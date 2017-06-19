@@ -30,7 +30,30 @@
                         </form>
                     </div>
                 </div>
-            </div><!--
+            </div>
+            <div class="dropdown items">
+                <div class="dropdown-toggle size18 size16-sm size14-xs"  data-toggle="dropdown">BRAND &nbsp; <i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                <div class="dropdown-menu">
+                    <div class="row input-group">
+                        <form method="post" action="">
+                            <div class="col-sm-4"><label><input type="checkbox" name="color1"> &nbsp; Black</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color2"> &nbsp; White</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color3"> &nbsp; Red</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color4"> &nbsp; Yellow</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color5"> &nbsp; Purple</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color6"> &nbsp; Grey</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color7"> &nbsp; Green</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color8"> &nbsp; Pink</label></div>
+                            <div class="col-sm-4"><label><input type="checkbox" name="color9"> &nbsp; Orange</label></div>
+                            <div class="col-sm-12 text-right">
+                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                <a href="#" class="b btn-black-s size16">APPLY</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--
             <div class="dropdown items">
                 <div class="dropdown-toggle size18 size16-sm size14-xs"  data-toggle="dropdown">COLOUR &nbsp; <i class="fa fa-angle-down" aria-hidden="true"></i></div>
                 <div class="dropdown-menu">

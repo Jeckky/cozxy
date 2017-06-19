@@ -11,11 +11,9 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model
-{
+class DisplaySearch extends Model {
 
-    public static function productSearch($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -91,8 +89,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -169,8 +166,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
-    {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
 
@@ -216,8 +212,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -231,10 +226,11 @@ class DisplaySearch extends Model
             }
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('ps.*,pps.*')
+            ->select('ps.*,pps.*,`brand`.title as brandName ')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
             ->andWhere([">", "ps.result", 0])
             ->andWhere([">", "pps.price", 0])
@@ -251,10 +247,11 @@ class DisplaySearch extends Model
             $whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('*')
+            ->select('ps.*,pps.*,`brand`.title as brandName ')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
             ->andWhere('ps.result > 0')
             ->andWhere('pps.price > 0')
@@ -291,7 +288,7 @@ class DisplaySearch extends Model
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-                'brand' => isset($value->brand) ? $value->brand->title : '',
+                'brand' => isset($value->brand) ? $value->brand->title : $value->brandName,
                 'title' => $title,
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
@@ -307,8 +304,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -319,10 +315,11 @@ class DisplaySearch extends Model
             $whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('ps.*,pps.*')
+            ->select('ps.*,pps.*,`brand`.title as brandName')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
             ->andWhere(["=", "ps.result", 0])
             ->andWhere(["=", "pps.price", 0])
@@ -339,10 +336,11 @@ class DisplaySearch extends Model
             $whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('*')
+            ->select('*,`brand`.title as brandName')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
             ->andWhere('ps.result > 0')
             ->andWhere('pps.price > 0')
@@ -363,10 +361,11 @@ class DisplaySearch extends Model
             $whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('ps.*,pps.*')
+            ->select('ps.*,pps.*,`brand`.title as brandName')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
             ->andWhere(["=", "ps.result", 0])
             ->andWhere(["=", "pps.price", 0])
@@ -397,7 +396,7 @@ class DisplaySearch extends Model
                 'productSuppId' => $value->productSuppId,
                 'image' => $productImagesThumbnail1,
                 'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-                'brand' => isset($value->brand) ? $value->brand->title : '',
+                'brand' => isset($value->brand) ? $value->brand->title : $value->brandName,
                 'title' => $title,
                 'price_s' => isset($price_s) ? $price_s : '',
                 'price' => isset($price) ? $price : '',
@@ -413,8 +412,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
-    {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
