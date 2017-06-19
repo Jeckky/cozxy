@@ -766,7 +766,7 @@ class ProductGroupController extends ProductMasterController
             \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
             \common\models\costfit\ProductImage::deleteAll("productId = " . $pg->productId);
             \common\models\costfit\Product::deleteAll("productId = " . $pg->productId);
-            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
+//            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
         }
         \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\ProductImage::deleteAll("productId = " . $_GET["id"]);
