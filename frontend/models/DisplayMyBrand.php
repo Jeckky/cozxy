@@ -21,12 +21,12 @@ use yii\data\ActiveDataProvider;
 class DisplayMyBrand {
 
     //put your code here
-    public static function MyFilterBrand($cats) {
+    public static function MyFilterBrand($categoryId) {
         $products = [];
         $brand = \common\models\costfit\ProductSuppliers::find()
-        ->select(' `brand`.*')
+        ->select(' `brand`.*,product_suppliers.categoryId')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->andWhere(isset($cats) ? 'brand.brandId =' . $cats : " 1=1")
+        ->andWhere(isset($categoryId) ? 'product_suppliers.categoryId =' . $categoryId : " 1=1")
         ->groupBy(['product_suppliers.brandId'])
         ->all();
 
