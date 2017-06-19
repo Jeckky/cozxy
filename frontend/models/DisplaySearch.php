@@ -557,7 +557,7 @@ class DisplaySearch extends Model {
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
         ->where($whereArray2)
-        ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
+        ->andWhere(($maxs >= 6000) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         //->andWhere('pps.price > 0')
         //->andWhere('ps.price > 0')
         //->andWhere(['between', 'pps.price', $mins, $maxs])
