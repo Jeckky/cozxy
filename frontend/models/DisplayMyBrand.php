@@ -65,8 +65,7 @@ class DisplayMyBrand
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
                 'url' => Yii::$app->homeUrl . 'search/brand/' . $items->encodeParams(['brandId' => $items->brandId]),
-                'title' => $items->title,
-                'description' => $items->description
+                'title' => $items->brandName,
             ];
         }
         return $products;

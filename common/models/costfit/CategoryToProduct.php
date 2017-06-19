@@ -44,7 +44,7 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
             'minPrice',
             'maxPrice',
             'productSupplierId', 'productSuppId', 'productId', 'title', 'price', 'result', 'brand', 'image', 'imageThumbnail1', 'imageThumbnail2'
-            , 'brandName'
+            , 'brandName', 'brandId', 'description'
         ]);
     }
 

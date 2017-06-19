@@ -573,14 +573,14 @@ function filterPriceCozxy() {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
                     items += "</a>";
-                    items += " <a>";
+                    items += " ";
                     if (val.wishList == 1) {
-                        items += "<div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
+                        items += "<a><div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     } else {
                         items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
@@ -819,14 +819,14 @@ function filterBrandCozxy($categoryId) {
                     items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
                     items += "<div class=\"product-box\">";
                     items += "<div class=\"product-img text-center\">";
-                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js / 262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 260px; height: 260px;\">";
+                    items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 250px; height: 260px;\">";
                     items += "<div class=\"v-hover\">";
                     items += "<a href='" + val.url + "'>";
                     items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
                     items += "</a>";
-                    items += " <a>";
+                    items += " ";
                     if (val.wishList == 1) {
-                        items += "<div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
+                        items += "<a><div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
                         items += "</a>";
                     } else {
                         items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
