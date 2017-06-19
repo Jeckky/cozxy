@@ -548,7 +548,7 @@ class DisplaySearch extends Model {
         $whereArray2["ps.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
         if ($maxs > 100) {
-            $whereArray2['pps.price'] = 'between ' . $mins . ' and ' . $maxs;
+            $whereArray2['pps.price between ' . $mins . ' and ' . $maxs . ' '];
         }
         //echo '<pre>';
         //print_r($whereArray2);
