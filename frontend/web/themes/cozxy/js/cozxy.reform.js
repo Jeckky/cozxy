@@ -644,10 +644,7 @@ function showMore(cat, clickNum, countAll, limit_start, limit_end) {
                 //var yourval = jQuery.parseJSON(JSON.stringify(data));
                 //$('.fa .fa-spinner .fa-spin').removeClass();
                 yourval = JSON.parse(data);
-                var items = '<h3 class="b">CATEGORY ::     \n\
-                                    <small>price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
+                var items = ' ';
                 $.each(yourval, function (key, val) {
 
                     if (val.fastId == false) {
@@ -822,7 +819,10 @@ function filterBrandCozxy($categoryId) {
                     var yourval = jQuery.parseJSON(JSON.stringify(data));
                     //var obj = JSON.parse(data);
                     //console.log(yourval['160']);
-                    var items = '';
+                    var items = '<h3 class="b">CATEGORY ::     \n\
+                                    <small>price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
                     $.each(yourval, function (key, val) {
 
                         if (val.fastId == false) {
