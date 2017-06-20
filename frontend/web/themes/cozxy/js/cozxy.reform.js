@@ -779,16 +779,26 @@ function sortCozxy($categoryId, status) {
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
-    $sortPrices = $('#Sortprice').val();
-    $sortBrand = $('#Sortbrand').val();
-    $sortNew = $('#Sortnew').val();
+    if (status == "price")
+    {
+        $sort = $('#Sortprice').val();
+    } else if (status == "brand")
+    {
+        $sort = $('#Sortbrand').val();
+    } else
+        (status == "new")
+    {
+        $sort = $('#Sortnew').val();
+    }
+
+
     $('.btn-black-s').html('APPLY ...');
     $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/sort-cozxy?categoryId=" + $categoryId;
     $.ajax({
         url: path,
         type: "POST",
-        data: {'status': status, brand: $brandName, mins: $min, maxs: $max, 'sortPrice': $sortPrices, 'sortBrand': $sortBrand, 'sortNew': $sortNew},
+        data: {'status': status, brand: $brandName, mins: $min, maxs: $max, 'sort': $sort},
         success: function (data, status) {
 
             if (data == '') {

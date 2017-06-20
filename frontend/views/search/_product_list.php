@@ -1,4 +1,8 @@
 <?php
+$sortBrand = isset($sortBrand) ? $sortBrand : 'SORT_ASC';
+$sortPrice = isset($sortPrice) ? $sortPrice : 'SORT_ASC';
+$sortNew = isset($sortNew) ? $sortNew : 'SORT_ASC';
+echo $sortBrand . " " . $sortPrice . " " . $sortNew;
 if ($sortBrand == 'SORT_ASC') {
     $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
     $sortBrand = 'SORT_DESC';
@@ -29,7 +33,7 @@ if ($sortNew == 'SORT_ASC') {
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')" style="color: #000;"><?= $sortNewIcon ?></a>
         <div id="mydiv">
             <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
-            <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortNew ?>">
+            <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
             <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
         </div>
     </small>
