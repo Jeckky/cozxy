@@ -1,8 +1,8 @@
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
     <small>
         Sort by price&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
-        Sort by brand&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
-        Sort by new product&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span>Sort by brand&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span>Sort by new product&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
     </small>
 </h3>
 
