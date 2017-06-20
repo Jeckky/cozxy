@@ -730,6 +730,7 @@ function filterPriceCozxy() {
                 if (status == "success") {
 
                     $('.brand-price-filter').html(data);
+
                 } else {
                     alert('error');
                 }
@@ -823,3 +824,5 @@ function sortCozxy($categoryId, status) {
         }
     });
 }
+
+
