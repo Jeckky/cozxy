@@ -142,6 +142,35 @@ class SearchController extends MasterController {
         return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
     }
 
+    public function actionSortCozxy() {
+        $FilterPrice = [];
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $brand = Yii::$app->request->post('brand');
+        $categoryId = Yii::$app->request->get('categoryId');
+        $status = Yii::$app->request->post('status');
+
+        if ($status == 'price') {
+            $productFilterPrice = new ArrayDataProvider([
+                'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status),
+                'pagination' => ['defaultPageSize' => 12]
+            ]);
+        } elseif ($status == 'brand') {
+            $productFilterPrice = new ArrayDataProvider([
+                'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status),
+                'pagination' => ['defaultPageSize' => 12]
+            ]);
+        } elseif ($status == 'new') {
+            $productFilterPrice = new ArrayDataProvider([
+                'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status),
+                'pagination' => ['defaultPageSize' => 12]
+            ]);
+        }
+
+        $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
+    }
+
     public function actionShowMoreProducts() {
 
         $catz = Yii::$app->request->post('cat');
