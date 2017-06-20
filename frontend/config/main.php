@@ -1,14 +1,14 @@
 <?php
 
 $params = array_merge(
-require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',
-        [
+            [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
         ]
@@ -32,7 +32,6 @@ return [
         ],
     ],
     'components' => [
-
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -40,7 +39,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
+                    [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -72,7 +71,7 @@ return [
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
 //                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
-                //'checkout/order-summary/<hash>' => 'checkout/order-summary',
+                'checkout/order-summary-topup/<hash>' => 'checkout/order-summary-topup',
                 'top-up/send-payment/<hash>' => 'top-up/send-payment',
 //                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
 //                'profile/picking-point/<hash>' => 'profile/picking-point',

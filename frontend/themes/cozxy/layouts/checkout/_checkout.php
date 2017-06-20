@@ -17,9 +17,9 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/summary',
+                    'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <!-- Cart -->
@@ -126,10 +126,10 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($model, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'addressId', function($model, $defaultValue, $index = 0) {
-                                        $index = $index++;
-                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                    }),
+                                                    ->asArray()->where('userId=' . Yii::$app->user->identity->userId)->all(), 'addressId', function($model, $defaultValue, $index = 0) {
+                                                $index = $index++;
+                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                            }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -191,8 +191,8 @@ $pickingId = rand(0, 9999);
 
                 <?php
                 $form = ActiveForm::begin([
-                    'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box'],
+                            'id' => 'default-add-new-billing-address',
+                            'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
@@ -212,13 +212,13 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Company (option)</label>
-                                    <?php echo $form->field($NewBilling, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                                    <?php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tax </label>
-                                    <?php echo $form->field($NewBilling, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                                    <?php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                                 </div>
                             </div>
                         </div>

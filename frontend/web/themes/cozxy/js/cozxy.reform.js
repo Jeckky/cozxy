@@ -701,9 +701,14 @@ function ShowImages(img, productImageId) {
 }
 $(document).on('click', '#default-coin', function (e) {
     var systemCoin = $(this).parent().parent().find("#systemCoin");
-    var choose = $(this).parent().parent().find("#firstCoin");
+    var choose = $(this).parent().find("#firstCoin");
+    var systemCoin2 = $(this).parent().find("#systemCoin2");
+    var system = $(this).parent().find("#system");
     var textPay = $(this).parent().find("#text-pay");
+
     systemCoin.val(choose.val());
+    system.val(choose.val());
+    systemCoin2.val(choose.val());
     textPay.html(choose.val());
 
 });
@@ -718,8 +723,12 @@ $(document).on('click', '#allCoin', function () {
     choose.val('');
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
+    var systemCoin2 = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin2");
+    var system = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#system");
     var allCoin = $(this).parent().find("#allCoinHidden");
     systemCoin.val(allCoin.val());
+    system.val(allCoin.val());
+    systemCoin2.val(allCoin.val());
     textPay.html(allCoin.val());
 });
 $(document).on('keypress', '#inputSystemCoin', function (e) {
@@ -734,16 +743,31 @@ $(document).on('click', '#confirm-payCoin', function (e) {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
-    if (parseInt(choose.val()) > parseInt(systemCoin.val())) {
+    var system = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#system");
+    var systemCoin2 = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin2");
+    var addressId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#addressId").val();
+    var orderId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#orderId").val();
+    if (parseInt(choose.val()) > parseInt(systemCoin2.val())) {
         alert('Incorrect Input');
     } else {
         if (choose.val() != '') {
             systemCoin.val(choose.val());
+            systemCoin2.val(choose.val());
+            system.val(choose.val());
             textPay.html(choose.val());
         } else {
             systemCoin.val(systemCoin.val());
+            system.val(systemCoin2.val());
             textPay.html(systemCoin.val());
         }
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "checkout/save-address-id/",
+            data: {'orderId': orderId, 'addressId': addressId, 'systemCoin': systemCoin2.val()},
+            success: function (data, status)
+            {
+            }
+        });
 
     }
 
@@ -752,9 +776,55 @@ $(document).on('click', '#confirm-payCoin', function (e) {
 $(document).on('click', '#cancel-payCoin', function (e) {
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
+    var systemCoin2 = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin2");
+    var system = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#system");
+    var orderId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#orderId").val();
+    var addressId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#addressId").val();
     textPay.html('');
     systemCoin.val(0);
+    system.val(0);
+    systemCoin2.val(0);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "checkout/save-address-id/",
+        data: {'orderId': orderId, 'addressId': addressId, 'systemCoin': systemCoin2.val()},
+        success: function (data, status)
+        {
+        }
+    });
 
+});
+/*$(document).on('click', '#toTopUp', function (e) {
+ var addressId = $(this).parent().find("#addressId").val();
+ var systemCoin2 = $(this).parent().find("#systemCoin2").val();
+ var orderId = $(this).parent().find("#orderId").val();
+ $.ajax({
+ type: "POST",
+ url: $baseUrl + "checkout/save-address-id/",
+ data: {'orderId': orderId, 'addressId': addressId, 'systemCoin': systemCoin2},
+ success: function (data, status)
+ {
+ return false;
+ }
+ });
+ // alert(orderId.val());
+
+ });*/
+$('#isPay').change(function () {
+    var orderId = $(this).parent().find("#orderId").val();
+    if ($(this).is(':checked')) {
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "checkout/is-pay-now/",
+            data: {'orderId': orderId, 'isPay': 1},
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "checkout/is-pay-now/",
+            data: {'orderId': orderId, 'isPay': 0},
+        });
+    }
 });
 /*
  $.growl({title: "Growl", message: "The kitten is awake!"});
