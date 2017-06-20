@@ -20,7 +20,7 @@ class FakeFactory extends Model {
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
 
-            $whereArray["product.approve"] = "approve";
+            $whereArray["product_suppliers.approve"] = "approve";
             $whereArray["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
@@ -81,7 +81,7 @@ class FakeFactory extends Model {
         if ($cat != FALSE) {
             $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
 
-            $whereArray2["product.approve"] = "approve";
+            $whereArray2["product_suppliers.approve"] = "approve";
             $whereArray2["ps.result"] = "0";
             $whereArray2["pps.status"] = "1";
             $product = \common\models\costfit\CategoryToProduct::find()

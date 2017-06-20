@@ -558,9 +558,10 @@ function filterPriceCozxy() {
                 if (status == "success") {
                     //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
                     //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
+
                     var yourval = jQuery.parseJSON(JSON.stringify(data));
                     //var obj = JSON.parse(data);
-                    // console.log(yourval);
+                    //console.log(yourval);
                     var items = '<h3 class="b">CATEGORY ::     \n\
                                     <small>Sort by price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
                                     Sort by brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
