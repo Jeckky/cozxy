@@ -30,7 +30,7 @@ if ($sortNew == 'SORT_ASC') {
         <div id="mydiv">
             <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
             <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortNew ?>">
-            <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_ASC">
+            <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
         </div>
     </small>
 </h3>
