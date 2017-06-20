@@ -147,8 +147,14 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
                                     <?php
                                     yii\widgets\Pjax::begin([
+                                        'id' => 'cansale',
                                         'enablePushState' => false, // to disable push state
-                                        'enableReplaceState' => false // to disable replace state
+                                        'enableReplaceState' => false, // to disable replace state
+                                        'timeout' => 5000,
+                                        'clientOptions' => [
+                                            'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
+                                            'linkSelector' => '#cansale'
+                                        ]
                                     ]);
                                     echo \yii\widgets\ListView::widget([
                                         'dataProvider' => $productCanSell,
@@ -188,8 +194,14 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
                                     <?php
                                     yii\widgets\Pjax::begin([
+                                        'id' => 'notsale',
                                         'enablePushState' => false, // to disable push state
-                                        'enableReplaceState' => false // to disable replace state
+                                        'enableReplaceState' => false, // to disable replace state
+                                        'timeout' => 5000,
+                                        'clientOptions' => [
+                                            'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
+                                            'linkSelector' => '#notsale'
+                                        ]
                                     ]);
                                     echo \yii\widgets\ListView::widget([
                                         'dataProvider' => $productNotSell,
@@ -234,7 +246,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                            ?>','<?php //echo $clickNum;                                                                           ?>','<?php //echo $countAllProduct;                                                                           ?>','<?php //echo $limit_start;                                                                          ?>','<?php //echo $limit_end;                                                                         ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                      ?>','<?php //echo $clickNum;                                                                                     ?>','<?php //echo $countAllProduct;                                                                                     ?>','<?php //echo $limit_start;                                                                                    ?>','<?php //echo $limit_end;                                                                                   ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
