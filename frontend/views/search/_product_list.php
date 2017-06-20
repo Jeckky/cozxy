@@ -11,6 +11,9 @@ if (isset($sortstatus)) {
         $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
         $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
     }
+} else {
+    $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortPrice = 'SORT_ASC';
 }
 
 if (isset($sortstatus)) {
@@ -21,6 +24,9 @@ if (isset($sortstatus)) {
         $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
         $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
     }
+} else {
+    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortBrand = 'SORT_ASC';
 }
 
 if (isset($sortstatus)) {
@@ -31,6 +37,9 @@ if (isset($sortstatus)) {
         $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
         $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
     }
+} else {
+    $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortNew = 'SORT_ASC';
 }
 ?>
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
