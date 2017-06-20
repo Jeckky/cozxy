@@ -284,7 +284,7 @@ class CheckoutController extends MasterController {
     function actionConfirm() {
         $orderId = Yii::$app->request->post('orderId');
         $systemCoin = Yii::$app->request->post('systemCoin');
-        $systemCoin = Yii::$app->request->post('addressId');
+        $addressId = Yii::$app->request->post('addressId');
         if (isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
             $orderId = $_GET['orderId'];
             $systemCoin = $_GET['systemCoin'];

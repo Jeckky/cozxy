@@ -137,6 +137,7 @@ $(document).on('click', '#confirm-topup', function (e) {
                 } else {
                     return false;
                 }
+
             }
         }
     } else {
@@ -144,10 +145,15 @@ $(document).on('click', '#confirm-topup', function (e) {
             alert("Amount must not less than 100 THB.");
             return false;
         } else {
-            if (confirm(':: Confirm Amount ' + amount + ' THB ?')) {
-                return true;
-            } else {
+            if (parseInt(amount) < parseInt(currentAmount)) {
+                alert("Amount must more than or equal " + currentAmount + " THB.");
                 return false;
+            } else {
+                if (confirm(':: Confirm Amount ' + amount + ' THB ?')) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
     }
