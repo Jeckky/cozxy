@@ -136,11 +136,11 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                         <?php if ($productCanSell->getTotalCount() > 0): ?>
                             <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
                                 <small>
-                                    Sort by price&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    Sort by price&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_ASC">
-                                    <span style="color: #fc0;">|</span>Sort by brand&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <span style="color: #fc0;">|</span>Sort by brand&nbsp;<a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_ASC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_ASC">
                                 </small>
                             </h3>
@@ -249,7 +249,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                 ?>','<?php //echo $clickNum;                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                ?>','<?php //echo $limit_start;                                                                                               ?>','<?php //echo $limit_end;                                                                                              ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                  ?>','<?php //echo $clickNum;                                                                                                 ?>','<?php //echo $countAllProduct;                                                                                                 ?>','<?php //echo $limit_start;                                                                                                ?>','<?php //echo $limit_end;                                                                                               ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

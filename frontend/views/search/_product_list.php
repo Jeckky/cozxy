@@ -25,8 +25,8 @@ if ($sortNew == 'SORT_ASC') {
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
     <small>
         <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')"><?= $sortBrandIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')"><?= $sortNewIcon ?></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')" style="color: #000;"><?= $sortNewIcon ?></a>
         <div id="mydiv">
             <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
             <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortNew ?>">
