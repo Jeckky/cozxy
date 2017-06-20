@@ -1,13 +1,17 @@
 <?php
 if ($sortBrand == 'SORT_ASC') {
     $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
+    $sortBrand = 'SORT_DESC';
 } else {
     $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortBrand = 'SORT_ASC';
 }
 if ($sortPrice == 'SORT_ASC') {
     $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
+    $sortBrand = 'SORT_DESC';
 } else {
     $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortBrand = 'SORT_ASC';
 }
 
 if ($sortNew == 'SORT_ASC') {
