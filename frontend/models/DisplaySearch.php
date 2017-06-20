@@ -601,7 +601,7 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE) {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sortBrand = FALSE, $sortPrice = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -621,10 +621,10 @@ class DisplaySearch extends Model {
         ->where($whereArray2)
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         ->groupBy('ps.productSuppId')
-        ->orderBy(($status == 'price') ? ['pps.price' => SORT_ASC] : (($status == 'brand') ? ['brandName' => SORT_ASC] : (($status == 'new') ? ['ps.updateDateTime' => SORT_ASC] : '')))
+        ->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => SORT_ASC] : '')))
         ->all();
 
-        //throw new \yii\base\Exception($status);
+        //throw new \yii\base\Exception($sortPrice);
 
         foreach ($pCanSale as $value) {
 
