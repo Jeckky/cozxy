@@ -142,7 +142,7 @@ class SearchController extends MasterController {
             //$FilterPrice = $FilterPrices;
         }
         //echo '<pre>';
-        //print_r($productFilterPrice);
+        //print_r($FilterPrice);
         return json_encode($FilterPrice);
     }
 
