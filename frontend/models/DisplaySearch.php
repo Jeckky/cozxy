@@ -638,7 +638,7 @@ class DisplaySearch extends Model
         ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
         ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
         ->where($whereArray2)
-        ->andWhere("ps.result > 0")
+        ->andWhere("ps.result > 0 AND pps.price > 0")
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         ->groupBy('ps.productSuppId')
         //->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => ($sortNew == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : '')))
