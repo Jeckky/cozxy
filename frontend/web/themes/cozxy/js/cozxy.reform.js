@@ -560,11 +560,11 @@ function filterPriceCozxy() {
                     //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
                     var yourval = jQuery.parseJSON(JSON.stringify(data));
                     //var obj = JSON.parse(data);
-                    //console.log(yourval['160']);
+                    // console.log(yourval);
                     var items = '<h3 class="b">CATEGORY ::     \n\
-                                    <small>price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
+                                    <small>Sort by price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    Sort by brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    Sort by new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
                     $.each(yourval, function (key, val) {
                         //console.log(key);//160,162
                         //console.log(val.productSuppId);
@@ -820,9 +820,9 @@ function filterBrandCozxy($categoryId) {
                     //var obj = JSON.parse(data);
                     //console.log(yourval['160']);
                     var items = '<h3 class="b">CATEGORY ::     \n\
-                                    <small>price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
+                                    <small>Sort by price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    Sort by brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
+                                    Sort by new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
                     $.each(yourval, function (key, val) {
 
                         if (val.fastId == false) {
