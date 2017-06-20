@@ -16,6 +16,7 @@ use common\models\costfit\PaymentMethod;
 use common\helpers\CozxyUnity;
 use common\helpers\IntToBath;
 use kartik\mpdf\Pdf;
+use common\models\costfit\Order;
 
 /**
  * TopUpController implements the CRUD actions for TopUp model.
@@ -54,14 +55,20 @@ class TopUpController extends MasterController {
         }
         $msg = '';
         $needMore = 0;
+        $systemPoin = 0;
         //$paymentMethod = PaymentMethod::find()->where("status=1")->all();
         $paymentMethod = PaymentMethod::find()->where("status=1")->all();
         if (isset($_GET['ms'])) {
             $msg = $_GET['ms'];
         }
-        if (isset($_GET['needMore'])) {
-            $needMore = $_GET['needMore'];
+        if (isset($_GET['orderId'])) {
+            $order = Order::find()->where("orderId=" . $_GET['orderId'])->one();
+            $systemPoin = $order->cozxyCoin;
         }
+        if (isset($_GET['needMore'])) {
+            $needMore = $_GET['needMore'] - $systemPoin;
+        }
+
         $this->subTitle = 'Home';
         $this->subSubTitle = 'Top up';
         $data = [];
@@ -172,7 +179,9 @@ class TopUpController extends MasterController {
     }
 
     public function checkAddress() {
-        $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1")->one();
+        $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1")
+                ->orderBy("createDateTime DESC")
+                ->one();
         if (!isset($address)) {
             return $this->redirect([Yii::$app->homeUrl . 'my-account/new-billing']);
         }
@@ -372,7 +381,7 @@ class TopUpController extends MasterController {
                 }
                 $type = 'success';
                 if ($topUp->isFromCheckout) {// มาจากหน้า check out หรือไม่
-                    $order = \common\models\costfit\Order::find()->where("userId='" . Yii::$app->user->id . "' and status='" . \common\models\costfit\Order::ORDER_STATUS_DRAFT . "'")->one();
+                    $order = Order::find()->where("userId='" . Yii::$app->user->id . "' and status='" . Order::ORDER_STATUS_DRAFT . "'")->one();
                 } else {
                     $order = '';
                 }
@@ -389,7 +398,19 @@ class TopUpController extends MasterController {
                     $topUpEmail = \common\helpers\Email::topUpSuccess($Subject, $username, $toMail, $url, $point, $money, $paymentMethod);
                 }
 
-                //
+                //////////////////////ถ้ามีการ เชค จ่ายทันที redirec ไปที่ checkout/confirm//////////////////////////////////////////////////////////
+                if ($topUp->isFromCheckout == 1) {
+                    $checkPayNow = Order::find()->where("userId='" . Yii::$app->user->id . "' and status='" . Order::ORDER_STATUS_DRAFT . "'")->one();
+                    if (isset($checkPayNow)) {
+                        if ($checkPayNow->isPayNow == 1) {
+                            return $this->redirect([Yii::$app->homeUrl . "checkout/confirm",
+                                        'orderId' => $checkPayNow->orderId,
+                                        'systemCoin' => $checkPayNow->cozxyCoin,
+                                        'addressId' => $checkPayNow->addressId
+                            ]);
+                        }
+                    }
+                }
                 return $this->render('thank', [
                             'topUpId' => $topUp->topUpId,
                             'currentPoint' => $currentPoint,

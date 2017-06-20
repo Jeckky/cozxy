@@ -1,6 +1,8 @@
 <?php
+
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use common\models\costfit\UserPoint;
 ?>
 <div class="col-xs-12 bg-yellow1" style="padding:18px;">
     <div class="rela size20">
@@ -25,50 +27,82 @@ use yii\bootstrap\ActiveForm;
     </div>
     <?php
     $orderId = $this->params['cart']['orderId'];
-    // throw new \yii\base\Exception(print_r($order, true));
+    //throw new \yii\base\Exception($addressId);
+    $userPoint = UserPoint::currentPoint();
+    if ($userPoint != false) {
+        if ($this->params['cart']['summary'] > $userPoint->currentPoint) {
+            $needMore = $this->params['cart']['summary'] - $userPoint->currentPoint;
+        } else {
+            $needMore = 0;
+        }
+    } else {
+        $needMore = $this->params['cart']['summary'];
+    }
+    if (isset($addressId)) {
+        $addressIdx = $addressId;
+    } else {
+        $addressIdx = '';
+    }
     ?>
-    <a href="<?= Url::to(['/top-up']) ?>" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
+    <br>
+    <input type="hidden" name="addressId" id="addressId" value="<?= $addressIdx ?>">
+    <input type="hidden" name="orderId" id="orderId" value="<?= $this->params['cart']['orderId'] ?>">
     <?php
-    if(isset($userPoint) && $userPoint->currentCozxySystemPoint>0){
-    ?>
-    <a href="" class="b btn-info btn-block text-center" style="padding:12px 32px; margin:12px auto 12px" data-toggle="modal" data-target="#inputSystemCoinModal" id="default-coin">PAY by Cozxy systemCoin<br><span id="text-pay"></span></a>
-    <?php
+    if ($needMore > 0) {//แสดงปุ่ม TOP UP เฉพาะตอนที่ point ไม่พอ
+        if ($addressIdx != 0 && $addressIdx != '') {
+            ?>
+            <input type="checkbox" name="isPay" id="isPay" >&nbsp;&nbsp;&nbsp;Pay immediately after top up
+        <?php } ?>
+        <a href="<?=
+        Url::to(['/top-up', 'checkout' => 'yes',
+            'needMore' => $needMore,
+            'orderId' => $orderId,
+        ])
+        ?>"id="toTopUp" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
+
+        <input type="hidden" name="addressId" id="addressId" value="<?= $addressIdx ?>">
+        <input type="hidden" name="orderId" id="orderId" value="<?= $this->params['cart']['orderId'] ?>">
+        <?php
+        // throw new \yii\base\Exception($addressId);
+    }
+    if (isset($userPoint) && $userPoint->currentCozxySystemPoint > 0 && $addressIdx != 0 && $addressIdx != '') {
+        ?>
+
+        <a href="" class="b btn-info btn-block text-center" style="padding:12px 32px; margin:12px auto 12px" data-toggle="modal" data-target="#inputSystemCoinModal" id="default-coin">PAY by Cozxy systemCoin<br><span id="text-pay"></span></a>
+        <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
+        <input type="hidden" id="system" value="0">
+        <input type="hidden" id="systemCoin2" value="0" name="systemCoin2">
+        <?php
     }
     if (Yii::$app->controller->action->id == 'summary') {
-    if (Yii::$app->user->id != '') {
-    $currentPoint = common\models\costfit\UserPoint::find()->where('userId=' . Yii::$app->user->id)->one();
-    if (isset($currentPoint) > 0) {
-    if ($this->params ['cart']['summary'] <= $currentPoint['currentPoint']) {
-    if (isset($addressId)) {
-    $addressIdx = $addressId;
-    } else {
-    $addressIdx = '';
-    }
+        if (Yii::$app->user->id != '') {
+            $currentPoint = UserPoint::find()->where('userId=' . Yii::$app->user->id)->one();
+            if (isset($currentPoint) && $currentPoint->currentPoint > 0) {
+                if ($this->params ['cart']['summary'] <= $currentPoint['currentPoint']) {
+                    // $k = base64_decode(base64_decode(common\models\ModelMaster::encodeParams(['orderId' => $orderId])));
+                    // $params = common\models\ModelMaster::decodeParams(common\models\ModelMaster::encodeParams(['orderId' => $orderId]));
+                    // $orderId = $params['orderId'];
+                    ?>
+                    <?php
+                    $form = ActiveForm::begin([
+                                'id' => 'default-shipping-address',
+                                'action' => Yii::$app->homeUrl . 'checkout/order-summary',
+                                'options' => ['class' => 'space-bottom'],
+                    ]);
+                    ?>
 
-    // $k = base64_decode(base64_decode(common\models\ModelMaster::encodeParams(['orderId' => $orderId])));
-    // $params = common\models\ModelMaster::decodeParams(common\models\ModelMaster::encodeParams(['orderId' => $orderId]));
-    // $orderId = $params['orderId'];
-    ?>
-    <?php
-    $form = ActiveForm::begin([
-    'id' => 'default-shipping-address',
-    'action' => Yii::$app->homeUrl . 'checkout/order-summary',
-    'options' => ['class' => 'space-bottom'],
-    ]);
-    ?>
-
-    <input type="hidden" id="addressIdsummary" name="addressIdsummary" value="<?= $addressIdx; ?>">
-    <input type="hidden" id="orderId" name="orderId" value="<?= $orderId; ?>">
-    <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
-    <input type="hidden" id="systemCoin" value="0" name="systemCoin">
-    <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
-    <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
-    <?php ActiveForm::end(); ?>
-    <br>
-    <?php
-    }
-    }
-    }
+                    <input type="hidden" id="addressIdsummary" name="addressIdsummary" value="<?= $addressIdx; ?>">
+                    <input type="hidden" id="orderId" name="orderId" value="<?= $orderId; ?>">
+                    <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
+                    <input type="hidden" id="systemCoin" value="0" name="systemCoin">
+                    <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
+                    <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
+                    <?php ActiveForm::end(); ?>
+                    <br>
+                    <?php
+                }
+            }
+        }
     }
     ?>
 </div>

@@ -29,7 +29,7 @@ class CheckoutController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
-
+        // throw new \yii\base\Exception('aaaaa');
         $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
         $pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
@@ -89,6 +89,7 @@ class CheckoutController extends MasterController {
         } else {
             $addressId = Yii::$app->request->post('addressIdsummary');
         }
+        $this->resetDefault($orderId, $addressId);
         //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
@@ -144,6 +145,40 @@ class CheckoutController extends MasterController {
         }
     }
 
+    public function actionSaveAddressId() {
+        $addressId = Yii::$app->request->post('addressId');
+        $orderId = Yii::$app->request->post('orderId');
+        $cozxyCoin = Yii::$app->request->post('systemCoin');
+        $res = [];
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->one();
+        if (isset($dataAddress)) {
+            $order->addressId = $addressId;
+            $order->cozxyCoin = $cozxyCoin;
+            $res["status"] = true;
+        } else {
+            $res["status"] = false;
+        }
+        $order->save(false);
+        return json_encode($res);
+    }
+
+    public function actionIsPayNow() {
+        $orderId = Yii::$app->request->post('orderId');
+        $isPay = Yii::$app->request->post('isPay');
+        $res = [];
+        $products = [];
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if ($isPay == 1) {
+            $order->isPayNow = 1;
+        } else {
+            $order->isPayNow = 0;
+        }
+        $order->save(false);
+        $res["status"] = true;
+        return json_encode($res);
+    }
+
     function actionMapImages() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
@@ -180,24 +215,38 @@ class CheckoutController extends MasterController {
         }
     }
 
+    static function resetDefault($orderId, $addressId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            $order->cozxyCoin = 0;
+            $order->isPayNow = 0;
+            $order->addressId = $addressId;
+            $order->save(false);
+        }
+    }
+
     function actionOrderSummary() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
-        //$k = base64_decode(base64_decode($hash));
-        //$params = ModelMaster::decodeParams($hash);
+        // $k = base64_decode(base64_decode($hash));
+        // $params = ModelMaster::decodeParams($hash);
         //$orderId = $params['orderId'];
-        //throw new \yii\base\Exception($orderId);
-        $addressIdsummary = Yii::$app->request->post('addressIdsummary');
         $orderId = Yii::$app->request->post('orderId');
-        $systemCoin = Yii::$app->request->post('systemCoin');
+        //throw new \yii\base\Exception($orderId);
         $order = Order::find()->where("orderId=" . $orderId)->one();
+        //$addressIdsummary = Yii::$app->request->post('addressIdsummary');
+        $addressIdsummary = $order->addressId;
+        //
+        $systemCoin = Yii::$app->request->post('systemCoin');
+
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
             $userPoint = $issetPoint;
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
+        //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
                     'order' => $order,
                     'userPoint' => $userPoint,
@@ -206,9 +255,41 @@ class CheckoutController extends MasterController {
         ]);
     }
 
+    function actionOrderSummaryTopup($hash) {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+        $k = base64_decode(base64_decode($hash));
+        $params = ModelMaster::decodeParams($hash);
+        $orderId = $params['orderId'];
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $addressIdsummary = $order->addressId;
+        //$systemCoin = Yii::$app->request->post('systemCoin');
+
+        $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
+        if (isset($issetPoint)) {
+            $userPoint = $issetPoint;
+        } else {
+            $userPoint = $this->CreateUserPoint($order->userId);
+        }
+        //throw new \yii\base\Exception($orderId);
+        return $this->render('/order/index', [
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $order->cozxyCoin
+        ]);
+    }
+
     function actionConfirm() {
         $orderId = Yii::$app->request->post('orderId');
         $systemCoin = Yii::$app->request->post('systemCoin');
+        $systemCoin = Yii::$app->request->post('addressId');
+        if (isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
+            $orderId = $_GET['orderId'];
+            $systemCoin = $_GET['systemCoin'];
+            $addressId = $_GET['addressId'];
+        }
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $res = [];
         if (isset($order)) {
@@ -220,8 +301,8 @@ class CheckoutController extends MasterController {
                 $order->invoiceNo = Order::genInvNo($order);
                 $order->status = Order::ORDER_STATUS_E_PAYMENT_SUCCESS;
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
-                $this->updateUserPoint($order->userId, $order->summary, $order->orderId, $systemCoin);
-                $this->updateBillingToOrder($_POST['addressId'], $order->orderId, $systemCoin);
+                $this->updateUserPoint($order->userId, $order->summary, $order->orderId, $systemCoin == NULL ? 0 : $systemCoin);
+                $this->updateBillingToOrder($addressId, $order->orderId, $systemCoin == NULL ? 0 : $systemCoin);
                 if ($order->save()) {
                     $res["status"] = 1;
 
@@ -253,7 +334,7 @@ class CheckoutController extends MasterController {
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $type = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
-                        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $_POST['addressId'] . " and userId=" . $order->userId)->one();
+                        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
                         $adress = [];
                         $adress['billingCompany'] = $addressId->company;
                         $adress['billingTax'] = $addressId->tax;
@@ -370,6 +451,7 @@ class CheckoutController extends MasterController {
     }
 
     public function updateUserPoint($userId, $point, $orderId, $systemCoin) {
+        // throw new \yii\base\Exception($systemCoin);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
             $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
