@@ -40,6 +40,7 @@ use yii\bootstrap\ActiveForm;
                         <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE SHOPPING</a> &nbsp;
                         <?php
                         if (($userPoint->currentPoint + $systemCoin) >= $order->summary) {
+                            //throw new \yii\base\Exception($addressIdsummary);
                             ?>
                             <input type="hidden" name="systemCoin" value="<?= $systemCoin ?>">
                             <input type="hidden" name="addressId" value="<?= $addressIdsummary ?>">
