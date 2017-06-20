@@ -80,7 +80,7 @@ class CartController extends MasterController
             }
         }
         //throw new \yii\base\Exception('orderId=' . $order->orderId);
-        $fastid = $_POST['fastId'];
+        $fastid = '';
         if ($fastid == '') {
             $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
         } else {
@@ -98,8 +98,8 @@ class CartController extends MasterController
             $orderItem->quantity = $orderItem->quantity + $_POST["quantity"];
         }
         $product = new \common\models\costfit\Product();
-        $orderItem->sendDate = $_POST["fastId"];
-        $orderItem->firstTimeSendDate = $_POST["fastId"];
+        $orderItem->sendDate = $fastid;
+        $orderItem->firstTimeSendDate = $fastid;
         $orderItem->supplierId = $_POST['supplierId'];
         $orderItem->orderId = $order->orderId;
         $orderItem->productId = $id;
