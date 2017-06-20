@@ -3,26 +3,34 @@
 //$sortPrice = isset($sortPrice) ? $sortPrice : 'SORT_ASC';
 //$sortNew = isset($sortNew) ? $sortNew : 'SORT_ASC';
 //echo $sortstatus . ':>' . $sort;
-if ($sortstatus == 'price') {
-    $sortPriceIcon = ($sort == 'SORT_DESC') ? 'Sort by price&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
-} else {
-    $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+if (isset($sortstatus)) {
+    if ($sortstatus == 'price') {
+        $sortPriceIcon = ($sort == 'SORT_DESC') ? 'Sort by price&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    } else {
+        $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    }
 }
-if ($sortstatus == 'brand') {
-    $sortBrandIcon = ($sort == 'SORT_DESC') ? 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
-} else {
-    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+
+if (isset($sortstatus)) {
+    if ($sortstatus == 'brand') {
+        $sortBrandIcon = ($sort == 'SORT_DESC') ? 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    } else {
+        $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    }
 }
-if ($sortstatus == 'new') {
-    $sortNewIcon = ($sort == 'SORT_DESC') ? 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
-} else {
-    $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+
+if (isset($sortstatus)) {
+    if ($sortstatus == 'new') {
+        $sortNewIcon = ($sort == 'SORT_DESC') ? 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    } else {
+        $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+    }
 }
 ?>
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
