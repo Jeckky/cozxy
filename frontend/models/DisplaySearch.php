@@ -601,7 +601,7 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sortBrand = FALSE, $sortPrice = FALSE) {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sortBrand = FALSE, $sortPrice = FALSE, $sortNew = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -621,7 +621,7 @@ class DisplaySearch extends Model {
         ->where($whereArray2)
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         ->groupBy('ps.productSuppId')
-        ->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => SORT_ASC] : '')))
+        ->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => ($sortNew == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : '')))
         ->all();
 
         //throw new \yii\base\Exception($sortPrice);

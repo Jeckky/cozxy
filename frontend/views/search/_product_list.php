@@ -9,12 +9,18 @@ if ($sortPrice == 'SORT_ASC') {
 } else {
     $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
 }
+
+if ($sortNew == 'SORT_ASC') {
+    $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
+} else {
+    $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+}
 ?>
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
     <small>
-        <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')"><?= $sortPriceIcon ?></a>
+        <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')"><?= $sortBrandIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')"><?= $sortNewIcon ?></a>
         <div id="mydiv">
             <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
             <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
