@@ -52,17 +52,18 @@ use common\models\costfit\UserPoint;
         if ($addressIdx != 0 && $addressIdx != '') {
             ?>
             <input type="checkbox" name="isPay" id="isPay" >&nbsp;&nbsp;&nbsp;Pay immediately after top up
-        <?php } ?>
-        <a href="<?=
-        Url::to(['/top-up', 'checkout' => 'yes',
-            'needMore' => $needMore,
-            'orderId' => $orderId,
-        ])
-        ?>"id="toTopUp" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
 
-        <input type="hidden" name="addressId" id="addressId" value="<?= $addressIdx ?>">
-        <input type="hidden" name="orderId" id="orderId" value="<?= $this->params['cart']['orderId'] ?>">
-        <?php
+            <a href="<?=
+            Url::to(['/top-up', 'checkout' => 'yes',
+                'needMore' => $needMore,
+                'orderId' => $orderId,
+            ])
+            ?>"id="toTopUp" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
+
+            <input type="hidden" name="addressId" id="addressId" value="<?= $addressIdx ?>">
+            <input type="hidden" name="orderId" id="orderId" value="<?= $this->params['cart']['orderId'] ?>">
+            <?php
+        }
         // throw new \yii\base\Exception($addressId);
     }
     if (isset($userPoint) && $userPoint->currentCozxySystemPoint > 0 && $addressIdx != 0 && $addressIdx != '') {

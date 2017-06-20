@@ -408,9 +408,14 @@ class TopUpController extends MasterController {
                                         'systemCoin' => $checkPayNow->cozxyCoin,
                                         'addressId' => $checkPayNow->addressId
                             ]);
+                        } else {//checkout/order-summary-topup/
+                            return $this->redirect([Yii::$app->homeUrl . "checkout/order-summary-topup/" .
+                                        $checkPayNow->encodeParams(['orderId' => $checkPayNow->orderId])
+                            ]);
                         }
                     }
                 }
+
                 return $this->render('thank', [
                             'topUpId' => $topUp->topUpId,
                             'currentPoint' => $currentPoint,
