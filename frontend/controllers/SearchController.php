@@ -10,12 +10,14 @@ use frontend\models\FakeFactory;
 use frontend\models\DisplayMyCategory;
 use yii\data\ArrayDataProvider;
 
-class SearchController extends MasterController {
+class SearchController extends MasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -27,7 +29,8 @@ class SearchController extends MasterController {
         ];
     }
 
-    public function actionIndex($hash = FALSE) {
+    public function actionIndex($hash = FALSE)
+    {
         $category = $_GET['c'];
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
@@ -57,7 +60,8 @@ class SearchController extends MasterController {
         return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand'));
     }
 
-    public function actionCozxyProduct() {
+    public function actionCozxyProduct()
+    {
         //$category = Yii::$app->request->post('search');
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
@@ -84,7 +88,8 @@ class SearchController extends MasterController {
         return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
-    public function actionBrand($hash = FALSE) {
+    public function actionBrand($hash = FALSE)
+    {
 
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
@@ -112,77 +117,40 @@ class SearchController extends MasterController {
         return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
     }
 
-    public function actionFilterPrice() {
+    public function actionFilterPrice()
+    {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $categoryId = Yii::$app->request->post('categoryId');
         $brand = Yii::$app->request->post('brand');
         $FilterPrice = [];
         //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs)]);
-        if (count($productFilterPrice->allModels) > 0) {
-            foreach ($productFilterPrice->allModels as $key => $value) {
-                $FilterPrice[$value['productSuppId']] = [
-                    'brand' => $value['brand'],
-                    'productSuppId' => $value['productSuppId'],
-                    'image' => $value['image'],
-                    'url' => $value['url'],
-                    'brand' => $value['brand'],
-                    'title' => $value['title'],
-                    'price_s' => $value['price_s'],
-                    'price' => $value['price'],
-                    'maxQnty' => $value['maxQnty'],
-                    'fastId' => $value['fastId'],
-                    'productId' => $value['productId'],
-                    'supplierId' => $value['supplierId'],
-                    'receiveType' => $value['receiveType'],
-                    'wishList' => $value['wishList']
-                ];
-            }
-            //$FilterPrice = $FilterPrices;
-        }
-        //echo '<pre>';
-        //print_r($FilterPrice);
-        return json_encode($FilterPrice);
+        $productFilterPrice = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
     }
 
-    public function actionFilterBrand() {
+    public function actionFilterBrand()
+    {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->post('categoryId');
 
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs)]);
-        //echo '<pre>';
-        //print_r($productFilterPrice->allModels);
-        if (count($productFilterPrice->allModels) > 0) {
-            foreach ($productFilterPrice->allModels as $key => $value) {
-                $FilterPrice[$value['productSuppId']] = [
-                    'brand' => $value['brand'],
-                    'productSuppId' => $value['productSuppId'],
-                    'image' => $value['image'],
-                    'url' => $value['url'],
-                    'brand' => $value['brand'],
-                    'title' => $value['title'],
-                    'price_s' => $value['price_s'],
-                    'price' => $value['price'],
-                    'maxQnty' => $value['maxQnty'],
-                    'fastId' => $value['fastId'],
-                    'productId' => $value['productId'],
-                    'supplierId' => $value['supplierId'],
-                    'receiveType' => $value['receiveType'],
-                    'wishList' => $value['wishList']
-                ];
-            }
-            //$FilterPrice = $FilterPrices;
-        }
-        //echo '<pre>';
-        //print_r($productFilterPrice);
-        return json_encode($FilterPrice);
+        $productFilterPrice = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
     }
 
-    public function actionShowMoreProducts() {
+    public function actionShowMoreProducts()
+    {
 
         $catz = Yii::$app->request->post('cat');
         $countz = (int) Yii::$app->request->post('count');

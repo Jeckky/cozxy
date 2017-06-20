@@ -530,6 +530,7 @@ function checkoutNewBilling() {
     });
 }
 
+
 function filterPriceCozxy() {
     var brandName = [];
     $("input:checked").each(function () {
@@ -549,69 +550,15 @@ function filterPriceCozxy() {
     $.ajax({
         url: path,
         type: "POST",
-        dataType: "JSON",
+        //dataType: "JSON",
         data: {mins: $min, maxs: $max, categoryId: $categoryId, brand: $brandName, },
         success: function (data, status) {
             if (data == '') {
                 $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
             } else {
                 if (status == "success") {
-                    //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
-                    //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
 
-                    var yourval = jQuery.parseJSON(JSON.stringify(data));
-                    //var obj = JSON.parse(data);
-                    //console.log(yourval);
-                    var items = '<h3 class="b">CATEGORY ::     \n\
-                                    <small>Sort by price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    Sort by brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    Sort by new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
-                    $.each(yourval, function (key, val) {
-                        //console.log(key);//160,162
-                        //console.log(val.productSuppId);
-                        //console.log(items);
-                        //alert(val.fastId);
-                        if (val.fastId == false) {
-                            $fastId = '';
-                        } else {
-                            $fastId = val.fastId;
-                        }
-                        items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
-                        items += "<div class=\"product-box\">";
-                        items += "<div class=\"product-img text-center\">";
-                        items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 240px; height: 260px;\">";
-                        items += "<div class=\"v-hover\">";
-                        items += "<a href='" + val.url + "'>";
-                        items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
-                        items += "</a>";
-                        items += " ";
-                        if (val.wishList == 1) {
-                            items += "<a><div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
-                            items += "</a>";
-                        } else {
-                            items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
-                            items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
-                            items += "</a>";
-                        }
-                        items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4 shopping-' + val.productSuppId + '\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
-                        items += '<div class=\"col-xs-4 shopping-' + val.productSuppId + '\"><i class=\"fa fa-cart-plus\" aria-hidden=\"true\"></i></div>';
-                        items += " </a>";
-                        items += " </div>";
-                        items += "</div>";
-                        items += "<div class=\"product-txt\">";
-                        items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
-                        items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
-                        if (val.price != '0.00') {
-                            items += " <p>";
-                            items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
-                            items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
-                            items += "   </p>";
-                        }
-                        items += " </div>";
-                        items += " </div>";
-                        items += "</div>";
-                        $('.brand-price-filter').html(items);
-                    });
+                    $('.brand-price-filter').html(data);
                 } else {
                     alert('error');
                 }
@@ -815,59 +762,7 @@ function filterBrandCozxy($categoryId) {
                 $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
             } else {
                 if (status == "success") {
-                    //javascript:addItemToCartUnitys('161', 1, '44', '', '145', '', '')
-                    //javascript:addItemToCartUnitys(160, 1, "48", "", "144", "", "")
-                    var yourval = jQuery.parseJSON(JSON.stringify(data));
-                    //var obj = JSON.parse(data);
-                    //console.log(yourval['160']);
-                    var items = '<h3 class="b">CATEGORY ::     \n\
-                                    <small>Sort by price <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    Sort by brand <i class="fa fa-angle-down" aria-hidden="true"></i>  \n\
-                                    Sort by new product <i class="fa fa-angle-down" aria-hidden="true"></i></small></h3>';
-                    $.each(yourval, function (key, val) {
-
-                        if (val.fastId == false) {
-                            $fastId = '';
-                        } else {
-                            $fastId = val.fastId;
-                        }
-
-                        items += "<div class=\"col-md-4 col-sm-6 col-xs-12\">";
-                        items += "<div class=\"product-box\">";
-                        items += "<div class=\"product-img text-center\">";
-                        items += "<img alt=\"262x262\" class=\"media-object fullwidth\" data-src=\"holder.js/262x262\" src='" + val.image + "' data-holder-rendered=\"true\" style=\"width: 240px; height: 260px;\">";
-                        items += "<div class=\"v-hover\">";
-                        items += "<a href='" + val.url + "'>";
-                        items += "<div class=\"col-xs-4\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></div>";
-                        items += "</a>";
-                        items += " ";
-                        if (val.wishList == 1) {
-                            items += "<a><div class=\"col-xs-4 heartbeat\"><i class=\"fa fa-heartbeat\" aria-hidden=\"true\"></i></div>";
-                            items += "</a>";
-                        } else {
-                            items += '<a href=\'javascript:addItemToWishlist(' + val.productSuppId + ');\' id=\'addItemToWishlist-' + val.productSuppId + '\' data-loading-text=\"<div class =\'col-xs-4\'><i class=\'fa fa-heartbeat\' aria-hidden =\'true\'></i></div>\">';
-                            items += "<div class=\"col-xs-4 heart\"><i class=\"fa fa-heart-o\" aria-hidden=\"true\"></i></div>";
-                            items += "</a>";
-                        }
-                        items += '<a href=\'javascript:addItemToCartUnitys(' + val.productSuppId + ', 1, "' + val.maxQnty + '", "' + $fastId + '", "' + val.productId + '", "' + val.supplierId + '", "' + val.receiveType + '")\' id=\"addItemsToCartMulti-' + val.productSuppId + '\" data-loading-text=\" <div class =\'col-xs-4 shopping-' + val.productSuppId + '\'> <i class = \'fa fa-circle-o-notch fa-spin\' aria-hidden = \'true\'> </i></div> \">';
-                        items += '<div class=\"col-xs-4 shopping-' + val.productSuppId + '\"><i class=\"fa fa-cart-plus\" aria-hidden=\"true\"></i></div>';
-                        items += " </a>";
-                        items += " </div>";
-                        items += "</div>";
-                        items += "<div class=\"product-txt\">";
-                        items += '<p class=\"size16 fc-g666\">' + val.brand + '</p>';
-                        items += ' <p class=\"size14 b\" style=\"height:50px; \"><a href=' + val.url + ' class=\"fc-black\">' + val.title + '</a></p>';
-                        if (val.price != '0.00') {
-                            items += " <p>";
-                            items += '<span class=\"size18\">' + val.price + ' THB</span><br>';
-                            items += '  <span class=\"size14 onsale\">' + val.price_s + ' THB</span>';
-                            items += "   </p>";
-                        }
-                        items += " </div>";
-                        items += " </div>";
-                        items += "</div>";
-                        $('.brand-price-filter').html(items);
-                    });
+                    $('.brand-price-filter').html(data);
                 } else {
                     $('.filter-brand-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
                 }
