@@ -1,29 +1,28 @@
 <?php
-$sortBrand = isset($sortBrand) ? $sortBrand : 'SORT_ASC';
-$sortPrice = isset($sortPrice) ? $sortPrice : 'SORT_ASC';
-$sortNew = isset($sortNew) ? $sortNew : 'SORT_ASC';
-echo $sortBrand . " " . $sortPrice . " " . $sortNew;
-if ($sortBrand == 'SORT_ASC') {
-    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
-    $sortBrand = 'SORT_DESC';
-} else {
-    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortBrand = 'SORT_ASC';
-}
-if ($sortPrice == 'SORT_ASC') {
-    $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
-    $sortBrand = 'SORT_DESC';
+//$sortBrand = isset($sortBrand) ? $sortBrand : 'SORT_ASC';
+//$sortPrice = isset($sortPrice) ? $sortPrice : 'SORT_ASC';
+//$sortNew = isset($sortNew) ? $sortNew : 'SORT_ASC';
+//echo $sortstatus . ':>' . $sort;
+if ($sortstatus == 'price') {
+    $sortPriceIcon = ($sort == 'SORT_DESC') ? 'Sort by price&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
 } else {
     $sortPriceIcon = 'Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortBrand = 'SORT_ASC';
+    $sortPrice = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
 }
-
-if ($sortNew == 'SORT_ASC') {
-    $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>';
-    $sortNew = 'SORT_DESC';
+if ($sortstatus == 'brand') {
+    $sortBrandIcon = ($sort == 'SORT_DESC') ? 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+} else {
+    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
+}
+if ($sortstatus == 'new') {
+    $sortNewIcon = ($sort == 'SORT_DESC') ? 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+    $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
 } else {
     $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortNew = 'SORT_ASC';
+    $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
 }
 ?>
 <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
@@ -31,11 +30,11 @@ if ($sortNew == 'SORT_ASC') {
         <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'new')" style="color: #000;"><?= $sortNewIcon ?></a>
-        <div id="mydiv">
-            <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
-            <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
-            <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
-        </div>
+
+        <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
+        <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
+        <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
+
     </small>
 </h3>
 
