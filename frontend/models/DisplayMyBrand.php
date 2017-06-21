@@ -18,17 +18,15 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class DisplayMyBrand
-{
+class DisplayMyBrand {
 
     //put your code here
-    public static function MyFilterBrand($categoryId)
-    {
+    public static function MyFilterBrand($categoryId) {
         $products = [];
         $categoryIds = \common\models\costfit\CategoryToProduct::find()
         ->select("ctp.*")
         ->join(" LEFT JOIN", "category_to_product ctp", "ctp.productId  = category_to_product.productId")
-        ->where("category_to_product.categoryId = $categoryId  ")
+        ->where((isset($categoryId)) ? "category_to_product.categoryId = $categoryId  " : '1=1')
         ->groupBy("ctp.categoryId")
         ->all();
         $cStr = "";
