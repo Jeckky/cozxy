@@ -18,9 +18,9 @@ if (count($trackingOrder->allModels) > 0) {
                                 <?php
                                 if ($value['status'] >= 5) {
                                     ?>
-                                    <img src="imgs/i-y-box.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-box.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="imgs/i-g-box.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-box.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
@@ -28,9 +28,9 @@ if (count($trackingOrder->allModels) > 0) {
                                 <?php
                                 if ($value['status'] >= 14) {
                                     ?>
-                                    <img src="imgs/i-y-truck.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-truck.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="imgs/i-g-truck.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-truck.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
@@ -38,9 +38,9 @@ if (count($trackingOrder->allModels) > 0) {
                                 <?php
                                 if ($value['status'] >= 15) {
                                     ?>
-                                    <img src="imgs/i-y-check.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-check.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="imgs/i-g-check.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-check.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                         </tr>
