@@ -81,7 +81,7 @@ if (count($trackingOrder->allModels) > 0) {
     }
 } else {
     ?>
-    <div class="track-list tracking-order text-center" style="color: #f5f5f5;">
+    <div class="track-list tracking-order text-center" style="color: #ccc;">
         No results found.
     </div>
     <?php
