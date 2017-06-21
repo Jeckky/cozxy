@@ -10,7 +10,7 @@
                             <div class="booking-confirmation clearfix">
                                 <i class="soap-icon-clock-1 icon circle"></i>
                                 <div class="message">
-                                    <h1 class="main-message">Please wait for Redirect to K-Payment Gateway...</h1>
+                                    <h3 class="main-message">Please wait for Redirect to K-Payment Gateway...</h3>
                                     <form id="sendform" name=sendform method=post action=<?= $sendUrl ?>>
                                         <INPUT type="hidden" id=MERCHANT2 name=MERCHANT2 value="<?= $merchantId ?>">
                                         <INPUT type="hidden" id=TERM2 name=TERM2 value="<?= $terminalId ?>">
@@ -20,7 +20,7 @@
                                         <INPUT type="hidden" id=IPCUST2 name=IPCUST2 value="<?= $cusIp ?>">
                                         <INPUT type="hidden" id=DETAIL2 name=DETAIL2 value="<?= $description ?>">
                                         <INPUT type="hidden" id=INVMERCHANT name=INVMERCHANT value="<?= $invoiceNo ?>">
-                                        <input type="hidden" id=FILLSPACE name=FILLSPACE value="<?= $fillSpace ?>"> 
+                                        <input type="hidden" id=FILLSPACE name=FILLSPACE value="<?= $fillSpace ?>">
                                         <!-- this input checksum you have to do md5 hash as description in integration guide -->
                                         <INPUT  type="hidden" id=checksum name=checksum value="<?= $checksum; ?>">
                                     </form>

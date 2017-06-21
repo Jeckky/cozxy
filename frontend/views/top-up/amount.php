@@ -15,9 +15,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <br><br>
 <?php
 $form = ActiveForm::begin([
-        ]);
+]);
 ?><div class="container login-box">
-    <div class="size32">&nbsp;</div>
     <div class="row">
         <?php if (isset($fromCheckout) && $fromCheckout != 'no') { ?>
             <input type="hidden" name="fromCheckout" value="yes">

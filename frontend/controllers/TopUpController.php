@@ -119,9 +119,9 @@ class TopUpController extends MasterController {
             $topUpDraf->save(false);
 
             return $this->render('amount', [
-                        'data' => $data,
-                        'fromCheckout' => $fromCheckout,
-                        'needMore' => $needMore
+                'data' => $data,
+                'fromCheckout' => $fromCheckout,
+                'needMore' => $needMore
             ]);
         }
         $amount = '';
@@ -151,37 +151,37 @@ class TopUpController extends MasterController {
                 $topUp->save(false);
                 if ($topUp->paymentMethod == 2) {//Payment Method เป็น การชำระด้วยบัตรเครดิต
                     return $this->redirect(['top-up/send-payment/' . $topUp->encodeParams(['userId' => $user->userId,
-                                    'amount' => $amount,
-                                    'fromCheckout' => $fromCheckout,
-                                    'topUpNo' => $topUp->topUpNo,])
+                            'amount' => $amount,
+                            'fromCheckout' => $fromCheckout,
+                            'topUpNo' => $topUp->topUpNo,])
                     ]);
                 } else if ($topUp->paymentMethod = 1) {//Payment Method เป็นการชำระด้วย Bill payment
                     return $this->redirect(['print-payment-form',
-                                'userId' => $user->userId,
-                                'amount' => $amount,
-                                'fromCheckout' => $fromCheckout
+                        'userId' => $user->userId,
+                        'amount' => $amount,
+                        'fromCheckout' => $fromCheckout
                     ]);
                 }
             } else {
                 return $this->render('index', [
-                            'data' => $data,
-                            'paymentMethod' => $paymentMethod
+                    'data' => $data,
+                    'paymentMethod' => $paymentMethod
                 ]);
             }
         } else {
             return $this->render('index', [
-                        'data' => $data,
-                        'paymentMethod' => $paymentMethod,
-                        'ms' => $msg,
-                        'needMore' => $needMore
+                'data' => $data,
+                'paymentMethod' => $paymentMethod,
+                'ms' => $msg,
+                'needMore' => $needMore
             ]);
         }
     }
 
     public function checkAddress() {
         $address = \common\models\costfit\Address::find()->where("userId=" . Yii::$app->user->id . " and status=1")
-                ->orderBy("createDateTime DESC")
-                ->one();
+        ->orderBy("createDateTime DESC")
+        ->one();
         if (!isset($address)) {
             return $this->redirect([Yii::$app->homeUrl . 'my-account/new-billing']);
         }
@@ -278,7 +278,9 @@ class TopUpController extends MasterController {
         $fillSpace = "Y";
         // throw new \yii\base\Exception(Yii::$app->params["ePaymentServerType"]);
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
-        return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        //return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+
+        return $this->render("@app/views/e_payment/e_pay", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
     public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
@@ -286,8 +288,8 @@ class TopUpController extends MasterController {
         $customerTel = \common\models\costfit\Address::userTel($userId);
         $taxId = '0105553036789';
         $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)
-                ->orderBy('updateDateTime DESC')
-                ->one(); //status=2
+        ->orderBy('updateDateTime DESC')
+        ->one(); //status=2
         $allBank = \common\models\costfit\BankTransfer::find()->where("paymentMethodId=1")->all();
 //        if (($topUp->topUpNo == NULL) && ($topUp->topUpNo == '')) {
 //            $topUp->topUpNo = $this->topUpNo();
@@ -314,14 +316,14 @@ class TopUpController extends MasterController {
             $topUpEmail = \common\helpers\Email::topUpBillpayment($Subject, $username, $toMail, $url, $point, $money, $paymentMethod, $bank);
         }
         return $this->render('billpayment', [
-                    'amount' => $amount,
-                    'customerName' => $customerName,
-                    'customerTel' => $customerTel,
-                    'topUpNo' => $topUp->topUpNo,
-                    'taxId' => $taxId,
-                    'barCode' => $barCode,
-                    'data' => $data,
-                    'allBank' => $allBank
+            'amount' => $amount,
+            'customerName' => $customerName,
+            'customerTel' => $customerTel,
+            'topUpNo' => $topUp->topUpNo,
+            'taxId' => $taxId,
+            'barCode' => $barCode,
+            'data' => $data,
+            'allBank' => $allBank
         ]);
     }
 
@@ -404,24 +406,24 @@ class TopUpController extends MasterController {
                     if (isset($checkPayNow)) {
                         if ($checkPayNow->isPayNow == 1) {
                             return $this->redirect([Yii::$app->homeUrl . "checkout/confirm",
-                                        'orderId' => $checkPayNow->orderId,
-                                        'systemCoin' => $checkPayNow->cozxyCoin,
-                                        'addressId' => $checkPayNow->addressId
+                                'orderId' => $checkPayNow->orderId,
+                                'systemCoin' => $checkPayNow->cozxyCoin,
+                                'addressId' => $checkPayNow->addressId
                             ]);
                         } else {//checkout/order-summary-topup/
                             return $this->redirect([Yii::$app->homeUrl . "checkout/order-summary-topup/" .
-                                        $checkPayNow->encodeParams(['orderId' => $checkPayNow->orderId])
+                                $checkPayNow->encodeParams(['orderId' => $checkPayNow->orderId])
                             ]);
                         }
                     }
                 }
 
                 return $this->render('thank', [
-                            'topUpId' => $topUp->topUpId,
-                            'currentPoint' => $currentPoint,
-                            'type' => $type,
-                            'fromCheckout' => ($topUp->isFromCheckout == 1) ? "yes" : "no",
-                            'order' => $order
+                    'topUpId' => $topUp->topUpId,
+                    'currentPoint' => $currentPoint,
+                    'type' => $type,
+                    'fromCheckout' => ($topUp->isFromCheckout == 1) ? "yes" : "no",
+                    'order' => $order
                 ]);
             } else {
                 return $this->redirect(Yii::$app->homeUrl . 'top-up');
@@ -441,8 +443,8 @@ class TopUpController extends MasterController {
                 $topUp->save(false);
                 $type = 'fail';
                 return $this->render('thank', [
-                            'type' => $type,
-                            'fromCheckout' => 'no'
+                    'type' => $type,
+                    'fromCheckout' => 'no'
                 ]);
             }
         }
@@ -551,7 +553,7 @@ class TopUpController extends MasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -567,7 +569,7 @@ class TopUpController extends MasterController {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -585,7 +587,7 @@ class TopUpController extends MasterController {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -624,10 +626,10 @@ class TopUpController extends MasterController {
             }
         } else {
             return $this->render('history', [
-                        'model' => $model,
-                        'dataProvider' => $dataProvider,
-                        'topUps' => $topUps,
-                        'currentPoint' => $currentPoint,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+                'topUps' => $topUps,
+                'currentPoint' => $currentPoint,
             ]);
         }
     }
@@ -668,7 +670,7 @@ class TopUpController extends MasterController {
         $topUpId = $_GET['id'];
         $topUp = TopUp::find()->where("topUpId=" . $topUpId)->one();
         return $this->render('@app/themes/cozxy/layouts/top-up/_upload_form', [
-                    'topUp' => $topUp,
+            'topUp' => $topUp,
         ]);
     }
 
