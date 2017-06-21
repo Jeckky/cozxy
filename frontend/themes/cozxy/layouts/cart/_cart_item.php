@@ -31,7 +31,7 @@ $val = rand(1, 10);
         <div class="col-sm-3 fc-g666">
             <table style="width:100%" class="qty-cart">
                 <tr >
-                    <td>Quatity</td>
+                    <td style="width: 100px;">Quatity</td>
                     <td style="width:32px">:</td>
                     <td><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
                 </tr>
@@ -41,7 +41,7 @@ $val = rand(1, 10);
                     ?>
 
                     <tr>
-                        <td><?= $option->productGroupTemplateOption->title; ?></td>
+                        <td style="width: 100px;"><?= $option->productGroupTemplateOption->title; ?></td>
                         <td>:</td>
                         <td><?= $option->value ?></td>
                     </tr>

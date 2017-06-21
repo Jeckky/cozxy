@@ -23,7 +23,8 @@ class MyAccountController extends MasterController {
         $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
-        return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost'));
+        $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
+        return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost', 'trackingOrder'));
     }
 
     public function actionEditPersonalDetail() {

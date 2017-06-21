@@ -21,10 +21,11 @@ $id = uniqid();
         <div class="col-sm-4 fc-g666">
             <table style="width:100%">
                 <tr>
-                    <td>Quatity</td>
+                    <td style="width: 100px;">Quatity</td>
                     <td style="width:32px">:</td>
                     <td><?= $item["qty"] ?></td>
                 </tr>
+                <!--
                 <tr>
                     <td>Color</td>
                     <td>:</td>
@@ -34,7 +35,17 @@ $id = uniqid();
                     <td>Size</td>
                     <td>:</td>
                     <td>None</td>
-                </tr>
+                </tr>-->
+                <?php
+                $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productSuppId = " . $item["productSuppId"])->all();
+                foreach ($options as $option):
+                    ?>
+                    <tr>
+                        <td style="width: 100px;"><?= $option->productGroupTemplateOption->title; ?></td>
+                        <td>:</td>
+                        <td><?= $option->value ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </table>
         </div>
     </div>
