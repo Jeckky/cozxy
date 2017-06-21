@@ -21,7 +21,7 @@ $id = uniqid();
         <div class="col-sm-4 fc-g666">
             <table style="width:100%">
                 <tr>
-                    <td>Quatity</td>
+                    <td style="width: 100px;">Quatity</td>
                     <td style="width:32px">:</td>
                     <td><?= $item["qty"] ?></td>
                 </tr>
@@ -41,7 +41,7 @@ $id = uniqid();
                 foreach ($options as $option):
                     ?>
                     <tr>
-                        <td><?= $option->productGroupTemplateOption->title; ?></td>
+                        <td style="width: 100px;"><?= $option->productGroupTemplateOption->title; ?></td>
                         <td>:</td>
                         <td><?= $option->value ?></td>
                     </tr>
