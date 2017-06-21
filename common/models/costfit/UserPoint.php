@@ -37,7 +37,7 @@ class UserPoint extends \common\models\costfit\master\UserPointMaster {
         if (isset($userPoint)) {
             return $userPoint;
         } else {
-            return false;
+            return Null;
         }
     }
 

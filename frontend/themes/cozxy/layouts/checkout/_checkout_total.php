@@ -66,14 +66,16 @@ use common\models\costfit\UserPoint;
         }
         // throw new \yii\base\Exception($addressId);
     }
-    if (isset($userPoint) && $userPoint->currentCozxySystemPoint > 0 && $addressIdx != 0 && $addressIdx != '') {
-        ?>
+    if (isset($userPoint)) {
+        if ($userPoint->currentCozxySystemPoint > 0 && $addressIdx != 0 && $addressIdx != '') {
+            ?>
 
-        <a href="" class="b btn-info btn-block text-center" style="padding:12px 32px; margin:12px auto 12px" data-toggle="modal" data-target="#inputSystemCoinModal" id="default-coin">PAY by Cozxy systemCoin<br><span id="text-pay"></span></a>
-        <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
-        <input type="hidden" id="system" value="0">
-        <input type="hidden" id="systemCoin2" value="0" name="systemCoin2">
-        <?php
+            <a href="" class="b btn-info btn-block text-center" style="padding:12px 32px; margin:12px auto 12px" data-toggle="modal" data-target="#inputSystemCoinModal" id="default-coin">PAY by Cozxy systemCoin<br><span id="text-pay"></span></a>
+            <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
+            <input type="hidden" id="system" value="0">
+            <input type="hidden" id="systemCoin2" value="0" name="systemCoin2">
+            <?php
+        }
     }
     if (Yii::$app->controller->action->id == 'summary') {
         if (Yii::$app->user->id != '') {
