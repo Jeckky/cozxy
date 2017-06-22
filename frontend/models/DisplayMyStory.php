@@ -23,7 +23,7 @@ class DisplayMyStory extends Model {
 
         if (isset(Yii::$app->user->id)) {
             $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productId=" . $productId)
-                            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
                 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
@@ -78,8 +78,8 @@ class DisplayMyStory extends Model {
 //throw new \yii\base\Exception($allProductSuppId);
 //$productPost = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSuppId)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
         $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc')
-                ->limit(5)//แสดงแค่ 5 รายการ
-                ->all();
+        ->limit(5)//แสดงแค่ 5 รายการ
+        ->all();
 //throw new \yii\base\Exception(count($productPost));
         $i = 0;
         foreach ($productPost as $value) {
@@ -132,7 +132,7 @@ class DisplayMyStory extends Model {
 
     public static function productViewsRecentStories($productPostId) {
         $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
-                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
         if (isset($productPost)) {
@@ -223,14 +223,14 @@ class DisplayMyStory extends Model {
         }
         if ($postId != '') {
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-                    ->groupBy('productPostId')
-                    ->orderBy('avg(score) DESC')
-                    ->all();
+            ->groupBy('productPostId')
+            ->orderBy('avg(score) DESC')
+            ->all();
         }
         if (!isset($productPostRating) || count($productPostRating) == 0) {
             $byCreate = ProductPost::find()->where("productId in($allProductId)")
-                    ->orderBy('createDateTime DESC')
-                    ->all();
+            ->orderBy('createDateTime DESC')
+            ->all();
             if (isset($byCreate) && count($byCreate) > 0) {
                 $productPostRating = $byCreate;
             } else {
@@ -269,9 +269,9 @@ class DisplayMyStory extends Model {
         }
         if ($postId != '') {
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-                    ->groupBy('productPostId')
-                    ->orderBy('avg(score) DESC')
-                    ->all();
+            ->groupBy('productPostId')
+            ->orderBy('avg(score) DESC')
+            ->all();
             if (isset($productPostRating) && count($productPostRating) > 0) {
                 foreach ($productPostRating as $rating):
                     $have .= $rating->productPostId . ",";
@@ -281,8 +281,8 @@ class DisplayMyStory extends Model {
         }
         if ($have != '') {
             $byCreate = ProductPost::find()->where("productPostId in($postId) and productPostId not in($have) and productId in($allProductId)")
-                    ->orderBy('createDateTime DESC')
-                    ->all();
+            ->orderBy('createDateTime DESC')
+            ->all();
         }
         if (isset($byCreate) && count($byCreate) > 0) {
             $productPostRating = $byCreate;
@@ -312,15 +312,15 @@ class DisplayMyStory extends Model {
     public static function productMyaacountStories($productId, $productSupplierId, $var1 = false) {
         $products = [];
         $productPost = \common\models\costfit\ProductPost::find()->where('userId =' . Yii::$app->user->id)
-                ->all();
+        ->all();
         $i = 0;
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
                 $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productId'])->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($productPrice->price, 2);
-                $price = number_format($productPrice->price, 2);
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
 
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
