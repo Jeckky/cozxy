@@ -21,7 +21,7 @@ use yii\helpers\Html;
     </div>
     <br><br><br>
     <div>
-        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : 'แสดงข้อมูล : Last 10 orders' ?></h4>
+        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
     <div class="order-history-sort">
