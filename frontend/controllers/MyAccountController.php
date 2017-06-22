@@ -21,10 +21,13 @@ class MyAccountController extends MasterController {
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
         $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
-        $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')]);
+        $orderHistory = new ArrayDataProvider(
+        ['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')
+        ]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
-        return $this->render('index', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost', 'trackingOrder'));
+        $statusText = '';
+        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost', 'trackingOrder'));
     }
 
     public function actionEditPersonalDetail() {
@@ -187,6 +190,32 @@ class MyAccountController extends MasterController {
         } else {
             return $this->redirect(['my-account']);
         }
+    }
+
+    public function actionOrderSort() {
+
+        $status = Yii::$app->request->post('status');
+        if ($status == 'show1') { // Last 10 orders
+            $statusText = 'Last 10 orders';
+        } else if ($status == 'show2') { // 15วันที่ผ่านมา
+            $statusText = '15วันที่ผ่านมา';
+        } else if ($status == 'show3') { // ระยะ 30 วันที่ผ่านมา
+            $statusText = 'ระยะ 30 วันที่ผ่านมา';
+        } else if ($status == 'show4') { // ระยะ 6 เดือนที่ผ่านมา
+            $statusText = 'ระยะ 6 เดือนที่ผ่านมา';
+        } else if ($status == 'show5') { // คำสั่งซื้อในปี 2017
+            $statusText = 'คำสั่งซื้อในปี 2017';
+        } else if ($status == 'show6') { // คำสั่งซื้อในปี 2016
+            $statusText = 'คำสั่งซื้อในปี 2016';
+        } else {
+            $statusText = '';
+        }
+        $orderHistorySort = new ArrayDataProvider([
+            'allModels' => DisplayMyAccount::myAccountOrderHistorySort($status, ''),
+            'pagination' => ['defaultPageSize' => 10]
+        ]);
+
+        return $this->renderAjax("@app/themes/cozxy/layouts/my-account/_order_history", ['orderHistory' => $orderHistorySort, 'statusText' => $statusText]);
     }
 
 }

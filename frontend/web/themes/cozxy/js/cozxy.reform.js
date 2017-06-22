@@ -536,14 +536,11 @@ function checkoutNewBilling() {
     });
 }
 
-
-
-
-
 $(".upload-payment-slip").click(function () {
     //alert($(this).data('id'));
 
 });
+
 function ShowImages(img, productImageId) {
     var src = img.src;
     $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
@@ -561,6 +558,7 @@ function ShowImages(img, productImageId) {
         }
     });
 }
+
 $(document).on('click', '#default-coin', function (e) {
     var systemCoin = $(this).parent().parent().find("#systemCoin");
     var choose = $(this).parent().find("#firstCoin");
@@ -574,11 +572,13 @@ $(document).on('click', '#default-coin', function (e) {
     textPay.html(choose.val());
 
 });
+
 $(document).on('click', '#chooseCoin', function () {
     var choose = $(this).parent().find("#inputSystemCoin");
     choose.removeAttr("disabled");
     //$("#inputSystemCoin").hide();
 });
+
 $(document).on('click', '#allCoin', function () {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     choose.attr("disabled", "disabled");
@@ -593,6 +593,7 @@ $(document).on('click', '#allCoin', function () {
     systemCoin2.val(allCoin.val());
     textPay.html(allCoin.val());
 });
+
 $(document).on('keypress', '#inputSystemCoin', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -601,6 +602,7 @@ $(document).on('keypress', '#inputSystemCoin', function (e) {
         return false;
     }
 });
+
 $(document).on('click', '#confirm-payCoin', function (e) {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
@@ -635,6 +637,7 @@ $(document).on('click', '#confirm-payCoin', function (e) {
 
 
 });
+
 $(document).on('click', '#cancel-payCoin', function (e) {
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
@@ -827,3 +830,27 @@ function sortCozxy($categoryId, status) {
 }
 
 
+
+function SortOrder(selectObject) {
+    var value = selectObject.value;
+    if (OrderHistory != '') {
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "my-account/order-sort/",
+            data: {'status': value},
+            success: function (data, status) {
+
+                if (data == '') {
+                    $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                } else {
+                    if (status == "success") {
+                        $('.order-list').html(data);
+                    } else {
+                        $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                    }
+                }
+
+            }
+        });
+    }
+}
