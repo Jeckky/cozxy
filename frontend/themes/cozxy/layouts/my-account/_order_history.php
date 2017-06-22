@@ -9,6 +9,7 @@ use yii\helpers\Html;
             <label for="inputOrderHistory" class="col-sm-2 control-label" style="margin-top: 14px;">Show Order History :</label>
             <div class="col-sm-5">
                 <select name="OrderHistory" id="OrderHistory" class="form-control size14" style="padding:3px;"  onclick="SortOrder(this)">
+                    <option value="">Select show order history</option>
                     <option value="show1">Last 10 orders</option>
                     <option value="show2">15 วันที่ผ่านมา</option>
                     <option value="show3">ระยะ 30 วันที่ผ่านมา</option>
