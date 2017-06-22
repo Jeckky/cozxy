@@ -198,7 +198,7 @@ class MyAccountController extends MasterController {
         if ($status == 'show1') { // Last 10 orders
             $statusText = 'Last 10 orders';
         } else if ($status == 'show2') { // 15วันที่ผ่านมา
-            $statusText = '15วันที่ผ่านมา';
+            $statusText = '15 วันที่ผ่านมา';
         } else if ($status == 'show3') { // ระยะ 30 วันที่ผ่านมา
             $statusText = 'ระยะ 30 วันที่ผ่านมา';
         } else if ($status == 'show4') { // ระยะ 6 เดือนที่ผ่านมา

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label for="inputOrderHistory" class="col-sm-2 control-label">Show Order History :</label>
+            <label for="inputOrderHistory" class="col-sm-2 control-label" style="margin-top: 14px;">Show Order History :</label>
             <div class="col-sm-5">
                 <select name="OrderHistory" id="OrderHistory" class="form-control size14" style="padding:3px;"  onclick="SortOrder(this)">
                     <option value="show1">Last 10 orders</option>
@@ -21,7 +21,7 @@ use yii\helpers\Html;
     </div>
     <br><br><br>
     <div>
-        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
+        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : 'แสดงข้อมูล : Last 10 orders' ?></h4>
     </div>
 
     <div class="order-history-sort">
