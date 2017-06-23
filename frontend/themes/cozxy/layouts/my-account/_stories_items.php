@@ -87,9 +87,10 @@
         box-sizing: border-box;
     }
 </style>
-<div class="col-sm-3" style=" padding: 2px; ">
-    <div class="card hovercard">
-        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" data-holder-rendered="true">
+<div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?>"  style=" padding: 5px; ">
+    <!--<div class="col-sm-3" style=" padding: 2px; ">-->
+    <div class="card hovercard product-img">
+        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth">
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""/>
@@ -107,7 +108,7 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <button class="b btn-black" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="<?= $model['productPostId'] ?>">Edit</button>
+            <button class="b btn-black e-stories" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="<?= $model['productPostId'] ?>">Edit</button>
         </div>
     </div>
 </div>
