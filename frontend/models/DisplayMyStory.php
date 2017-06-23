@@ -326,10 +326,10 @@ class DisplayMyStory extends Model {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
                     } else {
-                        $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
+                        $productImagesThumbnail2 = Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
                     }
                 } else {
-                    $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
+                    $productImagesThumbnail2 = Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
                 }
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(", ", $star);
