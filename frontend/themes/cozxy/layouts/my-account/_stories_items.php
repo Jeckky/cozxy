@@ -98,7 +98,7 @@
         </div>
         <div class="info">
             <div class="title" style="height:40px;">
-                <a href="<?= $model['url']; ?>" class="fc-black"><?= $model['title'] ?></a>
+                <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['title'] ?></a>
             </div>
             <div class="desc"><?= $model['head'] ?></div>
             <div class="desc">
