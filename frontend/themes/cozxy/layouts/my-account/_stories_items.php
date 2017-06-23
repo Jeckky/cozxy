@@ -109,7 +109,8 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <a class="b btn-black e-stories-x" href="<?= $model['urlEditStory'] ?>">Edit</a>
+            <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>">Edit</a>
+            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>">View</a>
         </div>
     </div>
 </div>
