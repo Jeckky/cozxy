@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 text-right">
         <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view')" style="color: #000;">Sort by max view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars')" style="color: #000;">Sort by stories stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
