@@ -97,7 +97,7 @@
         </div>
         <div class="info">
             <div class="title" style="height:40px;">
-                <a href="<?= $model['url']; ?>"><?= $model['title'] ?></a>
+                <a href="<?= $model['url']; ?>" class="fc-black"><?= $model['title'] ?></a>
             </div>
             <div class="desc"><?= $model['head'] ?></div>
             <div class="desc">
@@ -107,7 +107,7 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <button class="b btn-black" data-toggle="modal" data-target=".bs-example-modal-lg" >Edit</button>
+            <button class="b btn-black" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="<?= $model['productPostId'] ?>">Edit</button>
         </div>
     </div>
 </div>

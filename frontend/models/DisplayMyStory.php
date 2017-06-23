@@ -335,6 +335,7 @@ class DisplayMyStory extends Model {
                 $values = explode(", ", $star);
 
                 $products[$value->productPostId] = [
+                    'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
