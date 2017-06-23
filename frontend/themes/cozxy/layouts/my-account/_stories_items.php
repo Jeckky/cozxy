@@ -1,29 +1,113 @@
+<style type="text/css">
+    .card {
+        padding-top: 20px;
+        margin: 10px 0 20px 0;
+        background-color: #ffffff;
+        border: 1px solid #d8d8d8;
+        border-top-width: 0;
+        border-bottom-width: 2px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+
+    .card.hovercard {
+        position: relative;
+        /*width: 300px;*/
+        padding-top: 0;
+        overflow: hidden;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .card.hovercard img {
+        width: 300px;
+        height: 200px;
+    }
+
+    .card.hovercard .avatar {
+        position: relative;
+        top: -40px;
+        margin-bottom: -40px;
+    }
+
+    .card.hovercard .avatar img {
+        width: 80px;
+        height: 80px;
+        max-width: 80px;
+        max-height: 80px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
+
+    .card.hovercard .info {
+        padding: 4px 8px 10px;
+    }
+
+    .card.hovercard .info .title {
+        margin-bottom: 4px;
+        font-size: 24px;
+        line-height: 1;
+        color: #262626;
+        vertical-align: middle;
+    }
+
+    .card.hovercard .info .desc {
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 20px;
+        color: #737373;
+        text-overflow: ellipsis;
+    }
+
+    .card.hovercard .bottom {
+        padding: 0 20px;
+        margin-bottom: 17px;
+    }
+
+    .card.people .card-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: inline-block;
+        width: 100%;
+        padding: 10px 20px;
+        line-height: 29px;
+        text-align: center;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+</style>
 <div class="col-sm-3" style=" padding: 2px; ">
-
-    <div class="media-left">
-
-        <a href="#" class="pull-right btn-g999 p-edit " data-toggle="modal" data-target=".bs-example-modal-lg" style="margin-bottom: -50px;color: #f44501; font-size: 12px;"><i class="fa fa-pencil-square-o"></i> Edit</a>
-
-        <a href="<?= $model['url']; ?>">
-            <img alt="64x64" class="media-object img-circle" id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" data-holder-rendered="true">
-        </a>
-        <input type="hidden" id="userId" value="<?= isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '' ?>">
-        <input type="hidden" id="postId" value="<?= $model['productPostId'] ?>">
-    </div>
-    <div class="media-body col-sm-12">
-        <p>&nbsp;<p>
-        <h4 class="media-heading size14" style="margin:0px;"><?= $model['title'] ?></h4>
-        <p class="size12" style="margin:0px;color:#989898;"><?= $model['head'] ?></p>
-        <div class="size12">
-            <i class="fa fa-eye" style="color:#989898;"></i>
-            <span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;&nbsp;<i class="fa fa-star" style="color:#989898;"></i>
-            <span style="color:rgb(254, 230, 10);margin-right: 2.5cm;"><?= $model['star'] ?></span>
-            <span>
-                <?php // \yii\bootstrap\Html::a('<i class="fa fa-pencil-square-o"></i>&nbsp;Edit', \yii\helpers\Url::to(['my-account/edit-billing/']), ['class' => 'text-warning'])   ?>
-                <!--<a href="" data-loading-text="<a><i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i></a>"  class=" text-danger"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>-->
-            </span>
+    <div class="card hovercard">
+        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" data-holder-rendered="true">
+        <div class="avatar">
+            <a href="<?= $model['url']; ?>">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""/>
+            </a>
+        </div>
+        <div class="info">
+            <div class="title" style="height:40px;">
+                <?= $model['title'] ?>
+            </div>
+            <div class="desc"><?= $model['head'] ?></div>
+            <div class="desc">
+                <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;
+                <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model['star'] ?></span>
+            </div>
+            <div class="desc"></div>
+        </div>
+        <div class="bottom">
+            <button class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg" >Edit</button>
         </div>
     </div>
 </div>
-
-

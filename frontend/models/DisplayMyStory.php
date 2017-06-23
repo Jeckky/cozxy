@@ -326,10 +326,10 @@ class DisplayMyStory extends Model {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
                     } else {
-                        $productImagesThumbnail2 = Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
+                        $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                     }
                 } else {
-                    $productImagesThumbnail2 = Base64Decode::DataImageSvg195x195(FALSE, FALSE, FALSE);
+                    $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(", ", $star);
@@ -340,7 +340,7 @@ class DisplayMyStory extends Model {
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
                     'url_seemore' => Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
-                    'title' => $items->title,
+                    'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
                     'head' => $value->title,
                     'price_s' => $price_s,
                     'price' => $price,
