@@ -97,7 +97,7 @@
         </div>
         <div class="info">
             <div class="title" style="height:40px;">
-                <?= $model['title'] ?>
+                <a href="<?= $model['url']; ?>"><?= $model['title'] ?></a>
             </div>
             <div class="desc"><?= $model['head'] ?></div>
             <div class="desc">
