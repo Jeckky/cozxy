@@ -107,7 +107,7 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <button class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg" >Edit</button>
+            <button class="b btn-black" data-toggle="modal" data-target=".bs-example-modal-lg" >Edit</button>
         </div>
     </div>
 </div>
