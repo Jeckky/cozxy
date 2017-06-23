@@ -1,4 +1,10 @@
 <div class="row">
+    <div class="col-md-12">
+        <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view')" style="color: #000;">Sort by max view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars')" style="color: #000;">Sort by stories stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'new')" style="color: #000;">Sort by new stories&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+    </div>
     <?php
     echo \yii\widgets\ListView::widget([
         'dataProvider' => $productPost,
