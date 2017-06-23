@@ -852,28 +852,4 @@ function SortOrder(selectObject) {
     }
 }
 
-$('.e-stories').click(function () {
 
-    if (confirm("Do you want to remove discount coupon.")) {
-        var id = $(this).attr('data-id');
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: $baseUrl + "story/",
-            data: {'id': id},
-            success: function (data, status)
-            {
-                if (status == "success") {
-                    $('.price-detail').find('.coupon').addClass("hidden");
-//                alert(JSON.stringify(data.cart));
-                    $('.price-detail').find('.discountFormatText').html("<span style='color:black'>0 THB<span>");
-                    $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
-//                $('.price-detail').find('.summaryFormatText').html("xxx");
-                    $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
-                } else {
-
-                }
-            }
-        });
-    }
-});

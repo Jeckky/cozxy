@@ -126,7 +126,7 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-// throw new \yii\base\Exception(print_r($products, true));
+        // throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 
@@ -158,6 +158,8 @@ class DisplayMyStory extends Model {
                 'star' => FALSE,
             ];
         }
+
+        return $products;
     }
 
     public static function getResultsRating($productSuppId, $productPostId) {
@@ -317,20 +319,21 @@ class DisplayMyStory extends Model {
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
-                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productId'])->orderBy('productPriceId desc')->limit(1)->one();
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
                 $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
 
-                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
-                    } else {
-                        $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                    }
-                } else {
-                    $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                }
+                /* if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                  $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                  }
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                  } */
+                $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(", ", $star);
 
@@ -340,9 +343,10 @@ class DisplayMyStory extends Model {
                     //'url' => '/story?id=' . $items->productSuppId,
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
                     'url_seemore' => Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $productSupplierId]),
+                    'urlEditStory' => Yii::$app->homeUrl . 'story/update-stories/' . $value->encodeParams(['productId' => $items->productId, 'productPostId' => $value->productPostId, 'productSuppId' => $items['productSuppId']]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
-                    'head' => $value->title,
+                    'head' => isset($value->title) ? substr($value->title, 0, 45) : '',
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
@@ -352,6 +356,43 @@ class DisplayMyStory extends Model {
             }
         }
         // throw new \yii\base\Exception(print_r($products, true));
+        return $products;
+    }
+
+    public static function productEditRecentStories($productPostId) {
+        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
+        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+
+        $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
+        $values = explode(",", $star);
+        if (isset($productPost)) {
+            $productContent = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productPost['productId'])->one();
+            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($productPost['productId'], 0, 'Svg260x260');
+            $products['ViewsRecentStories'] = [
+                'userId' => $productPost['userId'],
+                'title' => $productPost['title'],
+                'shortDescription' => $productPost['shortDescription'],
+                'description' => $productPost['description'],
+                'price' => $productPost->price,
+                'views' => number_format(\common\models\costfit\ProductPost::getCountViews($productPost->productPostId)),
+                'star' => $values[0],
+                'titleProduct' => $productContent->title,
+                'image' => $productImagesThumbnail1,
+            ];
+        } else {
+            $products['ViewsRecentStories'] = [
+                'userId' => FALSE,
+                'title' => FALSE,
+                'shortDescription' => FALSE,
+                'description' => FALSE,
+                'price' => FALSE,
+                'views' => FALSE,
+                'star' => FALSE,
+                'titleProduct' => FALSE,
+                'image' => FALSE,
+            ];
+        }
+
         return $products;
     }
 

@@ -25,12 +25,20 @@ use yii\widgets\ActiveForm;
     }
 </style>
 <?php
-$form = ActiveForm::begin([
-    'id' => 'story',
-    'method' => 'POST',
-    'action' => Yii::$app->homeUrl . 'story/write-story',
-    'options' => ['enctype' => 'multipart/form-data']
-]);
+if (Yii::$app->controller->action->id == 'update-stories') {
+    $form = ActiveForm::begin([
+        'id' => 'story',
+        'method' => 'POST',
+        'options' => ['enctype' => 'multipart/form-data']
+    ]);
+} else {
+    $form = ActiveForm::begin([
+        'id' => 'story',
+        'method' => 'POST',
+        'action' => Yii::$app->homeUrl . 'story/write-story',
+        'options' => ['enctype' => 'multipart/form-data']
+    ]);
+}
 ?>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -38,10 +46,9 @@ $form = ActiveForm::begin([
         <div class="col-xs-12 bg-white">
             <h1 class="page-header">
                 <p style="margin: 0px;" class="size20 fc-g999">   <?= $productSupplier->title ?> </p>
-                <?//= $productSupplier->title ?>
             </h1>
             <div class="write-story-banner">
-                <?= Html::img(Url::home() . $image, ['class' => 'img-responsive']) ?>
+                <?= Html::img($image, ['class' => 'img-responsive', 'style' => '100%']) ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
 
@@ -58,9 +65,9 @@ $form = ActiveForm::begin([
                   ])->label('Product Self'); */
                 ?>
             </div>
-            <div class="form-group">
+            <div class="form-group login-box">
                 <label for="exampleInputEmail1">Title</label>
-                <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?>
+                <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?> 
             </div>
             <div class="form-group">
                 <?=
@@ -103,14 +110,12 @@ $form = ActiveForm::begin([
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Shop Name</label>
-                                <!--<input type="text" name="shopName" class="fullwidth" placeholder="Shop Name" required>-->
                                 <?php echo $form->field($model, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Price</label>
-                                        <!--<input type="text" name="price" class="fullwidth" placeholder="Price" required>-->
                                         <?php echo $form->field($model, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
                                     </div>
                                 </div>

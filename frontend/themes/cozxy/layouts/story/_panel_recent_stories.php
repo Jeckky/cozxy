@@ -24,8 +24,9 @@ if (Yii::$app->controller->id == 'product') {
             ]);
             ?>
 
-            <div class="text-center"><a href="<?php echo Yii::$app->homeUrl; ?>story/see-more/<?= \common\models\ModelMaster::encodeParams(['productSupplierId' => $productSupplierId, 'productId' => $productId]); ?>>" class="b btn-g999" style="margin:24px auto 12px">See
-                    All</a></div>
+            <div class="text-center">
+                <a href="<?php echo Yii::$app->homeUrl; ?>story/see-more/<?= \common\models\ModelMaster::encodeParams(['productSupplierId' => $productSupplierId, 'productId' => $productId]); ?>>" class="b btn-g999" style="margin:24px auto 12px">See All</a>
+            </div>
         </div>
     </div>
     <?php

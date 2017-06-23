@@ -100,7 +100,7 @@
             <div class="title" style="height:40px;">
                 <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['title'] ?></a>
             </div>
-            <div class="desc"><?= $model['head'] ?></div>
+            <div class="desc" style="height:40px;"><?= $model['head'] ?></div>
             <div class="desc">
                 <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;
                 <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model['star'] ?></span>
@@ -108,7 +108,7 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <button class="b btn-black e-stories" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="<?= $model['productPostId'] ?>">Edit</button>
+            <a class="b btn-black e-stories-x" href="<?= $model['urlEditStory'] ?>">Edit</a>
         </div>
     </div>
 </div>
