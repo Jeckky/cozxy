@@ -67,7 +67,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
             </div>
             <div class="form-group login-box">
                 <label for="exampleInputEmail1">Title</label>
-                <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?> 
+                <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?>
             </div>
             <div class="form-group">
                 <?=
@@ -177,7 +177,15 @@ if (Yii::$app->controller->action->id == 'update-stories') {
 
             <div class="row">
                 <div class="col-md-6">
-                    <input type="checkbox" name="isPublic" checked="true"> Make public
+                    <?php
+                    if ($model->isPublic === 1) {
+                        echo '<input type="checkbox" name="isPublic" id="isPublic" checked="true"> Make public';
+                    } else if ($model->isPublic === 0) {
+                        echo '<input type="checkbox" name="isPublic" id="isPublic" > Make public';
+                    } else {
+                        echo '<input type="checkbox" name="isPublic" id="isPublic" checked="true"> Make public';
+                    }
+                    ?>
                 </div>
                 <div class="col-md-6 text-right">
                     <input type="hidden" name="productSuppId" value="<?= $productSupplier->productSuppId ?>">

@@ -39,16 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="col-md-2 text-center">
                                     Price Filter
                                 </div>
-                                <!--                                <div class="col-md-3">
-                                                                    <select name="" id="" class="fullwidth">
-                                                                        <option value="">Filter 1</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <select name="" id="" class="fullwidth">
-                                                                        <option value="">Filter 1</option>
-                                                                    </select>
-                                                                </div>-->
                                 <?php
                                 $form = ActiveForm::begin(['method' => 'GET',
                                     'id' => 'currency',
@@ -134,9 +124,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php
         $js = "function top(){
-   window.location.hash = '#compare'
-  }
-  window.onload=top;";
+            window.location.hash = '#compare'
+           }
+           window.onload=top;";
         if (isset($_GET["currencyId"])) {
             $this->registerJS($js);
         }

@@ -93,6 +93,7 @@ class StoryController extends MasterController {
 
     public function actionWriteStory() {
         if (isset($_POST['ProductPost'])) {
+            $isPublic = Yii::$app->request->post('isPublic');
             $shelf = new \common\models\costfit\ProductPost();
 
             $productSuppId = $_POST["productSuppId"];
@@ -107,7 +108,7 @@ class StoryController extends MasterController {
             $shelf->price = $_POST["ProductPost"]["price"];
             $shelf->country = $_POST["ProductPost"]["country"];
             $shelf->currency = $_POST["ProductPost"]["currency"];
-            if ($_POST["isPublic"] == 'on') {
+            if ($isPublic == 'on') {
                 $shelf->isPublic = 1;
             } else {
                 $shelf->isPublic = 0;
@@ -252,7 +253,7 @@ class StoryController extends MasterController {
         // throw new \yii\base\Exception(print_r($params, true));
 
         if (isset($_POST["ProductPost"])) {
-
+            $isPublic = Yii::$app->request->post('isPublic');
             $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->one();
             $model->attributes = $_POST['ProductPost'];
             //$productSuppId = $_POST["productSuppId"];
@@ -267,7 +268,7 @@ class StoryController extends MasterController {
             $model->price = $_POST["ProductPost"]["price"];
             $model->country = $_POST["ProductPost"]["country"];
             $model->currency = $_POST["ProductPost"]["currency"];
-            if ($_POST["isPublic"] == 'on') {
+            if ($isPublic == 'on') {
                 $model->isPublic = 1;
             } else {
                 $model->isPublic = 0;
