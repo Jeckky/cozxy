@@ -44,19 +44,19 @@ class Ticket extends \common\models\costfit\master\TicketMaster {
         $status = '';
         if (isset($ticket) && !empty($ticket)) {
             if ($ticket->status == Ticket::TICKET_STATUS_CREATE) {
-                $status = 'รอการอนุมัติ';
+                $status = 'wait for approve';
             }
             if ($ticket->status == Ticket::TICKET_STATUS_APPROVED) {
-                $status = 'ผ่านการอนุมัติ';
+                $status = 'approved';
             }
             if ($ticket->status == Ticket::TICKET_STATUS_NOT_APPROVE) {
-                $status = 'ไม่อนุมัติ';
+                $status = 'not approve';
             }
             if ($ticket->status == Ticket::TICKET_STATUS_REJECT) {
-                $status = 'ยกเลิกคำขอ';
+                $status = 'reject';
             }
             if ($ticket->status == Ticket::TICKET_STATUS_SUCCESSFULL) {
-                $status = 'สำเร็จ';
+                $status = 'successful';
             }
         }
         return $status;

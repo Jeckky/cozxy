@@ -463,36 +463,36 @@ $(document).on('click', '#send-remark', function () {
     }
 
 });
-$(document).on('click', '#sendMessege', function () {
-    var messege = $(this).parent().parent().find("#messege").val();
+$(document).on('click', '#sendMessage', function () {
+    var message = $(this).parent().parent().find("#message").val();
     var orderId = $(this).parent().parent().find("#orderId").val();
     var userId = $(this).parent().parent().find("#userId").val();
     var ticketId = $(this).parent().parent().find("#ticketId").val();
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/save-messege',
-        data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
+        url: $baseUrl + 'returnproduct/return-product/save-message',
+        data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
         success: function (data) {
             if (data.status) {
-                $("#messege").val('');
+                $("#message").val('');
             }
         }
     });
 });
-$(document).on('keyup', '#messege', function (e) {
-    var messege = $(this).parent().parent().find("#messege").val();
+$(document).on('keyup', '#message', function (e) {
+    var message = $(this).parent().parent().find("#message").val();
     var orderId = $(this).parent().parent().find("#orderId").val();
     var userId = $(this).parent().parent().find("#userId").val();
     var ticketId = $(this).parent().parent().find("#ticketId").val();
 
     if (e.keyCode == 13) {
-        $("#messege").val('');
+        $("#message").val('');
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
-            url: $baseUrl + 'returnproduct/return-product/save-messege',
-            data: {messege: messege, orderId: orderId, userId: userId, ticketId: ticketId},
+            url: $baseUrl + 'returnproduct/return-product/save-message',
+            data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
             success: function (data) {
                 if (data.status) {
                     $("#messege").val('');

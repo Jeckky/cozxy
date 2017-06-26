@@ -87,7 +87,43 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <td style="text-align: center;width: 15%;"><?= Order::invoiceNo($approve->orderId) ?></td>
                                     <td style="text-align: center;width: 35%;"><?= User::userName($approve->userId) ?></td>
                                     <td style="text-align: center;width: 35%;"><?= $approve->ticketNo ?></td>
-                                    <td style="text-align: center;width: 15%;"><a href="<?= $baseUrl . 'contact?ticketId=' . $approve->ticketId ?>" >รายละเอียด</a></td>
+                                    <td style="text-align: center;width: 15%;"><a href="<?= $baseUrl . 'contact?ticketId=' . $approve->ticketId ?>" >คืนสินค้า</a></td>
+                                </tr>
+                                <?php
+                            endforeach;
+                            ?>
+                        </table>
+                    </div>
+                </div><?php
+            }
+            if (isset($success) && !empty($success)) {
+                ?>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="panel-heading"  style="background-color:#999999;vertical-align: middle;">
+                        <span class="panel-title"><h3 style="color:#000;">คืนแล้ว</h3></span>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr style="height: 50px;background-color: #999999;">
+                                <th style="vertical-align: middle;text-align: center;width: 15%;">Invoice</th>
+                                <th style="vertical-align: middle;text-align: center;width: 35%;">Customer</th>
+                                <th style="vertical-align: middle;text-align: center;width: 35%;">Ticket Code</th>
+                                <th style="vertical-align: middle;text-align: center;width: 15%;">รายละเอียด</th>
+                            </tr>
+
+                            <tr style="height: 48px;">
+                                <td  colspan="4"><input type="text" id="search-approve" class="form-control" placeholder="Search Ticket" style="height: 45px;font-size: 12pt;"></td>
+                            </tr>
+                        </table>
+                        <table class="table" id="search-a">
+                            <?php
+                            foreach ($success as $i => $successfull):
+                                ?>
+                                <tr id="status-approve">
+                                    <td style="text-align: center;width: 15%;"><?= Order::invoiceNo($successfull->orderId) ?></td>
+                                    <td style="text-align: center;width: 35%;"><?= User::userName($successfull->userId) ?></td>
+                                    <td style="text-align: center;width: 35%;"><?= $successfull->ticketNo ?></td>
+                                    <td style="text-align: center;width: 15%;"><a href="<?= $baseUrl . 'approve-detail?orderId=' . $successfull->orderId ?>" >รายละเอียด</a></td>
                                 </tr>
                                 <?php
                             endforeach;
@@ -120,7 +156,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 <tr>
                                     <td style="text-align: center;"><?= Order::invoiceNo($notApprove->orderId) ?></td>
                                     <td style="text-align: center;"><?= $notApprove->ticketNo ?></td>
-                                    <td style="text-align: center;"><a href="<?= $baseUrl . 'ticket-detail?orderId=' . $notApprove->orderId ?>" ><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                                    <td style="text-align: center;"><a href="<?= $baseUrl . 'ticket-detail?ticketId=' . $notApprove->ticketId ?>" ><i class="fa fa-eye" aria-hidden="true"></i></a></td>
                                 </tr>
                                 <?php
                             endforeach;
