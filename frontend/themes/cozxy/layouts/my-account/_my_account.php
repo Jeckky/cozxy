@@ -1,6 +1,11 @@
 <?php
 
 use frontend\assets\MyAccountAsset;
+use yii\helpers\Html;
+use kartik\select2\Select2;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use kartik\depdrop\DepDrop;
 
 MyAccountAsset::register($this);
 $this->title = 'MY ACCOUNT';
