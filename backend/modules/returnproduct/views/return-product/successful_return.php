@@ -46,14 +46,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <td style="vertical-align: middle;text-align: right;"><?= Order::invoiceNo($history->orderId) ?></td>
                                     <td style="vertical-align: middle;text-align: right;"><?= number_format($history->quantity, 2) ?></td>
                                     <td style="vertical-align: middle;text-align: right;"><?= number_format($history->credit, 2) ?></td>
-                                    <td style="vertical-align: middle;text-align: center;"><?= substr($this->context->dateThai($history->createDateTime, 1, true), 0, -8) ?></td>
+                                    <td style="vertical-align: middle;text-align: center;"><?= $this->context->dateThai($history->createDateTime, 4) ?></td>
                                 </tr>
                                 <?php
                                 $total += $history->credit;
                             endforeach;
                             ?>
                             <tr>
-                                <td colspan="3" style="text-align: right"><b>ยอดเครดิตทั้งหมด</b></td>
+                                <td colspan="3" style="text-align: right"><b>รวม</b></td>
                                 <td style="text-align: right;background-color: #cccccc;"><b><?= number_format($total, 2) ?></b></td>
                                 <td><b>บาท</b></td>
                             </tr>
@@ -62,14 +62,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 </div>
                 <div class="panel panel-default col-lg-4 col-md-4 col-xs-12 pull-right" style="border: #FFF;">
                     <div class="panel-heading"  style="background-color: #666666;vertical-align: middle;width: 100%">
-                        <span class="panel-title"><h4 style="color:#ffcc00;">เครดิต</h4></span>
+                        <span class="panel-title"><h4 style="color:#ffcc00;">Cozxy coin</h4></span>
                     </div>
                     <div class="panel-body" style="border: #cccccc solid thin;width: 100%;text-align: center;">
                         <h4>คุณ <?= \common\models\costfit\User::userName($userId) ?></h4><br>
-                        <h4>ยอดเครดิตคงเหลือ</h4>
-                        <b><h3><?= number_format($userTotalCredit->totalCredit, 2) ?> บาท</h3></b>
+                        <h4>ยอดคงเหลือ</h4>
+                        <b><h3><?= number_format($userTotalCredit->currentPoint, 2) ?> บาท</h3></b>
                     </div>
-                    <a href="<?= $baseUrl . 'index' ?>">
+                    <a href="<?= $baseUrl . 'request-ticket' ?>">
                         <div style="width: 100%;text-align: center;background-color: #ffcc00;color: #FFF;height: 80px">
                             <hr style="size: 1px;color: #FFF;">
                             <h1><i class="fa fa-home" aria-hidden="true"></i> กลับสู่หน้าหลัก</h1>

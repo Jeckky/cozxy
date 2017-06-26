@@ -28,7 +28,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     Invoice : <?= Order::invoiceNo($orderId) ?><br>
                     Customer: <?= Order::findReciever($orderId) ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Tel : <?= User::userTel($ticket->userId) ?><br>
-                    TicketNo : <?= $ticket->ticketNo ?>
+                    TicketNo : <?= $ticket->ticketNo ?><br>
+                    ReturnPoint : <?= $textReturn ?>
                     <hr>
                 </div>
                 <br>

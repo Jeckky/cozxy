@@ -1,35 +1,27 @@
-<div class="track-list">
-
-    <div class="row tk-head">
-        <div class="col-lg-3 col-md-4 col-sm-6">My Stories</div>
-        <div class="col-lg-9 col-md-8 col-sm-6">
-            <div class="col-lg-4 col-md-6"> </div>
-            <div class="col-lg-8 col-md-6"> </div>
-        </div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view')" style="color: #000;">Sort by max view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars')" style="color: #000;">Sort by stories stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+        <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'new')" style="color: #000;">Sort by new stories&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
     </div>
-    <div class="row tk-body">
-        <div class="col-lg-12 col-md-12 ">
-            <?php
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $productPost,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/themes/cozxy/layouts/my-account/_stories_items', ['model' => $model, 'index' => $index]);
-                },
-                //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
-            ?>
-        </div>
-        <div class="col-xs-12 size48">&nbsp;</div>
-
-    </div>
-    <div class="size12">&nbsp;</div>
-
+    <?php
+    echo \yii\widgets\ListView::widget([
+        'dataProvider' => $productPost,
+        'options' => [
+            'tag' => false,
+        ],
+        'itemView' => function ($model, $key, $index, $widget) {
+            return $this->render('@app/themes/cozxy/layouts/my-account/_stories_items', ['model' => $model, 'index' => $index]);
+        },
+        //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+        //'layout'=>"{summary}{pager}{items}"
+        'layout' => "{items}",
+        'itemOptions' => [
+            'tag' => false,
+        ],
+    ]);
+    ?>
 </div>
+
+<div class="col-xs-12 size48">&nbsp;</div>

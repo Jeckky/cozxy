@@ -174,7 +174,7 @@ class DisplayMyAccount extends Model {
             // (NOW() - INTERVAL 1 MONTH) <= (NOW() )
             $dataOrder = Order::find()
             ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('(NOW() - INTERVAL 6 MONTH) <= (NOW()')
+            ->andWhere('(NOW() - INTERVAL 6 MONTH) <= NOW()')
             ->all();
         } else if ($status == 'show5') { // คำสั่งซื้อในปี 2017
             $dataOrder = Order::find()

@@ -1,5 +1,5 @@
-
-<div class="bs-callout bs-callout-warning" style="display: block;height: 500px;width:550px;overflow: auto;overflow-y:scroll;border: #ffcc99 thin solid;" id="showMassege">
+Conversation :
+<div style="display: block;height: 500px;width:550px;overflow: auto;overflow-y:scroll;padding-right: 20px;" id="showMassege">
 
 </div>
 
@@ -7,7 +7,7 @@
 <?php
 $js = "
   $(function () {
-  var url = 'show-messege';
+  var url = 'show-message';
   var divHeight=$('#showMassege').height();
   setInterval(function () { // เขียนฟังก์ชัน javascript ให้ทำงานทุก ๆ 30 วินาที
   // 1 วินาที่ เท่า 1000

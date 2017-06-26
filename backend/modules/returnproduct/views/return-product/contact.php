@@ -28,13 +28,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     ?>
                     <div class="row">
                         <div class="col-lg-11 col-sm-11 col-md-11 col-xs-11" >
-                            <input type="text" name="message" class="form-control" placeholder="Messege" id="messege" style="height: 45px;">
+                            <input type="text" name="message" class="form-control" placeholder="Message" id="message" style="height: 45px;">
                         </div>
                         <input type="hidden" name="orderId" value="<?= $ticket->orderId ?>" id="orderId">
                         <input type="hidden" name="userId" value="<?= $ticket->userId ?>"  id="userId">
                         <input type="hidden" name="ticketId" value="<?= $ticket->ticketId ?>"  id="ticketId">
                         <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="margin-left: -20px;">
-                            <button style="color: #ffcc00;cursor: pointer;background-color: #000000;height: 45px;border: 0px;" id="sendMessege">Enter</button>
+                            <button style="color: #ffcc00;cursor: pointer;background-color: #000000;height: 45px;border: 0px;" id="sendMessage">Enter</button>
 
                         </div>
                     </div><br>
@@ -42,11 +42,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <h4>รายละเอียดการขอคืนสินค้า</h4><br>
                     <h4>เลขที่ <?= $ticket->ticketNo ?></h4>
-                    <h4>Title</h4>
+                    Order No. <b><?= $orderNo ?></b><br>
+                    Title
                     <div style="width: 100%;background-color: #ffffcc;min-height: 70px;border: #ffcc00 solid thin;padding-left: 10px;padding-top: 10px;font-size: 11pt;">
                         <?= $ticket->title ?>
                     </div><br>
-                    <h4>Description</h4>
+                    Description
                     <div style="width: 100%;background-color: #ffffcc;min-height: 70px;border: #ffcc00 solid thin;padding-left: 10px;padding-top: 10px;font-size: 11pt;">
                         <?= $ticket->description ?>
                     </div><br>
