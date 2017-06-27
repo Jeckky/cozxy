@@ -24,7 +24,7 @@ use yii\helpers\Html;
     <div>
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
-
+    <hr>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">

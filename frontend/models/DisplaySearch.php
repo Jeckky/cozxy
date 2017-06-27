@@ -14,6 +14,7 @@ use common\models\costfit\ProductSuppliers;
 class DisplaySearch extends Model
 {
 
+    public $score;
     public static function productSearch($search_hd, $n, $cat = FALSE)
     {
         $products = [];
@@ -23,8 +24,10 @@ class DisplaySearch extends Model
         if (isset($search_hd)) {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
+                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
+                /*
             ->andFilterWhere(['OR',
 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
@@ -33,9 +36,12 @@ class DisplaySearch extends Model
 //                ['LIKE', 'product_suppliers.title', $search_hd],
 //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
+                */
+                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
 //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-            ->orderBy(new \yii\db\Expression('rand()'))
+//            ->orderBy(new \yii\db\Expression('rand()'))
+                ->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -101,8 +107,12 @@ class DisplaySearch extends Model
 
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
+
+                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
+
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result = 0 and product_price_suppliers.price = 0")
+                /*
             ->andFilterWhere(['OR',
 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
@@ -111,9 +121,16 @@ class DisplaySearch extends Model
 //                ['LIKE', 'product_suppliers.title', $search_hd],
 //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
+                */
+
+                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
+
             //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-            ->orderBy(new \yii\db\Expression('rand()'))
+//            ->orderBy(new \yii\db\Expression('rand()'))
+
+                ->orderBy('score')
+
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
