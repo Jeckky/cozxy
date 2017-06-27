@@ -18,9 +18,12 @@ use common\models\costfit\Order;
         if ($model['statusNum'] == Order::ORDER_STATUS_RECEIVED) {//รับของแล้ว
             $flag = false;
             $flag = common\helpers\ReturnProduct::returnDate($model['updateDateTime']);
+            $isMoreItem = common\helpers\ReturnProduct::isMoreItem($model['orderNo']);
             if ($flag == true) {
-                echo " " . yii\helpers\Html::a(' Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-yellow',
-                    'title' => Yii::t('app', 'return')]);
+                if ($isMoreItem == true) {
+                    echo " " . yii\helpers\Html::a(' Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-yellow',
+                        'title' => Yii::t('app', 'return')]);
+                }
             }
         }
         ?>

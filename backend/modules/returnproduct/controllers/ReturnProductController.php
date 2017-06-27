@@ -144,7 +144,6 @@ class ReturnProductController extends ReturnProductMasterController {
         $body = '';
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $productSuppId = $this->supplierId($_POST["isbn"], $_POST["orderId"]);
-
         if ($productSuppId != '') {
             $productSuppId = trim($productSuppId);
             $producSupp = ProductSuppliers::find()->where("isbn='" . $_POST["isbn"] . "' and productSuppId=" . $productSuppId)->one();
@@ -154,46 +153,55 @@ class ReturnProductController extends ReturnProductMasterController {
                     $header = $this->tableHeader();
                     foreach ($orderItems as $item):
                         $check = false;
+                        $checkQuantity = false;
+                        $checkQuantity = $this->checkQuantityItem($item->orderItemId, $_POST["orderId"]);
                         $check = $this->checkDupplicateItem($item->orderItemId, $_POST['ticketId'], $_POST["orderId"]);
-                        if ($check) {
-                            $returns = new ReturnProduct();
-                            $returns->orderId = $_POST["orderId"];
-                            $returns->ticketId = $_POST["ticketId"];
-                            $returns->orderItemId = $item->orderItemId;
-                            $returns->discount = OrderItem::calculateReturnDiscount($item->orderItemId);
-                            $returns->productSuppId = $item->productSuppId;
-                            $returns->quantity = 1;
-                            $returns->price = ProductSuppliers::productPrice($item->productSuppId);
-                            $returns->totalPrice = $returns->quantity * $returns->price;
-                            $returns->totalDiscount = $returns->discount * $returns->quantity;
-                            $returns->credit = $returns->totalPrice - $returns->totalDiscount;
-                            $returns->receiver = Yii::$app->user->identity->userId;
-                            $returns->status = 1;
-                            $returns->createDateTime = new \yii\db\Expression('NOW()');
-                            $returns->updateDateTime = new \yii\db\Expression('NOW()');
-                            $returns->save(false);
+                        if ($check == true) {
+                            if ($checkQuantity == true) {
+                                $returns = new ReturnProduct();
+                                $returns->orderId = $_POST["orderId"];
+                                $returns->ticketId = $_POST["ticketId"];
+                                $returns->orderItemId = $item->orderItemId;
+                                $returns->discount = OrderItem::calculateReturnDiscount($item->orderItemId);
+                                $returns->productSuppId = $item->productSuppId;
+                                $returns->quantity = 1;
+                                $returns->price = ProductSuppliers::productPrice($item->productSuppId);
+                                $returns->totalPrice = $returns->quantity * $returns->price;
+                                $returns->totalDiscount = $returns->discount * $returns->quantity;
+                                $returns->credit = $returns->totalPrice - $returns->totalDiscount;
+                                $returns->receiver = Yii::$app->user->identity->userId;
+                                $returns->status = 1;
+                                $returns->createDateTime = new \yii\db\Expression('NOW()');
+                                $returns->updateDateTime = new \yii\db\Expression('NOW()');
+                                $returns->save(false);
+                            } else {
+                                $res["errors"] = "Max quantity for this product in this order";
+                            }
+                        } else {
+                            $res["errors"] = "Max quantity for this product in this order";
                         }
                     endforeach;
-
                     $returnItems = ReturnProduct::find()->where("orderId=" . $_POST["orderId"] . " and status=1")->all();
                     $i = 1;
-                    foreach ($returnItems as $rItem):
-                        $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
-                        $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
-                                '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
-                                . $producSupp->title . '</td>' .
-                                '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
-                                '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
-                                '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
-                                '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
-                                '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
-                                '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
-                                '</tr>';
-                        $i++;
-                    endforeach;
-                    $footer = $this->tableFooter();
-                    $res["dataList"] = $header . $body . $footer;
-                    $res["errors"] = '1';
+                    if (isset($returnItems) && count($returnItems) > 0) {
+                        foreach ($returnItems as $rItem):
+                            $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
+                            $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
+                                    '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
+                                    . $producSupp->title . '</td>' .
+                                    '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
+                                    '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
+                                    '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
+                                    '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
+                                    '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
+                                    '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
+                                    '</tr>';
+                            $i++;
+                        endforeach;
+                        $footer = $this->tableFooter();
+                        $res["dataList"] = $header . $body . $footer;
+                        $res["errors"] = '1';
+                    }
                 } else {
                     $res["errors"] = "Product not found in this order";
                 }
@@ -211,6 +219,24 @@ class ReturnProductController extends ReturnProductMasterController {
         $returns = ReturnProduct::find()->where("orderItemId=" . $orderItemId . " and ticketId=" . $ticketId . " and orderId=" . $orderId)->one();
         if (isset($returns) && !empty($returns)) {
             return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function checkQuantityItem($orderItemId, $orderId) {
+        $returns = ReturnProduct::find()->where("orderItemId=" . $orderItemId . " and orderId=" . $orderId)->all();
+        if (isset($returns) && count($returns) > 0) {//ถ้าเกินจำนวนใน order คืนไมได้
+            $total = 0;
+            foreach ($returns as $return):
+                $total += $return->quantity;
+            endforeach;
+            $orderItems = OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+            if ($total >= $orderItems->quantity) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return true;
         }
