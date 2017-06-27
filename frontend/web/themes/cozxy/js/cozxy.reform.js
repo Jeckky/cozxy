@@ -852,4 +852,36 @@ function SortOrder(selectObject) {
     }
 }
 
+function sortStoriesCozxy($userId, status) {
+
+    if (status == 'price') {
+        $sortStories = $('input:hidden:eq(0)', '.sort-stories-cozxy').val();
+    } else if (status == 'view') {
+        $sortStories = $('input:hidden:eq(1)', '.sort-stories-cozxy').val();
+    } else if (status == 'stars') {
+        $sortStories = $('input:hidden:eq(2)', '.sort-stories-cozxy').val();
+    } else if (status == 'new') {
+        $sortStories = $('input:hidden:eq(3)', '.sort-stories-cozxy').val();
+    }
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/sort-stories?userId=" + $userId,
+        data: {'status': status, 'sort': $sortStories},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.sort-stories-cozxy').html(data);
+                } else {
+                    $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+
+}
 

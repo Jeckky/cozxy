@@ -334,9 +334,15 @@ class DisplayMyStory extends Model {
                   $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                   } */
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
-                $star = DisplayMyStory::calculatePostRating($value->productPostId);
-                $values = explode(", ", $star);
-
+                //$star = DisplayMyStory::calculatePostRating($value->productPostId);
+                // $values = explode(", ", $star);
+                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
+                $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
+                if ($rating_score == 0 && $rating_member == 0) {
+                    $results_rating = 0;
+                } else {
+                    $results_rating = $rating_score / $rating_member;
+                }
                 $products[$value->productPostId] = [
                     'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail2,
@@ -350,7 +356,8 @@ class DisplayMyStory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => $values[0],
+                    //'star' => $values[0],
+                    'star' => number_format($results_rating, 2),
                     'productPostId' => $value->productPostId,
                 ];
             }
@@ -393,6 +400,98 @@ class DisplayMyStory extends Model {
             ];
         }
 
+        return $products;
+    }
+
+    public static function productMyacountStoriesSort($userId, $status, $sort) {
+        $products = [];
+        $sortStr = ($status == "new") ? "createDateTime " : (($status == "price") ? "price " : (($status == "stars") ? "sum(product_post_rating.score)" : (($status == "view") ? "sum(product_post_view.productPostViewId) " : "sum(product_post_view.productPostViewId) ")));
+        if ($sort == 'SORT_ASC') {
+            $sortStr.= 'asc';
+        } else {
+            $sortStr.= 'desc';
+        }
+
+        if ($status == 'price') {
+            $productPost = \common\models\costfit\ProductPost::find()
+            ->where('userId =' . Yii::$app->user->id)
+            ->orderBy($sortStr)
+            ->all();
+        } elseif ($status == 'new') {
+            $productPost = \common\models\costfit\ProductPost::find()
+            ->where('userId =' . Yii::$app->user->id)
+            ->orderBy($sortStr)
+            ->all();
+        } elseif ($status == 'view') {
+            $productPost = \common\models\costfit\ProductPost::find()
+            ->select('sum(product_post_view.productPostViewId) as viewNew  ,product_post.*')
+            ->join("LEFT JOIN", "product_post_view", "product_post_view.productPostId = product_post.productPostId")
+            ->where('product_post.userId =' . Yii::$app->user->id)
+            ->groupBy('product_post.productPostId')
+            ->orderBy($sortStr)
+            ->all();
+        } elseif ($status == 'stars') {
+            $productPost = \common\models\costfit\ProductPost::find()
+            ->select('sum(product_post_rating.score) as scoreNew  ,product_post.*')
+            ->join("LEFT JOIN", "product_post_rating", "product_post_rating.productPostId = product_post.productPostId")
+            ->where('product_post.userId =' . Yii::$app->user->id)
+            ->groupBy('product_post.productPostId')
+            ->orderBy($sortStr)
+            ->all();
+        } else {
+            $productPost = \common\models\costfit\ProductPost::find()
+            ->where('userId =' . Yii::$app->user->id)
+            ->all();
+        }
+        $i = 0;
+        foreach ($productPost as $value) {
+            $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
+            foreach ($productPostList as $items) {
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+
+                /* if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                  $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                  }
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
+                  } */
+                $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
+                //$star = DisplayMyStory::calculatePostRating($value->productPostId);
+                //$values = explode(", ", $star);
+                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
+                $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
+                if ($rating_score == 0 && $rating_member == 0) {
+                    $results_rating = 0;
+                } else {
+                    $results_rating = $rating_score / $rating_member;
+                }
+                $products[$value->productPostId] = [
+                    'productPostId' => $value->productPostId,
+                    'image' => $productImagesThumbnail2,
+                    //'url' => '/story?id=' . $items->productSuppId,
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
+                    'url_seemore' => Yii::$app->homeUrl . 'story/see-more/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
+                    'urlEditStory' => Yii::$app->homeUrl . 'story/update-stories/' . $value->encodeParams(['productId' => $items->productId, 'productPostId' => $value->productPostId, 'productSuppId' => $items['productSuppId']]),
+                    'brand' => isset($items->brand) ? $items->brand->title : '',
+                    'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
+                    'head' => isset($value->title) ? substr($value->title, 0, 45) : '',
+                    'price_s' => $price_s,
+                    'price' => $price,
+                    'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
+                    //'star' => $values[0],
+                    'star' => number_format($results_rating, 2),
+                    'productPostId' => $value->productPostId,
+                    'sort' => $sort
+                ];
+            }
+        }
+        // throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 

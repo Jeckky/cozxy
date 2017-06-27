@@ -210,12 +210,73 @@ class MyAccountController extends MasterController {
         } else {
             $statusText = '';
         }
+
         $orderHistorySort = new ArrayDataProvider([
             'allModels' => DisplayMyAccount::myAccountOrderHistorySort($status, ''),
             'pagination' => ['defaultPageSize' => 10]
         ]);
 
         return $this->renderAjax("@app/themes/cozxy/layouts/my-account/_order_history", ['orderHistory' => $orderHistorySort, 'statusText' => $statusText]);
+    }
+
+    public function actionSortStories() {
+        /*
+         * request : get
+         */
+        $isUserId = Yii::$app->request->get('userId');
+        /*
+         * request : post
+         */
+        $isStatus = Yii::$app->request->post('status');
+        $isSort = Yii::$app->request->post('sort');
+
+        /*
+         * productMyacountStoriesSort($productId, $productSupplierId, $var1 = false)
+         */
+
+        $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyacountStoriesSort($isUserId, $isStatus, $isSort)]);
+        if ($isStatus == 'new') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        }
+
+        if ($isStatus == 'price') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        }
+
+        if ($isStatus == 'view') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        }
+
+        if ($isStatus == 'stars') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        }
+
+
+        return $this->renderAjax('@app/themes/cozxy/layouts/my-account/items/_stories_items', compact('productPost', 'sort', 'isStatus', 'icon'));
     }
 
 }
