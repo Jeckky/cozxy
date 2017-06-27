@@ -67,10 +67,15 @@ class ReturnProductController extends ReturnProductMasterController {
                 ->orderBy("updateDateTime DESC")
                 ->limit(30)
                 ->all();
+        $success = Ticket::find()->where("status=5")
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
         return $this->render('ticket_request', [
                     'tickets' => $tickets,
                     'approved' => $approved,
-                    'notApproved' => $notApproved
+                    'notApproved' => $notApproved,
+                    'success' => $success
         ]);
     }
 
@@ -78,18 +83,25 @@ class ReturnProductController extends ReturnProductMasterController {
         if (isset($ticketId)) {
             $ticket = Ticket::find()->where("ticketId=" . $ticketId)->orderBy("createDateTime DESC")->one();
             $orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
+            $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
+            $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
+            $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
             return $this->render('ticket_detail', [
                         'orderItems' => $orderItems,
                         'orderId' => $ticket->orderId,
-                        'ticket' => $ticket
+                        'ticket' => $ticket,
+                        'textReturn' => $textReturn
             ]);
         }
     }
 
     public function actionContact($ticketId) {
         $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
+        $order = Order::find()->where("orderId=" . $ticket->orderId)->one();
         return $this->render('contact', [
                     'ticket' => $ticket,
+                    'orderNo' => $order->orderNo
         ]);
     }
 
@@ -208,25 +220,29 @@ class ReturnProductController extends ReturnProductMasterController {
         if (isset($_POST["orderId"])) {
             $orderId = $_POST["orderId"];
             //throw new \yii\base\Exception(print_r($_POST["remark"], true));
+            $ticketId = '';
             if (isset($_POST["remark"]) && !empty($_POST["remark"])) {
                 foreach ($_POST["remark"] as $returnProductId => $remark):
                     $returnProduct = ReturnProduct::find()->where("returnProductId=" . $returnProductId)->one();
                     $returnProduct->remark = $remark;
                     $returnProduct->updateDateTime = new \yii\db\Expression('NOW()');
                     $returnProduct->save(false);
+                    $ticketId = $returnProduct->ticketId;
                 endforeach;
             }
             $returnProducts = ReturnProduct::find()->where("orderId=" . $orderId)->all();
             if (isset($returnProducts) && !empty($returnProducts)) {
                 return $this->render('confirm_return', [
                             'orderId' => $orderId,
-                            'returnProducts' => $returnProducts]);
+                            'returnProducts' => $returnProducts,
+                            'ticketId' => $ticketId
+                ]);
             }
         }
         if (isset($_POST['confirm'])) {
             $orderId = $_POST['confirm'];
             $totalCredit = 0;
-            $returnProduct = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all(); //ยอดเครดิตที่ลูกค้าเพิ่งคืน
+            $returnProduct = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1 and ticketId=" . $_POST['ticketId'])->all(); //ยอดเครดิตที่ลูกค้าเพิ่งคืน
             if (isset($returnProduct) && !empty($returnProduct)) {
                 foreach ($returnProduct as $return):
                     $totalCredit += $return->credit;
@@ -234,31 +250,52 @@ class ReturnProductController extends ReturnProductMasterController {
                 endforeach;
                 $order = Order::find()->where("orderId=" . $orderId)->one();
                 if (isset($order) && !empty($order)) {
-                    $userCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
-                    if (isset($userCredit) && !empty($userCredit)) {//ถ้ามีอยู่แล้วให้เพิ่มลงไปในเรคคอร์ดอันเก่า
-                        $userCredit->totalCredit += $totalCredit;
-                        $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
-                        $userCredit->save(false);
-                    } else {//ถ้ายังไม่มี ให้สร้างใหม่
-                        $userCredit = new \common\models\costfit\UserCredit();
-                        $userCredit->userId = $order->userId;
-                        $userCredit->totalCredit = $totalCredit;
-                        $userCredit->createDateTime = new \yii\db\Expression('NOW()');
-                        $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
-                        $userCredit->save();
-                    }
+                    /* $userCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+                      if (isset($userCredit) && !empty($userCredit)) {//ถ้ามีอยู่แล้วให้เพิ่มลงไปในเรคคอร์ดอันเก่า
+                      $userCredit->totalCredit += $totalCredit;
+                      $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
+                      $userCredit->save(false);
+                      } else {//ถ้ายังไม่มี ให้สร้างใหม่
+                      $userCredit = new \common\models\costfit\UserCredit();
+                      $userCredit->userId = $order->userId;
+                      $userCredit->totalCredit = $totalCredit;
+                      $userCredit->createDateTime = new \yii\db\Expression('NOW()');
+                      $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
+                      $userCredit->save();
+                      } */
+                    $topUp = new \common\models\costfit\TopUp();
+                    $topUp->userId = $order->userId;
+                    $topUp->point = $totalCredit;
+                    $topUp->money = $totalCredit;
+                    $topUp->paymentMethod = 4;
+                    $topUp->type = 1;
+                    $topUp->status = 3;
+                    $topUp->description = "Return product";
+                    $topUp->createDateTime = new \yii\db\Expression('NOW()');
+                    $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                    $topUp->save(false);
+                    $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+                    $userPoint->currentPoint += $totalCredit;
+                    $userPoint->totalPoint += $totalCredit;
+                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                    $userPoint->save(false);
                     foreach ($returnProduct as $return):
                         $return->status = 2; //เปลี่ยน สถานะเป็น 2 (การคืนเสร็จสิ้นสำหรับ order นี้)
                         $return->updateDateTime = new \yii\db\Expression('NOW()');
                         $return->save(FALSE);
                     endforeach;
+                    $ticket = Ticket::find()->where("ticketId=" . $_POST['ticketId'])->one();
+                    $ticket->status = 5;
+                    $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+                    $ticket->save(false);
                     $returnHistory = ReturnProduct::find()
                             ->select(`order.*`, `return_product.*`)
                             ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
                             ->where("order.userId=" . $order->userId . " and return_product.status=2")
                             ->orderBy("return_product.updateDateTime DESC")
                             ->all();
-                    $userTotalCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+                    // $userTotalCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+                    $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
                     $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
                     return $this->render('successful_return', [
                                 'userId' => $order->userId,
@@ -267,12 +304,30 @@ class ReturnProductController extends ReturnProductMasterController {
                                 'lastReturn' => $lastReturn
                     ]);
                 } else {
-                    return $this->redirect(['index']);
+                    return $this->redirect(['approve-detail', 'orderId' => $orderId]);
                 }
             } else {
-                return $this->redirect(['index']);
+                return $this->redirect(['approve-detail', 'orderId' => $orderId]);
             }
         }
+    }
+
+    public function actionApproveDetail($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $returnHistory = ReturnProduct::find()
+                ->select(`order.*`, `return_product.*`)
+                ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+                ->where("order.userId=" . $order->userId . " and return_product.status=2")
+                ->orderBy("return_product.updateDateTime DESC")
+                ->all();
+        $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+        $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
+        return $this->render('successful_return', [
+                    'userId' => $order->userId,
+                    'returnHistory' => $returnHistory,
+                    'userTotalCredit' => $userTotalCredit,
+                    'lastReturn' => $lastReturn
+        ]);
     }
 
     public function actionDeleteReturnList() {
@@ -396,15 +451,15 @@ class ReturnProductController extends ReturnProductMasterController {
         return $footer = '</table>' . '<a class="btn-lg  pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</a>';
     }
 
-    public function actionSaveMessege() {
+    public function actionSaveMessage() {
         $messege = new \common\models\costfit\Messege();
         $res = [];
-        if ($_POST["messege"] != '') {
+        if ($_POST["message"] != '') {
             $messege->orderId = $_POST["orderId"];
             $messege->userId = $_POST["userId"];
             $messege->ticketId = $_POST["ticketId"];
-            $messege->messege = $_POST["messege"];
-            $messege->messegeType = 2; //customer   2=> cozxy
+            $messege->message = $_POST["message"];
+            $messege->messageType = 2; //customer   2=> cozxy
             $messege->status = 1;
             $messege->createDateTime = new \yii\db\Expression('NOW()');
             $messege->updateDateTime = new \yii\db\Expression('NOW()');
@@ -416,21 +471,22 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionShowMessege() {
+    public function actionShowMessage() {
         $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
                 ->orderBy("createDateTime ASC")
                 ->all();
         $ms = '';
+        $setFull = 'col-lg-12 col-md-12 col-sm-12 col-xs-12';
         $customer = 'คุณ';
         $ScrollPosition = 300;
         $res = [];
         if (isset($messeges) && !empty($messeges)) {
             foreach ($messeges as $messege):
                 $showTime = substr($messege->createDateTime, 11, 5);
-                if ($messege->messegeType == 2) {//ข้อความทางฝั่ง cozxy ชิดขวา
-                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div>' . '<div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+                if ($messege->messageType == 2) {//ข้อความทางฝั่ง cozxy ชิดขวา
+                    $ms = $ms . '<div class="message-yellow-right">' . $messege->message . '</div>' . '<div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="' . $setFull . '"></div>';
                 } else {///ฝั่ง customer ชิดซ้าย
-                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div>' . '<div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-black-left">' . $messege->message . '</div>' . '<div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div  class="' . $setFull . '"></div>';
                 }
                 $ScrollPosition += 50;
             endforeach;
@@ -501,9 +557,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
                         "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'contact?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;

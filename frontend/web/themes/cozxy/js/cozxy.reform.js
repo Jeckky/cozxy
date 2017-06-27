@@ -659,22 +659,7 @@ $(document).on('click', '#cancel-payCoin', function (e) {
     });
 
 });
-/*$(document).on('click', '#toTopUp', function (e) {
- var addressId = $(this).parent().find("#addressId").val();
- var systemCoin2 = $(this).parent().find("#systemCoin2").val();
- var orderId = $(this).parent().find("#orderId").val();
- $.ajax({
- type: "POST",
- url: $baseUrl + "checkout/save-address-id/",
- data: {'orderId': orderId, 'addressId': addressId, 'systemCoin': systemCoin2},
- success: function (data, status)
- {
- return false;
- }
- });
- // alert(orderId.val());
 
- });*/
 $('#isPay').change(function () {
     var orderId = $(this).parent().find("#orderId").val();
     if ($(this).is(':checked')) {
@@ -688,6 +673,54 @@ $('#isPay').change(function () {
             type: "POST",
             url: $baseUrl + "checkout/is-pay-now/",
             data: {'orderId': orderId, 'isPay': 0},
+        });
+    }
+});
+//////////////////////////////    RETURN  ///////////////////////////////////////
+$(document).on('click', '#sendTicket', function () {
+    var invoice = $(this).parent().parent().find("#invoiceNo").val();
+    var tickeTitle = $(this).parent().parent().find("#tickeTitle").val();
+    var description = $(this).parent().parent().find("#description").val();
+    if (invoice == '' || tickeTitle == '' || description == '') {
+        alert('Please fill in the form below.');
+    } else {
+        $("#ticket-form").submit();
+    }
+});
+$(document).on('click', '#sendMessage', function () {
+    var message = $(this).parent().parent().find("#message").val();
+    var orderId = $(this).parent().parent().find("#orderId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'return/save-message',
+        data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
+        success: function (data) {
+            if (data.status) {
+                $("#message").val('');
+            }
+        }
+    });
+});
+$(document).on('keyup', '#message', function (e) {
+    var message = $(this).parent().parent().find("#message").val();
+    var orderId = $(this).parent().parent().find("#orderId").val();
+    var userId = $(this).parent().parent().find("#userId").val();
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+    // $("#message").val('');
+    if (e.keyCode == 13) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + 'return/save-message',
+            data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
+            success: function (data) {
+                if (data.status) {
+                    $("#message").val('');
+                }
+            }
         });
     }
 });

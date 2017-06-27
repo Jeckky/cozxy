@@ -26,17 +26,17 @@ class CozxyAsset extends AssetBundle {
         'css/font-awesome.min.css',
         'css/mstyle.css',
         'css/cozxy.css',
+        'css/chat.css',
         'fonts/fonts.css',
     ];
     public $js = [
-
         'js/jquery.js',
         'js/bootstrap.min.js',
         'jquery.growl/notify.js',
         'js/cozxy.js',
         'js/cozxy.reform.js',
         'js/cozxy.unity.js',
-    //'js/search-filter.js'
+            //'js/search-filter.js'
     ];
 
 }

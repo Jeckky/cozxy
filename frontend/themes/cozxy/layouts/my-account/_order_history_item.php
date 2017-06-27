@@ -16,8 +16,12 @@ use common\models\costfit\Order;
                 , 'title' => Yii::t('app', ' ')]);
         }
         if ($model['statusNum'] == Order::ORDER_STATUS_RECEIVED) {//รับของแล้ว
-            echo yii\helpers\Html::a(' Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-yellow', 'target' => '_blank'
-                , 'title' => Yii::t('app', ' ')]);
+            $flag = false;
+            $flag = common\helpers\ReturnProduct::returnDate($model['updateDateTime']);
+            if ($flag == true) {
+                echo " " . yii\helpers\Html::a(' Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-yellow',
+                    'title' => Yii::t('app', 'return')]);
+            }
         }
         ?>
     </td>

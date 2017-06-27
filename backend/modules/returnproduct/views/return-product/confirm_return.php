@@ -27,7 +27,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <td style="text-align: center;">รวม</td>
                     <td style="text-align: center;">ส่วนลด/ชิ้น</td>
                     <td style="text-align: center;">รวมส่วนลด</td>
-                    <td style="text-align: center;">ยอดคืน(เครดิต)</td>
+                    <td style="text-align: center;">ยอดคืน(Coin)</td>
                 </tr>
                 <?php
                 $totalReturn = 0;
@@ -49,7 +49,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 endforeach;
                 ?>
                 <tr>
-                    <td colspan="6" style="text-align: right"><b>ยอดเครดิต</b></td>
+                    <td colspan="6" style="text-align: right"><b>รวม</b></td>
                     <td style="text-align: right;background-color: #cccccc;"><?= number_format($totalReturn, 2) ?></td>
                 </tr>
             </table>
@@ -60,8 +60,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
             <input type="hidden" name="confirm" value="<?= $orderId ?>">
+            <input type="hidden" name="ticketId" value="<?= $ticketId ?>">
             <button type="submit" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-circle-o" aria-hidden="true"></i> ยืนยันการคืนสินค้า</button>
-            <a href="<?= $baseUrl . 'order-detail?orderId=' . $orderId ?>" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;margin-right: 5px;"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไขรายการ</a>
+            <a href="<?= $baseUrl . 'order-detail?orderId=' . $orderId . '&ticketId=' . $ticketId ?>" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;margin-right: 5px;"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไขรายการ</a>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

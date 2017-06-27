@@ -54,7 +54,8 @@ class ReturnController extends MasterController {
                     $ms = 'ERROR :This invoice already in process returning, please wait cozxy reply.';
                     return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                                 'tickets' => $tickets,
-                                'histories' => $histories
+                                'histories' => $histories,
+                                'invoiceNo' => $_POST["invoiceNo"]
                     ]);
                 } else {
                     $ticket = new Ticket();
@@ -64,6 +65,9 @@ class ReturnController extends MasterController {
                     $ticket->userId = Yii::$app->user->identity->userId;
                     $ticket->status = 1;
                     $ticket->ticketNo = $this->genNewTicket();
+                    $ticket->provinceId = $_POST['provinceId'];
+                    $ticket->amphurId = $_POST['amphurId'];
+                    $ticket->pickingId = $_POST['LcpickingId'];
                     $ticket->createDateTime = new \yii\db\Expression('NOW()');
                     $ticket->updateDateTime = new \yii\db\Expression('NOW()');
                     $ticket->save(false);
@@ -71,7 +75,8 @@ class ReturnController extends MasterController {
                     $tickets = Ticket::find()->where("ticketId=" . $id)->one();
                     return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                                 'tickets' => $tickets,
-                                'histories' => $histories
+                                'histories' => $histories,
+                                'invoiceNo' => $_POST["invoiceNo"]
                     ]);
                 }
             } else {
@@ -83,6 +88,10 @@ class ReturnController extends MasterController {
             }
         } else {
             $ticket1 = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
+            $pickingPoint_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
+            $pickingPointBooth = isset($pickingPoint_booth) ? $pickingPoint_booth : NULL;
+            $model = new Ticket();
+            // throw new \yii\base\Exception(print_r($pickingPointBooth, true));
             if (isset($ticket1) && !empty($ticket1)) {
                 return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                             'tickets' => $ticket1,
@@ -92,7 +101,9 @@ class ReturnController extends MasterController {
             } else {
                 return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                             'histories' => $histories,
-                            'invoiceNo' => $invoiceNo
+                            'invoiceNo' => $invoiceNo,
+                            'model' => $model,
+                            'pickingPoint_booth' => $pickingPoint_booth
                 ]);
             }
         }
@@ -101,19 +112,19 @@ class ReturnController extends MasterController {
         //$dataProvider = $searchModel->search(Yii::$app->request->get());
     }
 
-    public function actionSaveMessege() {
-        $messege = new \common\models\costfit\Messege();
+    public function actionSaveMessage() {
+        $message = new \common\models\costfit\Messege();
         $res = [];
-        if ($_POST["messege"] != '') {
-            $messege->orderId = $_POST["orderId"];
-            $messege->userId = $_POST["userId"];
-            $messege->ticketId = $_POST["ticketId"];
-            $messege->messege = $_POST["messege"];
-            $messege->messegeType = 1; //customer   2=> cozxy
-            $messege->status = 1;
-            $messege->createDateTime = new \yii\db\Expression('NOW()');
-            $messege->updateDateTime = new \yii\db\Expression('NOW()');
-            $messege->save(false);
+        if ($_POST["message"] != '') {
+            $message->orderId = $_POST["orderId"];
+            $message->userId = $_POST["userId"];
+            $message->ticketId = $_POST["ticketId"];
+            $message->message = $_POST["message"];
+            $message->messageType = 1; //customer   2=> cozxy
+            $message->status = 1;
+            $message->createDateTime = new \yii\db\Expression('NOW()');
+            $message->updateDateTime = new \yii\db\Expression('NOW()');
+            $message->save(false);
             $res["status"] = True;
         } else {
             $res["status"] = FALSE;
@@ -121,20 +132,21 @@ class ReturnController extends MasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionShowMessege() {
-        $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
+    public function actionShowMessage() {
+        $messages = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
                 ->orderBy("createDateTime ASC")
                 ->all();
         $ms = '';
+        $setFull = 'col-lg-12 col-md-12 col-sm-12 col-xs-12';
         $ScrollPosition = 300;
         $res = [];
-        if (isset($messeges) && !empty($messeges)) {
-            foreach ($messeges as $messege):
-                $showTime = substr($messege->createDateTime, 11, 5);
-                if ($messege->messegeType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
-                    $ms = $ms . '<div class="message-yellow-right">' . $messege->messege . '</div><div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+        if (isset($messages) && !empty($messages)) {
+            foreach ($messages as $message):
+                $showTime = substr($message->createDateTime, 11, 5);
+                if ($message->messageType == 1) {//ข้อความทางฝั่ง customer ชิดขวา
+                    $ms = $ms . '<div class="row"><div class="message-yellow-right">' . $message->message . '</div><div class="pull-right" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-right:2px;">' . $showTime . '</div><div class="' . $setFull . '"></div></div>';
                 } else {///ฝั่ง cozxy ชิดซ้าย
-                    $ms = $ms . '<div class="message-black-left">' . $messege->messege . '</div><div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div class="col-lg-12"></div>';
+                    $ms = $ms . '<div class="message-black-left">' . $message->message . '</div><div class="pull-left" style="color:#cccccc;font-size:9pt;margin-top:12px;margin-left:2px;">' . $showTime . '</div><div  class="' . $setFull . '"></div>';
                 }
                 $ms = $ms;
                 $ScrollPosition += 50;
@@ -155,20 +167,27 @@ class ReturnController extends MasterController {
         $chats = \common\models\costfit\Messege::find()->where("ticketId=" . $ticketId)
                 ->orderBy("createDateTime ASC")
                 ->all();
-        return $this->render('@app/views/profile/ticket_detail', [
+        $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
+        $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
+        $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
+        $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
+        return $this->render('@app/themes/cozxy/layouts/return/ticket_detail', [
                     'ticket' => $ticket,
                     'returnProducts' => $returnProducts,
-                    'chats' => $chats
+                    'chats' => $chats,
+                    'textReturn' => $textReturn
         ]);
     }
 
     public function genNewTicket() {
         $ticket = Ticket::find()->max("ticketNo");
+        //throw new \yii\base\Exception(print_r($ticket, true));
         if (isset($ticket) && !empty($ticket)) {
-            $ticketNo = $ticket->ticketNo + 1;
+            $ticketNo = $ticket + 1;
         } else {
-            $ticketNo = "00000001";
+            $ticketNo = "0000001";
         }
+        $ticketNo = str_pad($ticketNo, 7, "0", STR_PAD_LEFT);
         return $ticketNo;
     }
 
