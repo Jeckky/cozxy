@@ -918,3 +918,38 @@ function sortStoriesCozxy($userId, status) {
 
 }
 
+
+function sortStoriesCompare(type, status, productPostId, productId) {
+    var $currencyType = type.value;
+    var $status = status;
+    var $postId = productPostId;
+
+    if ($status === 'price') {
+
+        var $sortStories = $("#sortStoriesPrice").val();
+        //var $sortStories = $('input:hidden:eq(1)', '.sort-stories-compare').val();
+    } else {
+        var $sortStories = '';
+        $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
+    }
+    var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/sort-compare-stories/",
+        //dataType: "JSON",
+        data: {'currency': CurrencyId, 'status': $status, 'postId': $postId, 'sort': $sortStories, 'productId': productId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.compare-price-ajax').html(data);
+                } else {
+                    $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+        }
+    });
+}

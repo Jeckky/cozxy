@@ -33,16 +33,21 @@ class StoryController extends MasterController {
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $popularStoriesNoneStar = DisplayMyStory::popularStoriesNoneStar($productPostId); //ที่ไม่มีการให้ดาว
         $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
+        $sort = '';
 
-        $currency = ArrayHelper::map(Currency::find()->where("status=1")
-        ->orderBy('createDateTime')
-        ->all(), 'currencyId', 'title');
+        $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $model = new Currency();
         if (isset($_GET['currencyId'])) {
-            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
+            //$comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId'], $sort)]);
         } else {
-            $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
+            // $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPost->productId, null, $sort)]);
         }
+
+        //echo '<pre>';
+        //print_r($comparePrice);
+
         /*
          * Product Post View : Count Story
          */
@@ -323,6 +328,36 @@ class StoryController extends MasterController {
                 'model' => $model
             ]);
         }
+    }
+
+    public function actionSortCompareStories() {
+        $currencyId = Yii::$app->request->post('currency');
+        $status = Yii::$app->request->post('status');
+        $postId = Yii::$app->request->post('postId');
+        $sort = Yii::$app->request->post('sort');
+        $productId = Yii::$app->request->post('productId');
+
+        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId)->one();
+        $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
+
+        if ($currencyId != '') {
+            //$comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productId, $currencyId, $sort)]);
+        } else {
+            // $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productId, null, $sort)]);
+        }
+        if ($sort === 'SORT_DESC') {
+            $sort = 'SORT_ASC';
+            $icon = 'down';
+        } elseif ($sort === 'SORT_ASC') {
+            $sort = 'SORT_DESC';
+            $icon = 'up';
+        } else {
+            $sort = '';
+            $icon = '';
+        }
+        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
     }
 
 }

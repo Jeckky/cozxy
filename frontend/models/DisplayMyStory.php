@@ -299,16 +299,45 @@ class DisplayMyStory extends Model {
         return count($view);
     }
 
-    public static function comparePrice($productId, $currency) {
-        if (isset($currency)) {
-            $productPost = ProductPost::find()->where("productId=" . $productId . " and currency=" . $currency)->limit(20);
+    public static function comparePrice($productId, $currency, $sort) {
+        $products = [];
+        $sortStr = "price ";
+        if ($sort == 'SORT_ASC') {
+            $sortStr.= 'asc';
         } else {
-            $productPost = ProductPost::find()->where("productId=" . $productId)->limit(20);
+            $sortStr.= 'desc';
         }
-        $dataProvider = new ActiveDataProvider([
-            'query' => $productPost
-        ]);
-        return $dataProvider;
+        if (isset($currency)) {
+            $productPost = ProductPost::find()->where("productId=" . $productId . " and currency=" . $currency)
+            ->orderBy($sortStr)
+            ->all();
+            foreach ($productPost as $value) {
+                $products[$value->productPostId] = [
+                    'productPostId' => $value->productPostId,
+                    'country' => $value->country,
+                    'place' => $value->shopName,
+                    'price' => $value->price,
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                ];
+            }
+        } else {
+            $productPost = ProductPost::find()->where("productId=" . $productId)
+            ->orderBy($sortStr)
+            ->all();
+            foreach ($productPost as $value) {
+                $products[$value->productPostId] = [
+                    'productPostId' => $value->productPostId,
+                    'country' => $value->country,
+                    'place' => $value->shopName,
+                    'price' => $value->price,
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                ];
+            }
+        }
+        //$dataProvider = new ActiveDataProvider([
+        //'query' => $productPost
+        //]);
+        return $products;
     }
 
     public static function productMyaacountStories($productId, $productSupplierId, $var1 = false) {
