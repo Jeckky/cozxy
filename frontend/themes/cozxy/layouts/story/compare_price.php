@@ -28,8 +28,6 @@
 </div>
 <div class="size20">&nbsp;</div>
 
-
-
 <div class="row" id="compare">
     <div class="col-md-12  " id="showData">
         <table class="table table-striped table-bordered">
