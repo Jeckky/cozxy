@@ -109,8 +109,9 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>">Edit</a>
-            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>">View</a>
+            <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>" style="padding: 3px 6px;">Edit Stories</a>
+            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>" style=" padding: 3px 6px;">View Stories</a>
+            <a class="b btn-black btn-xs " href="<?= $model['urlProduct'] ?>" style=" padding: 3px 6px;">View Product</a>
         </div>
     </div>
 </div>
