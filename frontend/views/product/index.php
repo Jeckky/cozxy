@@ -126,23 +126,23 @@ $(window).resize(function() { descSet(); });
         <div class="col-md-3">
             <div class="size48">&nbsp;</div>
             <?php
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $StoryProductPost,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', ['model' => $model, 'colSize' => '3']);
-                },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
+            /* echo \yii\widgets\ListView::widget([
+              'dataProvider' => $StoryProductPost,
+              'options' => [
+              'tag' => false,
+              ],
+              'itemView' => function ($model, $key, $index, $widget) {
+              return $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', ['model' => $model, 'colSize' => '3']);
+              },
+              //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+              //'layout'=>"{summary}{pager}{items}"
+              'layout' => "{items}",
+              'itemOptions' => [
+              'tag' => false,
+              ],
+              ]); */
             ?>
-            <?php //= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
             <?php
             //echo Yii::$app->controller->id;
             if (Yii::$app->controller->id == 'product') {

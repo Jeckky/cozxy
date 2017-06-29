@@ -26,7 +26,7 @@ class DisplayMyStory extends Model {
             ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
-                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
+//$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
                 $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
                 if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
@@ -37,7 +37,8 @@ class DisplayMyStory extends Model {
                 } else {
                     $productImagesThumbnail2 = $productImagesThumbnailNull;
                 }
-                $products[$productPost['productId']] = [
+                $products['myStoryTop'] = [
+                    'productPostId' => $productPost['productPostId'],
                     'image' => $productImagesThumbnail2,
                     'url' => Yii::$app->homeUrl . 'story/write-your-story/' . $productPostList->encodeParams(['productId' => $productPostList['productId'], 'productPostId' => $productPost['productPostId']]),
                     'urlView' => Yii::$app->homeUrl . 'story/' . $productPostList->encodeParams(['productPostId' => $productPost['productPostId'], 'productId' => $productPostList['productId'], 'productSupplierId' => $productSupplierId]),
@@ -47,7 +48,8 @@ class DisplayMyStory extends Model {
                     'text' => 'Write your story'
                 ];
             } else {
-                $products[0] = [
+                $products['myStoryTop'] = [
+                    'productPostId' => NULL,
                     'image' => $productImagesThumbnailNull,
                     'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
                     'urlView' => '',
@@ -59,7 +61,8 @@ class DisplayMyStory extends Model {
             }
         } else {
             //throw new \yii\base\Exception('11111');
-            $products[0] = [
+            $products['myStoryTop'] = [
+                'productPostId' => NULL,
                 'image' => $productImagesThumbnailNull,
                 'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
                 'urlView' => '',
@@ -73,14 +76,16 @@ class DisplayMyStory extends Model {
     }
 
     public static function productRecentStories($productId, $productSupplierId, $var1 = false) {
+
         $products = [];
-//$allProductSuppId = ProductSuppliers::productSupplierGroupStory($productId);
-//throw new \yii\base\Exception($allProductSuppId);
-//$productPost = \common\models\costfit\ProductPost::find()->where('productSuppId=' . $productSuppId)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
-        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc')
-        ->limit(5)//แสดงแค่ 5 รายการ
-        ->all();
-//throw new \yii\base\Exception(count($productPost));
+        if (isset($var1) && !empty($var1)) {
+            $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . ' and productPostId !=' . $var1)->orderBy('productPostId desc')->limit(5)//แสดงแค่ 5 รายการ
+            ->all();
+        } else {
+            $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc')->limit(5)//แสดงแค่ 5 รายการ
+            ->all();
+        }
+
         $i = 0;
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
@@ -102,14 +107,12 @@ class DisplayMyStory extends Model {
                         $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
                     } else {
                         $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
-//'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy4yMjY1NjI1IiB5PSIzNi41MzI4MTI1Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
                     }
                 } else {
                     $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                 }
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(",", $star);
-//throw new \yii\base\Exception($star);
                 $products[$value->productPostId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
@@ -126,7 +129,7 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-        // throw new \yii\base\Exception(print_r($products, true));
+// throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 
@@ -334,9 +337,9 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-        //$dataProvider = new ActiveDataProvider([
-        //'query' => $productPost
-        //]);
+//$dataProvider = new ActiveDataProvider([
+//'query' => $productPost
+//]);
         return $products;
     }
 
@@ -348,7 +351,7 @@ class DisplayMyStory extends Model {
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
+//$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
                 $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
@@ -363,8 +366,8 @@ class DisplayMyStory extends Model {
                   $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                   } */
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
-                //$star = DisplayMyStory::calculatePostRating($value->productPostId);
-                // $values = explode(", ", $star);
+//$star = DisplayMyStory::calculatePostRating($value->productPostId);
+// $values = explode(", ", $star);
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
@@ -391,7 +394,7 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-        // throw new \yii\base\Exception(print_r($products, true));
+// throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 
@@ -481,15 +484,6 @@ class DisplayMyStory extends Model {
                 $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
                 $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
 
-                /* if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                  $productImagesThumbnail2 = '/' . $productImages->imageThumbnail1;
-                  } else {
-                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  }
-                  } else {
-                  $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
-                  } */
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
                 //$star = DisplayMyStory::calculatePostRating($value->productPostId);
                 //$values = explode(", ", $star);
@@ -520,7 +514,7 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-        // throw new \yii\base\Exception(print_r($products, true));
+// throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 

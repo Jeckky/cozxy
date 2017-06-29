@@ -2,7 +2,7 @@
     <h3 class="page-header" style="margin:10px 20px;">Author</h3>
     <div class="panel-body text-center">
         <?php //$productImagesThumbnailNull = common\helpers\Base64Decode::DataImageSvg120x120(FALSE, FALSE, FALSE); ?>
-        <!--<img src="<?php // $productImagesThumbnailNull                                   ?>" class="img-responsive" alt="Big Bag" style="">-->
+        <!--<img src="<?php // $productImagesThumbnailNull  ?>" class="img-responsive" alt="Big Bag" style="">-->
         <a href="#">
             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""  class="img-responsive img-circle" style="zoom:0.5;">
         </a>
@@ -11,7 +11,7 @@
             <?php
             if (Yii::$app->user->id == $productPost->userId) {
                 ?>
-                <a class="b btn-black btn-xs" href="/story/update-stories/<?= $productPost->encodeParams(['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId]) ?>" style="padding: 6px 16px;">Edit</a>
+                <a class="b btn-black btn-xs" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?= $productPost->encodeParams(['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId]) ?>" style="padding: 6px 16px;">Edit</a>
                 <?php
             }
             ?>
