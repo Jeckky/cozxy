@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_stars', ['productPost' => $productPost]) ?>
-            <?= $this->render('_authors', ['productPost' => $productPost]) ?>
+            <?= $this->render('_authors', ['productPost' => $productPost, 'productSuppId' => $productSuppId]) ?>
             <?= $this->render('_about_this_story', ['productPost' => $productPost]) ?>
 
             <?= $this->render('_popular_stories', ['productSuppId' => $productSuppId, 'popularStories' => $popularStories, 'popularStoriesNoneStar' => $popularStoriesNoneStar, 'urlSeeAll' => $urlSeeAll]) ?>

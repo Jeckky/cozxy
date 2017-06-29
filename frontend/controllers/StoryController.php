@@ -98,51 +98,57 @@ class StoryController extends MasterController {
 
     public function actionWriteStory() {
         if (isset($_POST['ProductPost'])) {
-            $isPublic = Yii::$app->request->post('isPublic');
-            $shelf = new \common\models\costfit\ProductPost();
-
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
-            $shelf->productId = $parentId;
-            // $shelf->productSuppId = $_POST["ProductPost"]["productSuppId"];
-            $shelf->productSelfId = 0;
-            $shelf->userId = Yii::$app->user->identity->userId;
-            $shelf->title = $_POST["ProductPost"]["title"];
-            $shelf->description = $_POST["ProductPost"]["description"];
-            $shelf->shopName = $_POST["ProductPost"]["shopName"];
-            $shelf->price = $_POST["ProductPost"]["price"];
-            $shelf->country = $_POST["ProductPost"]["country"];
-            $shelf->currency = $_POST["ProductPost"]["currency"];
-            if ($isPublic == 'on') {
-                $shelf->isPublic = 1;
+            $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId)->one();
+            if (isset($checkRepeatedlyStory)) {
+                return $this->redirect(Yii::$app->homeUrl);
             } else {
-                $shelf->isPublic = 0;
-            }
-            $shelf->status = 1;
-            $shelf->createDateTime = new \yii\db\Expression('NOW()');
-            $shelf->updateDateTime = new \yii\db\Expression('NOW()');
-            /* $imageObj = \yii\web\UploadedFile::getInstanceByName("story[image]");
-              if (isset($imageObj) && !empty($imageObj)) {
-              $folderName = "stroy";
-              $file = $imageObj->name;
+                $isPublic = Yii::$app->request->post('isPublic');
+                $shelf = new \common\models\costfit\ProductPost();
 
-              $filenameArray = explode('.', $file);
-              $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
-              $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[count($filenameArray) - 1];
-              $urlFile = $urlFolder . $fileName;
-              $shelf->image = 'images/' . $folderName . "/" . $fileName;
 
-              if (!file_exists($urlFolder)) {
-              mkdir($urlFolder, 0777);
-              }
-              } */
-            if ($shelf->save(false)) {
-                // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
-                $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
-                $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
-                return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
-                // } else {
-                // }
+                $shelf->productId = $parentId;
+                // $shelf->productSuppId = $_POST["ProductPost"]["productSuppId"];
+                $shelf->productSelfId = 0;
+                $shelf->userId = Yii::$app->user->identity->userId;
+                $shelf->title = $_POST["ProductPost"]["title"];
+                $shelf->description = $_POST["ProductPost"]["description"];
+                $shelf->shopName = $_POST["ProductPost"]["shopName"];
+                $shelf->price = $_POST["ProductPost"]["price"];
+                $shelf->country = $_POST["ProductPost"]["country"];
+                $shelf->currency = $_POST["ProductPost"]["currency"];
+                if ($isPublic == 'on') {
+                    $shelf->isPublic = 1;
+                } else {
+                    $shelf->isPublic = 0;
+                }
+                $shelf->status = 1;
+                $shelf->createDateTime = new \yii\db\Expression('NOW()');
+                $shelf->updateDateTime = new \yii\db\Expression('NOW()');
+                /* $imageObj = \yii\web\UploadedFile::getInstanceByName("story[image]");
+                  if (isset($imageObj) && !empty($imageObj)) {
+                  $folderName = "stroy";
+                  $file = $imageObj->name;
+
+                  $filenameArray = explode('.', $file);
+                  $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                  $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[count($filenameArray) - 1];
+                  $urlFile = $urlFolder . $fileName;
+                  $shelf->image = 'images/' . $folderName . "/" . $fileName;
+
+                  if (!file_exists($urlFolder)) {
+                  mkdir($urlFolder, 0777);
+                  }
+                  } */
+                if ($shelf->save(false)) {
+                    // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
+                    $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
+                    return $this->redirect(Yii::$app->homeUrl . 'product/' . $productSuppId);
+                    // } else {
+                    // }
+                }
             }
         }
     }
