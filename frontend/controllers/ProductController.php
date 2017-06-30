@@ -43,7 +43,7 @@ class ProductController extends MasterController {
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
 
-//        $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
+        // $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
         $productViews = FakeFactory::productViews($productSupplierId);
         $productViews = $productViews[$productSupplierId];
 
