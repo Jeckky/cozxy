@@ -375,8 +375,8 @@ class DisplayMyStory extends Model {
                   $productImagesThumbnail2 = Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                   } */
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
-//$star = DisplayMyStory::calculatePostRating($value->productPostId);
-// $values = explode(", ", $star);
+                //$star = DisplayMyStory::calculatePostRating($value->productPostId);
+                // $values = explode(", ", $star);
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
@@ -449,9 +449,9 @@ class DisplayMyStory extends Model {
         $whereArray = [];
         $sortStr = ($status == "new") ? "createDateTime " : (($status == "price") ? "price " : (($status == "stars") ? "sum(product_post_rating.score)" : (($status == "view") ? "count(product_post_view.productPostViewId) " : "count(product_post_view.productPostViewId) ")));
         if ($sort == 'SORT_ASC') {
-            $sortStr.= 'asc';
+            $sortStr.= ' asc';
         } else {
-            $sortStr.= 'desc';
+            $sortStr.= ' desc';
         }
 
         $whereArray["product_post.isPublic"] = 1;

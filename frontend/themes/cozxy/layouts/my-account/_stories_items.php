@@ -99,9 +99,9 @@
         </div>
         <div class="info">
             <div class="title" style="height:40px;">
-                <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['title'] ?></a>
+                <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['head'] ?></a>
             </div>
-            <div class="desc" style="height:40px;"><?= $model['head'] ?></div>
+            <div class="desc" style="height:40px;"><?= $model['title'] ?></div>
             <div class="desc">
                 <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;
                 <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model['star'] ?></span>
