@@ -116,11 +116,11 @@ class DisplaySearch extends Model {
             //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
 
-//            ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
+            // ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
             //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
             ->orderBy(new \yii\db\Expression('rand()'))
-//            ->orderBy('score')
+            //->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
