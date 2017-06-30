@@ -13,19 +13,22 @@ use common\models\costfit;
 /**
  * Error controller
  */
-class ErrorMasterController extends \backend\controllers\BackendMasterController {
+class ErrorMasterController extends \backend\controllers\BackendMasterController
+{
 
     public $breadcrumbs = [];
-    public $layout = '/cl2';
+    public $layout = '/cl1';
     public $nav = [];
 
-    public function writeToFile($fileName, $string, $mode = 'w+') {
+    public function writeToFile($fileName, $string, $mode = 'w+')
+    {
         $handle = fopen($fileName, $mode);
         fwrite($handle, $string);
         fclose($handle);
     }
 
-    public function saveModelLang($mainModel, $langModel) {
+    public function saveModelLang($mainModel, $langModel)
+    {
         $result = [];
         $langClassName = (new \ReflectionClass($langModel))->getShortName();
         $mainModelClassName = (new \ReflectionClass($mainModel))->getShortName();

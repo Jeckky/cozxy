@@ -105,7 +105,13 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
                 <input type="password" name="LoginForm[password]" id="password_id" class="form-control input-lg" placeholder="Password">
                 <span class="fa fa-lock signin-form-icon"></span>
             </div> <!-- / Password -->
-
+            <?php if (isset($_GET["error"])): ?>
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1 alert alert-danger" style="margin-top:5px">
+                        <span class="">email or password incorrect.</span>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="form-actions">
                 <input type="submit" value="SIGN IN" class="signin-btn bg-primary">
                 <a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>

@@ -30,13 +30,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <div class="col-sm-12">
                         <!-- Pills -->
                         <ul class="nav nav-pills bs-tabdrop-example">
-                            <li class="active"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด User</a></li>
+                            <li class="<?= (!isset($_GET["tab"])) ? " active" : " " ?>"><a href="#bs-tabdrop-pill1" data-toggle="tab">รายละเอียด User</a></li>
                             <li><a href="#bs-tabdrop-pill4" data-toggle="tab">แก้ไข User</a></li>
-                            <li><a href="#bs-tabdrop-pill2" data-toggle="tab">เข้าอยู่ในกลุ่ม</a></li>
+                            <li class=" <?= (isset($_GET["tab"]) && $_GET["tab"] = 3) ? " active" : " " ?>"><a href="#bs-tabdrop-pill2" data-toggle="tab">เข้าอยู่ในกลุ่ม</a></li>
                             <li><a href="#bs-tabdrop-pill3" data-toggle="tab">ตั้งค่าพื้นฐาน</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="bs-tabdrop-pill1">
+                            <div class="tab-pane <?= (!isset($_GET["tab"])) ? " active" : " " ?>" id="bs-tabdrop-pill1">
                                 <p>
                                     <?=
                                     DetailView::widget([
@@ -112,45 +112,58 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     </a></h3>
                                 </p>
                             </div>
-                            <div class="tab-pane" id="bs-tabdrop-pill2">
+                            <div class="tab-pane <?= (isset($_GET["tab"]) && $_GET["tab"] = 3) ? " active" : " " ?>" id="bs-tabdrop-pill2">
                                 <?php
+                                $page = isset($_GET["page"]) ? $_GET["page"] : 1;
                                 $form = ActiveForm::begin([
                                     'id' => 'default-shipping-address',
-                                    'action' => $baseUrl . '/management/user/group?id=' . $_GET['id'],
+                                    'action' => $baseUrl . '/management/user/group?id=' . $_GET['id'] . "&page=" . $page,
                                     'options' => ['class' => 'space-bottom'],
                                 ]);
                                 ?>
-                                <?=
+                                <?//=
                                 TreeGrid::widget([
-                                    'dataProvider' => $listViewLevels,
-                                    'keyColumnName' => 'user_group_Id',
-                                    'parentColumnName' => 'parent_id',
-                                    'parentRootValue' => '0', //first parentId value
-                                    'pluginOptions' => [
-                                    //'initialState' => 'collapsed',
-                                    ],
-                                    'columns' => [
-                                        [
-                                            'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
-                                            'format' => 'raw',
-                                            'value' => function($data, $key, $index, $column) {
-                                                $getUserGroup = common\models\costfit\User::find()->select('user_group_Id')->where('userId =' . $_GET['id'])->one();
-                                                $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
-                                                $test = explode(',', $ListMenuGroup);
-                                                if (in_array($data->user_group_Id, $test)) {
-                                                    $checked = 'checked';
-                                                } else {
-                                                    $checked = ' ';
-                                                }
-                                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
-                                            },
-                                        ],
-                                    // 'name',
-                                    //'user_group_Id',
-                                    //'parent_id',
-                                    //['class' => 'yii\grid\ActionColumn']
-                                    ]
+                                'dataProvider' => $listViewLevels,
+                                'keyColumnName' => 'user_group_Id',
+                                'parentColumnName' => 'parent_id',
+                                'parentRootValue' => '0', //first parentId value
+                                'pluginOptions' => [
+                                //'initialState' => 'collapsed',
+                                ],
+                                'columns' => [
+                                [
+                                'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
+                                'format' => 'raw',
+                                'value' => function($data, $key, $index, $column) {
+                                $getUserGroup = common\models\costfit\User::find()->select('user_group_Id')->where('userId =' . $_GET['id'])->one();
+                                $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
+                                $test = explode(',', $ListMenuGroup);
+                                if (in_array($data->user_group_Id, $test)) {
+                                $checked = 'checked';
+                                } else {
+                                $checked = ' ';
+                                }
+                                return '<input type="checkbox" name="ViewLevels[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
+                                },
+                                ],
+                                // 'name',
+                                //'user_group_Id',
+                                //'parent_id',
+                                //['class' => 'yii\grid\ActionColumn']
+                                ]
                                 ]);
+                                ?>
+                                <?php
+                                echo $form->field($authAssignment, 'item_name')->widget(\kartik\widgets\Select2::classname(), [
+                                    'data' => $authItems,
+                                    'options' => [
+                                        'placeholder' => 'Select role ...',
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                        'multiple' => true,
+                                    ],
+                                ])->label('Role');
                                 ?>
                                 <?php
                                 echo Html::hiddenInput('user-group-userId', $model->userId, [ 'id' => 'user-group-userId']);

@@ -12,12 +12,14 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use yii\web\NotFoundHttpException;
 
-class AuthController extends AuthMasterController {
+class AuthController extends AuthMasterController
+{
 
     public $username;
     public $password;
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -28,16 +30,17 @@ class AuthController extends AuthMasterController {
         ];
     }
 
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         $model = new LoginForm();
         $session = Yii::$app->session;
-
         try {
             if (isset($_POST['LoginForm'])) {
 
@@ -77,7 +80,8 @@ class AuthController extends AuthMasterController {
         //return $this->render('index', ['model' => $model]);
     }
 
-    public function actionForgot() {
+    public function actionForgot()
+    {
         // if (!Yii::$app->request->getIsPost) {
         //   $this->redirect('atechwindow/brand');
         // exit(0);
@@ -86,7 +90,8 @@ class AuthController extends AuthMasterController {
         echo 'Test Login';
     }
 
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
         Yii::$app->session->destroy();
         return $this->redirect(Yii::$app->homeUrl . 'auth');

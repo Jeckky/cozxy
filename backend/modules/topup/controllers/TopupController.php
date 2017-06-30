@@ -16,30 +16,18 @@ use common\helpers\CozxyUnity;
 /**
  * TopupController implements the CRUD actions for Topup model.
  */
-class TopupController extends TopupMasterController {
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors() {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+class TopupController extends TopupMasterController
+{
 
     /**
      * Lists all Topup models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => TopUp::find()
-                    ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
+            ->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")
         ]);
         $readyData = TopUp::find()->where("status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1 and image!=''")->all();
         if (isset($_POST["fileCsv"])) {
@@ -86,35 +74,36 @@ class TopupController extends TopupMasterController {
                                 $topUps = '';
                             }
                             return $this->render('index', [
-                                        'dataProviderChange' => $dataProviderChange,
-                                        'dataProvider' => $dataProvider,
-                                        'dataChange' => $topUps,
-                                        'readyData' => $readyData
+                                'dataProviderChange' => $dataProviderChange,
+                                'dataProvider' => $dataProvider,
+                                'dataChange' => $topUps,
+                                'readyData' => $readyData
                             ]);
                         }
                     }
                 }
 
                 return $this->render('index', [
-                            'dataProvider' => $dataProvider,
-                            'data' => $data,
-                            'readyData' => $readyData
+                    'dataProvider' => $dataProvider,
+                    'data' => $data,
+                    'readyData' => $readyData
                 ]);
             } else {
                 return $this->render('index', [
-                            'dataProvider' => $dataProvider,
-                            'readyData' => $readyData
+                    'dataProvider' => $dataProvider,
+                    'readyData' => $readyData
                 ]);
             }
         } else {
             return $this->render('index', [
-                        'dataProvider' => $dataProvider,
-                        'readyData' => $readyData
+                'dataProvider' => $dataProvider,
+                'readyData' => $readyData
             ]);
         }
     }
 
-    public function actionAcceptBillpayment($id) {
+    public function actionAcceptBillpayment($id)
+    {
         $topUp = TopUp::find()->where("topUpId=" . $id)->one();
         if (isset($topUp)) {
             $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
@@ -154,7 +143,8 @@ class TopupController extends TopupMasterController {
         return $this->redirect(['index']);
     }
 
-    public function actionNotAcceptBillpayment($id) {
+    public function actionNotAcceptBillpayment($id)
+    {
         $topUp = TopUp::find()->where("topUpId=" . $id)->one();
         if (isset($topUp)) {
             $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_DISCLAIM;
@@ -169,9 +159,10 @@ class TopupController extends TopupMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -180,14 +171,15 @@ class TopupController extends TopupMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Topup();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -198,14 +190,15 @@ class TopupController extends TopupMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->topUpId]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -216,13 +209,15 @@ class TopupController extends TopupMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function updateBillpayment($data) {
+    public function updateBillpayment($data)
+    {
         /* foreach ($data as $record)://รอไฟล์ จากธนาคาร
           foreach ($record as $info):
 
@@ -230,8 +225,8 @@ class TopupController extends TopupMasterController {
           endforeach; */
         $changeId = '';
         $topUp = TopUp::find()
-                ->where("status=" . \common\models\costfit\TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")//
-                ->all();
+        ->where("status=" . \common\models\costfit\TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=1")//
+        ->all();
         if (isset($topUp) && count($topUp) > 0) {
             foreach ($topUp as $topup):
                 $topup->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
@@ -274,19 +269,21 @@ class TopupController extends TopupMasterController {
         return $changeId;
     }
 
-    public function actionAllBillPayment() {
+    public function actionAllBillPayment()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => TopUp::find()
-                    ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->orderBy('updateDateTime DESC')
+            ->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->orderBy('updateDateTime DESC')
         ]);
         $readyData = TopUp::find()->where("status>" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->all();
         return $this->render('alltopup', [
-                    'dataProvider' => $dataProvider,
-                    'readyData' => $readyData
+            'dataProvider' => $dataProvider,
+            'readyData' => $readyData
         ]);
     }
 
-    public function actionBillPay() {
+    public function actionBillPay()
+    {
         $topUpId = $_GET["epay"];
         $logo = \common\models\costfit\ContentGroup::find()->where("title='logoImageTop'")->one();
         $image = '';
@@ -322,7 +319,8 @@ class TopupController extends TopupMasterController {
         CozxyUnity::actionMpdfDocument($content, $header, $title);
     }
 
-    public function changDateFormat($subDate) {
+    public function changDateFormat($subDate)
+    {
         $d = substr($subDate, 8, 2);
         $m = substr($subDate, 5, 2);
         $y = substr($subDate, 0, 4);
@@ -337,7 +335,8 @@ class TopupController extends TopupMasterController {
      * @return Topup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Topup::findOne($id)) !== null) {
             return $model;
         } else {
