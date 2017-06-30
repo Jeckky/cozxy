@@ -885,7 +885,7 @@ function SortOrder(selectObject) {
     }
 }
 
-function sortStoriesCozxy($userId, status) {
+function sortStoriesCozxy($userId, status, type) {
 
     if (status == 'price') {
         $sortStories = $('input:hidden:eq(0)', '.sort-stories-cozxy').val();
@@ -900,7 +900,7 @@ function sortStoriesCozxy($userId, status) {
     $.ajax({
         type: "POST",
         url: $baseUrl + "my-account/sort-stories?userId=" + $userId,
-        data: {'status': status, 'sort': $sortStories},
+        data: {'status': status, 'sort': $sortStories, 'type': type},
         success: function (data, status) {
 
             if (data == '') {
@@ -952,4 +952,37 @@ function sortStoriesCompare(type, status, productPostId, productId) {
             }
         }
     });
+}
+
+
+function sortStoriesRecent($userId, status, type) {
+
+    if (status == 'view') {
+        $sortStories = $("#sortStoriesView").val();
+    } else if (status == 'stars') {
+        $sortStories = $("#sortStoriesStars").val();
+    }
+
+    var productId = $("#productId").val();
+    var productSupplierId = $("#productSupplierId").val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/sort-stories-recent?userId=" + $userId,
+        data: {'status': status, 'sort': $sortStories, 'type': type, 'productId': productId, 'productSupplierId': productSupplierId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.sort-stories-cozxy').html(data);
+                } else {
+                    $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+
 }

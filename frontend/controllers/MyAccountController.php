@@ -229,12 +229,12 @@ class MyAccountController extends MasterController {
          */
         $isStatus = Yii::$app->request->post('status');
         $isSort = Yii::$app->request->post('sort');
-
+        $isType = Yii::$app->request->post('type');
         /*
          * productMyacountStoriesSort($productId, $productSupplierId, $var1 = false)
          */
 
-        $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyacountStoriesSort($isUserId, $isStatus, $isSort)]);
+        $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyacountStoriesSort($isUserId, $isStatus, $isSort, $isType)]);
         if ($isStatus == 'new') {
             if ($isSort === 'SORT_DESC') {
                 $sort = 'SORT_ASC';
@@ -275,8 +275,56 @@ class MyAccountController extends MasterController {
             }
         }
 
+        if ($isType == 'myAccount') {
+            return $this->renderAjax('@app/themes/cozxy/layouts/my-account/items/_stories_items', compact('productPost', 'sort', 'isStatus', 'icon'));
+        } else if ($isType == 'product') {
+            return $this->renderAjax('@app/themes/cozxy/layouts/story/_panel_recent_stories_items', compact('productPost', 'sort', 'isStatus', 'icon'));
+        }
+    }
 
-        return $this->renderAjax('@app/themes/cozxy/layouts/my-account/items/_stories_items', compact('productPost', 'sort', 'isStatus', 'icon'));
+    public function actionSortStoriesRecent() {
+
+        $isUserId = Yii::$app->request->get('userId');
+        /*
+         * request : post
+         */
+        $isStatus = Yii::$app->request->post('status');
+        $isSort = Yii::$app->request->post('sort');
+        $isType = Yii::$app->request->post('type');
+        $productSupplierId = Yii::$app->request->post('productSupplierId');
+        $productId = Yii::$app->request->post('productId');
+
+        /*
+         * productMyacountStoriesSort($productId, $productSupplierId, $var1 = false)
+         */
+
+        $StoryRecentStories = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productRecentStoriesSort($productId, $productSupplierId, '', $isStatus, $isSort)]);
+
+
+        if ($isStatus == 'view') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        } else if ($isStatus == 'stars') {
+            if ($isSort === 'SORT_DESC') {
+                $sort = 'SORT_ASC';
+                $icon = 'down';
+            } elseif ($isSort === 'SORT_ASC') {
+                $sort = 'SORT_DESC';
+                $icon = 'up';
+            }
+        } else {
+            $sort = '';
+            $icon = '';
+            $isStatus = '';
+        }
+
+        return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
+            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
 }
