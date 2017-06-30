@@ -298,7 +298,7 @@ class MyAccountController extends MasterController {
          * productMyacountStoriesSort($productId, $productSupplierId, $var1 = false)
          */
 
-        $StoryRecentStories = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productRecentStoriesSort($productId, $productSupplierId, '', $isStatus, $isSort)]);
+        $StoryRecentStories = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productRecentStoriesSort($productId, $productSupplierId, '', $isStatus, $isSort), 'pagination' => ['defaultPageSize' => 5]]);
 
 
         if ($isStatus == 'view') {
