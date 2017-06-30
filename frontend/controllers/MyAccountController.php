@@ -21,9 +21,7 @@ class MyAccountController extends MasterController {
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
         $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
-        $orderHistory = new ArrayDataProvider(
-        ['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')
-        ]);
+        $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $statusText = '';
@@ -298,8 +296,8 @@ class MyAccountController extends MasterController {
          * productMyacountStoriesSort($productId, $productSupplierId, $var1 = false)
          */
 
-        $StoryRecentStories = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productRecentStoriesSort($productId, $productSupplierId, '', $isStatus, $isSort), 'pagination' => ['defaultPageSize' => 5]]);
-
+        $StoryRecentStories = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productRecentStoriesSort($productId, $productSupplierId, '', $isStatus, $isSort),
+            'pagination' => ['defaultPageSize' => 5]]);
 
         if ($isStatus == 'view') {
             if ($isSort === 'SORT_DESC') {

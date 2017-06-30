@@ -97,7 +97,7 @@ $(window).resize(function() { descSet(); });
                 if (Yii::$app->controller->id == 'product') {
                     echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories', 'productSupplierId', 'productId'));
                 } else {
-                    echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId'));
+                    echo $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('StoryRecentStories', 'productSupplierId', 'productId'));
                 }
                 ?>
             </div>

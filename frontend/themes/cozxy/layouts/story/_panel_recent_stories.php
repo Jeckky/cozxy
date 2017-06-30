@@ -6,40 +6,44 @@ if (Yii::$app->controller->id == 'product') {
     <div class="panel panel-defailt">
         <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
         <h3 class="page-header" style="margin:10px 20px;">Recent Stories</h3>
-        <div class="size14 text-center">
-            <a href="javascript:sortStoriesRecent('','view','product')">
-                <?php
-                if (isset($status) && !empty($status)) {
-                    if ($status == 'view') {
-                        ?>
-                        Sort by view&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
-                        <?php
-                    }
-                } else {
-                    echo ' Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-                }
-                ?>
-            </a>
-            <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
-            <span style="color: #fc0;">|</span><a href="javascript:sortStoriesRecent('','stars','product')">
-                <?php
-                if (isset($status) && !empty($status)) {
-                    if ($status == 'stars') {
-                        ?>
-                        Sort by stars&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
-                        <?php
-                    }
-                } else {
-                    echo ' Sort by stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-                }
-                ?>
-            </a>
-            <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
-            <input type="hidden" name="productId" id="productId" value="<?= isset($productId) ? $productId : '' ?>">
-            <input type="hidden" name="productSupplierId" id="productSupplierId" value="<?= $productSupplierId ?>">
+        <?php
+        if (Yii::$app->controller->id != 'search') {
+            ?>
 
-        </div>
+            <div class="size14 text-center">
+                <a href="javascript:sortStoriesRecent('','view','product')">
+                    <?php
+                    if (isset($status) && !empty($status)) {
+                        if ($status == 'view') {
+                            ?>
+                            Sort by view&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
+                            <?php
+                        }
+                    } else {
+                        echo ' Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+                    }
+                    ?>
+                </a>
+                <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
+                <span style="color: #fc0;">|</span><a href="javascript:sortStoriesRecent('','stars','product')">
+                    <?php
+                    if (isset($status) && !empty($status)) {
+                        if ($status == 'stars') {
+                            ?>
+                            Sort by stars&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
+                            <?php
+                        }
+                    } else {
+                        echo ' Sort by stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+                    }
+                    ?>
+                </a>
+                <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
+                <input type="hidden" name="productId" id="productId" value="<?= isset($productId) ? $productId : '' ?>">
+                <input type="hidden" name="productSupplierId" id="productSupplierId" value="<?= $productSupplierId ?>">
 
+            </div>
+        <?php } ?>
         <div class="panel-body">
 
             <?php
@@ -71,23 +75,42 @@ if (Yii::$app->controller->id == 'product') {
     <div class="panel panel-defailt  ">
         <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
         <h3 class="page-header" style="margin:10px 20px;">Recent Stories</h3>
-        <div class="size14 text-center">
-            <a href="javascript:sortStoriesRecent('','view','product')">
-                <?php
-                echo ' Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-                ?>
-            </a>
-            <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
-            <span style="color: #fc0;">|</span><a href="javascript:sortStoriesRecent('','stars','product')">
-                <?php
-                echo ' Sort by stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-                ?> 
-            </a>
-            <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
-            <input type="hidden" name="productId" id="productId" value="<?= isset($productId) ? $productId : '' ?>">
-            <input type="hidden" name="productSupplierId" id="productSupplierId" value="<?= $productSupplierId ?>">
-
-        </div>
+        <?php
+        if (Yii::$app->controller->id != 'search') {
+            ?>
+            <div class="size14 text-center">
+                <a href="javascript:sortStoriesRecent('','view','product')">
+                    <?php
+                    if (isset($status) && !empty($status)) {
+                        if ($status == 'view') {
+                            ?>
+                            Sort by view&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
+                            <?php
+                        }
+                    } else {
+                        echo ' Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+                    }
+                    ?>
+                </a>
+                <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
+                <span style="color: #fc0;">|</span><a href="javascript:sortStoriesRecent('','stars','product')">
+                    <?php
+                    if (isset($status) && !empty($status)) {
+                        if ($status == 'stars') {
+                            ?>
+                            Sort by stars&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i>
+                            <?php
+                        }
+                    } else {
+                        echo ' Sort by stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
+                    }
+                    ?>
+                </a>
+                <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
+                <input type="hidden" name="productId" id="productId" value="<?= isset($productId) ? $productId : '' ?>">
+                <input type="hidden" name="productSupplierId" id="productSupplierId" value="<?= $productSupplierId ?>">
+            </div>
+        <?php } ?>
         <div class="panel-body">
             <?php
             echo \yii\widgets\ListView::widget([
