@@ -26,17 +26,21 @@ class DisplayMyStory extends Model {
             ->groupBy(['productId'])->orderBy('productPostId desc')->one();
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
-//$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
-                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
-                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
-                    } else {
-                        $productImagesThumbnail2 = $productImagesThumbnailNull;
-                    }
-                } else {
-                    $productImagesThumbnail2 = $productImagesThumbnailNull;
-                }
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
+                /*
+                  $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)->one();
+                  if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                  $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
+                  } else {
+                  $productImagesThumbnail2 = $productImagesThumbnailNull;
+                  }
+                  } else {
+                  $productImagesThumbnail2 = $productImagesThumbnailNull;
+                  }
+                 */
+                $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($productId, FALSE, 'Svg120x120');
+
                 $products['myStoryTop'] = [
                     'productPostId' => $productPost['productPostId'],
                     'image' => $productImagesThumbnail2,
@@ -91,7 +95,9 @@ class DisplayMyStory extends Model {
             $productPostList = \common\models\costfit\Product::find()->where('productId =' . $value->productId)->all();
             foreach ($productPostList as $items) {
                 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
-                $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $value->productId)->one();
+                //$productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $value->productId)->one();
+                $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $productSupplierId, 'Svg64x64');
+
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
@@ -102,15 +108,15 @@ class DisplayMyStory extends Model {
                   } else {
                   $results_rating = $rating_score / $rating_member;
                   } */
-                if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
-                        $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
-                    } else {
-                        $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
-                    }
-                } else {
-                    $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
-                }
+                /* (if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
+                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
+                  $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
+                  }
+                  } else {
+                  $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
+                  } */
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(",", $star);
                 $products[$value->productPostId] = [
