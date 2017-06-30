@@ -8,8 +8,7 @@ if (Yii::$app->controller->id == 'product') {
         <h3 class="page-header" style="margin:10px 20px;">Recent Stories</h3>
         <?php
         if (Yii::$app->controller->id != 'search') {
-            ?>
-
+            ?> 
             <div class="size14 text-center">
                 <a href="javascript:sortStoriesRecent('','view','product')">
                     <?php

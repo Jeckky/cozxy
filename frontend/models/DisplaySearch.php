@@ -11,37 +11,35 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model
-{
+class DisplaySearch extends Model {
 
     public $score;
-    public static function productSearch($search_hd, $n, $cat = FALSE)
-    {
+
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
 
-        if (isset($search_hd)) {
+        if ($search_hd !== '') {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
-                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
+            ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
-                /*
             ->andFilterWhere(['OR',
-//                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
-//                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
                 ['LIKE', 'product_suppliers.title', trim($search_hd)],
                 ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', $search_hd],
-//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+            //                ['LIKE', 'product_suppliers.title', $search_hd],
+            //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
-                */
-                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
+
+//            ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
 //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-//            ->orderBy(new \yii\db\Expression('rand()'))
-                ->orderBy('score')
+            ->orderBy(new \yii\db\Expression('rand()'))
+//            ->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -97,8 +95,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -107,30 +104,23 @@ class DisplaySearch extends Model
 
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
-
-                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
-
+            //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result = 0 and product_price_suppliers.price = 0")
-                /*
             ->andFilterWhere(['OR',
-//                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
-//                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
                 ['LIKE', 'product_suppliers.title', trim($search_hd)],
                 ['LIKE', 'product_suppliers.description', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', $search_hd],
-//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+            //                ['LIKE', 'product_suppliers.title', $search_hd],
+            //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
-                */
 
-                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
-
+//            ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
             //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-//            ->orderBy(new \yii\db\Expression('rand()'))
-
-                ->orderBy('score')
-
+            ->orderBy(new \yii\db\Expression('rand()'))
+//            ->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -186,8 +176,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
-    {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
 
@@ -233,8 +222,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -326,8 +314,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -435,8 +422,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
-    {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -500,8 +486,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterBrand($cat = FALSE, $brand = FALSE)
-    {
+    public static function productFilterBrand($cat = FALSE, $brand = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -562,8 +547,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -628,8 +612,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE)
-    {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE) {
         $products = [];
         $whereArray2 = [];
 
