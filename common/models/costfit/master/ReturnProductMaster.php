@@ -21,8 +21,8 @@ use Yii;
     * @property integer $receiver
     * @property string $remark
     * @property integer $status
-    * @property integer $createDateTime
-    * @property integer $updateDateTime
+    * @property string $createDateTime
+    * @property string $updateDateTime
 */
 class ReturnProductMaster extends \common\models\ModelMaster
 {
@@ -41,8 +41,9 @@ public function rules()
 {
 return [
             [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'remark'], 'required'],
-            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status', 'createDateTime', 'updateDateTime'], 'integer'],
+            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status'], 'integer'],
             [['remark'], 'string'],
+            [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
 

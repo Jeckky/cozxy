@@ -10,6 +10,7 @@ use Yii;
     * @property string $viewId
     * @property string $productSuppId
     * @property string $userId
+    * @property string $token
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -31,6 +32,7 @@ public function rules()
 {
 return [
             [['productSuppId', 'userId', 'status'], 'integer'],
+            [['token'], 'string'],
             [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -45,6 +47,7 @@ return [
     'viewId' => Yii::t('product_page_views', 'View ID'),
     'productSuppId' => Yii::t('product_page_views', 'Product Supp ID'),
     'userId' => Yii::t('product_page_views', 'User ID'),
+    'token' => Yii::t('product_page_views', 'Token'),
     'status' => Yii::t('product_page_views', 'Status'),
     'createDateTime' => Yii::t('product_page_views', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_page_views', 'Update Date Time'),

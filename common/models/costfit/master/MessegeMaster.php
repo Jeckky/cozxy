@@ -7,12 +7,12 @@ use Yii;
 /**
 * This is the model class for table "messege".
 *
-    * @property string $messegeId
+    * @property string $messageId
     * @property string $ticketId
     * @property string $orderId
     * @property string $userId
     * @property string $message
-    * @property integer $messegeType
+    * @property integer $messageType
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -33,8 +33,8 @@ return 'messege';
 public function rules()
 {
 return [
-            [['ticketId', 'orderId', 'userId', 'message', 'messegeType'], 'required'],
-            [['ticketId', 'orderId', 'userId', 'messegeType', 'status'], 'integer'],
+            [['ticketId', 'orderId', 'userId', 'message', 'messageType'], 'required'],
+            [['ticketId', 'orderId', 'userId', 'messageType', 'status'], 'integer'],
             [['message'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -46,12 +46,12 @@ return [
 public function attributeLabels()
 {
 return [
-    'messegeId' => Yii::t('messege', 'Messege ID'),
+    'messageId' => Yii::t('messege', 'Message ID'),
     'ticketId' => Yii::t('messege', 'Ticket ID'),
     'orderId' => Yii::t('messege', 'Order ID'),
     'userId' => Yii::t('messege', 'User ID'),
     'message' => Yii::t('messege', 'Message'),
-    'messegeType' => Yii::t('messege', 'Messege Type'),
+    'messageType' => Yii::t('messege', 'Message Type'),
     'status' => Yii::t('messege', 'Status'),
     'createDateTime' => Yii::t('messege', 'Create Date Time'),
     'updateDateTime' => Yii::t('messege', 'Update Date Time'),

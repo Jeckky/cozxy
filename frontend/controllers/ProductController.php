@@ -31,6 +31,12 @@ class ProductController extends MasterController {
          * Product Views - Frontend
          */
         $productViews = new \common\models\costfit\ProductPageViews();
+        $cookies = Yii::$app->request->cookies;
+        if (isset($cookies['orderToken'])) {
+            $productViews->token = $cookies['orderToken']->value;
+        } else {
+            $productViews->token = NULL;
+        }
         $productViews->productSuppId = $productSupplierId;
         $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
         $productViews->updateDateTime = new \yii\db\Expression('NOW()');
