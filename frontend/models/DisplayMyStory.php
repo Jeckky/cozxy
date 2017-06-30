@@ -101,6 +101,7 @@ class DisplayMyStory extends Model {
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
+
                 /* $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
                   $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
                   if ($rating_score == 0 && $rating_member == 0) {
@@ -108,6 +109,7 @@ class DisplayMyStory extends Model {
                   } else {
                   $results_rating = $rating_score / $rating_member;
                   } */
+
                 /* (if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                   if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
                   $productImagesThumbnail2 = '/' . $productImages->imageThumbnail2;
@@ -117,8 +119,10 @@ class DisplayMyStory extends Model {
                   } else {
                   $productImagesThumbnail2 = Base64Decode::DataImageSvg64x64(FALSE, FALSE, FALSE);
                   } */
+
                 $star = DisplayMyStory::calculatePostRating($value->productPostId);
                 $values = explode(",", $star);
+
                 $products[$value->productPostId] = [
                     'image' => $productImagesThumbnail2,
                     //'url' => '/story?id=' . $items->productSuppId,
