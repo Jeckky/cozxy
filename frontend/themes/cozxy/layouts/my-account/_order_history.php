@@ -27,12 +27,14 @@ use yii\helpers\Html;
                 &nbsp;&nbsp;<input type="submit" value="SUBMIT" class="subs-btn size14-xs" onclick="SortOrder()">
             </div>
         </div>
+
     </div>
+
     <br><br><br>
-    <div>
+    <div style="border-bottom: 1px #000000 solid;" class="col-sm-12">
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
-    <hr>
+
     <?php
     yii\widgets\Pjax::begin([
         'id' => 'order-history',
