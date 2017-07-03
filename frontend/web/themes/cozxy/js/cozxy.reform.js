@@ -164,59 +164,48 @@ $(document).on('click', '#confirm-topup', function (e) {
  * @param {type} id
  * @returns {undefined}
  */
-function addItemToWishlist(id, shelfId, flag) {
+function addItemToWishlist(id, shelfId) {
     var $pId = id;
     var str = window.location.pathname;
     var res = str.split("/");
     //console.log(window.location.pathname);
     //console.log(res);
     //console.log(res[1]);
-    if (flag == 0) {
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: $baseUrl + "cart/add-wishlist",
-            data: {productId: $pId, shelfId: shelfId},
-            success: function (data)
-            {
-                if (data.status) {
-                    //$('.wishlist-message').addClass('visible');
-                    var $this = $('#addItemToWishlist-' + $pId);
-                    /*if (res[1] != 'search') {
-                     alert('133334');
-                     $this.button('loading');
-                     setTimeout(function () {
-                     $this.button('reset');
-                     }, 8000);
-                     } else {*/
-                    // alert('13333');
-                    $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
-                    $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
-                    $('#heart-o' + $pId + shelfId).hide();
-                    $('#heartbeat' + $pId + shelfId).show();
-                    //}
-                    //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
-                } else {
-                    alert(data.message);
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "cart/add-wishlist",
+        data: {productId: $pId, shelfId: shelfId},
+        success: function (data)
+        {
+            if (data.status) {
+                //$('.wishlist-message').addClass('visible');
+                var $this = $('#addItemToWishlist-' + $pId);
+                /*if (res[1] != 'search') {
+                 alert('133334');
+                 $this.button('loading');
+                 setTimeout(function () {
+                 $this.button('reset');
+                 }, 8000);
+                 } else {*/
+                // alert('13333');
+                $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
+                $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
+                $('#heart-o' + $pId + shelfId).hide();
+                $('#heartbeat' + $pId + shelfId).show();
+                //}
+                //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
+            } else {//ลบ
+                if (data.heartbeat == 0) {
+                    $('.heart-' + $pId + ' i').removeClass('fa fa-heartbeat');
+                    $('.heart-' + $pId + ' i').addClass('fa fa-heart-o');
                 }
+                $('#heart-o' + $pId + shelfId).show();
+                $('#heartbeat' + $pId + shelfId).hide();
             }
-        });
-    } else {
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            url: $baseUrl + "cart/delete-wishlist-shelf",
-            data: {productId: $pId, shelfId: shelfId},
-            success: function (data)
-            {
-                if (data.status) {
-                    alert('success');
-                } else {
-                    alert(data.message);
-                }
-            }
-        });
-    }
+        }
+    });
+
 }
 /*
  *  modal add Wish List Group
@@ -258,12 +247,13 @@ $(document).on('click', '#create-newWishList', function (e) {
     var newWishList = $(this).parent().parent().parent().find('#newWishList');
     var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
     var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
+    var productSuppId = $(this).parent().find('#productSuppId').val();
     if (title != '') {
         $.ajax({
             type: "POST",
             dataType: "JSON",
             url: $baseUrl + "shelf/create/",
-            data: {'title': title},
+            data: {'title': title, 'productSuppId': productSuppId},
             success: function (data)
             {
                 if (data.status) {
