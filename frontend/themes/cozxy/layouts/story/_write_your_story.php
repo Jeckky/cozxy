@@ -103,78 +103,79 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                 ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Compare Price</div>
-                <div class="panel-body login-box">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Shop Name</label>
-                                <?php echo $form->field($model, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Price</label>
-                                        <?php echo $form->field($model, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
+            <?php if (Yii::$app->controller->action->id != 'update-stories') { ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Compare Price</div>
+                    <div class="panel-body login-box">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Shop Name</label>
+                                    <?php echo $form->field($model, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Price</label>
+                                            <?php echo $form->field($model, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group" style="margin-top: 7px;">
+                                            <label for="exampleInputEmail1">Country</label>
+                                            <?php
+                                            echo $form->field($model, 'country')->widget(kartik\select2\Select2::classname(), [
+                                                //'options' => ['id' => 'address-countryid'],
+                                                'data' => $country,
+                                                'pluginOptions' => [
+                                                    'placeholder' => 'Select...',
+                                                    'loadingText' => 'Loading Country ...',
+                                                ],
+                                                'options' => ['placeholder' => 'Select Country ...'],
+                                            ])->label(FALSE);
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group"  style="margin-top: 7px;">
+                                            <label for="exampleInputEmail1">Currency</label>
+                                            <?php
+                                            echo $form->field($model, 'currency')->widget(kartik\select2\Select2::classname(), [
+                                                //'options' => ['id' => 'address-countryid'],
+                                                'data' => $currency,
+                                                'pluginOptions' => [
+                                                    'placeholder' => 'Select...',
+                                                    'loadingText' => 'Select Currency ...',
+                                                ],
+                                                'options' => ['placeholder' => 'Select Currency ...'],
+                                            ])->label(FALSE);
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group" style="margin-top: 7px;">
-                                        <label for="exampleInputEmail1">Country</label>
-                                        <?php
-                                        echo $form->field($model, 'country')->widget(kartik\select2\Select2::classname(), [
-                                            //'options' => ['id' => 'address-countryid'],
-                                            'data' => $country,
-                                            'pluginOptions' => [
-                                                'placeholder' => 'Select...',
-                                                'loadingText' => 'Loading Country ...',
-                                            ],
-                                            'options' => ['placeholder' => 'Select Country ...'],
-                                        ])->label(FALSE);
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group"  style="margin-top: 7px;">
-                                        <label for="exampleInputEmail1">Currency</label>
-                                        <?php
-                                        echo $form->field($model, 'currency')->widget(kartik\select2\Select2::classname(), [
-                                            //'options' => ['id' => 'address-countryid'],
-                                            'data' => $currency,
-                                            'pluginOptions' => [
-                                                'placeholder' => 'Select...',
-                                                'loadingText' => 'Select Currency ...',
-                                            ],
-                                            'options' => ['placeholder' => 'Select Currency ...'],
-                                        ])->label(FALSE);
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!--<div class="form-group">
-                                <label for="exampleInputEmail1">Picture</label>
-                                <input type="file" name="story[image]" class="fullwidth" placeholder="Shop Name" required>
-                            </div>-->
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Location (Lat,Long)</label>
-                                        <input type="text" name="firstname" class="fullwidth" placeholder="Location (Lat,Long)">
+                                <!--<div class="form-group">
+                                    <label for="exampleInputEmail1">Picture</label>
+                                    <input type="file" name="story[image]" class="fullwidth" placeholder="Shop Name" required>
+                                </div>-->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Location (Lat,Long)</label>
+                                            <input type="text" name="firstname" class="fullwidth" placeholder="Location (Lat,Long)">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div id="map" style="height:200px;"></div>
+                                    <div class="col-md-12">
+                                        <div id="map" style="height:200px;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            <?php } ?>
             <div class="row">
                 <div class="col-md-6">
                     <?php
