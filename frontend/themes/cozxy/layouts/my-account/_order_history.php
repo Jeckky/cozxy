@@ -11,11 +11,11 @@ use yii\helpers\Html;
                 <select name="OrderHistory" id="OrderHistory" class="form-control size14" style="padding:3px;"  onchange="SortOrder(this)">
                     <option value="">Select show order history</option>
                     <option value="show1">Last 10 orders</option>
-                    <option value="show2">15 วันที่ผ่านมา</option>
-                    <option value="show3">ระยะ 30 วันที่ผ่านมา</option>
-                    <option value="show4">ระยะ 6 เดือนที่ผ่านมา</option>
-                    <option value="show5">คำสั่งซื้อในปี 2017</option>
-                    <option value="show6">คำสั่งซื้อในปี 2016</option>
+                    <option value="show2">Last 15 days</option>
+                    <option value="show3">Last 30 days</option>
+                    <option value="show4">Last 6 months</option>
+                    <option value="show5">Orders placed in 2017</option>
+                    <option value="show6">Orders placed in 2016</option>
                 </select>
             </div>
         </div>

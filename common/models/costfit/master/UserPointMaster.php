@@ -12,6 +12,8 @@ use Yii;
     * @property string $currentPoint
     * @property string $totalPoint
     * @property string $totalMoney
+    * @property string $currentCozxySystemPoint
+    * @property string $totalCozxySystemPoint
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -33,7 +35,7 @@ public function rules()
 {
 return [
             [['userId', 'currentPoint', 'totalPoint', 'totalMoney'], 'required'],
-            [['userId', 'currentPoint', 'totalPoint', 'totalMoney', 'status'], 'integer'],
+            [['userId', 'currentPoint', 'totalPoint', 'totalMoney', 'currentCozxySystemPoint', 'totalCozxySystemPoint', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -49,6 +51,8 @@ return [
     'currentPoint' => Yii::t('user_point', 'Current Point'),
     'totalPoint' => Yii::t('user_point', 'Total Point'),
     'totalMoney' => Yii::t('user_point', 'Total Money'),
+    'currentCozxySystemPoint' => Yii::t('user_point', 'Current Cozxy System Point'),
+    'totalCozxySystemPoint' => Yii::t('user_point', 'Total Cozxy System Point'),
     'status' => Yii::t('user_point', 'Status'),
     'createDateTime' => Yii::t('user_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('user_point', 'Update Date Time'),

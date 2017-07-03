@@ -21,7 +21,7 @@ use common\models\costfit\Order;
             $isMoreItem = common\helpers\ReturnProduct::isMoreItem($model['orderNo']);
             if ($flag == true) {
                 if ($isMoreItem == true) {
-                    echo " " . yii\helpers\Html::a(' Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-yellow',
+                    echo " " . yii\helpers\Html::a('<i class="fa fa-repeat" aria-hidden="true"></i> Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-black btn-xs',
                         'title' => Yii::t('app', 'return')]);
                 }
             }

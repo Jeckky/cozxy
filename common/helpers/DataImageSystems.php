@@ -18,12 +18,10 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class DataImageSystems
-{
+class DataImageSystems {
 
     //put your code here
-    public static function DataImageMaster($masterId, $suppliersId, $imageSvg)
-    {
+    public static function DataImageMaster($masterId, $suppliersId, $imageSvg) {
         $productImagesThumbnail1 = '';
         //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
         //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
@@ -37,7 +35,7 @@ class DataImageSystems
                     if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
                         $productImagesThumbnail1 = \Yii::$app->homeUrl . $productImages->imageThumbnail1;
                     } else {
-                        if (isset($masterId)) {
+                        if (isset($suppliersId) && !empty($suppliersId)) {
                             //$ImagesMaster = \common\models\costfit\ProductImage::find()->where('productId=' . $masterId)->one();
                             $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
                             if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
@@ -54,7 +52,7 @@ class DataImageSystems
                         }
                     }
                 } else {
-                    if (isset($masterId)) {
+                    if (isset($suppliersId) && !empty($suppliersId)) {
                         $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->one();
                         if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
                             if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
@@ -71,17 +69,22 @@ class DataImageSystems
                 }
             } else {
 
-                $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
+                if (isset($suppliersId) && !empty($suppliersId)) {
+                    $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $suppliersId)->orderBy('ordering asc')->one();
 
-                if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
-                    if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
-                        $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+                    if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
+                        if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
+                            $productImagesThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;
+                        } else {
+                            $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
+                        }
                     } else {
                         $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
                     }
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
                 }
+
 
                 //$productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg($imageSvg);
             }
@@ -92,8 +95,7 @@ class DataImageSystems
         return $productImagesThumbnail1;
     }
 
-    public static function DataImageMasterViewsProdcuts($producmasterId, $productSuppId, $imageSvg1, $imageSvg2)
-    {
+    public static function DataImageMasterViewsProdcuts($producmasterId, $productSuppId, $imageSvg1, $imageSvg2) {
 
         $imagAll = [];
         /*

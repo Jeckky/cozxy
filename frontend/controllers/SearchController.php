@@ -31,8 +31,7 @@ class SearchController extends MasterController {
         $category = $_GET['c'];
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        //echo '<pre>';
-        //print_r($params);
+
         $categoryId = $params['categoryId'];
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(

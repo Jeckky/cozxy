@@ -14,6 +14,8 @@ use Yii;
     * @property integer $paymentMethod
     * @property string $image
     * @property string $topUpNo
+    * @property integer $type
+    * @property string $description
     * @property integer $isFromCheckout
     * @property string $resultCode
     * @property string $resultMessageEn
@@ -38,10 +40,12 @@ return 'top_up';
 public function rules()
 {
 return [
-            [['userId', 'money', 'point', 'paymentMethod', 'isFromCheckout', 'status'], 'integer'],
+            [['userId', 'money', 'point', 'paymentMethod', 'type', 'isFromCheckout', 'status'], 'integer'],
+            [['type', 'description'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['image', 'resultMessageEn', 'resultMessageTh'], 'string', 'max' => 255],
             [['topUpNo'], 'string', 'max' => 13],
+            [['description'], 'string', 'max' => 100],
             [['resultCode'], 'string', 'max' => 5],
         ];
 }
@@ -59,6 +63,8 @@ return [
     'paymentMethod' => Yii::t('top_up', 'Payment Method'),
     'image' => Yii::t('top_up', 'Image'),
     'topUpNo' => Yii::t('top_up', 'Top Up No'),
+    'type' => Yii::t('top_up', 'Type'),
+    'description' => Yii::t('top_up', 'Description'),
     'isFromCheckout' => Yii::t('top_up', 'Is From Checkout'),
     'resultCode' => Yii::t('top_up', 'Result Code'),
     'resultMessageEn' => Yii::t('top_up', 'Result Message En'),

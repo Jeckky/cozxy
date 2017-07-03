@@ -967,7 +967,7 @@ function SortOrder(selectObject) {
     }
 }
 
-function sortStoriesCozxy($userId, status) {
+function sortStoriesCozxy($userId, status, type) {
 
     if (status == 'price') {
         $sortStories = $('input:hidden:eq(0)', '.sort-stories-cozxy').val();
@@ -982,7 +982,7 @@ function sortStoriesCozxy($userId, status) {
     $.ajax({
         type: "POST",
         url: $baseUrl + "my-account/sort-stories?userId=" + $userId,
-        data: {'status': status, 'sort': $sortStories},
+        data: {'status': status, 'sort': $sortStories, 'type': type},
         success: function (data, status) {
 
             if (data == '') {
@@ -1000,3 +1000,71 @@ function sortStoriesCozxy($userId, status) {
 
 }
 
+
+function sortStoriesCompare(type, status, productPostId, productId) {
+    var $currencyType = type.value;
+    var $status = status;
+    var $postId = productPostId;
+
+    if ($status === 'price') {
+
+        var $sortStories = $("#sortStoriesPrice").val();
+        //var $sortStories = $('input:hidden:eq(1)', '.sort-stories-compare').val();
+    } else {
+        var $sortStories = '';
+        $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
+    }
+    var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/sort-compare-stories/",
+        //dataType: "JSON",
+        data: {'currency': CurrencyId, 'status': $status, 'postId': $postId, 'sort': $sortStories, 'productId': productId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.compare-price-ajax').html(data);
+                } else {
+                    $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+        }
+    });
+}
+
+
+function sortStoriesRecent($userId, status, type) {
+
+    if (status == 'view') {
+        $sortStories = $("#sortStoriesView").val();
+    } else if (status == 'stars') {
+        $sortStories = $("#sortStoriesStars").val();
+    }
+
+    var productId = $("#productId").val();
+    var productSupplierId = $("#productSupplierId").val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/sort-stories-recent?userId=" + $userId,
+        data: {'status': status, 'sort': $sortStories, 'type': type, 'productId': productId, 'productSupplierId': productSupplierId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.sort-stories-cozxy').html(data);
+                } else {
+                    $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+
+}

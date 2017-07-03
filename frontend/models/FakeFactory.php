@@ -198,7 +198,7 @@ class FakeFactory extends Model {
         $products = [];
 
         $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
-        ->groupBy(['productId'])->orderBy('productPostId desc')->limit($n)->all();
+        ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
             foreach ($productPostList as $items) {
