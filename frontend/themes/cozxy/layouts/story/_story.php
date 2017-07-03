@@ -8,7 +8,19 @@ use kartik\select2\Select2;
 $this->title = isset($productPost->title) ? 'Stories ' . $productPost->title : '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+    .btn-radio {
+        width: 100%;
+    }
+    .img-radio {
+        opacity: 0.5;
+        margin-bottom: 5px;
+    }
 
+    .space-20 {
+        margin-top: 20px;
+    }
+</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -37,10 +49,44 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
+                <?php
+                if (Yii::$app->user->id == $productPost->userId) {
+                    ?>
+                    <div id="1234" style="border-color:#fff;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <form class="form-horizontal" role="form" style="margin-bottom: 15px;">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
+                                                $productPost->encodeParams(
+                                                ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                ?>" style="padding: 6px 16px;">Edit My Stories</a>
+                                                <input type="checkbox" id="left-item" class="hidden">
+                                            </div>
+                                            <div class="col-xs-4">
+
+                                                <button type="button" class="btn btn-primary btn-radio">Add New Price</button>
+                                                <input type="checkbox" id="middle-item" class="hidden">
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
+                                                $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);
+                                                ?>" style="padding: 6px 16px;">View Product</a>
+                                                <input type="checkbox" id="right-item" class="hidden">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-
         </div>
-
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
@@ -64,3 +110,15 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('.btn-radio').click(function (e) {
+            $('.btn-radio').not(this).removeClass('active')
+                    .siblings('input').prop('checked', false)
+                    .siblings('.img-radio').css('opacity', '0.5');
+            $(this).addClass('active')
+                    .siblings('input').prop('checked', true)
+                    .siblings('.img-radio').css('opacity', '1');
+        });
+    });
+</script>
