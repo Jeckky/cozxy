@@ -44,7 +44,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 if ($model->supplierAddress->company != '') {
                                     return $model->supplierAddress->company;
                                 } else {
-                                    return $$model->supplierAddress->firstname . " " . $model->supplierAddress->lastname;
+                                    return $model->supplierAddress->firstname . " " . $model->supplierAddress->lastname;
                                 }
                             } else {
                                 return NULL;
