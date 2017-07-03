@@ -28,9 +28,9 @@ if (Yii::$app->controller->id == 'product') {
                         <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                     </a>
                 <?php } else { ?>
-                    <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                        <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                    </a>
+    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']  ?>);" id="addItemToWishlist-<?php // $model['productSuppId']  ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                        <div class="col-xs-4 heart-<?php // $model['productSuppId']  ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                    </a>-->
                     <a href="" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
                         <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                     </a>
@@ -90,6 +90,7 @@ if (Yii::$app->controller->id == 'product') {
                     <div class="text-right" style="">
                         <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
+                        <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productSuppId'] ?>">
                     </div>
                 </div>
                 <div id="allGroup">

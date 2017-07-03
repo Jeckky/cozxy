@@ -281,6 +281,16 @@ class CartController extends MasterController {
             $res["status"] = FALSE;
             $res['errorCode'] = 1;
             $res["message"] = "This item is already in your Wishlist";
+            $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+            if (isset($ws)) {
+                $ws->delete();
+            }
+            $ch = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+            if (isset($ch)) {
+                $res['heartbeat'] = 1;
+            } else {
+                $res['heartbeat'] = 0;
+            }
         }
         return \yii\helpers\Json::encode($res);
     }
