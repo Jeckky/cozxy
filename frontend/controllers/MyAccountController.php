@@ -21,9 +21,10 @@ class MyAccountController extends MasterController {
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
         $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
-        $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', '')]);
+        $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
+            'pagination' => ['defaultPageSize' => 2]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
-        $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
+        $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $statusText = '';
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost', 'trackingOrder'));
     }
@@ -193,25 +194,26 @@ class MyAccountController extends MasterController {
     public function actionOrderSort() {
 
         $status = Yii::$app->request->post('status');
+        $selectSearch = Yii::$app->request->post('selectSearch');
         if ($status == 'show1') { // Last 10 orders
             $statusText = 'Last 10 orders';
         } else if ($status == 'show2') { // 15วันที่ผ่านมา
-            $statusText = '15 วันที่ผ่านมา';
+            $statusText = 'Last 15 days';
         } else if ($status == 'show3') { // ระยะ 30 วันที่ผ่านมา
-            $statusText = 'ระยะ 30 วันที่ผ่านมา';
+            $statusText = 'Last 30 days';
         } else if ($status == 'show4') { // ระยะ 6 เดือนที่ผ่านมา
-            $statusText = 'ระยะ 6 เดือนที่ผ่านมา';
+            $statusText = 'Last 6 months';
         } else if ($status == 'show5') { // คำสั่งซื้อในปี 2017
-            $statusText = 'คำสั่งซื้อในปี 2017';
+            $statusText = 'Orders placed in 2017';
         } else if ($status == 'show6') { // คำสั่งซื้อในปี 2016
-            $statusText = 'คำสั่งซื้อในปี 2016';
+            $statusText = 'Orders placed in 2016';
         } else {
             $statusText = '';
         }
 
         $orderHistorySort = new ArrayDataProvider([
-            'allModels' => DisplayMyAccount::myAccountOrderHistorySort($status, ''),
-            'pagination' => ['defaultPageSize' => 10]
+            'allModels' => DisplayMyAccount::myAccountOrderHistorySort($status, $selectSearch),
+            'pagination' => ['defaultPageSize' => 2]
         ]);
 
         return $this->renderAjax("@app/themes/cozxy/layouts/my-account/_order_history", ['orderHistory' => $orderHistorySort, 'statusText' => $statusText]);
@@ -323,6 +325,36 @@ class MyAccountController extends MasterController {
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
             'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+    }
+
+    public function actionDetailTracking($hash) {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+
+        $orderId = Yii::$app->request->get('OrderNo');
+        $this->title = 'Cozxy.com | Order Purchase';
+        $this->subTitle = 'Home';
+        $this->subSubTitle = "Order Purchase";
+
+
+        if (isset($params['orderId'])) {
+            $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')->one();
+            $issetPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+            if (isset($issetPoint)) {
+                $userPoint = $issetPoint;
+            } else {
+                $userPoint = $this->CreateUserPoint($order->userId);
+            }
+
+            $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking($params['orderId'])]);
+            //$orderItem = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
+            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint', 'trackingOrder'));
+        } else {
+            return $this->redirect(['my-account']);
+        }
     }
 
 }
