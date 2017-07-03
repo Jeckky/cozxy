@@ -151,44 +151,59 @@ class DisplayMyAccount extends Model {
         return $products;
     }
 
-    public static function myAccountOrderHistorySort($status, $type) {
+    public static function myAccountOrderHistorySort($status, $orderNo) {
         $products = [];
+        $whereArray = [];
+
+        $whereArray["userId"] = Yii::$app->user->id;
+        if ($orderNo != '') {
+            $whereArray["order.orderNo"] = $orderNo;
+        }
+
         if ($status == 'show1') { // Last 10 orders
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
             ->orderBy([
                 'orderId' => SORT_DESC //Need this line to be fixed
             ])
             ->all();
         } else if ($status == 'show2') { // 15วันที่ผ่านมา
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('order.createDateTime BETWEEN (NOW() - INTERVAL 15 DAY) AND NOW()')
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 15 DAY) AND NOW()')
             ->all();
         } else if ($status == 'show3') { // ระยะ 30 วันที่ผ่านมา
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('order.createDateTime BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()')
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()')
             ->all();
         } else if ($status == 'show4') { // ระยะ 6 เดือนที่ผ่านมา
             // (NOW() - INTERVAL 1 MONTH) <= (NOW() )
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('(NOW() - INTERVAL 6 MONTH) <= NOW()')
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER)
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and (NOW() - INTERVAL 6 MONTH) <= NOW()')
             ->all();
         } else if ($status == 'show5') { // คำสั่งซื้อในปี 2017
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('YEAR(order.createDateTime) <=  YEAR(order.createDateTime)')
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)')
             ->all();
         } else if ($status == 'show6') { // คำสั่งซื้อในปี 2016
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
-            ->andWhere('YEAR(order.createDateTime) <=  YEAR(order.createDateTime)-1  ')
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)-1  ')
             ->all();
         } else {
             $dataOrder = Order::find()
-            ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "  and orderNo= '" . $type . "' ")
             ->all();
         }
 

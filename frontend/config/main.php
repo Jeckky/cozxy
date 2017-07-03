@@ -91,6 +91,7 @@ return [
                 'search/<title>/<hash>' => 'search/index',
                 'content/<hash>' => 'content/index',
                 'story/update-stories/<hash>' => 'story/update-stories/',
+                'my-account/detail-tracking/<hash>/<title>' => 'my-account/detail-tracking',
             ],
         ],
         /**

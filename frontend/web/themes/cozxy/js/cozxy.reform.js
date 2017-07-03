@@ -943,13 +943,42 @@ function sortCozxy($categoryId, status) {
     });
 }
 
-function SortOrder(selectObject) {
+function SortOrder1(selectObject) {
     var value = selectObject.value;
     if (OrderHistory != '') {
         $.ajax({
             type: "POST",
             url: $baseUrl + "my-account/order-sort/",
             data: {'status': value},
+            success: function (data, status) {
+
+                if (data == '') {
+                    $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                } else {
+                    if (status == "success") {
+                        $('.order-list').html(data);
+                    } else {
+                        $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                    }
+                }
+
+            }
+        });
+    }
+}
+
+function SortOrder() {
+    var selectObject = $('#OrderHistory').val();
+    var selectSearch = $('#searchOrderNo').val();
+    //var value = selectObject.value;
+
+    //console.log(selectObject + ' : ' + selectSearch);
+
+    if (OrderHistory != '') {
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "my-account/order-sort/",
+            data: {'status': selectObject, 'selectSearch': selectSearch},
             success: function (data, status) {
 
                 if (data == '') {

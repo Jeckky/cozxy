@@ -24,7 +24,7 @@ use yii\filters\AccessControl;
 class DisplayMyTracking {
 
     //put your code here
-    public static function productShowTracking() {
+    public static function productShowTracking($orderId) {
         /*
           - on process
           order status  5 6 7 8 9 10 11 12 13 14 15
@@ -40,7 +40,7 @@ class DisplayMyTracking {
         ->select(' count(`order_item`.quantity) as QIquantity , `user`.firstname ,`user`.lastname, `order`.*  ')
         ->join(" LEFT JOIN", "order_item", "order_item.orderId  = order.orderId")
         ->join(" LEFT JOIN", "user", "user.userId  = order.userId")
-        ->where('order.userId=' . Yii::$app->user->id . ' and order.status >=5')
+        ->where('order.userId=' . Yii::$app->user->id . ' and order.status >=5 and order.orderId=' . $orderId)
         ->groupBy('orderId')
         ->all();
         foreach ($orderTracking as $items) {
