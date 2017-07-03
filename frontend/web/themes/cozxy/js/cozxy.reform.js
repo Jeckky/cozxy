@@ -158,45 +158,127 @@ $(document).on('click', '#confirm-topup', function (e) {
         }
     }
 });
+
 /*
  * Use : Wishlist
  * @param {type} id
  * @returns {undefined}
  */
-function addItemToWishlist(id) {
+function addItemToWishlist(id, shelfId, flag) {
     var $pId = id;
     var str = window.location.pathname;
     var res = str.split("/");
     //console.log(window.location.pathname);
     //console.log(res);
     //console.log(res[1]);
-    $.ajax({
-        type: "POST",
-        dataType: "JSON",
-        url: $baseUrl + "cart/add-wishlist",
-        data: {productId: $pId},
-        success: function (data)
-        {
-            if (data.status) {
-                //$('.wishlist-message').addClass('visible');
-                var $this = $('#addItemToWishlist-' + $pId);
-                if (res[1] != 'search') {
-                    $this.button('loading');
-                    setTimeout(function () {
-                        $this.button('reset');
-                    }, 8000);
-                } else {
+    if (flag == 0) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "cart/add-wishlist",
+            data: {productId: $pId, shelfId: shelfId},
+            success: function (data)
+            {
+                if (data.status) {
+                    //$('.wishlist-message').addClass('visible');
+                    var $this = $('#addItemToWishlist-' + $pId);
+                    /*if (res[1] != 'search') {
+                     alert('133334');
+                     $this.button('loading');
+                     setTimeout(function () {
+                     $this.button('reset');
+                     }, 8000);
+                     } else {*/
+                    // alert('13333');
                     $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
                     $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
+                    $('#heart-o' + $pId + shelfId).hide();
+                    $('#heartbeat' + $pId + shelfId).show();
+                    //}
+                    //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
+                } else {
+                    alert(data.message);
                 }
-                //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
-            } else {
-                alert(data.message);
             }
-        }
-    });
+        });
+    } else {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "cart/delete-wishlist-shelf",
+            data: {productId: $pId, shelfId: shelfId},
+            success: function (data)
+            {
+                if (data.status) {
+                    alert('success');
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
 }
-
+/*
+ *  modal add Wish List Group
+ * By sak
+ */
+$(document).on('click', '#showCreateWishList', function (e) {
+    var newWishList = $(this).parent().find('#newWishList');
+    var hideCreateWishList = $(this).parent().find('#hideCreateWishList');
+    hideCreateWishList.show();
+    $(this).hide();
+    newWishList.show('fade-in');
+});
+$(document).on('click', '#cancel-newWishList', function (e) {
+    var newWishList = $(this).parent().parent().parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
+    var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
+    showCreateWishList.show();
+    hideCreateWishList.hide();
+    newWishList.hide('fade-in');
+});
+$(document).on('click', '#hideCreateWishList', function (e) {
+    var newWishList = $(this).parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().find('#showCreateWishList');
+    showCreateWishList.show();
+    $(this).hide();
+    newWishList.hide('fade-in');
+});
+$(document).on('keyup', '#wishListName', function (e) {
+    var createNew = $(this).parent().find('#create-newWishList');
+    if ($(this).val() != '') {
+        createNew.removeAttr('disabled');
+    } else {
+        createNew.attr('disabled', 'disabled');
+    }
+});
+$(document).on('click', '#create-newWishList', function (e) {
+    var title = $(this).parent().parent().find('#wishListName').val();
+    var allGroup = $(this).parent().parent().parent().find('#allGroup');
+    var newWishList = $(this).parent().parent().parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
+    var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
+    if (title != '') {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "shelf/create/",
+            data: {'title': title},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#wishListName').val('');
+                    showCreateWishList.show();
+                    hideCreateWishList.hide();
+                    newWishList.hide('fade-in');
+                    allGroup.html(data.text);
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    }
+});
 /*
  * Use : product show all
  * @param {type} id
