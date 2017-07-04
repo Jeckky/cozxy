@@ -1,9 +1,15 @@
 <?php
 
+use common\models\costfit\ProductShelf;
+
+$fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+?>
+<?php
+
 function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
     $quantity = 1;
     echo '
-		<div class="col-md-3 col-sm-6 item-to-wishlist-' . $id . '">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
@@ -34,24 +40,50 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     ';
 }
 ?>
+<?php
+$allshelf = ProductShelf::wishListGroup();
+if (isset($allshelf) && count($allshelf) > 0) {
+    $i = 0;
+    foreach ($allshelf as $shelf):
+        ?>
+        <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? '' : 'none' ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
+        <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $shelf->title ?> <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
+        <?php if ($i == 0) { ?>
+            <div id="wishListShelf-<?= $shelf->productShelfId ?>">
+                <?php
+                /*
+                 * By Taninut.Bm
+                 * 24-05-2017
+                 */
+                /* if (count($wishList->allModels) > 0) {
+                  foreach ($wishList->allModels as $key => $value) {
+                  product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                  }
+                  } else {
 
-<div class="row">
-    <?php
-    //product('01', 'imgs/product01.jpg', 'PREMIUM BAG', 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG', '43,000 THB', '59,000 THB', 'product-view.php');
-    //product('02', 'imgs/product07.jpg', 'PREMIUM BAG', 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG', '43,000 THB', '59,000 THB', 'product-view.php');
-    // product('03', 'imgs/product03.jpg', 'PREMIUM BAG', 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG', '43,000 THB', '59,000 THB', 'product-view.php');
-    //product('04', 'imgs/product04.jpg', 'PREMIUM BAG', 'QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG', '43,000 THB', '59,000 THB', 'product-view');
-
-    /*
-     * By Taninut.Bm
-     * 24-05-2017
-     */
-    if (count($wishList->allModels) > 0) {
-        foreach ($wishList->allModels as $key => $value) {
-            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                  } */
+                $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
+                if (isset($wishlists) && count($wishlists) > 0) {
+                    foreach ($wishlists as $value):
+                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                    endforeach;
+                }
+                ?>
+            </div>
+        <?php } else {
+            ?>
+            <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
+            <?php
         }
-    } else {
-
-    }
-    ?>
-</div>
+        $i++;
+    endforeach;
+}
+?>

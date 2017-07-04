@@ -903,7 +903,7 @@ class ProductGroupController extends ProductMasterController
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
             return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
         } else {
-            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"]]);
         }
     }
 
@@ -956,7 +956,8 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+//        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+        return $this->redirect(['index']);
     }
 
     public function actionUpdateAllCategoryProduct()
