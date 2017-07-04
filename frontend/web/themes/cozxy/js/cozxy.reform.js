@@ -299,6 +299,9 @@ $(document).on('click', '#create-newWishList', function (e) {
         });
     }
 });
+$(document).on('click', '#closeWishlistModal', function (e) {
+    // window.location = $baseUrl;
+});
 /*
  * Use : product show all
  * @param {type} id

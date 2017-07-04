@@ -34,7 +34,7 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
     public static function wishListGroup() {
         if (Yii::$app->user->id) {
             $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1")
-                    ->orderBy('createDateTime')
+                    ->orderBy('createDateTime DESC')
                     ->all();
             if (isset($shelf) && count($shelf) > 0) {
                 return $shelf;
