@@ -42,7 +42,7 @@ class ShelfController extends MasterController {
             if (isset($allShelf) && count($allShelf) > 0) {
                 foreach ($allShelf as $shelf):
                     $isAdd = ProductShelf::isAddToWishList($productSuppId, $shelf->productShelfId);
-                    $text1 = "<div class = 'row'>
+                    $text1 = "<hr><div class = 'row'>
 <a href = 'javascript:addItemToWishlist($productSuppId,$shelf->productShelfId,$isAdd);' id = 'addItemToWishlist-$productSuppId' style = 'color: #000;'>
 <div class = 'col-lg-8 col-md-8 col-sm-8 col-xs-8 pull-left text-left'>$shelf->title</div>";
                     if ($isAdd == 1) {

@@ -20,13 +20,13 @@ class MyAccountController extends MasterController {
         $billingAddress = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountBillingAddress('', \common\models\costfit\Address::TYPE_BILLING)]);
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
-        $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList(12)]);
+        // $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList(12)]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
             'pagination' => ['defaultPageSize' => 50]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $statusText = '';
-        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'wishList', 'orderHistory', 'productPost', 'trackingOrder'));
+        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder'));
     }
 
     public function actionEditPersonalDetail() {
@@ -409,7 +409,7 @@ class MyAccountController extends MasterController {
             $res['status'] = true;
         } else {
             $group = \common\models\costfit\ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
-            $res['text'] = '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> There are no item in "' . $group->title . '"</div>';
+            $res['text'] = '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h3>There are no item in "' . $group->title . '"</h3></div>';
             $res['status'] = true;
         }
         return \yii\helpers\Json::encode($res);
