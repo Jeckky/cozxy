@@ -98,31 +98,31 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             </a>
                         </div>
                     <?php } ?>
-                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
+                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/role'))) { ?>
                         <div class="col-lg-2">
-                            <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-danger text-left" style="font-size: 14px;width: 100%;text-align: left">
-                                <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                                    <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <a href="<?= Yii::$app->homeUrl . "/management/role" ?>" class="btn btn-lg btn-danger text-left" style="font-size: 14px;width: 100%;text-align: left">
+                                <p><i class="fa fa-lock" style="font-size:30px;"></i>
+                                    <span class="pull-right" style="font-size: 16px;font-weight: bold">Role</span><br>
                                     <span class="pull-right" style="text-decoration: underline">View >></span>
                                 </p>
                             </a>
                         </div>
                     <?php } ?>
-                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
+                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/product/product-group'))) { ?>
                         <div class="col-lg-2">
-                            <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-info text-left" style="font-size: 14px;width: 100%;text-align: left">
-                                <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                                    <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <a href="<?= Yii::$app->homeUrl . "product/product-group" ?>" class="btn btn-lg btn-info text-left" style="font-size: 14px;width: 100%;text-align: left">
+                                <p><i class="fa fa-list" style="font-size:30px;"></i>
+                                    <span class="pull-right" style="font-size: 16px;font-weight: bold">Product</span><br>
                                     <span class="pull-right" style="text-decoration: underline">View >></span>
                                 </p>
                             </a>
                         </div>
                     <?php } ?>
-                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
+                    <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/user/user'))) { ?>
                         <div class="col-lg-2">
-                            <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-default text-left" style="font-size: 14px;width: 100%;text-align: left">
-                                <p><i class="fa fa-archive" style="font-size:30px;"></i>
-                                    <span class="pull-right" style="font-size: 16px;font-weight: bold"><?= count(1) ?> โครงการ</span><br>
+                            <a href="<?= Yii::$app->homeUrl . "/user/user" ?>" class="btn btn-lg btn-default text-left" style="font-size: 14px;width: 100%;text-align: left">
+                                <p><i class="fa fa-user" style="font-size:30px;"></i>
+                                    <span class="pull-right" style="font-size: 16px;font-weight: bold">User</span><br>
                                     <span class="pull-right" style="text-decoration: underline">View >></span>
                                 </p>
                             </a>
