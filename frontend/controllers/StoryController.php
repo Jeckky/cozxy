@@ -48,6 +48,7 @@ class StoryController extends MasterController {
         //echo '<pre>';
         //print_r($comparePrice);
 
+        $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         /*
          * Product Post View : Count Story
          */
@@ -64,7 +65,7 @@ class StoryController extends MasterController {
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {

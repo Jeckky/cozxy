@@ -1,3 +1,9 @@
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+?>
 <h1 class="page-header">Compare Price</h1>
 <div class="row">
     <div class="col-md-6">
@@ -60,5 +66,74 @@
                 ?>
             </tbody>
         </table>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="gridSystemModalLabel"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Compare Price</h4>
+            </div>
+            <!-- Cart -->
+            <div class="row">
+                <!-- Details -->
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="size24">&nbsp;</div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Shop Name</label>
+                            <input type="text" id="productpost-shopname" class="form-control" name="ProductPost[shopName]" placeholder="Shop Name" autocomplete="off">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Price</label>
+                                    <input type="text" id="productpost-price" class="form-control" name="ProductPost[price]" placeholder="Price" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-top: 7px;">
+                                    <label for="exampleInputEmail1">Country</label>
+                                    <?php
+                                    echo kartik\select2\Select2::widget([
+                                        'name' => 'country',
+                                        'value' => '',
+                                        'data' => $country,
+                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...']
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group"  style="margin-top: 7px;">
+                                    <label for="exampleInputEmail1">Currency</label>
+                                    <?php
+                                    echo kartik\select2\Select2::widget([
+                                        'name' => 'currency',
+                                        'value' => '',
+                                        'data' => $currency,
+                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...']
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="size24">&nbsp;</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
+                &nbsp;
+                <a href="javascript:ComparePrice('Add')" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+            </div>
+
+        </div>
     </div>
 </div>

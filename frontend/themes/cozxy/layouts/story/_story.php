@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
+
                     <div class="size12">&nbsp;</div>
 
                 </div>
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 compare-price-ajax">
-                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
+                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
                         </div>
                     </div>
                 </div>
@@ -65,7 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                             </div>
                                             <div class="col-xs-4">
-                                                <button type="button" class="btn btn-success btn-radio"><i class="fa fa-plus" aria-hidden="true"></i> Add New Price</button>
+                                                <a class="btn btn-success btn-radio" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
+                                                </a>
                                                 <input type="checkbox" id="middle-item" class="hidden">
                                             </div>
                                             <div class="col-xs-4">
