@@ -86,13 +86,13 @@ use yii\bootstrap\ActiveForm;
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Shop Name</label>
-                            <input type="text" id="productpost-shopname" class="form-control" name="ProductPost[shopName]" placeholder="Shop Name" autocomplete="off">
+                            <input type="text" id="productpost-shopname" class="form-control" name="ProductPost[shopName]" placeholder="Price" autocomplete="off">
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Price</label>
-                                    <input type="text" id="productpost-price" class="form-control" name="ProductPost[price]" placeholder="Price" autocomplete="off">
+                                    <input type="text" id="productpost-price" class="form-control" name="ProductPost[shopName]" placeholder="Price" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -100,10 +100,10 @@ use yii\bootstrap\ActiveForm;
                                     <label for="exampleInputEmail1">Country</label>
                                     <?php
                                     echo kartik\select2\Select2::widget([
-                                        'name' => 'country',
+                                        'name' => 'countryModal',
                                         'value' => '',
                                         'data' => $country,
-                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...']
+                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...', 'id' => 'productpost-country']
                                     ]);
                                     ?>
                                 </div>
@@ -113,10 +113,10 @@ use yii\bootstrap\ActiveForm;
                                     <label for="exampleInputEmail1">Currency</label>
                                     <?php
                                     echo kartik\select2\Select2::widget([
-                                        'name' => 'currency',
+                                        'name' => 'currencyModal',
                                         'value' => '',
                                         'data' => $currency,
-                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...']
+                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
                                     ?>
                                 </div>
@@ -127,11 +127,11 @@ use yii\bootstrap\ActiveForm;
                     <div class="size24">&nbsp;</div>
                 </div>
             </div>
-
+            <div id="productpost-productPostId"></div>
             <div class="modal-footer">
                 <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
-                <a href="javascript:ComparePrice('Add')" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
+                <a href="javascript:ComparePriceStory('Add')" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">Update</a>
             </div>
 
         </div>

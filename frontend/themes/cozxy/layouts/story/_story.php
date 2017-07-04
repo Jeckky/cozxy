@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                             </div>
                                             <div class="col-xs-4">
-                                                <a class="btn btn-success btn-radio" data-toggle="modal" data-target=".bs-example-modal-lg">
+                                                <a class="btn btn-success btn-radio" data-toggle="modal" data-target=".bs-compare-price-modal-lg">
                                                     <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
                                                 </a>
                                                 <input type="checkbox" id="middle-item" class="hidden">
@@ -110,15 +110,3 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('.btn-radio').click(function (e) {
-            $('.btn-radio').not(this).removeClass('active')
-                    .siblings('input').prop('checked', false)
-                    .siblings('.img-radio').css('opacity', '0.5');
-            $(this).addClass('active')
-                    .siblings('input').prop('checked', true)
-                    .siblings('.img-radio').css('opacity', '1');
-        });
-    });
-</script>

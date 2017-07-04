@@ -158,7 +158,6 @@ $(document).on('click', '#confirm-topup', function (e) {
         }
     }
 });
-
 /*
  * Use : Wishlist
  * @param {type} id
@@ -205,7 +204,6 @@ function addItemToWishlist(id, shelfId) {
             }
         }
     });
-
 }
 /*
  *  modal add Wish List Group
@@ -294,7 +292,6 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $puls = $('#cart-plus-' + $productSuppId);
     var str = window.location.pathname;
     var res = str.split("/");
-
     if (res[1] != 'search') {
         $this.button('loading');
         setTimeout(function () {
@@ -612,7 +609,6 @@ $(".upload-payment-slip").click(function () {
     //alert($(this).data('id'));
 
 });
-
 function ShowImages(img, productImageId) {
     var src = img.src;
     $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
@@ -637,20 +633,16 @@ $(document).on('click', '#default-coin', function (e) {
     var systemCoin2 = $(this).parent().find("#systemCoin2");
     var system = $(this).parent().find("#system");
     var textPay = $(this).parent().find("#text-pay");
-
     systemCoin.val(choose.val());
     system.val(choose.val());
     systemCoin2.val(choose.val());
     textPay.html(choose.val());
-
 });
-
 $(document).on('click', '#chooseCoin', function () {
     var choose = $(this).parent().find("#inputSystemCoin");
     choose.removeAttr("disabled");
     //$("#inputSystemCoin").hide();
 });
-
 $(document).on('click', '#allCoin', function () {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     choose.attr("disabled", "disabled");
@@ -665,7 +657,6 @@ $(document).on('click', '#allCoin', function () {
     systemCoin2.val(allCoin.val());
     textPay.html(allCoin.val());
 });
-
 $(document).on('keypress', '#inputSystemCoin', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -674,7 +665,6 @@ $(document).on('keypress', '#inputSystemCoin', function (e) {
         return false;
     }
 });
-
 $(document).on('click', '#confirm-payCoin', function (e) {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
@@ -704,12 +694,10 @@ $(document).on('click', '#confirm-payCoin', function (e) {
             {
             }
         });
-
     }
 
 
 });
-
 $(document).on('click', '#cancel-payCoin', function (e) {
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
@@ -729,9 +717,7 @@ $(document).on('click', '#cancel-payCoin', function (e) {
         {
         }
     });
-
 });
-
 $('#isPay').change(function () {
     var orderId = $(this).parent().find("#orderId").val();
     if ($(this).is(':checked')) {
@@ -815,7 +801,6 @@ function filterPriceCozxy() {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     //$min = $('input:hidden:eq(0)', '#amount-min').val();
     //$max = $('input:hidden:eq(1)', '#amount-min').val();
     //$categoryId = $('input:hidden:eq(2)', '#amount-min').val();
@@ -839,7 +824,6 @@ function filterPriceCozxy() {
                 if (status == "success") {
 
                     $('.brand-price-filter').html(data);
-
                 } else {
                     alert('error');
                 }
@@ -858,7 +842,6 @@ function filterBrandCozxy($categoryId) {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
@@ -890,7 +873,6 @@ function sortCozxy($categoryId, status) {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
@@ -1016,7 +998,6 @@ function sortStoriesCozxy($userId, status, type) {
 
         }
     });
-
 }
 
 
@@ -1024,7 +1005,6 @@ function sortStoriesCompare(type, status, productPostId, productId) {
     var $currencyType = type.value;
     var $status = status;
     var $postId = productPostId;
-
     if ($status === 'price') {
 
         var $sortStories = $("#sortStoriesPrice").val();
@@ -1034,7 +1014,6 @@ function sortStoriesCompare(type, status, productPostId, productId) {
         $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
     }
     var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
-
     $.ajax({
         type: "POST",
         url: $baseUrl + "story/sort-compare-stories/",
@@ -1055,7 +1034,6 @@ function sortStoriesCompare(type, status, productPostId, productId) {
     });
 }
 
-
 function sortStoriesRecent($userId, status, type) {
 
     if (status == 'view') {
@@ -1066,7 +1044,6 @@ function sortStoriesRecent($userId, status, type) {
 
     var productId = $("#productId").val();
     var productSupplierId = $("#productSupplierId").val();
-
     $.ajax({
         type: "POST",
         url: $baseUrl + "my-account/sort-stories-recent?userId=" + $userId,
@@ -1085,6 +1062,93 @@ function sortStoriesRecent($userId, status, type) {
 
         }
     });
-
 }
 
+$(".bs-example-modal-lg-x").click(function () {
+    var postId = $(this).attr("data-id")
+    var path = $baseUrl + "story/compare-price-story-modified/";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'postId': postId, },
+        success: function (data, status) {
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                $('#productpost-shopname').val(JSONObject.shopName);
+                $('#productpost-price').val(JSONObject.price);
+                $('#productpost-country').val(JSONObject.country).trigger('change');
+                $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
+                console.log(JSONObject.country);
+                console.log(JSONObject.currency);
+                $(".bs-example-modal-lg").modal("show");
+            } else {
+                alert('error');
+            }
+        }
+    });
+});
+
+function bsExampleModalLgX(xx) {
+    var postId = xx;
+    var path = $baseUrl + "story/compare-price-story-modified/";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'postId': postId, },
+        success: function (data, status) {
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                $('#productpost-shopname').val(JSONObject.shopName);
+                $('#productpost-price').val(JSONObject.price);
+                $('#productpost-country').val(JSONObject.country).trigger('change');
+                $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
+                console.log(JSONObject.country);
+                console.log(JSONObject.currency);
+                $(".bs-example-modal-lg").modal("show");
+            } else {
+                alert('error');
+            }
+        }
+    });
+}
+
+function ComparePriceStory() {
+    var productPostId = $('#productPostId').val();
+    var shopName = $('#productpost-shopname').val();
+    var price = $('#productpost-price').val();
+    var country = $('#productpost-country').val();
+    var currency = $('#productpost-currency').val();
+    var path = $baseUrl + "story/compare-price-story/";
+    $data = '';
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency},
+        success: function (data, status) {
+            // console.log(data.price);
+            var JSONObject = JSON.parse(data);
+            if (status == "success") {
+                // $data += "<tr id='compare-price-12'>";
+                $data += "<td>1</td>";
+                $data += "<td>" + JSONObject.country + "</td>";
+                $data += " <td>" + JSONObject.shopName + "</td>";
+                $data += "<td>" + JSONObject.price + "</td>";
+                $data += "<td>";
+                $data += "" + JSONObject.LocalPrice + "<code>";
+                $data += '<a class="text-danger"  onclick="bsExampleModalLgX(' + productPostId + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                $data += "&nbsp;Edit Price</a></code></td>";
+                //$data += "</tr>";
+                $('#compare-price-' + productPostId).html($data);
+                $(".bs-example-modal-lg").modal("hide");
+
+            } else {
+                alert('error');
+            }
+        }
+    });
+}
