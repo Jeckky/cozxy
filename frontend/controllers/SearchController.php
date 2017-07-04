@@ -37,13 +37,13 @@ class SearchController extends MasterController {
         $productCanSell = new ArrayDataProvider(
         [
             'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 12],
+            'pagination' => ['defaultPageSize' => 15],
         ]);
 
         $productNotSell = new ArrayDataProvider(
         [
             'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 12],
+            'pagination' => ['defaultPageSize' => 15],
         ]);
         $productSupplierId = '';
 
