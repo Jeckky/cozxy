@@ -956,7 +956,8 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+//        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+        return $this->redirect(['index']);
     }
 
     public function actionUpdateAllCategoryProduct()
