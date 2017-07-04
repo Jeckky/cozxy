@@ -389,7 +389,7 @@ class StoryController extends MasterController {
             $update = \common\models\costfit\ProductPost::updateAll(
             [ 'shopName' => $shopName, 'shopName' => $shopName, 'price' => $price, 'country' => $country, 'currency' => $currency], ['userId' => Yii::$app->user->identity->userId, 'productPostId' => $productPostId]);
         } else {
-            
+
         }
 
         $sort = '';
