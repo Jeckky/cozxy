@@ -74,7 +74,7 @@ class ProductGroupController extends ProductMasterController
 //                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
                 ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
                 ->groupBy("product.productId")
-                ->orderBy("product.updateDateTime DESC");
+                ->orderBy("ps.updateDateTime DESC");
             }
         } else {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
@@ -90,7 +90,7 @@ class ProductGroupController extends ProductMasterController
                     ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
                     ->groupBy("ps.userId , pc.parentId")
-                    ->orderBy("product.updateDateTime DESC");
+                    ->orderBy("ps.updateDateTime DESC");
 //                ->count();
 //                throw new \yii\base\Exception($query);
                 } else {
@@ -903,7 +903,7 @@ class ProductGroupController extends ProductMasterController
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
             return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
         } else {
-            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"]]);
+            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"]]);
         }
     }
 
@@ -956,7 +956,8 @@ class ProductGroupController extends ProductMasterController
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+//        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'step' => $model->step]);
+        return $this->redirect(['index']);
     }
 
     public function actionUpdateAllCategoryProduct()
