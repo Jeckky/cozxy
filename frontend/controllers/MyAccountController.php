@@ -20,7 +20,7 @@ class MyAccountController extends MasterController {
         $billingAddress = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountBillingAddress('', \common\models\costfit\Address::TYPE_BILLING)]);
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
-        $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
+        $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList(12)]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
             'pagination' => ['defaultPageSize' => 2]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
@@ -324,7 +324,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -355,6 +355,64 @@ class MyAccountController extends MasterController {
         } else {
             return $this->redirect(['my-account']);
         }
+    }
+
+    public function actionShowWishlistGroup() {
+        $shelfId = $_POST['shelfId'];
+        $res = [];
+        $idHide = [];
+        $text = '';
+        $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
+        if (isset($wishlists) && count($wishlists) > 0) {
+            foreach ($wishlists as $item):
+                $quantity = 1;
+                $text .= '
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . '">
+			<div class="product-box">
+				<div class="product-img text-center">
+					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
+				</div>
+				<div class="product-txt">
+					<p class="size16"  style="height:50px;"><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
+                if ($item['price_s'] > 0) {
+                    $text .= '<p>
+						<span class="size18">' . $item['price_s'] . '</span> &nbsp;
+						<span class="size14 onsale">' . $item['price_s'] . '</span>
+					</p>';
+                } else {
+                    $text .= '<p>
+						<span class="size18">&nbsp</span> &nbsp;
+						<span class="size14">&nbsp;</span>
+					</p>';
+                }
+                $text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
+                if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
+                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $item['receiveType'] . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                } else {
+                    $text .= '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                }
+                $text .= '</div></div></div>';
+            endforeach;
+            $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
+            if (isset($productShelf) && count($productShelf) > 0) {
+                $i = 0;
+                foreach ($productShelf as $id):
+                    $idHide[$i] = $id->productShelfId;
+                    $i++;
+                endforeach;
+                $res['idHide'] = $idHide;
+            }else {
+                $res['idHide'] = false;
+            }
+
+            $res['text'] = $text;
+            $res['status'] = true;
+        } else {
+            $group = \common\models\costfit\ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
+            $res['text'] = '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> There are no item in "' . $group->title . '"</div>';
+            $res['status'] = true;
+        }
+        return \yii\helpers\Json::encode($res);
     }
 
 }

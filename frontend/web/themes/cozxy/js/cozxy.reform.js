@@ -211,6 +211,38 @@ function addItemToWishlist(id, shelfId) {
  *  modal add Wish List Group
  * By sak
  */
+function showWishlistGroup(shelfId, type) {
+    if (type == 1) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/show-wishlist-group",
+            data: {shelfId: shelfId},
+            success: function (data)
+            {
+                $('#showGroup-' + shelfId).hide();
+                $('#hideGroup-' + shelfId).show();
+                $('#wishListShelf-' + shelfId).html(data.text);
+                $('#wishListShelf-' + shelfId).hide();
+                $('#wishListShelf-' + shelfId).show('fade-in');
+                if (data.idHide) {
+                    var i;
+                    for (i = 0; i < data.idHide.length; i++) {
+                        $('#showGroup-' + data.idHide[i]).show();
+                        $('#hideGroup-' + data.idHide[i]).hide();
+                        $('#wishListShelf-' + data.idHide[i]).hide('slow');
+                    }
+                }
+            }
+        });
+    } else {
+
+        $('#hideGroup-' + shelfId).hide();
+        $('#wishListShelf-' + shelfId).hide('slow');
+        $('#showGroup-' + shelfId).show();
+    }
+
+}
 $(document).on('click', '#showCreateWishList', function (e) {
     var newWishList = $(this).parent().find('#newWishList');
     var hideCreateWishList = $(this).parent().find('#hideCreateWishList');
