@@ -22,7 +22,7 @@ class MyAccountController extends MasterController {
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
         $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList('', '')]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
-            'pagination' => ['defaultPageSize' => 2]]);
+            'pagination' => ['defaultPageSize' => 50]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $statusText = '';
@@ -213,7 +213,7 @@ class MyAccountController extends MasterController {
 
         $orderHistorySort = new ArrayDataProvider([
             'allModels' => DisplayMyAccount::myAccountOrderHistorySort($status, $selectSearch),
-            'pagination' => ['defaultPageSize' => 2]
+            'pagination' => ['defaultPageSize' => 50]
         ]);
 
         return $this->renderAjax("@app/themes/cozxy/layouts/my-account/_order_history", ['orderHistory' => $orderHistorySort, 'statusText' => $statusText]);
