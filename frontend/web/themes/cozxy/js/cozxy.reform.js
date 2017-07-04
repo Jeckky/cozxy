@@ -1091,29 +1091,34 @@ $(".bs-example-modal-lg-x").click(function () {
 });
 
 function bsExampleModalLgX(xx) {
+
     var postId = xx;
-    var path = $baseUrl + "story/compare-price-story-modified/";
-    $.ajax({
-        url: path,
-        type: "POST",
-        //dataType: "JSON",
-        data: {'postId': postId, },
-        success: function (data, status) {
-            if (status == "success") {
-                var JSONObject = JSON.parse(data);
-                $('#productpost-shopname').val(JSONObject.shopName);
-                $('#productpost-price').val(JSONObject.price);
-                $('#productpost-country').val(JSONObject.country).trigger('change');
-                $('#productpost-currency').val(JSONObject.currency).trigger('change');
-                $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
-                console.log(JSONObject.country);
-                console.log(JSONObject.currency);
-                $(".bs-example-modal-lg").modal("show");
-            } else {
-                alert('error');
+    if (xx == 0) {
+        $(".bs-example-modal-lg").modal("show");
+    } else {
+        var path = $baseUrl + "story/compare-price-story-modified/";
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'postId': postId, },
+            success: function (data, status) {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
+                    $('#productpost-shopname').val(JSONObject.shopName);
+                    $('#productpost-price').val(JSONObject.price);
+                    $('#productpost-country').val(JSONObject.country).trigger('change');
+                    $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                    $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
+                    console.log(JSONObject.country);
+                    console.log(JSONObject.currency);
+                    $(".bs-example-modal-lg").modal("show");
+                } else {
+                    alert('error');
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function ComparePriceStory() {

@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                             </div>
                                             <div class="col-xs-4">
-                                                <a class="btn btn-success btn-radio" data-toggle="modal" data-target=".bs-compare-price-modal-lg">
+                                                <a class="btn btn-success btn-radio" onclick="bsExampleModalLgXxx(0)">
                                                     <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
                                                 </a>
                                                 <input type="checkbox" id="middle-item" class="hidden">
