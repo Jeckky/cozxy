@@ -48,6 +48,7 @@ class StoryController extends MasterController {
         //echo '<pre>';
         //print_r($comparePrice);
 
+        $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         /*
          * Product Post View : Count Story
          */
@@ -64,7 +65,7 @@ class StoryController extends MasterController {
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
     }
 
     public function actionWriteYourStory($hash) {
@@ -345,7 +346,7 @@ class StoryController extends MasterController {
 
         $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId)->one();
         $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
-
+        $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         if ($currencyId != '') {
             //$comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
             $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productId, $currencyId, $sort)]);
@@ -363,7 +364,48 @@ class StoryController extends MasterController {
             $sort = '';
             $icon = '';
         }
-        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
+        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
+    }
+
+    public function actionComparePriceStoryModified() {
+        $postId = Yii::$app->request->post('postId');
+        $comparePrice = \common\models\costfit\ProductPost::find()->where('productPostId =' . $postId)->one();
+
+        if (isset($comparePrice)) {
+            return json_encode($comparePrice->attributes);
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionComparePriceStory() {
+        $productPostId = Yii::$app->request->post('productPostId');
+        $shopName = Yii::$app->request->post('shopName');
+        $price = Yii::$app->request->post('price');
+        $country = Yii::$app->request->post('country');
+        $currency = Yii::$app->request->post('currency');
+
+        if ($productPostId == '') {
+            $update = \common\models\costfit\ProductPost::updateAll(
+            [ 'shopName' => $shopName, 'shopName' => $shopName, 'price' => $price, 'country' => $country, 'currency' => $currency], ['userId' => Yii::$app->user->identity->userId, 'productPostId' => $productPostId]);
+        } else {
+            
+        }
+
+        $sort = '';
+        $comparePrice = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $products = [];
+
+        $products['comparePriceChange'] = [
+            'userId' => $comparePrice['userId'],
+            'productPostId' => $comparePrice['productPostId'],
+            'country' => $comparePrice['country'],
+            'shopName' => $comparePrice['shopName'],
+            'price' => $comparePrice['price'],
+            'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($comparePrice['currency'], $price), 2)
+        ];
+
+        return json_encode($products['comparePriceChange']);
     }
 
 }

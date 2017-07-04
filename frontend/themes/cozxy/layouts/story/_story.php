@@ -8,7 +8,19 @@ use kartik\select2\Select2;
 $this->title = isset($productPost->title) ? 'Stories ' . $productPost->title : '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+    .btn-radio {
+        width: 100%;
+    }
+    .img-radio {
+        opacity: 0.5;
+        margin-bottom: 5px;
+    }
 
+    .space-20 {
+        margin-top: 20px;
+    }
+</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -22,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
+
                     <div class="size12">&nbsp;</div>
 
                 </div>
@@ -33,14 +46,47 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 compare-price-ajax">
-                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
+                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
                         </div>
                     </div>
                 </div>
+                <?php
+                if (Yii::$app->user->id == $productPost->userId) {
+                    ?>
+                    <div id="1234" style="border-color:#fff;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <form class="form-horizontal" role="form" style="margin-bottom: 15px;">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
+                                                $productPost->encodeParams(
+                                                ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a class="btn btn-success btn-radio" onclick="bsExampleModalLgXxx(0)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
+                                                </a>
+                                                <input type="checkbox" id="middle-item" class="hidden">
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a class="btn btn-warning btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
+                                                $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);
+                                                ?>" style="padding: 6px 16px;"><i class="fa fa-eye" aria-hidden="true"></i> View Product</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-
         </div>
-
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">

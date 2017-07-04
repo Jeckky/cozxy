@@ -326,6 +326,7 @@ class DisplayMyStory extends Model {
             ->all();
             foreach ($productPost as $value) {
                 $products[$value->productPostId] = [
+                    'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,
@@ -339,6 +340,7 @@ class DisplayMyStory extends Model {
             ->all();
             foreach ($productPost as $value) {
                 $products[$value->productPostId] = [
+                    'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,

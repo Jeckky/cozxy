@@ -35,13 +35,7 @@ use yii\helpers\Html;
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
-    <?php
-    yii\widgets\Pjax::begin([
-        'id' => 'order-history',
-        'enablePushState' => false, // to disable push state
-        'enableReplaceState' => false // to disable replace state
-    ]);
-    ?>
+    <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">
@@ -52,7 +46,7 @@ use yii\helpers\Html;
                     <th></th>
                 </tr>
             </thead>
-            <tbody class="size16 size14-xs">
+            <tbody class="size16 size14-xs" id="order-history">
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $orderHistory,

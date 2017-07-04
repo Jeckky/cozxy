@@ -90,7 +90,7 @@
             } else {
                 $text = 'Star';
             }
-            echo '<br><span style="color:#000;font-size: 15pt;">' . $value[0] . ' ' . $text . '</span>';
+            echo '<br><span style="color:#000;font-size: 15px;">' . $value[0] . ' ' . $text . '</span>';
         }
         ?>
         <input type="hidden" id="userId" value="<?= $productPost->userId ?>">

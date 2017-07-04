@@ -19,7 +19,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 
 <div class="container">
     <div class="size32">&nbsp;</div>
-    <div class="row">
+    <div class="row" style="background-color: #fff;">
 
         <div class="col-lg-9 col-md-8 cart-body">
             <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order]) ?>
@@ -28,7 +28,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             if (isset($trackingOrder) && !empty($trackingOrder)) {
                 ?>
                 <h4>
-                    <strong>Tracking Order</strong>
+                    <strong><i class="fa fa-truck" aria-hidden="true"></i> Tracking Order</strong>
                 </h4>
                 <div class="col-lg-12 col-md-12 cart-body">
                     <?= $this->render('@app/themes/cozxy/layouts/my-account/_tracking', ['trackingOrder' => $trackingOrder]) ?>
