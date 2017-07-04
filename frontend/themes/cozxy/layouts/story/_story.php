@@ -65,11 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                             </div>
                                             <div class="col-xs-4">
-                                                <button type="button" class="btn btn-primary btn-radio"><i class="fa fa-plus" aria-hidden="true"></i> Add New Price</button>
+                                                <button type="button" class="btn btn-success btn-radio"><i class="fa fa-plus" aria-hidden="true"></i> Add New Price</button>
                                                 <input type="checkbox" id="middle-item" class="hidden">
                                             </div>
                                             <div class="col-xs-4">
-                                                <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
+                                                <a class="btn btn-warning btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
                                                 $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-eye" aria-hidden="true"></i> View Product</a>
                                             </div>
