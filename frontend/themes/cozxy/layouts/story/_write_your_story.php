@@ -111,20 +111,20 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Shop Name</label>
-                                    <?php echo $form->field($model, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
+                                    <?php echo $form->field($modelComparePrice, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Price</label>
-                                            <?php echo $form->field($model, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group" style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Country</label>
                                             <?php
-                                            echo $form->field($model, 'country')->widget(kartik\select2\Select2::classname(), [
+                                            echo $form->field($modelComparePrice, 'country')->widget(kartik\select2\Select2::classname(), [
                                                 //'options' => ['id' => 'address-countryid'],
                                                 'data' => $country,
                                                 'pluginOptions' => [
@@ -140,7 +140,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                         <div class="form-group"  style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Currency</label>
                                             <?php
-                                            echo $form->field($model, 'currency')->widget(kartik\select2\Select2::classname(), [
+                                            echo $form->field($modelComparePrice, 'currency')->widget(kartik\select2\Select2::classname(), [
                                                 //'options' => ['id' => 'address-countryid'],
                                                 'data' => $currency,
                                                 'pluginOptions' => [

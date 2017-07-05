@@ -145,10 +145,10 @@ class StoryController extends MasterController {
                     $comparePrice->productPostId = Yii::$app->db->lastInsertID;
                     $comparePrice->userId = Yii::$app->user->identity->userId;
                     $comparePrice->productId = $parentId;
-                    $comparePrice->shopName = $_POST["ProductPost"]["shopName"];
-                    $comparePrice->price = $_POST["ProductPost"]["price"];
-                    $comparePrice->country = $_POST["ProductPost"]["country"];
-                    $comparePrice->currency = $_POST["ProductPost"]["currency"];
+                    $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
+                    $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
+                    $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
+                    $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
                     $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
                     $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
                     $comparePrice->status = 1;
