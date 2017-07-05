@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use common\models\costfit\ProductShelf;
+use common\models\costfit\ProductSuppliers;
 
 $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
@@ -112,23 +114,35 @@ $val = rand(1, 10);
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
 
                             <?php
-                            if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
-                                ?>
-                                <a class="b btn-g999 size16">
-                                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
-                                </a>
-                            <?php } else { ?>
-                                <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" class="b btn-g999 size16" id="addItemToWishlist-<?= $model['productSuppId'] ?>" data-loading-text="<a><i class='fa fa-heartbeat' aria-hidden='true'></i></a>" style="margin:24px auto 12px">+
-                                    <i class="fa fa-heart"></i></a>
-                                <?php } ?>
-                                <?php
-                                if ($model['result'] > 0) {
-                                    echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
-                                <i class="fa fa-cart-plus"></i></a>';
-                                } else {
-                                    echo ' ';
+                            if (Yii::$app->user->id) {
+                                if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
+                                    ?>
+                                    <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
+                                    </a>
+                                <?php } else { ?>
+                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                 ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                 ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                 ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                    </a>-->
+                                    <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:24px auto 12px">
+                                        <div class="heart-<?= $model['productSuppId'] ?>">+ <i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                    </a>
+                                    <?php
                                 }
+                            } else {
                                 ?>
+                                <a href="<?= Yii::$app->homeUrl . 'site/login' ?>" style="margin:24px auto 12px">
+                                    <div class="b btn-g999 size15">+ <i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                </a>
+                            <?php } ?>
+                            <?php
+                            if ($model['result'] > 0) {
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:24px auto 12px">+
+                                <i class="fa fa-cart-plus"></i></a>';
+                            } else {
+                                echo ' ';
+                            }
+                            ?>
                             <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
                                  <i class = "fa fa-bookmark-o"></i></a>
                             -->
@@ -158,3 +172,75 @@ $(".productOption").on("change", function(){
 
 ');
 ?>
+<div class="modal fade" id="wishListGroup<?= $model['productSuppId'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
+                </button>
+                <h3>Save to Wish List</h3>
+            </div>
+            <div class="modal-body" style="padding: 40px;">
+                <a style="cursor: pointer;" id="showCreateWishList">Create New Wish List Group</a>
+                <a style="cursor: pointer;display: none;" id="hideCreateWishList" >Create New Wish List Group</a>
+                <div id="newWishList" style="display: none;">
+
+                    <h4>Name</h4>
+                    <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
+                    <div class="text-right" style="">
+                        <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
+                        <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productSuppId'] ?>">
+                    </div>
+                </div>
+                <div id="allGroup">
+                    <?php
+                    $whishListGroup = ProductShelf::wishListGroup();
+                    if (isset($whishListGroup) && count($whishListGroup) > 0) {
+                        foreach ($whishListGroup as $group):
+                            $isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
+                            ?> <hr>
+                            <div class="row">
+                                <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>,<?= $group->productShelfId ?>,<?= $isAdd ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pull-left text-left">
+                                        <?= $group->title ?>
+                                    </div>
+                                    <?php
+                                    //$isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
+                                    if ($isAdd) {
+                                        ?>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                        </div>
+                                    <?php } ?>
+                                </a>
+                            </div>
+
+                            <?php
+                        endforeach;
+                    }
+                    ?>
+                </div>
+                <div col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-left><hr style=""></div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl . ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) ?>" style="border: #cccccc solid thin;"></div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
+                        <?= ProductSuppliers::productSupplierName($model['productSuppId'])->title ?><br>
+                        <?= ProductSuppliers::productSupplierName($model['productSuppId'])->shortDescription ?>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>
