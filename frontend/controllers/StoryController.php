@@ -356,7 +356,7 @@ class StoryController extends MasterController {
         $postId = Yii::$app->request->post('postId');
         $sort = Yii::$app->request->post('sort');
         $productId = Yii::$app->request->post('productId');
-
+        $modelComparePrices = new \common\models\costfit\ProductPostComparePrice();
         $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $postId . ' and productId=' . $productId)->one();
         $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
@@ -374,10 +374,12 @@ class StoryController extends MasterController {
             $sort = 'SORT_DESC';
             $icon = 'up';
         } else {
-            $sort = '';
-            $icon = '';
+            //$sort = '';
+            //$icon = '';
+            $sort = 'SORT_ASC';
+            $icon = 'down';
         }
-        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
+        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
     }
 
     public function actionComparePriceStoryModified() {

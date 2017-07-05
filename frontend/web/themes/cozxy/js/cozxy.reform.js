@@ -1041,7 +1041,6 @@ function sortStoriesCompare(type, status, productPostId, productId) {
     var $status = status;
     var $postId = productPostId;
     if ($status === 'price') {
-
         var $sortStories = $("#sortStoriesPrice").val();
         //var $sortStories = $('input:hidden:eq(1)', '.sort-stories-compare').val();
     } else {

@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
         <div class="col-md-12 text-left"><i class="fa fa-align-left" aria-hidden="true"></i> Sort</div><br>
         <div class="col-md-12 text-left">
             <a href="javascript:sortStoriesCompare(this,'price', '<?= $productPost->productPostId ?>', '<?= $productPost->productId ?>')">
-                Sort by price&nbsp;<i class="fa fa-angle-down<?= isset($icon) ? $icon : '' ?>" aria-hidden="true"></i></a>
+                Sort by price&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i></a>
         </div>
         <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
     </div>
