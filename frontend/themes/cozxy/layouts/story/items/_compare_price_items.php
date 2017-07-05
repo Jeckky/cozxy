@@ -8,7 +8,7 @@
         <?php
         if (Yii::$app->user->id == $model['userId']) {
             ?>
-            &nbsp;<code><a class="text-danger" onclick="bsExampleModalLgX(<?= $model['productPostId'] ?>)"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit Price</a></code>
+            &nbsp;<code><a class="text-danger" onclick="bsExampleModalLgX(<?= $model['productPostId'] ?>, 'edit')"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit Price</a></code>
         <?php } ?>
     </td>
 </tr>
