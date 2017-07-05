@@ -36,14 +36,14 @@ use yii\bootstrap\ActiveForm;
 
 <div class="row" id="compare">
     <div class="col-md-12  " id="showData">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered " id="table-compare-price-cozxy">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Country</th>
                     <th>Place</th>
                     <th>Price</th>
-                    <th>Local  Price</th>
+                    <th>Local Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +66,8 @@ use yii\bootstrap\ActiveForm;
                 ?>
             </tbody>
         </table>
+        <input type="hidden" name="productPostId" id="productPostId" value="<?= $productPost->productPostId ?>">
+        <input type="hidden" name="productId" id="productId" value="<?= $productPost->productId ?>">
     </div>
 </div>
 

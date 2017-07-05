@@ -1125,17 +1125,16 @@ $(".bs-example-modal-lg-x").click(function () {
     });
 });
 
-function bsExampleModalLgX(xx, type) {
+function CozxyComparePriceModernBest(id, type, dataIndex) {
 
-    var postId = xx;
-    if (xx == 0) {
+    var postId = id;
+
+    if (postId == 0) {
         $('#productpost-shopname').val('');
         $('#productpost-price').val('');
         $('#productpost-country').val('');
         $('#productpost-currency').val('');
-        $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">');
-
-
+        $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '"> ');
         $(".bs-example-modal-lg").modal("show");
     } else {
         var path = $baseUrl + "story/compare-price-story-modified/";
@@ -1143,7 +1142,7 @@ function bsExampleModalLgX(xx, type) {
             url: path,
             type: "POST",
             //dataType: "JSON",
-            data: {'postId': postId, },
+            data: {'postId': postId, 'type': type},
             success: function (data, status) {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
@@ -1151,9 +1150,9 @@ function bsExampleModalLgX(xx, type) {
                     $('#productpost-price').val(JSONObject.price);
                     $('#productpost-country').val(JSONObject.country).trigger('change');
                     $('#productpost-currency').val(JSONObject.currency).trigger('change');
-                    $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '"> <input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
-                    console.log(JSONObject.country);
-                    console.log(JSONObject.currency);
+                    $('#productpost-productPostId').html('<input type="hidden" name="dataIndex" id="dataIndex" value="' + dataIndex + '"><input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">  <input type="hidden" name="comparePriceId" id="comparePriceId" value="' + JSONObject.comparePriceId + '">');
+                    //console.log(JSONObject.country);
+                    //console.log(JSONObject.currency);
                     $(".bs-example-modal-lg").modal("show");
                 } else {
                     alert('error');
@@ -1170,31 +1169,70 @@ function ComparePriceStory() {
     var country = $('#productpost-country').val();
     var currency = $('#productpost-currency').val();
     var statusPrice = $('#statusPrice').val();
+    var productId = $('#productId').val();
+    var comparePriceId = $('#comparePriceId').val();
+    var dataIndex = $('#dataIndex').val();
+    //var tRow = document.getElementById("compare-price-").getElementsByTagName("tr");
+    //alert(productPostId);
+    //alert(idTds);
+
+
     var path = $baseUrl + "story/compare-price-story/";
     $data = '';
     if (statusPrice == 'add') {
         alert('status : add new price');
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency, 'statusPrice': statusPrice, 'productId': productId},
+            success: function (data, status) {
+                // console.log(data.price);
+                var JSONObject = JSON.parse(data);
+                if (status == "success") {
+                    var table = document.getElementById("table-compare-price-cozxy");
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var rowCount = table.rows.length;
+
+                    cell1.innerHTML = rowCount - 1;
+                    cell2.innerHTML = JSONObject.country;
+                    cell3.innerHTML = JSONObject.shopName
+                    cell4.innerHTML = JSONObject.price;
+                    cell5.innerHTML = JSONObject.LocalPrice + '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    $('#compare-price-' + productPostId).append($data);
+                    $(".bs-example-modal-lg").modal("hide");
+
+                } else {
+                    alert('error');
+                }
+            }
+        });
     } else {
         $.ajax({
             url: path,
             type: "POST",
             //dataType: "JSON",
-            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency},
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency, 'statusPrice': statusPrice, 'comparePriceId': comparePriceId},
             success: function (data, status) {
                 // console.log(data.price);
                 var JSONObject = JSON.parse(data);
                 if (status == "success") {
-                    // $data += "<tr id='compare-price-12'>";
-                    $data += "<td>1</td>";
+                    //$data += "<tr id='compare-price-" + JSONObject.comparePriceId + "'>";
+                    $data += "<td>" + dataIndex + "</td>";
                     $data += "<td>" + JSONObject.country + "</td>";
                     $data += " <td>" + JSONObject.shopName + "</td>";
                     $data += "<td>" + JSONObject.price + "</td>";
                     $data += "<td>";
                     $data += "" + JSONObject.LocalPrice + "<code>";
-                    $data += '<a class="text-danger"  onclick="bsExampleModalLgX(' + productPostId + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    $data += '<a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
                     $data += "&nbsp;Edit Price</a></code></td>";
                     //$data += "</tr>";
-                    $('#compare-price-' + productPostId).html($data);
+                    $('#compare-price-' + JSONObject.comparePriceId).html($data);
                     $(".bs-example-modal-lg").modal("hide");
 
                 } else {

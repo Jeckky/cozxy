@@ -312,7 +312,7 @@ class DisplayMyStory extends Model {
         return count($view);
     }
 
-    public static function comparePrice($productId, $currency, $sort) {
+    public static function comparePrice($productPostId, $currency, $sort) {
         $products = [];
         $sortStr = "price ";
         if ($sort == 'SORT_ASC') {
@@ -321,11 +321,12 @@ class DisplayMyStory extends Model {
             $sortStr.= 'desc';
         }
         if (isset($currency)) {
-            $productPost = ProductPost::find()->where("productId=" . $productId . " and currency=" . $currency)
+            $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $productPostId . " and currency=" . $currency)
             ->orderBy($sortStr)
             ->all();
             foreach ($productPost as $value) {
-                $products[$value->productPostId] = [
+                $products[$value->comparePriceId] = [
+                    'comparePriceId' => $value->comparePriceId,
                     'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
@@ -335,11 +336,12 @@ class DisplayMyStory extends Model {
                 ];
             }
         } else {
-            $productPost = ProductPost::find()->where("productId=" . $productId)
+            $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $productPostId)
             ->orderBy($sortStr)
             ->all();
             foreach ($productPost as $value) {
-                $products[$value->productPostId] = [
+                $products[$value->comparePriceId] = [
+                    'comparePriceId' => $value->comparePriceId,
                     'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
@@ -349,9 +351,8 @@ class DisplayMyStory extends Model {
                 ];
             }
         }
-        //$dataProvider = new ActiveDataProvider([
-        //'query' => $productPost
-        //]);
+
+
         return $products;
     }
 
