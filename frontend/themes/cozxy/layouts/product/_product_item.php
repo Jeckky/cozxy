@@ -29,8 +29,8 @@ if (Yii::$app->controller->id == 'product') {
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']     ?>);" id="addItemToWishlist-<?php // $model['productSuppId']     ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']     ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']            ?>);" id="addItemToWishlist-<?php // $model['productSuppId']            ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']            ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
                         <a href="" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
@@ -141,9 +141,9 @@ if (Yii::$app->controller->id == 'product') {
                 </div>
                 <div col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-left><hr style=""></div>
                 <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><img src="<?= Yii::$app->homeUrl . ProductSuppliers::productImageSuppliers($model['productSuppId']) ?>" style="border: #cccccc solid thin;"></div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 text-left">
-                        <h3><?= ProductSuppliers::productSupplierName($model['productSuppId'])->title ?></h3>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl . ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) ?>" style="border: #cccccc solid thin;"></div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
+                        <?= ProductSuppliers::productSupplierName($model['productSuppId'])->title ?><br>
                         <?= ProductSuppliers::productSupplierName($model['productSuppId'])->shortDescription ?>
                     </div>
                 </div>
