@@ -1125,10 +1125,17 @@ $(".bs-example-modal-lg-x").click(function () {
     });
 });
 
-function bsExampleModalLgX(xx) {
+function bsExampleModalLgX(xx, type) {
 
     var postId = xx;
     if (xx == 0) {
+        $('#productpost-shopname').val('');
+        $('#productpost-price').val('');
+        $('#productpost-country').val('');
+        $('#productpost-currency').val('');
+        $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">');
+
+
         $(".bs-example-modal-lg").modal("show");
     } else {
         var path = $baseUrl + "story/compare-price-story-modified/";
@@ -1144,7 +1151,7 @@ function bsExampleModalLgX(xx) {
                     $('#productpost-price').val(JSONObject.price);
                     $('#productpost-country').val(JSONObject.country).trigger('change');
                     $('#productpost-currency').val(JSONObject.currency).trigger('change');
-                    $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
+                    $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '"> <input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
                     console.log(JSONObject.country);
                     console.log(JSONObject.currency);
                     $(".bs-example-modal-lg").modal("show");
@@ -1162,33 +1169,39 @@ function ComparePriceStory() {
     var price = $('#productpost-price').val();
     var country = $('#productpost-country').val();
     var currency = $('#productpost-currency').val();
+    var statusPrice = $('#statusPrice').val();
     var path = $baseUrl + "story/compare-price-story/";
     $data = '';
-    $.ajax({
-        url: path,
-        type: "POST",
-        //dataType: "JSON",
-        data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency},
-        success: function (data, status) {
-            // console.log(data.price);
-            var JSONObject = JSON.parse(data);
-            if (status == "success") {
-                // $data += "<tr id='compare-price-12'>";
-                $data += "<td>1</td>";
-                $data += "<td>" + JSONObject.country + "</td>";
-                $data += " <td>" + JSONObject.shopName + "</td>";
-                $data += "<td>" + JSONObject.price + "</td>";
-                $data += "<td>";
-                $data += "" + JSONObject.LocalPrice + "<code>";
-                $data += '<a class="text-danger"  onclick="bsExampleModalLgX(' + productPostId + ')"><i class=\'fa fa-pencil-square-o\'></i>';
-                $data += "&nbsp;Edit Price</a></code></td>";
-                //$data += "</tr>";
-                $('#compare-price-' + productPostId).html($data);
-                $(".bs-example-modal-lg").modal("hide");
+    if (statusPrice == 'add') {
+        alert('status : add new price');
+    } else {
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency},
+            success: function (data, status) {
+                // console.log(data.price);
+                var JSONObject = JSON.parse(data);
+                if (status == "success") {
+                    // $data += "<tr id='compare-price-12'>";
+                    $data += "<td>1</td>";
+                    $data += "<td>" + JSONObject.country + "</td>";
+                    $data += " <td>" + JSONObject.shopName + "</td>";
+                    $data += "<td>" + JSONObject.price + "</td>";
+                    $data += "<td>";
+                    $data += "" + JSONObject.LocalPrice + "<code>";
+                    $data += '<a class="text-danger"  onclick="bsExampleModalLgX(' + productPostId + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    $data += "&nbsp;Edit Price</a></code></td>";
+                    //$data += "</tr>";
+                    $('#compare-price-' + productPostId).html($data);
+                    $(".bs-example-modal-lg").modal("hide");
 
-            } else {
-                alert('error');
+                } else {
+                    alert('error');
+                }
             }
-        }
-    });
+        });
+    }
+
 }
