@@ -1,17 +1,17 @@
 <div class="sort-stories-cozxy">
     <div class="row sort-stories-cozxy-me">
         <div class="col-md-12 text-right sort-stories-cozxy">
-            <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
-                Sort by price&nbsp;<?php if ($isStatus == 'price') { ?>
-                <i class="fa fa-angle-<?= $icon ?>" aria-hidden="true"></i><?php } else { ?>
+            <!--<a href="javascript:sortStoriesCozxy(<?//= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
+                Sort by price&nbsp//php if ($isStatus == 'price') { ?>
+                <i class="fa fa-angle-<?//= $icon ?>" aria-hidden="true"></i><?//php } else { ?>
                 <i class="fa fa-angle-down" aria-hidden="true"></i>
-                <?php } ?>
-            </a>
+                <?//php } ?>
+            </a>-->
             <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
             <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view','myAccount')" style="color: #a79d9d;">
                 Sort by  view&nbsp;<?php if ($isStatus == 'view') { ?>
-                    <i class="fa fa-angle-<?= $icon ?>" aria-hidden="true"></i><?php } else { ?>
-                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <i class="fa fa-angle-<?= $icon ?>" aria-hidden="true"></i><?php } else { ?>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
                 <?php } ?></a>
             <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
             <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars','myAccount')" style="color: #a79d9d;">
