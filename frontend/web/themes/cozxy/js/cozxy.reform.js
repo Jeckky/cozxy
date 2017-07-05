@@ -1167,6 +1167,17 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
 }
 
 function ComparePriceStory() {
+    var $form = $("#default-add-new-compare-price-story"),
+            data = $form.data("yiiActiveForm");
+    $.each(data.attributes, function () {
+        this.status = 3;
+    });
+    $form.yiiActiveForm("validate");
+    var $this = $('#acheckoutNewBillingz');
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
     var productPostId = $('#productPostId').val();
     var shopName = $('#productpost-shopname').val();
     var price = $('#productpost-price').val();

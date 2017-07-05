@@ -38,7 +38,7 @@ return 'product_post_compare_price';
 public function rules()
 {
 return [
-            [['productPostId', 'userId', 'productSelfId', 'createDateTime'], 'required'],
+            [['productPostId', 'userId', 'productSelfId', 'shopName', 'price', 'country', 'currency', 'createDateTime'], 'required'],
             [['productPostId', 'productId', 'userId', 'productSelfId', 'price', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['shopName'], 'string', 'max' => 200],

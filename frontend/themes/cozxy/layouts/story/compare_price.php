@@ -74,9 +74,17 @@ use yii\bootstrap\ActiveForm;
 
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'default-add-new-compare-price-story',
+            'method' => 'POST',
+            'options' => ['enctype' => 'multipart/form-data']
+        ]);
+        ?>
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="gridSystemModalLabel"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Compare Price</h4>
             </div>
@@ -88,13 +96,13 @@ use yii\bootstrap\ActiveForm;
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Shop Name</label>
-                            <input type="text" id="productpost-shopname" class="form-control" name="ProductPost[shopName]" placeholder="Shop Name" autocomplete="off">
+                            <?= $form->field($modelComparePrices, 'shopName')->textInput([ 'class' => 'form-control', 'placeholder' => 'Shop Name', 'id' => 'productpost-shopname'])->label(FALSE); ?>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Price</label>
-                                    <input type="text" id="productpost-price" class="form-control" name="ProductPost[shopName]" placeholder="Price" autocomplete="off">
+                                    <?= $form->field($modelComparePrices, 'price')->textInput([ 'class' => 'form-control', 'placeholder' => 'Price', 'id' => 'productpost-price'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -129,13 +137,13 @@ use yii\bootstrap\ActiveForm;
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Location Latitude</label>
-                                    <input type="text" name="latitude" id="latitude" class="form-control" placeholder="Location (Lat)" autocomplete="off">
+                                    <?= $form->field($modelComparePrices, 'latitude')->textInput([ 'class' => 'form-control', 'placeholder' => 'Location (Lat)', 'id' => 'latitude'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group"  style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Location Longitude</label>
-                                    <input type="text" name="longitude" id="longitude" class="form-control" placeholder="Location (Long)" autocomplete="off">
+                                    <?= $form->field($modelComparePrices, 'longitude')->textInput([ 'class' => 'form-control', 'placeholder' => 'Location (Long)', 'id' => 'longitude'])->label(FALSE); ?>
                                 </div>
                             </div>
                         </div>
@@ -148,9 +156,10 @@ use yii\bootstrap\ActiveForm;
             <div class="modal-footer">
                 <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
-                <a href="javascript:ComparePriceStory()" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">Update</a>
+                <a href="javascript:ComparePriceStory()" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing Compare Price" style="padding:12px 32px; margin:24px auto 12px">Save</a>
             </div>
 
         </div>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

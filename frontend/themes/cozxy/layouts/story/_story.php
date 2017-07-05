@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-xs-12 compare-price-ajax">
                             <?php
                             ?>
-                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
+                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
                         </div>
                     </div>
                 </div>

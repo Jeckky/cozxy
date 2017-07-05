@@ -55,15 +55,12 @@ class StoryController extends MasterController {
         $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         $model = new Currency();
-        //if (isset($_GET['currencyId'])) {
-        //$comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
-        $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, isset($_GET['currencyId']) ? $_GET['currencyId'] : NULL, $sort)]);
-        //} else {
-        // $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
-        //$comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, null, $sort)]);
-        //}
 
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice'));
+        $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, isset($_GET['currencyId']) ? $_GET['currencyId'] : NULL, $sort)]);
+        $modelComparePrices = new \common\models\costfit\ProductPostComparePrice();
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact(
+        'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
+        );
     }
 
     public function actionWriteYourStory($hash) {

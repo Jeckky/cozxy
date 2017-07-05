@@ -331,7 +331,7 @@ class DisplayMyStory extends Model {
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,
-                    'price' => $value->price,
+                    'price' => number_format($value->price, 2),
                     'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
                     'latitude' => $value->latitude, 'longitude' => $value->longitude,
                 ];
@@ -347,7 +347,7 @@ class DisplayMyStory extends Model {
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,
-                    'price' => $value->price,
+                    'price' => number_format($value->price, 2),
                     'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
                     'latitude' => $value->price, 'longitude' => $value->longitude,
                 ];
