@@ -1134,6 +1134,8 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
         $('#productpost-price').val('');
         $('#productpost-country').val('');
         $('#productpost-currency').val('');
+        $('#latitude').val('');
+        $('#longitude').val('');
         $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '"> ');
         $(".bs-example-modal-lg").modal("show");
     } else {
@@ -1150,6 +1152,8 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
                     $('#productpost-price').val(JSONObject.price);
                     $('#productpost-country').val(JSONObject.country).trigger('change');
                     $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                    $('#latitude').val(JSONObject.latitude);
+                    $('#longitude').val(JSONObject.longitude);
                     $('#productpost-productPostId').html('<input type="hidden" name="dataIndex" id="dataIndex" value="' + dataIndex + '"><input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">  <input type="hidden" name="comparePriceId" id="comparePriceId" value="' + JSONObject.comparePriceId + '">');
                     //console.log(JSONObject.country);
                     //console.log(JSONObject.currency);
@@ -1171,6 +1175,10 @@ function ComparePriceStory() {
     var statusPrice = $('#statusPrice').val();
     var productId = $('#productId').val();
     var comparePriceId = $('#comparePriceId').val();
+
+    var latitude = $('#latitude').val();
+    var longitude = $('#longitude').val();
+
     var dataIndex = $('#dataIndex').val();
     //var tRow = document.getElementById("compare-price-").getElementsByTagName("tr");
     //alert(productPostId);
@@ -1180,12 +1188,16 @@ function ComparePriceStory() {
     var path = $baseUrl + "story/compare-price-story/";
     $data = '';
     if (statusPrice == 'add') {
-        alert('status : add new price');
+        // alert('status : add new price');
         $.ajax({
             url: path,
             type: "POST",
             //dataType: "JSON",
-            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency, 'statusPrice': statusPrice, 'productId': productId},
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
+                'country': country, 'currency': currency,
+                'statusPrice': statusPrice, 'productId': productId,
+                'latitude': latitude, 'longitude': longitude
+            },
             success: function (data, status) {
                 // console.log(data.price);
                 var JSONObject = JSON.parse(data);
@@ -1217,7 +1229,10 @@ function ComparePriceStory() {
             url: path,
             type: "POST",
             //dataType: "JSON",
-            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price, 'country': country, 'currency': currency, 'statusPrice': statusPrice, 'comparePriceId': comparePriceId},
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
+                'country': country, 'currency': currency, 'statusPrice': statusPrice,
+                'comparePriceId': comparePriceId, 'latitude': latitude, 'longitude': longitude
+            },
             success: function (data, status) {
                 // console.log(data.price);
                 var JSONObject = JSON.parse(data);

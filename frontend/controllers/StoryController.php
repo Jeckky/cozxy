@@ -76,6 +76,7 @@ class StoryController extends MasterController {
         $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
         $model = new \common\models\costfit\ProductPost(['scenario' => 'write_your_story']);
+        $modelComparePrice = new \common\models\costfit\ProductPostComparePrice(['scenario' => 'write_your_story']);
         $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
         ->orderBy('createDateTime')
         ->all(), 'productShelfId', 'title');
@@ -91,7 +92,7 @@ class StoryController extends MasterController {
             'shelf' => $shelf,
             'currency' => $currency,
             'country' => $country,
-            'model' => $model
+            'model' => $model, 'modelComparePrice' => $modelComparePrice
         ]);
     }
 
@@ -151,6 +152,8 @@ class StoryController extends MasterController {
                     $comparePrice->price = $_POST["ProductPost"]["price"];
                     $comparePrice->country = $_POST["ProductPost"]["country"];
                     $comparePrice->currency = $_POST["ProductPost"]["currency"];
+                    $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
+                    $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
                     $comparePrice->status = 1;
                     $comparePrice->createDateTime = new \yii\db\Expression('NOW()');
                     $comparePrice->updateDateTime = new \yii\db\Expression('NOW()');
@@ -357,15 +360,15 @@ class StoryController extends MasterController {
         $sort = Yii::$app->request->post('sort');
         $productId = Yii::$app->request->post('productId');
 
-        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId)->one();
+        $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $postId . ' and productId=' . $productId)->one();
         $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         if ($currencyId != '') {
             //$comparePrice = DisplayMyStory::comparePrice($productPost->productId, $_GET['currencyId']);
-            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productId, $currencyId, $sort)]);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($postId, $currencyId, $sort)]);
         } else {
             // $comparePrice = DisplayMyStory::comparePrice($productPost->productId, null);
-            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productId, null, $sort)]);
+            $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($postId, null, $sort)]);
         }
         if ($sort === 'SORT_DESC') {
             $sort = 'SORT_ASC';
@@ -400,10 +403,15 @@ class StoryController extends MasterController {
         $statusPrice = Yii::$app->request->post('statusPrice');
         $productId = Yii::$app->request->post('productId');
         $comparePriceId = Yii::$app->request->post('comparePriceId');
+
+        $latitude = Yii::$app->request->post('latitude');
+        $longitude = Yii::$app->request->post('longitude');
+
         $parentId = $productId; //ProductSuppliers::productParentId($productSuppId)->productId;
         if ($statusPrice == 'edit') {
             $update = \common\models\costfit\ProductPostComparePrice::updateAll(
-            [ 'shopName' => $shopName, 'shopName' => $shopName, 'price' => $price, 'country' => $country, 'currency' => $currency], ['userId' => Yii::$app->user->identity->userId,
+            [ 'shopName' => $shopName, 'shopName' => $shopName, 'price' => $price,
+                'country' => $country, 'currency' => $currency, 'latitude' => $latitude, 'longitude' => $longitude], ['userId' => Yii::$app->user->identity->userId,
                 'productPostId' => $productPostId,
                 'comparePriceId' => $comparePriceId]
             );
@@ -419,6 +427,8 @@ class StoryController extends MasterController {
             $storyComparePrice->price = $price;
             $storyComparePrice->country = $country;
             $storyComparePrice->currency = $currency;
+            $storyComparePrice->latitude = $latitude;
+            $storyComparePrice->longitude = $longitude;
             $storyComparePrice->status = 1;
             $storyComparePrice->createDateTime = new \yii\db\Expression('NOW()');
             $storyComparePrice->updateDateTime = new \yii\db\Expression('NOW()');

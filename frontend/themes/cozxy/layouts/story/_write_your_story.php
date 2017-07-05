@@ -114,13 +114,13 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                     <?php echo $form->field($model, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Price</label>
                                             <?php echo $form->field($model, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group" style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Country</label>
                                             <?php
@@ -136,7 +136,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group"  style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Currency</label>
                                             <?php
@@ -159,12 +159,16 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                     <input type="file" name="story[image]" class="fullwidth" placeholder="Shop Name" required>
                                 </div>-->
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6"><label for="exampleInputEmail1">Location (Lat,Long)</label>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Location (Lat,Long)</label>
-                                            <input type="text" name="firstname" class="fullwidth" placeholder="Location (Lat,Long)">
+                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)'])->label(FALSE); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <?php echo $form->field($modelComparePrice, 'longitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (longitude)'])->label(FALSE); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-12">

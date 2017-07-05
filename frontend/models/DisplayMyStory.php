@@ -332,7 +332,8 @@ class DisplayMyStory extends Model {
                     'country' => $value->country,
                     'place' => $value->shopName,
                     'price' => $value->price,
-                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
+                    'latitude' => $value->latitude, 'longitude' => $value->longitude,
                 ];
             }
         } else {
@@ -347,7 +348,8 @@ class DisplayMyStory extends Model {
                     'country' => $value->country,
                     'place' => $value->shopName,
                     'price' => $value->price,
-                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
+                    'latitude' => $value->price, 'longitude' => $value->longitude,
                 ];
             }
         }

@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <?php
-                if (Yii::$app->user->id == $productPost->userId) {
+                if (isset(Yii::$app->user->id)) {
                     ?>
                     <div id="1234" style="border-color:#fff;">
                         <div class="container">

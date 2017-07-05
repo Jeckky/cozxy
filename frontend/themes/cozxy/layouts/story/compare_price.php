@@ -125,6 +125,21 @@ use yii\bootstrap\ActiveForm;
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" style="margin-top: 7px;">
+                                    <label for="exampleInputEmail1">Location Latitude</label>
+                                    <input type="text" name="latitude" id="latitude" class="form-control" placeholder="Location (Lat)" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group"  style="margin-top: 7px;">
+                                    <label for="exampleInputEmail1">Location Longitude</label>
+                                    <input type="text" name="longitude" id="longitude" class="form-control" placeholder="Location (Long)" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="size24">&nbsp;</div>
                 </div>
