@@ -269,8 +269,6 @@ function changeMap(lats, lngs) {
 }
 ', \yii\web\View::POS_HEAD);
 
-
-
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
 
