@@ -429,13 +429,13 @@ function changeMap(lats, lngs) {
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
         zoom: 11,
-        mapTypeId: "hybrid"
+        //mapTypeId: "hybrid"
     });
 
     var marker = new google.maps.Marker({
         map: map,
         position: myLatLng,
-        title: "Hello World!"
+        title: "Location (Lat,Long)"
     });
 }
 ', \yii\web\View::POS_HEAD);

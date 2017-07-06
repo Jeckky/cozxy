@@ -236,13 +236,13 @@ function changeMap(lats, lngs) {
     //console.log(lats);
     //console.log(lngs);
     var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-    console.log(myLatLng);
+    //console.log(myLatLng);
     //document.getElementById("map").innerHTML = "Paragraph changed!";
     //$(".cart-detail").find("#map").html("xxxxxx");
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
-        zoom: 11,
-        mapTypeId: "hybrid"
+         zoom:18,
+        mapTypeId: "terrain"
     });
 
     var marker = new google.maps.Marker({
