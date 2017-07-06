@@ -238,16 +238,15 @@ function changeMap(lats, lngs) {
 
     if(lats != ""){
         $("input:hidden:eq(0)", ".compareprice-latitude").val(lats);
-
     }
 
     if(lngs != ""){
         $("input:hidden:eq(0)", ".compareprice-longitude").val(lngs);
-
     }
 
     var getLats =  $("#latitude").val();
     var getLngs = $("#longitude").val();
+    
     //console.log(getLats);
     //console.log(getLngs);
     var myLatLng = {lat: Number(getLats), lng: Number(getLngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
