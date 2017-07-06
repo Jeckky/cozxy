@@ -166,12 +166,12 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value,\'\')'])->label(FALSE); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php echo $form->field($modelComparePrice, 'longitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (longitude)'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'longitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (longitude)', 'onchange' => 'changeMap(\'\',this.value)'])->label(FALSE); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -233,7 +233,8 @@ $this->registerJs('
         }
 
 function changeMap(lats, lngs) {
-
+    //console.log(lats);
+    //console.log(lngs);
     var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
     console.log(myLatLng);
     //document.getElementById("map").innerHTML = "Paragraph changed!";
@@ -256,3 +257,5 @@ function changeMap(lats, lngs) {
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
+
+
