@@ -176,6 +176,9 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             <input type="hidden" id="longitude" value="">
                                         </div>
                                     </div>
+                                    <div class="col-md-12 text-right">
+                                        <div id="productpostcompareprice-longitude-label" style="padding: 5px; color: red;"></div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div id="map" style="height:200px;"></div>
                                     </div>
@@ -200,7 +203,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                 <div class="col-md-6 text-right">
                     <input type="hidden" name="productSuppId" value="<?= $productSupplier->productSuppId ?>">
                     <input type="hidden" name="productSuppName" value="<?= $productSupplier->title ?>">
-                    <button class="btn-yellow" typ="submit">Save Story</button>
+                    <button class="btn-yellow save-story" typ="submit">Save Story</button>
                 </div>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
@@ -236,37 +239,40 @@ $this->registerJs('
 
 function changeMap(lats, lngs) {
 
-    if(lats != ""){
-        $("input:hidden:eq(0)", ".compareprice-latitude").val(lats);
-    }
+        if(lats != ""){
+            $("input:hidden:eq(0)", ".compareprice-latitude").val(lats);
+        }
 
-    if(lngs != ""){
-        $("input:hidden:eq(0)", ".compareprice-longitude").val(lngs);
-    }
+        if(lngs != ""){
+            $("input:hidden:eq(0)", ".compareprice-longitude").val(lngs);
+        }
 
-    var getLats =  $("#latitude").val();
-    var getLngs = $("#longitude").val();
-    
-    //console.log(getLats);
-    //console.log(getLngs);
-    var myLatLng = {lat: Number(getLats), lng: Number(getLngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-    //console.log(myLatLng);
-    //console.log({lat: Number(lats), lng: Number(lngs)});
-    //document.getElementById("map").innerHTML = "Paragraph changed!";
-    //$(".cart-detail").find("#map").html("xxxxxx");
-    map = new google.maps.Map(document.getElementById("map"), {
+        var getLats =  $("#latitude").val();
+        var getLngs = $("#longitude").val();
+        if(getLats != ""  && getLngs == ""){
+            //alert("Please fill in your location longitude.");
+            $("#productpostcompareprice-longitude-label").html("Please fill in your location longitude");
+            $("#productpostcompareprice-longitude").focus();
+            return false;
+        }
+
+        var myLatLng = {lat: Number(getLats), lng: Number(getLngs)}; // get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+        //console.log(myLatLng);
+        //console.log({lat: Number(lats), lng: Number(lngs)});
+        //document.getElementById("map").innerHTML = "Paragraph changed!";
+        //$(".cart-detail").find("#map").html("xxxxxx");
+        map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
          zoom:16,
-        //mapTypeId: "terrain"
-    });
+         //mapTypeId: "terrain"
+        });
 
-    var marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
         map: map,
         position: myLatLng,
         title: "Hello World!"
     });
-}
-', \yii\web\View::POS_HEAD);
+} ', \yii\web\View::POS_HEAD);
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
