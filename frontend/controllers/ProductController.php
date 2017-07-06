@@ -60,15 +60,17 @@ class ProductController extends MasterController {
     public function actionImagesItemBig() {
         $ImageId = $_POST['ImageId'];
         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl;
-        $getImage = \common\models\costfit\ProductImage::find()->where('productImageId=' . $ImageId)->one();
-        if (!isset($getImage) > 0) {
-            $getImage = \common\models\costfit\ProductImageSuppliers::find()->where('productImageId=' . $ImageId)->one();
-            //return $getImage['image'];
-        }
-
-        if (isset($getImage->image) && !empty($getImage->image)) {
-            if (file_exists(Yii::$app->basePath . "/web/" . $getImage->image)) {
-                $productImagesThumbnail1 = $url . $getImage->image;
+        //$getImage = \common\models\costfit\ProductImage::find()->where('productImageId=' . $ImageId)->one();
+        //if (!isset($getImage) > 0) {
+        $getImage = \common\models\costfit\ProductImageSuppliers::find()->where('productImageId=' . $ImageId)->one();
+        //}
+        if (count($getImage) > 0) {
+            if (isset($getImage->image) && !empty($getImage->image)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $getImage->image)) {
+                    $productImagesThumbnail1 = $url . $getImage->image;
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg('Svg555x340');
+                }
             } else {
                 $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg('Svg555x340');
             }
