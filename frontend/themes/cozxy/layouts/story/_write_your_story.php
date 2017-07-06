@@ -165,13 +165,15 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                             <div class="col-md-6"><label for="exampleInputEmail1">Location (Lat,Long)</label>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group compareprice-latitude">
                                             <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value,\'\')'])->label(FALSE); ?>
+                                            <input type="hidden" id="latitude" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group compareprice-longitude">
                                             <?php echo $form->field($modelComparePrice, 'longitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (longitude)', 'onchange' => 'changeMap(\'\',this.value)'])->label(FALSE); ?>
+                                            <input type="hidden" id="longitude" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -233,15 +235,29 @@ $this->registerJs('
         }
 
 function changeMap(lats, lngs) {
-    //console.log(lats);
-    //console.log(lngs);
-    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+
+    if(lats != ""){
+        $("input:hidden:eq(0)", ".compareprice-latitude").val(lats);
+
+    }
+
+    if(lngs != ""){
+        $("input:hidden:eq(0)", ".compareprice-longitude").val(lngs);
+
+    }
+
+    var getLats =  $("#latitude").val();
+    var getLngs = $("#longitude").val();
+    //console.log(getLats);
+    //console.log(getLngs);
+    var myLatLng = {lat: Number(getLats), lng: Number(getLngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
     //console.log(myLatLng);
+    //console.log({lat: Number(lats), lng: Number(lngs)});
     //document.getElementById("map").innerHTML = "Paragraph changed!";
     //$(".cart-detail").find("#map").html("xxxxxx");
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
-         zoom:20,
+         zoom:16,
         //mapTypeId: "terrain"
     });
 
