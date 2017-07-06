@@ -95,6 +95,20 @@ class StoryController extends MasterController {
 
     public function actionWriteStory() {
         if (isset($_POST['ProductPost'])) {
+            $comparePrice = new \common\models\costfit\ProductPostComparePrice();
+            /* $comparePrice->attributes = $_POST["ProductPostComparePrice"];
+              echo '<pre>';
+              print_r($comparePrice);
+              exit();
+              //$model->addError("password", 'Confirm password not match');
+              echo 'latitude :' . $_POST["ProductPostComparePrice"]["latitude"];
+              echo 'longitude :' . $_POST["ProductPostComparePrice"]["longitude"];
+              if ($_POST["ProductPostComparePrice"]["latitude"] != '' && $_POST["ProductPostComparePrice"]["longitude"] == '') {
+              echo 'test';
+              $comparePrice->addError("longitude", 'Please fill in your location longitude.');
+              }
+              var_dump($comparePrice->getErrors());
+              exit(); */
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
             $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId)->one(); // ตรวจสอบว่าเคยโพส Story เรื่องนี้ยัง
@@ -141,7 +155,7 @@ class StoryController extends MasterController {
                      * แยก Table ProductPostComparePrice จาก ProductPost
                      * Update : 07/05/2017
                      */
-                    $comparePrice = new \common\models\costfit\ProductPostComparePrice();
+
                     $comparePrice->productPostId = Yii::$app->db->lastInsertID;
                     $comparePrice->userId = Yii::$app->user->identity->userId;
                     $comparePrice->productId = $parentId;
