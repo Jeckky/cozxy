@@ -241,8 +241,8 @@ function changeMap(lats, lngs) {
     //$(".cart-detail").find("#map").html("xxxxxx");
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
-         zoom:18,
-        mapTypeId: "terrain"
+         zoom:20,
+        //mapTypeId: "terrain"
     });
 
     var marker = new google.maps.Marker({
