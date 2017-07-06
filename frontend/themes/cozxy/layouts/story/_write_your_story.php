@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
+
+$this->title = 'Write your story : ' . $productSupplier->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style>
