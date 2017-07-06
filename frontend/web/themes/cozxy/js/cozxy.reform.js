@@ -1149,8 +1149,8 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
                     var JSONObject = JSON.parse(data);
                     $('#productpost-shopname').val(JSONObject.shopName);
                     $('#productpost-price').val(JSONObject.price);
-                    $('#productpost-country').val(JSONObject.country).trigger('change');
-                    $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                    $('#productpost-country').val(JSONObject.country);
+                    $('#productpost-currency').val(JSONObject.currency);
                     $('#latitude').val(JSONObject.latitude);
                     $('#longitude').val(JSONObject.longitude);
                     $('#productpost-productPostId').html('<input type="hidden" name="dataIndex" id="dataIndex" value="' + dataIndex + '"><input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">  <input type="hidden" name="comparePriceId" id="comparePriceId" value="' + JSONObject.comparePriceId + '">');

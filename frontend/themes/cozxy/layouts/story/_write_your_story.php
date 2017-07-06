@@ -255,6 +255,10 @@ function changeMap(lats, lngs) {
             $("#productpostcompareprice-longitude").focus();
             return false;
         }
+        
+        if(getLats != ""  && getLngs != ""){
+            $("#productpostcompareprice-longitude-label").html("");
+        }
 
         var myLatLng = {lat: Number(getLats), lng: Number(getLngs)}; // get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
         //console.log(myLatLng);
