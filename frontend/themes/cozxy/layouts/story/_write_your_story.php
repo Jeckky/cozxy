@@ -51,7 +51,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                 <p style="margin: 0px;" class="size20 fc-g999">   <?= $productSupplier->title ?> </p>
             </h1>
             <div class="write-story-banner">
-                <?= Html::img($image, ['class' => 'img-responsive', 'style' => '100%']) ?>
+                <?= Html::img(Yii::$app->homeUrl . $image, ['class' => 'img-responsive', 'style' => '100%']) ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
 
@@ -255,7 +255,7 @@ function changeMap(lats, lngs) {
             $("#productpostcompareprice-longitude").focus();
             return false;
         }
-        
+
         if(getLats != ""  && getLngs != ""){
             $("#productpostcompareprice-longitude-label").html("");
         }
