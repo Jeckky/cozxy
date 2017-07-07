@@ -18,7 +18,6 @@ $val = rand(1, 10);
                 <div class="col-xs-12">
                     <div class="zoom-box">
                         <a href="<?php echo $model['image'] ?>" target="_blank">
-                            <!--<img id="zoom-img" src="imgs/test1.jpg" class="fullwidth" alt="Big Bag" data-zoom-image="imgs/test1-large.jpg">-->
                             <img id="zoom-img" src="<?php echo $model['image'] ?>" class="fullwidth" alt="" data-zoom-image="<?php echo $model['image'] ?>">
                         </a>
                     </div>
@@ -42,7 +41,7 @@ $val = rand(1, 10);
                                       <img  src="' . $value['imageThumbnail1'] . '">
                                       </a>'; */
                                     ?>
-                                    <a href="javascript:pic2Zoom('<?= $value['imageThumbnail1'] ?>','<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>');" class="item">
+                                    <a href="javascript:pic2Zoom('<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>','<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>');" class="item">
                                         <img  src="<?= $value['imageThumbnail1'] ?>" width="116" height="116">
                                     </a>
                                     <?php
@@ -98,7 +97,6 @@ $val = rand(1, 10);
                             echo '';
                         }
                         ?>
-
 
                         <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
@@ -163,8 +161,8 @@ $val = rand(1, 10);
                                         <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                                     </a>
                                 <?php } else { ?>
-                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                                                      ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                                                      ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                                                      ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                                                                ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                                                                ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                                                                 ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                                     </a>-->
                                     <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:24px auto 12px">
                                         <div class="heart-<?= $model['productSuppId'] ?>">+ <i class="fa fa-heart-o" aria-hidden="true"></i></div>
@@ -210,7 +208,12 @@ $(".productOption").on("change", function(){
         window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
     });
 });
-
+$("#zoom-img").elevateZoom({
+        zoomType: "inner",
+        cursor: "zoom-in",
+        zoomWindowFadeIn: 384,
+        zoomWindowFadeOut: 728
+    });
 
 ');
 ?>
