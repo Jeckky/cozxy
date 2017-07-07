@@ -43,7 +43,7 @@ $val = rand(1, 10);
                                       </a>'; */
                                     ?>
                                     <a href="javascript:pic2Zoom('<?= $value['imageThumbnail1'] ?>','<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>');" class="item">
-                                        <img  src="<?= $value['imageThumbnail1'] ?>">
+                                        <img  src="<?= $value['imageThumbnail1'] ?>" width="116" height="116">
                                     </a>
                                     <?php
                                 }
@@ -163,8 +163,8 @@ $val = rand(1, 10);
                                         <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                                     </a>
                                 <?php } else { ?>
-                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                                                     ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                                                     ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                                                     ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                                                      ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                                                      ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                                                      ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                                     </a>-->
                                     <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:24px auto 12px">
                                         <div class="heart-<?= $model['productSuppId'] ?>">+ <i class="fa fa-heart-o" aria-hidden="true"></i></div>
