@@ -38,14 +38,23 @@ class ReturnController extends MasterController {
         $ms = '';
         $invoiceNo = '';
         //$checkStatus = Ticket::TICKET_STATUS_CREATE . "," . Ticket::TICKET_STATUS_WAIT . "," . Ticket::TICKET_STATUS_APPROVED;
-        $histories = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId)
+        $histories = Ticket::find()->where("userId=" . Yii::$app->user->id)
                 ->orderBy("updateDateTime DESC")
                 ->all();
         if (isset($_GET['orderNo'])) {
             $inVoice = Order::find()->where("orderNo='" . $_GET['orderNo'] . "'")->one();
             $invoiceNo = $inVoice->invoiceNo;
         }
+        if (isset($_GET['not'])) {
+            $ms = ' *Please select Product.';
+        }
         if (isset($_POST["invoiceNo"])) {
+            if (!isset($_POST["selectProduct"])) {//ถ้าไม่ได้เลือกสินค้าชินใดเลย
+                return $this->redirect(['returning',
+                            'orderNo' => $_GET['orderNo'],
+                            'not' => 1
+                ]);
+            }
             $order = Order::find()->where("invoiceNo='" . $_POST["invoiceNo"] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
                 $tickets = Ticket::find()->where("orderId=" . $order->orderId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
@@ -73,6 +82,27 @@ class ReturnController extends MasterController {
                     $ticket->save(false);
                     $id = Yii::$app->db->getLastInsertID();
                     $tickets = Ticket::find()->where("ticketId=" . $id)->one();
+                    foreach ($_POST["selectProduct"] as $orderItemId => $value):
+                        if ($_POST['quantity'][$orderItemId] != '') {
+                            $returnProduct = new ReturnProduct();
+                            $returnProduct->ticketId = $id;
+                            $returnProduct->orderId = $order->orderId;
+                            $returnProduct->orderItemId = $orderItemId;
+                            $returnProduct->productSuppId = $value;
+                            $returnProduct->quantity = $_POST['quantity'][$orderItemId];
+                            $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+                            $returnProduct->price = $orderItem->priceOnePiece;
+                            $returnProduct->totalPrice = $orderItem->priceOnePiece * $_POST['quantity'][$orderItemId];
+                            $returnProduct->credit = $orderItem->priceOnePiece * $_POST['quantity'][$orderItemId];
+                            $returnProduct->status = 1;
+                            $returnProduct->createDateTime = new \yii\db\Expression('NOW()');
+                            $returnProduct->updateDateTime = new \yii\db\Expression('NOW()');
+                            $returnProduct->save(false);
+                        }
+                    endforeach;
+                    $histories = Ticket::find()->where("userId=" . Yii::$app->user->id)
+                            ->orderBy("updateDateTime DESC")
+                            ->all();
                     return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                                 'tickets' => $tickets,
                                 'histories' => $histories,
@@ -87,6 +117,7 @@ class ReturnController extends MasterController {
                 ]);
             }
         } else {
+            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $inVoice->orderId)->all();
             $ticket1 = Ticket::find()->where("userId=" . Yii::$app->user->identity->userId . " and status!=" . Ticket::TICKET_STATUS_SUCCESSFULL)->one();
             $pickingPoint_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
             $pickingPointBooth = isset($pickingPoint_booth) ? $pickingPoint_booth : NULL;
@@ -96,14 +127,17 @@ class ReturnController extends MasterController {
                 return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                             'tickets' => $ticket1,
                             'histories' => $histories,
-                            'invoiceNo' => $invoiceNo
+                            'invoiceNo' => $invoiceNo,
+                            'ms' => $ms
                 ]);
             } else {
                 return $this->render('@app/themes/cozxy/layouts/return/return_form', [
                             'histories' => $histories,
                             'invoiceNo' => $invoiceNo,
                             'model' => $model,
-                            'pickingPoint_booth' => $pickingPoint_booth
+                            'pickingPoint_booth' => $pickingPoint_booth,
+                            'orderItem' => $orderItem,
+                            'ms' => $ms
                 ]);
             }
         }
@@ -167,6 +201,7 @@ class ReturnController extends MasterController {
         $chats = \common\models\costfit\Messege::find()->where("ticketId=" . $ticketId)
                 ->orderBy("createDateTime ASC")
                 ->all();
+        $order = Order::find()->where("orderId=" . $ticket->orderId)->one();
         $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
         $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
         $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
@@ -175,8 +210,26 @@ class ReturnController extends MasterController {
                     'ticket' => $ticket,
                     'returnProducts' => $returnProducts,
                     'chats' => $chats,
-                    'textReturn' => $textReturn
+                    'textReturn' => $textReturn,
+                    'orderNo' => $order->orderNo
         ]);
+    }
+
+    public function actionCheckQuantityReturn() {
+        $orderItemId = $_POST['orderItemId'];
+        $res = [];
+        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
+        $inReturn = ReturnProduct::find()->where("orderItemId=" . $orderItemId)->all();
+        $quantityInReturn = 0;
+        if (isset($inReturn) && count($inReturn) > 0) {
+            foreach ($inReturn as $q):
+                $quantityInReturn += $q->quantity;
+            endforeach;
+        }
+        $res['status'] = true;
+        $canReturn = $orderItem->quantity - $quantityInReturn;
+        $res['canReturn'] = $canReturn;
+        return \yii\helpers\Json::encode($res);
     }
 
     public function genNewTicket() {
