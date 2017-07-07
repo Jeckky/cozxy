@@ -75,7 +75,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
             <div class="form-group login-box">
                 <label for="exampleInputEmail1">Short Description</label>
                 <?php
-                echo $form->field($model, 'shortDescription')->textarea(['rows' => '6', 'maxlength' => 140])->hint('Max 140 characters.')->label(FALSE);
+                echo $form->field($model, 'shortDescription')->textarea(['rows' => '6', 'maxlength' => 140])->label(FALSE);
                 ?>
                 <div id="productpost-shortdescription-text">
                     <blockquote id="result"  style="font-size: 14px;">
@@ -84,7 +84,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                         Characters (excluding trails): <span id="charCount">0</span><br/>
                         Characters (excluding all spaces): <span id="charCountNoSpace">0</span>
 
-                        <footer>Max 140 characters. <cite title="Source Title">in story</cite></footer>
+                        <footer>Max 140 characters. <cite title="Source Title">inf story</cite></footer>
                     </blockquote>
 
                 </div>
