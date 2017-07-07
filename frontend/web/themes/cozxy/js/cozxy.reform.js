@@ -1299,3 +1299,45 @@ function ComparePriceStory() {
 
 }
 
+
+
+counter = function () {
+
+    var $textarea = $('#productpost-shortdescription').val();
+
+    if ($textarea.length == 0) {
+        $('#wordCount').html(0);
+        $('#totalChars').html(0);
+        $('#charCount').html(0);
+        $('#charCountNoSpace').html(0);
+        return;
+    }
+    console.log($textarea.length);
+    var regex = /\s+/gi;
+    var wordCount = $textarea.trim().replace(regex, ' ').split(' ').length;
+    var totalChars = $textarea.length;
+    var charCount = $textarea.trim().length;
+    var charCountNoSpace = $textarea.replace(regex, '').length;
+
+    $('#wordCount').html(wordCount);
+    $('#totalChars').html(totalChars);
+    $('#charCount').html(charCount);
+    $('#charCountNoSpace').html(charCountNoSpace);
+    var max = 10;
+    if (totalChars > max) {
+        //var top = $textarea.scrollTop();
+        //$textarea.val($textarea.val().substr(0, max));
+        //$textarea.scrollTop(top);
+        //alert(totalChars);
+    }
+};
+
+$(document).ready(function () {
+    //$('#count').click(counter);
+    $('#productpost-shortdescription').change(counter);
+    $('#productpost-shortdescription').keydown(counter);
+    $('#productpost-shortdescription').keypress(counter);
+    $('#productpost-shortdescription').keyup(counter);
+    $('#productpost-shortdescription').blur(counter);
+    $('#productpost-shortdescription').focus(counter);
+});

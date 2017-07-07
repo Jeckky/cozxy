@@ -123,6 +123,7 @@ class StoryController extends MasterController {
                 $shelf->productSelfId = 0;
                 $shelf->userId = Yii::$app->user->identity->userId;
                 $shelf->title = $_POST["ProductPost"]["title"];
+                $shelf->shortDescription = $_POST["ProductPost"]["shortDescription"];
                 $shelf->description = $_POST["ProductPost"]["description"];
 
                 if ($isPublic == 'on') {
