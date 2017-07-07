@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ?>
             <input type="hidden" name="confirm" value="<?= $orderId ?>">
             <input type="hidden" name="ticketId" value="<?= $ticketId ?>">
-            <button type="submit" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-circle-o" aria-hidden="true"></i> ยืนยันการคืนสินค้า</button>
+            <button type="submit" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-circle-o" aria-hidden="true"></i> ส่ง cozxy ตรวจสอบ</button>
             <a href="<?= $baseUrl . 'order-detail?orderId=' . $orderId . '&ticketId=' . $ticketId ?>" class="btn-lg pull-right" style="background-color: #000;color: #ffcc00;cursor: pointer;margin-right: 5px;"><i class="fa fa-pencil" aria-hidden="true"></i> แก้ไขรายการ</a>
             <?php ActiveForm::end(); ?>
         </div>

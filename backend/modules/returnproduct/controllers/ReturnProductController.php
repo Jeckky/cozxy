@@ -67,7 +67,11 @@ class ReturnProductController extends ReturnProductMasterController {
                 ->orderBy("updateDateTime DESC")
                 ->limit(30)
                 ->all();
-        $success = Ticket::find()->where("status=5")
+        $waitCozxy = Ticket::find()->where("status=5")//
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        $success = Ticket::find()->where("status=7")//
                 ->orderBy("updateDateTime DESC")
                 ->limit(30)
                 ->all();
@@ -75,6 +79,7 @@ class ReturnProductController extends ReturnProductMasterController {
                     'tickets' => $tickets,
                     'approved' => $approved,
                     'notApproved' => $notApproved,
+                    'waitCozxy' => $waitCozxy,
                     'success' => $success
         ]);
     }
@@ -82,16 +87,18 @@ class ReturnProductController extends ReturnProductMasterController {
     public function actionTicketDetail($ticketId) {
         if (isset($ticketId)) {
             $ticket = Ticket::find()->where("ticketId=" . $ticketId)->orderBy("createDateTime DESC")->one();
-            $orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
+//$orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
+            $returnProduct = ReturnProduct::find()->where("ticketId=" . $ticketId)->all();
             $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
             $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
             $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
             return $this->render('ticket_detail', [
-                        'orderItems' => $orderItems,
+//'orderItems' => $orderItems,
                         'orderId' => $ticket->orderId,
                         'ticket' => $ticket,
-                        'textReturn' => $textReturn
+                        'textReturn' => $textReturn,
+                        'returnProduct' => $returnProduct
             ]);
         }
     }
@@ -121,10 +128,92 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionApproveTicketCozxy() {
+        $ticket = Ticket::find()->where("ticketId=" . $_POST["ticketId"])->one();
+        $res = [];
+        $totalCredit = 0;
+        $returnCoin = 0;
+        if ($_POST['approve'] == 'Approve') {
+            $ticket->status = Ticket::TICKET_STATUS_SUCCESSFULL;
+            $res["status"] = TRUE;
+            $returnProduct = ReturnProduct::find()->where("ticketId=" . $_POST["ticketId"] . " and status=2")->all();
+            if (isset($returnProduct) && count($returnProduct) > 0) {
+                foreach ($returnProduct as $item):
+                    $item->status = 3; //อนุมัติ//รับคืน
+                    $item->updateDateTime = new \yii\db\Expression('NOW()');
+                    $item->save(false);
+                    $totalCredit += $item->credit;
+                endforeach;
+            }
+            $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+            $ticket->save(false);
+            $order = Order::find()->where("orderId=" . $ticket->orderId)->one();
+            if (isset($order) && !empty($order)) {
+                $topUp = new \common\models\costfit\TopUp();
+                $topUp->userId = $order->userId;
+                $topUp->point = $totalCredit;
+                $topUp->money = $totalCredit;
+                $topUp->paymentMethod = 4;
+                $topUp->type = 1;
+                $topUp->status = 3;
+                $topUp->description = "Return product";
+                $topUp->createDateTime = new \yii\db\Expression('NOW()');
+                $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+                $topUp->save(false);
+                $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+                $userPoint->currentPoint += $totalCredit;
+                $userPoint->totalPoint += $totalCredit;
+                $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+                $userPoint->save(false);
+                $returnCoin = $totalCredit;
+                $this->sendEmail($_POST["ticketId"], $ticket->orderId, $returnCoin);
+            }
+        } else {
+            $ticket->status = Ticket::TICKET_STATUS_NOT_SUCCESSFULL;
+            $ticket->cozxyRemark = $_POST['remark'];
+            $returnProduct = ReturnProduct::find()->where("ticketId=" . $_POST["ticketId"] . " and status=2")->one();
+            if (isset($returnProduct) && count($returnProduct) > 0) {
+                foreach ($returnProduct as $items):
+                    $item->status = 4; //ไม่อนุมัติ
+                    $item->updateDateTime = new \yii\db\Expression('NOW()');
+                    $item->save(false);
+                endforeach;
+            }
+            $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+            $ticket->save(false);
+            $res["status"] = FALSE;
+            $this->sendEmail($_POST["ticketId"], $ticket->orderId, $returnCoin);
+        }
+
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function sendEmail($ticketId, $orderId, $returnCoin) {
+        $ticket = Ticket::find()->where("ticketId=" . $ticketId . " and orderId=" . $orderId)->one();
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $user = User::find()->where("userId=" . $order->userId)->one();
+        $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+        $pickingPoints = PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
+        if ($ticket->status == Ticket::TICKET_STATUS_SUCCESSFULL) {
+            $status = "Successful";
+            $remark = '';
+        }if ($ticket->status == Ticket::TICKET_STATUS_NOT_SUCCESSFULL) {
+            $status = "Not successful";
+            $remark = $ticket->cozxyRemark;
+        }
+        $ticketNo = $ticket->ticketNo;
+        $currentPoint = $userPoint->currentPoint;
+        $returnPoint = $returnCoin;
+        $mailTo = $user->email;
+        $username = $user->firstname . " " . $user->lastname;
+        $pickingPoint = $pickingPoints->title;
+        $sendMail = \common\helpers\Email::mailReturnResult($mailTo, $ticketNo, $currentPoint, $returnPoint, $order->orderNo, $username, $status, $remark, $pickingPoint);
+    }
+
     public function actionOrderDetail($orderId, $ticketId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressText = '';
-        $returnList = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all();
+        $returnList = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1 and ticketId=" . $ticketId)->all();
         $address = Address::find()->where("userId=" . $order->userId . " and isDefault=1")->one();
         if (isset($address) && !empty($address)) {
             $addressText = User::userAddressText($address->addressId, true);
@@ -245,7 +334,7 @@ class ReturnProductController extends ReturnProductMasterController {
     public function actionConfirmReturn() {
         if (isset($_POST["orderId"])) {
             $orderId = $_POST["orderId"];
-            //throw new \yii\base\Exception(print_r($_POST["remark"], true));
+//throw new \yii\base\Exception(print_r($_POST["remark"], true));
             $ticketId = '';
             if (isset($_POST["remark"]) && !empty($_POST["remark"])) {
                 foreach ($_POST["remark"] as $returnProductId => $remark):
@@ -256,8 +345,8 @@ class ReturnProductController extends ReturnProductMasterController {
                     $ticketId = $returnProduct->ticketId;
                 endforeach;
             }
-            $returnProducts = ReturnProduct::find()->where("orderId=" . $orderId)->all();
-            if (isset($returnProducts) && !empty($returnProducts)) {
+            $returnProducts = ReturnProduct::find()->where("ticketId=" . $ticketId)->all();
+            if (isset($returnProducts) && count($returnProducts) > 0) {
                 return $this->render('confirm_return', [
                             'orderId' => $orderId,
                             'returnProducts' => $returnProducts,
@@ -265,95 +354,147 @@ class ReturnProductController extends ReturnProductMasterController {
                 ]);
             }
         }
-        if (isset($_POST['confirm'])) {
+        if (isset($_POST['confirm'])) {//มาจากการกด ยืนยันการคืนสินค้า
             $orderId = $_POST['confirm'];
+            $order = Order::find()->where("orderId=" . $orderId)->one();
             $totalCredit = 0;
             $returnProduct = ReturnProduct::find()->where("orderId=" . $orderId . " and status=1 and ticketId=" . $_POST['ticketId'])->all(); //ยอดเครดิตที่ลูกค้าเพิ่งคืน
-            if (isset($returnProduct) && !empty($returnProduct)) {
-                foreach ($returnProduct as $return):
-                    $totalCredit += $return->credit;
-                    $orderId = $return->orderId;
+            if (isset($returnProduct) && count($returnProduct) > 0) {
+                foreach ($returnProduct as $item):
+                    $item->status = 2; //เปลี่ยน สถานะเป็น 2 (รอ cozxy ตรวจสอบ)
+                    $item->updateDateTime = new \yii\db\Expression('NOW()');
+                    $item->save(FALSE);
                 endforeach;
-                $order = Order::find()->where("orderId=" . $orderId)->one();
-                if (isset($order) && !empty($order)) {
-                    /* $userCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
-                      if (isset($userCredit) && !empty($userCredit)) {//ถ้ามีอยู่แล้วให้เพิ่มลงไปในเรคคอร์ดอันเก่า
-                      $userCredit->totalCredit += $totalCredit;
-                      $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
-                      $userCredit->save(false);
-                      } else {//ถ้ายังไม่มี ให้สร้างใหม่
-                      $userCredit = new \common\models\costfit\UserCredit();
-                      $userCredit->userId = $order->userId;
-                      $userCredit->totalCredit = $totalCredit;
-                      $userCredit->createDateTime = new \yii\db\Expression('NOW()');
-                      $userCredit->updateDateTime = new \yii\db\Expression('NOW()');
-                      $userCredit->save();
-                      } */
-                    $topUp = new \common\models\costfit\TopUp();
-                    $topUp->userId = $order->userId;
-                    $topUp->point = $totalCredit;
-                    $topUp->money = $totalCredit;
-                    $topUp->paymentMethod = 4;
-                    $topUp->type = 1;
-                    $topUp->status = 3;
-                    $topUp->description = "Return product";
-                    $topUp->createDateTime = new \yii\db\Expression('NOW()');
-                    $topUp->updateDateTime = new \yii\db\Expression('NOW()');
-                    $topUp->save(false);
-                    $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
-                    $userPoint->currentPoint += $totalCredit;
-                    $userPoint->totalPoint += $totalCredit;
-                    $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
-                    $userPoint->save(false);
-                    foreach ($returnProduct as $return):
-                        $return->status = 2; //เปลี่ยน สถานะเป็น 2 (การคืนเสร็จสิ้นสำหรับ order นี้)
-                        $return->updateDateTime = new \yii\db\Expression('NOW()');
-                        $return->save(FALSE);
-                    endforeach;
-                    $ticket = Ticket::find()->where("ticketId=" . $_POST['ticketId'])->one();
-                    $ticket->status = 5;
-                    $ticket->updateDateTime = new \yii\db\Expression('NOW()');
-                    $ticket->save(false);
-                    $returnHistory = ReturnProduct::find()
-                            ->select(`order.*`, `return_product.*`)
-                            ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
-                            ->where("order.userId=" . $order->userId . " and return_product.status=2")
-                            ->orderBy("return_product.updateDateTime DESC")
-                            ->all();
-                    // $userTotalCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
-                    $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
-                    $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
-                    return $this->render('successful_return', [
-                                'userId' => $order->userId,
-                                'returnHistory' => $returnHistory,
-                                'userTotalCredit' => $userTotalCredit,
-                                'lastReturn' => $lastReturn
-                    ]);
-                } else {
-                    return $this->redirect(['approve-detail', 'orderId' => $orderId]);
-                }
-            } else {
-                return $this->redirect(['approve-detail', 'orderId' => $orderId]);
+                $ticket = Ticket::find()->where("ticketId=" . $_POST['ticketId'])->one();
+                $ticket->status = 5; //เปลี่ยน สถานะเป็น 5 (รอ cozxy ตรวจสอบ)
+                $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+                $ticket->save(false);
+                $returnHistory = ReturnProduct::find()
+                        ->select(`order.*`, `return_product.*`)
+                        ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+                        ->where("order.userId=" . $order->userId . " and return_product.status=2 and return_product.ticketId=" . $_POST['ticketId'])
+                        ->orderBy("return_product.updateDateTime DESC")
+                        ->all();
+//ส่ง Email ถึงลูกค้า
+//
+                $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId . " and ticketId=" . $_POST['ticketId'])->all();
+                return $this->render('wait_cozxy', [
+                            'userId' => $order->userId,
+                            'returnHistory' => $returnHistory,
+                            'lastReturn' => $lastReturn
+                ]);
+            }else {
+                $lastTicket = ReturnProduct::find()->where("orderId=" . $orderId)
+                        ->orderBy('updateDateTime DESC')
+                        ->one();
+                return $this->redirect(['approve-detail', 'orderId' => $orderId, 'flag' => 2, 'ticketId' => $lastTicket->ticketId]);
             }
+            /* if (isset($returnProduct) && count($returnProduct)>0) {
+              foreach ($returnProduct as $return):
+              $totalCredit += $return->credit;
+              $orderId = $return->orderId;
+              endforeach;
+              $order = Order::find()->where("orderId=" . $orderId)->one();
+              if (isset($order) && !empty($order)) {
+              $topUp = new \common\models\costfit\TopUp();
+              $topUp->userId = $order->userId;
+              $topUp->point = $totalCredit;
+              $topUp->money = $totalCredit;
+              $topUp->paymentMethod = 4;
+              $topUp->type = 1;
+              $topUp->status = 3;
+              $topUp->description = "Return product";
+              $topUp->createDateTime = new \yii\db\Expression('NOW()');
+              $topUp->updateDateTime = new \yii\db\Expression('NOW()');
+              $topUp->save(false);
+              $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+              $userPoint->currentPoint += $totalCredit;
+              $userPoint->totalPoint += $totalCredit;
+              $userPoint->updateDateTime = new \yii\db\Expression('NOW()');
+              $userPoint->save(false);
+              foreach ($returnProduct as $return):
+              $return->status = 2; //เปลี่ยน สถานะเป็น 2 (การคืนเสร็จสิ้นสำหรับ order นี้)
+              $return->updateDateTime = new \yii\db\Expression('NOW()');
+              $return->save(FALSE);
+              endforeach;
+              $ticket = Ticket::find()->where("ticketId=" . $_POST['ticketId'])->one();
+              $ticket->status = 5;
+              $ticket->updateDateTime = new \yii\db\Expression('NOW()');
+              $ticket->save(false);
+              $returnHistory = ReturnProduct::find()
+              ->select(`order.*`, `return_product.*`)
+              ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+              ->where("order.userId=" . $order->userId . " and return_product.status=2")
+              ->orderBy("return_product.updateDateTime DESC")
+              ->all();
+              // $userTotalCredit = \common\models\costfit\UserCredit::find()->where("userId=" . $order->userId)->one();
+              $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
+              $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
+              return $this->render('successful_return', [
+              'userId' => $order->userId,
+              'returnHistory' => $returnHistory,
+              'userTotalCredit' => $userTotalCredit,
+              'lastReturn' => $lastReturn
+              ]);
+              } else {
+              return $this->redirect(['approve-detail', 'orderId' => $orderId]);
+              }
+              } else {
+              return $this->redirect(['approve-detail', 'orderId' => $orderId]);
+              } */
         }
     }
 
-    public function actionApproveDetail($orderId) {
+    public function actionApproveDetail($orderId, $flag, $ticketId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $returnHistory = ReturnProduct::find()
                 ->select(`order.*`, `return_product.*`)
                 ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
-                ->where("order.userId=" . $order->userId . " and return_product.status=2")
+                ->where("order.userId=" . $order->userId . " and return_product.status=2 and return_product.ticketId=" . $ticketId)
                 ->orderBy("return_product.updateDateTime DESC")
                 ->all();
         $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
         $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
-        return $this->render('successful_return', [
-                    'userId' => $order->userId,
-                    'returnHistory' => $returnHistory,
-                    'userTotalCredit' => $userTotalCredit,
-                    'lastReturn' => $lastReturn
-        ]);
+        if ($flag == 1) {
+            return $this->render('successful_return', [
+                        'userId' => $order->userId,
+                        'returnHistory' => $returnHistory,
+                        'userTotalCredit' => $userTotalCredit,
+                        'lastReturn' => $lastReturn
+            ]);
+        } else {
+            return $this->render('wait_cozxy', [
+                        'userId' => $order->userId,
+                        'returnHistory' => $returnHistory,
+                        'userTotalCredit' => $userTotalCredit,
+                        'lastReturn' => $lastReturn
+            ]);
+        }
+    }
+
+    public function actionCozxyConfirm($ticketId) {
+        if (isset($ticketId)) {
+            $ticket = Ticket::find()->where("ticketId=" . $ticketId)->orderBy("createDateTime DESC")->one();
+//$orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
+            if ($ticket->status == Ticket::TICKET_STATUS_WAIT_COZXY) {
+                $returnProduct = ReturnProduct::find()->where("ticketId=" . $ticketId . " and status=2")->all();
+            } else if ($ticket->status == Ticket::TICKET_STATUS_SUCCESSFULL) {
+                $returnProduct = ReturnProduct::find()->where("ticketId=" . $ticketId . " and status=3")->all();
+            } else if ($ticket->status == Ticket::TICKET_STATUS_NOT_SUCCESSFULL) {
+                $returnProduct = ReturnProduct::find()->where("ticketId=" . $ticketId . " and status=4")->all();
+            }
+            $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
+            $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
+            $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
+            return $this->render('ticket_detail_cozxy', [
+//'orderItems' => $orderItems,
+                        'orderId' => $ticket->orderId,
+                        'ticket' => $ticket,
+                        'textReturn' => $textReturn,
+                        'returnProduct' => $returnProduct
+            ]);
+        }
     }
 
     public function actionDeleteReturnList() {
@@ -394,6 +535,26 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionCozxyApproveReturn() {
+        $waitCozxyApprove = Ticket::find()->where("status=5")//
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        $cozxyApprove = Ticket::find()->where("status=7")//
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        $cozxyReject = Ticket::find()->where("status=8")//
+                ->orderBy("updateDateTime DESC")
+                ->limit(30)
+                ->all();
+        return $this->render('return_wait_cozxy', [
+                    'waitCozxyApprove' => $waitCozxyApprove,
+                    'cozxyApprove' => $cozxyApprove,
+                    'cozxyReject' => $cozxyReject,
+        ]);
+    }
+
     public function actionCheckRemark() {
         $orderId = $_POST['orderId'];
         $res = [];
@@ -408,8 +569,8 @@ class ReturnProductController extends ReturnProductMasterController {
             $res["status"] = TRUE;
             $res["returnId"] = $id;
             $res["counts"] = count(ReturnProduct::find()->where("orderId=" . $orderId . " and status=1")->all());
-            // echo $orderId;
-            // throw new \yii\base\Exception($orderId);
+// echo $orderId;
+// throw new \yii\base\Exception($orderId);
         }else {
             $res["status"] = FALSE;
         }
@@ -595,6 +756,109 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
+    public function actionSearchApproveCozxy() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_SUCCESSFULL . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="4" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchWaitCozxy() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'approve-detail?orderId=' . $ticket->orderId . '&flag=2&ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="4" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchWaitCozxyConfirm() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $header = '';
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_WAIT_COZXY . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 5%;'>" . $i . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="7" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
     public function actionSearchNotApprove() {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
@@ -618,6 +882,39 @@ class ReturnProductController extends ReturnProductMasterController {
                 $text = $text . "<tr><td style='text-align: center;width: 40%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
                         "<td style='text-align: center;width: 30%;'>" . $ticket->ticketNo . "</td>" .
                         "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                $i++;
+            endforeach;
+            $res["wait"] = $text;
+        } else {
+            $res["wait"] = '<td colspan="3" style="text-align: center;color:red;font-size:14pt;"><i>ไม่มีข้อมูล</i></td>';
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionSearchNotApproveCozxy() {
+        $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+        $res = [];
+        $text = '';
+        $ms = $_POST['ms'];
+        $userId = $this->findUserId($_POST['ms']);
+        $orderId = $this->findOrderId($_POST['ms']);
+        if ($userId == '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_SUCCESSFULL . " and ticketNo like'%" . $_POST['ms'] . "%'")->all();
+        } else if ($userId != '' && $orderId == '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or userId in ($userId))")->all();
+        } else if ($userId == '' && $orderId != '') {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId))")->all();
+        } else {
+            $tickets = Ticket::find()->where("status=" . Ticket::TICKET_STATUS_NOT_SUCCESSFULL . " and (ticketNo like'%" . $_POST['ms'] . "%' or orderId in ($orderId) or userId in ($userId))")->all();
+        }
+
+        if (isset($tickets) && !empty($tickets)) {
+            $i = 1;
+            foreach ($tickets as $ticket):
+                $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;

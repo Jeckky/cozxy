@@ -421,25 +421,52 @@ $(document).on('click', '#approve', function () {
     var ticketId = $(this).parent().find("#ticketId").val();
     var approve = $('#approve').text();
     var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
-    $.ajax({
-        url: url,
-        data: {ticketId: ticketId, approve: approve},
-        dataType: 'JSON',
-        type: 'POST',
-        success: function (data) {
-            if (data.status) {
-                if (confirm('ต้องการอนุมัติรายการนี้ ?')) {
+    if (confirm('ต้องการอนุมัติรายการนี้ ?')) {
+        $.ajax({
+            url: url,
+            data: {ticketId: ticketId, approve: approve},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (data) {
+                if (data.status) {
+
                     window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+
                 }
             }
-        }
 
-    });
+        });
+    }
+});
+$(document).on('click', '#approve-by-cozxy', function () {
+    var ticketId = $(this).parent().find("#ticketId").val();
+    var approve = $('#approve').text();
+    var url = $baseUrl + 'returnproduct/return-product/approve-ticket-cozxy';
+    //alert(ticketId);
+    if (confirm('ต้องการอนุมัติรายการ ?')) {
+        $.ajax({
+            url: url,
+            data: {ticketId: ticketId, approve: 'Approve'},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (data) {
+                if (data.status) {
+
+                    window.location.href = $baseUrl + 'returnproduct/return-product/cozxy-approve-return';
+
+                }
+            }
+
+        });
+    }
 });
 $(document).on('click', '#not-approve', function () {
     $('#remark').show();
 });
-$(document).on('click', '#send-remark', function () {
+$(document).on('click', '#not-approve-cozxy', function () {
+    $('#remark').show();
+});
+$(document).on('click', '#send-remark', function () {//////////////
     var ticketId = $(this).parent().parent().find("#ticketId").val();
     var remark = $(this).parent().find("#remark").val();
     var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
@@ -456,6 +483,30 @@ $(document).on('click', '#send-remark', function () {
                 if (!data.status) {
                     alert('ดำเนินการเรียบร้อย');
                     window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+                }
+            }
+
+        });
+    }
+
+});
+$(document).on('click', '#send-remark-cozxy', function () {//////////////
+    var ticketId = $(this).parent().parent().find("#ticketId").val();
+    var remark = $(this).parent().find("#remark").val();
+    var url = $baseUrl + 'returnproduct/return-product/approve-ticket-cozxy';
+    if (remark == '') {
+        alert('กรุณากรอก Remark (เหตุผลที่ไม่อนุมัติ)');
+        return false;
+    } else {
+        $.ajax({
+            url: url,
+            data: {ticketId: ticketId, approve: 'not', remark: remark},
+            dataType: 'JSON',
+            type: 'POST',
+            success: function (data) {
+                if (!data.status) {
+                    alert('ดำเนินการเรียบร้อย');
+                    window.location.href = $baseUrl + 'returnproduct/return-product/cozxy-approve-return';
                 }
             }
 
@@ -522,6 +573,54 @@ $(document).on('keyup', '#search-approve', function (e) {
         data: {ms: ms},
         success: function (data) {
             $("#search-a").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-approve-cozxy', function (e) {
+    var ms = $("#search-approve-cozxy").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-approve-cozxy',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-ac").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-not-approve-cozxy', function (e) {
+    var ms = $("#search-not-approve-cozxy").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-not-approve-cozxy',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-not-ac").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-wait-cozxyapprove', function (e) {
+    var ms = $("#search-wait-cozxyapprove").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-wait-cozxy',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-wc").html(data.wait);
+        }
+    });
+});
+$(document).on('keyup', '#search-wait-cozxy-confirm', function (e) {
+    var ms = $("#search-wait-cozxy-confirm").val();
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'returnproduct/return-product/search-wait-cozxy-confirm',
+        data: {ms: ms},
+        success: function (data) {
+            $("#search-wcc").html(data.wait);
         }
     });
 });

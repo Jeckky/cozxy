@@ -362,6 +362,17 @@ class MyAccountController extends MasterController {
         $res = [];
         $idHide = [];
         $text = '';
+        $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
+        if (isset($productShelf) && count($productShelf) > 0) {
+            $i = 0;
+            foreach ($productShelf as $id):
+                $idHide[$i] = $id->productShelfId;
+                $i++;
+            endforeach;
+            $res['idHide'] = $idHide;
+        }else {
+            $res['idHide'] = false;
+        }
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
@@ -393,18 +404,6 @@ class MyAccountController extends MasterController {
                 }
                 $text .= '</div></div></div>';
             endforeach;
-            $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
-            if (isset($productShelf) && count($productShelf) > 0) {
-                $i = 0;
-                foreach ($productShelf as $id):
-                    $idHide[$i] = $id->productShelfId;
-                    $i++;
-                endforeach;
-                $res['idHide'] = $idHide;
-            }else {
-                $res['idHide'] = false;
-            }
-
             $res['text'] = $text;
             $res['status'] = true;
         } else {

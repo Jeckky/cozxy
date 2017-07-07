@@ -96,7 +96,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                         ?>
 
                     </div>
-                    <a href="<?= Yii::$app->homeUrl . 'return/returning' ?>" class="btn-lg pull-right"  style="margin-right: 5px;background-color: #ffcc00;color: #000;"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
+                    <a href="<?= Yii::$app->homeUrl . 'return/returning?orderNo=' . $orderNo ?>" class="btn-lg pull-right"  style="margin-right: 5px;background-color: #ffcc00;color: #000;"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back</a>
 
                 </div>
 
