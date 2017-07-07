@@ -84,7 +84,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                         Characters (excluding trails): <span id="charCount">0</span><br/>
                         Characters (excluding all spaces): <span id="charCountNoSpace">0</span>
 
-                        <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                        <footer>Max 140 characters. <cite title="Source Title">in story</cite></footer>
                     </blockquote>
 
                 </div>
