@@ -111,9 +111,9 @@ class DataImageSystems {
                 $productImagesAll = \common\models\costfit\ProductImage::find()->where('productId=' . $producmasterId)->orderBy('ordering asc')->all();
 
                 foreach ($productImagesAll as $items) {
-                    if (isset($items['imageThumbnail1']) && !empty($items['imageThumbnail1'])) {
-                        if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail1'])) {
-                            $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail1'];
+                    if (isset($items['imageThumbnail2']) && !empty($items['imageThumbnail2'])) {
+                        if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail2'])) {
+                            $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail2'];
                             $productimageBig = Yii::$app->homeUrl . $items['image'];
                         } else {
                             $masterId = $items['productId'];
