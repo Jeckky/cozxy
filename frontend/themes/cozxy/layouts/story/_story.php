@@ -46,12 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-12 compare-price-ajax">
-                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
+                            <?php
+                            ?>
+                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
                         </div>
                     </div>
                 </div>
                 <?php
-                if (Yii::$app->user->id == $productPost->userId) {
+                if (isset(Yii::$app->user->id)) {
                     ?>
                     <div id="1234" style="border-color:#fff;">
                         <div class="container">
@@ -66,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                             </div>
                                             <div class="col-xs-4">
-                                                <a class="btn btn-success btn-radio" onclick="bsExampleModalLgX(0, 'add')">
+                                                <a class="btn btn-success btn-radio" onclick="CozxyComparePriceModernBest(0, 'add', '')">
                                                     <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
                                                 </a>
                                                 <input type="checkbox" id="middle-item" class="hidden">

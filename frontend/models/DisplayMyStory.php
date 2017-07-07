@@ -312,7 +312,7 @@ class DisplayMyStory extends Model {
         return count($view);
     }
 
-    public static function comparePrice($productId, $currency, $sort) {
+    public static function comparePrice($productPostId, $currency, $sort) {
         $products = [];
         $sortStr = "price ";
         if ($sort == 'SORT_ASC') {
@@ -321,37 +321,40 @@ class DisplayMyStory extends Model {
             $sortStr.= 'desc';
         }
         if (isset($currency)) {
-            $productPost = ProductPost::find()->where("productId=" . $productId . " and currency=" . $currency)
+            $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $productPostId . " and currency=" . $currency)
             ->orderBy($sortStr)
             ->all();
             foreach ($productPost as $value) {
-                $products[$value->productPostId] = [
+                $products[$value->comparePriceId] = [
+                    'comparePriceId' => $value->comparePriceId,
                     'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,
-                    'price' => $value->price,
-                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                    'price' => number_format($value->price, 2),
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
+                    'latitude' => $value->latitude, 'longitude' => $value->longitude,
                 ];
             }
         } else {
-            $productPost = ProductPost::find()->where("productId=" . $productId)
+            $productPost = \common\models\costfit\ProductPostComparePrice::find()->where("productPostId=" . $productPostId)
             ->orderBy($sortStr)
             ->all();
             foreach ($productPost as $value) {
-                $products[$value->productPostId] = [
+                $products[$value->comparePriceId] = [
+                    'comparePriceId' => $value->comparePriceId,
                     'userId' => $value->userId,
                     'productPostId' => $value->productPostId,
                     'country' => $value->country,
                     'place' => $value->shopName,
-                    'price' => $value->price,
-                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2)
+                    'price' => number_format($value->price, 2),
+                    'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
+                    'latitude' => $value->price, 'longitude' => $value->longitude,
                 ];
             }
         }
-        //$dataProvider = new ActiveDataProvider([
-        //'query' => $productPost
-        //]);
+
+
         return $products;
     }
 

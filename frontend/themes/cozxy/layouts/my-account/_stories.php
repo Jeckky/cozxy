@@ -1,8 +1,8 @@
 <div class="sort-stories-cozxy">
     <div class="row">
         <div class="col-md-12 text-right sort-stories-cozxy">
-            <a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
-                Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <!--<a href="javascript:sortStoriesCozxy(<?//= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
+                Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>-->
             <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="SORT_ASC">
             <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view','myAccount')" style="color: #a79d9d;">
                 Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
