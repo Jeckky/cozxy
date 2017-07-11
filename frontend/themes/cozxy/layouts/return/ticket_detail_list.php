@@ -97,7 +97,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                         </table>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1 col-sm-12 col-xs-12">
                     <div class="col-xs-12 bg-yellow3" style="padding:18px 18px 10px;">
                         <p class="size20 size18-xs">Conversation history</p>
                     </div>
