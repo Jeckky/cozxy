@@ -239,7 +239,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                             <td style="text-align: center"><?= Order::invoiceNo($history->orderId) ?></td>
                                             <td style="text-align: center"><?= $history->ticketNo ?></td>
                                             <td style="text-align: center"><?= Ticket::statusText($history->ticketId) ?></td>
-                                            <td style="text-align: center"><a href="<?= $baseUrl . 'ticket-detail?ticketId=' . $history->ticketId ?>">Detail</a></td>
+                                            <td style="text-align: center"><a href="<?= $baseUrl . 'ticket-detail-list?ticketId=' . $history->ticketId ?>">Detail</a></td>
                                         </tr>
                                         <?php
                                         $i++;
