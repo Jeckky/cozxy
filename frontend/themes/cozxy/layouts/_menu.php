@@ -163,7 +163,7 @@ use yii\bootstrap\ActiveForm;
                                 //echo 'count :' . count($value['Children']);
                                 foreach ($value['Children'] as $key => $items) {
                                     ?>
-                                    <div class="sub-cate"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $items['categoryId']]) ?>"><?= $items['title'] ?></a></div>
+                                    <div class="sub-cate"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($items['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $items['categoryId']]) ?>"><?= $items['title'] ?></a></div>
                                     <?php
                                     if (isset($items['Children'])) {
                                         ?>
