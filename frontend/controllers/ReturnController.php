@@ -90,6 +90,7 @@ class ReturnController extends MasterController {
                             $returnProduct->orderItemId = $orderItemId;
                             $returnProduct->productSuppId = $value;
                             $returnProduct->quantity = $_POST['quantity'][$orderItemId];
+                            $returnProduct->rQuantity = $_POST['quantity'][$orderItemId];
                             $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
                             $returnProduct->price = $orderItem->priceOnePiece;
                             $returnProduct->totalPrice = $orderItem->priceOnePiece * $_POST['quantity'][$orderItemId];
@@ -242,6 +243,27 @@ class ReturnController extends MasterController {
         }
         $ticketNo = str_pad($ticketNo, 7, "0", STR_PAD_LEFT);
         return $ticketNo;
+    }
+
+    public function actionTicketDetailList() {
+        $ticketId = $_GET['ticketId'];
+        $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
+        $returnProducts = ReturnProduct::find()->where("ticketId=" . $ticketId)->all();
+        $chats = \common\models\costfit\Messege::find()->where("ticketId=" . $ticketId)
+                ->orderBy("createDateTime ASC")
+                ->all();
+        $order = Order::find()->where("orderId=" . $ticket->orderId)->one();
+        $province = \common\models\dbworld\States::find()->where("stateId=" . $ticket->provinceId)->one();
+        $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $ticket->amphurId)->one();
+        $pickingPoint = \common\models\costfit\PickingPoint::find()->where("pickingId=" . $ticket->pickingId)->one();
+        $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
+        return $this->render('@app/themes/cozxy/layouts/return/ticket_detail_list', [
+                    'ticket' => $ticket,
+                    'returnProducts' => $returnProducts,
+                    'chats' => $chats,
+                    'textReturn' => $textReturn,
+                    'orderNo' => $order->orderNo
+        ]);
     }
 
 }

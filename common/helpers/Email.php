@@ -85,9 +85,9 @@ class Email {
                 ->send();
     }
 
-    public static function mailReturnResult($mailTo, $ticketNo, $currentPoint, $returnPoint, $orderNo, $username, $status, $remark, $booth) {
+    public static function mailReturnResult($mailTo, $ticketNo, $currentPoint, $returnPoint, $orderNo, $username, $status, $remark, $booth, $listReturn) {
         $Subject = 'Result for retun product.';
-        \Yii::$app->mail->compose('cozxyReturn', ['ticketNo' => $ticketNo, 'currentCoin' => $currentPoint, 'returnCoin' => $returnPoint, 'orderNo' => $orderNo, 'username' => $username, 'status' => $status, 'remark' => $remark, 'booth' => $booth,])
+        \Yii::$app->mail->compose('cozxyReturn', ['ticketNo' => $ticketNo, 'currentCoin' => $currentPoint, 'returnCoin' => $returnPoint, 'orderNo' => $orderNo, 'username' => $username, 'status' => $status, 'remark' => $remark, 'booth' => $booth, 'listReturn' => $listReturn])
                 ->setTo($mailTo)//tomail
                 ->setFrom('cozxy@cozxy.com')
                 ->setSubject($Subject)
