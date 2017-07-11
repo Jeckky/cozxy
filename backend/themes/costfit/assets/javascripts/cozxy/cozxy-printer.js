@@ -394,6 +394,7 @@ $(document).on('click', '#incr-return', function () {
 $(document).on('click', '#confirm-return', function () {
     var orderId = $(this).parent().parent().find("#orderId").val();
     var url = $baseUrl + 'returnproduct/return-product/check-remark';
+
     $.ajax({
         url: url,
         data: {orderId: orderId},
@@ -406,7 +407,6 @@ $(document).on('click', '#confirm-return', function () {
                 if ($("#remark" + data.returnId[i]).val() == '') {
                     a = 2;
                 }
-                //alert($("#remark" + data.returnId[i]).val());
             }
             if (a == 1) {
                 $("#returnDetail").submit();
@@ -419,7 +419,7 @@ $(document).on('click', '#confirm-return', function () {
 });
 $(document).on('click', '#approve', function () {
     var ticketId = $(this).parent().find("#ticketId").val();
-    var approve = $('#approve').text();
+    var approve = 'Approve';
     var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
     if (confirm('ต้องการอนุมัติรายการนี้ ?')) {
         $.ajax({
@@ -451,7 +451,6 @@ $(document).on('click', '#approve-by-cozxy', function () {
             type: 'POST',
             success: function (data) {
                 if (data.status) {
-
                     window.location.href = $baseUrl + 'returnproduct/return-product/cozxy-approve-return';
 
                 }
@@ -655,3 +654,9 @@ $(document).on('click', '#export-txt', function (e) {
         }
     });
 });
+function hideRemark(id) {
+    $('#remark' + id).hide();
+}
+function showRemark(id) {
+    $('#remark' + id).show();
+}

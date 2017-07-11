@@ -5,7 +5,7 @@ use common\models\costfit\Order;
 <tr>
     <td>Order #<?= $model['orderNo'] ?></td>
     <td><?= $model['status'] ?></td>
-    <td><?= $model['updateDateTime'] ?></td>
+    <td><?= frontend\controllers\MasterController::dateThai($model['updateDateTime'], 4) ?></td>
     <td class="text-center">
         <?php
         if ($model['statusNum'] < Order::ORDER_STATUS_E_PAYMENT_SUCCESS || $model['status'] == Order::ORDER_STATUS_E_PAYMENT_PENDING) { // ชำระเงินแล้ว
