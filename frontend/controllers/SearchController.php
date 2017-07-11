@@ -27,7 +27,7 @@ class SearchController extends MasterController {
         ];
     }
 
-    public function actionIndex($hash = FALSE) {
+    public function actionIndex($title, $hash = FALSE) {
         if (isset($_GET['c']) && !empty($_GET['c'])) {
             $category = $_GET['c'];
         } else {
@@ -58,7 +58,7 @@ class SearchController extends MasterController {
         ]);
 
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title'));
     }
 
     public function actionCozxyProduct() {
