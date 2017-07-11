@@ -117,8 +117,13 @@ $(function() {
 });
 ');
 \frontend\assets\SearchAsset::register($this);
-$this->title = 'Search Categories ' . strtoupper($category);
-$this->params['breadcrumbs'][] = $this->title;
+if (isset($title) && !empty($title)) {
+    $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
+    $this->params['breadcrumbs'][] = $this->title;
+} else {
+    $this->title = 'Search Categories ' . $title;
+    $this->params['breadcrumbs'][] = $this->title;
+}
 ?>
 
 <?=
@@ -134,7 +139,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                     <div class="filter-product-cozxy col-sm-12">
 
                         <?php if ($productCanSell->getTotalCount() > 0): ?>
-                            <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
+                            <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($title) ?> (RECOMMENDED)
                                 <small>
                                     <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
@@ -190,7 +195,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                     </div>
                     <div class="filter-product-cozxy-not-sale col-sm-12">
                         <?php if ($productNotSell->getTotalCount() > 0): ?>
-                            <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (PRODUCTS)</h3>
+                            <h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($title) ?> (PRODUCTS)</h3>
                         <!--<p class="size18 size16-sm size14-xs">SHOWING 1-16 OF 79 RESULTS</p>-->
                             <div class="row">
                                 <div class="wf-container">
@@ -249,7 +254,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                       ?>','<?php //echo $clickNum;                                                                                                      ?>','<?php //echo $countAllProduct;                                                                                                      ?>','<?php //echo $limit_start;                                                                                                     ?>','<?php //echo $limit_end;                                                                                                    ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                            ?>','<?php //echo $clickNum;                                                                                                                           ?>','<?php //echo $countAllProduct;                                                                                                                           ?>','<?php //echo $limit_start;                                                                                                                          ?>','<?php //echo $limit_end;                                                                                                                         ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

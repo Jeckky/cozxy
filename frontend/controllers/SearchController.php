@@ -27,12 +27,17 @@ class SearchController extends MasterController {
         ];
     }
 
-    public function actionIndex($hash = FALSE) {
-        $category = $_GET['c'];
-        $k = base64_decode(base64_decode($hash));
-        $params = \common\models\ModelMaster::decodeParams($hash);
+    public function actionIndex($title, $hash = FALSE) {
+        if (isset($_GET['c']) && !empty($_GET['c'])) {
+            $category = $_GET['c'];
+        } else {
+            $k = base64_decode(base64_decode($hash));
+            $params = \common\models\ModelMaster::decodeParams($hash);
+            $categoryId = $params['categoryId'];
+        }
 
-        $categoryId = $params['categoryId'];
+        //echo '<pre>';
+        //print_r($params);
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(
         [
@@ -53,7 +58,7 @@ class SearchController extends MasterController {
         ]);
 
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title'));
     }
 
     public function actionCozxyProduct() {
