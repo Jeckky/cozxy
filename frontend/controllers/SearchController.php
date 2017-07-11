@@ -28,11 +28,16 @@ class SearchController extends MasterController {
     }
 
     public function actionIndex($hash = FALSE) {
-        $category = $_GET['c'];
-        $k = base64_decode(base64_decode($hash));
-        $params = \common\models\ModelMaster::decodeParams($hash);
+        if (isset($_GET['c']) && !empty($_GET['c'])) {
+            $category = $_GET['c'];
+        } else {
+            $k = base64_decode(base64_decode($hash));
+            $params = \common\models\ModelMaster::decodeParams($hash);
+            $categoryId = $params['categoryId'];
+        }
 
-        $categoryId = $params['categoryId'];
+        //echo '<pre>';
+        //print_r($params);
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(
         [

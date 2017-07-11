@@ -101,6 +101,15 @@ class ModelMaster extends \yii\db\ActiveRecord {
         return implode('-', $title);
     }
 
+    public static function createTitleArray($title) {
+        if (strpos($title, "/") === FALSE) {
+            $title = explode(' ', $title);
+        } else {
+            $title = explode('/', $title);
+        }
+        return implode('-', $title);
+    }
+
     public static function encodeParams($params) {
 //        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
 

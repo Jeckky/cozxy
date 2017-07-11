@@ -64,7 +64,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
+            [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
     }
 
@@ -102,7 +102,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     public function attributes() {
         return array_merge(parent::attributes(), [
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
-            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price', 'orderItemId', 'brandId', 'image', 'title', 'description'
+            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price',
+            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId'
         ]);
     }
 
@@ -224,12 +225,12 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productOrder($productSuppId) {
         $model = Order::find()
-                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-                ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
-                ->all();
+        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+        ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+        ->all();
         if (isset($model) && count($model) > 0) {
             return $model;
         } else {
