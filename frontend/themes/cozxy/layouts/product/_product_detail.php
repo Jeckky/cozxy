@@ -10,32 +10,73 @@ $id = uniqid();
 $val = rand(1, 10);
 ?>
 
+<!-- Product Detail Old -->
 <div class="product-detail">
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
-                <div class="col-md-12 col-xs-12 images-big">
-                    <img  src="<?php echo $model['image'] ?>" class="fullwidth" alt=" ">
+                <div class="col-xs-12">
+                    <div class="zoom-box">
+                        <a href="<?php echo $model['image'] ?>" target="_blank">
+                            <img id="zoom-img" src="<?php echo $model['image'] ?>" class="fullwidth" alt="" data-zoom-image="<?php echo $model['image'] ?>">
+                        </a>
+                    </div>
                 </div>
-                <?php
-                $productimageThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE2eDExNg0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTE2eDExNjwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
-                if (count($model['images']) == 0) {
-                    /* for ($index = 0; $index <= 3; $index++) {
-                      echo ''
-                      . '<div class="col-md-3 col-xs-6">
-                      <img src="' . $productimageThumbnail1 . '" class="fullwidth" alt="" style="margin-top: 24px;">
-                      </div>';
-                      } */
-                } else {
-                    foreach ($model['images'] as $key => $value) {
-                        echo ''
-                        . '<div class="col-md-3 col-xs-6">
-                            <img  src="' . $value['imageThumbnail1'] . '" class="fullwidth" alt="" style="margin-top: 24px;" onClick="ShowImages(this,' . $value['productImageId'] . ')">
-                        </div>';
-                    }
-                }
-                ?>
+                <div class="col-xs-12">
+                    <div class="product-navi rela">
+                        <div class="product-thumb nowrap">
+                            <?php
+                            $productimageThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE2eDExNg0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTE2eDExNjwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+                            if (count($model['images']) == 0) {
+                                /* for ($index = 0; $index <= 3; $index++) {
+                                  echo ''
+                                  . '<div class="col-md-3 col-xs-6">
+                                  <img src="' . $productimageThumbnail1 . '" class="fullwidth" alt="" style="margin-top: 24px;">
+                                  </div>';
+                                  } */
+                            } else {
+                                foreach ($model['images'] as $key => $value) {
+                                    /* echo ''
+                                      . '<a href="javascript:pic2Zoom("' . $value['imageThumbnail1'] . '", "' . $model['image'] . '");" class="item">
+                                      <img  src="' . $value['imageThumbnail1'] . '">
+                                      </a>'; */
+                                    ?>
+                                    <a href="javascript:pic2Zoom('<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>','<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>');" class="item">
+                                        <img  src="<?= $value['imageThumbnail1'] ?>" width="116" height="116">
+                                    </a>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                        <a class="align-middle fc-white bg-yellow3 size16" href="javascript:scrolling2Left();" style="padding:8px 8px 4px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>
+                        <a class="align-middle fc-white bg-yellow3 size16" href="javascript:scrolling2Right();" style="padding:8px 8px 4px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    </div>
+                </div>
             </div>
+            <!--<div class="row">
+                <div class="col-md-12 col-xs-12 images-big">
+                    <img  src="<?//php echo $model['image'] ?>" class="fullwidth" alt=" ">
+                </div>
+            <?//php
+            /* $productimageThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMTE2eDExNg0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MTE2eDExNjwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
+              if (count($model['images']) == 0) {
+              /* for ($index = 0; $index <= 3; $index++) {
+              echo ''
+              . '<div class="col-md-3 col-xs-6">
+              <img src="' . $productimageThumbnail1 . '" class="fullwidth" alt="" style="margin-top: 24px;">
+              </div>';
+              }
+              } else {
+              foreach ($model['images'] as $key => $value) {
+              echo ''
+              . '<div class="col-md-3 col-xs-6">
+              <img  src="' . $value['imageThumbnail1'] . '" class="fullwidth" alt="" style="margin-top: 24px;" onClick="ShowImages(this,' . $value['productImageId'] . ')">
+              </div>';
+              }
+              } */
+            ?>
+            </div>-->
         </div>
 
         <div class="col-md-4">
@@ -56,7 +97,6 @@ $val = rand(1, 10);
                             echo '';
                         }
                         ?>
-
 
                         <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
@@ -121,8 +161,8 @@ $val = rand(1, 10);
                                         <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                                     </a>
                                 <?php } else { ?>
-                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                 ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                 ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                 ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                    <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                                                                                                ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                                                                                                ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                                                                                                 ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                                     </a>-->
                                     <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:24px auto 12px">
                                         <div class="heart-<?= $model['productSuppId'] ?>">+ <i class="fa fa-heart-o" aria-hidden="true"></i></div>
@@ -168,7 +208,12 @@ $(".productOption").on("change", function(){
         window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
     });
 });
-
+$("#zoom-img").elevateZoom({
+        zoomType: "inner",
+        cursor: "zoom-in",
+        zoomWindowFadeIn: 384,
+        zoomWindowFadeOut: 728
+    });
 
 ');
 ?>
