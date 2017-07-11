@@ -29,12 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
+                    <?php
+                    if (isset($productPost->shortDescription)) {
+                        ?>
+                        <p>
+                            <?= $productPost->shortDescription ?>
+                        </p>
+                        <hr>
+                    <?php } ?>
                     <p>
                         <?= $productPost->description ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
-
                     <div class="size12">&nbsp;</div>
 
                 </div>
