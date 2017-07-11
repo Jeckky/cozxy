@@ -40,7 +40,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                         </div>
                         <hr>
                         <h4>Item(s) return</h4>
-                        <table class="table">
+                        <table class="table table-hover">
                             <tr>
                                 <td  style="text-align: center;color: #000;">Item</td>
                                 <td  style="text-align: center; color:#000;">Quantity</td>
