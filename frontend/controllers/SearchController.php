@@ -142,7 +142,7 @@ class SearchController extends MasterController {
         $FilterPrice = [];
         $productFilterPrice = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
-            'pagination' => ['defaultPageSize' => 12]
+            'pagination' => ['defaultPageSize' => 21]
         ]);
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
         return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
