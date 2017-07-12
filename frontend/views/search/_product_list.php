@@ -42,7 +42,7 @@ if (isset($sortstatus)) {
     $sortNew = 'SORT_ASC';
 }
 ?>
-<h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
+<h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?>
     <small>
         <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
@@ -59,16 +59,19 @@ if (isset($sortstatus)) {
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
         <?php
-        yii\widgets\Pjax::begin([
-            'id' => 'notsale',
-            'enablePushState' => false, // to disable push state
-            'enableReplaceState' => false, // to disable replace state
-            'timeout' => 5000,
-            'clientOptions' => [
-                'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
-                'linkSelector' => '#notsale'
-            ]
-        ]);
+        yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false])
+        ?>
+        <?php
+        //yii\widgets\Pjax::begin([
+        //'id' => 'notsale',
+        //'enablePushState' => false, // to disable push state
+        //'enableReplaceState' => false, // to disable replace state
+        //'timeout' => 5000,
+        // 'clientOptions' => [
+        // 'registerClientScript' => "$.pjax.reload({container: '#notsale', timeout: 2000});", //"$.pjax.reload({container:'#notsale'});",
+        // 'linkSelector' => '#notsale'
+        //]
+        //]);
         echo \yii\widgets\ListView::widget([
             'dataProvider' => $dataProvider,
             'options' => [

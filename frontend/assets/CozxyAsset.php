@@ -25,9 +25,9 @@ class CozxyAsset extends AssetBundle {
         'css/bootstrap.min.css',
         'css/font-awesome.min.css',
         'css/mstyle.css',
-        'css/cozxy.css',
         'css/chat.css',
         'fonts/fonts.css',
+        'css/cozxy.css',
     ];
     public $js = [
         'js/jquery.js',
@@ -36,7 +36,10 @@ class CozxyAsset extends AssetBundle {
         'js/cozxy.js',
         'js/cozxy.reform.js',
         'js/cozxy.unity.js',
-            //'js/search-filter.js'
+        'js/cozxy.product.modal.js',
+        'js/jquery.elevateZoom-3.0.8.min.js',
+        'js/cozxy.script.js',
+    //'js/search-filter.js'
     ];
 
 }

@@ -20,6 +20,7 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
         <?php
         $this->registerJs("
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -34,7 +35,7 @@ AppAsset::register($this);
     </head>
     <body>
         <?php $this->beginBody() ?>
-        <?= $this->render('_menu') ?> 
+        <?= $this->render('_menu') ?>
         <?= $content ?>
 
         <?= $this->render('_footer') ?>

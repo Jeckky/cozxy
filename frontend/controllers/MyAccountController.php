@@ -25,8 +25,9 @@ class MyAccountController extends MasterController {
             'pagination' => ['defaultPageSize' => 50]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
+        $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
         $statusText = '';
-        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder'));
+        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList'));
     }
 
     public function actionEditPersonalDetail() {
@@ -362,6 +363,17 @@ class MyAccountController extends MasterController {
         $res = [];
         $idHide = [];
         $text = '';
+        $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
+        if (isset($productShelf) && count($productShelf) > 0) {
+            $i = 0;
+            foreach ($productShelf as $id):
+                $idHide[$i] = $id->productShelfId;
+                $i++;
+            endforeach;
+            $res['idHide'] = $idHide;
+        }else {
+            $res['idHide'] = false;
+        }
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
@@ -393,18 +405,6 @@ class MyAccountController extends MasterController {
                 }
                 $text .= '</div></div></div>';
             endforeach;
-            $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
-            if (isset($productShelf) && count($productShelf) > 0) {
-                $i = 0;
-                foreach ($productShelf as $id):
-                    $idHide[$i] = $id->productShelfId;
-                    $i++;
-                endforeach;
-                $res['idHide'] = $idHide;
-            }else {
-                $res['idHide'] = false;
-            }
-
             $res['text'] = $text;
             $res['status'] = true;
         } else {

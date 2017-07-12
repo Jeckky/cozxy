@@ -54,8 +54,10 @@ class MasterController extends MasterCommonController {
         }
         $this->view->params['recentStories'] = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(6)]);
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
+        $this->view->params['actionTree'] = \frontend\controllers\CategoriesController::actionTree();
+        $this->view->params['actionTreeSub'] = \frontend\controllers\CategoriesController::actionTreeSub();
         //echo '<pre>';
-        //print_r($this->view->params['cart']);
+        //print_r($this->view->params['actionTreeSub']);
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([
@@ -316,26 +318,26 @@ class MasterController extends MasterCommonController {
 
     public function actionMenuCategory() {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  is null ')
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  is null ')
+        ->andWhere('status  =1')
+        ->all();
 
         return $list;
     }
 
     public function actionMenuCategoryParentId($id) {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  =' . $id)
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  =' . $id)
+        ->andWhere('status  =1')
+        ->all();
         return $list;
     }
 
     public function actionMenuCategorySubParentId($id) {
         $list = \common\models\costfit\Category::find()
-                ->andWhere('parentId  =' . $id)
-                ->andWhere('status  =1')
-                ->all();
+        ->andWhere('parentId  =' . $id)
+        ->andWhere('status  =1')
+        ->all();
         return $list;
     }
 
@@ -590,8 +592,8 @@ class MasterController extends MasterCommonController {
     public function findPriceRange($categoryId) {
         $res = [];
         $product = \common\models\costfit\CategoryToProduct::find()->select("min(product_price.price) as  minPrice ,max(product_price.price) as maxPrice")
-                        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
-                        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
+        ->join("LEFT JOIN", "product_price", "product_price.productId = category_to_product.productId")
+        ->where("product_price.quantity = 1 AND category_to_product.categoryId=" . $categoryId)->one();
 
         if (isset($product)) {
             $res["min"] = $product['minPrice'];
@@ -622,8 +624,8 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\dbworld\Cities::find()
-                                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
-                                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
+                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
+                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
@@ -692,7 +694,7 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\costfit\PickingPoint::find()
-                                ->andWhere(['amphurId' => $cat_id, 'type' => $type, 'status' => '1'])->asArray()->all();
+                ->andWhere(['amphurId' => $cat_id, 'type' => $type, 'status' => '1'])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
@@ -736,8 +738,8 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\dbworld\Cities::find()
-                                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
-                                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
+                ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
+                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {

@@ -25,7 +25,7 @@ class CartAsset extends AssetBundle {
         'css/cart.css',
     ];
     public $js = [
-        'js/cart.js'
+        'js/cart.js',
     ];
     public $depends = [
         'frontend\assets\CozxyAsset',

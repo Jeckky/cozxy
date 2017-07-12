@@ -29,7 +29,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         </div>
         <div class="panel-body" style="font-size: 13pt;">
 
-            <?= \yii\helpers\Html::textInput('isbn', NULL, ['class' => 'input-lg productQr', 'autofocus' => 'autofocus', 'placeholder' => 'Product Qr Code']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?>
+            <?= \yii\helpers\Html::textInput('isbn', NULL, ['class' => 'input-lg productQr', 'autofocus' => 'autofocus', 'placeholder' => 'Product Qr Code']); ?> <?= isset($ms) && $ms != '' ? '<span style="color:red;">* ' . $ms . '</span>' : '' ?>
+            <h4>Booth พิจารณาเบื้องต้น</h4>
+            <h4>- กรุณากด รับคืน / ไม่รับคืน ให้ครบทุกช่อง</h4>
+            <h4>- กรณีกด ไม่รับคืน ให้ลูกค้าเอาของกลับได้เลย</h4>
+            <h4>- กรณีกด รับคืน ให้ส่งทาง Cozxy ตรวจสอบ</h4>
             <?php
             $form = ActiveForm::begin([
                         'method' => 'POST',
@@ -38,14 +42,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             ]);
             ?>
             <input type="hidden" name="orderId" id="orderId" value="<?= $order->orderId ?>">
-            <input type="hidden" id="ticketId" value="<?= $ticketId ?>">
+            <input type="hidden" id="ticketId" name="ticketId" value="<?= $ticketId ?>">
             <div id="returnList" style="margin-top: 10px;">
                 <?php if (isset($returnList) && !empty($returnList)) { ?>
                     <table class="table">
                         <tr style="height: 50px;background-color: #999999;">
                             <th style="vertical-align: middle;text-align: center;width: 5%;">No.</th>
                             <th style="vertical-align: middle;text-align: center;width: 30%;">สินค้า</th>
-                            <th style="vertical-align: middle;text-align: center;width: 10%;">สั่งซื้อ</th>
+                            <th style="vertical-align: middle;text-align: center;width: 10%;">ขอคืน</th>
                             <th style="vertical-align: middle;text-align: center;width: 35%;">จำนวนที่ต้องการคืน</th>
                             <th style="vertical-align: middle;text-align: center;width: 15%;">Remark</th>
                             <th style="vertical-align: middle;text-align: center;width: 5%;">ยกเลิก</th>
@@ -64,7 +68,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                     <input type="text" class="text-center" style="width:35px;height:35px;" id="qnty-return<?= $rItem->returnProductId ?>" value="<?= $rItem->quantity ?>" readonly="true">
                                     <a class="btn" id="incr-return">+</a>
                                 </td>
-                                <td style="vertical-align: middle;text-align: center;"><textarea name="remark[<?= $rItem->returnProductId ?>]" id="remark<?= $rItem->returnProductId ?>" required="true"><?= isset($rItem->remark) ? $rItem->remark : '' ?></textarea></td>
+                                <td style="vertical-align: middle;text-align: center;">
+                                    <textarea name="remark[<?= $rItem->returnProductId ?>]" id="remark<?= $rItem->returnProductId ?>" required="true"><?= isset($rItem->remark) ? $rItem->remark : '' ?></textarea>
+                                    <br><input type="radio" name="isAccept[<?= $rItem->returnProductId ?>]" id="isAccept<?= $rItem->returnProductId ?>" value="1"> รับคืน&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="isAccept[<?= $rItem->returnProductId ?>]" id="isAccept<?= $rItem->returnProductId ?>" value="0"> ไม่รับคืน
+                                </td>
 
                             <input type="hidden" id="pSuppId" value="<?= $rItem->returnProductId ?>">
                             <input type="hidden" id="pOrderId" value="<?= $order->orderId ?>">
@@ -75,7 +83,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         endforeach;
                         ?>
                     </table>
-                    <a class="btn-lg pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</a>
+                    <a class="btn-lg pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> ยืนยัน</a>
                 <?php } ?>
             </div>
         </div>

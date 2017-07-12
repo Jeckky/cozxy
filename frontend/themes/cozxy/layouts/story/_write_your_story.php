@@ -51,7 +51,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                 <p style="margin: 0px;" class="size20 fc-g999">   <?= $productSupplier->title ?> </p>
             </h1>
             <div class="write-story-banner">
-                <?= Html::img($image, ['class' => 'img-responsive', 'style' => '100%']) ?>
+                <?= Html::img(Yii::$app->homeUrl . $image, ['class' => 'img-responsive', 'style' => '100%']) ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
 
@@ -71,6 +71,23 @@ if (Yii::$app->controller->action->id == 'update-stories') {
             <div class="form-group login-box">
                 <label for="exampleInputEmail1">Title</label>
                 <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?>
+            </div>
+            <div class="form-group login-box">
+                <label for="exampleInputEmail1">Short Description</label>
+                <?php
+                echo $form->field($model, 'shortDescription')->textarea(['rows' => '6', 'maxlength' => 140])->label(FALSE);
+                ?>
+                <div id="productpost-shortdescription-text">
+                    <blockquote id="result"  style="font-size: 14px;">
+                        <!--Words: <span id="wordCount">0</span><br/>-->
+                        Total Characters(including trails): <span id="totalChars">0</span><br/>
+                        Characters (excluding trails): <span id="charCount">0</span><br/>
+                        Characters (excluding all spaces): <span id="charCountNoSpace">0</span>
+
+                        <footer>Max 140 characters. <cite title="Source Title">in story</cite></footer>
+                    </blockquote>
+
+                </div>
             </div>
             <div class="form-group">
                 <?=
@@ -213,6 +230,28 @@ if (Yii::$app->controller->action->id == 'update-stories') {
 
     <div class="size12 size10-xs">&nbsp;</div>
 </div>
+<!--
+<div class="texCount"></div>
+<textarea class="comment"></textarea>-->
+<script>
+    /* $(document).ready(function () {
+     var text_Max = 200;
+     $('.texCount').html(text_Max + 'Words');
+
+     $('.comment').keyup(function () {
+     var text_Length = $('.comment').val().length;
+     var text_Remain = text_Max - text_Length;
+     $('.texCount').html(text_Remain + 'Words');
+
+     $('.comment').keydown(function (e) {
+     if (text_Remain == 0) {
+     e.preventDefault();
+     }
+     });
+     });
+     });*/
+</script>
+
 <?php ActiveForm::end(); ?>
 <?php
 $this->registerCss('
@@ -255,7 +294,7 @@ function changeMap(lats, lngs) {
             $("#productpostcompareprice-longitude").focus();
             return false;
         }
-        
+
         if(getLats != ""  && getLngs != ""){
             $("#productpostcompareprice-longitude-label").html("");
         }

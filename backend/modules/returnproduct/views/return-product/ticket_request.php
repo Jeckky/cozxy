@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <?php } ?>
     <div class="panel panel-default">
         <div class="row">
-            <?php if (isset($approved) && !empty($approved)) { ?>
+            <?php if (isset($approved) && count($approved) > 0) { ?>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                     <div class="panel-heading"  style="background-color:#999999;vertical-align: middle;">
                         <span class="panel-title"><h3 style="color:#000;">อนุมัติ</h3></span>
@@ -96,11 +96,11 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </div><?php
             }
-            if (isset($success) && !empty($success)) {
+            if (isset($waitCozxy) && count($waitCozxy) > 0) {
                 ?>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                     <div class="panel-heading"  style="background-color:#999999;vertical-align: middle;">
-                        <span class="panel-title"><h3 style="color:#000;">คืนแล้ว</h3></span>
+                        <span class="panel-title"><h3 style="color:#000;">รอการตรวจสอบจาก Cozxy</h3></span>
                     </div>
                     <div class="panel-body">
                         <table class="table">
@@ -112,18 +112,18 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                             </tr>
 
                             <tr style="height: 48px;">
-                                <td  colspan="4"><input type="text" id="search-approve" class="form-control" placeholder="Search Ticket" style="height: 45px;font-size: 12pt;"></td>
+                                <td  colspan="4"><input type="text" id="search-wait-cozxyapprove" class="form-control" placeholder="Search Ticket" style="height: 45px;font-size: 12pt;"></td>
                             </tr>
                         </table>
-                        <table class="table" id="search-a">
+                        <table class="table" id="search-wc">
                             <?php
-                            foreach ($success as $i => $successfull):
+                            foreach ($waitCozxy as $i => $waitCzy):
                                 ?>
                                 <tr id="status-approve">
-                                    <td style="text-align: center;width: 15%;"><?= Order::invoiceNo($successfull->orderId) ?></td>
-                                    <td style="text-align: center;width: 35%;"><?= User::userName($successfull->userId) ?></td>
-                                    <td style="text-align: center;width: 35%;"><?= $successfull->ticketNo ?></td>
-                                    <td style="text-align: center;width: 15%;"><a href="<?= $baseUrl . 'approve-detail?orderId=' . $successfull->orderId ?>" >รายละเอียด</a></td>
+                                    <td style="text-align: center;width: 15%;"><?= Order::invoiceNo($waitCzy->orderId) ?></td>
+                                    <td style="text-align: center;width: 35%;"><?= User::userName($waitCzy->userId) ?></td>
+                                    <td style="text-align: center;width: 35%;"><?= $waitCzy->ticketNo ?></td>
+                                    <td style="text-align: center;width: 15%;"><a href="<?= $baseUrl . 'approve-detail?orderId=' . $waitCzy->orderId . '&flag=2&ticketId=' . $waitCzy->ticketId ?>" >รายละเอียด</a></td>
                                 </tr>
                                 <?php
                             endforeach;
@@ -132,7 +132,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     </div>
                 </div><?php
             }
-            if (isset($notApproved) & !empty($notApproved)) {
+            if (isset($notApproved) & count($notApproved) > 0) {
                 ?>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div class="panel-heading"  style="background-color: #999999;vertical-align: middle;">

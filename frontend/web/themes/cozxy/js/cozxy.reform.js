@@ -769,6 +769,8 @@ $('#isPay').change(function () {
         });
     }
 });
+
+
 //////////////////////////////    RETURN  ///////////////////////////////////////
 $(document).on('click', '#sendTicket', function () {
     var invoice = $(this).parent().parent().find("#invoiceNo").val();
@@ -817,6 +819,37 @@ $(document).on('keyup', '#message', function (e) {
         });
     }
 });
+function checkReturnQuantity(orderItemId) {
+    $(document).on('keypress', '#quantity-' + orderItemId, function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code > 57) {
+            return false;
+        } else if (code < 48 && code != 8) {
+            return false;
+        }
+    });
+    var returnQuantity = $('#quantity-' + orderItemId).val();
+    if (returnQuantity > 0) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + 'return/check-quantity-return',
+            data: {orderItemId: orderItemId},
+            success: function (data) {
+                if (data.status) {
+                    if (data.canReturn < returnQuantity) {
+                        alert('No more than ' + data.canReturn);
+                        $('#quantity-' + orderItemId).val(data.canReturn);
+                    }
+                }
+            }
+        });
+    } else if (returnQuantity != '') {
+        alert('Can not be 0');
+        $('#quantity-' + orderItemId).val(1);
+    }
+
+}
 /*
  $.growl({title: "Growl", message: "The kitten is awake!"});
  $.growl.error({message: "The kitten is attacking!"});
@@ -1123,11 +1156,9 @@ $(".bs-example-modal-lg-x").click(function () {
         }
     });
 });
-
 function CozxyComparePriceModernBest(id, type, dataIndex) {
 
     var postId = id;
-
     if (postId == 0) {
         $('#productpost-shopname').val('');
         $('#productpost-price').val('');
@@ -1259,7 +1290,6 @@ function ComparePriceStory() {
                     //$data += "</tr>";
                     $('#compare-price-' + JSONObject.comparePriceId).html($data);
                     $(".bs-example-modal-lg").modal("hide");
-
                 } else {
                     alert('error');
                 }
@@ -1269,3 +1299,45 @@ function ComparePriceStory() {
 
 }
 
+
+
+counter = function () {
+
+    var $textarea = $('#productpost-shortdescription').val();
+
+    if ($textarea.length == 0) {
+        $('#wordCount').html(0);
+        $('#totalChars').html(0);
+        $('#charCount').html(0);
+        $('#charCountNoSpace').html(0);
+        return;
+    }
+    console.log($textarea.length);
+    var regex = /\s+/gi;
+    var wordCount = $textarea.trim().replace(regex, ' ').split(' ').length;
+    var totalChars = $textarea.length;
+    var charCount = $textarea.trim().length;
+    var charCountNoSpace = $textarea.replace(regex, '').length;
+
+    $('#wordCount').html(wordCount);
+    $('#totalChars').html(totalChars);
+    $('#charCount').html(charCount);
+    $('#charCountNoSpace').html(charCountNoSpace);
+    var max = 10;
+    if (totalChars > max) {
+        //var top = $textarea.scrollTop();
+        //$textarea.val($textarea.val().substr(0, max));
+        //$textarea.scrollTop(top);
+        //alert(totalChars);
+    }
+};
+
+$(document).ready(function () {
+    //$('#count').click(counter);
+    $('#productpost-shortdescription').change(counter);
+    $('#productpost-shortdescription').keydown(counter);
+    $('#productpost-shortdescription').keypress(counter);
+    $('#productpost-shortdescription').keyup(counter);
+    $('#productpost-shortdescription').blur(counter);
+    $('#productpost-shortdescription').focus(counter);
+});

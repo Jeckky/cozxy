@@ -29,12 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
+                    <?php
+                    if (isset($productPost->shortDescription)) {
+                        ?>
+                        <p>
+                            <?= $productPost->shortDescription ?>
+                        </p>
+                        <hr>
+                    <?php } ?>
                     <p>
                         <?= $productPost->description ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
-
                     <div class="size12">&nbsp;</div>
 
                 </div>
@@ -61,12 +68,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="col-md-9">
                                     <form class="form-horizontal" role="form" style="margin-bottom: 15px;">
                                         <div class="row">
-                                            <div class="col-xs-4">
-                                                <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
-                                                $productPost->encodeParams(
-                                                ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
-                                                ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
-                                            </div>
+                                            <?php if (Yii::$app->user->id == $productPost->userId) { ?>
+                                                <div class="col-xs-4">
+                                                    <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
+                                                    $productPost->encodeParams(
+                                                    ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                    ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
+                                                </div>
+                                            <?php } ?>
                                             <div class="col-xs-4">
                                                 <a class="btn btn-success btn-radio" onclick="CozxyComparePriceModernBest(0, 'add', '')">
                                                     <i class="fa fa-plus" aria-hidden="true"></i> Add New Price

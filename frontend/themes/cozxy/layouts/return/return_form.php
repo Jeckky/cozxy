@@ -48,6 +48,40 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                             ?>
                             Invoice Nunber <input type="text" name="invoice" id="invoiceNo" class="form-control" disabled="true" value="<?= $invoiceNo ?>">
                             <input type="hidden" name="invoiceNo" id="invoiceNo" value="<?= $invoiceNo ?>">
+                            <?php
+                            if (isset($orderItem) && count($orderItem) > 0) {
+                                ?>
+                                Which product(s): <?= isset($ms) ? '<span style="color:red;">' . $ms . '</span>' : '' ?>
+                                <table class="table table-hover">
+                                    <thead style="font-size: 12pt;">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Return</th>
+                                            <th>Select</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($orderItem as $item):
+                                            ?>
+                                            <tr>
+                                                <td style="width: 50%;text-align: center;">
+                                                    <img src="<?= Yii::$app->homeUrl . common\models\costfit\ProductSuppliers::productImageSuppliersSmall($item->productSuppId) ?>"style="width: 120px;height: 110px;"/><br>
+                                                    <span style="font-size: 12pt;"><?= common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId)->title ?></span>
+                                                </td>
+                                                <td style="width: 20%;"><?= $item->quantity ?></td>
+                                                <td style="width: 20%;">
+                                                    <input type="text" onkeyup="javascript:checkReturnQuantity(<?= $item->orderItemId ?>)" class="form-control" id="quantity-<?= $item->orderItemId ?>"value="1" name="quantity[<?= $item->orderItemId ?>]" style="width: 50px;height: 30px;margin-top: 2px;" />
+                                                </td>
+                                                <td style="width: 10%;"><input type="checkbox" name="selectProduct[<?= $item->orderItemId ?>]" value="<?= $item->productSuppId ?>"></td>
+                                            </tr>
+                                            <?php
+                                        endforeach;
+                                        ?>
+                                    </tbody>
+                                </table>
+                            <?php } ?>
                             <br>
                             Why are you returning it: <input type="text" name="tickeTitle" id="tickeTitle" class="form-control">
 
@@ -205,7 +239,7 @@ $createDateTime = $this->context->dateThai(Yii::$app->user->identity->createDate
                                             <td style="text-align: center"><?= Order::invoiceNo($history->orderId) ?></td>
                                             <td style="text-align: center"><?= $history->ticketNo ?></td>
                                             <td style="text-align: center"><?= Ticket::statusText($history->ticketId) ?></td>
-                                            <td style="text-align: center"><a href="<?= $baseUrl . 'ticket-detail?ticketId=' . $history->ticketId ?>">Detail</a></td>
+                                            <td style="text-align: center"><a href="<?= $baseUrl . 'ticket-detail-list?ticketId=' . $history->ticketId ?>">Detail</a></td>
                                         </tr>
                                         <?php
                                         $i++;
