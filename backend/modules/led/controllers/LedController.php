@@ -55,7 +55,7 @@ class LedController extends LedMasterController {
                 $ms = 'Error input, "End" just more or equal as "Start".';
                 return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $ip);
             }
-            $checkIp = [];
+            //$checkIp = ;
             for ($i = $start; $i <= $end; $i++):
                 $chekSameIp = true;
                 $chekSameIp = $this->chekIp($ip);
@@ -73,15 +73,26 @@ class LedController extends LedMasterController {
                 }
                 $ledId = Yii::$app->db->getLastInsertID();
                 $model->createLedItems($ledId);
-                $ip++;
-                $checkIp = substr($ip, -3);
+                //$ip++;
+                //$checkIp = substr($ip, -3);
                 $front = explode('.', $ip);
-                // throw new \yii\base\Exception($checkIp);
-                if ($checkIp >= '254') {
-                    //$showLastIp = ($ip - 1) . '.' . $front[2] . '.253'; // ip address ตัวสุดท้ายที่ สามารถบันทึกได้
+                $ip0 = $front[0];
+                $ip1 = $front[1];
+                $ip2 = $front[2];
+                $ip3 = $front[3];
+                if ($i != $end) {
+                    $ip3++;
+                }
+                $ip = $ip0 . "." . $ip1 . "." . $ip2 . "." . $ip3;
+                //throw new \yii\base\Exception($front[3]);
+                if ($ip3 > '254') {
+                    $showLastIp = ($_GET['Led']['ip'] - 1) . '.' . $front[2] . '.253'; // ip address ตัวสุดท้ายที่ สามารถบันทึกได้
                     $ms = 'System has created from ' . $_GET['Led']['ip'] . ' to ' . $showLastIp . ' ip ' . $ip . ' is Unable.';
                     //  $ms = 'System has created from ' . $_GET['Led']['ip'] . ' to ' . $ip-- . ' ip ' . $ip . ' is Unable';
                     return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $_GET['Led']['ip']);
+                }
+                if ($i == $end) {
+                    return $this->redirect(['index']);
                 }
             endfor;
             $model->code = "Led";

@@ -23,8 +23,19 @@ $(function() {
 		$('body').css('overflow-y', 'hidden');
 		$('.xs-category').slideDown(384);
 	});
+	var mouseo_x = 0;
+	var mouseo_y = 0;
+	var mouseo_z = 0;
+	$('.menubar').hover(function(){mouseo_x=1;},function(){mouseo_x=0;});
+	$('.main-category').hover(function(){mouseo_y=1;},function(){mouseo_y=0;});
+	$('.sub2menu').hover(function(){mouseo_z=1;},function(){mouseo_z=0;});
+	$('.container .row').hover(function(){setTimeout(function(){if((mouseo_x+mouseo_y+mouseo_z)<=0){categoryOut();}},512);});
 });
 // Sub Category Script (PC)
+function categoryOut() {
+	categoryOff();
+	$('#categories').collapse('hide');
+}
 function categoryOff() {
 	$('.menubar .menu-category').removeClass('active');
 	$('.categories-submenu .menu-item').removeClass('active');
