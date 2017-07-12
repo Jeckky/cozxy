@@ -42,7 +42,7 @@ if (isset($sortstatus)) {
     $sortNew = 'SORT_ASC';
 }
 ?>
-<h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?> (RECOMMENDED)
+<h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?>
     <small>
         <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><?= $sortBrandIcon ?></a>

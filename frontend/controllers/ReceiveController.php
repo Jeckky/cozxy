@@ -578,5 +578,13 @@ class ReceiveController extends MasterController
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
     }
 
+    public function actionCctv()
+    {
+        echo \common\helpers\Cctv::SendText("192.168.15.5", "7001");
+        echo \common\helpers\Cctv::SendText("192.168.15.5", "7002");
+        echo \common\helpers\Cctv::SendText("192.168.15.5", "7003");
+        echo \common\helpers\Cctv::SendText("192.168.15.5", "7004");
+    }
+
     //Tritech API
 }
