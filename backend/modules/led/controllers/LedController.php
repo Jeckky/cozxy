@@ -91,6 +91,9 @@ class LedController extends LedMasterController {
                     //  $ms = 'System has created from ' . $_GET['Led']['ip'] . ' to ' . $ip-- . ' ip ' . $ip . ' is Unable';
                     return $this->redirect($baseUrl . '/led/led?msg=' . $ms . '&&start=' . $start . '&&end=' . $end . '&&ip=' . $_GET['Led']['ip']);
                 }
+                if ($i == $end) {
+                    return $this->redirect(['index']);
+                }
             endfor;
             $model->code = "Led";
         }
