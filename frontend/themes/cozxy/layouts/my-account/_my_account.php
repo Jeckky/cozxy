@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                     <li role="presentation"><a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a></li>
                 <?php } ?>
-                <li role="presentation" <?= isset($_GET['act']) ? 'class="active"' : ''; ?>><a href="#wish-list" aria-controls="wish-list" role="tab" data-toggle="tab">Wish List</a></li>
+                <li role="presentation" <?= isset($_GET['act']) ? 'class="active"' : ''; ?>><a href="#wish-list" aria-controls="wish-list" role="tab" data-toggle="tab">My Shelves</a></li>
                 <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
                 <li role="presentation"><a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a></li>
             </ul>
