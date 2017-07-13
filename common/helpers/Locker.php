@@ -80,23 +80,27 @@ class Locker
 //        throw new \yii\base\Exception(print_r($curl_response, true));
         curl_close($curl);
 
-        $result = self::get_result_from_http_code($curl_httpcode, $curl_response);
+        $result = self::get_result_from_http_code($curl_httpcode, $curl_response, $data);
 
         return $result;
     }
 
-    public static function get_result_from_http_code($http_code, $http_response)
+    public static function get_result_from_http_code($http_code, $http_response, $data)
     {
         $resp_decode = json_decode($http_response);
         $resp = array();
-        foreach ($resp_decode as $key => $value) {
-            $resp[$key] = $value;
-        }
-        switch ($http_code) {
-            case 200:
-                return array("header" => $http_code, "body" => $resp);
-            default:
-                return array("header" => $http_code, "error" => $resp["message"]);
+        if (isset($resp_decode) && count($resp_decode) > 0) {
+            foreach ($resp_decode as $key => $value) {
+                $resp[$key] = $value;
+            }
+            switch ($http_code) {
+                case 200:
+                    return array("header" => $http_code, "body" => $resp);
+                default:
+                    return array("header" => $http_code, "error" => $resp["message"]);
+            }
+        } else {
+            throw new \yii\base\Exception(print_r($data, TRUE));
         }
     }
 
