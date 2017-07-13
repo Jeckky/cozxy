@@ -3,7 +3,7 @@
     if (isset(Yii::$app->user->identity->userId)) {
         ?>
         <div  style="margin:10px 20px;">
-            <a class="btn btn-primary btn-radio" onclick="CozxyFavStory()">
+            <a class="btn btn-primary btn-radio" id="bookmarkme" href="#" rel="sidebar">
                 <?= $productPost->userId != Yii::$app->user->identity->userId ? 'FAV THIS STORY' : 'Your fav this story' ?>
             </a>
         </div>
