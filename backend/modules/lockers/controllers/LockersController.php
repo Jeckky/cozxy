@@ -851,7 +851,7 @@ class LockersController extends LockersMasterController
     {
         $locker = PickingPoint::find()->where("pickingId = $id")->one();
 
-        echo file_get_contents("http://" . $locker->ip . "/ilocker/iLockerDEMO/");
+        echo file_get_contents("http://" . $locker->ip . "/iLockerDEMO/");
     }
 
 //    private function callWebservice($method, $request)
