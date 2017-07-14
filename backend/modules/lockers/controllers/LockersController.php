@@ -847,6 +847,13 @@ class LockersController extends LockersMasterController
         ]);
     }
 
+    public function actionTestConnection($id)
+    {
+        $locker = PickingPoint::find()->where("pickingId = $id")->one();
+
+        echo file_get_contents("http://" . $locker->ip);
+    }
+
 //    private function callWebservice($method, $request)
 //    {
 //        $responses;
