@@ -847,6 +847,29 @@ class LockersController extends LockersMasterController
         ]);
     }
 
+    public function actionOpenLocker2($id)
+    {
+//        throw new \yii\base\Exception;
+//        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
+        $locker = PickingPoint::find()->where("pickingId = $id")->one();
+
+        $num = array(3, 1, 2, 4);
+
+        $response = \common\helpers\Locker::Open2($locker, $num);
+
+        return $this->render('open_locker', [
+            'response' => $response,
+            'msg' => "",
+        ]);
+    }
+
+    public function actionTestConnection($id)
+    {
+        $locker = PickingPoint::find()->where("pickingId = $id")->one();
+
+        echo file_get_contents("http://" . $locker->ip . "/iLockerDEMO/");
+    }
+
 //    private function callWebservice($method, $request)
 //    {
 //        $responses;
