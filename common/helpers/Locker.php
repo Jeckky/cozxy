@@ -104,4 +104,41 @@ class Locker
         }
     }
 
+    public static function Open2($locker, $num)
+    {
+//        throw new \yii\base\Exception($locker->ip);
+        $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
+        $params = array('iLockerHQ17', // generalprofile lockercode
+            'Cozxy Locker Demo', // generalprofile lockername
+            'Cozxy-01', // serialnumber
+            $num, // number lockers
+            $masterKey->value, // masterkey
+            'nimita', // username unlock
+            $locker->ip); // locker url
+        $result = self::call_webapi2("open_locker", $params);
+        switch ($result['header']) {
+            case 200 :
+                return $result['body'];
+            default:
+                header('Error: ' . $result['error'], true, $result['header']);
+                return array('Error' => $result['header'] . ' ' . $result['error']);
+        }
+    }
+
+    public static function call_webapi2($api, $params)
+    {
+        // Check authen
+//        $auth = $this->customauth->auth_login();
+//        if ($auth != null) {
+//        $url = APIPATH . "/" . $api;
+        $url = "http://$params[6]/ilocker/iLockerWebAPI/index_api.php/$api";
+//        throw new \yii\base\Exception(print_r($params, true));
+        $token = base64_encode('admin' . ':' . 'admin');
+        $result = self::get_result_from_api($url, $token, $params);
+//        } else {
+//            $result = array("header" => 401, "error" => 'Unauthorized');
+//        }
+        return $result;
+    }
+
 }
