@@ -36,8 +36,6 @@ class SearchController extends MasterController {
             $categoryId = $params['categoryId'];
         }
 
-        //echo '<pre>';
-        //print_r($params);
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(
         [
@@ -65,19 +63,19 @@ class SearchController extends MasterController {
         //$category = Yii::$app->request->post('search');
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
-        $category = Yii::$app->request->post('search');
+        $category = Yii::$app->request->get('search');
         $categoryId = NULL;
 
         $productCanSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearch($category, 18, FALSE),
-            'pagination' => ['defaultPageSize' => 18],
+            'allModels' => DisplaySearch::productSearch($category, 12, FALSE),
+            'pagination' => ['defaultPageSize' => 12],
         ]);
 
         $productNotSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearchNotSale($category, 18, FALSE),
-            'pagination' => ['defaultPageSize' => 18],
+            'allModels' => DisplaySearch::productSearchNotSale($category, 12, FALSE),
+            'pagination' => ['defaultPageSize' => 12],
         ]);
 
 
