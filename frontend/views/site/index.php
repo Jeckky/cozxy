@@ -34,14 +34,14 @@ $this->registerCss('
 }
 ');
 
+
 $this->registerJs('
 $(function() {
 	$("#logoParade").smoothDivScroll({
 		manualContinuousScrolling: true
 	});
 });
-');
-
+', yii\web\View::POS_END);
 $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
 ?>
 
