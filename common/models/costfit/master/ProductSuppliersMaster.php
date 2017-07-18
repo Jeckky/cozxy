@@ -30,16 +30,16 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
-    * @property string $quantity
-    * @property string $result
+    * @property integer $quantity
+    * @property integer $result
     * @property string $approve
-    * @property string $productId
+    * @property integer $productId
     * @property string $approveCreateBy
     * @property string $approvecreateDateTime
     * @property string $receiveType
     * @property string $url
-    * @property string $warrantyType
-    * @property string $warrantyPeriod
+    * @property integer $warrantyType
+    * @property integer $warrantyPeriod
 */
 class ProductSuppliersMaster extends \common\models\ModelMaster
 {
