@@ -305,10 +305,10 @@ class StoryController extends MasterController {
             $model->userId = Yii::$app->user->identity->userId;
             $model->title = $_POST["ProductPost"]["title"];
             $model->description = $_POST["ProductPost"]["description"];
-            $model->shopName = $_POST["ProductPost"]["shopName"];
-            $model->price = $_POST["ProductPost"]["price"];
-            $model->country = $_POST["ProductPost"]["country"];
-            $model->currency = $_POST["ProductPost"]["currency"];
+            //$model->shopName = $_POST["ProductPost"]["shopName"];
+            //$model->price = $_POST["ProductPost"]["price"];
+            //$model->country = $_POST["ProductPost"]["country"];
+            //$model->currency = $_POST["ProductPost"]["currency"];
             if ($isPublic == 'on') {
                 $model->isPublic = 1;
             } else {
