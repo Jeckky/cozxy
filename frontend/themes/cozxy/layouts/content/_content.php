@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <span><i class="fa fa-calendar"></i> <?= \Yii::$app->formatter->asDate($content['createDateTime'], 'long') ?></span>&nbsp;
                         <a href="#"><i class="fa fa-tags"></i> Content</a>
                     </div>
+                    <br>
                     <?= Html::img($content['image'], ['class' => 'img-responsive']) ?>
                     <p class="size20">
                         <?php echo isset($content['shortDescription']) ? $content['shortDescription'] : ''; ?>
