@@ -63,6 +63,9 @@ class ProductPostController extends ProductPostMasterController {
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
+            $model->title = $_POST["ProductPost"]['title'];
+            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            $model->description = $_POST["ProductPost"]['description'];
             $model->productSelfId = 0;
             $model->userId = 0;
             $model->createDateTime = new \yii\db\Expression('NOW()');

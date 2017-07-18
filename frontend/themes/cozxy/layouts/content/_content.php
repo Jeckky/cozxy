@@ -28,14 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-9 col-md-8">
             <div class="row">
                 <div class="col-xs-12 bg-white">
-                    <h1 class="page-header"><?= $content['title'] ?></h1>
+                    <h1 class="page-header"><?= isset($content['title']) ? $content['title'] : '' ?></h1>
+                    <div style="font-size: 12px;">
+                        <a href="#"><i class="fa fa-user"></i> Cozxy</a>&nbsp;
+                        <span><i class="fa fa-calendar"></i> <?= \Yii::$app->formatter->asDate($content['createDateTime'], 'long') ?></span>&nbsp;
+                        <a href="#"><i class="fa fa-tags"></i> Content</a>
+                    </div>
                     <?= Html::img($content['image'], ['class' => 'img-responsive']) ?>
                     <p class="size20">
-                        <?php echo $content['shortDescription']; ?>
+                        <?php echo isset($content['shortDescription']) ? $content['shortDescription'] : ''; ?>
                     </p>
                     <div class="size12">&nbsp;</div>
                     <p class="size20">
-                        <?php echo $content['description']; ?>
+                        <?php echo isset($content['description']) ? $content['description'] : ''; ?>
                     </p>
                 </div>
             </div>
