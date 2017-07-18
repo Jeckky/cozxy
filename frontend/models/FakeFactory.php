@@ -196,9 +196,13 @@ class FakeFactory extends Model {
 
     public static function productStory($n) {
         $products = [];
-
-        $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
-        ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        if ($n == 99) {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
+        } else {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        }
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
             foreach ($productPostList as $items) {
