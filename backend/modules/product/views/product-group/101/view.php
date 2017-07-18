@@ -74,21 +74,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
             <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
                 <ul class="nav nav-tabs" id="myTabs" role="tablist">
-                    <li role="presentation" class="active">
+                    <li role="presentation" class=" <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  ">
                         <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Master Product (<?= $dataProvider->getTotalCount() ?>)</a>
                     </li>
                     <?php if (!$isMaster): ?>
-                        <li role="presentation" class="">
+                        <li role="presentation" class=" <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : "active in " ?>  ">
                             <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">My Product (<?= $dataProvider2->getTotalCount() ?>)</a>
                         </li>
                     <?php endif; ?>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade active in" role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
+                    <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                         <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
                     </div>
                     <?php if (!$isMaster): ?>
-                        <div class="tab-pane fade" role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade  <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
                                 <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
                             <?php else: ?>

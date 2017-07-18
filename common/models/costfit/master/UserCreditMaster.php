@@ -8,8 +8,8 @@ use Yii;
 * This is the model class for table "user_credit".
 *
     * @property string $userCreditId
-    * @property string $userId
-    * @property string $totalCredit
+    * @property integer $userId
+    * @property integer $totalCredit
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
