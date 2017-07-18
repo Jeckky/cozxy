@@ -24,13 +24,13 @@ use Yii;
     * @property integer $sendDate
     * @property string $sendDateTime
     * @property integer $firstTimeSendDate
-    * @property string $pickerId
-    * @property string $color
+    * @property integer $pickerId
+    * @property integer $color
     * @property string $bagNo
-    * @property string $supplierId
+    * @property integer $supplierId
     * @property integer $status
     * @property string $receiveType
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $createDateTime
     * @property string $updateDateTime
 */

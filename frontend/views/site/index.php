@@ -41,7 +41,7 @@ $(function() {
 		manualContinuousScrolling: true
 	});
 });
-', yii\web\View::POS_HEAD);
+', yii\web\View::POS_END);
 $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
 ?>
 
