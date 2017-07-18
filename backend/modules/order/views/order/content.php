@@ -4,15 +4,17 @@ use yii\helpers\Html;
 use common\models\costfit\User;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\Signature;
+use common\models\costfit\Po;
+use common\models\costfit\PoItem;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 $j = 1;
 //throw new \yii\base\Exception(print_r($supplierId, true));
-foreach ($storeProductGroupId as $id):
+foreach ($poId as $id):
     $i = 1;
-    $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
-    $supplier = User::supplierDetail($storeProductGroup->supplierId);
+    $po = Po::find()->where("poId=" . $id)->one();
+    $supplier = User::supplierDetail($po->supplierId);
     ?>
     <?php
     $showText = '';
@@ -37,9 +39,9 @@ foreach ($storeProductGroupId as $id):
         <div style="width: 45%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -90px;">
-             <?php $po = \common\models\costfit\StoreProductGroup::genPoNo(); ?>
-            เลขที่ใบสั่งซื้อ / PO No : <?= $storeProductGroup->poNo ?><br>
-            วันที่ / Date : <b><?= $this->context->dateThai($storeProductGroup->createDateTime, 1) ?></b><br>
+             <?php // $po = \common\models\costfit\StoreProductGroup::genPoNo(); ?>
+            เลขที่ใบสั่งซื้อ / PO No : <?= $po->poNo ?><br>
+            วันที่ / Date : <b><?= $this->context->dateThai($po->createDateTime, 1) ?></b><br>
             <br>
             ระยะเวลาที่ชำระเงิน/ Credit Term : <b>30 วันนับจากวันวางบิล</b>
         </div>
@@ -100,7 +102,7 @@ foreach ($storeProductGroupId as $id):
     <tbody>
         <?php
         //throw new \yii\base\Exception(print_r($orders, true));
-        $items = \common\models\costfit\StoreProduct::allProductInPo($id); //group Product
+        $items = Po::allProductInPo($id); //group Product
         $allTotal = 0;
         $empty = 20;
         if ($items != '' && !empty($items)) {
@@ -168,7 +170,7 @@ foreach ($storeProductGroupId as $id):
             </tr>
         </table>
     </div>
-    <?php if ($j < count($storeProductGroupId)) {
+    <?php if ($j < count($poId)) {
         ?>
         <pagebreak />
         <?php

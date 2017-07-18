@@ -11,9 +11,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\OrderPaymentHistory;
 use kartik\mpdf\Pdf;
-/*
- * update 12/1/2017 ,By Taninut.bm
- */
+use common\models\costfit\Po;
+use common\models\costfit\PoItem;
 use common\helpers\CozxyUnity;
 use common\helpers\PaymentPrint;
 
@@ -274,13 +273,13 @@ class OrderController extends OrderMasterController {
                 }
             endforeach;
             if (isset($orderIds) && !empty($orderIds)) {
-                $storeProductGroupId = $this->saveStoreProduct($orderIds, $supplierId);
+                $poId = $this->savePo($orderIds, $supplierId);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
-                $this->sendEmail($storeProductGroupId);
+                $this->sendEmail($poId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
                 $header = $this->renderPartial('header');
                 $content = $this->renderPartial('content', [
-                    'storeProductGroupId' => $storeProductGroupId,
+                    'poId' => $poId,
                 ]);
                 $this->printPdf($content, $header);
             } else {
@@ -314,10 +313,10 @@ class OrderController extends OrderMasterController {
     }
 
     public function actionReprintPo() {
-        $storeProductGroup = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $_GET['storeProductGroupId'])->one();
+        $po = Po::find()->where("poId=" . $_GET['poId'])->one();
         $header = $this->renderPartial('header', ['ms' => 'Reprint']);
         $content = $this->renderPartial('content2', [
-            'storeProductGroup' => $storeProductGroup
+            'po' => $po
         ]);
         $this->printPdf($content, $header);
     }
@@ -364,7 +363,7 @@ class OrderController extends OrderMasterController {
                 '<th style="vertical-align: middle;text-align: center;width: 30%;">สถานะ</th>' .
                 '<th style="vertical-align: middle;text-align: center;width: 30%;">พิมพ์ซ้ำ</th>' .
                 '</tr>';
-        $poes = \common\models\costfit\StoreProductGroup::allPurchaseOrder();
+        $poes = Po::allPurchaseOrder();
 
         if (isset($poes) && !empty($poes)) {
             $i = 1;
@@ -376,8 +375,8 @@ class OrderController extends OrderMasterController {
                         ' <td style="vertical-align: middle;text-align: center;width: 5%;">' . $i . '</td>' .
                         '<td style="vertical-align: middle;text-align: center;width: 30%;">' . $po->poNo . '</td>' .
                         '<td style="vertical-align: middle;text-align: center;width: 15%;">' . $this->dateThai($po->createDateTime, 1) . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . \common\models\costfit\StoreProductGroup::getStatusText($po->status) . '</td>' .
-                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Html::a('<i class = "fa fa-print" aria-hidden = "true"></i> พิมพ์ซ้ำ', ['reprint-po', 'storeProductGroupId' => $po->storeProductGroupId], ['class' => 'btn btn-md btn-warning pono', 'target' => '_blank']) . '</td>' .
+                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Po::getStatusText($po->status) . '</td>' .
+                        '<td style="vertical-align: middle;text-align: center;width: 15%;">' . Html::a('<i class = "fa fa-print" aria-hidden = "true"></i> พิมพ์ซ้ำ', ['reprint-po', 'poId' => $po->poId], ['class' => 'btn btn-md btn-warning pono', 'target' => '_blank']) . '</td>' .
                         '</tr>';
                 $i++;
             endforeach;
@@ -391,7 +390,7 @@ class OrderController extends OrderMasterController {
     }
 
     public function actionNewPo() {
-        $purchase = \common\models\costfit\StoreProductGroup::find()->where("status=1")->orderBy('updateDateTime');
+        $purchase = Po::find()->where("status=1")->orderBy('updateDateTime');
         $dataProvider = new ActiveDataProvider([
             'query' => $purchase
         ]);
@@ -470,50 +469,53 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public static function saveStoreProduct($orders, $supplierId) {
-        $storeProductGroupId = [];
+    public static function savePo($orders, $supplierId) {
+        $poId = [];
         $i = 0;
         foreach ($supplierId as $suppId):
-            $storeProductGroup = new \common\models\costfit\StoreProductGroup();
-            $storeProductGroup->supplierId = $suppId;
-            $storeProductGroup->poNo = \common\models\costfit\StoreProductGroup::genPoNo();
+            $po = new Po();
+            //$storeProductGroup = new \common\models\costfit\StoreProductGroup();
+            $po->supplierId = $suppId;
+            $po->poNo = Po::genPoNo();
 
-            $storeProductGroup->createDateTime = new \yii\db\Expression('NOW()');
-            $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
-            $storeProductGroup->save(false);
-            $lastStoreProductGroupId = Yii::$app->db->getLastInsertID();
-            $storeProductGroupId[$i] = $lastStoreProductGroupId;
+            $po->createDateTime = new \yii\db\Expression('NOW()');
+            $po->updateDateTime = new \yii\db\Expression('NOW()');
+            $po->save(false);
+            $lastPoId = Yii::$app->db->getLastInsertID();
+            $poId[$i] = $lastPoId;
             $productSuppId = \common\models\costfit\OrderItem::supplierItems($suppId, $orders);
             $stpgSum = 0;
             foreach ($productSuppId as $pSuppId):
-                $storeProducts = new \common\models\costfit\StoreProduct();
-                $storeProducts->storeProductGroupId = $lastStoreProductGroupId;
-                $storeProducts->productSuppId = $pSuppId;
-                $storeProducts->productId = \common\models\costfit\ProductSuppliers::productSupplierName($pSuppId)->productId;
-                $storeProducts->storeId = 1;
-                $storeProducts->paletNo = 1;
-                $storeProducts->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
-                $storeProducts->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
-                $storeProducts->marginPercent = \common\models\costfit\Margin::getProductSuppMargin($pSuppId);
-                $storeProducts->marginValue = $storeProducts->price * (($storeProducts->marginPercent) / 100);
-                $storeProducts->marginPrice = $storeProducts->price - $storeProducts->marginValue;
-                $storeProducts->total = $storeProducts->marginPrice * $storeProducts->quantity;
-                $stpgSum += $storeProducts->total;
-                $storeProducts->createDateTime = new \yii\db\Expression('NOW()');
-                $storeProducts->updateDateTime = new \yii\db\Expression('NOW()');
-                $storeProducts->save(false);
+                //$storeProducts = new \common\models\costfit\StoreProduct();
+                $poItems = new PoItem();
+                $poItems->poId = $lastPoId;
+                $poItems->productSuppId = $pSuppId;
+                $poItems->productId = \common\models\costfit\ProductSuppliers::productSupplierName($pSuppId)->productId;
+                $poItems->storeId = 1;
+                $poItems->paletNo = 1;
+                $poItems->quantity = \common\models\costfit\OrderItem::totalSupplierItem($suppId, $pSuppId, $orders);
+                $poItems->price = \common\models\costfit\ProductSuppliers::productPriceSupplier($pSuppId);
+                $poItems->marginPercent = \common\models\costfit\Margin::getProductSuppMargin($pSuppId);
+                $poItems->marginValue = $poItems->price * (($poItems->marginPercent) / 100);
+                $poItems->marginPrice = $poItems->price - $poItems->marginValue;
+                $poItems->total = $poItems->marginPrice * $poItems->quantity;
+                $stpgSum += $poItems->total;
+                $poItems->createDateTime = new \yii\db\Expression('NOW()');
+                $poItems->updateDateTime = new \yii\db\Expression('NOW()');
+                $poItems->save(false);
             endforeach;
 
-            $storeProductGroup->summary = $stpgSum;
-            $storeProductGroup->save(false);
+            $po->summary = $stpgSum;
+            $po->save(false);
             $i++;
         endforeach;
-        return $storeProductGroupId;
+        return $poId;
     }
 
-    public function sendEmail($storeProductGroupId) {
-        foreach ($storeProductGroupId as $id):
-            $po = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
+    public function sendEmail($poId) {
+        foreach ($poId as $id):
+            //$po = \common\models\costfit\StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
+            $po = Po::find()->where("poId=" . $id)->one();
             if (isset($po)) {
                 $supplier = \common\models\costfit\User::find()->where("userId=" . $po->supplierId)->one();
                 if (isset($supplier)) {
