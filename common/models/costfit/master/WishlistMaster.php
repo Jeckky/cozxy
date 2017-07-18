@@ -8,8 +8,9 @@ use Yii;
 * This is the model class for table "wishlist".
 *
     * @property string $wishlistId
+    * @property integer $productShelfId
     * @property string $userId
-    * @property string $productId
+    * @property integer $productId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -30,8 +31,8 @@ return 'wishlist';
 public function rules()
 {
 return [
-            [['userId', 'productId', 'createDateTime'], 'required'],
-            [['userId', 'productId', 'status'], 'integer'],
+            [['productShelfId', 'userId', 'productId', 'createDateTime'], 'required'],
+            [['productShelfId', 'userId', 'productId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -43,6 +44,7 @@ public function attributeLabels()
 {
 return [
     'wishlistId' => Yii::t('wishlist', 'Wishlist ID'),
+    'productShelfId' => Yii::t('wishlist', 'Product Shelf ID'),
     'userId' => Yii::t('wishlist', 'User ID'),
     'productId' => Yii::t('wishlist', 'Product ID'),
     'status' => Yii::t('wishlist', 'Status'),

@@ -5,9 +5,9 @@ namespace common\models\costfit\master;
 use Yii;
 
 /**
-* This is the model class for table "store_product_group".
+* This is the model class for table "po".
 *
-    * @property string $storeProductGroupId
+    * @property string $poId
     * @property string $supplierId
     * @property string $poNo
     * @property string $summary
@@ -18,14 +18,14 @@ use Yii;
     * @property string $createDateTime
     * @property string $updateDateTime
 */
-class StoreProductGroupMaster extends \common\models\ModelMaster
+class PoMaster extends \common\models\ModelMaster
 {
 /**
 * @inheritdoc
 */
 public static function tableName()
 {
-return 'store_product_group';
+return 'po';
 }
 
 /**
@@ -48,16 +48,16 @@ return [
 public function attributeLabels()
 {
 return [
-    'storeProductGroupId' => Yii::t('store_product_group', 'Store Product Group ID'),
-    'supplierId' => Yii::t('store_product_group', 'Supplier ID'),
-    'poNo' => Yii::t('store_product_group', 'Po No'),
-    'summary' => Yii::t('store_product_group', 'Summary'),
-    'receiveDate' => Yii::t('store_product_group', 'Receive Date'),
-    'receiveBy' => Yii::t('store_product_group', 'Receive By'),
-    'arranger' => Yii::t('store_product_group', 'Arranger'),
-    'status' => Yii::t('store_product_group', 'Status'),
-    'createDateTime' => Yii::t('store_product_group', 'Create Date Time'),
-    'updateDateTime' => Yii::t('store_product_group', 'Update Date Time'),
+    'poId' => Yii::t('po', 'Po ID'),
+    'supplierId' => Yii::t('po', 'Supplier ID'),
+    'poNo' => Yii::t('po', 'Po No'),
+    'summary' => Yii::t('po', 'Summary'),
+    'receiveDate' => Yii::t('po', 'Receive Date'),
+    'receiveBy' => Yii::t('po', 'Receive By'),
+    'arranger' => Yii::t('po', 'Arranger'),
+    'status' => Yii::t('po', 'Status'),
+    'createDateTime' => Yii::t('po', 'Create Date Time'),
+    'updateDateTime' => Yii::t('po', 'Update Date Time'),
 ];
 }
 }
