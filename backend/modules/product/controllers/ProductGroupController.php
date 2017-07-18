@@ -981,7 +981,7 @@ class ProductGroupController extends ProductMasterController
         if (isset($_GET["step"])) {
             return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId, 'tab' => 2]);
         } else {
-            return $this->redirect(["view", "productGroupId" => $model->product->parentId, 'userId' => $_GET["userId"]]);
+            return $this->redirect(["view", "productGroupId" => $model->product->parentId, 'userId' => $_GET["userId"], 'tab' => 2]);
         }
     }
 
