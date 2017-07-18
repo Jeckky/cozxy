@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 
-$this->title = isset($productPost->title) ? 'Content' . $content['title'] : '';
+$this->title = isset($content['title']) ? $content['title'] : '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
