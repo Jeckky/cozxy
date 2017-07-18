@@ -190,7 +190,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                 </div>
 
                 <div class="col-sm-12 text-center" style="margin-top: 3px;">
-                    <a href="<?= Yii::$app->homeUrl ?>story/views-more/" class="subs-btn size14-xs">See All</a>
+                    <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
                 </div>
                 <br><br>
             </div>
