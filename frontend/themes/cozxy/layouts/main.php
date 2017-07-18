@@ -58,6 +58,6 @@ $this->registerJs("
         a.appendChild(r);
     })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 </script>
-");
+", \yii\web\View::POS_END);
 ?>
 <?php $this->endPage() ?>
