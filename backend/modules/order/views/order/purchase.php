@@ -31,8 +31,7 @@ $this->registerJs($js);
 <div class="panel-heading" style="background-color: #000;">
     <span class="panel-title"><h3 style="color: #ffcc00">รายการ Orders ที่ยังไม่สร้าง PO</h3></span>
 </div>
-<div class="panel-body" id="showData">
-</div>
+<div class="panel-body" id="showData"></div>
 <div class="panel-heading reprint" style="background-color: #99ccff;color: #F0FFFF;cursor: pointer;">
     <h3><b><i class="fa fa-plus-circle" aria-hidden="true"></i> Reprint PO</b></h3>
 </div>
