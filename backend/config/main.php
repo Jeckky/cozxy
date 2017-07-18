@@ -63,11 +63,17 @@ return [
         'report' => [
             'class' => 'backend\modules\report\Report',
         ],
+        /* 'redactor' => [
+          'class' => 'yii\redactor\RedactorModule',
+          'uploadDir' => '/Users/kpu/Dev/wwwroot/cozxy/frontend/web/images',
+          'uploadUrl' => '@web/images',
+          'imageAllowExtensions' => ['jpg', 'png', 'gif']
+          ], */
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
-            'uploadDir' => '/Users/kpu/Dev/wwwroot/cozxy/frontend/web/images',
-            'uploadUrl' => '@web/images',
-            'imageAllowExtensions' => ['jpg', 'png', 'gif']
+            'uploadDir' => '@webroot/images/story',
+            'uploadUrl' => '@web/images/story',
+            'imageAllowExtensions' => ['jpg', 'png', 'gif', 'jpeg'],
         ],
         'picking' => [
             'class' => 'backend\modules\picking\Picking',

@@ -49,8 +49,37 @@ use common\models\costfit\User;
 
         <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
-
+        <?=
+        $form->field($model, 'description', ['options' => ['class' => '']])->widget(\yii\redactor\widgets\Redactor::className([
+            'settings' => [
+                'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
+                'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
+            ]
+        ]), [
+            'clientOptions' => [
+                'minHeight' => 350,
+                'lang' => 'en',
+                'clipboardUpload' => true,
+                'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
+                    'clips',
+                    'counter',
+                    'definedlinks',
+                    'filemanager',
+                    'limiter',
+                    'table',
+                    'textdirection',
+                    'textexpander',
+                    'video'],
+                'buttons' => [
+                    'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
+                    'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+                    'image', 'file', 'table', 'link', '|',
+                    'alignment', '|', 'horizontalrule',
+                    '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
+                ],
+            ]
+        ], ['style' => 'height:1000px;'])
+        ?>
         <?//= $form->field($model, 'shopName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
@@ -85,13 +114,7 @@ use common\models\costfit\User;
                         theme: 'monokai'
                     }
                 });
-                $('#productpost-description').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
+                
 
             }
 
