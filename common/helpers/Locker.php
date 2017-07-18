@@ -89,19 +89,19 @@ class Locker
     {
         $resp_decode = json_decode($http_response);
         $resp = array();
-        if (isset($resp_decode) && count($resp_decode) > 0) {
-            foreach ($resp_decode as $key => $value) {
-                $resp[$key] = $value;
-            }
-            switch ($http_code) {
-                case 200:
-                    return array("header" => $http_code, "body" => $resp);
-                default:
-                    return array("header" => $http_code, "error" => $resp["message"]);
-            }
-        } else {
-            throw new \yii\base\Exception(print_r($data, TRUE));
+//        if (isset($resp_decode) && count($resp_decode) > 0) {
+        foreach ($resp_decode as $key => $value) {
+            $resp[$key] = $value;
         }
+        switch ($http_code) {
+            case 200:
+                return array("header" => $http_code, "body" => $resp);
+            default:
+                return array("header" => $http_code, "error" => $resp["message"]);
+        }
+//        } else {
+//            throw new \yii\base\Exception(print_r($data, TRUE));
+//        }
     }
 
     public static function Open2($locker, $num)
