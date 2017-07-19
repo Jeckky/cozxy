@@ -108,6 +108,9 @@ return [
         'productpost' => [
             'class' => 'backend\modules\productpost\Productpost',
         ],
+        'inbound' => [
+            'class' => 'backend\modules\inbound\Inbound',
+        ],
     ],
     'components' => [
         'user' => [
