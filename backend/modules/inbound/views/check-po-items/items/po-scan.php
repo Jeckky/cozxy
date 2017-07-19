@@ -21,13 +21,13 @@ use yii\widgets\ActiveForm;
         <input type="text" class="form-control" id="poQrcode" name="poQrcode" placeholder="Scan Qr Code Po" value="<?= isset($_POST['poQrcode']) ? $_POST['poQrcode'] : '' ?>">
     </div>
     <?= $this->registerJS("
-                        $('#poQecode').blur(function(event){
-                            if(event.which == 13 || event.keyCode == 13)
-                            {
-                               $('#form').submit();
-                            }
-                        });
-                 ") ?>
+            $('#poQecode').blur(function(event){
+                if(event.which == 13 || event.keyCode == 13)
+                {
+                   $('#form').submit();
+                }
+            });
+     ") ?>
     <?php ActiveForm::end(); ?>
     <div class="col-md-3">&nbsp;</div>
 </div>

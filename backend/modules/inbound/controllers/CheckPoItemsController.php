@@ -14,6 +14,7 @@ class CheckPoItemsController extends InboundMasterController {
     public function actionIndex() {
         $poQrcode = Yii::$app->request->post('poQrcode');
         if (isset($poQrcode) && !empty($poQrcode)) {
+
             return $this->render('items/po-items');
         } else {
             return $this->render('index');

@@ -23,12 +23,11 @@ use yii\widgets\ActiveForm;
         <div class="panel-body">
             <ul id="uidemo-tabs-default-demo" class="nav nav-tabs">
                 <li class="active">
-                    <a href="#uidemo-tabs-default-demo-home" data-toggle="tab">ข้อมูลใบสั่งซื้อ <span class="label label-success">12</span></a>
+                    <a href="#uidemo-tabs-default-demo-home" data-toggle="tab">ข้อมูลใบสั่งซื้อ </a>
                 </li>
                 <li class="">
-                    <a href="#uidemo-tabs-default-demo-profile" data-toggle="tab">สินค้า <span class="badge badge-primary">12</span></a>
+                    <a href="#uidemo-tabs-default-demo-profile" data-toggle="tab">สินค้า <span class="badge badge-success">12</span></a>
                 </li>
-
             </ul>
 
             <div class="tab-content tab-content-bordered">
