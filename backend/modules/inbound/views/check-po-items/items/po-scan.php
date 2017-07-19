@@ -18,7 +18,12 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
     <div  class="col-md-6">
-        <input type="text" class="form-control" id="poQrcode" name="poQrcode" placeholder="Scan Qr Code Po" value="<?= isset($_POST['poQrcode']) ? $_POST['poQrcode'] : '' ?>">
+        <div class="form-group has-warning simple form-inline">
+            <!--<label class="control-label" for="inputWarning-42">Input with scan</label>-->
+            <input type="text" class="has-warning form-control" id="poQrcode" name="poQrcode" placeholder="Scan Qr Code Po" value="<?= isset($_POST['poQrcode']) ? $_POST['poQrcode'] : '' ?>" style="width: 450px;">
+            <button class="btn btn-primary" type="submit">Submit Or Enter</button>
+            <p class="help-block">&nbsp;</p>
+        </div>
     </div>
     <?= $this->registerJS("
             $('#poQecode').blur(function(event){

@@ -19,31 +19,65 @@ use yii\data\ActiveDataProvider;
  * @author it
  */
 class Inbound {
+    /*
+     * ค้าหาใบ PO
+     * Date : 19/07/2017
+     * By Taninut.Bm
+     * Email : taninut,b@cozxy.com
+     */
 
-    public static function CheckPoItems($id) {
+    public static function CheckPo($PoNo) {
 
         $products = [];
-        $poCheckItems = \common\models\costfit\Po::find()->where('poId=' . $id)->one();
+        $poInfo = \common\models\costfit\Po::find()->where('poNo="' . $PoNo . '"')->one();
 
-        foreach ($poCheckItems as $items) {
-            $products[$items['poId']] = [
-                'poId' => $items['poId'],
-                'supplierId' => $this->SearchSuppliersName($items['supplierId']), // หาชื่อ Suppliers
-                'poNo' => $items['poNo'],
-                'summary' => $items['summary'],
-                'receiveDate' => $items['receiveDate'],
-                'receiveBy' => $items['receiveBy'],
-                'arranger' => $items['arranger'],
-                'status' => $items['status'],
-                'createDateTime' => $items['createDateTime']
-            ];
-        }
+        $products['poInfo'] = [
+            'poId' => $poInfo['poId'],
+            'supplierId' => \common\helpers\Inbound::SearchSuppliersName($poInfo['supplierId']), // หาชื่อ Suppliers
+            'poNo' => $poInfo['poNo'],
+            'summary' => $poInfo['summary'],
+            'receiveDate' => $poInfo['receiveDate'],
+            'receiveBy' => \common\helpers\Inbound::SearchSuppliersName($poInfo['receiveBy']), // หาชื่อผู้ตรวจรับ,
+            'arranger' => \common\helpers\Inbound::SearchSuppliersName($poInfo['arranger']), // หาชื่อผู้จัดเรียง,
+            'status' => \common\models\costfit\Po::getStatusText($poInfo['status']),
+            'createDateTime' => $poInfo['createDateTime']
+        ];
+
         return $products;
     }
 
+    /*
+     * ค้าหา Items Po ว่ามีสินค้าอะไรบ้าง
+     * Date : 19/07/2017
+     * By Taninut.Bm
+     * Email : taninut,b@cozxy.com
+     */
+
+    public static function CheckPoItems($PoNo) {
+
+        $products = [];
+        $po = \common\models\costfit\Po::find()->where('poNo="' . $PoNo . '"')->one();
+        $poItems = \common\models\costfit\PoItem::find()->where('poId="' . $poInfo['poId'] . '"')->all();
+
+        foreach ($productPost as $value) {
+            $products[$value->poId] = [
+                'poId' => $poInfo['poId'],
+            ];
+        }
+
+        return $products;
+    }
+
+    /*
+     * ค้าหาชื่อ User ของ Type ต่างๆ
+     * Date : 19/07/2017
+     * By Taninut.Bm
+     * Email : taninut,b@cozxy.com
+     */
+
     public static function SearchSuppliersName($supplierId) {
-        $supplers = \common\models\costfit\User::find()->where('userId=' . $supplierId)->one();
         if (isset($supplers) && !empty($supplers)) {
+            $supplers = \common\models\costfit\User::find()->where('userId=' . $supplierId)->one();
             return isset($supplers['firstname']) ? $supplers['firstname'] : 'ไม่ระบชื่อ' . '&nbsp;' . isset($supplers['lastname']) ? $supplers['lastname'] : 'ไม่ระบุนามสกุล';
         } else {
             return FALSE;
