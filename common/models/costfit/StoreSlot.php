@@ -24,7 +24,8 @@ use \common\models\costfit\master\StoreSlotMaster;
  *
  * @property Store $store
  */
-class StoreSlot extends \common\models\costfit\master\StoreSlotMaster {
+class StoreSlot extends \common\models\costfit\master\StoreSlotMaster
+{
 
     /**
      * @inheritdoc
@@ -33,18 +34,21 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster {
     const LEVEL_SHELF_FLOOR = 2;
     const LEVEL_SHELF_FLOOR_SLOT = 3;
 
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function getLevelArray() {
+    public function getLevelArray()
+    {
         return [
             self::LEVEL_SHELF => 'ROW',
             self::LEVEL_SHELF_FLOOR => 'COLUMN',
@@ -52,7 +56,8 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster {
         ];
     }
 
-    public function getLevelText($level) {
+    public function getLevelText($level)
+    {
         $res = $this->getLevelArray();
         if (isset($res[$level])) {
             return $res[$level];
@@ -61,15 +66,23 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster {
         }
     }
 
-    public function getCols() {
+    public function getCols()
+    {
         return $this->hasMany(StoreSlot::className(), ['parentId' => 'storeSlotId'])->where(['level' => 2]);
     }
 
-    public function getSlots() {
+    public function getSlots()
+    {
         return $this->hasMany(StoreSlot::className(), ['parentId' => 'storeSlotId'])->where(['level' => 3]);
     }
 
-    public static function getSlotsFromRow($rowId) {
+    public function getParent()
+    {
+        return $this->hasOne(StoreSlot::className(), ['storeSlotId' => 'parentId']);
+    }
+
+    public static function getSlotsFromRow($rowId)
+    {
         return StoreSlot::find()
         ->join("LEFT JOIN", 'store_slot col', 'col.storeSlotId=store_slot.parentId')
         ->join("LEFT JOIN", 'store_slot row', 'row.storeSlotId=col.parentId')
@@ -79,7 +92,8 @@ class StoreSlot extends \common\models\costfit\master\StoreSlotMaster {
         ->all();
     }
 
-    public static function getSlotName($slotId) {
+    public static function getSlotName($slotId)
+    {
         $slot = StoreSlot::find()->where("storeSlotId=" . $slotId)->one();
         return $slot->barcode;
     }
