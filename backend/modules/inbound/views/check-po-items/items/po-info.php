@@ -71,7 +71,7 @@
 
         <tr>
             <td>
-                วันสร้าง PO
+                วันที่สร้าง PO
             </td>
             <td>
                 <?= Yii::$app->formatter->asDate($model['createDateTime'], 'long'); ?>
