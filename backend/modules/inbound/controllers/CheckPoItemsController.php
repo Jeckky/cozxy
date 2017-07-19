@@ -12,7 +12,12 @@ use yii\filters\VerbFilter;
 class CheckPoItemsController extends InboundMasterController {
 
     public function actionIndex() {
-        return $this->render('index');
+        $poQrcode = Yii::$app->request->post('poQrcode');
+        if (isset($poQrcode) && !empty($poQrcode)) {
+            return $this->render('items/po-items');
+        } else {
+            return $this->render('index');
+        }
     }
 
 }
