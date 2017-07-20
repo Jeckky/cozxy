@@ -65,6 +65,7 @@ class Inbound {
 
         foreach ($poItems as $value) {
             $products[$value->poItemId] = [
+                'poItemId' => $value['poItemId'],
                 'poId' => $value['poId'],
                 'productId' => $value['productId'],
                 'productSuppId' => $value['productSuppId'],

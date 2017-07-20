@@ -14,7 +14,14 @@
                 <span class="label label-warning ticket-label"><?= $model['status'] ?></span>
             </td>
         </tr>
-
+        <tr>
+            <td>
+                Suppliers Name
+            </td>
+            <td>
+                <?= $model['supplierId'] ?>
+            </td>
+        </tr>
         <tr>
             <td>
                 ใบสั่งซื้อ

@@ -18,7 +18,6 @@ class CheckPoItemsController extends InboundMasterController {
         if (isset($poQrcode) && !empty($poQrcode)) {
             $poContent = new ArrayDataProvider(['allModels' => \common\helpers\Inbound::CheckPo($poQrcode)]);
             $poItems = new ArrayDataProvider(['allModels' => \common\helpers\Inbound::CheckPoItems($poQrcode)]);
-
             return $this->render('items/po-items', compact('poContent', 'poItems'));
         } else {
             return $this->render('index');
