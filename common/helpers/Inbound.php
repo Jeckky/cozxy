@@ -73,7 +73,7 @@ class Inbound {
                 'result' => $value['result'],
                 'quantity' => $value['quantity'],
                 'unit' => \common\models\costfit\Unit::UnitNames($value['unit']),
-                'price' => $value['price'],
+                'price' => number_format($value['price'], 2),
             ];
         }
 

@@ -25,4 +25,8 @@ class CheckPoItemsController extends InboundMasterController {
         }
     }
 
+    public function actionQuickImport() {
+        return $this->render('quick-import');
+    }
+
 }
