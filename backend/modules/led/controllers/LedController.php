@@ -498,16 +498,17 @@ class LedController extends LedMasterController
                     $g = $color->g;
                     $b = $color->b;
                     $id = $index + 1;
-                    if (@file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
-                        $statusText = "Turn On ";
-                        $led->status = 1;
-                        $led->save();
+//                    if (@file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                    @file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                    $statusText = "Turn On ";
+                    $led->status = 1;
+                    $led->save();
 //                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
-                        break;
-                    } else {
-                        $statusText = "Turn Off ";
-//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
-                    }
+                    break;
+//                    } else {
+//                        $statusText = "Turn Off ";
+////                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+//                    }
                 } else {
                     continue;
                 }
