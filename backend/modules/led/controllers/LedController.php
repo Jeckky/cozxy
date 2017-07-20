@@ -518,6 +518,7 @@ class LedController extends LedMasterController
             $s = str_replace("'", "", $s);
             $this->checkShelfLed($s, $colorId, 1);
         }
+        echo $statusText;
     }
 
     public function actionCloseLed($slot, $colorId)
