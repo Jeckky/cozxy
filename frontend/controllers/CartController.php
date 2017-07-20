@@ -13,6 +13,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\helpers\PickingPoint;
+use common\models\costfit\Wishlist;
+use common\models\costfit\ProductShelf;
 
 class CartController extends MasterController {
 
@@ -263,9 +265,9 @@ class CartController extends MasterController {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
         if (!isset($ws)) {
-            $ws = new \common\models\costfit\Wishlist();
+            $ws = new Wishlist();
             $ws->productShelfId = $_POST['shelfId'];
             $ws->productId = $_POST['productId'];
             $ws->userId = \Yii::$app->user->id;
@@ -281,11 +283,61 @@ class CartController extends MasterController {
             $res["status"] = FALSE;
             $res['errorCode'] = 1;
             $res["message"] = "This item is already in your Wishlist";
-            $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+            $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
             if (isset($ws)) {
                 $ws->delete();
             }
-            $ch = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+            $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+            if (isset($ch)) {
+                $res['heartbeat'] = 1;
+            } else {
+                $res['heartbeat'] = 0;
+            }
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionAddDefaultWishlist() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+        $res = [];
+        $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
+        if (!isset($defaultWishlist)) {
+            $default = new ProductShelf();
+            $default->userId = Yii::$app->user->id;
+            $default->title = 'Default Wishlist';
+            $default->type = 1;
+            $default->status = 1;
+            $default->createDateTime = new \yii\db\Expression('NOW()');
+            $default->updateDateTime = new \yii\db\Expression('NOW()');
+            $default->save();
+        }
+        $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
+        $defaultWishlistId = $defaultWishlist->productShelfId;
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+        if (!isset($ws)) {
+            $ws = new Wishlist();
+            $ws->productShelfId = $defaultWishlistId;
+            $ws->productId = $_POST['productId'];
+            $ws->userId = \Yii::$app->user->id;
+            $ws->createDateTime = new \yii\db\Expression("NOW()");
+            if ($ws->save()) {
+                $res["status"] = TRUE;
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+                $res["message"] = "Can't save Wishlist";
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+            $res["message"] = "This item is already in your Wishlist";
+            $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+            if (isset($ws)) {
+                $ws->delete();
+            }
+            $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
             if (isset($ch)) {
                 $res['heartbeat'] = 1;
             } else {
@@ -300,10 +352,10 @@ class CartController extends MasterController {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        $ws = Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
-            \common\models\costfit\Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
-            $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
+            Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
+            $length = count(Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $res["status"] = TRUE;
             $res["length"] = $length;
         } else {
@@ -319,7 +371,7 @@ class CartController extends MasterController {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
         if (isset($ws)) {
             $ws->delete();
             $res["status"] = TRUE;

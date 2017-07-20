@@ -574,4 +574,12 @@ class LedController extends LedMasterController {
         }
     }
 
+    public function actionPrintQrCode() {
+        //$qr = ['R1C1S1', 'R1C1S2', 'R1C1S3', 'R1C1S4', 'R1C1S5', 'R1C1S6', 'R1C1S7', 'R1C1S8', 'R1C1S9', 'R1C1S10'];
+        //$qr = ['R1C2S1', 'R1C2S2', 'R1C2S3', 'R1C2S4', 'R1C2S5', 'R1C2S6', 'R1C2S7', 'R1C2S8', 'R1C2S9', 'R1C2S10'];
+        //$qr = ['R1C3S1', 'R1C3S2', 'R1C3S3', 'R1C3S4', 'R1C3S5', 'R1C3S6', 'R1C3S7', 'R1C3S8', 'R1C3S9', 'R1C3S10'];
+        $qr = ['R1C4S1', 'R1C4S2', 'R1C4S3', 'R1C4S4', 'R1C4S5', 'R1C4S6', 'R1C4S7', 'R1C4S8', 'R1C4S9', 'R1C4S10'];
+        return $this->render('show_qr', ['qr' => $qr]);
+    }
+
 }

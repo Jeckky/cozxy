@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'qr',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->code, ['style' => 'width:150px']);
+                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->slot, ['style' => 'width:150px']);
                         }
                     ],
                     'code',

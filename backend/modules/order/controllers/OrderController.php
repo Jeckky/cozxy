@@ -277,7 +277,7 @@ class OrderController extends OrderMasterController {
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
                 $this->sendEmail($poId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
-                $header = $this->renderPartial('header');
+                $header = $this->renderPartial('header', ['poId' => $poId]);
                 $content = $this->renderPartial('content', [
                     'poId' => $poId,
                 ]);
@@ -314,7 +314,7 @@ class OrderController extends OrderMasterController {
 
     public function actionReprintPo() {
         $po = Po::find()->where("poId=" . $_GET['poId'])->one();
-        $header = $this->renderPartial('header', ['ms' => 'Reprint']);
+        $header = $this->renderPartial('header', ['ms' => 'Reprint', 'po' => $po]);
         $content = $this->renderPartial('content2', [
             'po' => $po
         ]);

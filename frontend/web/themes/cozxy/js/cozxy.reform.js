@@ -205,6 +205,23 @@ function addItemToWishlist(id, shelfId) {
         }
     });
 }
+function addItemToDefaultWishlist(id) {
+    var $pId = id;
+    var str = window.location.pathname;
+    var res = str.split("/");
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "cart/add-default-wishlist",
+        data: {productId: $pId},
+        success: function (data)
+        {
+            if (data.status) {
+                window.location = $baseUrl + "my-account?act=2";
+            }
+        }
+    });
+}
 /*
  *  modal add Wish List Group
  * By sak
@@ -1342,4 +1359,3 @@ $(document).ready(function () {
     $('#productpost-shortdescription').focus(counter);
 });
 
- 
