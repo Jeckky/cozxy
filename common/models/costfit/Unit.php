@@ -49,4 +49,17 @@ class Unit extends \common\models\costfit\master\UnitMaster {
         }
     }
 
+    public static function UnitNames($unitId) {
+        if (isset($unitId) && !empty($unitId)) {
+            $unit = \common\models\costfit\Unit::find()->where('unitId=' . $unitId)->one();
+            if (isset($unit)) {
+                return $unit['title'];
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
 }

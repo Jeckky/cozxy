@@ -57,11 +57,23 @@ class Inbound {
 
         $products = [];
         $po = \common\models\costfit\Po::find()->where('poNo="' . $PoNo . '"')->one();
-        $poItems = \common\models\costfit\PoItem::find()->where('poId="' . $poInfo['poId'] . '"')->all();
+        $poItems = \common\models\costfit\PoItem::find()
+        ->select('`po_item`.*, `ps`.*')
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = po_item.productSuppId")
+        //->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where('po_item.poId="' . $po['poId'] . '"')->all();
 
-        foreach ($productPost as $value) {
-            $products[$value->poId] = [
-                'poId' => $poInfo['poId'],
+        foreach ($poItems as $value) {
+            $products[$value->poItemId] = [
+                'poId' => $value['poId'],
+                'productId' => $value['productId'],
+                'productSuppId' => $value['productSuppId'],
+                'code' => $value['code'],
+                'title' => $value['title'],
+                'result' => $value['result'],
+                'quantity' => $value['quantity'],
+                'unit' => \common\models\costfit\Unit::UnitNames($value['unit']),
+                'price' => $value['price'],
             ];
         }
 

@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
                     <a href="#uidemo-tabs-default-demo-home" data-toggle="tab">ข้อมูลใบสั่งซื้อ </a>
                 </li>
                 <li class="">
-                    <a href="#uidemo-tabs-default-demo-profile" data-toggle="tab">สินค้า <span class="badge badge-success">12</span></a>
+                    <a href="#uidemo-tabs-default-demo-profile" data-toggle="tab">สินค้า <span class="badge badge-success"><?= isset($poItems->allModels) ? count($poItems->allModels) : '0' ?></span></a>
                 </li>
             </ul>
 
@@ -55,7 +55,40 @@ use yii\widgets\ActiveForm;
                     </p>
                 </div> <!-- / .tab-pane -->
                 <div class="tab-pane fade" id="uidemo-tabs-default-demo-profile">
-                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                    <p><table class="table table-hover" id="inputs-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>สินค้า</th>
+                                <th>บาร์โค้ด</th>
+                                <th>จำนวนคงเหลือ</th>
+                                <th>หน่วยนับ</th>
+                                <th>ราคาขาย</th>
+                                <th class="text-right">เมนู&nbsp;&nbsp;&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            echo \yii\widgets\ListView::widget([
+                                'dataProvider' => $poItems,
+                                'options' => [
+                                    'tag' => false,
+                                ],
+                                'itemView' => function ($model, $key, $index, $widget) {
+                                    return $this->render('@app/modules/inbound/views/check-po-items/items/po-items-items', ['model' => $model, 'index' => $index]);
+                                },
+                                // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                //'layout'=>"{summary}{pager}{items}"
+                                'layout' => "{items}",
+                                'itemOptions' => [
+                                    'tag' => false,
+                                ],
+                            ]);
+                            ?>
+                        </tbody>
+                    </table>
+                    <br><br><br><br><br><br>
+                    </p>
                 </div> <!-- / .tab-pane -->
             </div> <!-- / .tab-content -->
         </div>
