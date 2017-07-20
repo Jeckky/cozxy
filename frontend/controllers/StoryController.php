@@ -305,10 +305,10 @@ class StoryController extends MasterController {
             $model->userId = Yii::$app->user->identity->userId;
             $model->title = $_POST["ProductPost"]["title"];
             $model->description = $_POST["ProductPost"]["description"];
-            $model->shopName = $_POST["ProductPost"]["shopName"];
-            $model->price = $_POST["ProductPost"]["price"];
-            $model->country = $_POST["ProductPost"]["country"];
-            $model->currency = $_POST["ProductPost"]["currency"];
+            //$model->shopName = $_POST["ProductPost"]["shopName"];
+            //$model->price = $_POST["ProductPost"]["price"];
+            //$model->country = $_POST["ProductPost"]["country"];
+            //$model->currency = $_POST["ProductPost"]["currency"];
             if ($isPublic == 'on') {
                 $model->isPublic = 1;
             } else {
@@ -465,6 +465,12 @@ class StoryController extends MasterController {
         ];
 
         return json_encode($products['comparePriceChange']);
+    }
+
+    public function actionViewsAll() {
+        //$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
+        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99), 'pagination' => ['defaultPageSize' => 16]]);
+        return $this->render('contentstory', compact('productStory'));
     }
 
 }

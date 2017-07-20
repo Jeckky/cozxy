@@ -837,6 +837,8 @@ class LockersController extends LockersMasterController
 //        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
         $locker = PickingPoint::find()->where("pickingId = $id")->one();
 
+//        throw new \yii\base\Exception(print_r($locker->attributes, true));
+
         $num = array(3, 1, 2, 4);
 
         $response = \common\helpers\Locker::Open($locker, $num);
