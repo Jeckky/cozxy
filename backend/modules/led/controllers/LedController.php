@@ -478,16 +478,17 @@ class LedController extends LedMasterController {
                     $g = $color->g;
                     $b = $color->b;
                     $id = $index + 1;
-                    if (file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
-                        $statusText = "Turn On ";
-                        $led->status = 1;
-                        $led->save();
+//                    if (@file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                    @file_get_contents('http://' . $item->ip . "?id=$id&status=1&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                    $statusText = "Turn On ";
+                    $led->status = 1;
+                    $led->save();
 //                        echo "LED " . $item->code . " " . $statusText . $item->ip . "<br>";
-                        break;
-                    } else {
-                        $statusText = "Turn Off ";
-//                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
-                    }
+                    break;
+//                    } else {
+//                        $statusText = "Turn Off ";
+////                        echo "LED " . $item->code . " " . $statusText . $item->ip . $exc->getMessage();
+//                    }
                 } else {
                     continue;
                 }
@@ -498,6 +499,7 @@ class LedController extends LedMasterController {
             $s = str_replace("'", "", $s);
             $this->checkShelfLed($s, $colorId, 1);
         }
+        echo $statusText;
     }
 
     public function actionCloseLed($slot, $colorId) {
@@ -511,14 +513,15 @@ class LedController extends LedMasterController {
                 $g = $color->g;
                 $b = $color->b;
                 $id = $index + 1;
-                if (@file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
-                    $statusText = "Turn Off ";
-                    $led->status = 0;
-                    $led->save();
-                    break;
-                } else {
-                    $statusText = "Turn On ";
-                }
+//                if (@file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0) !== FALSE) {
+                @file_get_contents('http://' . $item->ip . "?id=$id&status=0&r=$r&g=$g&b=$b", NULL, NULL, 0, 0);
+                $statusText = "Turn Off ";
+                $led->status = 0;
+                $led->save();
+                break;
+//                } else {
+//                    $statusText = "Turn On ";
+//                }
             } else {
                 continue;
             }
@@ -575,7 +578,7 @@ class LedController extends LedMasterController {
     }
 
     public function actionPrintQrCode() {
-        // $qr = ['R1C1S1', 'R1C1S2', 'R1C1S3', 'R1C1S4', 'R1C1S5', 'R1C1S6', 'R1C1S7', 'R1C1S8', 'R1C1S9', 'R1C1S10'];
+        //$qr = ['R1C1S1', 'R1C1S2', 'R1C1S3', 'R1C1S4', 'R1C1S5', 'R1C1S6', 'R1C1S7', 'R1C1S8', 'R1C1S9', 'R1C1S10'];
         //$qr = ['R1C2S1', 'R1C2S2', 'R1C2S3', 'R1C2S4', 'R1C2S5', 'R1C2S6', 'R1C2S7', 'R1C2S8', 'R1C2S9', 'R1C2S10'];
         //$qr = ['R1C3S1', 'R1C3S2', 'R1C3S3', 'R1C3S4', 'R1C3S5', 'R1C3S6', 'R1C3S7', 'R1C3S8', 'R1C3S9', 'R1C3S10'];
         //$qr = ['R1C4S1', 'R1C4S2', 'R1C4S3', 'R1C4S4', 'R1C4S5', 'R1C4S6', 'R1C4S7', 'R1C4S8', 'R1C4S9', 'R1C4S10'];
