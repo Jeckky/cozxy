@@ -39,8 +39,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         </div>
     ';
 }
-?>
-<?php
+
 $allshelf = ProductShelf::wishListGroup();
 if (isset($allshelf) && count($allshelf) > 0) {
     $i = 0;
@@ -58,18 +57,20 @@ if (isset($allshelf) && count($allshelf) > 0) {
         </a>
         <?php if ($i == 0) { ?>
             <div id="wishListShelf-<?= $shelf->productShelfId ?>">
-                <?php
-                /*
-                 * By Taninut.Bm
-                 * 24-05-2017
-                 */
-                /* if (count($wishList->allModels) > 0) {
-                  foreach ($wishList->allModels as $key => $value) {
-                  product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
-                  }
-                  } else {
+                <div>
+                    <a style="cursor: pointer;" id="showCreateWishList">+ Create New Wish List Group</a>
+                    <a style="cursor: pointer;display: none;" id="hideCreateWishList" >- Create New Wish List Group</a>
+                    <div id="newWishList" style="display: none;">
 
-                  } */
+                        <h4>Name</h4>
+                        <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
+                        <div class="text-right" style="">
+                            <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
+                        </div>
+                    </div>
+                </div>
+                <?php
                 $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
                 if (isset($wishlists) && count($wishlists) > 0) {
                     foreach ($wishlists as $value):

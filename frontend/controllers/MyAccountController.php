@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\DisplayMyAccount;
+use common\models\costfit\ProductShelf;
 
 class MyAccountController extends MasterController {
 
@@ -26,6 +27,7 @@ class MyAccountController extends MasterController {
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
+        $this->createDefault(); //สร้าง  Defalut wishlist and default favorite stories
         $statusText = '';
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList'));
     }
@@ -363,7 +365,7 @@ class MyAccountController extends MasterController {
         $res = [];
         $idHide = [];
         $text = '';
-        $productShelf = \common\models\costfit\ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
+        $productShelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and productShelfId !=" . $shelfId)->all();
         if (isset($productShelf) && count($productShelf) > 0) {
             $i = 0;
             foreach ($productShelf as $id):
@@ -408,11 +410,36 @@ class MyAccountController extends MasterController {
             $res['text'] = $text;
             $res['status'] = true;
         } else {
-            $group = \common\models\costfit\ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
+            $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
             $res['text'] = '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h3>There are no item in "' . $group->title . '"</h3></div>';
             $res['status'] = true;
         }
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function createDefault() {
+        $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
+        if (!isset($defaultWishlist)) {
+            $default = new ProductShelf();
+            $default->userId = Yii::$app->user->id;
+            $default->title = 'My wishlist';
+            $default->type = 1;
+            $default->status = 1;
+            $default->createDateTime = new \yii\db\Expression('NOW()');
+            $default->updateDateTime = new \yii\db\Expression('NOW()');
+            $default->save();
+        }
+        $defaultFavoriteStories = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=3")->one();
+        if (!isset($defaultFavoriteStories)) {
+            $default = new ProductShelf();
+            $default->userId = Yii::$app->user->id;
+            $default->title = 'My favorite stories';
+            $default->type = 3;
+            $default->status = 1;
+            $default->createDateTime = new \yii\db\Expression('NOW()');
+            $default->updateDateTime = new \yii\db\Expression('NOW()');
+            $default->save();
+        }
     }
 
 }

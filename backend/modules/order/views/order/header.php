@@ -8,7 +8,17 @@ use yii\grid\GridView;
 ///$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 //$baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 ?>
+
 <?= isset($ms) ? '[ ' . $ms . ' ]' : '' ?>
+<?php
+if (isset($po)) {
+    echo Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $po->poNo, ['style' => 'width:70px;margin-top:-30px;']);
+}
+if (isset($poId)) {
+    $po = Po::find()->where("poId=" . $poId)->one();
+    echo Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $po->poNo, ['style' => 'width:70px;margin-top:-30px;']);
+}
+?>
 <table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="8" style="border-color: #ffffff;margin-top: -20px;">
     <tr>
         <td colspan="2" style="padding: 5px; vertical-align: text-top; text-align: center;border:solid 0px #ffffff;">

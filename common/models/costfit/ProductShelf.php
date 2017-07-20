@@ -34,10 +34,26 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
     public static function wishListGroup() {
         if (Yii::$app->user->id) {
             $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1")
-                    ->orderBy('createDateTime DESC')
+                    ->orderBy('type')
+                    ->addOrderBy('updateDateTime DESC')
                     ->all();
             if (isset($shelf) && count($shelf) > 0) {
                 return $shelf;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public static function defaultWishlist() {
+        if (Yii::$app->user->id) {
+            $defalueWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type=1")
+                    ->orderBy('createDateTime DESC')
+                    ->one();
+            if (isset($defalueWishlist)) {
+                return $defalueWishlist;
             } else {
                 return null;
             }
