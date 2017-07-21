@@ -4,10 +4,17 @@
     <div class="panel-body text-center"> 
         <?php if ($StoryProductPost->allModels['myStoryTop']['title'] != NULL) { ?>
             <a href="<?= $StoryProductPost->allModels['myStoryTop']['urlView']; ?>">
+                <?php /*
                 <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
+                */?>
+
+                <img src="<?php echo $productViews['image']; ?>" class="img-circle img-responsive" alt="" style="width:120px;">
             </a>
         <?php } else { ?>
+            <?php /*
             <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
+            */?>
+            <img src="<?php echo $productViews['image']; ?>" class="img-circle img-responsive" alt="" style="width:120px;">
 
         <?php } ?>
         <h4><span style="height: 50px;"></span><?php echo $StoryProductPost->allModels['myStoryTop']['title']; ?></h4>
