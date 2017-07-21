@@ -321,6 +321,7 @@ class ReceiveController extends MasterController
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
                             $res["refNo"] = $order->refNo;
+                            $this->cctv($order->refNo, $_POST['userId']);
                             //throw new \yii\base\Exception(print_r($res, true));
                             //print_r(Json::encode($res));
                             echo Json::encode($res);
@@ -576,6 +577,14 @@ class ReceiveController extends MasterController
         fclose($myfile);
 
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
+    }
+
+    public function cctv($orderNo, $user)
+    {
+        echo \common\helpers\Cctv::SendText("192.168.15.5", "7001", $orderNo, $user);
+//        echo \common\helpers\Cctv::SendText("192.168.15.5", "7002");
+//        echo \common\helpers\Cctv::SendText("192.168.15.5", "7003");
+//        echo \common\helpers\Cctv::SendText("192.168.15.5", "7004");
     }
 
     public function actionCctv()
