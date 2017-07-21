@@ -321,8 +321,8 @@ class DisplaySearch extends Model {
 
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
-            $whereArray["ps.approve"] = "approve";
-            $whereArray["pps.status"] = "1";
+            //$whereArray["ps.approve"] = "approve";
+            // $whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*,`brand`.title as brandName')
@@ -331,7 +331,10 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
-            ->andWhere(["=", "ps.result", 0])
+            //->andWhere(["=", "ps.result", 0])
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
             ->andWhere(["=", "pps.price", 0])
             //->orderBy(new \yii\db\Expression('rand()'))
             //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
@@ -342,8 +345,8 @@ class DisplaySearch extends Model {
             $whereArray2 = [];
 
             $whereArray2["category_to_product.categoryId"] = $cat;
-            $whereArray2["ps.approve"] = "approve";
-            $whereArray2["pps.status"] = "1";
+            //$whereArray2["ps.approve"] = "approve";
+            //$whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('*,`brand`.title as brandName')
@@ -352,8 +355,11 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
-            ->andWhere('ps.result > 0')
-            ->andWhere('pps.price > 0')
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
+            //->andWhere('ps.result > 0')
+            //->andWhere('pps.price > 0')
             ->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')
             ->orderBy(['pps.price' => SORT_ASC])
@@ -367,8 +373,8 @@ class DisplaySearch extends Model {
               ->orderBy("product_price_suppliers.price ASC , " . new \yii\db\Expression('rand()'))->limit($n)->all(); */
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
-            $whereArray["ps.approve"] = "approve";
-            $whereArray["pps.status"] = "1";
+            //$whereArray["ps.approve"] = "approve";
+            //$whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*,`brand`.title as brandName')
@@ -377,17 +383,19 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
-            ->andWhere(["=", "ps.result", 0])
-            ->andWhere(["=", "pps.price", 0])
+            //->andWhere(["=", "ps.result", 0])
+            //->andWhere(["=", "pps.price", 0])
             //->orderBy(new \yii\db\Expression('rand()'))
             //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
             ->orderBy(['pps.price' => SORT_ASC])
             //->limit($n)
             ->all();
         }
 
         foreach ($pCanSale as $value) {
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 

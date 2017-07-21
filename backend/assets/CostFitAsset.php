@@ -30,6 +30,7 @@ class CostFitAsset extends AssetBundle {
         'javascripts/cozxy/cozxy-unity.js', //by Taninut.Bm, Master codeding
         //'javascripts/cozxy/cozxy-unity.min.js', // By Taninut.bm , create date 06/02/2017 , ย่อขนาด บีบอัดไฟล์
         'javascripts/cozxy/cozxy-printer.js',
+        'javascripts/cozxy/cozxy-inbound.js',
     ];
 
 }

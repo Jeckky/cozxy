@@ -8,7 +8,7 @@ if (Yii::$app->controller->id == 'product') {
         <h3 class="page-header" style="margin:10px 20px;">Recent Stories</h3>
         <?php
         if (Yii::$app->controller->id != 'search') {
-            ?> 
+            ?>
             <div class="size14 text-center">
                 <a href="javascript:sortStoriesRecent('','view','product')">
                     <?php
@@ -129,9 +129,10 @@ if (Yii::$app->controller->id == 'product') {
             ]);
             ?>
 
-            <div class="text-center">
-
+            <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
             </div>
+
         </div>
     </div>
     <?php
