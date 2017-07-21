@@ -6,7 +6,7 @@ $this->registerJs("
                 if(flag){
                     location.reload();
                 }
-                }, 30000);")
+                }, 100000);")
 ?>
 
 <h1>virtual/index</h1>
