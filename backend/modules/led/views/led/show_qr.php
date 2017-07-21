@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
             <?php foreach ($qr as $code): ?>
                 <div class="col-md-3 text-center" style="margin-top: 30px;">
-                    <?= Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $code, ['style' => 'width:400px']); ?><br>
+                    <?= Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $code, ['style' => 'width:3cm;']); ?><br>
                     <?= $code ?>
                 </div>
 
