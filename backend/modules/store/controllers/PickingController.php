@@ -68,7 +68,7 @@ class PickingController extends StoreMasterController {
         endif;
         //throw new \yii\base\Exception(print_r($allId, true));
         $enoughId = $this->checkQuantity($allId); //ได้ orderId ที่มีของพอ
-        //throw new \yii\base\Exception($enoughId);
+        // throw new \yii\base\Exception($enoughId);
         if ($enoughId != '') {
             $query = Order::find()
                     ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
@@ -402,70 +402,53 @@ class PickingController extends StoreMasterController {
     }
 
     static function checkQuantity($allOrder) {//allslots are barcodd
-        $products[] = 0;
         $returnId = '';
-        //$arrangTotal = 0;
-        $result = 0;
-        $oldResult = 0;
-
+        $products = [];
         foreach ($allOrder as $orderId)://set variable to 0
             $orderItems = OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
-            if (isset($orderItems) && !empty($orderItems)) {
+            if (isset($orderItems) && count($orderItems) > 0) {
                 foreach ($orderItems as $item):
-                    $arrangTotal[$item->productSuppId] = 0;
+                    $arrangeTotal[$item->productSuppId] = 0;
                     $totalUse[$item->productSuppId] = 0;
+                    $products[$item->productSuppId] = $item->productSuppId;
                 endforeach;
             }
         endforeach;
-        foreach ($allOrder as $orderId)://หาว่าใน order ที่เลือกมา มี Product อะไรบ้าง
+        foreach ($products as $product)://หาว่า Product ใน order มีอยู่ใน stock เท่าไหร(ที่จัดเรียงแล้ว)
+            $arranges = \common\models\costfit\StoreProductArrange::find()->where("productSuppId = " . $product . " and status = 4")->all();
+            if (isset($arranges) && count($arranges) > 0) {
+                foreach ($arranges as $arrange):
+                    $arrangeTotal[$product] += $arrange->result;
+                endforeach;
+            }
+        endforeach;
+        foreach ($allOrder as $orderId)://กรอง order ที่มีของพอ
             $i = 0;
             $orderItems = OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
-
-            if (isset($orderItems) && !empty($orderItems)) {
+            if (isset($orderItems) && count($orderItems) > 0) {
                 foreach ($orderItems as $item):
-                    //$arranges = \common\models\costfit\StoreProductArrange::find()->where("productId = " . $item->productId . " and status = 4")->all();
-                    $arranges = \common\models\costfit\StoreProductArrange::find()->where("productSuppId = " . $item->productSuppId . " and status = 4")->all();
-
-                    /* if (isset($arranges) && count($arranges)>0) {
-                      foreach ($arranges as $arrange):
-                      $arrangTotal += $arrange->result;
-                      endforeach;
-
-                      $result = $arrangTotal - $item->quantity;
-                      //    throw new \yii\base\Exception($result . "=" . $arrangTotal . "-" . $item->quantity);
-
-                      if ($result < $oldResult) {//ถ้าของใน arrange store ไม่พอ
-                      $i++;
-                      } else {
-                      $oldResult = $result;
-                      }
-                      } else {//ถ้าไม่มีใน StoreProductArrange
-                      $i++;
-                      } */
-                    if (isset($arranges) && count($arranges) > 0) {
-                        foreach ($arranges as $arrange):
-                            $arrangTotal[$item->productSuppId] += $arrange->result;
-                        endforeach;
-                        $totalUse[$item->productSuppId] += $item->quantity;
-                        if (($arrangTotal[$item->productSuppId] - $totalUse[$item->productSuppId]) < 0) {
-                            $totalUse[$item->productSuppId] = $totalUse[$item->productSuppId] - $item->quantity; //setกลับ
-                            $i++;
-                        }
-                    } else {
+                    if ($arrangeTotal[$item->productSuppId] < $item->quantity) {
                         $i++;
                     }
                 endforeach;
-            }if ($i == 0) {
+            }
+            if ($i == 0) {
+                $orderItemUpdate = OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
+                if (isset($orderItemUpdate) && count($orderItemUpdate) > 0) {
+                    foreach ($orderItemUpdate as $item):
+                        $arrangeTotal[$item->productSuppId] = $arrangeTotal[$item->productSuppId] - $item->quantity;
+                    endforeach;
+                }
                 $returnId .= $orderId . ",";
             }
         endforeach;
         $returnId = substr($returnId, 0, -1);
-        //throw new \yii\base\Exception(print_r($allOrder, true));
+        //throw new \yii\base\Exception($returnId);
         return $returnId;
     }
 
     static function checkSlot($oldArraySlot, $newSlot) {
-        if (isset($oldArraySlot) && !empty($oldArraySlot)) {
+        if (isset($oldArraySlot) && count($oldArraySlot) > 0) {
             $i = 0;
             foreach ($oldArraySlot as $old):
                 if ($old == $newSlot) {
@@ -495,7 +478,7 @@ class PickingController extends StoreMasterController {
         endforeach;
         foreach ($allOrderId as $orderId):
             $orderItems = OrderItem::find()->where("orderId = " . $orderId . " and DATE(DATE_SUB(sendDateTime, INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE()")->all();
-            if (isset($orderItems) && !empty($orderItems)) {
+            if (isset($orderItems) && count($orderItems) > 0) {
                 foreach ($orderItems as $item):
                     $item->color = $color;
                     $item->save(false);
