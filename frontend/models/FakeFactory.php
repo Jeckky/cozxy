@@ -81,15 +81,18 @@ class FakeFactory extends Model {
         if ($cat != FALSE) {
             $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
 
-            $whereArray2["product_suppliers.approve"] = "approve";
-            $whereArray2["ps.result"] = "0";
-            $whereArray2["pps.status"] = "1";
+            //$whereArray2["product_suppliers.approve"] = "approve";
+            // $whereArray2["ps.result"] = "0";
+            //$whereArray2["pps.status"] = "1";
             $product = \common\models\costfit\CategoryToProduct::find()
             ->select('*')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray2)
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
             ->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         } else {
             $product = \common\models\costfit\ProductSuppliers::find()
