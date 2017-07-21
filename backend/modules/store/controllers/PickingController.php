@@ -443,7 +443,6 @@ class PickingController extends StoreMasterController {
             }
         endforeach;
         $returnId = substr($returnId, 0, -1);
-        //throw new \yii\base\Exception($returnId);
         return $returnId;
     }
 
