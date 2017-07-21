@@ -321,7 +321,7 @@ class ReceiveController extends MasterController
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
                             $res["refNo"] = $order->refNo;
-                            $this->cctv($order->refNo, $_POST['userId']);
+                            $this->cctv($order->refNo, $user->email);
                             //throw new \yii\base\Exception(print_r($res, true));
                             //print_r(Json::encode($res));
                             echo Json::encode($res);
