@@ -36,7 +36,6 @@ use yii\widgets\ActiveForm;
                             </div>
                         </div>
 
-
                         <div class="col-md-12">
                             <div class="form-group no-margin-hr">
                                 <label class="control-label">จำนวน <span class="text-danger">*</span></label>
@@ -62,6 +61,13 @@ use yii\widgets\ActiveForm;
                             </div>
                         </div>
 
+                        <div class="col-md-12">
+                            <div class="form-group no-margin-hr">
+                                <label class="control-label">หมายเหตุ</label>
+                                <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col-md-2">
@@ -75,8 +81,49 @@ use yii\widgets\ActiveForm;
                     <div class="col-md-5">
                         <div class="form-group no-margin-hr">
                             <label class="control-label">ประวัติการนำเข้าสินค้า  <small>(5 รายการล่าสุด)</small></label>
-                            <div class="well">
-                                Look, I'm in a well!
+                            <div class="well table-primary">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="25">&nbsp;</th>
+                                            <th>วันที่-เวลา <i class="iconfa-sort-down"></i></th>
+                                            <th width="80">จำนวน</th>
+                                            <th width="80">ต้นทุน</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tooltipsample">
+                                        <tr>
+                                            <td style="font-size:20px"><span class="iconfa-building tooltipster tooltipstered" style="cursor:pointer" id="sp15"></span></td>
+                                            <td class="nowarp">  2017-07-20 11:43:13 </td>
+                                            <td> 10 </td>
+                                            <td> ฿20.00 </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="font-size:20px"><span class="iconfa-building tooltipster tooltipstered" style="cursor:pointer" id="sp14"></span></td>
+                                            <td class="nowarp">  2017-07-20 11:42:51 </td>
+                                            <td> 10 </td>
+                                            <td> ฿20.00 </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="font-size:20px"><span class="iconfa-building tooltipster tooltipstered" style="cursor:pointer" id="sp11"></span></td>
+                                            <td class="nowarp"> 2017-07-19 14:09:11</td>
+                                            <td>10</td>
+                                            <td> ฿45.00	</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="font-size:20px">
+                                                <span class="iconfa-building tooltipster tooltipstered" style="cursor:pointer" id="sp4"></span>
+                                            </td>
+                                            <td class="nowarp"> 2017-07-19 09:07:13 </td>
+                                            <td>  20 </td>
+                                            <td> ฿45.00	 </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
