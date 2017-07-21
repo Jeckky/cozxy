@@ -28,7 +28,7 @@ use yii\data\ArrayDataProvider;
  */
 class CategoriesController extends MasterController {
 
-    //put your code here
+//put your code here
     public static function actionTree() {
         $status = false;
         $message = '';
@@ -37,8 +37,8 @@ class CategoriesController extends MasterController {
             'parentId' => SORT_ASC //Need this line to be fixed
         ])->all();
         $cattree = self::CreateTree($model);
-        // echo '<pre>';
-        //print_r($cattree);
+// echo '<pre>';
+//print_r($cattree);
         return $cattree;
         die;
         if ($model) {
@@ -66,8 +66,8 @@ class CategoriesController extends MasterController {
           '`category`.`parentId`' => SORT_ASC //Need this line to be fixed
           ])->all(); */
         $cattree = self::CreateTree($model);
-        // echo '<pre>';
-        //print_r($cattree);
+// echo '<pre>';
+//print_r($cattree);
         return $cattree;
         die;
         if ($model) {
@@ -91,6 +91,18 @@ class CategoriesController extends MasterController {
             }
         }
         return $branch;
+    }
+
+    public static function actionSearchForCategoriesWithProducts() {
+        $cate = \common\models\costfit\ProductSuppliers::find()
+        ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+        ->join("LEFT JOIN", "category", "category.categoryId = product_suppliers.categoryId")
+        ->where("approve = 'approve' and parentId IS NULL")
+        ->groupBy('`product_suppliers`.categoryId')
+        ->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+        ->all();
+
+        echo count($cate);
     }
 
 }
