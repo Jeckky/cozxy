@@ -12,8 +12,8 @@ use Yii;
     * @property string $poNo
     * @property string $summary
     * @property string $receiveDate
-    * @property integer $receiveBy
-    * @property integer $arranger
+    * @property string $receiveBy
+    * @property string $arranger
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

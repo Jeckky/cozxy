@@ -7,9 +7,9 @@ use Yii;
 /**
 * This is the model class for table "order_item_packing_items".
 *
-    * @property integer $remarkId
-    * @property integer $pickingItemsId
-    * @property integer $orderItemPackingId
+    * @property string $remarkId
+    * @property string $pickingItemsId
+    * @property string $orderItemPackingId
     * @property string $desc
     * @property integer $status
     * @property string $createDateTime
