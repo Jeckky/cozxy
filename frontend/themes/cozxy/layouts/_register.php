@@ -4,8 +4,28 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
+$this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
 \frontend\assets\LoginRegisterAsset::register($this);
 ?>
+<style type="text/css">
+    .login-box .select-new {
+        text-overflow: '';
+        overflow: hidden;
+        white-space: nowrap;
+        border: 1px solid #999;
+        /* padding: 11px 10px 12px; */
+        /* margin-top: 8px; */
+        margin-bottom: 8px;
+        color: #666;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+        /* -webkit-appearance: inherit; */
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+    }
+</style>
 <div class="container login-box">
     <div class="row">
         <div class="col-xs-12">
@@ -38,23 +58,46 @@ use yii\bootstrap\ActiveForm;
                             <p>Gender</p>
                             <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-9">
                             <p>Birthday</p>
+                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                                <?=
+                                Html::dropDownList('SignupForm[dd]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth '
+                                ,
+                                ])
+                                ?>
+                            </div>
+                            <div class="day col-md-4 col-xs-12">
+                                <?=
+                                Html::dropDownList('SignupForm[mm]', NULL, $birthdate['month'], ['prompt' => '---Select month---', 'class' => 'fullwidth', 'style' => ""
+                                ,
+                                ])
+                                ?>
+                            </div>
+                            <div class="day col-md-4 col-xs-12">
+                                <?=
+                                Html::dropDownList('SignupForm[yyyy]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'fullwidth'
+                                ,
+                                ])
+                                ?>
+                            </div>
+                            <!--
                             <input type="number" name="SignupForm[dd]" min="1" max="31" placeholder="31" style="width: 26%">
                             <input type="number" name="SignupForm[mm]" min="1" max="12" placeholder="12" style="width: 26%">
                             <input type="number" name="SignupForm[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
+                            -->
                         </div>
                         <div class="col-sm-12">
                             <div class="checkbox">
                                 <label class="">
                                     <div class="icheckbox" style="position: relative;">
-                                        <input type="checkbox" id="loginform-rememberme" name="User[acceptTerm]" value="1">
+                                        <input type="checkbox" id="loginform-accept-term" name="User[acceptTerm]" value="1">
                                     </div> I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT">
+                            <input type="submit" id="create-account" class="btn-yellow fullwidth" value="CREATE ACCOUNT DISABLED" disabled>
                         </div>
                     </div>
 
@@ -102,7 +145,7 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Accept</button>
+                <button type="button" class="btn btn-primary" id="acceptTerms">Accept</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

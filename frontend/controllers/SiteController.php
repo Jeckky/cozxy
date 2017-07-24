@@ -18,6 +18,7 @@ use frontend\models\FakeFactory;
 use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
 use common\helpers\Email;
+use common\helpers\CozxyUnity;
 
 /**
  * Site controller
@@ -215,6 +216,11 @@ class SiteController extends MasterController {
         } else {
             $content = FALSE;
         }
+        $birthdate = [];
+        $birthdate['dates'] = CozxyUnity::getDates(1);
+
+        $birthdate['month'] = CozxyUnity::getMonthEn(01);
+        $birthdate['years'] = CozxyUnity::getYears(1999);
         if (isset($_POST["SignupForm"])) {
 
             if ($model->load(Yii::$app->request->post())) {
@@ -234,7 +240,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model, 'content' => $content
+            'model' => $model, 'content' => $content, 'birthdate' => $birthdate
         ]);
     }
 

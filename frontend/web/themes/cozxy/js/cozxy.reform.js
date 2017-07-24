@@ -1173,6 +1173,7 @@ $(".bs-example-modal-lg-x").click(function () {
         }
     });
 });
+
 function CozxyComparePriceModernBest(id, type, dataIndex) {
 
     var postId = id;
@@ -1359,3 +1360,19 @@ $(document).ready(function () {
     $('#productpost-shortdescription').focus(counter);
 });
 
+
+//
+$("#acceptTerms").click(function () {
+    //alert('Accept Terms');
+    $(".bs-example-modal-lg").modal("hide");
+    //loginform-accept-term
+    document.getElementById('loginform-accept-term').checked = true;
+    $('#create-account').removeAttr('disabled');
+    $('#create-account').val('CREATE ACCOUNT');
+});
+
+$('#loginform-accept-term').click(function () {
+    document.getElementById('loginform-accept-term').checked = true;
+    $('#create-account').removeAttr('disabled');
+    $('#create-account').val('CREATE ACCOUNT');
+});
