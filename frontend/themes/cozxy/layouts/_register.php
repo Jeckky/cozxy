@@ -37,7 +37,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
-                            <?php // throw new \yii\base\Exception($model->scenario); ?>
+                            <?php // throw new \yii\base\Exception($model->scenario);  ?>
                             <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
@@ -61,21 +61,65 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                         <div class="col-md-9">
                             <p>Birthday</p>
                             <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
-                                <?=
-                                Html::dropDownList('SignupForm[dd]', NULL, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth '
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'dd',
+                                    'data' => $birthdate['dates'],
+                                    'options' => ['placeholder' => 'Select a day ...'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+
+                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'mm',
+                                    'data' => $birthdate['month'],
+                                    'options' => ['placeholder' => 'Select a month ...'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+
+                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'yyyy',
+                                    'data' => $birthdate['years'],
+                                    'options' => ['placeholder' => 'Select a year ...'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                                <?//=
+                                Html::dropDownList('SignupForm[dd]', $model, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth '
                                 ,
                                 ])
                                 ?>
                             </div>
                             <div class="day col-md-4 col-xs-12">
-                                <?=
+                                <?//=
                                 Html::dropDownList('SignupForm[mm]', NULL, $birthdate['month'], ['prompt' => '---Select month---', 'class' => 'fullwidth', 'style' => ""
                                 ,
                                 ])
                                 ?>
                             </div>
                             <div class="day col-md-4 col-xs-12">
-                                <?=
+                                <?//=
                                 Html::dropDownList('SignupForm[yyyy]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'fullwidth'
                                 ,
                                 ])

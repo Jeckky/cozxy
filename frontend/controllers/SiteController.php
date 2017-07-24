@@ -225,7 +225,23 @@ class SiteController extends MasterController {
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
+                /* $errors = $model->errors;
+                  if ($_POST["SignupForm"]['yyyy'] == '') {
+                  echo $errors;
+                  }
+                  if ($_POST["SignupForm"]['mm'] == '') {
+                  echo $errors;
+                  }
+                  if ($_POST["SignupForm"]['dd'] == '') {
+                  echo $errors;
+                  } */
                 $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
+                //echo 'test :' . $_POST["SignupForm"]['yyyy'];
+                // $message = 'Your salary is not enough for children.';
+                // echo $model->addError('xxxxx');
+                // echo $model->addError('personalSalary', $message);
+                // echo $model->addError('wifeSalary', $message);
+                //echo $model->addError('childrenCount', $message);
                 //echo $model->birthDate;
                 //exit();
                 if ($user = $model->signup()) {
