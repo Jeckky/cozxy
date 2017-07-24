@@ -58,8 +58,16 @@ class StoryController extends MasterController {
 
         $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, isset($_GET['currencyId']) ? $_GET['currencyId'] : NULL, $sort)]);
         $modelComparePrices = new \common\models\costfit\ProductPostComparePrice();
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact(
-        'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
+
+        $userAvatar = \common\models\costfit\User::find()->where('userId=' . $productPost->userId)->one();
+        //echo '<pre>';
+        //print_r($userAvatar['attributes']);
+        if (isset($userAvatar['attributes'])) {
+            $avatar = $userAvatar['attributes']['avatar'];
+        } else {
+            $avatar = FALSE;
+        }
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('avatar', 'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
         );
     }
 
