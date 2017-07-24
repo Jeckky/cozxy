@@ -111,6 +111,9 @@ return [
         'inbound' => [
             'class' => 'backend\modules\inbound\Inbound',
         ],
+        'elastic-search' => [
+            'class' => 'app\modules\elasticsearch\ElasticSearch',
+        ],
     ],
     'components' => [
         'user' => [

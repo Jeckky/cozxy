@@ -90,7 +90,7 @@ $(window).resize(function() { descSet(); });
         </div>
         <div class="col-md-3">
             <div class="size48">&nbsp;</div>
-            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost')) ?>
+            <?= $this->render('@app/themes/cozxy/layouts/story/_panel_your_story', compact('StoryProductPost', 'productViews')) ?>
             <div class="sort-stories-cozxy">
                 <?php
                 //echo Yii::$app->controller->id;
