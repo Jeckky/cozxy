@@ -17,17 +17,20 @@ use yii\bootstrap\ActiveForm;
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/login', 'options' => ['class' => 'registr-form']]); ?>
                     <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                     <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
-                    <input type="submit" class="btn-yellow fullwidth" value="LOGIN">
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="checkbox">
                                 <label class="">
                                     <div class="icheckbox" style="position: relative;">
-                                        <input type="checkbox" name="User[acceptTerm]" id="agreePolicy" style="position: absolute; opacity: 0;">
+                                        <input type="checkbox" id="loginform-rememberme" name="User[acceptTerm]" value="1">
                                     </div> I have read and agree with the <a href="#" data-toggle="modal" data-target="#terms"> terms</a>
                                 </label>
                             </div>
                         </div>
+                    </div>
+                    <input type="submit" class="btn-yellow fullwidth" value="LOGIN">
+                    <div class="row">
                         <div class="col-sm-6 f-margin">
                             <a href="#" data-toggle="modal" data-target=".bs-forget-modal-lg"><u class="fc-black">Forget password?</u></a>
                         </div>
