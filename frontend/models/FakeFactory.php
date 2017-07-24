@@ -430,4 +430,65 @@ class FakeFactory extends Model {
         return $products;
     }
 
+    public static function productStoryViewsMore($n, $categoryId) {
+        $products = [];
+        if ($n == 99) {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null ")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
+        } else {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        }
+        foreach ($productPost as $value) {
+            if (isset($categoryId)) {
+                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' and categoryId=' . $categoryId)->all();
+            } else {
+                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' ')->all();
+            }
+
+            foreach ($productPostList as $items) {
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
+                //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+                $price_s = number_format($productPrice->price, 2);
+                $price = number_format($productPrice->price, 2);
+                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
+                $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
+                if ($rating_score == 0 && $rating_member == 0) {
+                    $results_rating = 0;
+                } else {
+                    $results_rating = $rating_score / $rating_member;
+                }
+
+                $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+                //echo $test[0];
+                //exit();
+                if ($controller[0] == '') {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
+                }
+
+                $products[$value->productId] = [
+                    'productId' => $value->productId,
+                    'productPostId' => $value->productPostId,
+                    'image' => $productImagesThumbnail1,
+                    //'url' => '/story?id = ' . $items->productSuppId,
+                    //'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    //'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    'brand' => isset($items->brand) ? $items->brand->title : '',
+                    'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
+                    'head' => $value->title,
+                    'price_s' => $price_s,
+                    'price' => $price,
+                    'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
+                    'star' => number_format($results_rating, 2),
+                ];
+            }
+        }
+
+        return $products;
+    }
+
 }

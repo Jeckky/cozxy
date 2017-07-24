@@ -113,7 +113,7 @@ if (Yii::$app->controller->id == 'product') {
         <div class="panel-body">
             <?php
             echo \yii\widgets\ListView::widget([
-                'dataProvider' => $this->params['recentStories'],
+                'dataProvider' => isset($productStory) ? $productStory : $this->params['recentStories'], //$this->params['recentStories'],
                 'options' => [
                     'tag' => false,
                 ],
@@ -130,7 +130,7 @@ if (Yii::$app->controller->id == 'product') {
             ?>
 
             <div class="col-sm-12 text-center" style="margin-top: 3px;">
-                <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
+                <a href="<?= Yii::$app->homeUrl ?>story/views-all/<?= isset($productStory) ? common\models\ModelMaster::encodeParams(['categoryId' => $categoryId]) : '' ?>" class="subs-btn size14-xs">View All</a>
             </div>
 
         </div>

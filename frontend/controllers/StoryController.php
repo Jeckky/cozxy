@@ -467,9 +467,13 @@ class StoryController extends MasterController {
         return json_encode($products['comparePriceChange']);
     }
 
-    public function actionViewsAll() {
+    public function actionViewsAll($hash = FALSE) {
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $categoryId = $params['categoryId'];
+
         //$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
-        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99), 'pagination' => ['defaultPageSize' => 16]]);
+        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         return $this->render('contentstory', compact('productStory'));
     }
 
