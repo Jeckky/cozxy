@@ -4,7 +4,7 @@
             <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
         </div>
         <div class="product-txt">
-            <p class="size14 fc-g666"><?= $model['brand'] ?></p>
+            <p class="size14 fc-g666 text-center">in <?= $model['brand'] ?></p>
             <h4 class="media-heading size14" style="margin:0px; height: 20px; margin-top: 3px;">
                 <a href="<?= $model['url'] ?>" class="fc-black"><?= substr($model['head'], 0, 40); ?></a>
             </h4>
