@@ -209,7 +209,12 @@ class SiteController extends MasterController {
     public function actionSignup() {
         //$model_verdifile = new \common\models\costfit\User(['scenario' => 'register']);
         $model = new SignupForm(['scenario' => 'register']);
-
+        $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->one();
+        } else {
+            $content = FALSE;
+        }
         if (isset($_POST["SignupForm"])) {
 
             if ($model->load(Yii::$app->request->post())) {
@@ -229,7 +234,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model,
+            'model' => $model, 'content' => $content
         ]);
     }
 

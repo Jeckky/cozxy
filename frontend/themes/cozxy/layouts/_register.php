@@ -44,13 +44,26 @@ use yii\bootstrap\ActiveForm;
                             <input type="number" name="SignupForm[mm]" min="1" max="12" placeholder="12" style="width: 26%">
                             <input type="number" name="SignupForm[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
                         </div>
-                        <div class="col-md-6"><input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT"></div>
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <label class="">
+                                    <div class="icheckbox" style="position: relative;">
+                                        <input type="checkbox" id="loginform-rememberme" name="User[acceptTerm]" value="1">
+                                    </div> I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT">
+                        </div>
                     </div>
-                    <?php ActiveForm::end(); ?>
+
                 </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="size64">&nbsp;</div>
 <div style="background:#ccc url(<?= Url::home() ?>imgs/c-diamond.png) center no-repeat; background-size: cover; padding: 64px 0 96px; margin-top: 48px;" class="text-center size48 size32-sm size24-xs b">HOW IT WORK</div>
@@ -77,3 +90,20 @@ use yii\bootstrap\ActiveForm;
     </div>
 </div>
 <div class="size48">&nbsp;</div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">I have read and agree with the terms</h4>
+            </div>
+            <div class="modal-body">
+                <?= $content['description'] ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Accept</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
