@@ -5,11 +5,11 @@
         </div>
         <div class="product-txt">
             <p class="size14 fc-g666 text-center">in <?= $model['brand'] ?></p>
-            <h4 class="media-heading size14" style="margin:0px; height: 20px; margin-top: 3px;">
+            <h4 class="media-heading size14" style="margin:0px; height: 25px; margin-top: 3px; word-break: break-all;">
                 <a href="<?= $model['url'] ?>" class="fc-black"><?= substr($model['head'], 0, 40); ?></a>
             </h4>
             <p class="size12" style="margin:0px;color:#989898; margin-top: 10px;">
-                (<a href="<?= $model['url'] ?>" style="color:#989898;word-break: break-all; font-weight: normal;"><?= $model['title'] ?></a>)
+                (<a href="<?= $model['url'] ?>" style="color:#989898;word-break: break-all; font-weight: normal; word-break: break-all;"><?= $model['title'] ?></a>)
             </p>
         </div>
         <div class="row text-center">
