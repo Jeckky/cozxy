@@ -58,11 +58,11 @@ if (isset($allshelf) && count($allshelf) > 0) {
         <?php if ($i == 0) { ?>
             <div id="wishListShelf-<?= $shelf->productShelfId ?>">
                 <div>
-                    <a style="cursor: pointer;" id="showCreateWishList">+ Create New Wish List Group</a>
-                    <a style="cursor: pointer;display: none;" id="hideCreateWishList" >- Create New Wish List Group</a>
+                    <a style="cursor: pointer;" id="showCreateWishList">+ Create my shelf</a>
+                    <a style="cursor: pointer;display: none;" id="hideCreateWishList" >- Create my shelf</a>
                     <div id="newWishList" style="display: none;">
 
-                        <h4>Name</h4>
+                        <h4>Shelf's Name</h4>
                         <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
                         <div class="text-right" style="">
                             <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
