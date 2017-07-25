@@ -119,6 +119,27 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
     <div class="container">
         <div class="row">
             <div class="col-md-9">
+                <h3 class="b text-center-sm text-center-xs">PROMOTION</h3>
+                <div class="row">
+                    <!--RECOMMENDED-->
+                    <?php
+                    echo \yii\widgets\ListView::widget([
+                        'dataProvider' => $promotions,
+                        'options' => [
+                            'tag' => false,
+                        ],
+                        'itemView' => function ($model, $key, $index, $widget) {
+                            return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
+                        },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                        //'layout'=>"{summary}{pager}{items}"
+                        'layout' => "{items}",
+                        'itemOptions' => [
+                            'tag' => false,
+                        ],
+                    ]);
+                    ?>
+                </div>
                 <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>
                 <div class="row">
                     <!--RECOMMENDED-->

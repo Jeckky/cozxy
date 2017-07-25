@@ -579,6 +579,29 @@ class ReceiveController extends MasterController
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
     }
 
+    //Tritech API
+    public function actionAlarmOpen()
+    {
+        $filePath = \Yii::$app->basePath . "/web" . "/tritech-alarm.html";
+        if (!file_exists($filePath)) {
+            $myfile = fopen($filePath, "w");
+        } else {
+            $myfile = fopen($filePath, "a");
+        }
+        $dateString = date("D M d, Y G:i", time());
+
+        fwrite($myfile, $dateString . "<br>");
+        foreach ($_POST as $index => $value) {
+            fwrite($myfile, $index . "=>" . $value . "<br>");
+        }
+        fwrite($myfile, "<br>");
+
+        fclose($myfile);
+
+//        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
+    }
+
+    //
     public function cctv($orderNo, $user)
     {
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7001", $orderNo, $user);
