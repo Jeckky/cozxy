@@ -67,7 +67,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'dd',
                                     'data' => $birthdate['dates'],
-                                    'options' => ['placeholder' => 'Select a day ...', 'required' => 'required'],
+                                    'options' => ['placeholder' => 'Select a day ...'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
@@ -83,7 +83,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'attribute' => 'mm',
                                     'data' => $birthdate['month'],
                                     //'options' => ['placeholder' => 'Select a month ...'],
-                                    'options' => ['placeholder' => 'Selecione a month', 'required' => 'required'],
+                                    'options' => ['placeholder' => 'Selecione a month'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
@@ -98,7 +98,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'yyyy',
                                     'data' => $birthdate['years'],
-                                    'options' => ['placeholder' => 'Select a year ...', 'required' => 'required'],
+                                    'options' => ['placeholder' => 'Select a year ...'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
