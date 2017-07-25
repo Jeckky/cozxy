@@ -445,9 +445,9 @@ class FakeFactory extends Model
         $products = [];
         $whereArray = [];
 
-        $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->all();
-        if (!isset($promotionConfig) && count($promotionConfig)) {
-            $newPs = ProductSuppliers::find()->where("approve = 'approve' AND result > 0")->orderBy("updateDateTime DESC")->limit(6);
+        $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->one();
+        if (!isset($promotionConfig)) {
+            $newPs = ProductSuppliers::find()->where("approve = 'approve' AND result > 0")->orderBy("updateDateTime DESC")->limit(6)->all();
             $promotionIds = "";
             foreach ($newPs as $i => $item) {
                 $promotionIds .=$item->productSuppId;
