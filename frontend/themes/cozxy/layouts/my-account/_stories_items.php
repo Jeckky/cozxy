@@ -111,7 +111,7 @@
         <div class="bottom">
             <div class="col-md-12" style="padding: 5px;">
                 <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>" style="padding: 3px 6px;">Edit Stories</a>
-                <a class="b btn-black btn-xs " href="#" style=" padding: 3px 6px;">Remove Stories</a>
+                <a class="b btn-black btn-xs " href="javascript:StoriesRemove(<?= $model['productPostId'] ?>)" style=" padding: 3px 6px;">Remove Stories</a>
             </div>
             <div class="col-md-12" style="padding: 5px;">
                 <a class="b btn-black btn-xs " href="<?= $model['url'] ?>" style=" padding: 3px 6px;">View Stories</a>

@@ -485,4 +485,8 @@ class StoryController extends MasterController {
         return $this->render('contentstory', compact('productStory'));
     }
 
+    public function actionToriesRemove() {
+        echo 'xxxx';
+    }
+
 }

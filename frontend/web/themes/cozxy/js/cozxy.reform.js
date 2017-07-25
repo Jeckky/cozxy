@@ -1376,3 +1376,23 @@ $('#loginform-accept-term').click(function () {
     $('#create-account').removeAttr('disabled');
     $('#create-account').val('CREATE ACCOUNT');
 });
+
+
+function StoriesRemove(id) {
+    var path = $baseUrl + "story/stories-remove/";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'id': id},
+        success: function (data, status) {
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+
+
+            } else {
+                alert('error');
+            }
+        }
+    });
+}
