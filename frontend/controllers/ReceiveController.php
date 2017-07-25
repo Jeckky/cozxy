@@ -572,6 +572,11 @@ class ReceiveController extends MasterController
         foreach ($_POST as $index => $value) {
             fwrite($myfile, $index . "=>" . $value . "<br>");
         }
+
+        $decode = Json::decode($_POST);
+        foreach ($decode as $key => $v) {
+            fwrite($myfile, $key . "=>" . $v . "<br>");
+        }
         fwrite($myfile, "<br>");
 
         fclose($myfile);
