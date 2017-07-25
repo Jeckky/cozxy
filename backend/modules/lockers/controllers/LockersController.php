@@ -839,7 +839,7 @@ class LockersController extends LockersMasterController
 
 //        throw new \yii\base\Exception(print_r($locker->attributes, true));
 
-        $num = array(3, 1, 2, 4);
+        $num = array(1, 2, 3);
 
         $response = \common\helpers\Locker::Open($locker, $num);
 
