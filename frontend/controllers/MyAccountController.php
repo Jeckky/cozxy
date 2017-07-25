@@ -381,9 +381,20 @@ class MyAccountController extends MasterController {
             $edit = '<i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;"></i>';
             $delete = '<i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;"></i>';
             $text .= '<div class="pull-right">'
-                    . '<a href="javascript:editShelf(' . $shelfId . ')" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
+                    . '<a href="javascript:editShelf(' . $shelfId . ',1)" id="showEditShelf' . $shelfId . '" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>'
+                    . '<a href="javascript:editShelf(' . $shelfId . ',0)" id="hideEditShelf' . $shelfId . '" style="display:none;cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
                     . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
                     . '</div>';
+            $text .= " <div id='editShelf" . $shelfId . "' style='display: none;' class='col-md-12'>
+
+            <h4>Shelf's Name</h4>
+            <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName" . $shelfId . "' style='margin-bottom: 10px;' value='" . $shelfType->title . "'>
+            <div class='text-right' style=''>
+                <input type='hidden' id='productSuppId' value='no'>
+                <a class='btn btn-black' id='cancel-newWishList" . $shelfId . "'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a class='btn btn-yellow'id='create-newWishList" . $shelfId . "' disabled>Update</a>
+            </div>
+        </div>";
         }
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
         if (isset($wishlists) && count($wishlists) > 0) {

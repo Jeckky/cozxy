@@ -275,6 +275,17 @@ function deleteShelf(shelfId) {
         return false;
     }
 }
+function editShelf(shelfId, flag) {
+    if (flag == 1) {
+        $('#editShelf' + shelfId).show('fade-in');
+        $('#hideEditShelf' + shelfId).show();
+        $('#showEditShelf' + shelfId).hide();
+    } else {
+        $('#editShelf' + shelfId).hide('fade-in');
+        $('#hideEditShelf' + shelfId).hide();
+        $('#showEditShelf' + shelfId).show();
+    }
+}
 $(document).on('click', '#showCreateWishList', function (e) {
     var newWishList = $(this).parent().find('#newWishList');
     var hideCreateWishList = $(this).parent().find('#hideCreateWishList');

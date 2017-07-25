@@ -44,14 +44,14 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     <div class="col-md-12">
         <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ Create my shelf</a>
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
-        <div id="newWishList" style="display: none;padding: 15px;margin-top: 70px;">
+        <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
             <h4>Shelf's Name</h4>
-            <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
-            <div class="text-right" style="">
+            <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
+            <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>
-                <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
-                <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
+                <a class='btn btn-black' id='cancel-newWishList'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a class='btn btn-yellow'id='create-newWishList' disabled>Create</a>
             </div>
         </div>
     </div>
