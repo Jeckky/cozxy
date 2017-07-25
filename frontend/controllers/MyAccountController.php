@@ -24,7 +24,8 @@ class MyAccountController extends MasterController {
         // $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList(12)]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
             'pagination' => ['defaultPageSize' => 50]]);
-        $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
+        $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', ''),
+            'pagination' => ['defaultPageSize' => 8]]);
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
         $this->createDefault(); //สร้าง  Defalut wishlist and default favorite stories
@@ -327,7 +328,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -381,10 +382,10 @@ class MyAccountController extends MasterController {
             $edit = '<i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;"></i>';
             $delete = '<i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;"></i>';
             $text .= '<div class="pull-right">'
-                    . '<a href="javascript:editShelf(' . $shelfId . ',1)" id="showEditShelf' . $shelfId . '" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>'
-                    . '<a href="javascript:editShelf(' . $shelfId . ',0)" id="hideEditShelf' . $shelfId . '" style="display:none;cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
-                    . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
-                    . '</div>';
+            . '<a href="javascript:editShelf(' . $shelfId . ',1)" id="showEditShelf' . $shelfId . '" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>'
+            . '<a href="javascript:editShelf(' . $shelfId . ',0)" id="hideEditShelf' . $shelfId . '" style="display:none;cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
+            . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
+            . '</div>';
             $text .= " <div id='editShelf" . $shelfId . "' style='display: none;' class='col-md-12'>
 
             <h4>Shelf's Name</h4>

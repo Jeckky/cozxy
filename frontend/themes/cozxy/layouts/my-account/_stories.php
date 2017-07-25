@@ -1,4 +1,5 @@
 <div class="sort-stories-cozxy">
+    <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="row">
         <div class="col-md-12 text-right sort-stories-cozxy">
             <!--<a href="javascript:sortStoriesCozxy(<?//= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
@@ -23,15 +24,23 @@
             'itemView' => function ($model, $key, $index, $widget) {
                 return $this->render('@app/themes/cozxy/layouts/my-account/_stories_items', ['model' => $model, 'index' => $index]);
             },
-            //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-            //'layout'=>"{summary}{pager}{items}"
-            'layout' => "{items}",
+            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+            'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+            //'layout' => "{items}",
             'itemOptions' => [
                 'tag' => false,
+            ], 'pager' => [
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageLabel' => 'previous',
+                'nextPageLabel' => 'next',
+            //'maxButtonCount  ' => 3,
             ],
         ]);
         ?>
     </div>
-
+    <?php
+    yii\widgets\Pjax::end();
+    ?>
     <div class="col-xs-12 size48">&nbsp;</div>
 </div>
