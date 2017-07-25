@@ -45,7 +45,7 @@ class ReceiveController extends MasterController
      */
     public function beforeAction($action)
     {
-        if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp") {
+        if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp" || $action->id == "update-open-status" || $action->id == "alarm-open") {
             $this->enableCsrfValidation = false;
         }
 
