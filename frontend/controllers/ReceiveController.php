@@ -570,12 +570,12 @@ class ReceiveController extends MasterController
 
         fwrite($myfile, $dateString . "<br>");
         foreach ($_POST as $index => $value) {
-            fwrite($myfile, $index . "=>" . $value . "<br>");
+            fwrite($myfile, $index . " value=>" . $value . "<br>");
         }
 
         $decode = Json::decode($_POST);
         foreach ($decode as $key => $v) {
-            fwrite($myfile, $key . "=>" . $v . "<br>");
+            fwrite($myfile, $key . " v=>" . $v . "<br>");
         }
         fwrite($myfile, "<br>");
 
