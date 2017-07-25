@@ -451,7 +451,7 @@ class FakeFactory extends Model
             $promotionIds = "";
             foreach ($newPs as $i => $item) {
                 $promotionIds .=$item->productSuppId;
-                if ($i < count($promotionIds) - 1) {
+                if ($i < count($newPs) - 1) {
                     $promotionIds .= ",";
                 }
             }
@@ -468,23 +468,19 @@ class FakeFactory extends Model
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
 
-            $whereArray["product_suppliers.approve"] = "approve";
-            $whereArray["pps.status"] = "1";
-
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('*')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->where($whereArray)
-            ->andWhere([">", "ps.result", 0])
+            ->andWhere(["in", "ps.productSuppId", $promotionIds])
             ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit($n)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-            . ' product_price_suppliers.price > 0')
+            ->where(" product_suppliers.productSuppId in ($promotionIds) ")
             ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit($n)->all();
         }
 

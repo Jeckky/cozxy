@@ -16,7 +16,7 @@ if (Yii::$app->controller->id == 'product') {
 <div class="col-md-<?= $col ?> col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true" style="<?= $width ?>; <?= $height ?>;">
+            <a href="<?= $model['url'] ?>" class="fc-black"><img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true" style="<?= $width ?>; <?= $height ?>;"></a>
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
@@ -29,17 +29,17 @@ if (Yii::$app->controller->id == 'product') {
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                    ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                    ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']                    ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                      ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                      ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']                      ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
-                        <!--<a href="" data-toggle="modal" data-target="#wishListGroup<?php // $model['productSuppId']        ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']        ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                        <!--<a href="" data-toggle="modal" data-target="#wishListGroup<?php // $model['productSuppId']          ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']          ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
                         <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);">
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>
-        <!--                        <a href="<?php // Yii::$app->homeUrl . 'my-account?act=2'  ?>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']  ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+        <!--                        <a href="<?php // Yii::$app->homeUrl . 'my-account?act=2'    ?>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']    ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
                         <?php
                     }
