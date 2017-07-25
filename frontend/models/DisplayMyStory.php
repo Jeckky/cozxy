@@ -225,7 +225,7 @@ class DisplayMyStory extends Model {
           /* ->where("productPostId=" . $productPostId)
           ->average('score'); */
 
-//throw new \yii\base\Exception(print_r($productPostRating, true));
+        //throw new \yii\base\Exception(print_r($productPostRating, true));
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
         $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
         $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
