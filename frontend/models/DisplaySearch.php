@@ -11,37 +11,35 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model
-{
+class DisplaySearch extends Model {
 
     public $score;
-    public static function productSearch($search_hd, $n, $cat = FALSE)
-    {
+
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
 
-        if (isset($search_hd)) {
+        if ($search_hd !== '') {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
-                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
+            //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
-                /*
             ->andFilterWhere(['OR',
-//                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
-//                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
                 ['LIKE', 'product_suppliers.title', trim($search_hd)],
                 ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', $search_hd],
-//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+            //                ['LIKE', 'product_suppliers.title', $search_hd],
+            //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
-                */
-                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
+
+//            ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
 //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-//            ->orderBy(new \yii\db\Expression('rand()'))
-                ->orderBy('score')
+            ->orderBy(new \yii\db\Expression('rand()'))
+//            ->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -97,8 +95,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -107,30 +104,23 @@ class DisplaySearch extends Model
 
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
             ->select('*')
-
-                ->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) as score')
-
+            //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
             ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result = 0 and product_price_suppliers.price = 0")
-                /*
             ->andFilterWhere(['OR',
-//                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
-//                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
                 ['LIKE', 'product_suppliers.title', trim($search_hd)],
                 ['LIKE', 'product_suppliers.description', trim($search_hd)],
-//                ['LIKE', 'product_suppliers.title', $search_hd],
-//                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+            //                ['LIKE', 'product_suppliers.title', $search_hd],
+            //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ])
-                */
 
-                ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("'.trim($search_hd).'*" in boolean mode) ')
-
+            // ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
             //->andWhere('group by product_suppliers.productSuppId ')
             ->groupBy(' product_suppliers.productSuppId ')
-//            ->orderBy(new \yii\db\Expression('rand()'))
-
-                ->orderBy('score')
-
+            ->orderBy(new \yii\db\Expression('rand()'))
+            //->orderBy('score')
             ->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
@@ -186,8 +176,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
-    {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
 
@@ -233,8 +222,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -326,16 +314,15 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
 
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
-            $whereArray["ps.approve"] = "approve";
-            $whereArray["pps.status"] = "1";
+            //$whereArray["ps.approve"] = "approve";
+            // $whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*,`brand`.title as brandName')
@@ -344,7 +331,10 @@ class DisplaySearch extends Model
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
-            ->andWhere(["=", "ps.result", 0])
+            //->andWhere(["=", "ps.result", 0])
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
             ->andWhere(["=", "pps.price", 0])
             //->orderBy(new \yii\db\Expression('rand()'))
             //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
@@ -355,8 +345,8 @@ class DisplaySearch extends Model
             $whereArray2 = [];
 
             $whereArray2["category_to_product.categoryId"] = $cat;
-            $whereArray2["ps.approve"] = "approve";
-            $whereArray2["pps.status"] = "1";
+            //$whereArray2["ps.approve"] = "approve";
+            //$whereArray2["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('*,`brand`.title as brandName')
@@ -365,8 +355,11 @@ class DisplaySearch extends Model
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
-            ->andWhere('ps.result > 0')
-            ->andWhere('pps.price > 0')
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
+            //->andWhere('ps.result > 0')
+            //->andWhere('pps.price > 0')
             ->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')
             ->orderBy(['pps.price' => SORT_ASC])
@@ -380,8 +373,8 @@ class DisplaySearch extends Model
               ->orderBy("product_price_suppliers.price ASC , " . new \yii\db\Expression('rand()'))->limit($n)->all(); */
             $whereArray = [];
             $whereArray["category_to_product.categoryId"] = $cat;
-            $whereArray["ps.approve"] = "approve";
-            $whereArray["pps.status"] = "1";
+            //$whereArray["ps.approve"] = "approve";
+            //$whereArray["pps.status"] = "1";
             //$whereArray["ps.result"] = "0";
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
             ->select('ps.*,pps.*,`brand`.title as brandName')
@@ -390,17 +383,19 @@ class DisplaySearch extends Model
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray)
-            ->andWhere(["=", "ps.result", 0])
-            ->andWhere(["=", "pps.price", 0])
+            //->andWhere(["=", "ps.result", 0])
+            //->andWhere(["=", "pps.price", 0])
             //->orderBy(new \yii\db\Expression('rand()'))
             //->orderBy(['pps.price' => SORT_DESC, 'rand()' => SORT_DESC])
+            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
             ->orderBy(['pps.price' => SORT_ASC])
             //->limit($n)
             ->all();
         }
 
         foreach ($pCanSale as $value) {
-
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
@@ -435,8 +430,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
-    {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -500,8 +494,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterBrand($cat = FALSE, $brand = FALSE)
-    {
+    public static function productFilterBrand($cat = FALSE, $brand = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -562,8 +555,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -585,8 +577,8 @@ class DisplaySearch extends Model
         ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
         ->where($whereArray2)
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
-        ->andWhere('pps.price > 0')
-        ->andWhere('ps.result > 0')
+        //->andWhere('pps.price > 0')
+        //->andWhere('ps.result > 0')
         //->andWhere(['between', 'pps.price', $mins, $maxs])
         ->groupBy('ps.productSuppId')
         ->orderBy(['pps.price' => SORT_ASC])
@@ -628,8 +620,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE)
-    {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE) {
         $products = [];
         $whereArray2 = [];
 

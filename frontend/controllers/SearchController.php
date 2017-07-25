@@ -27,24 +27,26 @@ class SearchController extends MasterController {
         ];
     }
 
-    public function actionIndex($hash = FALSE) {
-        $category = $_GET['c'];
-        $k = base64_decode(base64_decode($hash));
-        $params = \common\models\ModelMaster::decodeParams($hash);
-        //echo '<pre>';
-        //print_r($params);
-        $categoryId = $params['categoryId'];
+    public function actionIndex($title, $hash = FALSE) {
+        if (isset($_GET['c']) && !empty($_GET['c'])) {
+            $category = $_GET['c'];
+        } else {
+            $k = base64_decode(base64_decode($hash));
+            $params = \common\models\ModelMaster::decodeParams($hash);
+            $categoryId = $params['categoryId'];
+        }
+
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $productCanSell = new ArrayDataProvider(
         [
             'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 9],
+            'pagination' => ['defaultPageSize' => 15],
         ]);
 
         $productNotSell = new ArrayDataProvider(
         [
             'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 9],
+            'pagination' => ['defaultPageSize' => 15],
         ]);
         $productSupplierId = '';
 
@@ -54,26 +56,26 @@ class SearchController extends MasterController {
         ]);
 
 
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand'));
+        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title'));
     }
 
     public function actionCozxyProduct() {
         //$category = Yii::$app->request->post('search');
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
-        $category = Yii::$app->request->post('search');
+        $category = Yii::$app->request->get('search');
         $categoryId = NULL;
 
         $productCanSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearch($category, 18, FALSE),
-            'pagination' => ['defaultPageSize' => 9],
+            'allModels' => DisplaySearch::productSearch($category, 12, FALSE),
+            'pagination' => ['defaultPageSize' => 12],
         ]);
 
         $productNotSell = new ArrayDataProvider(
         [
-            'allModels' => DisplaySearch::productSearchNotSale($category, 18, FALSE),
-            'pagination' => ['defaultPageSize' => 9],
+            'allModels' => DisplaySearch::productSearchNotSale($category, 12, FALSE),
+            'pagination' => ['defaultPageSize' => 12],
         ]);
 
 
@@ -138,7 +140,7 @@ class SearchController extends MasterController {
         $FilterPrice = [];
         $productFilterPrice = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
-            'pagination' => ['defaultPageSize' => 12]
+            'pagination' => ['defaultPageSize' => 21]
         ]);
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
         return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);

@@ -102,7 +102,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     public function attributes() {
         return array_merge(parent::attributes(), [
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
-            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price', 'orderItemId', 'brandId', 'image', 'title', 'description'
+            , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price',
+            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId'
         ]);
     }
 
@@ -168,6 +169,16 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
         if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
+        } else {
+            return '';
+        }
+    }
+
+    public static function productImageSuppliersSmall($productId) {
+//throw new \yii\base\Exception($productSuppId);
+        $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
+        if (isset($image) && !empty($image)) {
+            return $image->imageThumbnail2;
         } else {
             return '';
         }

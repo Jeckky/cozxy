@@ -20,6 +20,7 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
         <?php
         $this->registerJs("
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -34,7 +35,7 @@ AppAsset::register($this);
     </head>
     <body>
         <?php $this->beginBody() ?>
-        <?= $this->render('_menu') ?> 
+        <?= $this->render('_menu') ?>
         <?= $content ?>
 
         <?= $this->render('_footer') ?>
@@ -44,4 +45,18 @@ AppAsset::register($this);
         <!--        defer></script>-->
     </body>
 </html>
+<?php
+$this->registerJs("
+<!-- Hotjar Tracking Code for www.cozxy.com -->
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:565530,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+
+", \yii\web\View::POS_END);
+?>
 <?php $this->endPage() ?>

@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -20,7 +20,11 @@ use Yii;
     * @property string $grandTotal
     * @property string $shippingRate
     * @property string $summary
+    * @property integer $userCoin
+    * @property integer $cozxyCoin
     * @property string $sendDate
+    * @property integer $addressId
+    * @property integer $isPayNow
     * @property string $billingFirstname
     * @property string $billingLastname
     * @property string $billingCompany
@@ -44,12 +48,12 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property string $couponId
+    * @property integer $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property string $color
+    * @property integer $color
     * @property integer $pickerId
     * @property string $password
     * @property string $otp
@@ -76,7 +80,7 @@ return 'order';
 public function rules()
 {
 return [
-            [['userId', 'pickingId', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'color', 'pickerId', 'status', 'error'], 'integer'],
+            [['userId', 'pickingId', 'userCoin', 'cozxyCoin', 'addressId', 'isPayNow', 'billingProvinceId', 'billingAmphurId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'couponId', 'checkStep', 'isSlowest', 'color', 'pickerId', 'status', 'error'], 'integer'],
             [['token', 'billingAddress', 'shippingAddress', 'note'], 'string'],
             [['totalExVat', 'vat', 'total', 'discount', 'grandTotal', 'shippingRate', 'summary'], 'number'],
             [['sendDate', 'paymentDateTime', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -109,7 +113,11 @@ return [
     'grandTotal' => Yii::t('order', 'Grand Total'),
     'shippingRate' => Yii::t('order', 'Shipping Rate'),
     'summary' => Yii::t('order', 'Summary'),
+    'userCoin' => Yii::t('order', 'User Coin'),
+    'cozxyCoin' => Yii::t('order', 'Cozxy Coin'),
     'sendDate' => Yii::t('order', 'Send Date'),
+    'addressId' => Yii::t('order', 'Address ID'),
+    'isPayNow' => Yii::t('order', 'Is Pay Now'),
     'billingFirstname' => Yii::t('order', 'Billing Firstname'),
     'billingLastname' => Yii::t('order', 'Billing Lastname'),
     'billingCompany' => Yii::t('order', 'Billing Company'),

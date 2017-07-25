@@ -6,10 +6,12 @@ use yii\helpers\Html;
 use common\models\costfit\User;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\Signature;
+use common\models\costfit\Po;
+use common\models\costfit\PoItem;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //throw new \yii\base\Exception(print_r($supplierId, true));
-$supplier = User::supplierDetail($storeProductGroup->supplierId);
+$supplier = User::supplierDetail($po->supplierId);
 ?>
 <br><br><br><br>
 <div style="width: 100%;font-size: 10px;">
@@ -22,8 +24,8 @@ $supplier = User::supplierDetail($storeProductGroup->supplierId);
     <div style="width: 45%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
          -moz-border-radius:10px;
          border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -90px;">
-        เลขที่ใบสั่งซื้อ / PO No : <?= $storeProductGroup->poNo ?><br>
-        วันที่ / Date : <b><?= $this->context->dateThai($storeProductGroup->createDateTime, 1) ?></b><br>
+        เลขที่ใบสั่งซื้อ / PO No : <?= $po->poNo ?><br>
+        วันที่ / Date : <b><?= $this->context->dateThai($po->createDateTime, 1) ?></b><br>
         <br>
         ระยะเวลาที่ชำระเงิน/ Credit Term : <b>30 วันนับจากวันวางบิล</b>
     </div>
@@ -84,7 +86,7 @@ $supplier = User::supplierDetail($storeProductGroup->supplierId);
 <tbody>
     <?php
     //throw new \yii\base\Exception(print_r($orders, true));
-    $items = \common\models\costfit\StoreProduct::allProductInPo($storeProductGroup->storeProductGroupId); //group Product
+    $items = Po::allProductInPo($po->poId); //group Product
     $allTotal = 0;
     $i = 1;
     $empty = 20;

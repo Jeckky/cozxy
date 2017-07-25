@@ -199,7 +199,9 @@ class CozxyUnity {
 
 
         // return the pdf output as per the destination setting
-        return $pdf->render();
+        //$pdf->AutoPrint(true);
+        $pdf->getApi()->SetJS('this.print();');
+        return $pdf->render('html');
     }
 
     public static function GetParams($hash, $title) {

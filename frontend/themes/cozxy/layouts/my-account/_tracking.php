@@ -4,14 +4,17 @@ if (count($trackingOrder->allModels) > 0) {
         ?>
         <div class="track-list tracking-order-<?= $value['orderId'] ?>">
             <div class="row tk-head">
-                <div class="col-lg-3 col-md-4 col-sm-6">Tracking code: <?= $value['invoiceNo'] ?></div>
-                <div class="col-lg-9 col-md-8 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    Status tracking code: <?= $value['invoiceNo'] ?>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-6">
                     <div class="col-lg-4 col-md-6"><?= $value['item'] ?> Item</div>
                     <div class="col-lg-8 col-md-6">Shipping to <?php echo $value['firstname'] . '&nbsp;' . $value['lastname']; ?></div>
                 </div>
             </div>
             <div class="row tk-body">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <br><br>
+                <div class="col-lg-12 col-md-12">
                     <table style="width: 100%" class="text-center">
                         <tr>
                             <td>

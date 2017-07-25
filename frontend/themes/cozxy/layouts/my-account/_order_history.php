@@ -3,28 +3,39 @@
 use yii\helpers\Html;
 ?>
 <div class="table-responsive order-list">
-
     <div class="col-sm-12">
         <div class="form-group">
             <label for="inputOrderHistory" class="col-sm-2 control-label" style="margin-top: 14px;">Show Order History :</label>
             <div class="col-sm-5">
-                <select name="OrderHistory" id="OrderHistory" class="form-control size14" style="padding:3px;"  onchange="SortOrder(this)">
+                <input type="text" name="searchOrderNo" id="searchOrderNo" class="form-control size14" style="padding:3px;" placeholder="SEARCH ORDER NO" value="" autocomplete="on">
+                <select name="OrderHistory" id="OrderHistory" class="form-control size14" style="padding:3px;"  >
                     <option value="">Select show order history</option>
                     <option value="show1">Last 10 orders</option>
-                    <option value="show2">15 วันที่ผ่านมา</option>
-                    <option value="show3">ระยะ 30 วันที่ผ่านมา</option>
-                    <option value="show4">ระยะ 6 เดือนที่ผ่านมา</option>
-                    <option value="show5">คำสั่งซื้อในปี 2017</option>
-                    <option value="show6">คำสั่งซื้อในปี 2016</option>
+                    <option value="show2">Last 15 days</option>
+                    <option value="show3">Last 30 days</option>
+                    <option value="show4">Last 6 months</option>
+                    <option value="show5">Orders placed in 2017</option>
+                    <option value="show6">Orders placed in 2016</option>
                 </select>
             </div>
         </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="inputOrderHistory" class="col-sm-2 control-label">&nbsp;</label>
+            </div>
+            <div class="col-sm-5" style="padding-left: 0px;">
+                &nbsp;&nbsp;<input type="submit" value="SUBMIT" class="subs-btn size14-xs" onclick="SortOrder()">
+            </div>
+        </div>
+
     </div>
+
     <br><br><br>
-    <div>
+    <div style="border-bottom: 1px #000000 solid;" class="col-sm-12">
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
+    <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">
@@ -35,12 +46,8 @@ use yii\helpers\Html;
                     <th></th>
                 </tr>
             </thead>
-            <tbody class="size16 size14-xs">
+            <tbody class="size16 size14-xs" id="order-history">
                 <?php
-                yii\widgets\Pjax::begin([
-                    'enablePushState' => false, // to disable push state
-                    'enableReplaceState' => false // to disable replace state
-                ]);
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $orderHistory,
                     'options' => [
@@ -62,10 +69,13 @@ use yii\helpers\Html;
                     //'maxButtonCount  ' => 3,
                     ],
                 ]);
-                yii\widgets\Pjax::end();
                 ?>
             </tbody>
         </table>
+
     </div>
+    <?php
+    yii\widgets\Pjax::end();
+    ?>
 
 </div>

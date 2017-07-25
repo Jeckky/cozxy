@@ -163,7 +163,7 @@ $(document).on('click', '#confirm-topup', function (e) {
  * @param {type} id
  * @returns {undefined}
  */
-function addItemToWishlist(id) {
+function addItemToWishlist(id, shelfId) {
     var $pId = id;
     var str = window.location.pathname;
     var res = str.split("/");
@@ -174,29 +174,182 @@ function addItemToWishlist(id) {
         type: "POST",
         dataType: "JSON",
         url: $baseUrl + "cart/add-wishlist",
-        data: {productId: $pId},
+        data: {productId: $pId, shelfId: shelfId},
         success: function (data)
         {
             if (data.status) {
                 //$('.wishlist-message').addClass('visible');
                 var $this = $('#addItemToWishlist-' + $pId);
-                if (res[1] != 'search') {
-                    $this.button('loading');
-                    setTimeout(function () {
-                        $this.button('reset');
-                    }, 8000);
-                } else {
-                    $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
-                    $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
-                }
+                /*if (res[1] != 'search') {
+                 alert('133334');
+                 $this.button('loading');
+                 setTimeout(function () {
+                 $this.button('reset');
+                 }, 8000);
+                 } else {*/
+                // alert('13333');
+                $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
+                $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
+                $('#heart-o' + $pId + shelfId).hide();
+                $('#heartbeat' + $pId + shelfId).show();
+                //}
                 //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
-            } else {
-                alert(data.message);
+            } else {//ลบ
+                if (data.heartbeat == 0) {
+                    $('.heart-' + $pId + ' i').removeClass('fa fa-heartbeat');
+                    $('.heart-' + $pId + ' i').addClass('fa fa-heart-o');
+                }
+                $('#heart-o' + $pId + shelfId).show();
+                $('#heartbeat' + $pId + shelfId).hide();
             }
         }
     });
 }
+function addItemToDefaultWishlist(id) {
+    var $pId = id;
+    var str = window.location.pathname;
+    var res = str.split("/");
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "cart/add-default-wishlist",
+        data: {productId: $pId},
+        success: function (data)
+        {
+            if (data.status) {
+                window.location = $baseUrl + "my-account?act=2";
+            }
+        }
+    });
+}
+/*
+ *  modal add Wish List Group
+ * By sak
+ */
+function showWishlistGroup(shelfId, type) {
+    if (type == 1) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/show-wishlist-group",
+            data: {shelfId: shelfId},
+            success: function (data)
+            {
+                $('#showGroup-' + shelfId).hide();
+                $('#hideGroup-' + shelfId).show();
+                $('#wishListShelf-' + shelfId).html(data.text);
+                $('#wishListShelf-' + shelfId).hide();
+                $('#wishListShelf-' + shelfId).show('fade-in');
+                if (data.idHide) {
+                    var i;
+                    for (i = 0; i < data.idHide.length; i++) {
+                        $('#showGroup-' + data.idHide[i]).show();
+                        $('#hideGroup-' + data.idHide[i]).hide();
+                        $('#wishListShelf-' + data.idHide[i]).hide('slow');
+                    }
+                }
+            }
+        });
+    } else {
 
+        $('#hideGroup-' + shelfId).hide();
+        $('#wishListShelf-' + shelfId).hide('slow');
+        $('#showGroup-' + shelfId).show();
+    }
+
+}
+function deleteShelf(shelfId) {
+
+    if (confirm('Are you sure to delete?')) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/delete-shelf",
+            data: {shelfId: shelfId},
+            success: function (data)
+            {
+                $('#allShelf2').html(data.text);
+            }
+        });
+    } else {
+        return false;
+    }
+}
+function editShelf(shelfId, flag) {
+    if (flag == 1) {
+        $('#editShelf' + shelfId).show('fade-in');
+        $('#hideEditShelf' + shelfId).show();
+        $('#showEditShelf' + shelfId).hide();
+    } else {
+        $('#editShelf' + shelfId).hide('fade-in');
+        $('#hideEditShelf' + shelfId).hide();
+        $('#showEditShelf' + shelfId).show();
+    }
+}
+$(document).on('click', '#showCreateWishList', function (e) {
+    var newWishList = $(this).parent().find('#newWishList');
+    var hideCreateWishList = $(this).parent().find('#hideCreateWishList');
+    hideCreateWishList.show();
+    $(this).hide();
+    newWishList.show('fade-in');
+});
+$(document).on('click', '#cancel-newWishList', function (e) {
+    var newWishList = $(this).parent().parent().parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
+    var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
+    showCreateWishList.show();
+    hideCreateWishList.hide();
+    newWishList.hide('fade-in');
+});
+$(document).on('click', '#hideCreateWishList', function (e) {
+    var newWishList = $(this).parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().find('#showCreateWishList');
+    showCreateWishList.show();
+    $(this).hide();
+    newWishList.hide('fade-in');
+});
+$(document).on('keyup', '#wishListName', function (e) {
+    var createNew = $(this).parent().find('#create-newWishList');
+    if ($(this).val() != '') {
+        createNew.removeAttr('disabled');
+    } else {
+        createNew.attr('disabled', 'disabled');
+    }
+});
+$(document).on('click', '#create-newWishList', function (e) {
+    var title = $(this).parent().parent().find('#wishListName').val();
+    var allGroup = $(this).parent().parent().parent().find('#allGroup');
+    var newWishList = $(this).parent().parent().parent().find('#newWishList');
+    var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
+    var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
+    var productSuppId = $(this).parent().find('#productSuppId').val();
+    var allShelf2 = $(this).parent().parent().parent().parent().parent().find('#allShelf2');
+    //alert(allShelf2.text);
+    if (title != '') {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "shelf/create/",
+            data: {'title': title, 'productSuppId': productSuppId},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#wishListName').val('');
+                    showCreateWishList.show();
+                    hideCreateWishList.hide();
+                    newWishList.hide('fade-in');
+                    allGroup.html(data.text);
+                    allShelf2.html(data.text);
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    }
+});
+$(document).on('click', '#closeWishlistModal', function (e) {
+    // window.location = $baseUrl;
+});
 /*
  * Use : product show all
  * @param {type} id
@@ -222,7 +375,6 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var $puls = $('#cart-plus-' + $productSuppId);
     var str = window.location.pathname;
     var res = str.split("/");
-
     if (res[1] != 'search') {
         $this.button('loading');
         setTimeout(function () {
@@ -540,7 +692,6 @@ $(".upload-payment-slip").click(function () {
     //alert($(this).data('id'));
 
 });
-
 function ShowImages(img, productImageId) {
     var src = img.src;
     $('.images-big').html("<div class='text-center' style='zoom:2; height: 185px;'><br><br><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
@@ -565,20 +716,16 @@ $(document).on('click', '#default-coin', function (e) {
     var systemCoin2 = $(this).parent().find("#systemCoin2");
     var system = $(this).parent().find("#system");
     var textPay = $(this).parent().find("#text-pay");
-
     systemCoin.val(choose.val());
     system.val(choose.val());
     systemCoin2.val(choose.val());
     textPay.html(choose.val());
-
 });
-
 $(document).on('click', '#chooseCoin', function () {
     var choose = $(this).parent().find("#inputSystemCoin");
     choose.removeAttr("disabled");
     //$("#inputSystemCoin").hide();
 });
-
 $(document).on('click', '#allCoin', function () {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     choose.attr("disabled", "disabled");
@@ -593,7 +740,6 @@ $(document).on('click', '#allCoin', function () {
     systemCoin2.val(allCoin.val());
     textPay.html(allCoin.val());
 });
-
 $(document).on('keypress', '#inputSystemCoin', function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
     if (code > 57) {
@@ -602,7 +748,6 @@ $(document).on('keypress', '#inputSystemCoin', function (e) {
         return false;
     }
 });
-
 $(document).on('click', '#confirm-payCoin', function (e) {
     var choose = $(this).parent().parent().parent().find("#inputSystemCoin");
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
@@ -632,12 +777,10 @@ $(document).on('click', '#confirm-payCoin', function (e) {
             {
             }
         });
-
     }
 
 
 });
-
 $(document).on('click', '#cancel-payCoin', function (e) {
     var systemCoin = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#systemCoin");
     var textPay = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().find("#text-pay");
@@ -657,9 +800,7 @@ $(document).on('click', '#cancel-payCoin', function (e) {
         {
         }
     });
-
 });
-
 $('#isPay').change(function () {
     var orderId = $(this).parent().find("#orderId").val();
     if ($(this).is(':checked')) {
@@ -676,6 +817,8 @@ $('#isPay').change(function () {
         });
     }
 });
+
+
 //////////////////////////////    RETURN  ///////////////////////////////////////
 $(document).on('click', '#sendTicket', function () {
     var invoice = $(this).parent().parent().find("#invoiceNo").val();
@@ -724,6 +867,37 @@ $(document).on('keyup', '#message', function (e) {
         });
     }
 });
+function checkReturnQuantity(orderItemId) {
+    $(document).on('keypress', '#quantity-' + orderItemId, function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code > 57) {
+            return false;
+        } else if (code < 48 && code != 8) {
+            return false;
+        }
+    });
+    var returnQuantity = $('#quantity-' + orderItemId).val();
+    if (returnQuantity > 0) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: $baseUrl + 'return/check-quantity-return',
+            data: {orderItemId: orderItemId},
+            success: function (data) {
+                if (data.status) {
+                    if (data.canReturn < returnQuantity) {
+                        alert('No more than ' + data.canReturn);
+                        $('#quantity-' + orderItemId).val(data.canReturn);
+                    }
+                }
+            }
+        });
+    } else if (returnQuantity != '') {
+        alert('Can not be 0');
+        $('#quantity-' + orderItemId).val(1);
+    }
+
+}
 /*
  $.growl({title: "Growl", message: "The kitten is awake!"});
  $.growl.error({message: "The kitten is attacking!"});
@@ -743,7 +917,6 @@ function filterPriceCozxy() {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     //$min = $('input:hidden:eq(0)', '#amount-min').val();
     //$max = $('input:hidden:eq(1)', '#amount-min').val();
     //$categoryId = $('input:hidden:eq(2)', '#amount-min').val();
@@ -767,7 +940,6 @@ function filterPriceCozxy() {
                 if (status == "success") {
 
                     $('.brand-price-filter').html(data);
-
                 } else {
                     alert('error');
                 }
@@ -786,7 +958,6 @@ function filterBrandCozxy($categoryId) {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
@@ -818,7 +989,6 @@ function sortCozxy($categoryId, status) {
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
-
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
@@ -861,7 +1031,7 @@ function sortCozxy($categoryId, status) {
     });
 }
 
-function SortOrder(selectObject) {
+function SortOrder1(selectObject) {
     var value = selectObject.value;
     if (OrderHistory != '') {
         $.ajax({
@@ -885,4 +1055,338 @@ function SortOrder(selectObject) {
     }
 }
 
+function SortOrder() {
+    var selectObject = $('#OrderHistory').val();
+    var selectSearch = $('#searchOrderNo').val();
+    //var value = selectObject.value;
+
+    //console.log(selectObject + ' : ' + selectSearch);
+
+    if (OrderHistory != '') {
+        $.ajax({
+            type: "POST",
+            url: $baseUrl + "my-account/order-sort/",
+            data: {'status': selectObject, 'selectSearch': selectSearch},
+            success: function (data, status) {
+
+                if (data == '') {
+                    $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                } else {
+                    if (status == "success") {
+                        $('.order-list').html(data);
+                    } else {
+                        $('.order-list').html('<center><br><br><br><br><br><br>No results found.</center>');
+                    }
+                }
+
+            }
+        });
+    }
+}
+
+function sortStoriesCozxy($userId, status, type) {
+
+    if (status == 'price') {
+        $sortStories = $('input:hidden:eq(0)', '.sort-stories-cozxy').val();
+    } else if (status == 'view') {
+        $sortStories = $('input:hidden:eq(1)', '.sort-stories-cozxy').val();
+    } else if (status == 'stars') {
+        $sortStories = $('input:hidden:eq(2)', '.sort-stories-cozxy').val();
+    } else if (status == 'new') {
+        $sortStories = $('input:hidden:eq(3)', '.sort-stories-cozxy').val();
+    }
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/sort-stories?userId=" + $userId,
+        data: {'status': status, 'sort': $sortStories, 'type': type},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.sort-stories-cozxy').html(data);
+                } else {
+                    $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+}
+
+
+function sortStoriesCompare(type, status, productPostId, productId) {
+    var $currencyType = type.value;
+    var $status = status;
+    var $postId = productPostId;
+    if ($status === 'price') {
+        var $sortStories = $("#sortStoriesPrice").val();
+        //var $sortStories = $('input:hidden:eq(1)', '.sort-stories-compare').val();
+    } else {
+        var $sortStories = '';
+        $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
+    }
+    var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "story/sort-compare-stories/",
+        //dataType: "JSON",
+        data: {'currency': CurrencyId, 'status': $status, 'postId': $postId, 'sort': $sortStories, 'productId': productId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.compare-price-ajax').html(data);
+                } else {
+                    $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+        }
+    });
+}
+
+function sortStoriesRecent($userId, status, type) {
+
+    if (status == 'view') {
+        $sortStories = $("#sortStoriesView").val();
+    } else if (status == 'stars') {
+        $sortStories = $("#sortStoriesStars").val();
+    }
+
+    var productId = $("#productId").val();
+    var productSupplierId = $("#productSupplierId").val();
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/sort-stories-recent?userId=" + $userId,
+        data: {'status': status, 'sort': $sortStories, 'type': type, 'productId': productId, 'productSupplierId': productSupplierId},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.sort-stories-cozxy').html(data);
+                } else {
+                    $('.sort-stories-cozxy').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+}
+
+$(".bs-example-modal-lg-x").click(function () {
+    var postId = $(this).attr("data-id")
+    var path = $baseUrl + "story/compare-price-story-modified/";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'postId': postId, },
+        success: function (data, status) {
+            if (status == "success") {
+                var JSONObject = JSON.parse(data);
+                $('#productpost-shopname').val(JSONObject.shopName);
+                $('#productpost-price').val(JSONObject.price);
+                $('#productpost-country').val(JSONObject.country).trigger('change');
+                $('#productpost-currency').val(JSONObject.currency).trigger('change');
+                $('#productpost-productPostId').html('<input type="hidden" name="productPostId" id="productPostId" value="' + JSONObject.productPostId + '">');
+                console.log(JSONObject.country);
+                console.log(JSONObject.currency);
+                $(".bs-example-modal-lg").modal("show");
+            } else {
+                alert('error');
+            }
+        }
+    });
+});
+function CozxyComparePriceModernBest(id, type, dataIndex) {
+
+    var postId = id;
+    if (postId == 0) {
+        $('#productpost-shopname').val('');
+        $('#productpost-price').val('');
+        $('#productpost-country').val('');
+        $('#productpost-currency').val('');
+        $('#latitude').val('');
+        $('#longitude').val('');
+        $('#productpost-productPostId').html('<input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '"> ');
+        $(".bs-example-modal-lg").modal("show");
+    } else {
+        var path = $baseUrl + "story/compare-price-story-modified/";
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'postId': postId, 'type': type},
+            success: function (data, status) {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
+                    $('#productpost-shopname').val(JSONObject.shopName);
+                    $('#productpost-price').val(JSONObject.price);
+                    $('#productpost-country').val(JSONObject.country);
+                    $('#productpost-currency').val(JSONObject.currency);
+                    $('#latitude').val(JSONObject.latitude);
+                    $('#longitude').val(JSONObject.longitude);
+                    $('#productpost-productPostId').html('<input type="hidden" name="dataIndex" id="dataIndex" value="' + dataIndex + '"><input type="hidden" name="statusPrice" id="statusPrice" value="' + type + '">  <input type="hidden" name="comparePriceId" id="comparePriceId" value="' + JSONObject.comparePriceId + '">');
+                    //console.log(JSONObject.country);
+                    //console.log(JSONObject.currency);
+                    $(".bs-example-modal-lg").modal("show");
+                } else {
+                    alert('error');
+                }
+            }
+        });
+    }
+}
+
+function ComparePriceStory() {
+    var $form = $("#default-add-new-compare-price-story"),
+            data = $form.data("yiiActiveForm");
+    $.each(data.attributes, function () {
+        this.status = 3;
+    });
+    $form.yiiActiveForm("validate");
+    var $this = $('#acheckoutNewBillingz');
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
+    var productPostId = $('#productPostId').val();
+    var shopName = $('#productpost-shopname').val();
+    var price = $('#productpost-price').val();
+    var country = $('#productpost-country').val();
+    var currency = $('#productpost-currency').val();
+    var statusPrice = $('#statusPrice').val();
+    var productId = $('#productId').val();
+    var comparePriceId = $('#comparePriceId').val();
+
+    var latitude = $('#latitude').val();
+    var longitude = $('#longitude').val();
+
+    var dataIndex = $('#dataIndex').val();
+    //var tRow = document.getElementById("compare-price-").getElementsByTagName("tr");
+    //alert(productPostId);
+    //alert(idTds);
+
+
+    var path = $baseUrl + "story/compare-price-story/";
+    $data = '';
+    if (statusPrice == 'add') {
+        // alert('status : add new price');
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
+                'country': country, 'currency': currency,
+                'statusPrice': statusPrice, 'productId': productId,
+                'latitude': latitude, 'longitude': longitude
+            },
+            success: function (data, status) {
+                // console.log(data.price);
+                var JSONObject = JSON.parse(data);
+                if (status == "success") {
+                    var table = document.getElementById("table-compare-price-cozxy");
+                    var row = table.insertRow(-1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var rowCount = table.rows.length;
+
+                    cell1.innerHTML = rowCount - 1;
+                    cell2.innerHTML = JSONObject.country;
+                    cell3.innerHTML = JSONObject.shopName
+                    cell4.innerHTML = JSONObject.price;
+                    cell5.innerHTML = JSONObject.LocalPrice + '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    $('#compare-price-' + productPostId).append($data);
+                    $(".bs-example-modal-lg").modal("hide");
+
+                } else {
+                    alert('error');
+                }
+            }
+        });
+    } else {
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
+                'country': country, 'currency': currency, 'statusPrice': statusPrice,
+                'comparePriceId': comparePriceId, 'latitude': latitude, 'longitude': longitude
+            },
+            success: function (data, status) {
+                // console.log(data.price);
+                var JSONObject = JSON.parse(data);
+                if (status == "success") {
+                    //$data += "<tr id='compare-price-" + JSONObject.comparePriceId + "'>";
+                    $data += "<td>" + dataIndex + "</td>";
+                    $data += "<td>" + JSONObject.country + "</td>";
+                    $data += " <td>" + JSONObject.shopName + "</td>";
+                    $data += "<td>" + JSONObject.price + "</td>";
+                    $data += "<td>";
+                    $data += "" + JSONObject.LocalPrice + "<code>";
+                    $data += '<a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    $data += "&nbsp;Edit Price</a></code></td>";
+                    //$data += "</tr>";
+                    $('#compare-price-' + JSONObject.comparePriceId).html($data);
+                    $(".bs-example-modal-lg").modal("hide");
+                } else {
+                    alert('error');
+                }
+            }
+        });
+    }
+
+}
+
+
+
+counter = function () {
+
+    var $textarea = $('#productpost-shortdescription').val();
+
+    if ($textarea.length == 0) {
+        $('#wordCount').html(0);
+        $('#totalChars').html(0);
+        $('#charCount').html(0);
+        $('#charCountNoSpace').html(0);
+        return;
+    }
+    console.log($textarea.length);
+    var regex = /\s+/gi;
+    var wordCount = $textarea.trim().replace(regex, ' ').split(' ').length;
+    var totalChars = $textarea.length;
+    var charCount = $textarea.trim().length;
+    var charCountNoSpace = $textarea.replace(regex, '').length;
+
+    $('#wordCount').html(wordCount);
+    $('#totalChars').html(totalChars);
+    $('#charCount').html(charCount);
+    $('#charCountNoSpace').html(charCountNoSpace);
+    var max = 10;
+    if (totalChars > max) {
+        //var top = $textarea.scrollTop();
+        //$textarea.val($textarea.val().substr(0, max));
+        //$textarea.scrollTop(top);
+        //alert(totalChars);
+    }
+};
+
+$(document).ready(function () {
+    //$('#count').click(counter);
+    $('#productpost-shortdescription').change(counter);
+    $('#productpost-shortdescription').keydown(counter);
+    $('#productpost-shortdescription').keypress(counter);
+    $('#productpost-shortdescription').keyup(counter);
+    $('#productpost-shortdescription').blur(counter);
+    $('#productpost-shortdescription').focus(counter);
+});
 

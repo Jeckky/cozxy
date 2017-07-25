@@ -83,6 +83,7 @@ return [
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
                 'story/write-story' => 'story/write-story',
                 'story/rating-post' => 'story/rating-post',
+                'story/views-all' => 'story/views-all',
                 'story/view-post' => 'story/view-post',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
                 'story/see-more/<hash>' => 'story/see-more/',
@@ -91,6 +92,7 @@ return [
                 'search/<title>/<hash>' => 'search/index',
                 'content/<hash>' => 'content/index',
                 'story/update-stories/<hash>' => 'story/update-stories/',
+                'my-account/detail-tracking/<hash>/<title>' => 'my-account/detail-tracking',
             ],
         ],
         /**

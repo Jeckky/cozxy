@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -52,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ?>
         </div>
         <div class="panel-body">
+            <?php Pjax::begin(); ?>
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -64,19 +66,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 },
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     //'ledId',
                     [
                         'attribute' => 'qr',
                         'format' => 'html',
                         'value' => function($model) {
-                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->code, ['style' => 'width:150px']);
+                            return Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $model->slot, ['style' => 'width:150px']);
                         }
                     ],
                     'code',
                     'ip',
                     'slot',
-                    [
+                        [
                         'attribute' => 'status',
                         'value' => function($model) {
                             return ($model->status == 1) ? "ใช้งาน" : "ไม่ใช้งาน";
@@ -116,6 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
             ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 </div>

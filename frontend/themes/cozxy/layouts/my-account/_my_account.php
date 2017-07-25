@@ -25,8 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <ul class="nav nav-pills size18 size14-xs b" role="tablist">
                 <li role="presentation" <?= isset($_GET['act']) ? '' : 'class="active"'; ?>><a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Account Detail</a></li>
                 <li role="presentation"><a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">Order History</a></li>
-                <li role="presentation" <?= isset($_GET['act']) ? 'class="active"' : ''; ?>><a href="#wish-list" aria-controls="wish-list" role="tab" data-toggle="tab">Wish List</a></li>
-                <li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>
+                <?php
+                if (isset($returnList) && count($returnList) > 0) {
+                    ?>
+                    <li role="presentation"><a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a></li>
+                <?php } ?>
+                <li role="presentation" <?= isset($_GET['act']) ? 'class="active"' : ''; ?>><a href="#wish-list" aria-controls="wish-list" role="tab" data-toggle="tab">My Shelves</a></li>
+                <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
                 <li role="presentation"><a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a></li>
             </ul>
             <div class="size18 size14-xs">&nbsp;</div>
@@ -39,12 +44,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div role="tabpanel" class="tab-pane fade in" id="order-history">
                     <?= $this->render('_order_history', compact('orderHistory')) ?>
                 </div>
+                <div role="tabpanel" class="tab-pane fade in" id="return-list">
+                    <?= $this->render('_return_list', compact('returnList')) ?>
+                </div>
                 <div role="tabpanel" class="tab-pane fade in <?= isset($_GET['act']) ? 'active' : ''; ?>" id="wish-list">
-                    <?= $this->render('_wish_list', compact('wishList')) ?>
+                    <?= $this->render('_wish_list', compact('')) ?>
                 </div>
-                <div role="tabpanel" class="tab-pane fade in" id="tracking">
-                    <?= $this->render('_tracking', compact('trackingOrder')) ?>
-                </div>
+                <!--<div role="tabpanel" class="tab-pane fade in" id="tracking">
+                    <?//= $this->render('_tracking', compact('trackingOrder')) ?>
+                </div>-->
                 <div role="tabpanel" class="tab-pane fade in" id="stories">
                     <?= $this->render('_stories', compact('productPost')) ?>
                 </div>

@@ -63,6 +63,9 @@ class ProductPostController extends ProductPostMasterController {
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
+            $model->title = $_POST["ProductPost"]['title'];
+            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            $model->description = $_POST["ProductPost"]['description'];
             $model->productSelfId = 0;
             $model->userId = 0;
             $model->createDateTime = new \yii\db\Expression('NOW()');
@@ -93,11 +96,15 @@ class ProductPostController extends ProductPostMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+
         $modelImage = $this->findModel($id);
         $folderName = "story"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
+            $model->title = $_POST["ProductPost"]['title'];
+            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            $model->description = $_POST["ProductPost"]['description'];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductPost[image]");
 
@@ -110,9 +117,7 @@ class ProductPostController extends ProductPostMasterController {
                 //echo 'No';
                 $model->image = $modelImage->image;
             }
-
-
-            if ($model->save()) {
+            if ($model->save(FALSE)) {
 
                 return $this->redirect(['index']);
             }

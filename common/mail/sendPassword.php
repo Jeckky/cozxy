@@ -58,11 +58,12 @@
                         <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8sxxx"  width="100%" height="260" text-align="center" style=" height:260px; width:100% ;  text-align: center;  ">
                             <tr>
                                 <td>
-                                    <p style="color: #ff9016; font-size: 20px;"><strong>รหัสผ่านสำหรับรับสินค้า COZXY.COM</strong></p>
-
+                                    <p style="color: #ff9016; font-size: 20px;"><strong>Congratulation! Your order from COZXY.COM has arrived your locker at</strong></p>
+                                    <p style="color: #CE3C2D; font-size: 16px;"><b>"<?= $location ?>"</b></p>
+                                    <p style="color: #ff9016; font-size: 20px;"><strong>Please enter the following code at the locker :</strong></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b><?= $password ?></b></p>
-                                    <p style="color: #CE3C2D; font-size: 16px;"><b>กรุณาไปรับสินค้าได้แล้วที่ "<?= $location ?>"</b></p>
-                                    <p style="color: #ff9016; font-size: 16px;">อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ</p>
+                                    <p style="color: #CE3C2D; font-size: 16px;"><b>You will recieve another one-time passcode at the locker to verify your indentity</b></p>
+                                    <p style="color: #CE3C2D; font-size: 16px;"><b>Please have your phone with you to opon locker box.</b></p>
                                 </td>
                             </tr>
                         </table>

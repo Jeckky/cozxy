@@ -89,7 +89,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right" style="font-weight: bold">Summary</td>
+                                <td colspan="5" class="text-right" style="font-weight: bold">Summary</td>
                                 <td style="color: red;font-weight: bold"><?= number_format($model->summary, 2) ?></td>
                             </tr>
                         </tfoot>

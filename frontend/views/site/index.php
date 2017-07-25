@@ -34,14 +34,14 @@ $this->registerCss('
 }
 ');
 
+
 $this->registerJs('
 $(function() {
 	$("#logoParade").smoothDivScroll({
 		manualContinuousScrolling: true
 	});
 });
-');
-
+', yii\web\View::POS_END);
 $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
 ?>
 
@@ -188,6 +188,11 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                     ]);
                     ?>
                 </div>
+
+                <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                    <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
+                </div>
+                <br><br>
             </div>
 
 

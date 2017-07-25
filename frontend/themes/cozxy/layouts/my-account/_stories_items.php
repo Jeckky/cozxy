@@ -99,9 +99,9 @@
         </div>
         <div class="info">
             <div class="title" style="height:40px;">
-                <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['title'] ?></a>
+                <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['head'] ?></a>
             </div>
-            <div class="desc" style="height:40px;"><?= $model['head'] ?></div>
+            <div class="desc" style="height:40px;"><?= $model['title'] ?></div>
             <div class="desc">
                 <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model['views'] ?></span>&nbsp;
                 <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model['star'] ?></span>
@@ -109,8 +109,9 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>">Edit</a>
-            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>">View</a>
+            <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>" style="padding: 3px 6px;">Edit Stories</a>
+            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>" style=" padding: 3px 6px;">View Stories</a>
+            <a class="b btn-black btn-xs " href="<?= $model['urlProduct'] ?>" style=" padding: 3px 6px;">View Product</a>
         </div>
     </div>
 </div>

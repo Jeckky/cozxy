@@ -13,12 +13,12 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\helpers\PickingPoint;
+use common\models\costfit\Wishlist;
+use common\models\costfit\ProductShelf;
 
-class CartController extends MasterController
-{
+class CartController extends MasterController {
 
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == 'add-coupon' || $action->id == 'change-quantity-item-and-save' || $action->id == 'add-to-cart') {
             $this->enableCsrfValidation = false;
         }
@@ -31,8 +31,7 @@ class CartController extends MasterController
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         // \frontend\assets\CartAsset::register($this);
         /* if (Yii::$app->user->isGuest) {
           return $this->redirect(Yii::$app->homeUrl . 'site/login');
@@ -64,8 +63,7 @@ class CartController extends MasterController
         return $this->render('index');
     }
 
-    public function actionAddToCart($id)
-    {
+    public function actionAddToCart($id) {
 
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
@@ -153,8 +151,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCartItem()
-    {
+    public function actionDeleteCartItem() {
         if (Yii::$app->user->isGuest) {
             //return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -179,8 +176,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteCoupon()
-    {
+    public function actionDeleteCoupon() {
         $res = [];
         $id = $_POST["id"];
         $order = \common\models\costfit\Order::findOne($id);
@@ -191,8 +187,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItem()
-    {
+    public function actionChangeQuantityItem() {
 
         $res = [];
         $product = new \common\models\costfit\Product();
@@ -218,8 +213,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function createShoppingCart($orderId)
-    {
+    public function createShoppingCart($orderId) {
         $text = "";
         $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($showOrder) && !empty($showOrder)) {
@@ -230,9 +224,9 @@ class CartController extends MasterController
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class = "item" id = "item' . $item->orderItemId . '">'
-                . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
-                . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
-                . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
+                        . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                        . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
+                        . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
@@ -244,8 +238,7 @@ class CartController extends MasterController
         return $text;
     }
 
-    public function actionAddCoupon()
-    {
+    public function actionAddCoupon() {
         $res = [];
         $order = \common\models\costfit\Order::getOrder();
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
@@ -267,15 +260,15 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionAddWishlist()
-    {
+    public function actionAddWishlist() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
         if (!isset($ws)) {
-            $ws = new \common\models\costfit\Wishlist();
+            $ws = new Wishlist();
+            $ws->productShelfId = $_POST['shelfId'];
             $ws->productId = $_POST['productId'];
             $ws->userId = \Yii::$app->user->id;
             $ws->createDateTime = new \yii\db\Expression("NOW()");
@@ -290,20 +283,79 @@ class CartController extends MasterController
             $res["status"] = FALSE;
             $res['errorCode'] = 1;
             $res["message"] = "This item is already in your Wishlist";
+            $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+            if (isset($ws)) {
+                $ws->delete();
+            }
+            $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+            if (isset($ch)) {
+                $res['heartbeat'] = 1;
+            } else {
+                $res['heartbeat'] = 0;
+            }
         }
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionDeleteWishlist()
-    {
+    public function actionAddDefaultWishlist() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
+        $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
+        if (!isset($defaultWishlist)) {
+            $default = new ProductShelf();
+            $default->userId = Yii::$app->user->id;
+            $default->title = 'Default Wishlist';
+            $default->type = 1;
+            $default->status = 1;
+            $default->createDateTime = new \yii\db\Expression('NOW()');
+            $default->updateDateTime = new \yii\db\Expression('NOW()');
+            $default->save();
+        }
+        $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
+        $defaultWishlistId = $defaultWishlist->productShelfId;
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+        if (!isset($ws)) {
+            $ws = new Wishlist();
+            $ws->productShelfId = $defaultWishlistId;
+            $ws->productId = $_POST['productId'];
+            $ws->userId = \Yii::$app->user->id;
+            $ws->createDateTime = new \yii\db\Expression("NOW()");
+            if ($ws->save()) {
+                $res["status"] = TRUE;
+            } else {
+                $res["status"] = FALSE;
+                $res['errorCode'] = 2;
+                $res["message"] = "Can't save Wishlist";
+            }
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+            $res["message"] = "This item is already in your Wishlist";
+            $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+            if (isset($ws)) {
+                $ws->delete();
+            }
+            $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
+            if (isset($ch)) {
+                $res['heartbeat'] = 1;
+            } else {
+                $res['heartbeat'] = 0;
+            }
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionDeleteWishlist() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+        $res = [];
+        $ws = Wishlist::find()->where("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id)->one();
         if (isset($ws)) {
-            \common\models\costfit\Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
-            $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
+            Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
+            $length = count(Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $res["status"] = TRUE;
             $res["length"] = $length;
         } else {
@@ -314,16 +366,31 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionGenerateNewToken()
-    {
+    public function actionDeleteWishlistShelf() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+        $res = [];
+        $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->one();
+        if (isset($ws)) {
+            $ws->delete();
+            $res["status"] = TRUE;
+        } else {
+            $res["status"] = FALSE;
+            $res['errorCode'] = 1;
+            $res["message"] = "Exits product in Wishlist";
+        }
+        return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionGenerateNewToken() {
         $res = [];
         \common\helpers\Token::generateNewToken();
         $res["status"] = TRUE;
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityItemAndSave()
-    {
+    public function actionChangeQuantityItemAndSave() {
 
         $res = [];
         $product = new \common\models\costfit\Product();
@@ -387,8 +454,7 @@ class CartController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSaveSlowest()
-    {
+    public function actionSaveSlowest() {
         if (isset($_POST['orderId'])) {
             $order = \common\models\costfit\Order::find()->where("orderId = " . $_POST['orderId'])->one();
             if (isset($order)) {
@@ -422,8 +488,7 @@ class CartController extends MasterController
         echo $_POST['orderId'];
     }
 
-    public function allProduct()
-    {
+    public function allProduct() {
         $products = \common\models\costfit\Product::find()->where("approve = 'approve'")->all();
         $productSuppId = [];
         if (isset($products) && !empty($products)) {
@@ -453,8 +518,7 @@ class CartController extends MasterController
         }
     }
 
-    public function actionListProductAll()
-    {
+    public function actionListProductAll() {
         $this->layout = "/content_right";
         $this->title = 'Cozxy.com | cart';
         $this->subTitle = 'Checkout Cart';
@@ -466,15 +530,15 @@ class CartController extends MasterController
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
-            ->where("productSuppId in ($id) and approve = 'approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
+                    ->where("productSuppId in ($id) and approve = 'approve'")
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
         } else {
             $products = \common\models\costfit\ProductSuppliers::find()->where("approve = 'approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
         }
         $this->subSubTitle = '';
         //echo '<pre>';
@@ -489,8 +553,7 @@ class CartController extends MasterController
         return $this->render('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
     }
 
-    public function actionGetProductQuantity()
-    {
+    public function actionGetProductQuantity() {
 
         $order = \common\models\costfit\Order::getOrder();
         if (isset($order->attributes['orderId'])) {
