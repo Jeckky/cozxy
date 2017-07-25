@@ -27,8 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <div class="col-lg-9 col-md-8">
             <div class="row">
+
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
+                    <center>
+                        <?= Html::img(Yii::$app->homeUrl . $imgShowStory, ['class' => 'img-responsive', 'style' => '100%']) ?>
+                    </center>
                     <?php
                     if (isset($productPost->shortDescription)) {
                         ?>

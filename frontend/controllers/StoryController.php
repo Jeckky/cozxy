@@ -46,7 +46,19 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId)->one();
+        $product_image_suppliers = $productPost->attributes;
+        $imgShowStory = '';
+        if (isset($product_image_suppliers['productId'])) {
+            $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $product_image_suppliers['productId'])
+            ->orderBy('ordering asc')->limit(1)->one();
+            if (isset($product_image)) {
+                $imgShowStory = $product_image['image'];
+            }
+        }
+
+        //echo '<pre>';
+        //print_r($product_image->attributes);
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $popularStoriesNoneStar = DisplayMyStory::popularStoriesNoneStar($productPostId); //ที่ไม่มีการให้ดาว
         $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
@@ -67,7 +79,7 @@ class StoryController extends MasterController {
         } else {
             $avatar = FALSE;
         }
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('avatar', 'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('imgShowStory', 'avatar', 'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
         );
     }
 
