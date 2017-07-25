@@ -573,6 +573,7 @@ class ReceiveController extends MasterController
             fwrite($myfile, $index . " value=>" . $value . "<br>");
         }
 
+
         fwrite($myfile, "<br>");
 
         fclose($myfile);
