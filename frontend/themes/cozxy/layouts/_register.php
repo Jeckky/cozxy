@@ -61,7 +61,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                         <div class="col-md-9">
                             <p>Birthday</p>
 
-                            <div class="form-group field-signupform-dd required <?= isset($ddError) ? $ddError : '' ?>">
+                            <div class="form-group col-md-4  field-signupform-dd required <?= isset($ddError) ? $ddError : '' ?>" style="padding-left: 0px;">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
@@ -77,7 +77,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                 <p class="help-block help-block-error"><?= isset($dd) ? $dd : '' ?></p>
                             </div>
 
-                            <div class="form-group field-signupform-dd required <?= isset($mmError) ? $mmError : '' ?>">
+                            <div class="form-group col-md-4 field-signupform-dd required <?= isset($mmError) ? $mmError : '' ?>">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
@@ -94,7 +94,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                 <p class="help-block help-block-error"><?= isset($mm) ? $mm : '' ?></p>
                             </div>
 
-                            <div class="form-group field-signupform-dd required <?= isset($yyyyError) ? $yyyyError : '' ?>">
+                            <div class="form-group col-md-4  field-signupform-dd required <?= isset($yyyyError) ? $yyyyError : '' ?>">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
