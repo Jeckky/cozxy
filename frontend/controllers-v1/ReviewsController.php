@@ -194,11 +194,11 @@ class ReviewsController extends MasterController {
         $this->subTitle = $model->attributes['title'];
         $this->subSubTitle = '';
 
-        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId =' . $productPostId)->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId =' . $productPostId . ' and product_post.status =1')->one();
         //$productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->all();
 
         if (\Yii::$app->user->id != '') {
-            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productPostId = ' . $productPostId . ' and productSuppId=' . $productSupplierId)->limit(6)->all();
+            $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productPostId = ' . $productPostId . ' and productSuppId=' . $productSupplierId . ' and product_post.status =1')->limit(6)->all();
             //$productPostViewMem = \common\models\costfit\ProductPostRating::find()->where('productPostId=' . $productPostId)->all();
         } else {
             $productPostView = NULL;
