@@ -573,8 +573,8 @@ class ReceiveController extends MasterController
             fwrite($myfile, $index . " value=>" . $value . "<br>");
         }
 
-        if (isset(\yii::$app->request->post)) {
-            $rJson = json_decode(\yii::$app->request->post);
+        if (isset($_REQUEST)) {
+            $rJson = json_decode($_REQUEST);
         } else {
             $rJson = [];
         }
