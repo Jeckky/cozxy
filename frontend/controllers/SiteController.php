@@ -236,7 +236,7 @@ class SiteController extends MasterController {
                   if ($_POST["SignupForm"]['dd'] == '') {
                   echo $errors;
                   } */
-                $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
+                //$model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
                 //echo 'test :' . $_POST["SignupForm"]['yyyy'];
                 // $message = 'Your salary is not enough for children.';
                 // echo $model->addError('xxxxx');

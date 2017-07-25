@@ -67,7 +67,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'dd',
                                     'data' => $birthdate['dates'],
-                                    'options' => ['placeholder' => 'Select a day ...'],
+                                    'options' => ['placeholder' => 'Select a day ...', 'required' => 'required'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
@@ -82,7 +82,8 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'mm',
                                     'data' => $birthdate['month'],
-                                    'options' => ['placeholder' => 'Select a month ...'],
+                                    //'options' => ['placeholder' => 'Select a month ...'],
+                                    'options' => ['placeholder' => 'Selecione a month', 'required' => 'required'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
@@ -97,32 +98,11 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'yyyy',
                                     'data' => $birthdate['years'],
-                                    'options' => ['placeholder' => 'Select a year ...'],
+                                    'options' => ['placeholder' => 'Select a year ...', 'required' => 'required'],
                                     'pluginOptions' => [
                                         'allowClear' => true
                                     ],
                                 ]);
-                                ?>
-                            </div>
-                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
-                                <?//=
-                                Html::dropDownList('SignupForm[dd]', $model, $birthdate['dates'], ['prompt' => '---Select day---', 'class' => 'fullwidth '
-                                ,
-                                ])
-                                ?>
-                            </div>
-                            <div class="day col-md-4 col-xs-12">
-                                <?//=
-                                Html::dropDownList('SignupForm[mm]', NULL, $birthdate['month'], ['prompt' => '---Select month---', 'class' => 'fullwidth', 'style' => ""
-                                ,
-                                ])
-                                ?>
-                            </div>
-                            <div class="day col-md-4 col-xs-12">
-                                <?//=
-                                Html::dropDownList('SignupForm[yyyy]', NULL, $birthdate['years'], ['prompt' => '---Select year---', 'class' => 'fullwidth'
-                                ,
-                                ])
                                 ?>
                             </div>
                             <!--
