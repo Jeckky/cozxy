@@ -576,6 +576,8 @@ class ReceiveController extends MasterController
 
         fclose($myfile);
 
+        echo Json::encode(['status' => 200]);
+
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
     }
 
@@ -599,6 +601,7 @@ class ReceiveController extends MasterController
         fclose($myfile);
 
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
+        echo Json::encode(['status' => 500]);
     }
 
     //
