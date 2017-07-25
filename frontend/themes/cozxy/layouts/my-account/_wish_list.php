@@ -107,5 +107,47 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             $i++;
         endforeach;
     }
+    ?></div>
+<?php
+$favoriteStories = ProductShelf::favoriteStories();
+if (isset($favoriteStories)) {
+    $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
     ?>
-</div>
+    <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
+        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+        </div>
+    </a>
+    <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
+        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+        </div>
+    </a>
+    <?php
+    $favoriteItem = '';
+    ?>
+    <div id="showFavoriteItem" style="display:none;">
+        <div class="row" style="padding: 20px;">
+            <?=
+            \yii\widgets\ListView::widget([
+                'dataProvider' => $favoriteStory,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model) {
+                    return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
+                },
+                //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
+        </div>
+
+        <div class="col-xs-12 size48">&nbsp;</div>
+    </div>
+<?php }
+?>

@@ -33,7 +33,7 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
 
     public static function wishListGroup() {
         if (Yii::$app->user->id) {
-            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1")
+            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type!=3")
                     ->orderBy('type')
                     ->addOrderBy('updateDateTime DESC')
                     ->all();
@@ -44,6 +44,21 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
             }
         } else {
             return null;
+        }
+    }
+
+    public static function favoriteStories() {
+        if (Yii::$app->user->id) {
+            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type=3")
+                    ->addOrderBy('updateDateTime DESC')
+                    ->one();
+            if (isset($shelf)) {
+                return $shelf;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 

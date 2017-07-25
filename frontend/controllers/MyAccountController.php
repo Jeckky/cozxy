@@ -25,11 +25,13 @@ class MyAccountController extends MasterController {
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
             'pagination' => ['defaultPageSize' => 50]]);
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', '')]);
+
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
         $this->createDefault(); //สร้าง  Defalut wishlist and default favorite stories
+        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories()]);
         $statusText = '';
-        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList'));
+        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory'));
     }
 
     public function actionEditPersonalDetail() {

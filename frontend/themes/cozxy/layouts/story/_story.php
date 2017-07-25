@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <div class="col-xs-4">
                                                     <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
                                                     $productPost->encodeParams(
-                                                    ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                            ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
                                                     ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                                 </div>
                                             <?php } ?>
@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?= $this->render('_stars', ['productPost' => $productPost]) ?>
-            <?//= $this->render('_faverlis', ['productPost' => $productPost]) ?>
+            <?= $this->render('_faverlis', ['productPost' => $productPost]) ?>
             <?= $this->render('_authors', ['productPost' => $productPost, 'productSuppId' => $productSuppId]) ?>
             <?= $this->render('_about_this_story', ['productPost' => $productPost]) ?>
 

@@ -9,6 +9,7 @@ use Yii;
 *
     * @property string $productShelfId
     * @property string $title
+    * @property integer $type
     * @property integer $userId
     * @property integer $status
     * @property string $createDateTime
@@ -31,7 +32,7 @@ public function rules()
 {
 return [
             [['title', 'userId'], 'required'],
-            [['userId', 'status'], 'integer'],
+            [['type', 'userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 100],
         ];
@@ -45,6 +46,7 @@ public function attributeLabels()
 return [
     'productShelfId' => Yii::t('product_shelf', 'Product Shelf ID'),
     'title' => Yii::t('product_shelf', 'Title'),
+    'type' => Yii::t('product_shelf', 'Type'),
     'userId' => Yii::t('product_shelf', 'User ID'),
     'status' => Yii::t('product_shelf', 'Status'),
     'createDateTime' => Yii::t('product_shelf', 'Create Date Time'),
