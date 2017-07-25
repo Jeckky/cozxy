@@ -162,7 +162,7 @@ $val = rand(1, 10);
                                     </a>
                                 <?php } else { ?>
                                     <!-- <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']             ?>);" id="addItemToWishlist-<?php // $model['productSuppId']              ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']            ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']             ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                                     </a>-->
                                     <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
                                         <div class="heart-<?= $model['productSuppId'] ?>">ADD TO SHELVER<!--+ <i class="fa fa-heart-o" aria-hidden="true"></i>--></div>
