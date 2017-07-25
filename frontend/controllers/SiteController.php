@@ -225,6 +225,7 @@ class SiteController extends MasterController {
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
+
                 /* $errors = $model->errors;
                   if ($_POST["SignupForm"]['yyyy'] == '') {
                   echo $errors;
