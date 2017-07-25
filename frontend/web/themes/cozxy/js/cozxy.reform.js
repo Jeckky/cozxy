@@ -218,6 +218,9 @@ function addItemToDefaultWishlist(id) {
         {
             if (data.status) {
                 window.location = $baseUrl + "my-account?act=2";
+            } else {
+                alert(data.message);
+                return false;
             }
         }
     });
@@ -284,6 +287,34 @@ function editShelf(shelfId, flag) {
         $('#editShelf' + shelfId).hide('fade-in');
         $('#hideEditShelf' + shelfId).hide();
         $('#showEditShelf' + shelfId).show();
+    }
+}
+function cancelEditShelf(shelfId) {
+    $('#editShelf' + shelfId).hide('fade-in');
+    $('#hideEditShelf' + shelfId).hide();
+    $('#showEditShelf' + shelfId).show();
+}
+function updateShelf(shelfId) {
+    var name = $('#shelfName' + shelfId).val();
+    if (name == '') {
+        alert('Shelf name can not empty');
+        return false;
+    } else {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/update-shelf",
+            data: {shelfId: shelfId, name: name},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#allShelf2').html(data.text);
+                    showWishlistGroup(shelfId, 1);
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
     }
 }
 $(document).on('click', '#showCreateWishList', function (e) {
