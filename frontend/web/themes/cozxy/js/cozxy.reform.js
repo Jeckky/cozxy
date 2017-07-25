@@ -258,6 +258,34 @@ function showWishlistGroup(shelfId, type) {
     }
 
 }
+function deleteShelf(shelfId) {
+
+    if (confirm('Are you sure to delete?')) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/delete-shelf",
+            data: {shelfId: shelfId},
+            success: function (data)
+            {
+                $('#allShelf2').html(data.text);
+            }
+        });
+    } else {
+        return false;
+    }
+}
+function editShelf(shelfId, flag) {
+    if (flag == 1) {
+        $('#editShelf' + shelfId).show('fade-in');
+        $('#hideEditShelf' + shelfId).show();
+        $('#showEditShelf' + shelfId).hide();
+    } else {
+        $('#editShelf' + shelfId).hide('fade-in');
+        $('#hideEditShelf' + shelfId).hide();
+        $('#showEditShelf' + shelfId).show();
+    }
+}
 $(document).on('click', '#showCreateWishList', function (e) {
     var newWishList = $(this).parent().find('#newWishList');
     var hideCreateWishList = $(this).parent().find('#hideCreateWishList');
@@ -295,6 +323,8 @@ $(document).on('click', '#create-newWishList', function (e) {
     var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
     var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
     var productSuppId = $(this).parent().find('#productSuppId').val();
+    var allShelf2 = $(this).parent().parent().parent().parent().parent().find('#allShelf2');
+    //alert(allShelf2.text);
     if (title != '') {
         $.ajax({
             type: "POST",
@@ -309,6 +339,7 @@ $(document).on('click', '#create-newWishList', function (e) {
                     hideCreateWishList.hide();
                     newWishList.hide('fade-in');
                     allGroup.html(data.text);
+                    allShelf2.html(data.text);
                 } else {
                     alert(data.error);
                 }

@@ -84,7 +84,9 @@ class DisplayMyAccount extends Model {
 
     public static function myAccountWishList($shelfId) {
         $products = [];
-        $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')->all();
+        $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
+                ->limit(6)
+                ->all();
         foreach ($dataWishlist as $items) {
             $dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
             foreach ($dataProductSuppliers as $value) {

@@ -39,52 +39,73 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         </div>
     ';
 }
-
-$allshelf = ProductShelf::wishListGroup();
-if (isset($allshelf) && count($allshelf) > 0) {
-    $i = 0;
-    foreach ($allshelf as $shelf):
-        ?>
-        <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? '' : 'none' ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
-        <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $shelf->title ?> <i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
-        <?php if ($i == 0) { ?>
-            <div id="wishListShelf-<?= $shelf->productShelfId ?>">
-                <div>
-                    <a style="cursor: pointer;" id="showCreateWishList">+ Create New Wish List Group</a>
-                    <a style="cursor: pointer;display: none;" id="hideCreateWishList" >- Create New Wish List Group</a>
-                    <div id="newWishList" style="display: none;">
-
-                        <h4>Name</h4>
-                        <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
-                        <div class="text-right" style="">
-                            <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
-                            <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
-                        </div>
-                    </div>
-                </div>
-                <?php
-                $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
-                if (isset($wishlists) && count($wishlists) > 0) {
-                    foreach ($wishlists as $value):
-                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
-                    endforeach;
-                }
-                ?>
-            </div>
-        <?php } else {
-            ?>
-            <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
-            <?php
-        }
-        $i++;
-    endforeach;
-}
 ?>
+<div class="row">
+    <div class="col-md-12">
+        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ Create my shelf</a>
+        <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
+        <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
+
+            <h4>Shelf's Name</h4>
+            <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
+            <div class='text-right' style=''>
+                <input type='hidden' id='productSuppId' value='no'>
+                <a class='btn btn-black' id='cancel-newWishList'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a class='btn btn-yellow'id='create-newWishList' disabled>Create</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="allShelf2">
+    <?php
+    $allshelf = ProductShelf::wishListGroup();
+    if (isset($allshelf) && count($allshelf) > 0) {
+        $i = 0;
+        $edit = '';
+        $delete = '';
+        foreach ($allshelf as $shelf):
+            $edit = '';
+            $delete = '';
+            if ($shelf->type == 1) {
+                $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+            }
+            if ($shelf->type == 2) {
+                $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+            }
+            if ($shelf->type == 3) {
+                $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+            }
+            ?>
+
+            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
+                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+                </div>
+            </a>
+            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
+                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+                </div>
+            </a>
+            <?php if ($i == 0) { ?>
+                <div id="wishListShelf-<?= $shelf->productShelfId ?>">
+
+                    <?php
+                    $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
+                    if (isset($wishlists) && count($wishlists) > 0) {
+                        foreach ($wishlists as $value):
+                            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                        endforeach;
+                    }
+                    ?>
+                </div>
+            <?php } else {
+                ?>
+                <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
+                <?php
+            }
+            $i++;
+        endforeach;
+    }
+    ?>
+</div>
