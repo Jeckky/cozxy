@@ -1411,6 +1411,11 @@ $('#loginform-accept-term').click(function () {
 
 function StoriesRemove(id) {
     var path = $baseUrl + "story/stories-remove/";
+    var $this = $('#removeItemStory-' + id);
+    $this.button('loading');
+    setTimeout(function () {
+        $this.button('reset');
+    }, 8000);
     $.ajax({
         url: path,
         type: "POST",
@@ -1418,8 +1423,8 @@ function StoriesRemove(id) {
         data: {'id': id},
         success: function (data, status) {
             if (status == "success") {
-                var JSONObject = JSON.parse(data);
-
+                //var JSONObject = JSON.parse(data);
+                $('.item-to-stories-' + id).remove();
 
             } else {
                 alert('error');

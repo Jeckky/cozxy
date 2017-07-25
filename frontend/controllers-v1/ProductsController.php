@@ -82,12 +82,12 @@ class ProductsController extends MasterController {
             //echo $model->categoryId;
             // $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId =" . $productSupplierId)->one();
             //$productPostView = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(6)->all();
-            $productPostView = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId)->all();
+            $productPostView = \common\models\costfit\ProductPost::find()->where('productSuppId =' . $productSupplierId . ' and product_post.status =1')->all();
             if (\Yii::$app->user->id != '') {
-                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productSuppId=' . $productSupplierId)->orderBy('productPostId desc')->all();
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . '  and productSuppId=' . $productSupplierId . ' and product_post.status =1')->orderBy('productPostId desc')->all();
             } else {
                 //$productPostView = NULL;
-                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId = ' . $productSupplierId)->orderBy('productPostId desc')->all();
+                $productPostViewMem = \common\models\costfit\ProductPost::find()->where('productSuppId = ' . $productSupplierId . ' and product_post.status =1')->orderBy('productPostId desc')->all();
             }
 
             //echo '<pre>';

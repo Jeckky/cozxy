@@ -200,10 +200,10 @@ class FakeFactory extends Model {
     public static function productStory($n) {
         $products = [];
         if ($n == 99) {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {
@@ -256,7 +256,7 @@ class FakeFactory extends Model {
     public static function productStoryAll($n, $productId, $productSuppId) {
         $products = [];
 
-        $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId)->orderBy('productPostId desc')->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId . '  and status =1')->orderBy('productPostId desc')->all();
         //throw new \yii\base\Exception(count($productPost));
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
@@ -406,7 +406,7 @@ class FakeFactory extends Model {
     }
 
     public static function productOtherProducts() {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null')
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status =1')
         ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
@@ -433,10 +433,10 @@ class FakeFactory extends Model {
     public static function productStoryViewsMore($n, $categoryId) {
         $products = [];
         if ($n == 99) {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {

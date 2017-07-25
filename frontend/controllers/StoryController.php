@@ -46,7 +46,7 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId)->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' and product_post.status =1')->one();
         $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
         if (isset($product_image_suppliers['productId'])) {
@@ -131,7 +131,7 @@ class StoryController extends MasterController {
               exit(); */
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
-            $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId)->one(); // ตรวจสอบว่าเคยโพส Story เรื่องนี้ยัง
+            $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId . ' and product_post.status =1')->one(); // ตรวจสอบว่าเคยโพส Story เรื่องนี้ยัง
             if (isset($checkRepeatedlyStory)) {
                 return $this->redirect(Yii::$app->homeUrl);
             } else {
@@ -233,7 +233,7 @@ class StoryController extends MasterController {
 
     public function actionViewPost() {
         $res = [];
-        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"])->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"] . ' and product_post.status =1')->one();
         if ($productPost->userId != Yii::$app->user->identity->userId) {
             $productPostView = new \common\models\costfit\ProductPostView();
             $productPostView->userId = Yii::$app->user->identity->userId;
@@ -254,7 +254,7 @@ class StoryController extends MasterController {
 
     public function checkViewTime($postId) {
         $flag = false;
-        $lastView = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId . " and userId=" . Yii::$app->user->identity->userId)
+        $lastView = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId . " and userId=" . Yii::$app->user->identity->userId . ' and product_post.status =1')
         ->orderBy('createDateTime DESC')
         ->one();
 
@@ -282,7 +282,7 @@ class StoryController extends MasterController {
         $currencyId = $_POST["currencyId"];
         // throw new \yii\base\Exception($currencyId);
         $res = [];
-        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . " and currency=" . $currencyId);
+        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . " and currency=" . $currencyId . ' and product_post.status =1');
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $productPost
         ]);
@@ -315,7 +315,7 @@ class StoryController extends MasterController {
 
         if (isset($_POST["ProductPost"])) {
             $isPublic = Yii::$app->request->post('isPublic');
-            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->one();
+            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')->one();
             $model->attributes = $_POST['ProductPost'];
             //$productSuppId = $_POST["productSuppId"];
             //$parentId = ProductSuppliers::productParentId($productSuppId)->productId;
@@ -363,7 +363,7 @@ class StoryController extends MasterController {
             $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             //$productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
             $productSuppImg = \common\helpers\DataImageSystems::DataImageMaster($productSupplier->productId, $productSupplier->productSuppId, 'Svg555x340');
-            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->one();
+            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')->one();
             $model->scenario = 'write_your_story';
             $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
             ->orderBy('createDateTime')
@@ -497,8 +497,13 @@ class StoryController extends MasterController {
         return $this->render('contentstory', compact('productStory'));
     }
 
-    public function actionToriesRemove() {
-        echo 'xxxx';
+    public function actionStoriesRemove() {
+        $id = Yii::$app->request->post('id');
+        $RemoveHidden = \common\models\costfit\ProductPost::updateAll(['status' => 0], ['userId' => Yii::$app->user->id, 'productPostId' => $id]);
+        //echo '<pre>';
+        //print_r($RemoveHidden);
+        echo $RemoveHidden;
+        //echo 'complete';
     }
 
 }

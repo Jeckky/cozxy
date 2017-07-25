@@ -37,7 +37,7 @@ class ReviewsController extends MasterController {
         $this->title = 'Cozxy.com | My stories';
         $this->subTitle = 'reviews';
         $this->subSubTitle = "My reviews";
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id)->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . ' and product_post.status =1')->groupBy(['productSuppId'])->orderBy('productPostId desc')->all();
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
         $model->scenario = 'profile';
 
@@ -97,7 +97,7 @@ class ReviewsController extends MasterController {
 
         $score = Yii::$app->request->post('score');
 
-        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId . " AND userId =" . Yii::$app->user->id)->one();
+        $model = \common\models\costfit\ProductPost::find()->where("productSuppId=" . $productSupplierId . " AND userId =" . Yii::$app->user->id . ' and product_post.status =1')->one();
         if (!isset($model)) {
             $model = new \common\models\costfit\ProductPost(['scenario' => 'review_post']);
         }
