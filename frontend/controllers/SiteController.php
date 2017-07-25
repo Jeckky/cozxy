@@ -209,6 +209,12 @@ class SiteController extends MasterController {
      */
     public function actionSignup() {
         //$model_verdifile = new \common\models\costfit\User(['scenario' => 'register']);
+        $dd = '';
+        $mm = '';
+        $yyyy = '';
+        $ddError = '';
+        $mmError = '';
+        $yyyyError = '';
         $model = new SignupForm(['scenario' => 'register']);
         $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
         if (isset($contentGroup)) {
@@ -225,39 +231,36 @@ class SiteController extends MasterController {
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
+                if ($_POST["SignupForm"]['dd'] == '') {
+                    $dd = 'Date cannot be blank.';
+                    $ddError = 'has-error';
+                }
+                if ($_POST["SignupForm"]['mm'] == '') {
+                    $mm = 'Month cannot be blank.';
+                    $mmError = 'has-error';
+                }
+                if ($_POST["SignupForm"]['yyyy'] == '') {
+                    $yyyy = 'Years cannot be blank.';
+                    $yyyyError = 'has-error';
+                }
 
-                /* $errors = $model->errors;
-                  if ($_POST["SignupForm"]['yyyy'] == '') {
-                  echo $errors;
-                  }
-                  if ($_POST["SignupForm"]['mm'] == '') {
-                  echo $errors;
-                  }
-                  if ($_POST["SignupForm"]['dd'] == '') {
-                  echo $errors;
-                  } */
-                //$model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
-                //echo 'test :' . $_POST["SignupForm"]['yyyy'];
-                // $message = 'Your salary is not enough for children.';
-                // echo $model->addError('xxxxx');
-                // echo $model->addError('personalSalary', $message);
-                // echo $model->addError('wifeSalary', $message);
-                //echo $model->addError('childrenCount', $message);
-                //echo $model->birthDate;
-                //exit();
+                $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
+
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
                         return $this->redirect([Yii::$app->homeUrl . 'site/thank']);
                     }
                 }
+            } else {
+
             }
         } else {
 
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model, 'content' => $content, 'birthdate' => $birthdate
+            'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
         ]);
     }
 

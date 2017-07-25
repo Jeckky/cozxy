@@ -33,10 +33,12 @@ class SignupForm extends Model {
             ['firstname', 'required'],
             ['lastname', 'required'],
             ['gender', 'required'],
-            //['birthDate', 'required'],
+            ['birthDate', 'required'],
             //['yyyy', 'required'],
             //['mm', 'required'],
             //['dd', 'required'],
+            [['birthday'], 'safe'],
+            ['birthDate', 'required', 'message' => 'BirthDate cannot be blank.'],
             ['dd', 'required', 'message' => 'Date cannot be blank.'],
             ['mm', 'required', 'message' => 'Month cannot be blank.'],
             ['yyyy', 'required', 'message' => 'Year cannot be blank.'],
@@ -75,6 +77,8 @@ class SignupForm extends Model {
      * @return User|null the saved model or null if saving fails
      */
     public function signup() {
+        //echo 'birthDate :' . $this->birthDate . '<br>';
+
         if (!$this->validate()) {
             return null;
         }
@@ -101,7 +105,7 @@ class SignupForm extends Model {
         } else {
             return null;
         }
-        //return $user->save(FALSE) ? $user : null;
+//return $user->save(FALSE) ? $user : null;
     }
 
 }

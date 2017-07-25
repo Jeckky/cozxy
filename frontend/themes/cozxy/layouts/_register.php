@@ -60,7 +60,8 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                         </div>
                         <div class="col-md-9">
                             <p>Birthday</p>
-                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+
+                            <div class="form-group field-signupform-dd required <?= isset($ddError) ? $ddError : '' ?>">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
@@ -73,9 +74,10 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     ],
                                 ]);
                                 ?>
+                                <p class="help-block help-block-error"><?= isset($dd) ? $dd : '' ?></p>
                             </div>
 
-                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                            <div class="form-group field-signupform-dd required <?= isset($mmError) ? $mmError : '' ?>">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
@@ -89,9 +91,10 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     ],
                                 ]);
                                 ?>
+                                <p class="help-block help-block-error"><?= isset($mm) ? $mm : '' ?></p>
                             </div>
 
-                            <div class="day col-md-4 col-xs-12" style="padding-left: 0px;">
+                            <div class="form-group field-signupform-dd required <?= isset($yyyyError) ? $yyyyError : '' ?>">
                                 <?php
                                 // With a model and without ActiveForm
                                 echo \kartik\select2\Select2::widget([
@@ -104,7 +107,9 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     ],
                                 ]);
                                 ?>
+                                <p class="help-block help-block-error"><?= isset($yyyy) ? $yyyy : '' ?></p>
                             </div>
+
                             <!--
                             <input type="number" name="SignupForm[dd]" min="1" max="31" placeholder="31" style="width: 26%">
                             <input type="number" name="SignupForm[mm]" min="1" max="12" placeholder="12" style="width: 26%">
