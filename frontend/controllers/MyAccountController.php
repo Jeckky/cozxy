@@ -376,6 +376,15 @@ class MyAccountController extends MasterController {
         }else {
             $res['idHide'] = false;
         }
+        $shelfType = ProductShelf::find()->where("productShelfId =" . $shelfId)->one();
+        if ($shelfType->type == 2) {
+            $edit = '<i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;"></i>';
+            $delete = '<i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;"></i>';
+            $text .= '<div class="pull-right">'
+                    . '<a href="javascript:editShelf(' . $shelfId . ')" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
+                    . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
+                    . '</div>';
+        }
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
@@ -411,7 +420,7 @@ class MyAccountController extends MasterController {
             $res['status'] = true;
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
-            $res['text'] = '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h3>There are no item in "' . $group->title . '"</h3></div>';
+            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h3>There are no item in "' . $group->title . '"</h3></div>';
             $res['status'] = true;
         }
         return \yii\helpers\Json::encode($res);
@@ -440,6 +449,69 @@ class MyAccountController extends MasterController {
             $default->updateDateTime = new \yii\db\Expression('NOW()');
             $default->save();
         }
+    }
+
+    public function actionDeleteShelf() {
+        $res = [];
+        $text = '';
+        $productShelfId = $_POST['shelfId'];
+        $productShelf = ProductShelf::find()->where("productShelfId=" . $productShelfId)->one();
+        if (isset($productShelf)) {
+            $productShelf->status = 0;
+            $productShelf->updateDateTime = new \yii\db\Expression('NOW()');
+            $productShelf->save(false);
+            $shelfItems = \common\models\costfit\Wishlist::find()->where("productShelfId=" . $productShelfId)->all();
+            if (isset($shelfItems) && count($shelfItems) > 0) {
+                foreach ($shelfItems as $shelfItem):
+                    $shelfItem->status = 0;
+                    $shelfItem->updateDateTime = new \yii\db\Expression('NOW()');
+                    $shelfItem->save(false);
+                endforeach;
+            }
+            $allshelf = ProductShelf::wishListGroup();
+            $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+            if (isset($allshelf) && count($allshelf) > 0) {
+                $i = 0;
+                foreach ($allshelf as $shelf):
+
+                    if ($i == 0) {
+                        $display = '';
+                    } else {
+                        $display = 'none';
+                    }
+                    if ($i == 0) {
+                        $display2 = 'none';
+                    } else {
+                        $display2 = '';
+                    }
+                    if ($shelf->type == 1) {
+                        $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+                    }
+                    if ($shelf->type == 2) {
+                        $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+                    }
+                    if ($shelf->type == 3) {
+                        $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+                    }
+
+                    $text .= "<a href='javascript:showWishlistGroup($shelf->productShelfId,0);' style='display:none;color:#000;' id='hideGroup-$shelf->productShelfId'>
+                          <div class='$fullCol bg-gray' style='padding:18px 18px 10px;margin-bottom: 10px;'>$a $shelf->title<i class='fa fa-chevron-up pull-right' aria-hidden='true'></i>
+                          </div>
+                          </a>";
+                    $text .= "<a href='javascript:showWishlistGroup($shelf->productShelfId,1);' style='color:#000;' id='showGroup-$shelf->productShelfId'>
+            <div class='$fullCol bg-gray' style='padding:18px 18px 10px;margin-bottom: 10px;'>$a $shelf->title<i class='fa fa-chevron-down pull-right' aria-hidden='true'></i>
+            </div>
+        </a>";
+                    $text .= "<div id='wishListShelf-$shelf->productShelfId'></div>";
+                    $i++;
+                endforeach;
+            }
+            $res['status'] = true;
+            $res['text'] = $text;
+        } else {
+            $res['status'] = false;
+        }
+        return \yii\helpers\Json::encode($res);
     }
 
 }
