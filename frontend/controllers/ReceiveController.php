@@ -45,7 +45,7 @@ class ReceiveController extends MasterController
      */
     public function beforeAction($action)
     {
-        if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp") {
+        if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp" || $action->id == "update-open-status" || $action->id == "alarm-open") {
             $this->enableCsrfValidation = false;
         }
 
@@ -570,6 +570,38 @@ class ReceiveController extends MasterController
 
         fwrite($myfile, $dateString . "<br>");
         foreach ($_POST as $index => $value) {
+            fwrite($myfile, $index . " value=>" . $value . "<br>");
+        }
+
+        if (isset($_POST[0])) {
+            $decode = json_decode($_POST[0]);
+            foreach ($decode as $index => $value) {
+                fwrite($myfile, $index . " value2=>" . $value . "<br>");
+            }
+        }
+
+        fwrite($myfile, "<br>");
+
+        fclose($myfile);
+
+        echo Json::encode(['status' => 200]);
+
+//        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
+    }
+
+    //Tritech API
+    public function actionAlarmOpen()
+    {
+        $filePath = \Yii::$app->basePath . "/web" . "/tritech-alarm.html";
+        if (!file_exists($filePath)) {
+            $myfile = fopen($filePath, "w");
+        } else {
+            $myfile = fopen($filePath, "a");
+        }
+        $dateString = date("D M d, Y G:i", time());
+
+        fwrite($myfile, $dateString . "<br>");
+        foreach ($_POST as $index => $value) {
             fwrite($myfile, $index . "=>" . $value . "<br>");
         }
         fwrite($myfile, "<br>");
@@ -577,8 +609,10 @@ class ReceiveController extends MasterController
         fclose($myfile);
 
 //        return $this->redirect(\Yii::$app->homeUrl . "tritech.html");
+        echo Json::encode(['status' => 500]);
     }
 
+    //
     public function cctv($orderNo, $user)
     {
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7001", $orderNo, $user);
