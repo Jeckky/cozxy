@@ -573,14 +573,6 @@ class ReceiveController extends MasterController
             fwrite($myfile, $index . " value=>" . $value . "<br>");
         }
 
-        if (isset($_REQUEST)) {
-            $rJson = json_decode($_REQUEST);
-        } else {
-            $rJson = [];
-        }
-        foreach ($rJson as $index => $value) {
-            fwrite($myfile, $index . " value2=>" . $value . "<br>");
-        }
 
         fwrite($myfile, "<br>");
 
