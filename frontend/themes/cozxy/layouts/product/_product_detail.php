@@ -161,8 +161,8 @@ $val = rand(1, 10);
                                         <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                                     </a>
                                 <?php } else { ?>
-                                    <!-- <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']             ?>);" id="addItemToWishlist-<?php // $model['productSuppId']              ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']             ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                    <!-- <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']               ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']               ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                                     </a>-->
                                     <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
                                         <div class="heart-<?= $model['productSuppId'] ?>">ADD TO SHELVER<!--+ <i class="fa fa-heart-o" aria-hidden="true"></i>--></div>
@@ -177,7 +177,7 @@ $val = rand(1, 10);
                             <?php } ?>
                             <?php
                             if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:14px auto 2px;padding: 6px 26px;">ADD TO CART</a>';
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16">ADD TO CART</a>';
                             } else {
                                 echo ' ';
                             }
@@ -239,7 +239,7 @@ $("#zoom-img").elevateZoom({
                 </div>
                 <div id="allGroup">
                     <?php
-                    $whishListGroup = ProductShelf::wishListGroup();
+                    $whishListGroup = ProductShelf::wishListGroupModal();
                     if (isset($whishListGroup) && count($whishListGroup) > 0) {
                         foreach ($whishListGroup as $group):
                             $isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
