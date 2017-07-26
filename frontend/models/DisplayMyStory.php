@@ -412,9 +412,18 @@ class DisplayMyStory extends Model {
         return $products;
     }
 
-    public static function favoriteStories() {
+    public static function favoriteStories($limit) {
         $products = [];
-        $allFavorite = \common\models\costfit\FavoriteStory::find()->where('userId =' . Yii::$app->user->id . " and status=1")->all();
+        if ($limit == 0) {
+            $allFavorite = \common\models\costfit\FavoriteStory::find()->where('userId =' . Yii::$app->user->id . " and status=1")
+                    ->orderBy('updateDateTime DESC')
+                    ->all();
+        } else {
+            $allFavorite = \common\models\costfit\FavoriteStory::find()->where('userId =' . Yii::$app->user->id . " and status=1")
+                    ->limit($limit)
+                    ->orderBy('updateDateTime DESC')
+                    ->all();
+        }
         $postId = '';
         if (isset($allFavorite) && count($allFavorite) > 0) {
             foreach ($allFavorite as $favorite):

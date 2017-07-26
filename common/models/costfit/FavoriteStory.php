@@ -52,4 +52,13 @@ class FavoriteStory extends \common\models\costfit\master\FavoriteStoryMaster {
         }
     }
 
+    public static function allFavoriteStories() {
+        $favorites = FavoriteStory::find()->where("userId=" . Yii::$app->user->id . " and status=1")->all();
+        if (isset($favorites) && count($favorites) > 0) {
+            return count($favorites);
+        } else {
+            return false;
+        }
+    }
+
 }

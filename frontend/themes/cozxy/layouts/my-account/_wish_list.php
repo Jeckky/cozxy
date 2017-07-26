@@ -1,6 +1,8 @@
 <?php
 
 use common\models\costfit\ProductShelf;
+use frontend\models\DisplayMyAccount;
+use common\models\costfit\FavoriteStory;
 
 $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 ?>
@@ -91,15 +93,24 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 <div id="wishListShelf-<?= $shelf->productShelfId ?>">
 
                     <?php
-                    $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
+                    $wishlists = DisplayMyAccount::myAccountWishList($shelf->productShelfId, 8);
                     if (isset($wishlists) && count($wishlists) > 0) {
                         foreach ($wishlists as $value):
                             product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
                         endforeach;
                     }
+                    $isShowSeemore = DisplayMyAccount::wishlistItems($shelf->productShelfId);
+                    if ($isShowSeemore > 8) {
+                        ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                            <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $shelf->productShelfId ?>">See more >></a>
+                        </div>
+                        <?php
+                    }
                     ?>
                 </div>
-            <?php } else {
+                <?php
+            } else {
                 ?>
                 <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
                 <?php
@@ -110,6 +121,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     ?></div>
 <?php
 $favoriteStories = ProductShelf::favoriteStories();
+$allFavorite = FavoriteStory::allFavoriteStories();
 if (isset($favoriteStories)) {
     $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
     ?>
@@ -123,9 +135,6 @@ if (isset($favoriteStories)) {
             <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
         </div>
     </a>
-    <?php
-    $favoriteItem = '';
-    ?>
     <div id="showFavoriteItem" style="display:none;">
         <div class="row" style="padding: 20px;">
             <?=
@@ -146,8 +155,16 @@ if (isset($favoriteStories)) {
             ]);
             ?>
         </div>
-
-        <div class="col-xs-12 size48">&nbsp;</div>
+        <?php
+        // throw new \yii\base\Exception(count($allFavorite));
+        if (isset($allFavorite) && $allFavorite > 3) {
+            ?>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                <a href="<?= Yii::$app->homeUrl ?>my-account/all-favorite-story">See more favorite stories >></a>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 <?php }
 ?>

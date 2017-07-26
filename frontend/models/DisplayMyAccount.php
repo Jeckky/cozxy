@@ -82,11 +82,17 @@ class DisplayMyAccount extends Model {
         return $products;
     }
 
-    public static function myAccountWishList($shelfId) {
+    public static function myAccountWishList($shelfId, $limit) {
         $products = [];
-        $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
-                ->limit(8)
-                ->all();
+        if ($limit == 0) {
+            $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
+                    ->all();
+        } else {
+            $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
+                    ->limit($limit)
+                    ->all();
+        }
+
         foreach ($dataWishlist as $items) {
             $dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
             foreach ($dataProductSuppliers as $value) {
@@ -94,15 +100,6 @@ class DisplayMyAccount extends Model {
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($value->price, 2);
                 $price = number_format($value->price, 2);
-                /*
-                  if (isset($productImages->imageThumbnail1) && !empty($productImages->imageThumbnail1)) {
-                  if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail1)) {
-                  $productImagesThumbnail1 = '/' . $productImages->imageThumbnail1;
-                  } else {
-                  $productImagesThumbnail1 = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgdmlld0JveD0iMCAwIDY0IDY0IiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIj48IS0tDQpTb3VyY2UgVVJMOiBob2xkZXIuanMvMjYweDI2MA0KQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4NCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQ0KKGMpIDIwMTItMjAxNSBJdmFuIE1hbG9waW5za3kgLSBodHRwOi8vaW1za3kuY28NCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNWMwYTg2ZjY1YSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1YzBhODZmNjVhIj48cmVjdCB3aWR0aD0iMjYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYuMjI2NTYyNSIgeT0iMzYuNTMyODEyNSI+MjYweDI2MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==';
-                  }
-                  } */
-
                 $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
 
                 if (Yii::$app->controller->id == 'my-account') {
@@ -129,6 +126,17 @@ class DisplayMyAccount extends Model {
             }
         }
         return $products;
+    }
+
+    public static function wishlistItems($shelfId) {
+        $products = [];
+        $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
+                ->all();
+        if (isset($dataWishlist) && count($dataWishlist) > 0) {
+            return count($dataWishlist);
+        } else {
+            return 0;
+        }
     }
 
     public static function myAccountOrderHistory($status, $type) {

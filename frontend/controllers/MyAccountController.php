@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use frontend\models\DisplayMyAccount;
 use common\models\costfit\ProductShelf;
+use common\models\costfit\Wishlist;
 
 class MyAccountController extends MasterController {
 
@@ -29,7 +30,7 @@ class MyAccountController extends MasterController {
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
         $this->createDefault(); //สร้าง  Defalut wishlist and default favorite stories
-        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories()]);
+        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(8)]);
         $statusText = '';
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory'));
     }
@@ -398,7 +399,7 @@ class MyAccountController extends MasterController {
             </div>
         </div>";
         }
-        $wishlists = DisplayMyAccount::myAccountWishList($shelfId);
+        $wishlists = DisplayMyAccount::myAccountWishList($shelfId, 8);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
                 $quantity = 1;
@@ -429,6 +430,10 @@ class MyAccountController extends MasterController {
                 }
                 $text .= '</div></div></div>';
             endforeach;
+            $isShowSeemore = DisplayMyAccount::wishlistItems($shelfId);
+            if ($isShowSeemore > 8) {
+                $text .= '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;"><a href="' . Yii::$app->homeUrl . 'my-account/all-wishlist?s=' . $shelfId . '">See more >></a></div>';
+            }
             $res['text'] = $text;
             $res['status'] = true;
         } else {
@@ -473,7 +478,7 @@ class MyAccountController extends MasterController {
             $productShelf->status = 0;
             $productShelf->updateDateTime = new \yii\db\Expression('NOW()');
             $productShelf->save(false);
-            $shelfItems = \common\models\costfit\Wishlist::find()->where("productShelfId=" . $productShelfId)->all();
+            $shelfItems = Wishlist::find()->where("productShelfId=" . $productShelfId)->all();
             if (isset($shelfItems) && count($shelfItems) > 0) {
                 foreach ($shelfItems as $shelfItem):
                     $shelfItem->status = 0;
@@ -588,6 +593,24 @@ class MyAccountController extends MasterController {
             }
         }
         return \yii\helpers\Json::encode($res);
+    }
+
+    public function actionAllWishlist() {
+        $shelfId = $_GET['s'];
+        $wishlists = DisplayMyAccount::myAccountWishList($shelfId, 0);
+        $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
+        return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
+                    'wishlists' => $wishlists,
+                    'title' => $productShelf->title
+        ]);
+    }
+
+    public function actionAllFavoriteStory() {
+        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
+        return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
+                    'favoriteStory' => $favoriteStory,
+                    'title' => 'Favorite stories'
+        ]);
     }
 
 }
