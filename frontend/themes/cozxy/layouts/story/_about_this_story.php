@@ -1,5 +1,13 @@
 <div class="panel panel-defailt">
-    <h3 class="page-header" style="margin:10px 20px;">About This Story</h3>
+    <?php
+    //echo $productPost->userId;
+    if (Yii::$app->user->identity->userId == $productPost->userId) {
+        $txtStory = 'Dashboard';
+    } else {
+        $txtStory = 'About';
+    }
+    ?>
+    <h3 class="page-header" style="margin:10px 20px;"><?= $txtStory ?> This Story</h3>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-9">

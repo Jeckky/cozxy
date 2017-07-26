@@ -84,6 +84,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     'model' => $model,
                                     'attribute' => 'mm',
                                     'data' => $birthdate['month'],
+                                    // 'value' => ['2'], // value to initialize
                                     //'options' => ['placeholder' => 'Select a month ...'],
                                     'options' => ['placeholder' => 'Selecione a month'],
                                     'pluginOptions' => [
