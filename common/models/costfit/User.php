@@ -59,13 +59,13 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                ['firstname', 'required'],
-                ['lastname', 'required'],
-                ['email', 'unique'],
+            ['firstname', 'required'],
+            ['lastname', 'required'],
+            ['email', 'unique'],
             'tel' => [['tel'], 'string'], //, 'min' => 8
             ['newPassword', 'string', 'min' => 8],
-                ['password', 'string', 'min' => 8],
-                ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
+            ['password', 'string', 'min' => 8],
+            ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
 //            ['email', 'exist', 'targetAttribute' => 'username', 'targetClass' => '\common\models\cosfit\User'],
@@ -74,7 +74,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                    ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
                 'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
@@ -82,7 +82,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['rePassword', 'compare', 'compareAttribute' => 'newPassword', 'on' => self::COZXY_PROFILE],
             //['username', 'email'],
             [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
-                [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => 'register_new'],
+            [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => 'register_new'],
         ]);
     }
 
@@ -337,6 +337,12 @@ class User extends \common\models\costfit\master\UserMaster {
             $tel = $user->tel;
         }
         return $tel;
+    }
+
+    public static function getAvatar($userId) {
+        $user = User::find()->where("userId=" . $userId)->one();
+        $avatar = isset($user['avatar']) ? $user['avatar'] : '/images/avatar_2x.png'; //
+        return $avatar;
     }
 
 }

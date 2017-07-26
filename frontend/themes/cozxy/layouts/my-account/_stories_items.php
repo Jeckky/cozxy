@@ -94,7 +94,7 @@
 
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""/>
+                <img src="<?= $model['avatar'] ?>" alt=""/>
             </a>
         </div>
         <div class="info">

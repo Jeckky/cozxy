@@ -404,6 +404,7 @@ class DisplayMyStory extends Model {
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                     //'star' => $values[0],
                     'star' => number_format($results_rating, 2),
+                    'avatar' => \common\models\costfit\User::getAvatar(Yii::$app->user->id),
                     'productPostId' => $value->productPostId,
                 ];
             }
