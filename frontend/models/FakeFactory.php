@@ -491,4 +491,8 @@ class FakeFactory extends Model {
         return $products;
     }
 
+    public static function productPromotion($n, $categoryId) {
+        
+    }
+
 }

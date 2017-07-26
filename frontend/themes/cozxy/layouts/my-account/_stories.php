@@ -1,21 +1,25 @@
 <div class="sort-stories-cozxy">
     <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="row">
-        <div class="col-md-12 text-right sort-stories-cozxy">
-            <!--<a href="javascript:sortStoriesCozxy(<?//= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
-                Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>-->
-            <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="SORT_ASC">
-            <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view','myAccount')" style="color: #a79d9d;">
-                Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-            <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="SORT_ASC">
-            <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars','myAccount')" style="color: #a79d9d;">
-                Sort by stories stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-            <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="SORT_ASC">
-            <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'new','myAccount')" style="color: #a79d9d;">
-                Sort by new stories&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-            <input type="hidden" name="sortStoriesNew" id="sortStoriesNew" value="SORT_ASC">
-        </div>
         <?php
+        if (count($productPost->allModels)) {
+            ?>
+            <div class="col-md-12 text-right sort-stories-cozxy">
+                <!--<a href="javascript:sortStoriesCozxy(<?//= Yii::$app->user->id ?>,'price','myAccount')" style="color: #a79d9d;">
+                    Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>-->
+                <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="SORT_ASC">
+                <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'view','myAccount')" style="color: #a79d9d;">
+                    Sort by view&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <input type="hidden" name="sortStoriesView" id="sortStoriesView" value="SORT_ASC">
+                <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'stars','myAccount')" style="color: #a79d9d;">
+                    Sort by stories stars&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <input type="hidden" name="sortStoriesStars" id="sortStoriesStars" value="SORT_ASC">
+                <span style="color: #fc0;">|</span><a href="javascript:sortStoriesCozxy(<?= Yii::$app->user->id ?>,'new','myAccount')" style="color: #a79d9d;">
+                    Sort by new stories&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <input type="hidden" name="sortStoriesNew" id="sortStoriesNew" value="SORT_ASC">
+            </div>
+            <?php
+        }
         echo \yii\widgets\ListView::widget([
             'dataProvider' => $productPost,
             'options' => [
