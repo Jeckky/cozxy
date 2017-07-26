@@ -333,10 +333,10 @@ class CartController extends MasterController {
             $res["status"] = FALSE;
             $res['errorCode'] = 1;
             $res["message"] = "This item is already in your Wishlist";
-            $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
-            if (isset($ws)) {
-                $ws->delete();
-            }
+            /* $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+              if (isset($ws)) {
+              $ws->delete();
+              } */
             $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
             if (isset($ch)) {
                 $res['heartbeat'] = 1;

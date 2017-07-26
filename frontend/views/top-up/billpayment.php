@@ -18,6 +18,9 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
     </div>
     <div class="col-lg-6 text-right" style="padding-right: 35px;">
+        <a href="<?= Yii::$app->homeUrl ?>top-up/history" class="b btn-black">
+            < < Go to top up histories
+        </a>
         <a href="<?= Yii::$app->homeUrl . 'top-up/print-payment-form-topdf?amount=' . $amount . '&customerName=' . $customerName . '&customerTel=' . $customerTel . '&topUpNo=' . $topUpNo . '&taxId=' . $taxId . '&barCode=' . $barCode . '&data=' . $data ?>" class="b btn-yellow" target="_blank">
             Print
         </a>

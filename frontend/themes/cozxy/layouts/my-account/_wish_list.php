@@ -1,6 +1,8 @@
 <?php
 
 use common\models\costfit\ProductShelf;
+use frontend\models\DisplayMyAccount;
+use common\models\costfit\FavoriteStory;
 
 $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 ?>
@@ -91,15 +93,24 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 <div id="wishListShelf-<?= $shelf->productShelfId ?>">
 
                     <?php
-                    $wishlists = frontend\models\DisplayMyAccount::myAccountWishList($shelf->productShelfId);
+                    $wishlists = DisplayMyAccount::myAccountWishList($shelf->productShelfId, 8);
                     if (isset($wishlists) && count($wishlists) > 0) {
                         foreach ($wishlists as $value):
                             product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
                         endforeach;
                     }
+                    $isShowSeemore = DisplayMyAccount::wishlistItems($shelf->productShelfId);
+                    if ($isShowSeemore > 8) {
+                        ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                            <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $shelf->productShelfId ?>">See more >></a>
+                        </div>
+                        <?php
+                    }
                     ?>
                 </div>
-            <?php } else {
+                <?php
+            } else {
                 ?>
                 <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
                 <?php
@@ -107,5 +118,53 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             $i++;
         endforeach;
     }
+    ?></div>
+<?php
+$favoriteStories = ProductShelf::favoriteStories();
+$allFavorite = FavoriteStory::allFavoriteStories();
+if (isset($favoriteStories)) {
+    $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
     ?>
-</div>
+    <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
+        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+        </div>
+    </a>
+    <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
+        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+        </div>
+    </a>
+    <div id="showFavoriteItem" style="display:none;">
+        <div class="row" style="padding: 20px;">
+            <?=
+            \yii\widgets\ListView::widget([
+                'dataProvider' => $favoriteStory,
+                'options' => [
+                    'tag' => false,
+                ],
+                'itemView' => function ($model) {
+                    return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
+                },
+                //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                //'layout'=>"{summary}{pager}{items}"
+                'layout' => "{items}",
+                'itemOptions' => [
+                    'tag' => false,
+                ],
+            ]);
+            ?>
+        </div>
+        <?php
+        // throw new \yii\base\Exception(count($allFavorite));
+        if (isset($allFavorite) && $allFavorite > 3) {
+            ?>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                <a href="<?= Yii::$app->homeUrl ?>my-account/all-favorite-story">See more favorite stories >></a>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+<?php }
+?>

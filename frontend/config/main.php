@@ -1,14 +1,14 @@
 <?php
 
 $params = array_merge(
-require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log',
-        [
+            [
             'class' => 'common\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
         ]
@@ -39,7 +39,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
+                    [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -81,6 +81,8 @@ return [
                 'my-account/purchase-order/<hash>' => 'my-account/purchase-order/',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
+                'story/add-to-favorite' => 'story/add-to-favorite/',
+                'story/un-favorite' => 'story/un-favorite/',
                 'story/write-story' => 'story/write-story',
                 'story/rating-post' => 'story/rating-post',
                 'story/views-all/<hash>' => 'story/views-all',

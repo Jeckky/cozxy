@@ -218,6 +218,9 @@ function addItemToDefaultWishlist(id) {
         {
             if (data.status) {
                 window.location = $baseUrl + "my-account?act=2";
+            } else {
+                alert(data.message);
+                return false;
             }
         }
     });
@@ -258,6 +261,19 @@ function showWishlistGroup(shelfId, type) {
     }
 
 }
+function showFavorite(type) {
+    if (type == 1) {
+        $("#showFavoriteItem").show('fade-in');
+        $("#hidefav").show();
+        $("#showfav").hide();
+    } else {
+
+        $("#showFavoriteItem").hide('fade-in');
+        $("#hidefav").hide();
+        $("#showfav").show();
+    }
+
+}
 function deleteShelf(shelfId) {
 
     if (confirm('Are you sure to delete?')) {
@@ -284,6 +300,114 @@ function editShelf(shelfId, flag) {
         $('#editShelf' + shelfId).hide('fade-in');
         $('#hideEditShelf' + shelfId).hide();
         $('#showEditShelf' + shelfId).show();
+    }
+}
+function cancelEditShelf(shelfId) {
+    $('#editShelf' + shelfId).hide('fade-in');
+    $('#hideEditShelf' + shelfId).hide();
+    $('#showEditShelf' + shelfId).show();
+}
+function updateShelf(shelfId) {
+    var name = $('#shelfName' + shelfId).val();
+    if (name == '') {
+        alert('Shelf name can not empty');
+        return false;
+    } else {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "my-account/update-shelf",
+            data: {shelfId: shelfId, name: name},
+            success: function (data)
+            {
+                if (data.status) {
+                    $('#allShelf2').html(data.text);
+                    showWishlistGroup(shelfId, 1);
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    }
+}
+function addToFavoriteStory(productPostId) {
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "story/add-to-favorite",
+        data: {productPostId: productPostId},
+        success: function (data)
+        {
+            if (data.status) {
+                $("#favorite").hide();
+                $("#unfavorite").show();
+            } else {
+                alert(data.error);
+            }
+        }
+    });
+}
+function addToFavoriteStory(productPostId) {
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "story/add-to-favorite",
+        data: {productPostId: productPostId},
+        success: function (data)
+        {
+            if (data.status) {
+                $("#favorite").hide();
+                $("#unfavorite").show();
+                $("#showAddSuccess").show();
+                $("#showDelSuccess").hide();
+            } else {
+                alert(data.error);
+            }
+        }
+    });
+}
+function unFavoriteStory(productPostId) {
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "story/un-favorite",
+        data: {productPostId: productPostId},
+        success: function (data)
+        {
+            if (data.status) {
+                $("#favorite").show();
+                $("#unfavorite").hide();
+                $("#showAddSuccess").hide();
+                $("#showDelSuccess").show();
+            } else {
+                alert(data.error);
+            }
+        }
+    });
+}
+function deleteItemFromFav(productPostId) {
+    if (confirm('Are you sure to delete this favorite story')) {
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            url: $baseUrl + "story/un-favorite",
+            data: {productPostId: productPostId},
+            success: function (data)
+            {
+                //alert(data);
+                if (data.status) {
+                    //alert('aaaaa');
+                    $('#itemStory-' + productPostId).remove();
+                } else {
+                    /*
+                     $('.name-lockers-cool').html('');
+                     $('.view-map-images-lockers-cool').html('');
+                     */
+                }
+            }
+        });
+    } else {
+        return false;
     }
 }
 $(document).on('click', '#showCreateWishList', function (e) {
@@ -600,7 +724,7 @@ $(document).on('click', '#reviews-rate', function (e) {
             //alert(data["status"]);
             //(status);
             if (data) {
-                alert('Successful, you give ' + rate + ' stars to this post.');
+                $('#showSuccessRateStar').html('Successful, you give ' + rate + ' stars to this post.');
             } else {
                 alert('Somting wrong');
             }
