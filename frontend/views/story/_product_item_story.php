@@ -1,4 +1,4 @@
-<div class="col-md-3 col-sm-6 col-xs-12">
+<div class="<?php if (Yii::$app->controller->action->id == 'see-more') { ?>col-md-4<?php } else { ?>col-md-3<?php } ?> col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
             <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">

@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'tag' => false,
                                 ],
                                 'itemView' => function ($model, $key, $index, $widget) {
-                                    return $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories_items_seemore', ['model' => $model]);
+                                    return $this->render('@app/views/story/_product_item_story', ['model' => $model]);
                                 },
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
@@ -88,7 +88,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                 ?>
             </div>
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;     ?>','<?php //echo $clickNum;    ?>','<?php //echo $countAllProduct;                        ?>','<?php //echo $limit_start;                       ?>','<?php //echo $limit_end;                       ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;      ?>','<?php //echo $clickNum;     ?>','<?php //echo $countAllProduct;                         ?>','<?php //echo $limit_start;                        ?>','<?php //echo $limit_end;                        ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
