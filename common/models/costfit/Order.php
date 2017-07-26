@@ -75,7 +75,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+            [['pickingId'], 'required', 'on' => 'ship_to_cozxy_box'],
+        ]);
     }
 
     /**
