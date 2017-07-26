@@ -724,7 +724,7 @@ $(document).on('click', '#reviews-rate', function (e) {
             //alert(data["status"]);
             //(status);
             if (data) {
-                alert('Successful, you give ' + rate + ' stars to this post.');
+                $('#showSuccessRateStar').html('Successful, you give ' + rate + ' stars to this post.');
             } else {
                 alert('Somting wrong');
             }

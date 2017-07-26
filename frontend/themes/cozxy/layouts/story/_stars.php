@@ -2,11 +2,12 @@
     <?php
     if (isset(Yii::$app->user->identity->userId)) {
         ?>
-        <h3 class="page-header" style="margin:10px 20px;"><?= $productPost->userId != Yii::$app->user->identity->userId ? 'Rate this sotry' : 'Your story rate' ?></h3>
+        <h3 class="page-header" style="margin:10px 20px;"><?= $productPost->userId != Yii::$app->user->identity->userId ? 'Rate this story' : 'Your story rate' ?></h3>
     <?php } else { ?>
         <h3 class="page-header" style="margin:10px 20px;">Story rate</h3>
     <?php } ?>
     <div class="panel-body text-center fc-yellow3 size24">
+        <div id="showSuccessRateStar" style="color: #000;font-size: 10pt;"></div>
         <?php
         if (isset(Yii::$app->user->identity->userId)) {
             if ($productPost->userId != Yii::$app->user->identity->userId) {
