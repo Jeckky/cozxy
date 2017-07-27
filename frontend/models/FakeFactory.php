@@ -576,6 +576,8 @@ class FakeFactory extends Model
                 ];
             }
         }
+
+        return $products;
     }
 
 }
