@@ -414,14 +414,9 @@ class FakeFactory extends Model
         return $products;
     }
 
-<<<<<<< HEAD
     public static function productOtherProducts()
     {
-        $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null')
-=======
-    public static function productOtherProducts() {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status =1')
->>>>>>> v1.1
         ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
@@ -445,7 +440,6 @@ class FakeFactory extends Model
         return $products;
     }
 
-<<<<<<< HEAD
     public static function productPromotion($n, $cat = FALSE)
     {
         $products = [];
@@ -519,8 +513,13 @@ class FakeFactory extends Model
                 'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
                 'wishList' => $wishList
             ];
-=======
-    public static function productStoryViewsMore($n, $categoryId) {
+        }
+
+        return $products;
+    }
+
+    public static function productStoryViewsMore($n, $categoryId)
+    {
         $products = [];
         if ($n == 99) {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
@@ -576,17 +575,7 @@ class FakeFactory extends Model
                     'star' => number_format($results_rating, 2),
                 ];
             }
->>>>>>> v1.1
         }
-
-        return $products;
     }
 
-<<<<<<< HEAD
-=======
-    public static function productPromotion($n, $categoryId) {
-        
-    }
-
->>>>>>> v1.1
 }
