@@ -607,7 +607,9 @@ class MyAccountController extends MasterController {
     }
 
     public function actionAllFavoriteStory() {
-        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
+        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)
+                ]
+        );
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
                     'favoriteStory' => $favoriteStory,
                     'title' => 'Favorite stories'

@@ -50,8 +50,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 
             <?php
             if (isset($_GET['p'])) {
-                $productName = ProductSuppliers::productSupplierName($_GET['p'])->title;
-                echo 'Added &nbsp;&nbsp;&nbsp;"' . $productName . '" &nbsp;&nbsp;&nbsp;to wishlist.';
+                echo 'Added &nbsp;&nbsp;&nbsp;"' . $_GET['p'] . '" &nbsp;&nbsp;&nbsp;to wishlist.';
             }
             ?>
         </div>
