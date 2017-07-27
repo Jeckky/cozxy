@@ -168,7 +168,7 @@ if (isset($favoriteStories)) {
         </div>
         <?php
         // throw new \yii\base\Exception(count($allFavorite));
-        if (isset($allFavorite) && $allFavorite > 3) {
+        if (isset($allFavorite) && $allFavorite > 8) {
             ?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
                 <a href="<?= Yii::$app->homeUrl ?>my-account/all-favorite-story">See more favorite stories >></a>
