@@ -3,6 +3,7 @@
 use common\models\costfit\ProductShelf;
 use frontend\models\DisplayMyAccount;
 use common\models\costfit\FavoriteStory;
+use common\models\costfit\ProductSuppliers;
 
 $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 ?>
@@ -43,7 +44,17 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 }
 ?>
 <div class="row">
+
     <div class="col-md-12">
+        <div class="alert alert-warning">
+
+            <?php
+            if (isset($_GET['p'])) {
+                $productName = ProductSuppliers::productSupplierName($_GET['p'])->title;
+                echo 'Added &nbsp;&nbsp;&nbsp;"' . $productName . '" &nbsp;&nbsp;&nbsp;to wishlist.';
+            }
+            ?>
+        </div>
         <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ Create my shelf</a>
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>

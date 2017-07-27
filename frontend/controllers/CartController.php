@@ -316,6 +316,7 @@ class CartController extends MasterController {
         $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
         $defaultWishlistId = $defaultWishlist->productShelfId;
         $ws = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id . " and productShelfId=" . $defaultWishlistId)->one();
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $_POST['productId'])->one();
         if (!isset($ws)) {
             $ws = new Wishlist();
             $ws->productShelfId = $defaultWishlistId;
