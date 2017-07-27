@@ -19,7 +19,7 @@
                     return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
                 },
                 //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
+                //'layout' => "{items}{pager}",
                 'layout' => "{items}",
                 'itemOptions' => [
                     'tag' => false,
