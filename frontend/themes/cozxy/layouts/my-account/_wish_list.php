@@ -46,7 +46,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 <div class="row">
 
     <div class="col-md-12">
-        <div class="alert alert-warning">
+        <div class="alert alert-warning" style="display: <?= isset($_GET['p']) ? '' : 'none' ?>">
 
             <?php
             if (isset($_GET['p'])) {
