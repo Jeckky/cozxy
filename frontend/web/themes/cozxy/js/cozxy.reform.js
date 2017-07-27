@@ -217,7 +217,7 @@ function addItemToDefaultWishlist(id) {
         success: function (data)
         {
             if (data.status) {
-                window.location = $baseUrl + "my-account?act=2&&p=" + pId;
+                window.location = $baseUrl + "my-account?act=2&&p=" + data.title;
                 //$('#showSuccessAdd').html(data.showText);
             } else {
                 alert(data.message);

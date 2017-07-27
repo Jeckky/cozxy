@@ -13,11 +13,9 @@ use frontend\models\DisplayMyAccount;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\Wishlist;
 
-class MyAccountController extends MasterController
-{
+class MyAccountController extends MasterController {
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -39,8 +37,7 @@ class MyAccountController extends MasterController
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory'));
     }
 
-    public function actionEditPersonalDetail()
-    {
+    public function actionEditPersonalDetail() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -72,8 +69,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionNewBilling()
-    {
+    public function actionNewBilling() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -98,8 +94,7 @@ class MyAccountController extends MasterController
         return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
-    public function actionChangePassword()
-    {
+    public function actionChangePassword() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -118,8 +113,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionReset()
-    {
+    public function actionReset() {
         $request = Yii::$app->request;
         $token = $request->post('token');
 
@@ -132,8 +126,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionEditBilling($hash)
-    {
+    public function actionEditBilling($hash) {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -163,8 +156,7 @@ class MyAccountController extends MasterController
         return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
     }
 
-    public function actionDeleteItemToBillingAddress()
-    {
+    public function actionDeleteItemToBillingAddress() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -178,8 +170,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionPurchaseOrder($hash)
-    {
+    public function actionPurchaseOrder($hash) {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -208,8 +199,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionOrderSort()
-    {
+    public function actionOrderSort() {
 
         $status = Yii::$app->request->post('status');
         $selectSearch = Yii::$app->request->post('selectSearch');
@@ -237,8 +227,7 @@ class MyAccountController extends MasterController
         return $this->renderAjax("@app/themes/cozxy/layouts/my-account/_order_history", ['orderHistory' => $orderHistorySort, 'statusText' => $statusText]);
     }
 
-    public function actionSortStories()
-    {
+    public function actionSortStories() {
         /*
          * request : get
          */
@@ -301,8 +290,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionSortStoriesRecent()
-    {
+    public function actionSortStoriesRecent() {
 
         $isUserId = Yii::$app->request->get('userId');
         /*
@@ -344,11 +332,10 @@ class MyAccountController extends MasterController
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
-    public function actionDetailTracking($hash)
-    {
+    public function actionDetailTracking($hash) {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -378,8 +365,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionShowWishlistGroup()
-    {
+    public function actionShowWishlistGroup() {
         $shelfId = $_POST['shelfId'];
         $res = [];
         $idHide = [];
@@ -400,10 +386,10 @@ class MyAccountController extends MasterController
             $edit = '<i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;"></i>';
             $delete = '<i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;"></i>';
             $text .= '<div class="pull-right">'
-            . '<a href="javascript:editShelf(' . $shelfId . ',1)" id="showEditShelf' . $shelfId . '" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>'
-            . '<a href="javascript:editShelf(' . $shelfId . ',0)" id="hideEditShelf' . $shelfId . '" style="display:none;cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
-            . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
-            . '</div>';
+                    . '<a href="javascript:editShelf(' . $shelfId . ',1)" id="showEditShelf' . $shelfId . '" style="cursor:pointer; color:#FF6699;">' . $edit . '</a>'
+                    . '<a href="javascript:editShelf(' . $shelfId . ',0)" id="hideEditShelf' . $shelfId . '" style="display:none;cursor:pointer; color:#FF6699;">' . $edit . '</a>' . '&nbsp;&nbsp;&nbsp;'
+                    . '<a href="javascript:deleteShelf(' . $shelfId . ')" style="cursor:pointer; color:#000;">' . $delete . '</a>'
+                    . '</div>';
             $text .= " <div id='editShelf" . $shelfId . "' style='display: none;' class='col-md-12'>
 
             <h4>Shelf's Name</h4>
@@ -460,8 +446,7 @@ class MyAccountController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function createDefault()
-    {
+    public function createDefault() {
         $defaultWishlist = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and type=1")->one();
         if (!isset($defaultWishlist)) {
             $default = new ProductShelf();
@@ -486,8 +471,7 @@ class MyAccountController extends MasterController
         }
     }
 
-    public function actionDeleteShelf()
-    {
+    public function actionDeleteShelf() {
         $res = [];
         $text = '';
         $productShelfId = $_POST['shelfId'];
@@ -550,8 +534,7 @@ class MyAccountController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionUpdateShelf()
-    {
+    public function actionUpdateShelf() {
         $res = [];
         $text = '';
         $productShelfId = $_POST['shelfId'];
@@ -614,23 +597,21 @@ class MyAccountController extends MasterController
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionAllWishlist()
-    {
+    public function actionAllWishlist() {
         $shelfId = $_GET['s'];
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId, 0);
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-            'wishlists' => $wishlists,
-            'title' => $productShelf->title
+                    'wishlists' => $wishlists,
+                    'title' => $productShelf->title
         ]);
     }
 
-    public function actionAllFavoriteStory()
-    {
+    public function actionAllFavoriteStory() {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-            'favoriteStory' => $favoriteStory,
-            'title' => 'Favorite stories'
+                    'favoriteStory' => $favoriteStory,
+                    'title' => 'Favorite stories'
         ]);
     }
 

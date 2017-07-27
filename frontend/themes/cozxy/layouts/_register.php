@@ -127,7 +127,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="submit" id="create-account" class="btn-yellow fullwidth" value="CREATE ACCOUNT DISABLED" disabled>
+                            <input type="submit" id="create-account" class="btn-yellow fullwidth" value="CREATE ACCOUNT" disabled>
                         </div>
                     </div>
 
