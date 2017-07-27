@@ -325,6 +325,7 @@ class CartController extends MasterController {
             $ws->createDateTime = new \yii\db\Expression("NOW()");
             if ($ws->save()) {
                 $res["status"] = TRUE;
+                $res['title'] = \common\models\costfit\ProductSuppliers::productSupplierName($_POST['productId'])->title;
             } else {
                 $res["status"] = FALSE;
                 $res['errorCode'] = 2;
