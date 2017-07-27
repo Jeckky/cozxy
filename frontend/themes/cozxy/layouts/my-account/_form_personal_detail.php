@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
             <div class="row">
                 <div class="col-md-4">
                     <p>Email</p>
-                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
+                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS', 'disabled'=>true])->label(false); ?>
                 </div>
             </div>
             <div class="row">
