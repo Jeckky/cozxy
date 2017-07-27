@@ -28,6 +28,7 @@ class MyAccountController extends MasterController {
 
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', ''),
             'pagination' => ['defaultPageSize' => 8]]);
+
         $trackingOrder = NULL; //new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking()]);
         $returnList = \common\models\costfit\Ticket::find()->where("userId=" . Yii::$app->user->id)->all();
         $this->createDefault(); //สร้าง  Defalut wishlist and default favorite stories
@@ -607,9 +608,7 @@ class MyAccountController extends MasterController {
     }
 
     public function actionAllFavoriteStory() {
-        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)
-                ]
-        );
+        $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
                     'favoriteStory' => $favoriteStory,
                     'title' => 'Favorite stories'

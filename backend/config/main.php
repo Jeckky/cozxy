@@ -108,6 +108,12 @@ return [
         'productpost' => [
             'class' => 'backend\modules\productpost\Productpost',
         ],
+        'mimin' => [
+            'class' => '\hscstudio\mimin\Module',
+        ],
+        'error' => [
+            'class' => 'backend\modules\error\Error',
+        ],
         'inbound' => [
             'class' => 'backend\modules\inbound\Inbound',
         ],
@@ -116,6 +122,7 @@ return [
         ],
     ],
     'components' => [
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -133,9 +140,8 @@ return [
             ],
         ],
         'errorHandler' => [
-            //'errorAction' => 'site/error',
             'class' => 'yii\web\ErrorHandler',
-            'errorAction' => '\backend\error\error\index',
+            'errorAction' => 'error/error/index',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -183,6 +189,19 @@ return [
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD', //GD or Imagick
+        ],
+    ],
+    'as access' => [
+        'class' => '\hscstudio\mimin\components\AccessControl',
+        'allowActions' => [
+            // add wildcard allowed action here!
+            'dashboard/*',
+            'auth/*',
+            'site/*',
+            'debug/*',
+            'mimin/*', // only in dev mode
+//            'management/*'
+            'topup/*',
         ],
     ],
     'params' => $params,

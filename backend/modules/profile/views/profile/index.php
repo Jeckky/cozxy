@@ -78,7 +78,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <span class="panel-title">Social</span>
                     </div>
                     <div class="list-group">
-                        <a href="#" class="list-group-item"><i class="profile-list-icon fa fa-twitter" style="color: #4ab6d5"></i> &nbsp;</a>
+                        <a href="#" class="list-group-item" ><i class="profile-list-icon fa fa-twitter" style="color: #4ab6d5"></i> &nbsp;</a>
                         <a href="#" class="list-group-item"><i class="profile-list-icon fa fa-facebook-square" style="color: #1a7ab9"></i> &nbsp;</a>
                         <a href="#" class="list-group-item"><i class="profile-list-icon fa fa-envelope" style="color: #888"></i> &nbsp;</a>
                     </div>

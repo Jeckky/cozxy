@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\helpers\Upload;
+use hscstudio\mimin\models\AuthAssignment;
+use hscstudio\mimin\models\AuthItem;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -69,6 +71,19 @@ class UserController extends ManagementMasterController
     {
 
         $modelUser = $this->findModel($id);
+
+        $authAssignments = AuthAssignment::find()->where([
+            'user_id' => $modelUser->userId,
+        ])->column();
+
+        $authItems = \yii\helpers\ArrayHelper::map(
+        AuthItem::find()->where([
+            'type' => 1,
+        ])->asArray()->all(), 'name', 'name');
+
+        $authAssignment = new AuthAssignment([
+            'user_id' => $modelUser->userId,
+        ]);
         //echo $modelUser->user_group_Id;
         $CheckuserGroup = str_replace('[', '', str_replace(']', '', $modelUser->user_group_Id));
 
@@ -96,9 +111,10 @@ class UserController extends ManagementMasterController
 
         //echo '<pre>';
         // print_r($listMenu);
-
+        $authAssignment->item_name = $authAssignments;
         return $this->render('view', [
-            'model' => $this->findModel($id), 'listViewLevels' => $listViewLevels, 'listMenu' => $listMenu
+            'model' => $this->findModel($id), 'listViewLevels' => $listViewLevels, 'listMenu' => $listMenu, 'authAssignment' => $authAssignment,
+            'authItems' => $authItems,
         ]);
     }
 
@@ -222,27 +238,62 @@ class UserController extends ManagementMasterController
     public function actionGroup($id)
     {
         $model = $this->findModel($id);
-        if (isset($_POST["ViewLevels"])) {
-            $model->attributes = $_POST["ViewLevels"];
-            if (isset($_POST["ViewLevels"]['user_group_Id'])) {
-                $rules = '';
-                foreach ($_POST["ViewLevels"]['user_group_Id'] as $value) {
-                    $rules .= $value . ',';
-                }
-                $listRules = substr($rules, 0, -1);
-                $getRules = '[' . $listRules . ']';
-            } else {
-                $getRules = '[]';
-            }
-            $model->user_group_Id = $getRules;
-            $model->updateDateTime = new \yii\db\Expression('NOW()');
+//        if (isset($_POST["ViewLevels"])) {
+//            $model->attributes = $_POST["ViewLevels"];
+//            if (isset($_POST["ViewLevels"]['user_group_Id'])) {
+//                $rules = '';
+//                foreach ($_POST["ViewLevels"]['user_group_Id'] as $value) {
+//                    $rules .= $value . ',';
+//                }
+//                $listRules = substr($rules, 0, -1);
+//                $getRules = '[' . $listRules . ']';
+//            } else {
+//                $getRules = '[]';
+//            }
+//            $model->user_group_Id = $getRules;
+//            $model->updateDateTime = new \yii\db\Expression('NOW()');
+//
+//            if ($model->save(FALSE)) {
+//                return $this->redirect(['index']);
+//            }
+//        }
+        $authAssignments = AuthAssignment::find()->where([
+            'user_id' => $model->userId,
+        ])->column();
 
-            if ($model->save(FALSE)) {
-                return $this->redirect(['index']);
+        $authItems = \yii\helpers\ArrayHelper::map(
+        AuthItem::find()->where([
+            'type' => 1,
+        ])->asArray()->all(), 'name', 'name');
+
+        $authAssignment = new AuthAssignment([
+            'user_id' => $model->userId,
+        ]);
+        if (Yii::$app->request->post()) {
+//            throw new \yii\base\Exception(print_r(Yii::$app->request->post(), true));
+            $authAssignment->load(Yii::$app->request->post());
+            // delete all role
+            AuthAssignment::deleteAll(['user_id' => $model->userId]);
+            if (is_array($authAssignment->item_name)) {
+                foreach ($authAssignment->item_name as $item) {
+//                    if (!in_array($item, $authAssignments)) {
+                    $authAssignment2 = new AuthAssignment([
+                        'user_id' => $model->userId,
+                    ]);
+                    $authAssignment2->item_name = $item;
+                    $authAssignment2->created_at = time();
+                    $authAssignment2->save();
+
+                    $authAssignments = AuthAssignment::find()->where([
+                        'user_id' => $model->userId,
+                    ])->column();
+//                    }
+                }
             }
+            Yii::$app->session->setFlash('success', 'Data tersimpan');
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
     }
 
     /**

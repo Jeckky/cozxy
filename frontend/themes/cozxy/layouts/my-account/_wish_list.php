@@ -9,7 +9,8 @@ $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 ?>
 <?php
 
-function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
+function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType)
+{
     $quantity = 1;
     echo '
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
@@ -91,15 +92,15 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 
             <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
                 <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+        <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
                 </div>
             </a>
             <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
                 <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+        <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
                 </div>
             </a>
-            <?php if ($i == 0) { ?>
+        <?php if ($i == 0) { ?>
                 <div id="wishListShelf-<?= $shelf->productShelfId ?>">
 
                     <?php
@@ -137,12 +138,12 @@ if (isset($favoriteStories)) {
     ?>
     <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <div id="showFavoriteItem" style="display:none;">
