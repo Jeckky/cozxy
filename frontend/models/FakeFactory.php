@@ -84,9 +84,9 @@ class FakeFactory extends Model
         if ($cat != FALSE) {
             $whereArray2["category_to_product.categoryId"] = $params['categoryId'];
 
-            //$whereArray2["product_suppliers.approve"] = "approve";
-            // $whereArray2["ps.result"] = "0";
-            //$whereArray2["pps.status"] = "1";
+//$whereArray2["product_suppliers.approve"] = "approve";
+// $whereArray2["ps.result"] = "0";
+//$whereArray2["pps.status"] = "1";
             $product = \common\models\costfit\CategoryToProduct::find()
             ->select('*')
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
@@ -166,7 +166,7 @@ class FakeFactory extends Model
                     'productSuppId' => $value->productSuppId,
                     'image' => $productImagesThumbnail1,
                     //'image' => isset($productImages->imageThumbnail1) ? Yii::$app->homeUrl . $productImages->imageThumbnail1 : '',
-                    //'url' => 'product?id = ' . $value->productSuppId,
+//'url' => 'product?id = ' . $value->productSuppId,
                     'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
                     'brand' => isset($value->brand) ? $value->brand->title : '',
                     'title' => $title,
@@ -205,17 +205,17 @@ class FakeFactory extends Model
     {
         $products = [];
         if ($n == 99) {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null  ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                // $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
-                //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
+// $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
+//$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
                 $price = number_format($productPrice->price, 2);
@@ -228,8 +228,8 @@ class FakeFactory extends Model
                 }
 
                 $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-                //echo $test[0];
-                //exit();
+//echo $test[0];
+//exit();
                 if ($controller[0] == '') {
                     $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
                 } else {
@@ -241,8 +241,8 @@ class FakeFactory extends Model
                     'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail1,
                     //'url' => '/story?id = ' . $items->productSuppId,
-                    //'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
-                    //'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
+//'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+//'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
@@ -262,12 +262,12 @@ class FakeFactory extends Model
     {
         $products = [];
 
-        $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId)->orderBy('productPostId desc')->all();
-        //throw new \yii\base\Exception(count($productPost));
+        $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId . '  and status =1')->orderBy('productPostId desc')->all();
+//throw new \yii\base\Exception(count($productPost));
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
             foreach ($productPostList as $items) {
-                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
+//$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
                 $productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
                 $price_s = number_format($productPrice->price, 2);
@@ -332,14 +332,14 @@ class FakeFactory extends Model
     public static function productViews($productSuppId)
     {
         $products = [];
-        //$imagAll = [];
+//$imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
         $GetProductCozxy = $GetProductSuppliers->product;
-        //foreach ($GetProductSuppliers as $items) {
+//foreach ($GetProductSuppliers as $items) {
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers['productId'], $productSuppId, 'Svg116x116', 'Svg555x340');
 
-        //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
+//throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {
             $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers['categoryId'])->one();
         }
@@ -365,7 +365,7 @@ class FakeFactory extends Model
             'price' => isset($price) ? number_format($price, 2) : '',
             'category' => isset($GetCategory->title) ? $GetCategory->title : '',
             //'image' => $productImagesOneTopz,
-            //'images' => $imagAll,
+//'images' => $imagAll,
             'image' => $productImagesMulti['productImagesOneTopz'],
             'images' => $productImagesMulti['imagAll'],
             'maxQnty' => $GetProductSuppliers['result'],
@@ -378,7 +378,7 @@ class FakeFactory extends Model
             'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
         ];
-        // }
+// }
 
         return $products;
     }
@@ -386,7 +386,7 @@ class FakeFactory extends Model
     public static function productSlideBanner($n, $status)
     {
         $products = [];
-        //$brand = \common\models\costfit\Brand::find()->all();
+//$brand = \common\models\costfit\Brand::find()->all();
         $brand = \common\models\costfit\ProductSuppliers::find()
         ->select(' `brand`.*    , `product_suppliers`.*')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
@@ -414,9 +414,14 @@ class FakeFactory extends Model
         return $products;
     }
 
+<<<<<<< HEAD
     public static function productOtherProducts()
     {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null')
+=======
+    public static function productOtherProducts() {
+        $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status =1')
+>>>>>>> v1.1
         ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
@@ -440,6 +445,7 @@ class FakeFactory extends Model
         return $products;
     }
 
+<<<<<<< HEAD
     public static function productPromotion($n, $cat = FALSE)
     {
         $products = [];
@@ -513,9 +519,74 @@ class FakeFactory extends Model
                 'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
                 'wishList' => $wishList
             ];
+=======
+    public static function productStoryViewsMore($n, $categoryId) {
+        $products = [];
+        if ($n == 99) {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
+        } else {
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
+            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+        }
+        foreach ($productPost as $value) {
+            if (isset($categoryId)) {
+                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' and categoryId=' . $categoryId)->all();
+            } else {
+                $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' ')->all();
+            }
+
+            foreach ($productPostList as $items) {
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
+                //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+                $price_s = number_format($productPrice->price, 2);
+                $price = number_format($productPrice->price, 2);
+                $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
+                $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
+                if ($rating_score == 0 && $rating_member == 0) {
+                    $results_rating = 0;
+                } else {
+                    $results_rating = $rating_score / $rating_member;
+                }
+
+                $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+                //echo $test[0];
+                //exit();
+                if ($controller[0] == '') {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
+                } else {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
+                }
+
+                $products[$value->productId] = [
+                    'productId' => $value->productId,
+                    'productPostId' => $value->productPostId,
+                    'image' => $productImagesThumbnail1,
+                    //'url' => '/story?id = ' . $items->productSuppId,
+                    //'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    //'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
+                    'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    'brand' => isset($items->brand) ? $items->brand->title : '',
+                    'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
+                    'head' => $value->title,
+                    'price_s' => $price_s,
+                    'price' => $price,
+                    'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
+                    'star' => number_format($results_rating, 2),
+                ];
+            }
+>>>>>>> v1.1
         }
 
         return $products;
     }
 
+<<<<<<< HEAD
+=======
+    public static function productPromotion($n, $categoryId) {
+        
+    }
+
+>>>>>>> v1.1
 }

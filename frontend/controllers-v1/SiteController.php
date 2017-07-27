@@ -95,7 +95,7 @@ class SiteController extends MasterController {
         $popularCat = Category::findAllPopularCategory();
         $hotProduct = \common\models\costfit\ProductHot::findAllHotProducts();
         //$footer = "adfadf";
-        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'])->orderBy('productPostId desc')->limit(20)->all();
+        $productPost = \common\models\costfit\ProductPost::find()->groupBy(['productSuppId'] . ' and product_post.status =1')->orderBy('productPostId desc')->limit(20)->all();
         $pCanSale = \common\models\costfit\ProductSuppliers::find()
         ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
         ->where('product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND product_price_suppliers.price > 0')->orderBy(new \yii\db\Expression('rand()'));
@@ -366,7 +366,7 @@ class SiteController extends MasterController {
         ->select('product_post.productPostId, product_post.productSuppId,user.username ,product_post_rating.score, product_post.title , product_post.description ,product_post.createDateTime')
         ->join("LEFT JOIN", 'user', 'user.userId = product_post.userId')
         ->join("LEFT JOIN", 'product_post_rating', 'product_post_rating.productPostId = product_post.productPostId')
-        ->where('product_post.productSuppId=' . $productSuppId)
+        ->where('product_post.productSuppId=' . $productSuppId . ' and product_post.status =1')
         ->all();
 
         return \yii\helpers\Json::encode($reviews);

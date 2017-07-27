@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Jul 24, 2017, 11:46:19 AM
+    Author     : it
+*/
+
+.login-box select {
+    text-overflow: '';
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid #999;
+    /* padding: 11px 10px 12px; */
+    /* margin-top: 8px; */
+    /* margin-bottom: 8px; */
+    color: #666;
+    /* -webkit-border-radius: 0px; */
+    -moz-border-radius: 0px;
+    /* border-radius: 0px; */
+    /* -webkit-appearance: none; */
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    /* background: #fff url(../imgs/select-arrow.png) right center no-repeat; */
+}

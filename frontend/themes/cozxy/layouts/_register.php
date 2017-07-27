@@ -4,8 +4,28 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
+$this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
 \frontend\assets\LoginRegisterAsset::register($this);
 ?>
+<style type="text/css">
+    .login-box .select-new {
+        text-overflow: '';
+        overflow: hidden;
+        white-space: nowrap;
+        border: 1px solid #999;
+        /* padding: 11px 10px 12px; */
+        /* margin-top: 8px; */
+        margin-bottom: 8px;
+        color: #666;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px;
+        /* -webkit-appearance: inherit; */
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+    }
+</style>
 <div class="container login-box">
     <div class="row">
         <div class="col-xs-12">
@@ -17,7 +37,7 @@ use yii\bootstrap\ActiveForm;
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
-                            <?php // throw new \yii\base\Exception($model->scenario); ?>
+                            <?php // throw new \yii\base\Exception($model->scenario);  ?>
                             <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
@@ -38,19 +58,85 @@ use yii\bootstrap\ActiveForm;
                             <p>Gender</p>
                             <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-9">
                             <p>Birthday</p>
+
+                            <div class="form-group col-md-4  field-signupform-dd required <?= isset($ddError) ? $ddError : '' ?>" style="padding-left: 0px;">
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'dd',
+                                    'data' => $birthdate['dates'],
+                                    'options' => ['placeholder' => 'Select a day ...'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                                <p class="help-block help-block-error"><?= isset($dd) ? $dd : '' ?></p>
+                            </div>
+
+                            <div class="form-group col-md-4 field-signupform-dd required <?= isset($mmError) ? $mmError : '' ?>">
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'mm',
+                                    'data' => $birthdate['month'],
+                                    // 'value' => ['2'], // value to initialize
+                                    //'options' => ['placeholder' => 'Select a month ...'],
+                                    'options' => ['placeholder' => 'Selecione a month'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                                <p class="help-block help-block-error"><?= isset($mm) ? $mm : '' ?></p>
+                            </div>
+
+                            <div class="form-group col-md-4  field-signupform-dd required <?= isset($yyyyError) ? $yyyyError : '' ?>">
+                                <?php
+                                // With a model and without ActiveForm
+                                echo \kartik\select2\Select2::widget([
+                                    'model' => $model,
+                                    'attribute' => 'yyyy',
+                                    'data' => $birthdate['years'],
+                                    'options' => ['placeholder' => 'Select a year ...'],
+                                    'pluginOptions' => [
+                                        'allowClear' => true
+                                    ],
+                                ]);
+                                ?>
+                                <p class="help-block help-block-error"><?= isset($yyyy) ? $yyyy : '' ?></p>
+                            </div>
+
+                            <!--
                             <input type="number" name="SignupForm[dd]" min="1" max="31" placeholder="31" style="width: 26%">
                             <input type="number" name="SignupForm[mm]" min="1" max="12" placeholder="12" style="width: 26%">
                             <input type="number" name="SignupForm[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
+                            -->
                         </div>
-                        <div class="col-md-6"><input type="submit" class="btn-yellow fullwidth" value="CREATE ACCOUNT"></div>
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <label class="">
+                                    <div class="icheckbox" style="position: relative;">
+                                        <input type="checkbox" id="loginform-accept-term" name="User[acceptTerm]" value="1">
+                                    </div> I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="submit" id="create-account" class="btn-yellow fullwidth" value="CREATE ACCOUNT DISABLED" disabled>
+                        </div>
                     </div>
-                    <?php ActiveForm::end(); ?>
+
                 </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="size64">&nbsp;</div>
 <div style="background:#ccc url(<?= Url::home() ?>imgs/c-diamond.png) center no-repeat; background-size: cover; padding: 64px 0 96px; margin-top: 48px;" class="text-center size48 size32-sm size24-xs b">HOW IT WORK</div>
@@ -77,3 +163,20 @@ use yii\bootstrap\ActiveForm;
     </div>
 </div>
 <div class="size48">&nbsp;</div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">I have read and agree with the terms</h4>
+            </div>
+            <div class="modal-body">
+                <?= $content['description'] ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="acceptTerms">Accept</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

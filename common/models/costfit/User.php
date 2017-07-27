@@ -364,6 +364,7 @@ class User extends \common\models\costfit\master\UserMaster
         return $tel;
     }
 
+<<<<<<< HEAD
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -372,6 +373,12 @@ class User extends \common\models\costfit\master\UserMaster
         return $this->hasMany(\hscstudio\mimin\models\AuthAssignment::className(), [
             'user_id' => 'userId',
         ]);
+=======
+    public static function getAvatar($userId) {
+        $user = User::find()->where("userId=" . $userId)->one();
+        $avatar = isset($user['avatar']) ? $user['avatar'] : '/images/avatar_2x.png'; //
+        return $avatar;
+>>>>>>> v1.1
     }
 
 }

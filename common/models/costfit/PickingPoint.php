@@ -4,6 +4,7 @@ namespace common\models\costfit;
 
 use Yii;
 use \common\models\costfit\master\PickingPointMaster;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "picking_point".
@@ -150,6 +151,16 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         } else {
             return '';
         }
+    }
+
+    public static function availableProvince()
+    {
+        preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
+        return ArrayHelper::map(States::find()->select(['stateId', 'localName'])
+            ->leftJoin($dbName[1].'.picking_point cpp', 'states.stateId=cpp.provinceId')
+            ->groupBy('cpp.provinceId')
+            ->orderBy('states.localName')
+            ->asArray()->all(), 'stateId', 'localName');
     }
 
 }

@@ -18,6 +18,7 @@ use frontend\models\FakeFactory;
 use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
 use common\helpers\Email;
+use common\helpers\CozxyUnity;
 
 /**
  * Site controller
@@ -219,28 +220,58 @@ class SiteController extends MasterController
     public function actionSignup()
     {
         //$model_verdifile = new \common\models\costfit\User(['scenario' => 'register']);
+        $dd = '';
+        $mm = '';
+        $yyyy = '';
+        $ddError = '';
+        $mmError = '';
+        $yyyyError = '';
         $model = new SignupForm(['scenario' => 'register']);
+        $contentGroup = ContentGroup::find()->where("lower(title)='term'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->one();
+        } else {
+            $content = FALSE;
+        }
+        $birthdate = [];
+        $birthdate['dates'] = CozxyUnity::getDates(1);
 
+        $birthdate['month'] = CozxyUnity::getMonthEn(01);
+        $birthdate['years'] = CozxyUnity::getYears(1999);
         if (isset($_POST["SignupForm"])) {
 
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
+                if ($_POST["SignupForm"]['dd'] == '') {
+                    $dd = 'Date cannot be blank.';
+                    $ddError = 'has-error';
+                }
+                if ($_POST["SignupForm"]['mm'] == '') {
+                    $mm = 'Month cannot be blank.';
+                    $mmError = 'has-error';
+                }
+                if ($_POST["SignupForm"]['yyyy'] == '') {
+                    $yyyy = 'Years cannot be blank.';
+                    $yyyyError = 'has-error';
+                }
+
                 $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
-                //echo $model->birthDate;
-                //exit();
+
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
                         return $this->redirect([Yii::$app->homeUrl . 'site/thank']);
                     }
                 }
+            } else {
+
             }
         } else {
 
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model,
+            'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
         ]);
     }
 

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
             <div class="form-group">
-                <label for="exampleInputEmail1">Billing type *</label>
+                <label for="">Billing type *</label>
                 <div class="select-style">
                     <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                         <option value="personal">Individual </option>
@@ -35,13 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Company (option)</label>
+                            <label for="">Company (option)</label>
                             <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Tax </label>
+                            <label for="">Tax </label>
                             <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                         </div>
                     </div>
@@ -51,26 +51,26 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">First Name</label>
+                        <label for="">First Name</label>
                         <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
+                        <label for="">Last Name</label>
                         <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Address</label>
+                <label for="">Address</label>
                 <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Countries</label>
+                        <label for="">Countries</label>
                         <?php
                         echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
                             //'options' => ['id' => 'address-countryid'],
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Province</label>
+                        <label for="">Province</label>
                         <?php
                         echo Html::hiddenInput('input-type-1', $model->provinceId, ['id' => 'input-type-1']);
                         echo Html::hiddenInput('input-type-2', $model->provinceId, ['id' => 'input-type-2']);
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">City</label>
+                        <label for="">City</label>
                         <?php
                         echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
                         echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">District</label>
+                        <label for="">District</label>
                         <?php
                         echo Html::hiddenInput('input-type-13', $model->districtId, ['id' => 'input-type-13']);
                         echo Html::hiddenInput('input-type-33', $model->districtId, ['id' => 'input-type-33']);
@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Zipcode</label>
+                        <label for="">Zipcode</label>
                         <?php
                         echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
                         echo Html::hiddenInput('input-type-42', $model->districtId, ['id' => 'input-type-42']);
@@ -184,19 +184,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
+                            <label for="">Email</label>
                             <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <label for="">Mobile Number</label>
                             <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Default address</label>
+                    <label for="">Default address</label>
                     <?php echo $form->field($model, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio']])->label(false); ?>
                 </div>
 

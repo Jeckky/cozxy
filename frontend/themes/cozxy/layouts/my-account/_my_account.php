@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $this->render('_return_list', compact('returnList')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in <?= isset($_GET['act']) ? 'active' : ''; ?>" id="wish-list">
-                    <?= $this->render('_wish_list', compact('')) ?>
+                    <?= $this->render('_wish_list', compact('favoriteStory')) ?>
                 </div>
                 <!--<div role="tabpanel" class="tab-pane fade in" id="tracking">
                     <?//= $this->render('_tracking', compact('trackingOrder')) ?>

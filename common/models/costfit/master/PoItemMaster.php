@@ -11,16 +11,16 @@ use Yii;
     * @property string $poId
     * @property string $storeId
     * @property string $productId
-    * @property integer $productSuppId
+    * @property string $productSuppId
     * @property string $paletNo
-    * @property integer $quantity
+    * @property string $quantity
     * @property string $price
     * @property string $marginPercent
     * @property string $marginValue
     * @property string $marginPrice
     * @property string $total
     * @property integer $shippingFromType
-    * @property integer $importQuantity
+    * @property string $importQuantity
     * @property string $remark
     * @property string $orderItemId
     * @property integer $status

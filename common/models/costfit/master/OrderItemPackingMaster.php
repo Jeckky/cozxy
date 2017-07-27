@@ -7,19 +7,18 @@ use Yii;
 /**
 * This is the model class for table "order_item_packing".
 *
-    * @property integer $orderItemPackingId
-    * @property integer $orderItemId
-    * @property integer $pickingItemsId
+    * @property string $orderItemPackingId
+    * @property string $orderItemId
+    * @property string $pickingItemsId
     * @property string $bagNo
-    * @property integer $quantity
+    * @property string $quantity
     * @property integer $status
     * @property integer $type
     * @property string $shipDate
     * @property string $remark
     * @property integer $userId
-    * @property integer $packer
-    * @property integer $shipper
-    * @property string $taxNo
+    * @property string $packer
+    * @property string $shipper
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate
@@ -45,7 +44,6 @@ return [
             [['shipDate', 'createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
             [['remark'], 'string', 'max' => 150],
-            [['taxNo'], 'string', 'max' => 100],
         ];
 }
 
@@ -67,7 +65,6 @@ return [
     'userId' => Yii::t('order_item_packing', 'User ID'),
     'packer' => Yii::t('order_item_packing', 'Packer'),
     'shipper' => Yii::t('order_item_packing', 'Shipper'),
-    'taxNo' => Yii::t('order_item_packing', 'Tax No'),
     'createDateTime' => Yii::t('order_item_packing', 'Create Date Time'),
     'updateDateTime' => Yii::t('order_item_packing', 'Update Date Time'),
     'lastvisitDate' => Yii::t('order_item_packing', 'Lastvisit Date'),

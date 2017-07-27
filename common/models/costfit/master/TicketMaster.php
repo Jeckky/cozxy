@@ -8,16 +8,16 @@ use Yii;
 * This is the model class for table "ticket".
 *
     * @property string $ticketId
-    * @property integer $orderId
-    * @property integer $userId
+    * @property string $orderId
+    * @property string $userId
     * @property string $title
     * @property string $description
     * @property string $ticketNo
     * @property string $remark
     * @property integer $cozxyRemark
-    * @property integer $provinceId
-    * @property integer $amphurId
-    * @property integer $pickingId
+    * @property string $provinceId
+    * @property string $amphurId
+    * @property string $pickingId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

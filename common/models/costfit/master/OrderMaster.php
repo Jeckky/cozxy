@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $orderId
     * @property string $userId
-    * @property integer $pickingId
+    * @property string $pickingId
     * @property string $token
     * @property string $orderNo
     * @property string $invoiceNo
@@ -20,10 +20,10 @@ use Yii;
     * @property string $grandTotal
     * @property string $shippingRate
     * @property string $summary
-    * @property integer $userCoin
-    * @property integer $cozxyCoin
+    * @property string $userCoin
+    * @property string $cozxyCoin
     * @property string $sendDate
-    * @property integer $addressId
+    * @property string $addressId
     * @property integer $isPayNow
     * @property string $billingFirstname
     * @property string $billingLastname
@@ -48,12 +48,12 @@ use Yii;
     * @property string $shippingZipcode
     * @property string $shippingTel
     * @property integer $paymentType
-    * @property integer $couponId
+    * @property string $couponId
     * @property integer $checkStep
     * @property string $note
     * @property string $paymentDateTime
     * @property integer $isSlowest
-    * @property integer $color
+    * @property string $color
     * @property integer $pickerId
     * @property string $password
     * @property string $otp

@@ -30,32 +30,44 @@ class SignupForm extends Model {
      */
     public function rules() {
         return [
-                ['firstname', 'required'],
-                ['lastname', 'required'],
-                ['username', 'trim'],
-                ['username', 'required'],
-                ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-                ['username', 'string', 'min' => 2, 'max' => 255],
-                ['email', 'trim'],
-                ['email', 'required'],
-                ['email', 'email'],
-                ['email', 'string', 'max' => 255],
-                ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-                ['password', 'required'],
-                ['password', 'string', 'min' => 8],
+            ['firstname', 'required'],
+            ['lastname', 'required'],
+            ['gender', 'required'],
+            ['birthDate', 'required'],
+            //['yyyy', 'required'],
+            //['mm', 'required'],
+            //['dd', 'required'],
+            [['birthday'], 'safe'],
+            ['birthDate', 'required', 'message' => 'BirthDate cannot be blank.'],
+            ['dd', 'required', 'message' => 'Date cannot be blank.'],
+            ['mm', 'required', 'message' => 'Month cannot be blank.'],
+            ['yyyy', 'required', 'message' => 'Year cannot be blank.'],
+            //['birthDate', 'date', 'format' => 'yyyy-mm-dd'],
+            //['birthDate', 'isValidDate'],
+            ['username', 'trim'],
+            ['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['password', 'required'],
+            ['password', 'string', 'min' => 8],
             //['email', 'unique'],
             'tel' => [['tel'], 'string'],
-                ['newPassword', 'string', 'min' => 8],
-                ['password', 'string', 'min' => 8],
-                ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
-                [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_REGIS],
-                ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
+            ['newPassword', 'string', 'min' => 8],
+            ['password', 'string', 'min' => 8],
+            ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
+            [['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'dd', 'mm', 'yyyy'], 'required', 'on' => self::COZXY_REGIS],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
         ];
     }
 
     public function scenarios() {
         return [
-            self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword'],
+            self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
         ];
     }
 
@@ -65,6 +77,8 @@ class SignupForm extends Model {
      * @return User|null the saved model or null if saving fails
      */
     public function signup() {
+        //echo 'birthDate :' . $this->birthDate . '<br>';
+
         if (!$this->validate()) {
             return null;
         }
@@ -91,7 +105,7 @@ class SignupForm extends Model {
         } else {
             return null;
         }
-        //return $user->save(FALSE) ? $user : null;
+//return $user->save(FALSE) ? $user : null;
     }
 
 }

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
+$this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
 \frontend\assets\LoginRegisterAsset::register($this);
 ?>
 <div class="container login-box">
@@ -17,6 +18,7 @@ use yii\bootstrap\ActiveForm;
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Yii::$app->homeUrl . 'site/login', 'options' => ['class' => 'registr-form']]); ?>
                     <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                     <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
+
                     <input type="submit" class="btn-yellow fullwidth" value="LOGIN">
                     <div class="row">
                         <div class="col-sm-6 f-margin">
@@ -116,3 +118,4 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 </div>
+

@@ -27,6 +27,7 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
+                                    <?php if($order->pickingId != 0):?>
                                     <div class="col-xs-12">
                                         <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
                                         <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&sensor=true" type="text/javascript"></script>
@@ -116,6 +117,23 @@ use kartik\select2\Select2;
                                         <h4>Map</h4>
                                         <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>
                                     </div>
+                                    <?php else:?>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?=$order->shippingFirstname.' '.$order->shippingLastname?></div>
+                                        <div class="size6">&nbsp;</div>
+                                        <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
+                                        <div class="col-lg-10 col-md-9 col-sm-12">
+                                            <?=$order->shippingAddress?>&nbsp;
+                                            <?=$order->shippingDistrict->localName?>&nbsp;
+                                            <?=$order->shippingCities->localName?>&nbsp;
+                                            <?=$order->shippingProvince->localName?>&nbsp;
+                                        </div>
+                                        <div class="size12">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Tel:</div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?=$order->shippingTel?></div>
+                                        <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Email:</div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?=$order->email?></div>
+                                        <div class="size6">&nbsp;</div>
+                                    <?php endif;?>
                                 </div>
                             </div>
                             <div class="col-md-6 col-xs-12">

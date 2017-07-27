@@ -17,6 +17,7 @@ use common\models\costfit\ProductImageSuppliers;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\Currency;
 use common\models\dbworld\Countries;
+use common\models\costfit\FavoriteStory;
 
 class StoryController extends MasterController {
 
@@ -46,7 +47,19 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' and product_post.status =1')->one();
+        $product_image_suppliers = $productPost->attributes;
+        $imgShowStory = '';
+        if (isset($product_image_suppliers['productId'])) {
+            $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $product_image_suppliers['productId'])
+                            ->orderBy('ordering asc')->limit(1)->one();
+            if (isset($product_image)) {
+                $imgShowStory = $product_image['image'];
+            }
+        }
+
+        //echo '<pre>';
+        //print_r($product_image->attributes);
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $popularStoriesNoneStar = DisplayMyStory::popularStoriesNoneStar($productPostId); //ที่ไม่มีการให้ดาว
         $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
@@ -58,8 +71,11 @@ class StoryController extends MasterController {
 
         $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, isset($_GET['currencyId']) ? $_GET['currencyId'] : NULL, $sort)]);
         $modelComparePrices = new \common\models\costfit\ProductPostComparePrice();
-        return $this->render('@app/themes/cozxy/layouts/story/_story', compact(
-        'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
+
+
+        $avatar = \common\models\costfit\User::getAvatar($productPost->userId);
+
+        return $this->render('@app/themes/cozxy/layouts/story/_story', compact('imgShowStory', 'avatar', 'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
         );
     }
 
@@ -75,21 +91,21 @@ class StoryController extends MasterController {
         $model = new \common\models\costfit\ProductPost(['scenario' => 'write_your_story']);
         $modelComparePrice = new \common\models\costfit\ProductPostComparePrice(['scenario' => 'write_your_story']);
         $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
-        ->orderBy('createDateTime')
-        ->all(), 'productShelfId', 'title');
+                                ->orderBy('createDateTime')
+                                ->all(), 'productShelfId', 'title');
         $currency = ArrayHelper::map(Currency::find()->where("status=1")
-        ->orderBy('createDateTime')
-        ->all(), 'currencyId', 'title');
+                                ->orderBy('createDateTime')
+                                ->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")
-        ->all(), 'countryId', 'countryName');
+                                ->all(), 'countryId', 'countryName');
 
         return $this->render('@app/themes/cozxy/layouts/story/_write_your_story', [
-            'productSupplier' => $productSupplier,
-            'image' => isset($productSuppImg) ? $productSuppImg->image : '',
-            'shelf' => $shelf,
-            'currency' => $currency,
-            'country' => $country,
-            'model' => $model, 'modelComparePrice' => $modelComparePrice
+                    'productSupplier' => $productSupplier,
+                    'image' => isset($productSuppImg) ? $productSuppImg->image : '',
+                    'shelf' => $shelf,
+                    'currency' => $currency,
+                    'country' => $country,
+                    'model' => $model, 'modelComparePrice' => $modelComparePrice
         ]);
     }
 
@@ -111,7 +127,7 @@ class StoryController extends MasterController {
               exit(); */
             $productSuppId = $_POST["productSuppId"];
             $parentId = ProductSuppliers::productParentId($productSuppId)->productId;
-            $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId)->one(); // ตรวจสอบว่าเคยโพส Story เรื่องนี้ยัง
+            $checkRepeatedlyStory = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->identity->userId . ' and productId=' . $parentId . ' and product_post.status =1')->one(); // ตรวจสอบว่าเคยโพส Story เรื่องนี้ยัง
             if (isset($checkRepeatedlyStory)) {
                 return $this->redirect(Yii::$app->homeUrl);
             } else {
@@ -185,8 +201,8 @@ class StoryController extends MasterController {
 
     public function actionRatingPost() {
         $rate = \common\models\costfit\ProductPostRating::find()->where("productPostId=" . $_POST['postId'] . " and userId=" . $_POST['userId'])
-        ->orderBy("productPostRatingId DESC")
-        ->one();
+                ->orderBy("productPostRatingId DESC")
+                ->one();
         if (isset($rate)) {
             if ($rate->status == 1) {
                 $rate->status = 2;
@@ -213,7 +229,7 @@ class StoryController extends MasterController {
 
     public function actionViewPost() {
         $res = [];
-        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"])->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("productPostId=" . $_POST["postId"] . ' and product_post.status =1')->one();
         if ($productPost->userId != Yii::$app->user->identity->userId) {
             $productPostView = new \common\models\costfit\ProductPostView();
             $productPostView->userId = Yii::$app->user->identity->userId;
@@ -234,10 +250,9 @@ class StoryController extends MasterController {
 
     public function checkViewTime($postId) {
         $flag = false;
-        $lastView = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId . " and userId=" . Yii::$app->user->identity->userId)
-        ->orderBy('createDateTime DESC')
-        ->one();
-
+        $lastView = \common\models\costfit\ProductPost::find()->where("productPostId=" . $postId . " and userId=" . Yii::$app->user->identity->userId . ' and product_post.status =1')
+                ->orderBy('createDateTime DESC')
+                ->one();
         if (isset($lastView)) {
             $now = date('Y-m-d H:i:s');
             $time_diff = strtotime($now) - strtotime($time);
@@ -262,7 +277,7 @@ class StoryController extends MasterController {
         $currencyId = $_POST["currencyId"];
         // throw new \yii\base\Exception($currencyId);
         $res = [];
-        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . " and currency=" . $currencyId);
+        $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . " and currency=" . $currencyId . ' and product_post.status =1');
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $productPost
         ]);
@@ -295,7 +310,7 @@ class StoryController extends MasterController {
 
         if (isset($_POST["ProductPost"])) {
             $isPublic = Yii::$app->request->post('isPublic');
-            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->one();
+            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')->one();
             $model->attributes = $_POST['ProductPost'];
             //$productSuppId = $_POST["productSuppId"];
             //$parentId = ProductSuppliers::productParentId($productSuppId)->productId;
@@ -343,24 +358,24 @@ class StoryController extends MasterController {
             $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             //$productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
             $productSuppImg = \common\helpers\DataImageSystems::DataImageMaster($productSupplier->productId, $productSupplier->productSuppId, 'Svg555x340');
-            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)->one();
+            $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')->one();
             $model->scenario = 'write_your_story';
             $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
-            ->orderBy('createDateTime')
-            ->all(), 'productShelfId', 'title');
+                                    ->orderBy('createDateTime')
+                                    ->all(), 'productShelfId', 'title');
             $currency = ArrayHelper::map(Currency::find()->where("status=1")
-            ->orderBy('createDateTime')
-            ->all(), 'currencyId', 'title');
+                                    ->orderBy('createDateTime')
+                                    ->all(), 'currencyId', 'title');
             $country = ArrayHelper::map(Countries::find()->where("1")
-            ->all(), 'countryId', 'countryName');
+                                    ->all(), 'countryId', 'countryName');
 
             return $this->render('@app/themes/cozxy/layouts/story/_write_your_story', [
-                'productSupplier' => $productSupplier,
-                'image' => $productSuppImg,
-                'shelf' => $shelf,
-                'currency' => $currency,
-                'country' => $country,
-                'model' => $model
+                        'productSupplier' => $productSupplier,
+                        'image' => $productSuppImg,
+                        'shelf' => $shelf,
+                        'currency' => $currency,
+                        'country' => $country,
+                        'model' => $model
             ]);
         }
     }
@@ -424,10 +439,10 @@ class StoryController extends MasterController {
         $parentId = $productId; //ProductSuppliers::productParentId($productSuppId)->productId;
         if ($statusPrice == 'edit') {
             $update = \common\models\costfit\ProductPostComparePrice::updateAll(
-            [ 'shopName' => $shopName, 'shopName' => $shopName, 'price' => $price,
-                'country' => $country, 'currency' => $currency, 'latitude' => $latitude, 'longitude' => $longitude], ['userId' => Yii::$app->user->identity->userId,
-                'productPostId' => $productPostId,
-                'comparePriceId' => $comparePriceId]
+                            ['shopName' => $shopName, 'shopName' => $shopName, 'price' => $price,
+                        'country' => $country, 'currency' => $currency, 'latitude' => $latitude, 'longitude' => $longitude], ['userId' => Yii::$app->user->identity->userId,
+                        'productPostId' => $productPostId,
+                        'comparePriceId' => $comparePriceId]
             );
         } else if ($statusPrice == 'add') {
             /*
@@ -467,10 +482,60 @@ class StoryController extends MasterController {
         return json_encode($products['comparePriceChange']);
     }
 
-    public function actionViewsAll() {
-        //$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
-        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99), 'pagination' => ['defaultPageSize' => 16]]);
+    public function actionViewsAll($hash = FALSE) {
+        $k = base64_decode(base64_decode($hash));
+        $params = \common\models\ModelMaster::decodeParams($hash);
+        $categoryId = $params['categoryId'];
+
+//$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
+        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         return $this->render('contentstory', compact('productStory'));
+    }
+
+    public function actionAddToFavorite() {
+        $res = [];
+        $text = '';
+        $productPostId = $_POST['productPostId'];
+        $favorites = FavoriteStory::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id . " and status=1")->all();
+        if (isset($favorites) && count($favorites) > 0) {
+            $res['status'] = false;
+            $res['error'] = 'This story is already in you favorite stories.';
+        } else {
+            $post = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId)->one();
+            $favorite = new FavoriteStory();
+            $favorite->productPostId = $productPostId;
+            $favorite->userId = Yii::$app->user->id;
+            $favorite->status = 1;
+            $favorite->productId = $post->productId;
+            $favorite->createDateTime = new \yii\db\Expression('NOW()');
+            $favorite->updateDateTime = new \yii\db\Expression('NOW()');
+            $favorite->save(false);
+            $res['status'] = true;
+        }
+        return json_encode($res);
+    }
+
+    public function actionUnFavorite() {
+        $res = [];
+        $text = '';
+        $productPostId = $_POST['productPostId'];
+        $favorite = FavoriteStory::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id . " and status=1")->one();
+        if (isset($favorite)) {
+            $favorite->delete();
+            $res['status'] = true;
+        } else {
+            $res['status'] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function actionStoriesRemove() {
+        $id = Yii::$app->request->post('id');
+        $RemoveHidden = \common\models\costfit\ProductPost::updateAll(['status' => 0], ['userId' => Yii::$app->user->id, 'productPostId' => $id]);
+        //echo '<pre>';
+        //print_r($RemoveHidden);
+        echo $RemoveHidden;
+        //echo 'complete';
     }
 
 }

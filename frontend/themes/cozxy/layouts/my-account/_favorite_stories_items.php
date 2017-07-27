@@ -20,7 +20,7 @@
 
     .card.hovercard {
         position: relative;
-        /*width: 300px;*/
+        width: 260px;
         padding-top: 0;
         overflow: hidden;
         text-align: center;
@@ -87,14 +87,14 @@
         box-sizing: border-box;
     }
 </style>
-<div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?>"  style=" padding: 5px; ">
+<div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?>"  style=" padding: 5px;" id="itemStory-<?= $model['productPostId'] ?>">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="card hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
 
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
-                <img src="<?= $model['avatar'] ?>" alt=""/>
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""/>
             </a>
         </div>
         <div class="info">
@@ -109,15 +109,9 @@
             <div class="desc"></div>
         </div>
         <div class="bottom">
-            <div class="col-md-12" style="padding: 5px;">
-                <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>" style="padding: 3px 6px;">Edit Stories</a>
-                <a id="removeItemStory-<?= $model['productPostId'] ?>" class="b btn-black btn-xs " href="javascript:StoriesRemove(<?= $model['productPostId'] ?>)" style=" padding: 3px 6px;">Remove Stories</a>
-            </div>
-            <div class="col-md-12" style="padding: 5px;">
-                <a class="b btn-black btn-xs " href="<?= $model['url'] ?>" style=" padding: 3px 6px;">View Stories</a>
-                <a class="b btn-black btn-xs " href="<?= $model['urlProduct'] ?>" style=" padding: 3px 6px;">View Product</a>
-            </div>
+            <a class="b btn-black btn-xs " href="<?= $model['url'] ?>" style=" padding: 3px 6px;">View Stories</a>
+            <a class="b btn-black btn-xs " href="<?= $model['urlProduct'] ?>" style=" padding: 3px 6px;">View Product</a>
+            <a class="b btn-black btn-xs " href="javascript:deleteItemFromFav(<?= $model['productPostId'] ?>);" style=" padding: 3px 6px;" id="reFav">Remove</a>
         </div>
-
     </div>
 </div>

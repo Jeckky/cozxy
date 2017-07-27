@@ -8,17 +8,16 @@ use Yii;
 * This is the model class for table "return_product".
 *
     * @property string $returnProductId
-    * @property integer $ticketId
+    * @property string $ticketId
     * @property integer $orderId
     * @property integer $orderItemId
     * @property integer $productSuppId
     * @property integer $quantity
-    * @property integer $rQuantity
     * @property integer $price
-    * @property integer $totalPrice
-    * @property integer $discount
-    * @property integer $totalDiscount
-    * @property integer $credit
+    * @property string $totalPrice
+    * @property string $discount
+    * @property string $totalDiscount
+    * @property string $credit
     * @property integer $receiver
     * @property string $remark
     * @property string $cozxyRemark
@@ -42,8 +41,8 @@ return 'return_product';
 public function rules()
 {
 return [
-            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'rQuantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'remark', 'cozxyRemark'], 'required'],
-            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'rQuantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status'], 'integer'],
+            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'remark', 'cozxyRemark'], 'required'],
+            [['ticketId', 'orderId', 'orderItemId', 'productSuppId', 'quantity', 'price', 'totalPrice', 'discount', 'totalDiscount', 'credit', 'receiver', 'status'], 'integer'],
             [['remark', 'cozxyRemark'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -61,7 +60,6 @@ return [
     'orderItemId' => Yii::t('return_product', 'Order Item ID'),
     'productSuppId' => Yii::t('return_product', 'Product Supp ID'),
     'quantity' => Yii::t('return_product', 'Quantity'),
-    'rQuantity' => Yii::t('return_product', 'R Quantity'),
     'price' => Yii::t('return_product', 'Price'),
     'totalPrice' => Yii::t('return_product', 'Total Price'),
     'discount' => Yii::t('return_product', 'Discount'),

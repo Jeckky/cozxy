@@ -47,6 +47,8 @@ class ProductController extends MasterController {
         $productViews = FakeFactory::productViews($productSupplierId);
         $productViews = $productViews[$productSupplierId];
 
+
+
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
 
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);

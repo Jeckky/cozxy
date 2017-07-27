@@ -38,7 +38,7 @@ class ContentController extends MasterController {
         $productViews->updateDateTime = new \yii\db\Expression('NOW()');
         $productViews->createDateTime = new \yii\db\Expression('NOW()');
         $productViews->save(FALSE);
-        $content = \common\models\costfit\ProductPost::find()->where('productPostId=' . $params['productPostId'])->one();
+        $content = \common\models\costfit\ProductPost::find()->where('productPostId=' . $params['productPostId'] . ' and status =1')->one();
         return $this->render('@app/themes/cozxy/layouts/content/_content', compact('content'));
     }
 
