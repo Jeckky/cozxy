@@ -1524,12 +1524,14 @@ $("#acceptTerms").click(function () {
     //loginform-accept-term
     document.getElementById('loginform-accept-term').checked = true;
     $('#create-account').removeAttr('disabled');
+    $('#create-account').removeAttr('style');
     $('#create-account').val('CREATE ACCOUNT');
 });
 
 $('#loginform-accept-term').click(function () {
     document.getElementById('loginform-accept-term').checked = true;
     $('#create-account').removeAttr('disabled');
+    $('#create-account').removeAttr('style');
     $('#create-account').val('CREATE ACCOUNT');
 });
 
