@@ -34,11 +34,11 @@ $pickingId = rand(0, 9999);
                             <div class="row">
                                 <div class="col-lg-12">
                                     Choose shipping type :
-                                    <?= Html::radio('shipping', ($order->pickingId == 0) ? false : true, ['value' => 1, 'class' => 'shippingOption']) ?>
+                                    <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId )) ? false : true, ['value' => 1, 'class' => 'shippingOption']) ?>
                                     Ship to CozxyBox
                                     <!--   <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
 
-                                    <?= Html::radio('shipping', ($order->pickingId == 0) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
+                                    <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId )) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                     Ship to address
                                 </div>
                             </div>
