@@ -18,19 +18,22 @@ use \common\models\costfit\master\MenuMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Menu extends \common\models\costfit\master\MenuMaster {
+class Menu extends \common\models\costfit\master\MenuMaster
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributes() {
+    public function attributes()
+    {
         return array_merge(parent::attributes(), [
             'parents',
         ]);
@@ -39,12 +42,14 @@ class Menu extends \common\models\costfit\master\MenuMaster {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), []);
     }
 
     //parentMennu
-    static public function getparentMenus($parent) {
+    static public function getparentMenus($parent)
+    {
         $items = Menu::find()->where("menuId =" . $parent)->one();
         if (isset($items)) {
             return $items;

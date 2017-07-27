@@ -41,8 +41,8 @@ use yii\helpers\Html;
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright-social text-center-sm text-center-xs">
-                <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-facebook"></i></a>
-                <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-instagram"></i></a>
+                <a href="https://www.facebook.com/cozxydotcom/" target="_blank"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.instagram.com/cozxy_thailand" target="_blank"><i class="fa fa-instagram"></i></a>
 <!--                <a href="#"><i class="fa fa-twitter"></i></a>
                 <a href="#"><i class="fa fa-pinterest-p"></i></a>-->
             </div>

@@ -404,4 +404,37 @@ class SiteController extends MasterController
         }
     }
 
+    public function actionSeeAllPromotions()
+    {
+//        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
+//        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+//        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
+        $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
+        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(), 'pagination' => ['defaultPageSize' => 15],]);
+
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+    }
+
+    public function actionSeeAllSale()
+    {
+//        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
+        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(), 'pagination' => ['defaultPageSize' => 15],]);
+//        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+//        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
+        $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
+
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+    }
+
+    public function actionSeeAllNotSale()
+    {
+//        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
+        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(), 'pagination' => ['defaultPageSize' => 15],]);
+//        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+//        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
+        $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
+
+        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+    }
+
 }

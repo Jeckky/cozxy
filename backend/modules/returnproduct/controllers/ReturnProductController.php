@@ -19,30 +19,33 @@ use common\models\costfit\Ticket;
 /**
  * Default controller for the `returnProduct` module
  */
-class ReturnProductController extends ReturnProductMasterController {
+class ReturnProductController extends ReturnProductMasterController
+{
 
     /**
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex($ticketId) {
+    public function actionIndex($ticketId)
+    {
         if (Yii::$app->user->isGuest == 1) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         } else {
             return $this->render('index', [
-                        'ticketId' => $ticketId
+                'ticketId' => $ticketId
             ]);
         }
     }
 
-    public function actionDetail() {
+    public function actionDetail()
+    {
         $ticketId = $_GET['ticketId'];
         if (isset($_GET['orderId'])) {
             $order = Order::find()->where("orderId='" . $_GET['orderId'] . "' and status=" . Order::ORDER_STATUS_RECEIVED)->one();
             if (isset($order) && !empty($order)) {
                 return $this->redirect(['order-detail',
-                            'orderId' => $order->orderId,
-                            'ticketId' => $ticketId
+                    'orderId' => $order->orderId,
+                    'ticketId' => $ticketId
                 ]);
             } else {
                 $ms = 'ไม่มีออร์เดอร์ กรุณาลองใหม่อีกครั้ง';
@@ -51,37 +54,39 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function actionRequestTicket() {
+    public function actionRequestTicket()
+    {
         $tickets = Ticket::find()->where("status=1")
-                ->orderBy("createDateTime ASC")
-                ->limit(30)
-                ->all();
+        ->orderBy("createDateTime ASC")
+        ->limit(30)
+        ->all();
         $approved = Ticket::find()->where("status=3")
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         $notApproved = Ticket::find()->where("status=4")
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         $waitCozxy = Ticket::find()->where("status=5")//
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         $success = Ticket::find()->where("status=7")//
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         return $this->render('ticket_request', [
-                    'tickets' => $tickets,
-                    'approved' => $approved,
-                    'notApproved' => $notApproved,
-                    'waitCozxy' => $waitCozxy,
-                    'success' => $success
+            'tickets' => $tickets,
+            'approved' => $approved,
+            'notApproved' => $notApproved,
+            'waitCozxy' => $waitCozxy,
+            'success' => $success
         ]);
     }
 
-    public function actionTicketDetail($ticketId) {
+    public function actionTicketDetail($ticketId)
+    {
         if (isset($ticketId)) {
             $ticket = Ticket::find()->where("ticketId=" . $ticketId)->orderBy("createDateTime DESC")->one();
 //$orderItems = OrderItem::find()->where("orderId=" . $ticket->orderId)->all();
@@ -92,24 +97,26 @@ class ReturnProductController extends ReturnProductMasterController {
             $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
             return $this->render('ticket_detail', [
 //'orderItems' => $orderItems,
-                        'orderId' => $ticket->orderId,
-                        'ticket' => $ticket,
-                        'textReturn' => $textReturn,
-                        'returnProduct' => $returnProduct
+                'orderId' => $ticket->orderId,
+                'ticket' => $ticket,
+                'textReturn' => $textReturn,
+                'returnProduct' => $returnProduct
             ]);
         }
     }
 
-    public function actionContact($ticketId) {
+    public function actionContact($ticketId)
+    {
         $ticket = Ticket::find()->where("ticketId=" . $ticketId)->one();
         $order = Order::find()->where("orderId=" . $ticket->orderId)->one();
         return $this->render('contact', [
-                    'ticket' => $ticket,
-                    'orderNo' => $order->orderNo
+            'ticket' => $ticket,
+            'orderNo' => $order->orderNo
         ]);
     }
 
-    public function actionApproveTicket() {
+    public function actionApproveTicket()
+    {
         $ticket = Ticket::find()->where("ticketId=" . $_POST["ticketId"])->one();
         $res = [];
         if ($_POST['approve'] == 'Approve') {
@@ -125,7 +132,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionApproveTicketCozxy() {
+    public function actionApproveTicketCozxy()
+    {
         if (isset($_POST["ticketId"])) {
             $orderId = $_POST['orderId'];
             if (isset($_POST['isAccept'])) {
@@ -136,8 +144,8 @@ class ReturnProductController extends ReturnProductMasterController {
                 if ($countCheck < $countReturn) {
                     $ms = "กรุณาเลือก รับคืน / ไม่รับคืน ให้ครบทุกช่อง";
                     return $this->redirect(['cozxy-confirm',
-                                'ticketId' => $_POST['ticketId'],
-                                'ms' => $ms
+                        'ticketId' => $_POST['ticketId'],
+                        'ms' => $ms
                     ]);
                 } else {
                     $check = false;
@@ -145,8 +153,8 @@ class ReturnProductController extends ReturnProductMasterController {
                         if ($res == 0 && $_POST['remark'][$index] == '') {
                             $ms = "กรุณาเลือกใส่เหตุผลในช่องที่ไม่รับคืน";
                             return $this->redirect(['cozxy-confirm',
-                                        'ticketId' => $_POST['ticketId'],
-                                        'ms' => $ms
+                                'ticketId' => $_POST['ticketId'],
+                                'ms' => $ms
                             ]);
                         }
                     endforeach;
@@ -154,9 +162,9 @@ class ReturnProductController extends ReturnProductMasterController {
             } else {
                 $ms = "กรุณาเลือก รับคืน / ไม่รับคืน ให้ครบทุกช่อง";
                 return $this->redirect(['cozxy-confirm',
-                            'orderId' => $orderId,
-                            'ticketId' => $_POST['ticketId'],
-                            'ms' => $ms
+                    'orderId' => $orderId,
+                    'ticketId' => $_POST['ticketId'],
+                    'ms' => $ms
                 ]);
             }
             $ticket = Ticket::find()->where("ticketId=" . $_POST["ticketId"])->one();
@@ -230,7 +238,8 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function sendEmail($ticketId, $orderId, $returnCoin) {
+    public function sendEmail($ticketId, $orderId, $returnCoin)
+    {
         $ticket = Ticket::find()->where("ticketId=" . $ticketId . " and orderId=" . $orderId)->one();
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $user = User::find()->where("userId=" . $order->userId)->one();
@@ -253,7 +262,8 @@ class ReturnProductController extends ReturnProductMasterController {
         $sendMail = \common\helpers\Email::mailReturnResult($mailTo, $ticketNo, $currentPoint, $returnPoint, $order->orderNo, $username, $status, $remark, $pickingPoint, $listReturn);
     }
 
-    public function actionOrderDetail($orderId, $ticketId) {
+    public function actionOrderDetail($orderId, $ticketId)
+    {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressText = '';
         $ms = '';
@@ -274,16 +284,17 @@ class ReturnProductController extends ReturnProductMasterController {
         }
         $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
         return $this->render('order_detail', [
-                    'order' => $order,
-                    'addressText' => $addressText,
-                    'pickingPoint' => isset($pickingPoint) && !empty($pickingPoint) ? $pickingPoint->title : '',
-                    'returnList' => $returnList,
-                    'ticketId' => $ticketId,
-                    'ms' => $ms
+            'order' => $order,
+            'addressText' => $addressText,
+            'pickingPoint' => isset($pickingPoint) && !empty($pickingPoint) ? $pickingPoint->title : '',
+            'returnList' => $returnList,
+            'ticketId' => $ticketId,
+            'ms' => $ms
         ]);
     }
 
-    public function actionReturnList() {
+    public function actionReturnList()
+    {
         $res = [];
         $body = '';
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -331,15 +342,15 @@ class ReturnProductController extends ReturnProductMasterController {
                         foreach ($returnItems as $rItem):
                             $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
                             $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
-                                    '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
-                                    . $producSupp->title . '</td>' .
-                                    '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
-                                    '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
-                                    '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
-                                    '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
-                                    '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
-                                    '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
-                                    '</tr>';
+                            '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
+                            . $producSupp->title . '</td>' .
+                            '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
+                            '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
+                            '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
+                            '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
+                            '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
+                            '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
+                            '</tr>';
                             $i++;
                         endforeach;
                         $footer = $this->tableFooter();
@@ -359,7 +370,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function checkDupplicateItem($orderItemId, $ticketId, $orderId) {
+    public function checkDupplicateItem($orderItemId, $ticketId, $orderId)
+    {
         $returns = ReturnProduct::find()->where("orderItemId=" . $orderItemId . " and ticketId=" . $ticketId . " and orderId=" . $orderId)->one();
         if (isset($returns) && !empty($returns)) {
             return false;
@@ -368,7 +380,8 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function checkQuantityItem($orderItemId, $orderId) {
+    public function checkQuantityItem($orderItemId, $orderId)
+    {
         $returns = ReturnProduct::find()->where("orderItemId=" . $orderItemId . " and orderId=" . $orderId)->all();
         if (isset($returns) && count($returns) > 0) {//ถ้าเกินจำนวนใน order คืนไมได้
             $total = 0;
@@ -386,7 +399,8 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function actionConfirmReturn() {
+    public function actionConfirmReturn()
+    {
         if (isset($_POST["orderId"])) {
             $orderId = $_POST["orderId"];
 //throw new \yii\base\Exception(print_r($_POST["remark"], true));
@@ -399,17 +413,17 @@ class ReturnProductController extends ReturnProductMasterController {
                 if ($countCheck < $countReturn) {
                     $ms = "กรุณาเลือก รับคืน / ไม่รับคืน ให้ครบทุกช่อง";
                     return $this->redirect(['order-detail',
-                                'orderId' => $orderId,
-                                'ticketId' => $_POST['ticketId'],
-                                'ms' => $ms
+                        'orderId' => $orderId,
+                        'ticketId' => $_POST['ticketId'],
+                        'ms' => $ms
                     ]);
                 }
             } else {
                 $ms = "กรุณาเลือก รับคืน / ไม่รับคืน ให้ครบทุกช่อง";
                 return $this->redirect(['order-detail',
-                            'orderId' => $orderId,
-                            'ticketId' => $_POST['ticketId'],
-                            'ms' => $ms
+                    'orderId' => $orderId,
+                    'ticketId' => $_POST['ticketId'],
+                    'ms' => $ms
                 ]);
             }
             if (isset($_POST["remark"]) && !empty($_POST["remark"])) {
@@ -431,9 +445,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $returnProducts = ReturnProduct::find()->where("ticketId=" . $ticketId . " and orderId=" . $orderId)->all();
             if (isset($returnProducts) && count($returnProducts) > 0) {
                 return $this->render('confirm_return', [
-                            'orderId' => $orderId,
-                            'returnProducts' => $returnProducts,
-                            'ticketId' => $ticketId
+                    'orderId' => $orderId,
+                    'returnProducts' => $returnProducts,
+                    'ticketId' => $ticketId
                 ]);
             }
         }
@@ -453,16 +467,16 @@ class ReturnProductController extends ReturnProductMasterController {
                 $ticket->updateDateTime = new \yii\db\Expression('NOW()');
                 $ticket->save(false);
                 $returnHistory = ReturnProduct::find()
-                        ->select(`order.*`, `return_product.*`)
-                        ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
-                        ->where("order.userId=" . $order->userId . " and return_product.status=4 and return_product.ticketId=" . $_POST['ticketId'])
-                        ->orderBy("return_product.updateDateTime DESC")
-                        ->all();
+                ->select(`order.*`, `return_product.*`)
+                ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+                ->where("order.userId=" . $order->userId . " and return_product.status=4 and return_product.ticketId=" . $_POST['ticketId'])
+                ->orderBy("return_product.updateDateTime DESC")
+                ->all();
                 $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId . " and ticketId=" . $_POST['ticketId'])->all();
                 return $this->render('wait_cozxy', [
-                            'userId' => $order->userId,
-                            'returnHistory' => $returnHistory,
-                            'lastReturn' => $lastReturn
+                    'userId' => $order->userId,
+                    'returnHistory' => $returnHistory,
+                    'lastReturn' => $lastReturn
                 ]);
             }else {
 //ถ้าไม่มีที่ผ่านการอนุมัติ จากบูธ
@@ -532,34 +546,36 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function actionApproveDetail($orderId, $flag, $ticketId) {
+    public function actionApproveDetail($orderId, $flag, $ticketId)
+    {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $returnHistory = ReturnProduct::find()
-                ->select(`order.*`, `return_product.*`)
-                ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
-                ->where("order.userId=" . $order->userId . " and return_product.status=4 and return_product.ticketId=" . $ticketId)
-                ->orderBy("return_product.updateDateTime DESC")
-                ->all();
+        ->select(`order.*`, `return_product.*`)
+        ->join('LEFT JOIN', 'order', 'order.orderId=return_product.orderId')
+        ->where("order.userId=" . $order->userId . " and return_product.status=4 and return_product.ticketId=" . $ticketId)
+        ->orderBy("return_product.updateDateTime DESC")
+        ->all();
         $userTotalCredit = \common\models\costfit\UserPoint::find()->where("userId=" . $order->userId)->one();
         $lastReturn = ReturnProduct::find()->where("orderId=" . $order->orderId)->all();
         if ($flag == 1) {
             return $this->render('successful_return', [
-                        'userId' => $order->userId,
-                        'returnHistory' => $returnHistory,
-                        'userTotalCredit' => $userTotalCredit,
-                        'lastReturn' => $lastReturn
+                'userId' => $order->userId,
+                'returnHistory' => $returnHistory,
+                'userTotalCredit' => $userTotalCredit,
+                'lastReturn' => $lastReturn
             ]);
         } else {
             return $this->render('wait_cozxy', [
-                        'userId' => $order->userId,
-                        'returnHistory' => $returnHistory,
-                        'userTotalCredit' => $userTotalCredit,
-                        'lastReturn' => $lastReturn
+                'userId' => $order->userId,
+                'returnHistory' => $returnHistory,
+                'userTotalCredit' => $userTotalCredit,
+                'lastReturn' => $lastReturn
             ]);
         }
     }
 
-    public function actionCozxyConfirm($ticketId) {
+    public function actionCozxyConfirm($ticketId)
+    {
         $ms = '';
         if (isset($ticketId)) {
             if (isset($_GET['ms'])) {
@@ -580,16 +596,17 @@ class ReturnProductController extends ReturnProductMasterController {
             $textReturn = "Boots " . $pickingPoint->title . ", " . $amphur->cityName . ", " . $province->stateName;
             return $this->render('ticket_detail_cozxy', [
 //'orderItems' => $orderItems,
-                        'orderId' => $ticket->orderId,
-                        'ticket' => $ticket,
-                        'textReturn' => $textReturn,
-                        'returnProduct' => $returnProduct,
-                        'ms' => $ms
+                'orderId' => $ticket->orderId,
+                'ticket' => $ticket,
+                'textReturn' => $textReturn,
+                'returnProduct' => $returnProduct,
+                'ms' => $ms
             ]);
         }
     }
 
-    public function actionDeleteReturnList() {
+    public function actionDeleteReturnList()
+    {
         $res = [];
         $body = '';
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -605,15 +622,15 @@ class ReturnProductController extends ReturnProductMasterController {
                 foreach ($returnItems as $rItem):
                     $producSupp = ProductSuppliers::find()->where("productSuppId=" . $rItem->productSuppId)->one();
                     $body = $body . '<tr style="height: 50px;">' . '<td style="vertical-align: middle;text-align: center;">' . $i . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
-                            . $producSupp->title . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
-                            '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
-                            '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
-                            '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
-                            '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
-                            '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
-                            '</tr>';
+                    '<td style="vertical-align: middle;text-align: center;"><img src="' . $baseUrl . '/' . ProductSuppliers::productImagesSuppliers($rItem->productSuppId)[0]->image . '" style="width:150px;height: 100px;"><br>'
+                    . $producSupp->title . '</td>' .
+                    '<td style="vertical-align: middle;text-align: center;">' . $rItem->quantity . '</td>' .
+                    '<td style="vertical-align: middle;text-align: center;"><a class="btn" id="incr-return">-</a> <input type="text" class="text-center" id="qnty-return' . $rItem->returnProductId . '" value="' . $rItem->quantity . '" style="width:35px;height:35px;" readonly="true"> <a class="btn" id="incr-return">+</a></td>' .
+                    '<td style="vertical-align: middle;text-align: center;"><textarea name="remark[' . $rItem->returnProductId . ']" id="remark' . $rItem->returnProductId . '">' . $rItem->remark . '</textarea></td>' .
+                    '<input type="hidden" id="pSuppId" value="' . $rItem->returnProductId . '">' .
+                    '<input type="hidden" id="pOrderId" value="' . $rItem->orderId . '">' .
+                    '<td style="vertical-align: middle;text-align: center;font-size:25pt;"><i class="fa fa-times-circle deleteR" id="deleteR"' . $rItem->returnProductId . '" aria-hidden="true" style="cursor: pointer;"></i></td>' .
+                    '</tr>';
                     $i++;
                 endforeach;
                 $footer = $this->tableFooter();
@@ -627,27 +644,29 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionCozxyApproveReturn() {
+    public function actionCozxyApproveReturn()
+    {
         $waitCozxyApprove = Ticket::find()->where("status=5")//
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         $cozxyApprove = Ticket::find()->where("status=7")//
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         $cozxyReject = Ticket::find()->where("status=8")//
-                ->orderBy("updateDateTime DESC")
-                ->limit(30)
-                ->all();
+        ->orderBy("updateDateTime DESC")
+        ->limit(30)
+        ->all();
         return $this->render('return_wait_cozxy', [
-                    'waitCozxyApprove' => $waitCozxyApprove,
-                        //'cozxyApprove' => $cozxyApprove,
-                        //'cozxyReject' => $cozxyReject,
+            'waitCozxyApprove' => $waitCozxyApprove,
+        //'cozxyApprove' => $cozxyApprove,
+        //'cozxyReject' => $cozxyReject,
         ]);
     }
 
-    public function actionCheckRemark() {
+    public function actionCheckRemark()
+    {
         $orderId = $_POST['orderId'];
         $res = [];
         $id = [];
@@ -669,7 +688,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionChangeQuantityReturnList() {
+    public function actionChangeQuantityReturnList()
+    {
         $orderId = $_POST["orderId"];
         $returnId = $_POST["returnId"];
         $currentQnty = $_POST["qnty"];
@@ -703,11 +723,12 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function supplierId($isbn, $orderId) {
+    public function supplierId($isbn, $orderId)
+    {
         $id = OrderItem::find()
-                ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
-                ->where("ps.isbn='" . $isbn . "' and order_item.orderId=" . $orderId)
-                ->one();
+        ->join("LEFT JOIN", "product_suppliers ps", "order_item.productSuppId=ps.productSuppId")
+        ->where("ps.isbn='" . $isbn . "' and order_item.orderId=" . $orderId)
+        ->one();
         if (isset($id) && !empty($id)) {
             return $id->productSuppId;
         } else {
@@ -715,23 +736,26 @@ class ReturnProductController extends ReturnProductMasterController {
         }
     }
 
-    public function tableHeader() {
+    public function tableHeader()
+    {
         return $header = '<table class="table">' .
-                '<tr style="height: 50px;background-color: #999999;">' .
-                '<th style="vertical-align: middle;text-align: center;width: 5%;">No.</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 30%;">สินค้า</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 10%;">สั่งซื้อ</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 35%;">จำนวนที่ต้องการคืน</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 15%;">Remark</th>' .
-                '<th style="vertical-align: middle;text-align: center;width: 5%;">ยกเลิก</th>' .
-                '</tr>';
+        '<tr style="height: 50px;background-color: #999999;">' .
+        '<th style="vertical-align: middle;text-align: center;width: 5%;">No.</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 30%;">สินค้า</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 10%;">สั่งซื้อ</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 35%;">จำนวนที่ต้องการคืน</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 15%;">Remark</th>' .
+        '<th style="vertical-align: middle;text-align: center;width: 5%;">ยกเลิก</th>' .
+        '</tr>';
     }
 
-    public function tableFooter() {
+    public function tableFooter()
+    {
         return $footer = '</table>' . '<a class="btn-lg  pull-right" id="confirm-return" style="background-color: #000;color: #ffcc00;cursor: pointer;"><i class="fa fa-check-square-o" aria-hidden="true"></i> คืนสินค้า</a>';
     }
 
-    public function actionSaveMessage() {
+    public function actionSaveMessage()
+    {
         $messege = new \common\models\costfit\Messege();
         $res = [];
         if ($_POST["message"] != '') {
@@ -751,10 +775,11 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionShowMessage() {
+    public function actionShowMessage()
+    {
         $messeges = \common\models\costfit\Messege::find()->where("ticketId=" . $_POST["ticketId"])
-                ->orderBy("createDateTime ASC")
-                ->all();
+        ->orderBy("createDateTime ASC")
+        ->all();
         $ms = '';
         $setFull = 'col-lg-12 col-md-12 col-sm-12 col-xs-12';
         $customer = 'คุณ';
@@ -779,7 +804,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchWait() {
+    public function actionSearchWait()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -801,12 +827,12 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 5%;'>" . $i . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -816,7 +842,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchApprove() {
+    public function actionSearchApprove()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -837,9 +864,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'contact?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'contact?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -849,7 +876,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchApproveCozxy() {
+    public function actionSearchApproveCozxy()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -870,9 +898,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -882,7 +910,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchWaitCozxy() {
+    public function actionSearchWaitCozxy()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -903,9 +932,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'approve-detail?orderId=' . $ticket->orderId . '&flag=2&ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'approve-detail?orderId=' . $ticket->orderId . '&flag=2&ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -915,7 +944,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchWaitCozxyConfirm() {
+    public function actionSearchWaitCozxyConfirm()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -937,12 +967,12 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 5%;'>" . $i . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 15%;'>" . Order::findOrderNo($ticket->orderId) . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 20%;'>" . substr($this->dateThai(Order::recieveDate($ticket->orderId), 1, true), 0, -8) . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -952,7 +982,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchNotApprove() {
+    public function actionSearchNotApprove()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -973,8 +1004,8 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 40%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 30%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 30%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 30%;'><a href=" . $baseUrl . 'ticket-detail?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -984,7 +1015,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function actionSearchNotApproveCozxy() {
+    public function actionSearchNotApproveCozxy()
+    {
         $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         $res = [];
         $text = '';
@@ -1005,9 +1037,9 @@ class ReturnProductController extends ReturnProductMasterController {
             $i = 1;
             foreach ($tickets as $ticket):
                 $text = $text . "<tr><td style='text-align: center;width: 15%;'>" . Order::invoiceNo($ticket->orderId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
-                        "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
-                        "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
+                "<td style='text-align: center;width: 35%;'>" . User::userName($ticket->userId) . "</td>" .
+                "<td style='text-align: center;width: 35%;'>" . $ticket->ticketNo . "</td>" .
+                "<td style='text-align: center;width: 15%;'><a href=" . $baseUrl . 'cozxy-confirm?ticketId=' . $ticket->ticketId . " >รายละเอียด</a></td></tr>";
                 $i++;
             endforeach;
             $res["wait"] = $text;
@@ -1017,7 +1049,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return \yii\helpers\Json::encode($res);
     }
 
-    public function findUserId($ms) {
+    public function findUserId($ms)
+    {
         $id = '';
         $users = User::find()->where("firstname like '%" . $ms . "%' or lastname like '%" . $ms . "%'")->all();
         if (isset($users) && !empty($users)) {
@@ -1031,7 +1064,8 @@ class ReturnProductController extends ReturnProductMasterController {
         return $id;
     }
 
-    public function findOrderId($ms) {
+    public function findOrderId($ms)
+    {
         $id = '';
         $orders = Order::find()->where("orderNo like'%" . $ms . "%' or invoiceNo like '%" . $ms . "%'")->all();
         if (isset($orders) && !empty($orders)) {

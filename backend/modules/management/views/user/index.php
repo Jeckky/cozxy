@@ -86,8 +86,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'format' => 'raw',
                         'value' => function($model) {
                             //return $model->user_group_Id;
-                            $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($model->user_group_Id);
-                            return $getUserGroup['name'];
+//                            $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($model->user_group_Id);
+//                            return $getUserGroup['name'];
+                            $roles = [];
+                            foreach ($model->roles as $role) {
+                                $roles[] = $role->item_name;
+                            }
+                            return Html::a(implode(', ', $roles), ['view', 'id' => $model->userId, 'tab' => 3, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
                         },
                     ],
                     // 'auth_key:ntext',
@@ -144,7 +149,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => '{view} {address} {margin}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', $url, [
+                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', ['view', 'id' => $model->userId, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1], [
                                     'title' => Yii::t('yii', 'view'),
                                 ]);
                             },

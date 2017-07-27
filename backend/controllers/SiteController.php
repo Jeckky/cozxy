@@ -11,12 +11,14 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends \backend\controllers\BackendMasterController {
+class SiteController extends \backend\controllers\BackendMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -44,7 +46,8 @@ class SiteController extends \backend\controllers\BackendMasterController {
     /**
      * @inheritdoc
      */
-    public function actions() {
+    public function actions()
+    {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -52,12 +55,14 @@ class SiteController extends \backend\controllers\BackendMasterController {
         ];
     }
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         // return $this->render('index');
         $this->redirect(Yii::$app->homeUrl . 'auth');
     }
 
-    public function actionLogin() {
+    public function actionLogin()
+    {
         // throw new \yii\base\Exception('cc');
         /* if (!Yii::$app->user->isGuest) {
           throw new \yii\base\Exception('cc');
@@ -84,6 +89,7 @@ class SiteController extends \backend\controllers\BackendMasterController {
             }
             //return $this->goBack();
         } else {
+            return $this->redirect(Yii::$app->homeUrl . 'auth?error=1');
             // throw new \yii\base\Exception('ccaa');
             /* return $this->redirect('../auth', [
               'model' => $model,
@@ -92,12 +98,14 @@ class SiteController extends \backend\controllers\BackendMasterController {
         }
     }
 
-    public function actionLogout() {
+    public function actionLogout()
+    {
         Yii::$app->user->logout();
         return $this->redirect(Yii::$app->homeUrl . '/dashboard');
     }
 
-    public function actionProduct($id) {
+    public function actionProduct($id)
+    {
         $product = \common\models\costfit\search\Product::find()->where("categoryId =" . $id);
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $product,
@@ -105,7 +113,8 @@ class SiteController extends \backend\controllers\BackendMasterController {
         return $this->render('_index_product', compact('dataProvider'));
     }
 
-    public function actionProductView($id) {
+    public function actionProductView($id)
+    {
         $model = \common\models\costfit\search\Product::find()->where("productId = " . $id)->one();
         return $this->render('_product_view', compact('model'));
     }
