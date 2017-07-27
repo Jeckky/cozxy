@@ -6,7 +6,7 @@ use common\models\costfit\ProductSuppliers;
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
+            <a href="<?= $model['url'] ?>" class="fc-black"><img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;"></a>
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
@@ -31,8 +31,8 @@ use common\models\costfit\ProductSuppliers;
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']           ?>);" id="addItemToWishlist-<?php // $model['productSuppId']           ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']            ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']            ?>);" id="addItemToWishlist-<?php // $model['productSuppId']            ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']             ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
                         <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);">
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>

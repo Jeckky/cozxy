@@ -29,7 +29,7 @@ use yii\bootstrap\ActiveForm;
                 <div class="row user-menu">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
-                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', [Yii::$app->homeUrl . 'my-account'], ['class' => 'u-menu-1']) . '</div>';
+                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
                     } else {
                         echo '';
                     }

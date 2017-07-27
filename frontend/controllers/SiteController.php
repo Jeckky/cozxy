@@ -250,7 +250,7 @@ class SiteController extends MasterController {
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
-                        return $this->redirect([Yii::$app->homeUrl . 'site/thank']);
+                        return $this->redirect(Yii::$app->homeUrl . 'site/thank');
                     }
                 }
             } else {
@@ -271,7 +271,7 @@ class SiteController extends MasterController {
         if (isset($user)) {
             $user->status = 1;
             $user->save(FALSE);
-            return $this->redirect([Yii::$app->homeUrl . 'site/thank?verification=complete']);
+            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete');
         } else {
 
         }
