@@ -1,8 +1,12 @@
 <div class="panel panel-defailt">
     <?php
     //echo $productPost->userId;
-    if (Yii::$app->user->identity->userId == $productPost->userId) {
-        $txtStory = 'Dashboard';
+    if (isset(Yii::$app->user->identity->userId)) {
+        if (Yii::$app->user->identity->userId == $productPost->userId) {
+            $txtStory = 'Dashboard';
+        } else {
+            $txtStory = 'About';
+        }
     } else {
         $txtStory = 'About';
     }
