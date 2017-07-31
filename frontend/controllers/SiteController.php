@@ -76,6 +76,7 @@ class SiteController extends MasterController {
      * @return mixed
      */
     public function actionIndex() {
+        //echo Yii::getVersion();
         $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
         $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
         $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);

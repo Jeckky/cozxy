@@ -73,6 +73,10 @@ $this->registerCss('
 	top: -8px;
 	border-radius: 50%;
 }
+.pagination{
+    width: 100%;
+
+}
 ');
 
 $this->registerJs('
@@ -103,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-list">
     <div class="container">
         <div class="row">
-            <div class="col-xs-9">
+            <div class="col-xs-9 ">
                 <?php if ($productCanSell->getTotalCount() > 0): ?>
                     <h3 class="b">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
@@ -123,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
                                 },
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                                'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
                                 //'layout' => "{items}",
                                 'itemOptions' => [
                                     'tag' => false,
@@ -159,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale', ['model' => $model]);
                                     }, 'emptyText' => ' ',
                                     'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                    'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                                    'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
                                     //'layout' => "{items}",
                                     'itemOptions' => [
                                         'tag' => false,
