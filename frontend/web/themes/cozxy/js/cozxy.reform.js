@@ -481,6 +481,7 @@ $(document).on('click', '#closeWishlistModal', function (e) {
  * @returns {undefined}
  */
 $notify = $('#notify-cart-top-menu').html();
+//alert($notify);
 if ($notify == '') {
     $('#notify-cart-top-menu').css('background-color', '#000');
 } else {
@@ -1529,10 +1530,19 @@ $("#acceptTerms").click(function () {
 });
 
 $('#loginform-accept-term').click(function () {
-    document.getElementById('loginform-accept-term').checked = true;
-    $('#create-account').removeAttr('disabled');
-    $('#create-account').removeAttr('style');
-    $('#create-account').val('CREATE ACCOUNT');
+    //document.getElementById('loginform-accept-term').checked = true;
+    //alert(document.getElementById('loginform-accept-term').checked);
+    var accept = document.getElementById('loginform-accept-term').checked;
+    if (accept == true) {
+        $('#create-account').removeAttr('disabled');
+        $('#create-account').removeAttr('style');
+        $('#create-account').val('CREATE ACCOUNT');
+    } else if (accept == false) {
+        $('#create-account').attr('disabled', 'disabled');
+        $('#create-account').attr('style', 'background-color: #ccc;');
+        $('#create-account').val('CREATE ACCOUNT');
+    }
+
 });
 
 

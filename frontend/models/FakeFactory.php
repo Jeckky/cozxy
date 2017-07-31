@@ -11,11 +11,9 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class FakeFactory extends Model
-{
+class FakeFactory extends Model {
 
-    public static function productForSale($n = NULL, $cat = FALSE)
-    {
+    public static function productForSale($n = NULL, $cat = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE) {
@@ -76,8 +74,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productForNotSale($n = NULL, $cat = FALSE)
-    {
+    public static function productForNotSale($n = NULL, $cat = FALSE) {
         $products = [];
 
         $whereArray2 = [];
@@ -133,8 +130,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productHotNewAndProduct($n, $cat = FALSE)
-    {
+    public static function productHotNewAndProduct($n, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -201,8 +197,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productStory($n)
-    {
+    public static function productStory($n) {
         $products = [];
         if ($n == 99) {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
@@ -217,8 +212,8 @@ class FakeFactory extends Model
 // $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
 //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($productPrice->price, 2);
-                $price = number_format($productPrice->price, 2);
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : 0;
+                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : 0;
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
@@ -258,8 +253,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productStoryAll($n, $productId, $productSuppId)
-    {
+    public static function productStoryAll($n, $productId, $productSuppId) {
         $products = [];
 
         $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId . '  and status =1')->orderBy('productPostId desc')->all();
@@ -308,8 +302,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productSlideGroup($n, $status)
-    {
+    public static function productSlideGroup($n, $status) {
         $products = [];
         $slideGroup = \common\models\costfit\ContentGroup::find()->where("lower(title) = 'banner' and status=1")->one();
         $content = \common\models\costfit\Content::find()->where("contentGroupId =" . $slideGroup['contentGroupId'])->all();
@@ -329,8 +322,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productViews($productSuppId)
-    {
+    public static function productViews($productSuppId) {
         $products = [];
 //$imagAll = [];
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
@@ -383,8 +375,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productSlideBanner($n, $status)
-    {
+    public static function productSlideBanner($n, $status) {
         $products = [];
 //$brand = \common\models\costfit\Brand::find()->all();
         $brand = \common\models\costfit\ProductSuppliers::find()
@@ -414,8 +405,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productOtherProducts()
-    {
+    public static function productOtherProducts() {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status =1')
         ->orderBy('productPostId desc')->all();
         $products = [];
@@ -440,8 +430,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productPromotion($n = NULL, $cat = FALSE)
-    {
+    public static function productPromotion($n = NULL, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -523,8 +512,7 @@ class FakeFactory extends Model
         return $products;
     }
 
-    public static function productStoryViewsMore($n, $categoryId)
-    {
+    public static function productStoryViewsMore($n, $categoryId) {
         $products = [];
         if ($n == 99) {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")

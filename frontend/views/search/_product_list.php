@@ -42,7 +42,7 @@ if (isset($sortstatus)) {
     $sortNew = 'SORT_ASC';
 }
 ?>
-<h3 class="b"><?= strtoupper('category') ?> :: <?= strtoupper($category) ?>
+<h3 class="b"><?= strtoupper('category') ?> RECOMMENDED:: <?= strtoupper($category) ?>
     <small>
         <a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'price')" style="color: #000;"><?= $sortPriceIcon ?></a>
         <span style="color: #fc0;">|</span><a href="javascript:sortCozxy(<?php echo $categoryId; ?>,'brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
@@ -59,21 +59,20 @@ if (isset($sortstatus)) {
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
         <?php
-        yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false])
+        yii\widgets\Pjax::begin([
+            'id' => 'cansale',
+            'enablePushState' => false, // to disable push state
+            'enableReplaceState' => false, // to disable replace state
+            'timeout' => 5000,
+            'clientOptions' => [
+                'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
+                'linkSelector' => '#cansale'
+            ]
+        ]);
         ?>
         <?php
-        //yii\widgets\Pjax::begin([
-        //'id' => 'notsale',
-        //'enablePushState' => false, // to disable push state
-        //'enableReplaceState' => false, // to disable replace state
-        //'timeout' => 5000,
-        // 'clientOptions' => [
-        // 'registerClientScript' => "$.pjax.reload({container: '#notsale', timeout: 2000});", //"$.pjax.reload({container:'#notsale'});",
-        // 'linkSelector' => '#notsale'
-        //]
-        //]);
         echo \yii\widgets\ListView::widget([
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $productFilterPriceCansale,
             'options' => [
                 'tag' => false,
             ],
@@ -82,7 +81,57 @@ if (isset($sortstatus)) {
             },
             'emptyText' => ' ',
             'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-            'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+            'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
+            //'layout' => "{items}",
+            'itemOptions' => [
+                'tag' => false,
+            ]
+            , 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+line-height:35px;"><br><br><br>No results found.</div></div>',
+            'pager' => [
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageLabel' => 'previous',
+                'nextPageLabel' => 'next',
+                'maxButtonCount' => 3,
+            ],
+        ]);
+        yii\widgets\Pjax::end();
+        ?>
+
+    </div>
+</div>
+
+
+<h3 class="b"><?= strtoupper('category') ?> PRODUCT :: <?= strtoupper($category) ?> </h3>
+<div class="row">
+    <div class="wf-container">
+        <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?php
+        yii\widgets\Pjax::begin([
+            'id' => 'notsale',
+            'enablePushState' => false, // to disable push state
+            'enableReplaceState' => false, // to disable replace state
+            'timeout' => 5000,
+            'clientOptions' => [
+                'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
+                'linkSelector' => '#notsale'
+            ]
+        ]);
+        ?>
+        <?php
+        echo \yii\widgets\ListView::widget([
+            'dataProvider' => $productFilterPriceNotsale,
+            'options' => [
+                'tag' => false,
+            ],
+            'itemView' => function ($model, $key, $index, $widget) {
+                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
+            }
+            , 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+line-height:35px;"><br><br><br>No results found.</div></div>',
+            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+            'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
             //'layout' => "{items}",
             'itemOptions' => [
                 'tag' => false,
