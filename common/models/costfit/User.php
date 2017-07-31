@@ -377,7 +377,7 @@ class User extends \common\models\costfit\master\UserMaster
     public static function getAvatar($userId)
     {
         $user = User::find()->where("userId=" . $userId)->one();
-        $avatar = isset($user['avatar']) ? $user['avatar'] : '/images/avatar_2x.png'; //
+        $avatar = isset($user['avatar']) ? "images/user/avatar/" . $user['avatar'] : '/images/avatar_2x.png'; //
         return $avatar;
     }
 
