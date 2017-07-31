@@ -90,7 +90,7 @@ $(function() {
 		range: true,
 		min: ' . $catPrice['minPrice'] . ',
 		max: ' . $catPrice['maxPrice'] . ',
-		values: [ ' . $catPrice['minPrice'] * 1.25 . ', ' . $catPrice['maxPrice'] * 0.75 . ' ],
+		//values: [ ' . $catPrice['minPrice'] * 1.25 . ', ' . $catPrice['maxPrice'] * 0.75 . ' ],
 		slide: function( event, ui ) {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
             $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
@@ -288,7 +288,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                  ?>','<?php //echo $clickNum;                                                                                                                                                                                                 ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                 ?>','<?php //echo $limit_start;                                                                                                                                                                                                ?>','<?php //echo $limit_end;                                                                                                                                                                                               ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
