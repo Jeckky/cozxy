@@ -41,6 +41,7 @@ class SearchController extends MasterController
         }
 
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
+        $catPrice = DisplaySearch::findAllPrice($categoryId);
         $productCanSell = new ArrayDataProvider(
         [
             'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
@@ -60,7 +61,7 @@ class SearchController extends MasterController
         ]);
 
 
-        return $this->render('index', compact('productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title'));
+        return $this->render('index', compact('productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));
     }
 
     public function actionCozxyProduct()

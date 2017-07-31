@@ -11,11 +11,13 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model {
+class DisplaySearch extends Model
+{
 
     public $score;
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -95,7 +97,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
+    {
         $products = [];
 
         $whereArray = [];
@@ -176,7 +179,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
+    {
 
         $products = [];
 
@@ -244,7 +248,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -336,7 +341,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -452,7 +458,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
+    {
         $products = [];
         $whereArray = [];
 
@@ -516,7 +523,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productFilterBrand($cat = FALSE, $brand = FALSE) {
+    public static function productFilterBrand($cat = FALSE, $brand = FALSE)
+    {
         $products = [];
         $whereArray = [];
 
@@ -577,7 +585,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE)
+    {
         $products = [];
         $whereArray2 = [];
 
@@ -642,7 +651,8 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE) {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE)
+    {
         $products = [];
         $whereArray2 = [];
 
@@ -710,6 +720,25 @@ class DisplaySearch extends Model {
         }
 
         return $products;
+    }
+
+    public static function findAllPrice($categoryId)
+    {
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $categoryId;
+
+        $whereArray["ps.approve"] = "approve";
+        $whereArray["pps.status"] = "1";
+        $pCanSale = \common\models\costfit\CategoryToProduct::find()
+        ->select('MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where($whereArray)
+        ->andWhere([">", "ps.result", 0])
+        ->andWhere([">", "pps.price", 0])
+        ->one();
+        return $pCanSale;
     }
 
 }
