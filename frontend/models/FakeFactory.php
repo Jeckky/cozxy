@@ -478,7 +478,7 @@ class FakeFactory extends Model
             ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
-            ->select('*')
+            ->select('* , product_suppliers.productSuppId as productSuppId')
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where(" product_suppliers.productSuppId in ($promotionIds) ")
 //            ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit($n)->all();
