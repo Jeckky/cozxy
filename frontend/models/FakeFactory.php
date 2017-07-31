@@ -486,36 +486,39 @@ class FakeFactory extends Model
 
         foreach ($pCanSale as $value) {
 
-            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-            $price = number_format($value->price, 2);
+            if (isset($value->productSuppId)) {
+                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+                $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
+                $price = number_format($value->price, 2);
 
-            if (Yii::$app->controller->id == 'site') {
-                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
-            } else {
-                $title = isset($value->title) ? $value->title : '';
+                if (Yii::$app->controller->id == 'site') {
+                    $title = isset($value->title) ? substr($value->title, 0, 35) : '';
+                } else {
+                    $title = isset($value->title) ? $value->title : '';
+                }
+
+                $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+
+
+                $products[$value->productSuppId] = [
+                    'productSuppId' => $value->productSuppId,
+                    'image' => $productImagesThumbnail1,
+                    'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                    'brand' => isset($value->brand) ? $value->brand->title : '',
+                    'title' => $title,
+                    'price_s' => isset($price_s) ? $price_s : '',
+                    'price' => isset($price) ? $price : '',
+                    'maxQnty' => isset($value->result) ? $value->result : '',
+                    'fastId' => FALSE,
+                    'productId' => isset($value->productId) ? $value->productId : '',
+                    'supplierId' => isset($value->userId) ? $value->userId : '',
+                    'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                    'wishList' => $wishList
+                ];
             }
-
-            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
-
-            $products[$value->productSuppId] = [
-                'productSuppId' => $value->productSuppId,
-                'image' => $productImagesThumbnail1,
-                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-                'brand' => isset($value->brand) ? $value->brand->title : '',
-                'title' => $title,
-                'price_s' => isset($price_s) ? $price_s : '',
-                'price' => isset($price) ? $price : '',
-                'maxQnty' => isset($value->result) ? $value->result : '',
-                'fastId' => FALSE,
-                'productId' => isset($value->productId) ? $value->productId : '',
-                'supplierId' => isset($value->userId) ? $value->userId : '',
-                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
-                'wishList' => $wishList
-            ];
         }
 
-        throw new \yii\base\Exception(print_r($products, true));
+//        throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 
