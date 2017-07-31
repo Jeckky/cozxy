@@ -11,9 +11,9 @@ use Yii;
     * @property string $productPostId
     * @property string $productId
     * @property string $userId
-    * @property integer $productSelfId
+    * @property string $productSelfId
     * @property string $shopName
-    * @property integer $price
+    * @property string $price
     * @property string $country
     * @property string $currency
     * @property integer $status
@@ -38,7 +38,7 @@ return 'product_post_compare_price';
 public function rules()
 {
 return [
-            [['productPostId', 'userId', 'productSelfId', 'shopName', 'price', 'country', 'currency', 'createDateTime'], 'required'],
+            [['productPostId', 'userId', 'createDateTime'], 'required'],
             [['productPostId', 'productId', 'userId', 'productSelfId', 'price', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['shopName'], 'string', 'max' => 200],

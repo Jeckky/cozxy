@@ -202,6 +202,7 @@ return [
             'mimin/*', // only in dev mode
 //            'management/*'
             'topup/*',
+            'generate-model/*',
         ],
     ],
     'params' => $params,
