@@ -515,6 +515,7 @@ class FakeFactory extends Model
             ];
         }
 
+        throw new \yii\base\Exception(print_r($products, true));
         return $products;
     }
 
