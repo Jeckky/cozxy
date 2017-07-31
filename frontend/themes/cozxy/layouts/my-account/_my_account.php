@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12 bg-white myData">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in <?= isset($_GET['act']) ? '' : 'active'; ?>" id="account-detail">
-                    <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin')) ?>
+                    <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'user')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="order-history">
                     <?= $this->render('_order_history', compact('orderHistory')) ?>
