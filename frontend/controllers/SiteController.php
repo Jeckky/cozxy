@@ -357,12 +357,16 @@ class SiteController extends MasterController {
 
     public function actionForgetPassword() {
         $forget = $_POST['forget'];
-        $user = \common\models\costfit\User::find()->where('email = "' . $forget . '" ')->one();
+        $user = \common\models\costfit\User::find()->where('email = "' . $forget . '  " ')->one();
         if (count($user) > 0) {
-            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
-            $toMail = $user->email;
-            $emailSend = \common\helpers\Email::mailForgetPassword($toMail, $url);
-            return TRUE;
+            if ($user['status'] == 1) {
+                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
+                $toMail = $user->email;
+                $emailSend = \common\helpers\Email::mailForgetPassword($toMail, $url);
+                return TRUE;
+            } else {
+                return 9;
+            }
         } else {
             return FALSE;
         }
@@ -414,6 +418,19 @@ class SiteController extends MasterController {
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+    }
+
+    public function actionConfirmEmail() {
+        $forget = trim($_POST['forget']);
+        $user = \common\models\costfit\User::find()->where('email= "' . $forget . '"')->one();
+        if (count($user) > 0) {
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user['token'];
+            $toMail = $user['email'];
+            $emailSend = \common\helpers\Email::mailRegisterConfirm($toMail, $url);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
 }

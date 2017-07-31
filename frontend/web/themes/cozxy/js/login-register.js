@@ -4,10 +4,11 @@
 
 function ForgetCozxy() {
     $forget = $('#address-email').val();
+    //alert($forget);
     if ($forget == '') {
         alert('Please provide an email address as well.');
     } else {
-        var $this = $('#Forget');
+        var $this = $('#confirm-email-js');
         $this.button('loading');
         setTimeout(function () {
             $this.button('reset');
@@ -18,21 +19,44 @@ function ForgetCozxy() {
             data: {'forget': $forget},
             success: function (data, status)
             {
-                //alert(data);
                 if (status == "success") {
                     if (data == 1) {
                         alert('Please check your email to confirm your registration.');
                         //$('.bs-forget-modal-lg').close();
                         $('.bs-forget-modal-lg').modal('hide');
                     } else {
-                        alert('Please provide an email address as well.');
+                        //alert('Please provide an email address as well.');
+                        $('.confirm-email-label').val($forget);
+                        $('.bs-confirm-email-modal-lg').modal('show');
                     }
-
                 } else {
-                    alert('Please provide an email address as well.');
+                    // alert('Please provide an email address as well.');
                 }
             }
         });
     }
 
+}
+
+function ConfirmEmail() {
+
+    var confirmEmail = $('#confirm-email').val();
+
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "site/confirm-email",
+        data: {'forget': confirmEmail},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                if (data == 1) {
+                    alert('Please check your email to confirm your registration.');
+                    //$('.bs-forget-modal-lg').close();
+                    $('.bs-confirm-email-modal-lg').modal('hide');
+                }
+            } else {
+                // alert('Please provide an email address as well.');
+            }
+        }
+    });
 }
