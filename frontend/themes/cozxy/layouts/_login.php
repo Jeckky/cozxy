@@ -88,7 +88,7 @@ $this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
 
             <div class="row">
 
-                <form id="default-add-new-billing-address" class="login-box" action="#" method="post">
+                <div id="default-add-new-billing-address" class="login-box" action="#" method="post">
                     <div class="col-md-12 col-md-offset-1">
                         <div class="size24">&nbsp;</div>
                         <div class="form-group">
@@ -105,7 +105,7 @@ $this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
                         </div>
                         <div class="size24">&nbsp;</div>
                     </div>
-                </form>
+                </div>
 
             </div>
 
