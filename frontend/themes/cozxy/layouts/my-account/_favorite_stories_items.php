@@ -21,6 +21,7 @@
     .card.hovercard {
         position: relative;
         width: 260px;
+        /*height: 260px;*/
         padding-top: 0;
         overflow: hidden;
         text-align: center;
@@ -49,7 +50,7 @@
     }
 
     .card.hovercard .info {
-        padding: 4px 8px 10px;
+        padding: 4px 8px 10px ;
     }
 
     .card.hovercard .info .title {
@@ -90,11 +91,14 @@
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?>"  style=" padding: 5px;" id="itemStory-<?= $model['productPostId'] ?>">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="card hovercard product-img">
-        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
+        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;height: 260px;margin-left: -19px;">
 
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" alt=""/>
+                <?php
+                $userpic = common\models\costfit\User::getAvatar(Yii::$app->user->id);
+                ?>
+                <img src="<?= Yii::$app->homeUrl . "images/user/avatar/" . $userpic ?>" alt=""/>
             </a>
         </div>
         <div class="info">

@@ -217,11 +217,11 @@ function addItemToDefaultWishlist(id) {
         success: function (data)
         {
             if (data.status) {
-                window.location = $baseUrl + "my-account?act=2&&p=" + data.title;
-                //$('#showSuccessAdd').html(data.showText);
+                //window.location = $baseUrl + "my-account?act=2&&p=" + data.title;
+                $('#heartbeat-' + id).show();
+                $('#heart-o-' + id).hide();
             } else {
                 alert(data.message);
-                return false;
             }
         }
     });

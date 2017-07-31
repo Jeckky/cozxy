@@ -29,17 +29,17 @@ if (Yii::$app->controller->id == 'product') {
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-        <!--                    <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                      ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                      ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']                      ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                        <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>);" id="heartbeat-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="display: none;">
+                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
+                        </a>
+                        <!--<a href="" data-toggle="modal" data-target="#wishListGroup<?php // $model['productSuppId']             ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']             ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
-                        <!--<a href="" data-toggle="modal" data-target="#wishListGroup<?php // $model['productSuppId']          ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']          ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                        </a>-->
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);">
+                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heart-o-<?= $model['productSuppId'] ?>">
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>
-        <!--                        <a href="<?php // Yii::$app->homeUrl . 'my-account?act=2'    ?>">
-                            <div class="col-xs-4 heart-<?php // $model['productSuppId']    ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+        <!--                        <a href="<?php // Yii::$app->homeUrl . 'my-account?act=2'       ?>">
+                            <div class="col-xs-4 heart-<?php // $model['productSuppId']       ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>-->
                         <?php
                     }

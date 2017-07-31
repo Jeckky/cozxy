@@ -33,9 +33,8 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
 
     public static function wishListGroup() {
         if (Yii::$app->user->id) {
-            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type!=3")
-                    ->orderBy('type')
-                    ->addOrderBy('updateDateTime DESC')
+            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type=2")
+                    ->orderBy('title')
                     ->all();
             if (isset($shelf) && count($shelf) > 0) {
                 return $shelf;
@@ -47,11 +46,24 @@ class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
         }
     }
 
+    public static function defaultWishList1() {
+        if (Yii::$app->user->id) {
+            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type=1")->one();
+            if (isset($shelf)) {
+                return $shelf;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     public static function wishListGroupModal() {
         if (Yii::$app->user->id) {
-            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type=2")
+            $shelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type in(1,2)")
                     ->orderBy('type')
-                    ->addOrderBy('updateDateTime DESC')
+                    ->addOrderBy('title')
                     ->all();
             if (isset($shelf) && count($shelf) > 0) {
                 return $shelf;
