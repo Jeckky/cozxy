@@ -11,13 +11,11 @@ use common\models\costfit\ProductSuppliers;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplaySearch extends Model
-{
+class DisplaySearch extends Model {
 
     public $score;
 
-    public static function productSearch($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -97,8 +95,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchNotSale($search_hd, $n, $cat = FALSE)
-    {
+    public static function productSearchNotSale($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -179,21 +176,42 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status)
-    {
+    public static function productSearchBrand($brandId, $n, $cat = FALSE, $status) {
 
         $products = [];
 
-        $product = \common\models\costfit\CategoryToProduct::find()
-        ->select('ps.*,pps.*,category_to_product.*')
-        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-        ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
-        ->andWhere(($status == 'sale') ? 'pps.price > 0 AND ps.result > 0' : 'pps.price = 0 AND ps.result = 0')
-        ->groupBy('ps.productSuppId')
-        ->all();
+        if ($status == 'sale') {
+            $product = \common\models\costfit\CategoryToProduct::find()
+            ->select('ps.*,pps.*,category_to_product.*')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
+            ->andWhere('pps.price > 0 AND ps.result > 0')
+            ->groupBy('ps.productSuppId')
+            ->all();
+        } else {
+            $product = \common\models\costfit\CategoryToProduct::find()
+            ->select('ps.*,pps.*,category_to_product.*')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
+            ->andWhere('pps.price = 0 AND ps.result = 0')
+            ->groupBy('ps.productSuppId')
+            ->all();
+        }
 
+        /* $product = \common\models\costfit\CategoryToProduct::find()
+          ->select('ps.*,pps.*,category_to_product.*')
+          ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+          ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+          ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+          ->where("ps.brandId  = $brandId AND product.approve = 'approve' AND pps.status = 1")
+          ->andWhere(($status == 'sale') ? 'pps.price > 0 AND ps.result > 0' : 'pps.price = 0 AND ps.result = 0')
+          ->groupBy('ps.productSuppId')
+          ->all();
+         */
 
         //if (count($product) > 0) {
         foreach ($product as $value) {
@@ -226,8 +244,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategory($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -319,8 +336,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productSearchCategoryNotSale($n, $cat = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray = [];
         if ($cat != FALSE && $mins == FALSE && $maxs == FALSE) {
@@ -436,8 +452,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE)
-    {
+    public static function productSearchCategoryShowMore($s, $e, $cat = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -501,8 +516,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterBrand($cat = FALSE, $brand = FALSE)
-    {
+    public static function productFilterBrand($cat = FALSE, $brand = FALSE) {
         $products = [];
         $whereArray = [];
 
@@ -563,8 +577,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE)
-    {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -629,8 +642,7 @@ class DisplaySearch extends Model
         return $products;
     }
 
-    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE)
-    {
+    public static function productSortAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE) {
         $products = [];
         $whereArray2 = [];
 
