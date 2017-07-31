@@ -15,13 +15,19 @@ use common\helpers\Base64Decode;
 /**
  * ContactForm is the model behind the contact form.
  */
-class DisplayMyWishList extends Model {
+class DisplayMyWishList extends Model
+{
 
-    public static function productWishList($productId) {
+    public static function productWishList($productId)
+    {
         if (isset(Yii::$app->user->id)) {
-            $productPost = \common\models\costfit\Wishlist::find()->where('userId=' . Yii::$app->user->id . ' and productId=' . $productId)->one();
-            if (isset($productPost)) {
-                return 1;
+            if (isset($productId) && !empty($productId)) {
+                $productPost = \common\models\costfit\Wishlist::find()->where('userId=' . Yii::$app->user->id . ' and productId=' . $productId)->one();
+                if (isset($productPost)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             } else {
                 return 0;
             }
