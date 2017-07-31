@@ -10,14 +10,12 @@ use frontend\models\FakeFactory;
 use frontend\models\DisplayMyCategory;
 use yii\data\ArrayDataProvider;
 
-class SearchController extends MasterController
-{
+class SearchController extends MasterController {
 
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -29,8 +27,7 @@ class SearchController extends MasterController
         ];
     }
 
-    public function actionIndex($title, $hash = FALSE)
-    {
+    public function actionIndex($title, $hash = FALSE) {
         if (isset($_GET['c']) && !empty($_GET['c'])) {
             $category = $_GET['c'];
         } else {
@@ -63,8 +60,7 @@ class SearchController extends MasterController
         return $this->render('index', compact('productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title'));
     }
 
-    public function actionCozxyProduct()
-    {
+    public function actionCozxyProduct() {
         //$category = Yii::$app->request->post('search');
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
@@ -93,8 +89,7 @@ class SearchController extends MasterController
         return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
-    public function actionBrand($hash = FALSE)
-    {
+    public function actionBrand($hash = FALSE) {
 
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
@@ -122,8 +117,7 @@ class SearchController extends MasterController
         return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
     }
 
-    public function actionFilterPrice()
-    {
+    public function actionFilterPrice() {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $categoryId = Yii::$app->request->get('categoryId');
@@ -138,24 +132,28 @@ class SearchController extends MasterController
         return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
     }
 
-    public function actionFilterBrand()
-    {
+    public function actionFilterBrand() {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->get('categoryId');
 
         $FilterPrice = [];
-        $productFilterPrice = new ArrayDataProvider([
-            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
-            'pagination' => ['defaultPageSize' => 21]
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Notsale'),
+            'pagination' => ['defaultPageSize' => 9]
+        ]);
+
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 9]
         ]);
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
-        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
+        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
+            'category' => $category, 'categoryId' => $categoryId]);
     }
 
-    public function actionSortCozxy()
-    {
+    public function actionSortCozxy() {
         $FilterPrice = [];
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
@@ -177,8 +175,7 @@ class SearchController extends MasterController
         return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
     }
 
-    public function actionShowMoreProducts()
-    {
+    public function actionShowMoreProducts() {
 
         $catz = Yii::$app->request->post('cat');
         $countz = (int) Yii::$app->request->post('count');
