@@ -59,7 +59,16 @@ if (isset($sortstatus)) {
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
         <?php
-        yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false])
+        yii\widgets\Pjax::begin([
+            'id' => 'cansale',
+            'enablePushState' => false, // to disable push state
+            'enableReplaceState' => false, // to disable replace state
+            'timeout' => 5000,
+            'clientOptions' => [
+                'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
+                'linkSelector' => '#cansale'
+            ]
+        ]);
         ?>
         <?php
         echo \yii\widgets\ListView::widget([
@@ -99,7 +108,16 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
         <?php
-        yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false])
+        yii\widgets\Pjax::begin([
+            'id' => 'notsale',
+            'enablePushState' => false, // to disable push state
+            'enableReplaceState' => false, // to disable replace state
+            'timeout' => 5000,
+            'clientOptions' => [
+                'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
+                'linkSelector' => '#notsale'
+            ]
+        ]);
         ?>
         <?php
         echo \yii\widgets\ListView::widget([
