@@ -120,7 +120,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                         <div class="col-sm-12">
                             <div class="checkbox">
                                 <label class="">
-                                    <div class="icheckbox" style="position: relative;">
+                                    <div >
                                         <input type="checkbox" id="loginform-accept-term" name="User[acceptTerm]" value="1">
                                     </div> I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
                                 </label>
