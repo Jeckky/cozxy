@@ -481,7 +481,8 @@ class FakeFactory extends Model
             ->select('*')
             ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
             ->where(" product_suppliers.productSuppId in ($promotionIds) ")
-            ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit($n)->all();
+//            ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit($n)->all();
+            ->orderBy("product_price_suppliers.price ASC  ")->limit($n)->all();
         }
 
         foreach ($pCanSale as $value) {
