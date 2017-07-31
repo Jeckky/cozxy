@@ -27,6 +27,7 @@ class MyAccountController extends MasterController
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        // throw new \yii\base\Exception(Yii::getVersion());
         $billingAddress = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountBillingAddress('', \common\models\costfit\Address::TYPE_BILLING)]);
         $personalDetails = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountPersonalDetails('', '')]);
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
