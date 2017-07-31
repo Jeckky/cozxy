@@ -8,8 +8,9 @@ use Yii;
 * This is the model class for table "favorite_story".
 *
     * @property string $favoriteStoryId
-    * @property integer $productPostId
-    * @property integer $userId
+    * @property string $productPostId
+    * @property string $productId
+    * @property string $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -30,8 +31,8 @@ return 'favorite_story';
 public function rules()
 {
 return [
-            [['productPostId', 'userId'], 'required'],
-            [['productPostId', 'userId', 'status'], 'integer'],
+            [['productPostId', 'productId', 'userId'], 'required'],
+            [['productPostId', 'productId', 'userId', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
 }
@@ -44,6 +45,7 @@ public function attributeLabels()
 return [
     'favoriteStoryId' => Yii::t('favorite_story', 'Favorite Story ID'),
     'productPostId' => Yii::t('favorite_story', 'Product Post ID'),
+    'productId' => Yii::t('favorite_story', 'Product ID'),
     'userId' => Yii::t('favorite_story', 'User ID'),
     'status' => Yii::t('favorite_story', 'Status'),
     'createDateTime' => Yii::t('favorite_story', 'Create Date Time'),

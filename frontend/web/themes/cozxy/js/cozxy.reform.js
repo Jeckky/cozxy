@@ -481,6 +481,7 @@ $(document).on('click', '#closeWishlistModal', function (e) {
  * @returns {undefined}
  */
 $notify = $('#notify-cart-top-menu').html();
+//alert($notify);
 if ($notify == '') {
     $('#notify-cart-top-menu').css('background-color', '#000');
 } else {
