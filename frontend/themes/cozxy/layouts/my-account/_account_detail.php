@@ -1,4 +1,5 @@
 <?php
+
 use \yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
@@ -16,11 +17,12 @@ use dosamigos\fileupload\FileUpload;
         <?php
         $avatar = (isset($user->avatar)) ? $user->avatar : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
         ?>
-        <?=Html::img($avatar, ['width'=>120, 'class'=>'img-circle', 'id'=>'avatar'])?><br />
-        <?= FileUpload::widget([
+        <?= Html::img($avatar, ['width' => 120, 'class' => 'img-circle', 'id' => 'avatar']) ?><br />
+        <?=
+        FileUpload::widget([
             'model' => $user,
             'attribute' => 'avatar',
-            'url' => Url::home().'my-account/upload-avatar', // your url, this is just for demo purposes,
+            'url' => Url::home() . 'my-account/upload-avatar', // your url, this is just for demo purposes,
             'options' => ['accept' => 'image/*'],
             'clientOptions' => [
                 'maxFileSize' => 2000000,
@@ -30,7 +32,6 @@ use dosamigos\fileupload\FileUpload;
             'clientEvents' => [
                 'fileuploaddone' => 'function(e, data) {
                                 var res = JSON.parse(data.result);
-                                alert(res.avatar);
                                 $("#avatar").attr("src", res.avatar);
                             }',
                 'fileuploadfail' => 'function(e, data) {
@@ -38,31 +39,32 @@ use dosamigos\fileupload\FileUpload;
                                 console.log(data);
                             }',
             ],
-        ]); ?>
+        ]);
+        ?>
 
-<!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
-<!--        --><?php //ActiveForm::begin();?>
-<!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-<!--        --><?php //ActiveForm::end();?>
+        <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
+        <!--        --><?php //ActiveForm::begin();  ?>
+        <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
+        <!--        --><?php //ActiveForm::end(); ?>
     </div>
     <div class="col-md-10">
-    <?php
-    echo \yii\widgets\ListView::widget([
-        'dataProvider' => $personalDetails,
-        'options' => [
-            'tag' => false,
-        ],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('@app/themes/cozxy/layouts/my-account/_account_detail_personal_details', ['model' => $model, 'index' => $index]);
-        },
-        //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-        //'layout'=>"{summary}{pager}{items}"
-        'layout' => "{items}",
-        'itemOptions' => [
-            'tag' => false,
-        ],
-    ]);
-    ?>
+        <?php
+        echo \yii\widgets\ListView::widget([
+            'dataProvider' => $personalDetails,
+            'options' => [
+                'tag' => false,
+            ],
+            'itemView' => function ($model, $key, $index, $widget) {
+                return $this->render('@app/themes/cozxy/layouts/my-account/_account_detail_personal_details', ['model' => $model, 'index' => $index]);
+            },
+            //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+            //'layout'=>"{summary}{pager}{items}"
+            'layout' => "{items}",
+            'itemOptions' => [
+                'tag' => false,
+            ],
+        ]);
+        ?>
     </div>
 </div>
 <div class="size32 hr-margin">&nbsp;</div>
