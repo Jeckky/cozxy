@@ -796,4 +796,22 @@ class DisplaySearch extends Model {
         return $products;
     }
 
+    public static function findAllPrice($categoryId) {
+        $whereArray = [];
+        $whereArray["category_to_product.categoryId"] = $categoryId;
+
+        $whereArray["ps.approve"] = "approve";
+        $whereArray["pps.status"] = "1";
+        $pCanSale = \common\models\costfit\CategoryToProduct::find()
+        ->select('MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice')
+        ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where($whereArray)
+        ->andWhere([">", "ps.result", 0])
+        ->andWhere([">", "pps.price", 0])
+        ->one();
+        return $pCanSale;
+    }
+
 }
