@@ -110,7 +110,8 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                             'table',
                             'textdirection',
                             'textexpander',
-                            'video'],
+                            'video',
+                        ],
                         'buttons' => [
                             'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
                             'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
