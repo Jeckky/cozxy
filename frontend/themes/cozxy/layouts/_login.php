@@ -78,7 +78,7 @@ $this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
 
 
 <div class="modal fade bs-forget-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
@@ -113,6 +113,54 @@ $this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
                 <a href="#" class="b btn-black" style="padding:6px 11px; margin:24px auto 12px;" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
                 <a href="javascript:ForgetCozxy()" class="b btn-yellow" id="Forget" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing..." style="padding:6px 11px; margin:24px auto 12px;">SUBMIT</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade bs-confirm-email-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="gridSystemModalLabel">+ Confirm email?</h4>
+            </div>
+
+            <div class="row">
+
+                <div id="default-add-new-billing-address" class="login-box" action="#" method="post">
+                    <div class="col-md-12 col-md-offset-1">
+                        <div class="size24">&nbsp;</div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email</label>
+                                        <div class="form-group field-address-email required">
+                                            <input type="text" id="confirm-email" class="fullwidth confirm-email-label" name="confirm-email" placeholder="Email" aria-required="true" value="">
+                                        </div>
+                                        <label for="exampleInputEmail1">Status</label>
+                                        <div class="form-group field-address-email required text-danger">
+                                            your email address has not been confirmed yet
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="size24">&nbsp;</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="b btn-black" style="padding:6px 11px; margin:24px auto 12px;" data-dismiss="modal" aria-label="Close">CANCEL</a>
+                &nbsp;
+                <a href="javascript:ConfirmEmail()" class="b btn-yellow" id="confirm-email-js" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing..." style="padding:6px 11px; margin:24px auto 12px;">CONFIRM EMAIL</a>
             </div>
 
         </div>
