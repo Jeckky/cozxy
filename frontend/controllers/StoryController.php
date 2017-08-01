@@ -49,18 +49,18 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
-
-        $product_image_suppliers = $productPost->attributes;
+        //$productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
+        // $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
-        if (isset($product_image_suppliers['productId'])) {
+        //if (isset($product_image_suppliers['productId'])) {
+        if (isset($productId)) {
             $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productId)
             ->orderBy('ordering asc')->limit(1)->one();
             if (isset($product_image)) {
                 $imgShowStory = $product_image->image;
             }
         }
-
+        // }
         //echo '<pre>';
         //print_r($product_image->attributes);
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
