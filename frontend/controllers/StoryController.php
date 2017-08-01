@@ -47,7 +47,7 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' and product_post.status =1')->one();
+        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
 
         $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
