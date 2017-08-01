@@ -60,7 +60,7 @@ class StoryController extends MasterController {
             if (isset($product_image)) {
                 $imgShowStory = $product_image->image;
             } else {
-                $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productId=' . $productPost->productId)
+                $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)
                 ->orderBy('ordering asc')->limit(1)->one();
                 if (isset($product_image)) {
                     $imgShowStory = $product_image->image;
