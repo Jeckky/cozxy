@@ -40,12 +40,17 @@ class Currency extends \common\models\costfit\master\CurrencyMaster {
     }
 
     public static function ToThb($currencyId, $price) {
-        $currency = Currency::find()->where("currencyId=" . $currencyId)->one();
-        if (isset($currency)) {
-            $thb = $currency->toThb * $price;
+        if (isset($currencyId)) {
+            $currency = Currency::find()->where("currencyId=" . $currencyId)->one();
+            if (isset($currency)) {
+                $thb = $currency->toThb * $price;
+            } else {
+                $thb = $price;
+            }
         } else {
-            $thb = $price;
+            $thb = 0;
         }
+
         return $thb;
     }
 
