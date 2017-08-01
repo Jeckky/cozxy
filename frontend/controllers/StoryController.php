@@ -54,11 +54,17 @@ class StoryController extends MasterController {
         $imgShowStory = '';
         //if (isset($product_image_suppliers['productId'])) {
         if (isset($productId)) {
-            $product_image = \common\models\costfit\ProductImage::find()->where('productIdx=' . $productPost->productId)
+            $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)
             ->orderBy('ordering asc')->limit(1)->one();
 
             if (isset($product_image)) {
                 $imgShowStory = $product_image->image;
+            } else {
+                $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productId=' . $productPost->productId)
+                ->orderBy('ordering asc')->limit(1)->one();
+                if (isset($product_image)) {
+                    $imgShowStory = $product_image->image;
+                }
             }
         }
         // }
