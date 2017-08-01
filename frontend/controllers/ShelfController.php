@@ -82,16 +82,6 @@ class ShelfController extends MasterController {
                     $i = 0;
                     foreach ($allshelf as $shelf):
 
-                        if ($i == 0) {
-                            $display = '';
-                        } else {
-                            $display = 'none';
-                        }
-                        if ($i == 0) {
-                            $display2 = 'none';
-                        } else {
-                            $display2 = '';
-                        }
                         if ($shelf->type == 1) {
                             $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
                         }
@@ -102,14 +92,27 @@ class ShelfController extends MasterController {
                             $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
                         }
 
-                        $text .= "<a href='javascript:showWishlistGroup($shelf->productShelfId,0);' style='display:none;color:#000;' id='hideGroup-$shelf->productShelfId'>
-                          <div class='$fullCol bg-gray' style='padding:18px 18px 10px;margin-bottom: 10px;'>$a $shelf->title<i class='fa fa-chevron-up pull-right' aria-hidden='true'></i>
-                          </div>
-                          </a>";
-                        $text .= "<a href='javascript:showWishlistGroup($shelf->productShelfId,1);' style='color:#000;' id='showGroup-$shelf->productShelfId'>
-            <div class='$fullCol bg-gray' style='padding:18px 18px 10px;margin-bottom: 10px;'>$a $shelf->title<i class='fa fa-chevron-down pull-right' aria-hidden='true'></i>
+                        $text .= '<div class="col-lg-10 bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 1);" id="showGroup-' . $shelf->productShelfId . '">
+                ' . $a . ' ' . $shelf->title . '
             </div>
-        </a>";
+            <div class="col-lg-10 bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 0);" id="hideGroup-' . $shelf->productShelfId . '">
+                ' . $a . ' ' . $shelf->title . '
+            </div>
+            <div class="col-lg-2 bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
+                <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 1)" id="showEditShelf' . $shelf->productShelfId . '"></i>
+                <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;display: none;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 0)" id="hideEditShelf' . $shelf->productShelfId . '"></i>&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:deleteShelf(' . $shelf->productShelfId . ')"></i>
+            </div>
+            <div id="editShelf' . $shelf->productShelfId . '" style="display: none;" class="col-md-12">
+
+                <h4>Shelf' . "'s" . ' Name</h4>
+                <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
+                <div class="text-right" style="">
+                    <input type="hidden" id="productSuppId" value="no">
+                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancle</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:updateShelf(' . $shelf->productShelfId . ')"class="btn btn-yellow"id="updateShelf' . $shelf->productShelfId . '">Update</a>
+                </div>
+            </div>';
                         $text .= "<div id='wishListShelf-$shelf->productShelfId'></div>";
                         $i++;
                     endforeach;
