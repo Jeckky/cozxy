@@ -723,7 +723,6 @@ class DisplaySearch extends Model {
         $whereArray2["ps.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
 
-
         //echo '<pre>';
         //print_r($whereArray2);
         if ($status == 'Notsale') {
@@ -735,7 +734,7 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
             ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
-            ->andWhere('pps.price = 0')
+            //->andWhere('pps.price = 0')
             ->andWhere('ps.result = 0')
             //->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')
@@ -750,7 +749,7 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
             ->where($whereArray2)
             ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
-            ->andWhere('pps.price > 0')
+            //->andWhere('pps.price > 0')
             ->andWhere('ps.result > 0')
             //->andWhere(['between', 'pps.price', $mins, $maxs])
             ->groupBy('ps.productSuppId')
