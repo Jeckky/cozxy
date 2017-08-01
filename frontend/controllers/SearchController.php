@@ -139,10 +139,13 @@ class SearchController extends MasterController {
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->get('categoryId');
         if (isset($_GET['brandName']) && !empty($_GET['brandName'])) {
-            //$brand[] = Yii::$app->request->get('brandName');
+            $brand = Yii::$app->request->get('brandName');
+            $brandTxt = explode(",", $brand);
+            //echo count($brandTxt);
+            //print_r(explode(",", $brand));
+            $brand = array_map('trim', explode(",", $brand));
         }
-        //echo '<pre>';
-        //print_r($brand);
+
         $productFilterPriceNotsale = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 9]
