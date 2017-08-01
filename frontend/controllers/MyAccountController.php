@@ -484,17 +484,13 @@ class MyAccountController extends MasterController {
         $productShelfId = $_POST['shelfId'];
         $productShelf = ProductShelf::find()->where("productShelfId=" . $productShelfId)->one();
         if (isset($productShelf)) {
-            $productShelf->status = 0;
-            $productShelf->updateDateTime = new \yii\db\Expression('NOW()');
-            $productShelf->save(false);
             $shelfItems = Wishlist::find()->where("productShelfId=" . $productShelfId)->all();
             if (isset($shelfItems) && count($shelfItems) > 0) {
                 foreach ($shelfItems as $shelfItem):
-                    $shelfItem->status = 0;
-                    $shelfItem->updateDateTime = new \yii\db\Expression('NOW()');
-                    $shelfItem->save(false);
+                    $shelfItem->delete();
                 endforeach;
             }
+            $productShelf->delete();
             $allshelf = ProductShelf::wishListGroup();
             $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
             if (isset($allshelf) && count($allshelf) > 0) {
