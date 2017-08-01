@@ -73,10 +73,6 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     $defalutWishlist = ProductShelf::defaultWishList1();
     if (isset($defalutWishlist)) {
         $i = 0;
-        $edit = '';
-        $delete = '';
-        $edit = '';
-        $delete = '';
         $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
         ?>
 
@@ -172,11 +168,7 @@ if (isset($favoriteStories)) {
     $allshelf = ProductShelf::wishListGroup();
     if (isset($allshelf) && count($allshelf) > 0) {
         $i = 0;
-        $edit = '';
-        $delete = '';
         foreach ($allshelf as $shelf):
-            $edit = '';
-            $delete = '';
             if ($shelf->type == 2) {
                 $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
             }

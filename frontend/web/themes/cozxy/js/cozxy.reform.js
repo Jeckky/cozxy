@@ -1085,11 +1085,16 @@ function filterBrandCozxy($categoryId) {
         brandName.push($(this).val());
     });
     $brandName = brandName;
+    var brandName = '';
+    for (i = 0; i < $brandName.length; i++) {
+        brandName += $brandName[i] + ',';
+    }
+    //console.log(brandName);
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
     $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
-    var path = $baseUrl + "search/filter-brand?categoryId=" + $categoryId;
+    var path = $baseUrl + "search/filter-brand?categoryId=" + $categoryId + '&brandName=' + brandName + '';
     $.ajax({
         url: path,
         type: "POST",
