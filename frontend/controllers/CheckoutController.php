@@ -52,6 +52,9 @@ class CheckoutController extends MasterController
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
 
+        //Default address
+        $order->addressId = \common\models\costfit\Address::find()->where(['userId'=>Yii::$app->user->identity->userId, 'isDefault'=>1])->one()->addressId;
+
         if(isset($order->pickingId) && !empty($order->pickingId)) {
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId'=>$order->pickingId])->one();
         } else {

@@ -28,7 +28,7 @@
     }
 
     .card.hovercard img {
-        width: 300px;
+        /*width: 300px;*/
         height: 200px;
     }
 
