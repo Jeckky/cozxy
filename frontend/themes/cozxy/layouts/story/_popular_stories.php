@@ -7,7 +7,9 @@ use common\models\costfit\ProductPost;
     <h3 class="page-header" style="margin:10px 20px;">Popular Stories</h3>
     <div class="panel-body">
         <?php
-        throw new \yii\base\Exception(count($popularStories));
+        //throw new \yii\base\Exception(count($popularStories));
+        echo '<pre>';
+        print_r($popularStories);
         if (isset($popularStories) && count($popularStories) > 0) {
             foreach ($popularStories as $post):
                 $img = ProductSuppliers::ImagesFromPost($post->productPostId, $productSuppId);
