@@ -57,7 +57,7 @@ if (isset($sortstatus)) {
 
 <div class="row">
     <div class="wf-container">
-<?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
 
         <?php
         yii\widgets\Pjax::begin([
@@ -107,7 +107,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
 <h3 class="b"><?= strtoupper('category') ?> PRODUCT :: <?= strtoupper($category) ?> </h3>
 <div class="row">
     <div class="wf-container">
-<?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
 
         <?php
         yii\widgets\Pjax::begin([

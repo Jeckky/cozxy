@@ -170,14 +170,22 @@ class SearchController extends MasterController {
 //        $sortNew = Yii::$app->request->post('sortNew');
         $sort = Yii::$app->request->post('sort');
 
-        $productFilterPrice = new ArrayDataProvider([
-            'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status, $sort),
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status, $sort, 'Notsale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
+
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status, $sort, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+
+
         $sortstatus = ($status == "price") ? "price" : (($status == "brand") ? "brand" : "new");
 
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
-        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
+        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
     }
 
     public function actionShowMoreProducts() {

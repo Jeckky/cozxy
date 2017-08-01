@@ -813,4 +813,91 @@ class DisplaySearch extends Model {
         return $pCanSale;
     }
 
+    public static function productSortAlls($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE, $type = FALSE) {
+        $products = [];
+        $whereArray2 = [];
+
+        $whereArray2["category_to_product.categoryId"] = $cat;
+        if (isset($brand)) {
+            $whereArray2["brand.brandId"] = $brand;
+        }
+        $whereArray2["ps.approve"] = "approve";
+        $whereArray2["pps.status"] = "1";
+
+        $sortStr = ($status == "price") ? "pps.price " : (($status == "brand") ? "brandName " : "ps.updateDateTime ");
+        if ($sort == 'SORT_ASC') {
+            $sortStr.= 'asc';
+        } else {
+            $sortStr.= 'desc';
+        }
+        if ($type == 'Notsale') {
+            $pCanSale = \common\models\costfit\CategoryToProduct::find()
+            ->select('ps.*, pps.*, `brand`.title as brandName ')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
+            ->where($whereArray2)
+            ->andWhere("ps.result = 0 ")
+            ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " ps.result = 0")
+            ->groupBy('ps.productSuppId')
+
+            //->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => ($sortNew == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : '')))
+            ->orderBy($sortStr)
+            ->all();
+        } else {
+            $pCanSale = \common\models\costfit\CategoryToProduct::find()
+            ->select('ps.*, pps.*, `brand`.title as brandName ')
+            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+            ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
+            ->where($whereArray2)
+            ->andWhere("ps.result > 0   ")
+            ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " pps.price > 0")
+            ->groupBy('ps.productSuppId')
+            //->orderBy(($status == 'price') ? ['pps.price' => ($sortPrice == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'brand') ? ['brandName' => ($sortBrand == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : (($status == 'new') ? ['ps.updateDateTime' => ($sortNew == 'SORT_ASC') ? SORT_ASC : SORT_DESC] : '')))
+            ->orderBy($sortStr)
+            ->all();
+        }
+
+
+
+        //throw new \yii\base\Exception($sortPrice);
+
+        foreach ($pCanSale as $value) {
+
+            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+
+            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; // number_format($value->product->price, 2);
+            $price = number_format($value->price, 2);
+
+            if (Yii::$app->controller->id == 'site') {
+                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
+            } else {
+                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
+            }
+
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+
+            $products[$value->productSuppId] = [
+                'productSuppId' => $value->productSuppId,
+                'image' => $productImagesThumbnail1,
+                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                'brand' => isset($value->brand) ? $value->brand->title : $value->brandName,
+                'title' => $title,
+                'price_s' => isset($price_s) ? $price_s : '',
+                'price' => isset($price) ? $price : '',
+                'maxQnty' => isset($value->result) ? $value->result : '',
+                'fastId' => FALSE,
+                'productId' => isset($value->productId) ? $value->productId : '',
+                'supplierId' => isset($value->userId) ? $value->userId : '',
+                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                'wishList' => $wishList
+            ];
+        }
+
+        return $products;
+    }
+
 }
