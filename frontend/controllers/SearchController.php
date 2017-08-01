@@ -138,8 +138,11 @@ class SearchController extends MasterController {
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->get('categoryId');
-
-        $FilterPrice = [];
+        if (isset($_GET['brandName']) && !empty($_GET['brandName'])) {
+            //$brand[] = Yii::$app->request->get('brandName');
+        }
+        //echo '<pre>';
+        //print_r($brand);
         $productFilterPriceNotsale = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 9]
@@ -149,9 +152,10 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Cansale'),
             'pagination' => ['defaultPageSize' => 9]
         ]);
+
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
-            'category' => $category, 'categoryId' => $categoryId]);
+            'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand]);
     }
 
     public function actionSortCozxy() {

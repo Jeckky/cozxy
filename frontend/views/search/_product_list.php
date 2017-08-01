@@ -41,6 +41,13 @@ if (isset($sortstatus)) {
     $sortNewIcon = 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
     $sortNew = 'SORT_ASC';
 }
+
+
+$arrlength = count($brandId);
+
+for ($x = 0; $x < $arrlength; $x++) {
+    $brand = $brandId[$x] . ',';
+}
 ?>
 <h3 class="b"><?= strtoupper('category') ?> RECOMMENDED:: <?= strtoupper($category) ?>
     <small>
@@ -58,6 +65,7 @@ if (isset($sortstatus)) {
 <div class="row">
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("brandId", $brand); ?>
         <?php
         yii\widgets\Pjax::begin([
             'id' => 'cansale',
@@ -107,6 +115,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
 <div class="row">
     <div class="wf-container">
         <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("brandId", $brand); ?>
         <?php
         yii\widgets\Pjax::begin([
             'id' => 'notsale',
