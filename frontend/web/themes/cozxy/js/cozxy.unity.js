@@ -12,7 +12,7 @@ $(document).ready(function (e) {
         }
 
         //alert('test add to cart new ');
-
+        $('#notify-cart-top-menu').removeAttr('style');
         //$addedToCartMessage.removeClass('visible');
         var $itemName = $(this).parent().parent().find('h1').text();
         if (typeof $itemName == 'undefined' || $itemName == '')
