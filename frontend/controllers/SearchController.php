@@ -171,12 +171,12 @@ class SearchController extends MasterController {
         $sort = Yii::$app->request->post('sort');
 
         $productFilterPriceNotsale = new ArrayDataProvider([
-            'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status, $sort, 'Notsale'),
+            'allModels' => DisplaySearch::productSortAlls($categoryId, $brand, $mins, $maxs, $status, $sort, 'Notsale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
 
         $productFilterPriceCansale = new ArrayDataProvider([
-            'allModels' => DisplaySearch::productSortAll($categoryId, $brand, $mins, $maxs, $status, $sort, 'Cansale'),
+            'allModels' => DisplaySearch::productSortAlls($categoryId, $brand, $mins, $maxs, $status, $sort, 'Cansale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
 
