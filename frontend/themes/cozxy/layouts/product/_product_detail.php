@@ -157,34 +157,28 @@ $val = rand(1, 10);
                             if (Yii::$app->user->id) {
                                 if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                     ?>
-                                    <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
+                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
+                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i> ADD TO SHELF</div>
                                     </a>
                                 <?php } else { ?>
-                                    <!-- <a href="javascript:addItemToWishlist(<?php // $model['productSuppId']                  ?>);" id="addItemToWishlist-<?php // $model['productSuppId']                   ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>">
-                                        <div class="col-xs-4 heart-<?php // $model['productSuppId']                  ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                                    </a>-->
-                                    <a href="" class="b btn-g999 size15" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
-                                        <div class="heart-<?= $model['productSuppId'] ?>">ADD TO SHELVER<!--+ <i class="fa fa-heart-o" aria-hidden="true"></i>--></div>
+                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
+                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
                                     </a>
                                     <?php
                                 }
                             } else {
                                 ?>
                                 <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
-                                    <div class="b btn-g999 size15" style="padding: 6px 16px;">ADD TO SHELVER<!--+ <i class="fa fa-heart-o" aria-hidden="true"></i>--></div>
+                                    <div class="b btn-g999 size12" style="padding: 6px 16px;">ADD TO SHELF</div>
                                 </a>
                             <?php } ?>
                             <?php
                             if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size16" style="margin:14px auto 2px;padding: 6px 16px;">ADD TO CART</a>';
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size12"  style="margin:14px auto 2px;padding: 6px 16px;">ADD TO CART</a>';
                             } else {
                                 echo ' ';
                             }
                             ?>
-                            <!-- <a href = "/cart" class = "b btn-g999 btn-success size16" style = "margin:24px auto 12px;color:#fff;">+
-                                 <i class = "fa fa-bookmark-o"></i></a>
-                            -->
                             <div class="size12">&nbsp;</div>
                         </div>
                     </div>

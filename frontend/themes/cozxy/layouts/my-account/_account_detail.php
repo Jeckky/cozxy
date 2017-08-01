@@ -30,9 +30,12 @@ use dosamigos\fileupload\FileUpload;
             // Also, you can specify jQuery-File-Upload events
             // see: https://github.com/blueimp/jQuery-File-Upload/wiki/Options#processing-callback-options
             'clientEvents' => [
+                'fileuploadstart' => 'function(e, data) {
+                               $("#avatar").attr("style", "opacity:0.5;");
+                            }',
                 'fileuploaddone' => 'function(e, data) {
                                 var res = JSON.parse(data.result);
-                                $("#avatar").attr("src", res.avatar);
+                                $("#avatar").attr("src", res.avatar).removeAttr("style" );
                             }',
                 'fileuploadfail' => 'function(e, data) {
                                 console.log(e);
@@ -160,4 +163,21 @@ $("#profilePictureBtn").click(function(e){
     $("#profilePicture").trigger("click");
 });
 ');
+
+$this->registerCss("
+.fileinput-button {
+    margin-top:5px;
+    padding:5px;
+    font-size:12px;
+}
+
+.fileinput-button span, .fileinput-button i{
+    display:none;
+
+}
+
+.fileinput-button:after {
+    content:'Update Profile Picture';
+}
+");
 ?>
