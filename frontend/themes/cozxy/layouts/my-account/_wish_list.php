@@ -9,8 +9,7 @@ $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 ?>
 <?php
 
-function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType)
-{
+function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
     $quantity = 1;
     echo '
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
@@ -69,65 +68,54 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         </div>
     </div>
 </div>
-<div id="allShelf2">
+<div id="allShelf1">
     <?php
-    $allshelf = ProductShelf::wishListGroup();
-    if (isset($allshelf) && count($allshelf) > 0) {
+    $defalutWishlist = ProductShelf::defaultWishList1();
+    if (isset($defalutWishlist)) {
         $i = 0;
         $edit = '';
         $delete = '';
-        foreach ($allshelf as $shelf):
-            $edit = '';
-            $delete = '';
-            if ($shelf->type == 1) {
-                $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-            }
-            if ($shelf->type == 2) {
-                $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-            }
-            if ($shelf->type == 3) {
-                $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-            }
-            ?>
+        $edit = '';
+        $delete = '';
+        $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+        ?>
 
-            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
-                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-        <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
-                </div>
-            </a>
-            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
-                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-        <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
-                </div>
-            </a>
+        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
+        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
         <?php if ($i == 0) { ?>
-                <div id="wishListShelf-<?= $shelf->productShelfId ?>">
+            <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>">
 
-                    <?php
-                    $wishlists = DisplayMyAccount::myAccountWishList($shelf->productShelfId, 8);
-                    if (isset($wishlists) && count($wishlists) > 0) {
-                        foreach ($wishlists as $value):
-                            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
-                        endforeach;
-                    }
-                    $isShowSeemore = DisplayMyAccount::wishlistItems($shelf->productShelfId);
-                    if ($isShowSeemore > 8) {
-                        ?>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
-                            <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $shelf->productShelfId ?>">See more >></a>
-                        </div>
-                        <?php
-                    }
+                <?php
+                $wishlists = DisplayMyAccount::myAccountWishList($defalutWishlist->productShelfId, 8);
+                if (isset($wishlists) && count($wishlists) > 0) {
+                    foreach ($wishlists as $value):
+                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                    endforeach;
+                }
+                $isShowSeemore = DisplayMyAccount::wishlistItems($defalutWishlist->productShelfId);
+                if ($isShowSeemore > 8) {
                     ?>
-                </div>
-                <?php
-            } else {
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                        <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $defalutWishlist->productShelfId ?>">See more >></a>
+                    </div>
+                    <?php
+                }
                 ?>
-                <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
-                <?php
-            }
-            $i++;
-        endforeach;
+            </div>
+            <?php
+        } else {
+            ?>
+            <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>"></div>
+            <?php
+        }
     }
     ?></div>
 <?php
@@ -138,12 +126,12 @@ if (isset($favoriteStories)) {
     ?>
     <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <div id="showFavoriteItem" style="display:none;">
@@ -179,3 +167,58 @@ if (isset($favoriteStories)) {
     </div>
 <?php }
 ?>
+<div id="allShelf2">
+    <?php
+    $allshelf = ProductShelf::wishListGroup();
+    if (isset($allshelf) && count($allshelf) > 0) {
+        $i = 0;
+        $edit = '';
+        $delete = '';
+        foreach ($allshelf as $shelf):
+            $edit = '';
+            $delete = '';
+            if ($shelf->type == 2) {
+                $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
+            }
+            ?>
+
+            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $shelf->productShelfId ?>"><!-- click for hidden -->
+                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+                </div>
+            </a>
+            <a href="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $shelf->productShelfId ?>"><!-- click for show -->
+                <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                    <?= $a . '' . $shelf->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+                </div>
+            </a>
+            <?php if ($i == 0) { ?>
+                <div id="wishListShelf-<?= $shelf->productShelfId ?>">
+
+                    <?php
+                    $wishlists = DisplayMyAccount::myAccountWishList($shelf->productShelfId, 8);
+                    if (isset($wishlists) && count($wishlists) > 0) {
+                        foreach ($wishlists as $value):
+                            product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                        endforeach;
+                    }
+                    $isShowSeemore = DisplayMyAccount::wishlistItems($shelf->productShelfId);
+                    if ($isShowSeemore > 8) {
+                        ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                            <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $shelf->productShelfId ?>">See more >></a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+            } else {
+                ?>
+                <div id="wishListShelf-<?= $shelf->productShelfId ?>"></div>
+                <?php
+            }
+            $i++;
+        endforeach;
+    }
+    ?></div>
