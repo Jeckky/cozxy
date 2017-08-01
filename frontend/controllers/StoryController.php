@@ -48,8 +48,7 @@ class StoryController extends MasterController {
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' and product_post.status =1')->one();
-        echo '<pre>';
-        print_r($productPost);
+
         $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
         if (isset($product_image_suppliers['productId'])) {
