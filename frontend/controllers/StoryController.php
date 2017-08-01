@@ -24,8 +24,8 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        echo '<pre>';
-        print_r($params);
+        //echo '<pre>';
+        //print_r($params);
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -56,6 +56,8 @@ class StoryController extends MasterController {
         if (isset($productId)) {
             $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)
             ->orderBy('ordering asc')->limit(1)->one();
+            echo '<pre>';
+            print_r($product_image);
             if (isset($product_image)) {
                 $imgShowStory = $product_image->image;
             }
