@@ -10,6 +10,8 @@ use common\models\costfit\ProductPost;
         //throw new \yii\base\Exception(count($popularStories));
         echo '<pre>';
         print_r($popularStories);
+        print_r($popularStoriesNoneStar);
+        exit();
         if (isset($popularStories) && count($popularStories) > 0) {
             foreach ($popularStories as $post):
                 $img = ProductSuppliers::ImagesFromPost($post->productPostId, $productSuppId);
