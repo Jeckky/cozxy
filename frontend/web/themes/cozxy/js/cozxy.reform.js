@@ -54,8 +54,10 @@ $('#addressId').change(function (event, id, value) {
                 $('.address-checkouts').find(".name-show").html(JSONObject.address.firstname + ' ,' + JSONObject.address.lastname);
                 $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' ,'
                         + JSONObject.address.district + ' ,' + JSONObject.address.amphur + ' ,' + JSONObject.address.province
-                        + ' ,' + JSONObject.address.zipcode);
+                        + ' ,' + JSONObject.address.zipcode + ', ');
                 //$('.checkout-total')
+                $('.address-checkouts').find(".email-show").html(JSONObject.address.email);
+                $('.address-checkouts').find(".tel-show").html(JSONObject.address.tel);
                 $('input:hidden', '.checkout-total').val(JSONObject.address.addressId);
             } else {
                 $('.name-lockers-cool').html('');
