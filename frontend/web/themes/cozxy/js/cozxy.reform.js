@@ -526,60 +526,59 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             success: function (data)
             {
                 if (data.status) {
-                    $('#maxQnty').val($maxQnty - $itemQnty);
-                    if (($maxQnty - $itemQnty) == 0) {
-                        $('#quantity').val(0);
-                        //$addToCartBtn.attr('disabled', 'disabled');
-                    } else {
-                        $('#quantity').val(1);
-                    }
-
-                    if (res[1] != 'search') {
-                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
-                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
-                    } else {
-                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
-                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
-                        setTimeout(function () {
-                            $('.shopping-' + productSuppId + ' i').removeClass('fa fa-checkn');
-                            $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
-                        }, 8000)
-                    }
-
-                    //$('.cart-dropdown table').remove();
-                    //$('.cart-dropdown .body').append(
-                    //data.shoppingCart
-                    // );
-                    // $('.cart-btn a span').text($cartTotalItems);
-                    //$('.cart-btn a').find("#cartTotal").html(data.cart.totalFormatText);
-                    //$('.cart-dropdown .footer .total').html(data.cart.totalFormatText);
-                    //window.location = $baseUrl + 'cart';
-                    //$.notify("Add to Cart Success ,", "success");
-
-                    /* notify */
-                    //alert(productSuppId);
-                    //$('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus');
-                    //$('.shopping-' + productSuppId + ' i').addClass('fa fa-check-circle fa-spin');
-                    //alert($('.product-img').find('.v-hover').find('.shopping-' + productSuppId + ' i'));
-                    //console.log(productSuppId);
-
-                    // $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus');
-                    //$('#cart-plus-' + productSuppId + ' i').addClass('fa fa-check-circle fa-spin');
-
-                    $.ajax({
-                        type: "POST",
-                        url: $baseUrl + "cart/get-product-quantity",
-                        data: {},
-                        success: function (data, status)
-                        {
-                            if (status == "success") {
-                                $('#notify-cart-top-menu').removeAttr('style');
-                                $('#notify-cart-top-menu').html(data);
-                            } else {
-
-                            }
+                    console.log(data.isMaxQuantitys);
+                    if (data.isMaxQuantitys == 'YES') {
+                        $('#maxQnty').val($maxQnty - $itemQnty);
+                        if (($maxQnty - $itemQnty) == 0) {
+                            $('#quantity').val(0);
+                            //$addToCartBtn.attr('disabled', 'disabled');
+                        } else {
+                            $('#quantity').val(1);
                         }
-                    });
+
+                        if (res[1] != 'search') {
+                            $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                            $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
+                        } else {
+                            $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                            $('.shopping-' + productSuppId + ' i').addClass('fa fa-check');
+                            setTimeout(function () {
+                                $('.shopping-' + productSuppId + ' i').removeClass('fa fa-checkn');
+                                $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
+                            }, 8000)
+                        }
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: $baseUrl + "cart/get-product-quantity",
+                            data: {},
+                            success: function (data, status)
+                            {
+                                if (status == "success") {
+                                    $('#notify-cart-top-menu').removeAttr('style');
+                                    $('#notify-cart-top-menu').html(data);
+                                } else {
+
+                                }
+                            }
+                        });
+                    }
+                } else {
+
+                    //console.log('No No');
+                    //alert('Max quantity for this product');
+                    $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                    $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
+                    $('.shopping-' + productSuppId + ' i').attr("title", "Max quantity for this product");
+                    setTimeout(function () {
+                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
+                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
+                    }, 8000)
+
+
+
+
                 }
                 //alert(data.shoppingCart);
                 //$addedToCartMessage.addClass('visible');
