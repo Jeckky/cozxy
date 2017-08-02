@@ -24,12 +24,10 @@ use common\models\costfit\PointUsed;
 use frontend\models\DisplayMyAddress;
 use yii\data\ArrayDataProvider;
 
-class CheckoutController extends MasterController
-{
+class CheckoutController extends MasterController {
 
-    public function actionIndex()
-    {
-        if(Yii::$app->user->isGuest) {
+    public function actionIndex() {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
 
@@ -53,11 +51,14 @@ class CheckoutController extends MasterController
         $order = Order::find()->where(['orderId' => $orderId])->one();
 
         //Default address
-        $defaultAddress = \common\models\costfit\Address::find()->where(['userId'=>Yii::$app->user->identity->userId, 'isDefault'=>1])->one();
-        $order->addressId = $defaultAddress->addressId;
+        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
 
-        if(isset($order->pickingId) && !empty($order->pickingId)) {
-            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId'=>$order->pickingId])->one();
+        if (isset($order->addressId)) {
+            $order->addressId = $defaultAddress->addressId;
+        }
+
+        if (isset($order->pickingId) && !empty($order->pickingId)) {
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId])->one();
         } else {
             $pickingPoint = new \common\models\costfit\PickingPoint();
         }
@@ -66,52 +67,51 @@ class CheckoutController extends MasterController
          * New Billing
          */
         $NewBilling = new \common\models\costfit\Address(['scenario' => 'new_checkouts_billing_address']);
-        if(isset($_POST['Address'])) {
+        if (isset($_POST['Address'])) {
             $NewBilling->attributes = $_POST['Address'];
-            if($_POST["Address"]['isDefault']) {
+            if ($_POST["Address"]['isDefault']) {
                 \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
                 $NewBilling->isDefault = 1;
             }
             $NewBilling->userId = Yii::$app->user->id;
             $NewBilling->type = \common\models\costfit\Address::TYPE_BILLING;
             $NewBilling->createDateTime = new \yii\db\Expression("NOW()");
-            if($model->save(FALSE)) {
+            if ($model->save(FALSE)) {
                 //return $this->redirect(['/my-account']);
             }
         }
-        if(!isset($NewBilling->isDefault)) {
+        if (!isset($NewBilling->isDefault)) {
             $NewBilling->isDefault = 0;
         }
 
         return $this->render('index', compact('NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
-    public function actionSummary()
-    {
-        if(Yii::$app->user->isGuest) {
+    public function actionSummary() {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $shipTo = Yii::$app->request->post('shipping');
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');
-        $LcpickingId = ($shipTo==1) ? Yii::$app->request->post('LcpickingId') : 0;
+        $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
         $addressId = Yii::$app->request->post('addressId');
 
         //save address
         $orderAddress = Yii::$app->request->post('Order');
         $orderId = Yii::$app->request->post('orderId');
 
-        if(isset($addressId)) {
+        if (isset($addressId)) {
             $addressId = Yii::$app->request->post('addressId');
         } else {
             $addressId = Yii::$app->request->post('addressIdsummary');
         }
         $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress);
         //throw new Exception(print_r());
-        if(isset($LcpickingId) && !empty($LcpickingId)) {
+        if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
             $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
-            if(isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
+            if (isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
                 $pickingMap = $pickingMap->attributes;
             } else {
                 $pickingMap = Null;
@@ -127,20 +127,18 @@ class CheckoutController extends MasterController
         return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order', 'addressId', 'userPoint'));
     }
 
-    public function actionThanks()
-    {
+    public function actionThanks() {
         return $this->render('thanks');
     }
 
-    public function actionAddress()
-    {
+    public function actionAddress() {
         $addressId = Yii::$app->request->post('addressId');
         $products = [];
-        if(isset($addressId) && !empty($addressId)) {
+        if (isset($addressId) && !empty($addressId)) {
 
             $products = [];
             $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->all();
-            foreach($dataAddress as $items) {
+            foreach ($dataAddress as $items) {
                 $products['address'] = [
                     'addressId' => $items->addressId,
                     'userId' => $items->userId,
@@ -168,15 +166,14 @@ class CheckoutController extends MasterController
         }
     }
 
-    public function actionSaveAddressId()
-    {
+    public function actionSaveAddressId() {
         $addressId = Yii::$app->request->post('addressId');
         $orderId = Yii::$app->request->post('orderId');
         $cozxyCoin = Yii::$app->request->post('systemCoin');
         $res = [];
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $dataAddress = \common\models\costfit\Address::find()->where("addressId =" . $addressId)->orderBy('addressId DESC')->one();
-        if(isset($dataAddress)) {
+        if (isset($dataAddress)) {
             $order->addressId = $addressId;
             $order->cozxyCoin = $cozxyCoin;
             $res["status"] = true;
@@ -188,14 +185,13 @@ class CheckoutController extends MasterController
         return json_encode($res);
     }
 
-    public function actionIsPayNow()
-    {
+    public function actionIsPayNow() {
         $orderId = Yii::$app->request->post('orderId');
         $isPay = Yii::$app->request->post('isPay');
         $res = [];
         $products = [];
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        if($isPay == 1) {
+        if ($isPay == 1) {
             $order->isPayNow = 1;
         } else {
             $order->isPayNow = 0;
@@ -206,18 +202,17 @@ class CheckoutController extends MasterController
         return json_encode($res);
     }
 
-    function actionMapImages()
-    {
-        if(Yii::$app->user->isGuest) {
+    function actionMapImages() {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
-        if(isset($pickingId) && !empty($pickingId)) {
+        if (isset($pickingId) && !empty($pickingId)) {
             $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
             //print_r($mapImages->attributes);
-            if(isset($mapImages) && !empty($mapImages)) {
+            if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
             } else {
                 return NULL;
@@ -225,18 +220,17 @@ class CheckoutController extends MasterController
         }
     }
 
-    function actionMapImagesGoogle()
-    {
-        if(Yii::$app->user->isGuest) {
+    function actionMapImagesGoogle() {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         //echo 'test map images';
         $pickingId = Yii::$app->request->post('pickingIds');
         //$pickingId = 1;
-        if(isset($pickingId) && !empty($pickingId)) {
+        if (isset($pickingId) && !empty($pickingId)) {
             $mapImages = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
 
-            if(isset($mapImages) && !empty($mapImages)) {
+            if (isset($mapImages) && !empty($mapImages)) {
                 return json_encode($mapImages->attributes);
             } else {
                 return NULL;
@@ -244,16 +238,15 @@ class CheckoutController extends MasterController
         }
     }
 
-    static function resetDefault($orderId, $addressId = null, $pickingId, $shipTo = 1, $orderAddress = null)
-    {
+    static function resetDefault($orderId, $addressId = null, $pickingId, $shipTo = 1, $orderAddress = null) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        if(isset($order)) {
+        if (isset($order)) {
             $order->cozxyCoin = 0;
             $order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
 
-            if($shipTo == 2) {
+            if ($shipTo == 2) {
                 $order->shippingFirstname = $orderAddress['shippingFirstname'];
                 $order->shippingLastname = $orderAddress['shippingLastname'];
                 $order->shippingAddress = $orderAddress['shippingAddress'];
@@ -268,9 +261,8 @@ class CheckoutController extends MasterController
         }
     }
 
-    function actionOrderSummary()
-    {
-        if(Yii::$app->user->isGuest) {
+    function actionOrderSummary() {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         // $k = base64_decode(base64_decode($hash));
@@ -285,7 +277,7 @@ class CheckoutController extends MasterController
         $systemCoin = Yii::$app->request->post('systemCoin');
 
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
-        if(isset($issetPoint)) {
+        if (isset($issetPoint)) {
             $userPoint = $issetPoint;
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
@@ -300,9 +292,8 @@ class CheckoutController extends MasterController
         ]);
     }
 
-    function actionOrderSummaryTopup($hash)
-    {
-        if(Yii::$app->user->isGuest) {
+    function actionOrderSummaryTopup($hash) {
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
         $k = base64_decode(base64_decode($hash));
@@ -313,7 +304,7 @@ class CheckoutController extends MasterController
         //$systemCoin = Yii::$app->request->post('systemCoin');
 
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
-        if(isset($issetPoint)) {
+        if (isset($issetPoint)) {
             $userPoint = $issetPoint;
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
@@ -328,21 +319,20 @@ class CheckoutController extends MasterController
         ]);
     }
 
-    function actionConfirm()
-    {
+    function actionConfirm() {
         $orderId = Yii::$app->request->post('orderId');
         $systemCoin = Yii::$app->request->post('systemCoin');
         $addressId = Yii::$app->request->post('addressId');
-        if(isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
+        if (isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
             $orderId = $_GET['orderId'];
             $systemCoin = $_GET['systemCoin'];
             $addressId = $_GET['addressId'];
         }
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $res = [];
-        if(isset($order)) {
+        if (isset($order)) {
             $userPoint = UserPoint::find()->where("userId=" . $order->userId . " and status=1")->one();
-            if(isset($userPoint)) {
+            if (isset($userPoint)) {
                 $this->updateSupplierStock($order->orderId);
                 $getRankMemberPoints = RewardPoints::getRankMemberPoints($order->userId, $order->orderId, $order->summary);
                 $order->orderNo = \common\models\costfit\Order::genOrderNo();
@@ -351,29 +341,29 @@ class CheckoutController extends MasterController
                 $order->paymentDateTime = new \yii\db\Expression('NOW()');
                 $this->updateUserPoint($order->userId, $order->summary, $order->orderId, $systemCoin == NULL ? 0 : $systemCoin);
                 $this->updateBillingToOrder($addressId, $order->orderId, $systemCoin == NULL ? 0 : $systemCoin);
-                if($order->save()) {
+                if ($order->save()) {
                     $res["status"] = 1;
 
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = "Successful transaction";
                     // Update Send Date field
                     // ****รอ Confirm เรื่อง สั่งหลังกี่โมง เลื่อนไปอีก 1 วัน****
-                    if($order->isSlowest) {
+                    if ($order->isSlowest) {
                         $maxDate = \common\models\costfit\OrderItem::findSlowestDate($order->orderId);
-                        foreach($order->orderItems as $item):
+                        foreach ($order->orderItems as $item):
                             $item->sendDateTime = date('Y-m-d', strtotime("+$maxDate day"));
                             $item->save();
                         endforeach;
                     } else {
-                        foreach($order->orderItems as $item):
+                        foreach ($order->orderItems as $item):
                             //$date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
                             $item->sendDateTime = date('Y-m-d', strtotime("+1 day"));
                             $item->save();
                         endforeach;
                     }
                     $member = \common\models\costfit\User::find()->where('userId=' . $order->userId)->one();
-                    if(isset($member)) {
-                        if(isset($member->email)) {
+                    if (isset($member)) {
+                        if (isset($member->email)) {
                             $toMails = $member->email;
                         } else {
                             $toMails = $member->username;
@@ -431,8 +421,7 @@ class CheckoutController extends MasterController
     }
 
     public
-    function updateBillingToOrder($billingAddressId, $orderId, $systemCoin)
-    {
+    function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
 
@@ -468,8 +457,7 @@ class CheckoutController extends MasterController
         $order->save(false);
     }
 
-    function CreateUserPoint($userId)
-    {
+    function CreateUserPoint($userId) {
         $point = new UserPoint();
         $point->userId = Yii::$app->user->identity->userId;
         $point->status = 1;
@@ -483,12 +471,11 @@ class CheckoutController extends MasterController
     }
 
     public
-    function updateSupplierStock($orderId)
-    {
+    function updateSupplierStock($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
-        foreach($orderItems as $orderItem):
+        foreach ($orderItems as $orderItem):
             $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
-            if(isset($productSupp) && !empty($productSupp)) {
+            if (isset($productSupp) && !empty($productSupp)) {
                 $History = new \common\models\costfit\StockHistory();
                 $History->orderItemId = $orderItem->orderItemId;
                 $History->productSuppId = $productSupp->productSuppId;
@@ -506,11 +493,10 @@ class CheckoutController extends MasterController
     }
 
     public
-    function updateUserPoint($userId, $point, $orderId, $systemCoin)
-    {
+    function updateUserPoint($userId, $point, $orderId, $systemCoin) {
         // throw new \yii\base\Exception($systemCoin);
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        if(($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
+        if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
             $userPoint = UserPoint::find()->where("userId=" . $userId)->one();
             $userPoint->currentPoint = ($userPoint->currentPoint - $point) + $systemCoin;
             $userPoint->currentCozxySystemPoint = $userPoint->currentCozxySystemPoint - $systemCoin;
@@ -530,9 +516,8 @@ class CheckoutController extends MasterController
     }
 
     public
-    function actionCheckoutNewBilling()
-    {
-        if(Yii::$app->user->isGuest) {
+    function actionCheckoutNewBilling() {
+        if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -554,7 +539,7 @@ class CheckoutController extends MasterController
         /* Insert New Billing Address */
         $model = new \common\models\costfit\Address();
 
-        if($isDefault == 1) {
+        if ($isDefault == 1) {
             \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
             $model->isDefault = 1;
         } else {
@@ -566,7 +551,7 @@ class CheckoutController extends MasterController
         $model->address = $address;
         $model->email = $email;
         $model->tel = $tel;
-        if($co_country == 'company') {
+        if ($co_country == 'company') {
             $model->company = $company;
             $model->tax = $tax;
         } else {
@@ -580,10 +565,11 @@ class CheckoutController extends MasterController
         $model->zipcode = $zipcode;
         $model->type = \common\models\costfit\Address::TYPE_BILLING;
         $model->createDateTime = new \yii\db\Expression("NOW()");
-        if($model->save(FALSE)) {
+        if ($model->save(FALSE)) {
             return '<option value="' . Yii::$app->db->lastInsertID . '">Billing Address :' . $firstname . ' ' . $lastname . '</option>';
         } else {
             return '';
         }
     }
+
 }
