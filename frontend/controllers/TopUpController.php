@@ -345,6 +345,7 @@ class TopUpController extends MasterController {
             'data' => $_GET["data"],
             'allBank' => $allBank
         ]);
+        //throw new \yii\base\Exception(print_r($allBank, true));
         $title = FALSE;
         $this->actionMpdfDocument($content, $header, $title);
     }
