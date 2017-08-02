@@ -13,15 +13,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <p class="size20 size18-xs">Story See More</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
+
+            <?php yii\widgets\Pjax::begin(['id' => 'products-table']); ?>
             <?php
-            yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false]);
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productStory,
                 'options' => [
                     'tag' => false,
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/views/story/_product_item_story', ['model' => $model]);
+                    return $this->render('@app/views/story/_product_item_story_1', ['model' => $model]);
                 }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
 //              'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
@@ -43,3 +44,4 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="size32">&nbsp;</div>
+
