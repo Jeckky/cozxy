@@ -34,7 +34,9 @@ use yii\bootstrap\ActiveForm;
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3"><a href="<?php echo Yii::$app->homeUrl; ?>my-account?act=2" class="u-menu-2">&nbsp;</a></div>
+                    <div class="col-xs-3">
+                        <a href="<?php echo Yii::$app->homeUrl; ?><?=isset(Yii::$app->user->id) ? 'my-account?act=2' : 'site/login'?>" class="u-menu-2">&nbsp;</a>
+                    </div>
                     <div class="col-xs-3"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
