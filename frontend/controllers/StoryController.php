@@ -369,7 +369,23 @@ class StoryController extends MasterController {
         } else {
             $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             //$productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
-            $productSuppImg = \common\helpers\DataImageSystems::DataImageMaster($productSupplier->productId, $productSupplier->productSuppId, 'Svg555x340');
+            //$productSuppImg = \common\helpers\DataImageSystems::DataImageMaster($productSupplier->productId, $productSupplier->productSuppId, 'Svg555x340');
+
+            if (isset($productId)) {
+                $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPostId)
+                ->orderBy('ordering asc')->limit(1)->one();
+
+                if (isset($product_image)) {
+                    $imgShowStory = $product_image->image;
+                } else {
+                    $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)
+                    ->orderBy('ordering asc')->limit(1)->one();
+                    if (isset($product_image)) {
+                        $imgShowStory = $product_image->image;
+                    }
+                }
+            }
+
             $model = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')->one();
             $model->scenario = 'write_your_story';
             $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
@@ -383,7 +399,7 @@ class StoryController extends MasterController {
 
             return $this->render('@app/themes/cozxy/layouts/story/_write_your_story', [
                 'productSupplier' => $productSupplier,
-                'image' => $productSuppImg,
+                'image' => $imgShowStory,
                 'shelf' => $shelf,
                 'currency' => $currency,
                 'country' => $country,
