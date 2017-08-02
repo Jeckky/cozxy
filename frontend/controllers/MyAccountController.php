@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\costfit\Address;
 use common\models\costfit\User;
 use Yii;
 use yii\base\InvalidParamException;
@@ -98,9 +99,11 @@ class MyAccountController extends MasterController {
                 return $this->redirect(['/my-account']);
             }
         }
-        if (!isset($model->isDefault)) {
-            $model->isDefault = 0;
-        }
+        //first billing address set default = 1
+
+        $hasAddress = Address::find()->where(['userId'=>Yii::$app->user->id, 'isDefault'=>1])->count();
+        $model->isDefault = (!$hasAddress) ? 1 : 0;
+
         $hash = 'add';
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_form_billing', compact('model', 'hash'));
