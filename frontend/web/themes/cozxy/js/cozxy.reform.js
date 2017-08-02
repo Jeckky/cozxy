@@ -570,6 +570,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                     //alert('Max quantity for this product');
                     $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
                     $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
+                    $('.shopping-' + productSuppId + ' i').attr("title", "Max quantity for this product");
                     setTimeout(function () {
                         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
                         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
