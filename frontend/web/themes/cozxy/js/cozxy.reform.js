@@ -526,16 +526,8 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             success: function (data)
             {
                 if (data.status) {
-
-                    if (data.isMaxQuantitys == 'NO') {
-                        alert('Max quantity for this product');
-                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
-                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
-                        setTimeout(function () {
-                            $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
-                            $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
-                        }, 8000)
-                    } else {
+                    console.log(data.isMaxQuantitys);
+                    if (data.isMaxQuantitys == 'YES') {
                         $('#maxQnty').val($maxQnty - $itemQnty);
                         if (($maxQnty - $itemQnty) == 0) {
                             $('#quantity').val(0);
@@ -572,6 +564,18 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                             }
                         });
                     }
+                } else {
+
+                    //console.log('No No');
+                    //alert('Max quantity for this product');
+                    $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
+                    $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
+                    setTimeout(function () {
+                        $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
+                        $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
+                    }, 8000)
+
+
 
 
                 }
