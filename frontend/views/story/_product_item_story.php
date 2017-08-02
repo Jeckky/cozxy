@@ -8,7 +8,7 @@
             <h4 class="media-heading size14" style="margin:0px; height: 25px; margin-top: 3px; word-break: break-all;">
                 <a href="<?= $model['url'] ?>" class="fc-black"><?= substr($model['head'], 0, 40); ?></a>
             </h4>
-            <p class="size12" style="margin:0px;color:#989898; margin-top: 10px;">
+            <p class="size18" style="margin:0px;color:#989898; margin-top: 10px;">
                 (<a href="<?= $model['url'] ?>" style="color:#989898;word-break: break-all; font-weight: normal; word-break: break-all;"><?= $model['title'] ?></a>)
             </p>
         </div>

@@ -26,8 +26,8 @@ class CozxyAsset extends AssetBundle {
         'css/font-awesome.min.css',
         'css/mstyle.css',
         'css/chat.css',
-        'fonts/fonts.css',
         'css/cozxy.css',
+        'fonts/fonts.css',
     ];
     public $js = [
         'js/jquery.js',

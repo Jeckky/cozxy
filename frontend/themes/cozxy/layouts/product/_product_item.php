@@ -56,14 +56,14 @@ if (Yii::$app->controller->id == 'product') {
             <?php
             if (isset($model['brand'])) {
                 ?>
-                <p class="size16 fc-g666"><?= $model['brand'] ?></p>
+                <p class="size14 fc-g666"><?= strtoupper($model['brand']) ?></p>
                 <?php
             } else {
                 echo '';
             }
             ?>
 
-            <p class="size14 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= $model['title'] ?></a></p>
+            <p class="size18 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= strtoupper($model['title']) ?></a></p>
 
             <?php
             if ($model['price'] > 0) {
