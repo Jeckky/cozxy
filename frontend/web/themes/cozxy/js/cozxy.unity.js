@@ -95,8 +95,7 @@ $(document).ready(function (e) {
                             });
                         } else {
                             //console.log('No No');
-                            //alert('Max quantity for this product');
-
+                            alert('Max quantity for this product');
                             $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
                             $('#cart-plus-' + $productSuppId).addClass('fa fa-times');
 
