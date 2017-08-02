@@ -53,7 +53,8 @@ class CheckoutController extends MasterController
         $order = Order::find()->where(['orderId' => $orderId])->one();
 
         //Default address
-        $order->addressId = \common\models\costfit\Address::find()->where(['userId'=>Yii::$app->user->identity->userId, 'isDefault'=>1])->one()->addressId;
+        $defaultAddress = \common\models\costfit\Address::find()->where(['userId'=>Yii::$app->user->identity->userId, 'isDefault'=>1])->one();
+        $order->addressId = $defaultAddress->addressId;
 
         if(isset($order->pickingId) && !empty($order->pickingId)) {
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId'=>$order->pickingId])->one();
@@ -82,7 +83,7 @@ class CheckoutController extends MasterController
             $NewBilling->isDefault = 0;
         }
 
-        return $this->render('index', compact('NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint'));
+        return $this->render('index', compact('NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
     public function actionSummary()
