@@ -53,7 +53,7 @@ class CheckoutController extends MasterController {
         //Default address
         $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
 
-        if (isset($order->addressId)) {
+        if (isset($defaultAddress)) {
             $order->addressId = $defaultAddress->addressId;
         }
 
