@@ -2,6 +2,13 @@
 
 use Picqer\Barcode\BarcodeGenerator;
 
+if (isset($_SERVER['HTTPS'])) {
+    $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+} else {
+    $protocol = 'http';
+}
+$protocol .= "://" . $_SERVER['HTTP_HOST'];
+//throw new \yii\base\Exception($protocol);
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 for ($i = 1; $i < 3; $i++):
     ?>
@@ -23,7 +30,7 @@ for ($i = 1; $i < 3; $i++):
                     ?>
                     <div class="checkbox" style="margin-bottom: 1px;font-size: 7pt;">
                         <input type="checkbox" disabled="true">
-                        <img src="<?= $baseUrl . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
+                        <img src="<?= $protocol . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
                         <?= $bank->title ?> (<?= $bank->description ?>)
                     </div>
                     <?php
@@ -49,7 +56,7 @@ for ($i = 1; $i < 3; $i++):
             จำนวนเงิน(บาท)
         </div>
         <div style="margin-top: 0px;">
-            <img src="<?= $baseUrl . '/images/ContentGroup/zWnWm6Z1PY.png' ?>" style="float: left;width: 70px;height: 50px;" />
+            <img src="<?= $protocol . '/images/ContentGroup/zWnWm6Z1PY.png' ?>" style="float: left;width: 70px;height: 50px;" />
         </div>
         <div style="height: 80px;padding: 10px;text-align: right;font-size: 7pt;margin-top: -40px;">
             ชื่อผู้นำฝาก/Desposit by_______________________โทร/Tel_____________________เจ้าหน้าที่ธนาคาร_________________________
