@@ -527,13 +527,17 @@ class FakeFactory extends Model {
             } else {
                 $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' ')->all();
             }
-
-            foreach ($productPostList as $items) {
-//$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
-//$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
-                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($productPrice->price, 2);
+            if (isset($productPrice->price)) {
                 $price = number_format($productPrice->price, 2);
+            } else {
+                $price = '';
+            }
+            foreach ($productPostList as $items) {
+                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
+                //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
+                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+                $price_s = $price;
+                $price = $price;
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
