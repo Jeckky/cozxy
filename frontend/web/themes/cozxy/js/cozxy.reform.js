@@ -576,9 +576,6 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
                     }, 8000)
 
-
-
-
                 }
                 //alert(data.shoppingCart);
                 //$addedToCartMessage.addClass('visible');
