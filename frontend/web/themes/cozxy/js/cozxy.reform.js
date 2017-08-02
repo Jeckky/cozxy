@@ -53,7 +53,7 @@ $('#addressId').change(function (event, id, value) {
                 //alert(JSONObject.address.firstname);
                 $('.address-checkouts').find(".name-show").html(JSONObject.address.firstname + ' ,' + JSONObject.address.lastname);
                 $('.address-checkouts').find(".address-show").html(JSONObject.address.address + ' ,'
-                        + JSONObject.address.amphur + ' ,' + JSONObject.address.district + ' ,' + JSONObject.address.province
+                        + JSONObject.address.district + ' ,' + JSONObject.address.amphur + ' ,' + JSONObject.address.province
                         + ' ,' + JSONObject.address.zipcode);
                 //$('.checkout-total')
                 $('input:hidden', '.checkout-total').val(JSONObject.address.addressId);
