@@ -103,9 +103,9 @@ class CartController extends MasterController {
         if (isset($productId)) {
             $Qty = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
             $quantityMain = $Qty->result;
-            if ((int) $orderItem->quantity >= (int) $quantityMain) {
-                echo $quantityMain . '<br>::';
-                echo $orderItem->quantity;
+            if ((int) $orderItem->quantity > (int) $quantityMain) {
+                //echo $quantityMain . '<br>::';
+                //echo $orderItem->quantity;
                 // exit();
                 $res["isMaxQuantitys"] = 'NO';
                 return \yii\helpers\Json::encode($res);
