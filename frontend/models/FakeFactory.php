@@ -547,9 +547,14 @@ class FakeFactory extends Model {
                 }
 
                 $controller = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-//echo $test[0];
-//exit();
+                //echo '<pre>';
+                //print_r($controller);
+                //echo $test[0];
+                //exit();
+
                 if ($controller[0] == '') {
+                    $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
+                } else if ($controller[0] == 'story/views-all/') {
                     $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg260x260');
                 } else {
                     $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $items['productSuppId'], 'Svg64x64');
@@ -560,8 +565,8 @@ class FakeFactory extends Model {
                     'productPostId' => $value->productPostId,
                     'image' => $productImagesThumbnail1,
                     //'url' => '/story?id = ' . $items->productSuppId,
-//'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
-//'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
+                    //'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
+                    //'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items->productSuppId,'productSupplierId' => $productSupplierId]),
                     'url' => Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items->productSuppId]),
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => isset($items->title) ? substr($items->title, 0, 35) : '',
@@ -570,6 +575,7 @@ class FakeFactory extends Model {
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                     'star' => number_format($results_rating, 2),
+                    'avatar' => \common\models\costfit\User::getAvatar($value->userId),
                 ];
             }
         }

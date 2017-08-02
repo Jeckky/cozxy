@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'tag' => false,
                 ],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('@app/views/story/_product_item_story', ['model' => $model]);
+                    return $this->render('@app/views/story/_product_item_story_1', ['model' => $model]);
                 }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
 //              'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
