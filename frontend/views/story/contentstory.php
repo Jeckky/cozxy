@@ -14,7 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <?php
-            yii\widgets\Pjax::begin(['id' => 'models', 'timeout' => false, 'enablePushState' => false]);
+            yii\widgets\Pjax::begin([
+                'enablePushState' => false, // to disable push state
+                'enableReplaceState' => false // to disable replace state
+            ]);
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productStory,
                 'options' => [
