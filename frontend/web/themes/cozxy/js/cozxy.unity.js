@@ -59,8 +59,11 @@ $(document).ready(function (e) {
                 data: {quantity: $itemQnty, fastId: $fastId, supplierId: $supplierId, productSuppId: $productSuppId, receiveType: $receiveType},
                 success: function (data)
                 {
+
                     if (data.status) {
+
                         if (data.isMaxQuantitys == 'YES') {
+
                             $('#maxQnty').val($maxQnty - $itemQnty);
                             if (($maxQnty - $itemQnty) == 0) {
                                 $('#quantity').val(0);
@@ -93,14 +96,11 @@ $(document).ready(function (e) {
                                     }
                                 }
                             });
-                        } else {
-                            //console.log('No No');
+                        } else if (data.isMaxQuantitys == 'NO') {
                             alert('Max quantity for this product');
                             $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
                             $('#cart-plus-' + $productSuppId).addClass('fa fa-times');
-
                         }
-
                     }
                     //alert(data.shoppingCart);
                     //$addedToCartMessage.addClass('visible');
