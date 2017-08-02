@@ -15,8 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <?php
             yii\widgets\Pjax::begin([
+                'id' => 'cansale',
                 'enablePushState' => false, // to disable push state
-                'enableReplaceState' => false // to disable replace state
+                'enableReplaceState' => false, // to disable replace state
+                'timeout' => 5000,
+                'clientOptions' => [
+                    'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
+                    'linkSelector' => '#cansale'
+                ]
             ]);
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productStory,
