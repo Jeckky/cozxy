@@ -19,7 +19,7 @@ use common\models\costfit\ProductPost;
                 $value = explode(",", $star);
                 $posts = ProductPost::PostDetail($post->productPostId);
                 $productId = ProductSuppliers::productId(ProductPost::PostDetail($post->productPostId)->productId);
-                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $productId]);
+                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $productSuppId]);
                 ?>
                 <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
                     <img src="<?= $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">
@@ -42,7 +42,7 @@ use common\models\costfit\ProductPost;
                 $value = explode(",", $star);
                 $posts = ProductPost::PostDetail($post->productPostId);
                 $productId = ProductSuppliers::productId(ProductPost::PostDetail($post->productPostId)->productId);
-                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $productId]);
+                $url = Yii::$app->homeUrl . 'story/' . $post->encodeParams(['productPostId' => $post->productPostId, 'productId' => $productId, 'productSupplierId' => $productSuppId]);
                 ?>
                 <div style="border-bottom:1px solid #999;margin-bottom: 18px;">
                     <img src="<?= $img ?>" alt="" class="fullwidth" style="margin-bottom:10px;">

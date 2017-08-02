@@ -18,31 +18,19 @@ for ($i = 1; $i < 3; $i++):
             <b  style="font-size: 15pt;">Deposit for Cozxy Dot Com Co., Ltd / Tax Identification Number <?= $taxId ?></b><br>
             <b  style="font-size: 14pt;">เพื่อนำเข้าบัญชี บริษัท คอซซี่ดอทคอม จำกัด/เลขที่ประจำตัวผู้เสียภาษีอากร <?= $taxId ?></b><br>
             <span style="font-size: 14pt;">5 Ram intra Sou 5 Yeak4, Anusawari, Khet Bangken, Bangkok 10220 Tel. 02-101-0689</span>
-            <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
-                <input type="checkbox">
-                <img src="<?= $baseUrl . '/images/Bank/5LlgcfoBI7.png' ?>" style="width: 20px;height: 20px;" />
-                ธนาคารกรุงศรีอยุธยา จำกัด(มหาชน)(CompCode : 90525 ชื่อบัญชี บริษัท คอซซี่ดอทคอม)
-            </div>
-            <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
-                <input type="checkbox">
-                <img src="<?= $baseUrl . '/images/Bank/BBL.png' ?>" style="width: 20px;height: 20px;">
-                ธนาคารกรุงเทพ (CompCode : 27900 ชื่อบัญชี บริษัท คอซซี่ดอทคอม)
-            </div>
-            <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
-                <input type="checkbox">
-                <img src="<?= $baseUrl . '/images/Bank/TMB.png' ?>" style="width: 20px;height: 20px;">
-                ธนาคารทหารไทย จำกัด(มหาชน)(CompCode : 2710 ชื่อบัญชี บริษัท คอซซี่ดอทคอม)
-            </div>
-            <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
-                <input type="checkbox">
-                <img src="<?= $baseUrl . '/images/Bank/scb.png' ?>" style="width: 20px;height: 20px;">
-                ธนาคารไทยพาณิชย์ (เลขที่บัญชีกระแสรายวัน  076-3-03904-7 Bill Payment)
-            </div>
-            <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
-                <input type="checkbox">
-                <img src="<?= $baseUrl . '/images/Bank/kbang.png' ?>" style="width: 20px;height: 20px;">
-                ธนาคารกสิกรไทย (เลขที่บัญชี  0198405094 ชื่อบัญชี บริษัท คอซซี่ดอทคอม)
-            </div>
+            <?php
+            if (isset($allBank) && count($allBank) > 0) {
+                foreach ($allBank as $bank):
+                    ?>
+                    <div class="checkbox" style="margin-bottom: 1px;font-size: 12pt;margin-left: 20px;">
+                        <input type="checkbox" disabled="true">
+                        <img src="<?= $baseUrl . $bank->image ?>" style="width: 20px;height: 20px;" />
+                        <?= $bank->title ?>&nbsp; (<?= $bank->description ?>)
+                    </div>
+                    <?php
+                endforeach;
+            }
+            ?>
         </div>
         <div style="width:30%;border: #000 solid 0.5px;margin-left: 440px;margin-top: -140px;padding: 5px;font-size: 13pt;" class="pull-right">
             Branch:___________Date:___________<br>
