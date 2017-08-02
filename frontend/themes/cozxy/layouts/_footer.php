@@ -6,16 +6,22 @@ use yii\helpers\Html;
     <div class="container">
         <div class="row">
             <div class="col-md-5">
+                <?php /*
                 <div class="size30 b">SUBSCRIBE</div>
                 <div class="size24">TO OUR NEWS &AMP; PROMOTION</div>
+                */?>
+                <span class="size30">&nbsp;</span>
             </div>
             <div class="col-md-7">
+<?php /*
                 <div class="size12">&nbsp;</div>
                 <div class="row">
                     <div class="col-sm-9 col-xs-8"><input type="email" name="subscribe_email" class="subs-input" placeholder="ENTER YOUR EMAIL ADDRESS"></div>
                     <div class="col-sm-3 col-xs-4 text-right"><input type="submit" value="SUBMIT" class="subs-btn size14-xs"></div>
                     <div class="col-sm-12 col-xs-12"><hr></div>
                 </div>
+                */?>
+                <span class="size30">&nbsp;</span>
             </div>
         </div>
     </div>

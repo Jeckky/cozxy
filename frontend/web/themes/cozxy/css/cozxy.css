@@ -641,7 +641,7 @@ label {
     color: #ddd;
 }
 .mod-body {
-    padding: 24px; 32px 16px;
+    padding: 24px 32px 16px;
 }
 .mod-body .color-sel a, .mod-body quantity-sel a {
     margin: auto 6px;
