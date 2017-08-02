@@ -350,7 +350,7 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function getAvatar($userId) {
         $user = User::find()->where("userId=" . $userId)->one();
-        $avatar = isset($user['avatar']) ? Yii::$app->homeUrl . "images/user/avatar/" . $user['avatar'] : Yii::$app->homeUrl . '/images/avatar_2x.png'; //
+        $avatar = isset($user['avatar']) ? Yii::$app->homeUrl . "images/user/avatar/" . $user['avatar'] : Yii::$app->homeUrl . 'images/user/avatar/150164668359814f5b27d5f0.83713741.png'; //
         return $avatar;
     }
 
