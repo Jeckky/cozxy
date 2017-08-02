@@ -144,6 +144,7 @@ return [
          * Assert Manager
          */
         'assetManager' => [
+            'appendTimestamp' => true,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [],
