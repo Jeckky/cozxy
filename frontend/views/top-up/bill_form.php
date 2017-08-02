@@ -32,13 +32,15 @@ for ($i = 1; $i < 3; $i++):
                     <div class="checkbox" style="margin-bottom: 1px;font-size: 7pt;">
                         <input type="checkbox" disabled="true">
                         <?=
-                        Html::img($protocol . $bank->image, ['style' => 'float: left;width: 20px;height: 20px;'])
+                        Html::img(Yii::$app->urlManager->createAbsoluteUrl($bank->image), ['style' => 'float: left;width: 20px;height: 20px;'])
                         //$mpdf->Image('files/images/frontcover.jpg', 0, 0, 210, 297, 'jpg', '', true, false);
+                        . Yii::$app->urlManager->createAbsoluteUrl($bank->image)
                         ?>
                         <img src="<?= $protocol . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
-                        <?= $bank->title ?> (<?= $bank->description ?>)
+                        <?= $bank->title ?> (<?= $bank->description . $protocol . $bank->image ?>)
                     </div>
                     <?php
+                    //throw new \yii\base\Exception(Yii::$app->urlManager->createAbsoluteUrl($bank->image));
                 endforeach;
             }
             ?>
