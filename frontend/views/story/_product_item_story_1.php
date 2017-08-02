@@ -98,10 +98,10 @@
             </a>
         </div>
         <div class="info">
-            <div class="title" style="height:40px;">
+            <div class="title" style="height:50px;">
                 <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['head'] ?></a>
             </div>
-            <div class="desc" style="height:40px;">
+            <div class="desc" style="height:50px;">
                 <a href="<?= $model['url']; ?>"> <?= $model['title'] ?></a>
             </div>
             <div class="desc">

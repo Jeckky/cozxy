@@ -201,6 +201,7 @@ class CozxyUnity {
         // return the pdf output as per the destination setting
         //$pdf->AutoPrint(true);
         $pdf->getApi()->SetJS('this.print();');
+
         return $pdf->render('html');
     }
 

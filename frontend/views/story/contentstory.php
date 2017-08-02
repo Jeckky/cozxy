@@ -6,6 +6,11 @@ use yii\helpers\Html;
 $this->title = 'Story See More';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+    .ias-trigger{
+        width: 100%;
+    }
+</style>
 <div class="container login-box">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -14,30 +19,26 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
 
-            <?php yii\widgets\Pjax::begin(['id' => 'products-table']); ?>
+            <?php //yii\widgets\Pjax::begin(['id' => 'products-table']); ?>
             <?php
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productStory,
-                'options' => [
-                    'tag' => false,
-                ],
+                // 'options' => [
+                //'tag' => false,
+                //],
                 'itemView' => function ($model, $key, $index, $widget) {
                     return $this->render('@app/views/story/_product_item_story_1', ['model' => $model]);
-                }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
+                }, 'emptyText' => ' &nbsp; &nbsp; No results found.'
 //              'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                //'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
                 //'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ], 'pager' => [
-                    'firstPageLabel' => 'first',
-                    'lastPageLabel' => 'last',
-                    'prevPageLabel' => 'previous',
-                    'nextPageLabel' => 'next',
-                    'maxButtonCount' => 3,
-                ],
+                //'itemOptions' => [
+                //'tag' => false,
+                //],
+                , 'itemOptions' => ['class' => 'item']
+                , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
             ]);
-            yii\widgets\Pjax::end();
+            //yii\widgets\Pjax::end();
             ?>
         </div>
     </div>
