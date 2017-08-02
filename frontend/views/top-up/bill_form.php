@@ -1,6 +1,7 @@
 <?php
 
 use Picqer\Barcode\BarcodeGenerator;
+use yii\bootstrap\Html;
 
 if (isset($_SERVER['HTTPS'])) {
     $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
@@ -30,6 +31,10 @@ for ($i = 1; $i < 3; $i++):
                     ?>
                     <div class="checkbox" style="margin-bottom: 1px;font-size: 7pt;">
                         <input type="checkbox" disabled="true">
+                        <?=
+                        Html::img($protocol . $bank->image, ['style' => 'float: left;width: 20px;height: 20px;'])
+                        //$mpdf->Image('files/images/frontcover.jpg', 0, 0, 210, 297, 'jpg', '', true, false);
+                        ?>
                         <img src="<?= $protocol . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
                         <?= $bank->title ?> (<?= $bank->description ?>)
                     </div>
