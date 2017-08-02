@@ -24,6 +24,8 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+        //echo '<pre>';
+        //print_r($params);
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -47,17 +49,25 @@ class StoryController extends MasterController {
         //throw new \yii\base\Exception(print_r($params, true));
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' and product_post.status =1')->one();
-        $product_image_suppliers = $productPost->attributes;
+        $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
+        // $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
-        if (isset($product_image_suppliers['productId'])) {
-            $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $product_image_suppliers['productId'])
+        //if (isset($product_image_suppliers['productId'])) {
+        if (isset($productId)) {
+            $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)
             ->orderBy('ordering asc')->limit(1)->one();
+
             if (isset($product_image)) {
-                $imgShowStory = $product_image['image'];
+                $imgShowStory = $product_image->image;
+            } else {
+                $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)
+                ->orderBy('ordering asc')->limit(1)->one();
+                if (isset($product_image)) {
+                    $imgShowStory = $product_image->image;
+                }
             }
         }
-
+        // }
         //echo '<pre>';
         //print_r($product_image->attributes);
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
@@ -172,22 +182,24 @@ class StoryController extends MasterController {
                      * แยก Table ProductPostComparePrice จาก ProductPost
                      * Update : 07/05/2017
                      */
+                    if ($_POST["ProductPostComparePrice"]["shopName"] != '' && $_POST["ProductPostComparePrice"]["price"] != '' && $_POST["ProductPostComparePrice"]["country"] != '' && $_POST["ProductPostComparePrice"]["currency"] != '') {
+                        $comparePrice->productPostId = Yii::$app->db->lastInsertID;
+                        $comparePrice->userId = Yii::$app->user->identity->userId;
+                        $comparePrice->productId = $parentId;
+                        $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
+                        $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
+                        $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
+                        $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
+                        $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
+                        $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
+                        $comparePrice->status = 1;
+                        $comparePrice->createDateTime = new \yii\db\Expression('NOW()');
+                        $comparePrice->updateDateTime = new \yii\db\Expression('NOW()');
+                        if ($comparePrice->save(false)) {
 
-                    $comparePrice->productPostId = Yii::$app->db->lastInsertID;
-                    $comparePrice->userId = Yii::$app->user->identity->userId;
-                    $comparePrice->productId = $parentId;
-                    $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
-                    $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
-                    $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
-                    $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
-                    $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
-                    $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
-                    $comparePrice->status = 1;
-                    $comparePrice->createDateTime = new \yii\db\Expression('NOW()');
-                    $comparePrice->updateDateTime = new \yii\db\Expression('NOW()');
-                    if ($comparePrice->save(false)) {
-
+                        }
                     }
+
                     // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
                     $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);

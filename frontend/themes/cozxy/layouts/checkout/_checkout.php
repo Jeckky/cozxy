@@ -253,10 +253,22 @@ $pickingId = rand(0, 9999);
                             <div class="size14">&nbsp;</div>
 
                             <div class="col-lg-1 col-md-2 col-sm-3 ">Name:</div>
-                            <div class="col-lg-11 col-md-10 col-sm-9 name-show">none</div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 name-show"><?=$defaultAddress->firstname. ' '. $defaultAddress->lastname?></div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Address:</div>
-                            <div class="col-lg-11 col-md-10 col-sm-9 address-show"> none</div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 address-show">
+                                <?=$defaultAddress->address.', '.$defaultAddress->district->localName.', '.$defaultAddress->cities->localName.', '.$defaultAddress->states->localName.', '.$defaultAddress->countries->localName.', '.$defaultAddress->zipcode?>
+                            </div>
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-lg-1 col-md-2 col-sm-3">Email:</div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 email-show">
+                                <?=$defaultAddress->email?>
+                            </div>
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-lg-1 col-md-2 col-sm-3">Tel:</div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 tel-show">
+                                <?=$defaultAddress->tel?>
+                            </div>
                             <div class="size12">&nbsp;</div>
                         </div>
                     </div>
