@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <p class="size20 size18-xs">Story See More</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
+            <?php yii\widgets\Pjax::begin(['id' => 'bank']); ?>
             <?php
-            yii\widgets\Pjax::begin();
             echo \yii\widgets\ListView::widget([
                 'dataProvider' => $productStory,
                 'options' => [
