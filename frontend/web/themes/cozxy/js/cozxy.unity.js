@@ -98,8 +98,8 @@ $(document).ready(function (e) {
                             });
                         } else if (data.isMaxQuantitys == 'NO') {
                             alert('Max quantity for this product');
-                            $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
-                            $('#cart-plus-' + $productSuppId).addClass('fa fa-times');
+                            //$('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
+                            //$('#cart-plus-' + $productSuppId).addClass('fa fa-times');
                         }
                     }
                     //alert(data.shoppingCart);
