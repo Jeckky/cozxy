@@ -500,7 +500,7 @@ class StoryController extends MasterController {
         $categoryId = $params['categoryId'];
 
 //$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
-        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 50]]);
+        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 8]]);
         return $this->render('contentstory', compact('productStory'));
     }
 

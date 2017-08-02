@@ -13,7 +13,7 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
 <table class="table table_bordered" width="100%"  cellpadding="2" cellspacing="0" >
     <tr>
         <td colspan="2" style="text-align: center; vertical-align: text-top;"><br><br>
-            <img src="<?php echo Yii::$app->homeUrl . $logo->image; ?>" alt=" " alt="Cost Fit" width="93" height="48" broder ="0" class="img-responsive"/>
+            <img src="<?php echo $baseUrl . $logo->image; ?>" alt=" " alt="Cost Fit" width="93" height="48" broder ="0" class="img-responsive"/>
         </td>
         <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;">
             <h2>
