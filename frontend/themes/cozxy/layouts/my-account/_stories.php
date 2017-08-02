@@ -1,5 +1,5 @@
 <div class="sort-stories-cozxy">
-    <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
+    <?php //yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="row">
         <?php
         if (count($productPost->allModels)) {
@@ -22,29 +22,24 @@
         }
         echo \yii\widgets\ListView::widget([
             'dataProvider' => $productPost,
-            'options' => [
-                'tag' => false,
-            ],
+            //'options' => [
+            //'tag' => false,
+            // ],
             'itemView' => function ($model, $key, $index, $widget) {
                 return $this->render('@app/themes/cozxy/layouts/my-account/_stories_items', ['model' => $model, 'index' => $index]);
             },
-            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-            'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+            //'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+            //'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
             //'layout' => "{items}",
             'itemOptions' => [
                 'tag' => false,
-            ], 'pager' => [
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'prevPageLabel' => 'previous',
-                'nextPageLabel' => 'next',
-            //'maxButtonCount  ' => 3,
-            ],
+            ], 'itemOptions' => ['class' => 'item']
+            , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
         ]);
         ?>
     </div>
     <?php
-    yii\widgets\Pjax::end();
+    //yii\widgets\Pjax::end();
     ?>
     <div class="col-xs-12 size48">&nbsp;</div>
 </div>
