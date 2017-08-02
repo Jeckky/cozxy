@@ -182,22 +182,24 @@ class StoryController extends MasterController {
                      * แยก Table ProductPostComparePrice จาก ProductPost
                      * Update : 07/05/2017
                      */
+                    if ($_POST["ProductPostComparePrice"]["shopName"] != '' && $_POST["ProductPostComparePrice"]["price"] != '' && $_POST["ProductPostComparePrice"]["country"] != '' && $_POST["ProductPostComparePrice"]["currency"] != '') {
+                        $comparePrice->productPostId = Yii::$app->db->lastInsertID;
+                        $comparePrice->userId = Yii::$app->user->identity->userId;
+                        $comparePrice->productId = $parentId;
+                        $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
+                        $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
+                        $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
+                        $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
+                        $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
+                        $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
+                        $comparePrice->status = 1;
+                        $comparePrice->createDateTime = new \yii\db\Expression('NOW()');
+                        $comparePrice->updateDateTime = new \yii\db\Expression('NOW()');
+                        if ($comparePrice->save(false)) {
 
-                    $comparePrice->productPostId = Yii::$app->db->lastInsertID;
-                    $comparePrice->userId = Yii::$app->user->identity->userId;
-                    $comparePrice->productId = $parentId;
-                    $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
-                    $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
-                    $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
-                    $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
-                    $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
-                    $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
-                    $comparePrice->status = 1;
-                    $comparePrice->createDateTime = new \yii\db\Expression('NOW()');
-                    $comparePrice->updateDateTime = new \yii\db\Expression('NOW()');
-                    if ($comparePrice->save(false)) {
-
+                        }
                     }
+
                     // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                     $porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
                     $productSuppId = $porductSupplier->encodeParams(['productId' => $porductSupplier->productId, 'productSupplierId' => $porductSupplier->productSuppId]);
