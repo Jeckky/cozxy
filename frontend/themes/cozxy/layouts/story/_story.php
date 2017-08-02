@@ -30,17 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
+
+                    <p>
+                        <?= isset($productPost->shortDescription) ? $productPost->shortDescription : '' ?>
+                    </p>
                     <center>
                         <?= Html::img(Yii::$app->homeUrl . $imgShowStory, ['class' => 'img-responsive', 'style' => '100%']) ?>
                     </center>
-                    <?php
-                    if (isset($productPost->shortDescription)) {
-                        ?>
-                        <p>
-                            <?= $productPost->shortDescription ?>
-                        </p>
-                        <hr>
-                    <?php } ?>
+
+                    <hr>
+
                     <p>
                         <?= $productPost->description ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
@@ -76,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <div class="col-xs-4">
                                                     <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
                                                     $productPost->encodeParams(
-                                                            ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                    ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
                                                     ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                                 </div>
                                             <?php } ?>

@@ -50,6 +50,8 @@ class StoryController extends MasterController {
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
+        //echo '<pre>';
+        //print_r($productPost);
         // $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
         //if (isset($product_image_suppliers['productId'])) {
@@ -332,6 +334,7 @@ class StoryController extends MasterController {
             $model->userId = Yii::$app->user->identity->userId;
             $model->title = $_POST["ProductPost"]["title"];
             $model->description = $_POST["ProductPost"]["description"];
+            $model->shortDescription = $_POST["ProductPost"]["shortDescription"];
             //$model->shopName = $_POST["ProductPost"]["shopName"];
             //$model->price = $_POST["ProductPost"]["price"];
             //$model->country = $_POST["ProductPost"]["country"];
@@ -361,8 +364,10 @@ class StoryController extends MasterController {
             if ($model->save(false)) {
                 // if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
                 //$porductSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-                $productSuppId = $model->encodeParams(['productId' => $productId, 'productSupplierId' => $productSuppId]);
-                return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
+                $productSuppId = $model->encodeParams(['productPostId' => $productPostId, 'productId' => $productId, 'productSupplierId' => $productSuppId]);
+                // return $this->redirect([Yii::$app->homeUrl . 'product/' . $productSuppId]);
+                return $this->redirect(Yii::$app->homeUrl . 'story/' . $productSuppId);
+                //Yii::$app->homeUrl . 'story/' . $value->encodeParams(['productPostId' => $value->productPostId, 'productId' => $items->productId, 'productSupplierId' => $items['productSuppId']])
                 // } else {
                 // }
             }
