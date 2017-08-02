@@ -515,10 +515,10 @@ class FakeFactory extends Model {
     public static function productStoryViewsMore($n, $categoryId) {
         $products = [];
         if ($n == 99) {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 and isPublic = 1")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
-            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
+            $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 and isPublic = 1")
             ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {
