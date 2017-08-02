@@ -6,7 +6,7 @@
                 <div class="col-md-3 col-sm-3">Name:</div>
                 <div class="col-md-9 col-sm-9"><?= $model['firstname'] ?> <?= $model['lastname'] ?></div>
                 <div class="col-md-3 col-sm-3">Address:</div>
-                <div class="col-md-9 col-sm-9"><?= $model['address'] ?>, <?= $model['district'] ?> <?= $model['amphur'] ?> <?= $model['province'] ?> , <?= $model['country'] ?> <?= $model['zipcode'] ?>
+                <div class="col-md-9 col-sm-9" style="height: 100px;"><?= $model['address'] ?>, <?= $model['district'] ?> <?= $model['amphur'] ?> <?= $model['province'] ?> , <?= $model['country'] ?> <?= $model['zipcode'] ?>
                 </div>
                 <div class="col-md-12 text-right">
                     <div class="size10">&nbsp;</div>
