@@ -108,9 +108,11 @@ class CartController extends MasterController {
                 //echo $orderItem->quantity;
                 // exit();
                 $res["isMaxQuantitys"] = 'NO';
+                $res["status"] = FALSE;
                 return \yii\helpers\Json::encode($res);
                 die();
             } else {
+                $res["status"] = TRUE;
                 $res["isMaxQuantitys"] = 'YES';
             }
         }
