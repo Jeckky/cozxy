@@ -42,6 +42,7 @@ use common\models\costfit\Order;
     </div>
 
     <?php
+    //yii\widgets\Pjax::begin(['timeout' => 5000]);
     echo \yii\grid\GridView::widget([
         'dataProvider' => $orderHistory,
         'columns' => [
@@ -87,9 +88,56 @@ use common\models\costfit\Order;
             'container' => '.grid-view tbody',
             'item' => 'tr',
             'paginationSelector' => '.grid-view .pagination',
-            'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer">{text}</a></td></tr>',
+        //'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer">{text}</a></td></tr>',
         ],
     ]);
+    ?>
+    <div class="order-history-sort">
+        <table class="table table-bordered table-striped fc-g666">
+            <thead class="size18 size16-xs">
+                <tr>
+                    <th>Order No.</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="size16 size14-xs" id="order-history">
+
+                <?php
+                echo \yii\widgets\ListView::widget([
+                    'itemOptions' => ['class' => 'item'],
+                    'pager' => [
+                        'class' => \kop\y2sp\ScrollPager::className(),
+                    ]
+                    , 'dataProvider' => $orderHistory,
+                    /* 'options' => [
+                      'tag' => false,
+                      ], */
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('@app/themes/cozxy/layouts/my-account/_order_history_item', ['model' => $model]);
+                    }
+                    , 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right']
+// 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+//'layout' => "{items}",
+                /* 'itemOptions' => [
+                  'tag' => false,
+                  ], 'pager' => [
+                  'firstPageLabel' => 'first',
+                  'lastPageLabel' => 'last',
+                  'prevPageLabel' => 'previous',
+                  'nextPageLabel' => 'next',
+                  //'maxButtonCount  ' => 3,
+                  ], */
+                ]);
+                ?>
+
+            </tbody>
+        </table>
+
+    </div>
+    <?php
+//yii\widgets\Pjax::end();
     ?>
 
 </div>
