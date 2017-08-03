@@ -2,6 +2,11 @@
 
 use yii\helpers\Html;
 ?>
+<style type="text/css">
+    .ias-trigger{
+        width: 100%;
+    }
+</style>
 <div class="table-responsive order-list">
     <div class="col-sm-12">
         <div class="form-group">
@@ -35,7 +40,7 @@ use yii\helpers\Html;
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
-    <?php //yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
+<?php //yii\widgets\Pjax::begin(['timeout' => 5000]);   ?>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">
@@ -49,7 +54,9 @@ use yii\helpers\Html;
             <tbody class="size16 size14-xs" id="order-history">
                 <?php
                 echo \yii\widgets\ListView::widget([
-                    'dataProvider' => $orderHistory,
+                    'itemOptions' => ['class' => 'item']
+                    , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
+                    , 'dataProvider' => $orderHistory,
                     /* 'options' => [
                       'tag' => false,
                       ], */
@@ -57,19 +64,17 @@ use yii\helpers\Html;
                         return $this->render('@app/themes/cozxy/layouts/my-account/_order_history_item', ['model' => $model]);
                     }
                     , 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right']
-                    // 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
-                    //'layout' => "{items}",
-                    /* 'itemOptions' => [
-                      'tag' => false,
-                      ], 'pager' => [
-                      'firstPageLabel' => 'first',
-                      'lastPageLabel' => 'last',
-                      'prevPageLabel' => 'previous',
-                      'nextPageLabel' => 'next',
-                      //'maxButtonCount  ' => 3,
-                      ], */
-                    , 'itemOptions' => ['class' => 'item']
-                    , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
+                // 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                //'layout' => "{items}",
+                /* 'itemOptions' => [
+                  'tag' => false,
+                  ], 'pager' => [
+                  'firstPageLabel' => 'first',
+                  'lastPageLabel' => 'last',
+                  'prevPageLabel' => 'previous',
+                  'nextPageLabel' => 'next',
+                  //'maxButtonCount  ' => 3,
+                  ], */
                 ]);
                 ?>
             </tbody>
@@ -77,7 +82,7 @@ use yii\helpers\Html;
 
     </div>
     <?php
-    //yii\widgets\Pjax::end();
+//yii\widgets\Pjax::end();
     ?>
 
 </div>
