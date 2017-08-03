@@ -56,7 +56,7 @@ use yii\helpers\Html;
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('@app/themes/cozxy/layouts/my-account/_order_history_item', ['model' => $model]);
                     }
-                    //'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                    , 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right']
                     // 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
                     //'layout' => "{items}",
                     /* 'itemOptions' => [
