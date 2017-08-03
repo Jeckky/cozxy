@@ -35,7 +35,7 @@ use yii\helpers\Html;
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
-    <?php yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
+    <?php //yii\widgets\Pjax::begin(['timeout' => 5000]); ?>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">
@@ -50,24 +50,26 @@ use yii\helpers\Html;
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $orderHistory,
-                    'options' => [
-                        'tag' => false,
-                    ],
+                    /* 'options' => [
+                      'tag' => false,
+                      ], */
                     'itemView' => function ($model, $key, $index, $widget) {
                         return $this->render('@app/themes/cozxy/layouts/my-account/_order_history_item', ['model' => $model]);
-                    },
-                    'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                    'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
+                    }
+                    //'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                    // 'layout' => "{summary}\n{items}\n<center>{pager}</center>\n",
                     //'layout' => "{items}",
-                    'itemOptions' => [
-                        'tag' => false,
-                    ], 'pager' => [
-                        'firstPageLabel' => 'first',
-                        'lastPageLabel' => 'last',
-                        'prevPageLabel' => 'previous',
-                        'nextPageLabel' => 'next',
-                    //'maxButtonCount  ' => 3,
-                    ],
+                    /* 'itemOptions' => [
+                      'tag' => false,
+                      ], 'pager' => [
+                      'firstPageLabel' => 'first',
+                      'lastPageLabel' => 'last',
+                      'prevPageLabel' => 'previous',
+                      'nextPageLabel' => 'next',
+                      //'maxButtonCount  ' => 3,
+                      ], */
+                    , 'itemOptions' => ['class' => 'item']
+                    , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
                 ]);
                 ?>
             </tbody>
@@ -75,7 +77,7 @@ use yii\helpers\Html;
 
     </div>
     <?php
-    yii\widgets\Pjax::end();
+    //yii\widgets\Pjax::end();
     ?>
 
 </div>

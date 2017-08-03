@@ -32,7 +32,7 @@ class MyAccountController extends MasterController {
         $cozxyCoin = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountCozxyCoin('', '')]);
         // $wishList = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountWishList(12)]);
         $orderHistory = new ArrayDataProvider(['allModels' => DisplayMyAccount::myAccountOrderHistory('', ''),
-            'pagination' => ['defaultPageSize' => 50]]);
+            'pagination' => ['defaultPageSize' => 10]]);
 
         $productPost = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::productMyaacountStories('', '', ''),
             'pagination' => ['defaultPageSize' => 8]]);
@@ -101,7 +101,7 @@ class MyAccountController extends MasterController {
         }
         //first billing address set default = 1
 
-        $hasAddress = Address::find()->where(['userId'=>Yii::$app->user->id, 'isDefault'=>1])->count();
+        $hasAddress = Address::find()->where(['userId' => Yii::$app->user->id, 'isDefault' => 1])->count();
         $model->isDefault = (!$hasAddress) ? 1 : 0;
 
         $hash = 'add';
@@ -348,7 +348,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -614,8 +614,8 @@ class MyAccountController extends MasterController {
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-                    'wishlists' => $wishlists,
-                    'title' => $productShelf->title
+            'wishlists' => $wishlists,
+            'title' => $productShelf->title
         ]);
     }
 
@@ -623,8 +623,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-                    'favoriteStory' => $favoriteStory,
-                    'title' => 'Favorite stories'
+            'favoriteStory' => $favoriteStory,
+            'title' => 'Favorite stories'
         ]);
     }
 
