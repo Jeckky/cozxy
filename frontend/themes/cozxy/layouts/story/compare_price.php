@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 <div class="row">
     <div class="col-md-6">
         <div class="col-md-12 text-left">
-            <i class="fa fa-align-left" aria-hidden="true"></i> Currency Filter
+            <i class="fa fa-align-left" aria-hidden="true"></i> Currency Exchange Rate
         </div><br>
         <div class="col-md-9 text-center sort-stories-currency">
             <select id="currencyid" class="fullwidth input-sm" name="currencyId" onchange="sortStoriesCompare(this, 'currency', '<?= $productPost->productPostId ?>', '<?= $productPost->productId ?>')">

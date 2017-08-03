@@ -77,7 +77,7 @@ class StoryController extends MasterController {
         $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
         $sort = '';
 
-        $currency = ArrayHelper::map(Currency::find()->where("status=1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
+        $currency = ArrayHelper::map(Currency::find()->where("status=1 and currencyId =1")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         $model = new Currency();
 
