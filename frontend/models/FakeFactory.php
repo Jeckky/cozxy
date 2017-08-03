@@ -66,7 +66,7 @@ class FakeFactory extends Model {
                 'fastId' => FALSE,
                 'productId' => isset($value->productId) ? $value->productId : '',
                 'supplierId' => isset($value->userId) ? $value->userId : '',
-                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                'receiveType' => isset($value->receiveType) ? $value->receiveType : '1',
                 'wishList' => $wishList
             ];
         }
