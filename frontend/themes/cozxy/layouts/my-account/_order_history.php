@@ -40,7 +40,7 @@ use yii\helpers\Html;
         <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
-<?php //yii\widgets\Pjax::begin(['timeout' => 5000]);   ?>
+    <?php //yii\widgets\Pjax::begin(['timeout' => 5000]);   ?>
     <div class="order-history-sort">
         <table class="table table-bordered table-striped fc-g666">
             <thead class="size18 size16-xs">
@@ -52,6 +52,7 @@ use yii\helpers\Html;
                 </tr>
             </thead>
             <tbody class="size16 size14-xs" id="order-history">
+            <div>
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'itemOptions' => ['class' => 'item']
@@ -77,6 +78,8 @@ use yii\helpers\Html;
                   ], */
                 ]);
                 ?>
+            </div>
+
             </tbody>
         </table>
 
