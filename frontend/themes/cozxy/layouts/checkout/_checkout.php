@@ -236,7 +236,7 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where(['userId'=>Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
                                         $index = $index++;
 
                                         return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
@@ -253,21 +253,54 @@ $pickingId = rand(0, 9999);
                             <div class="size14">&nbsp;</div>
 
                             <div class="col-lg-1 col-md-2 col-sm-3 ">Name:</div>
-                            <div class="col-lg-11 col-md-10 col-sm-9 name-show"><?=isset($defaultAddress) ? $defaultAddress->firstname. ' '. $defaultAddress->lastname:'&nbsp;'?></div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 name-show"><?= isset($defaultAddress) ? $defaultAddress->firstname . ' ' . $defaultAddress->lastname : '&nbsp;' ?></div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Address:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 address-show">
-                                <?=isset($defaultAddress) ? $defaultAddress->address.', '.$defaultAddress->district->localName.', '.$defaultAddress->cities->localName.', '.$defaultAddress->states->localName.', '.$defaultAddress->countries->localName.', '.$defaultAddress->zipcode:'&nbsp;'?>
+                                <?//= isset($defaultAddress) ? $defaultAddress->address . ', ' . $defaultAddress->district->localName . ', ' . $defaultAddress->cities->localName . ', ' . $defaultAddress->states->localName . ', ' . $defaultAddress->countries->localName . ', ' . $defaultAddress->zipcode : '&nbsp;' ?>
+                                <?php
+                                if (isset($defaultAddress)) {
+                                    $address = $defaultAddress->address;
+                                    if (isset($defaultAddress->district)) {
+                                        $districtLocalName = $defaultAddress->district->localName;
+                                    } else {
+                                        $districtLocalName = '';
+                                    }
+                                    if (isset($defaultAddress->cities)) {
+                                        $citiesLocalName = $defaultAddress->cities->localName;
+                                    } else {
+                                        $citiesLocalName = '';
+                                    }
+                                    //$defaultAddress->states->localName . ', ' . $defaultAddress->countries->localName . ', ' . $defaultAddress->zipcode
+                                    if (isset($defaultAddress->states)) {
+                                        $statesLocalName = $defaultAddress->states->localName;
+                                    } else {
+                                        $statesLocalName = '';
+                                    }
+                                    if (isset($defaultAddress->countries)) {
+                                        $countriesLocalName = $defaultAddress->countries->localName;
+                                    } else {
+                                        $statesLocalName = '';
+                                    }
+                                    if (isset($defaultAddress->zipcode)) {
+                                        $zipcode = $defaultAddress->zipcode;
+                                    } else {
+                                        $zipcode = '';
+                                    }
+
+                                    echo $address . ', ' . $districtLocalName . ', ' . $citiesLocalName . ', ' . $statesLocalName . ', ' . $countriesLocalName . ', ' . $zipcode;
+                                }
+                                ?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Email:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 email-show">
-                                <?=isset($defaultAddress) ? $defaultAddress->email:'&nbsp;'?>
+                                <?= isset($defaultAddress) ? $defaultAddress->email : '&nbsp;' ?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Tel:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 tel-show">
-                                <?=isset($defaultAddress) ? $defaultAddress->tel:'&nbsp;'?>
+                                <?= isset($defaultAddress) ? $defaultAddress->tel : '&nbsp;' ?>
                             </div>
                             <div class="size12">&nbsp;</div>
                         </div>
