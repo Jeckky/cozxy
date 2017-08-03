@@ -577,7 +577,7 @@ class DisplaySearch extends Model {
         return $products;
     }
 
-    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE) {
+    public static function productFilterAll($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE) {
         $products = [];
         $whereArray2 = [];
 
@@ -587,7 +587,6 @@ class DisplaySearch extends Model {
         }
         $whereArray2["ps.approve"] = "approve";
         $whereArray2["pps.status"] = "1";
-
 
         //echo '<pre>';
         //print_r($whereArray2);
@@ -600,7 +599,7 @@ class DisplaySearch extends Model {
         ->where($whereArray2)
         ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
         //->andWhere('pps.price > 0')
-        //->andWhere('ps.result > 0')
+        ->andWhere(($status == 'Notsale') ? 'ps.result = 0' : 'ps.result > 0')
         //->andWhere(['between', 'pps.price', $mins, $maxs])
         ->groupBy('ps.productSuppId')
         ->orderBy(['pps.price' => SORT_ASC])

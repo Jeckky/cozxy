@@ -125,12 +125,19 @@ class SearchController extends MasterController {
         $brand = Yii::$app->request->post('brand');
         $FilterPrice = [];
         //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
-        $productFilterPrice = new ArrayDataProvider([
-            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs),
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        //
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
-        return $this->renderAjax("_product_list", ['dataProvider' => $productFilterPrice, 'category' => $category, 'categoryId' => $categoryId]);
+        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale,
+            'productFilterPriceCansale' => $productFilterPriceCansale
+            , 'category' => $category, 'categoryId' => $categoryId]);
     }
 
     public function actionFilterBrand() {
