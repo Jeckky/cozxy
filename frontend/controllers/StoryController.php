@@ -77,14 +77,14 @@ class StoryController extends MasterController {
         $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
         $sort = '';
 
-        $currency = ArrayHelper::map(Currency::find()->where("status=1 ")->orderBy('createDateTime')->all(), 'currencyId', 'title');
+        //$currency = ArrayHelper::map(Currency::find()->where("status=1 ")->orderBy('createDateTime')->all(), 'currencyId', 'title');
+        $currency = new ArrayDataProvider(['allModels' => DisplayMyStory::CurrencyInfos()]);
+        // $currency = \common\models\costfit\CurrencyInfo::find()->all();
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         $model = new Currency();
 
         $comparePrice = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::comparePrice($productPostId, isset($_GET['currencyId']) ? $_GET['currencyId'] : NULL, $sort)]);
         $modelComparePrices = new \common\models\costfit\ProductPostComparePrice();
-
-
         $avatar = \common\models\costfit\User::getAvatar($productPost->userId);
 
         return $this->render('@app/themes/cozxy/layouts/story/_story', compact('imgShowStory', 'avatar', 'modelComparePrices', 'country', 'productSuppId', 'ViewsRecentStories', 'productPost', 'popularStories', 'urlSeeAll', 'popularStoriesNoneStar', 'currency', 'model', 'comparePrice')
@@ -105,9 +105,13 @@ class StoryController extends MasterController {
         $shelf = ArrayHelper::map(ProductShelf::find()->where("userId=" . Yii::$app->user->identity->userId . " and status=1")
         ->orderBy('createDateTime')
         ->all(), 'productShelfId', 'title');
-        $currency = ArrayHelper::map(Currency::find()->where("status=1")
-        ->orderBy('createDateTime')
-        ->all(), 'currencyId', 'title');
+        /* $currency = ArrayHelper::map(Currency::find()->where("status=1")
+          ->orderBy('createDateTime')
+          ->all(), 'currencyId', 'title');
+         */
+        $currency = new ArrayDataProvider(['allModels' => DisplayMyStory::CurrencyInfos()]);
+
+
         $country = ArrayHelper::map(Countries::find()->where("1")
         ->all(), 'countryId', 'countryName');
 
@@ -569,6 +573,27 @@ class StoryController extends MasterController {
         //print_r($RemoveHidden);
         echo $RemoveHidden;
         //echo 'complete';
+    }
+
+    public function actionComparePriceStoryCurrency() {
+        $postId = $_GET['id'];
+        $k = base64_decode(base64_decode($postId));
+        $params = \common\models\ModelMaster::decodeParams($postId);
+        $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
+        $productId = isset($params['productId']) ? $params['productId'] : NULL;
+        $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
+
+        $comparePrice = \common\models\costfit\ProductPostComparePrice::find()
+        ->select('`product_post_compare_price`.* ,`currency_info`.currency_code ')
+        ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+        ->where('product_post_compare_price.productPostId =' . $productPostId . ' and currency_info.status=2')->asArray()->all();
+        //echo '<pre>';
+        //print_r($comparePrice);
+        if (isset($comparePrice)) {
+            return \yii\helpers\Json::encode($comparePrice);
+        } else {
+            return FALSE;
+        }
     }
 
 }

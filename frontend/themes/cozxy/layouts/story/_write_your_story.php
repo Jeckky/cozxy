@@ -163,7 +163,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             <?php
                                             echo $form->field($modelComparePrice, 'currency')->widget(kartik\select2\Select2::classname(), [
                                                 //'options' => ['id' => 'address-countryid'],
-                                                'data' => $currency,
+                                                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', 'ctry_name'),
                                                 'pluginOptions' => [
                                                     'placeholder' => 'Select...',
                                                     'loadingText' => 'Select Currency ...',
@@ -184,7 +184,8 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group compareprice-latitude">
-                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value,\'\')'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value, \'\')'])->label(FALSE);
+                                            ?>
                                             <input type="hidden" id="latitude" value="">
                                         </div>
                                     </div>

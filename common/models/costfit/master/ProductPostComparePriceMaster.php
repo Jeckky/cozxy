@@ -39,7 +39,8 @@ public function rules()
 {
 return [
             [['productPostId', 'userId', 'createDateTime'], 'required'],
-            [['productPostId', 'productId', 'userId', 'productSelfId', 'price', 'status'], 'integer'],
+            [['productPostId', 'productId', 'userId', 'productSelfId', 'status'], 'integer'],
+            [['price'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['shopName'], 'string', 'max' => 200],
             [['country', 'currency'], 'string', 'max' => 100],

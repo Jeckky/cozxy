@@ -88,6 +88,7 @@ return [
                 'story/views-all/<hash>' => 'story/views-all',
                 'story/view-post' => 'story/view-post',
                 'story/views-all' => 'story/views-all',
+                'story/compare-price-story-currency' => 'story/compare-price-story-currency',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
                 'story/see-more/<hash>' => 'story/see-more/',
                 'story/<hash>' => 'story/index',

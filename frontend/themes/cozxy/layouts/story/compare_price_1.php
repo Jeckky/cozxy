@@ -3,77 +3,30 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
-use yii\web\JsExpression;
 ?>
-<style>
-    .select2-close-mask{
-        z-index: 2099;
-    }
-    .select2-dropdown{
-        z-index: 3051;
-    }
-</style>
 <h1 class="page-header">Compare Price</h1>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="col-md-12 text-left">
-            <i class="fa fa-align-justify" aria-hidden="true"></i> Currency Exchange Rate
-        </div>
-        <br>
-        <div class="col-md-12 text-left sort-stories-currency" style="margin-top: 5px;">
-            <?php
-            // Templating example of formatting each list element
-            $url = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/flat/16/';
-            $format = <<< SCRIPT
-function format(state) {
-           console.log(state);
-    if (!state.id) return state.text.toLowerCase() ; // optgroup
-    src = '$url' + 'Abkhazia' + '.png'
-    //console.log(src);
-    //return '<img class="flag" src="' + src + '"/> ' + state.text.toLowerCase() ;
-    return  state.text.toLowerCase() ;
-}
-SCRIPT;
-            $escape = new JsExpression("function(m) { return m; }");
-            $this->registerJs($format, \yii\web\View::POS_HEAD);
-            ?>
-            <?php
-            // Templating example of formatting each list element
-
-            echo kartik\select2\Select2::widget([
-                'name' => 'state_2',
-                'value' => '',
-                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', 'ctry_name'),
-                'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
-                'pluginOptions' => [
-                    'templateResult' => new JsExpression('format'),
-                    'templateSelection' => new JsExpression('format'),
-                    'escapeMarkup' => $escape,
-                    'allowClear' => true
-                ],
-            /* , 'addon' => [
-              'prepend' => [
-              'content' => Html::icon('globe')
-              ],
-              'append' => [
-              'content' => Html::button(Html::icon('map-marker'), [
-              'class' => 'btn btn-primary',
-              'title' => 'Mark on map',
-              'data-toggle' => 'tooltip'
-              ]),
-              'asButton' => true
-              ]
-              ] */
-            ]);
-            ?>
+            <i class="fa fa-align-left" aria-hidden="true"></i> Currency Exchange Rate
+        </div><br>
+        <div class="col-md-9 text-center sort-stories-currency">
+            <select id="currencyid" class="fullwidth input-sm" name="currencyId" onchange="sortStoriesCompare(this, 'currency', '<?= $productPost->productPostId ?>', '<?= $productPost->productId ?>')">
+                <option value="">select currency</option>
+                <?php
+                foreach ($currency as $key => $value) {
+                    ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <?php } ?>
+            </select>
+            <input type="hidden" name="hiddenCurrencyId" id="hiddenCurrencyId" value="<?= isset($currencyId) ? $currencyId : '' ?>">
         </div>
     </div>
 
-    <div class="col-md-12 text-left sort-stories-compare" style="margin-top: 10px;">
+    <div class="col-md-4 text-left sort-stories-compare">
         <div class="col-md-12 text-left"><i class="fa fa-align-left" aria-hidden="true"></i> Sort</div><br>
         <div class="col-md-12 text-left">
-            <a href="javascript:sortStoriesCompare(this,'price', '<?= $productPost->productPostId
-            ?>', '<?= $productPost->productId ?>')">
+            <a href="javascript:sortStoriesCompare(this,'price', '<?= $productPost->productPostId ?>', '<?= $productPost->productId ?>')">
                 Sort by price&nbsp;<i class="fa fa-angle-<?= isset($icon) ? $icon : 'down' ?>" aria-hidden="true"></i></a>
         </div>
         <input type="hidden" name="sortStoriesPrice" id="sortStoriesPrice" value="<?= isset($sort) ? $sort : 'SORT_ASC' ?>">
@@ -91,7 +44,6 @@ SCRIPT;
                     <th>Place</th>
                     <th>Price</th>
                     <th>Local Price</th>
-                    <th>Update Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,6 +71,7 @@ SCRIPT;
     </div>
 </div>
 
+
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <?php
@@ -143,7 +96,7 @@ SCRIPT;
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Shop Name</label>
-                            <?= $form->field($modelComparePrices, 'shopName')->textInput(['class' => 'form-control', 'placeholder' => 'Shop Name', 'id' => 'productpost-shopname'])->label(FALSE); ?>
+                            <?= $form->field($modelComparePrices, 'shopName')->textInput([ 'class' => 'form-control', 'placeholder' => 'Shop Name', 'id' => 'productpost-shopname'])->label(FALSE); ?>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -166,14 +119,13 @@ SCRIPT;
                                         <div class="input-group-addon">.00</div>
                                     </div>-->
                                 </div>
-                                <!--<div class="form-group">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Price</label>
-                                <?//= $form->field($modelComparePrices, 'price')->textInput([ 'class' => 'form-control', 'placeholder' => 'Price', 'id' => 'productpost-price'])->label(FALSE); ?>
-                                </div>-->
+                                    <?= $form->field($modelComparePrices, 'price')->textInput([ 'class' => 'form-control', 'placeholder' => 'Price', 'id' => 'productpost-price'])->label(FALSE); ?>
+                                </div>
                             </div>
-
                             <div class="col-md-6">
-                                <div class="form-group field-productpost-country" style="margin-top: 7px;">
+                                <div class="form-group" style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Country</label>
                                     <?php
                                     echo kartik\select2\Select2::widget([
@@ -183,30 +135,19 @@ SCRIPT;
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...', 'id' => 'productpost-country']
                                     ]);
                                     ?>
-                                    <p class="help-block help-block-error"></p>
                                 </div>
                             </div>
-
                             <div class="col-md-6">
-                                <div class="form-group field-productpost-currency"  style="margin-top: 7px;">
+                                <div class="form-group"  style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Currency</label>
                                     <?php
                                     echo kartik\select2\Select2::widget([
                                         'name' => 'currencyModal',
                                         'value' => '',
-                                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', 'ctry_name'),
+                                        'data' => $currency,
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
                                     ?>
-                                    <?php
-                                    /* echo kartik\select2\Select2::widget([
-                                      'name' => 'currencyModal',
-                                      'value' => '',
-                                      'data' => $currency,
-                                      'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
-                                      ]); */
-                                    ?>
-                                    <p class="help-block help-block-error"></p>
                                 </div>
                             </div>
                         </div>
@@ -215,13 +156,13 @@ SCRIPT;
                             <div class="col-md-6">
                                 <div class="form-group" style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Location Latitude</label>
-                                    <?= $form->field($modelComparePrices, 'latitude')->textInput(['class' => 'form-control', 'placeholder' => 'Location (Lat)', 'id' => 'latitude'])->label(FALSE); ?>
+                                    <?= $form->field($modelComparePrices, 'latitude')->textInput([ 'class' => 'form-control', 'placeholder' => 'Location (Lat)', 'id' => 'latitude'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group"  style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Location Longitude</label>
-                                    <?= $form->field($modelComparePrices, 'longitude')->textInput(['class' => 'form-control', 'placeholder' => 'Location (Long)', 'id' => 'longitude'])->label(FALSE); ?>
+                                    <?= $form->field($modelComparePrices, 'longitude')->textInput([ 'class' => 'form-control', 'placeholder' => 'Location (Long)', 'id' => 'longitude'])->label(FALSE); ?>
                                 </div>
                             </div>
                         </div>

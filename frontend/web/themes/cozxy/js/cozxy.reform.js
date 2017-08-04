@@ -17,6 +17,7 @@ if (window.location.host == 'localhost' || window.location.host == 'dev') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
 
+
 function organization(selectObject, value) {
     var value = selectObject.value;
     //alert(value);//default-shipping-address
@@ -941,8 +942,6 @@ $('#isPay').change(function () {
         });
     }
 });
-
-
 //////////////////////////////    RETURN  ///////////////////////////////////////
 $(document).on('click', '#sendTicket', function () {
     var invoice = $(this).parent().parent().find("#invoiceNo").val();
@@ -1333,13 +1332,12 @@ $(".bs-example-modal-lg-x").click(function () {
         }
     });
 });
-
 function CozxyComparePriceModernBest(id, type, dataIndex) {
 
     var postId = id;
     if (postId == 0) {
         $('#productpost-shopname').val('');
-        $('#productpost-price').val('');
+        $('#productpostcompareprice-price').val('');
         $('#productpost-country').val('');
         $('#productpost-currency').val('');
         $('#latitude').val('');
@@ -1357,7 +1355,7 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
                     $('#productpost-shopname').val(JSONObject.shopName);
-                    $('#productpost-price').val(JSONObject.price);
+                    $('#productpostcompareprice-price').val(JSONObject.price);
                     $('#productpost-country').val(JSONObject.country);
                     $('#productpost-currency').val(JSONObject.currency);
                     $('#latitude').val(JSONObject.latitude);
@@ -1388,20 +1386,50 @@ function ComparePriceStory() {
     }, 8000);
     var productPostId = $('#productPostId').val();
     var shopName = $('#productpost-shopname').val();
-    var price = $('#productpost-price').val();
+    var price = $('#productpostcompareprice-price').val();
     var country = $('#productpost-country').val();
     var currency = $('#productpost-currency').val();
     var statusPrice = $('#statusPrice').val();
     var productId = $('#productId').val();
     var comparePriceId = $('#comparePriceId').val();
-
     var latitude = $('#latitude').val();
     var longitude = $('#longitude').val();
-
     var dataIndex = $('#dataIndex').val();
     //var tRow = document.getElementById("compare-price-").getElementsByTagName("tr");
     //alert(productPostId);
     //alert(idTds);
+
+    if (shopName == "")
+    {
+        $('.field-productpost-shopname').find(".help-block-error").html('ShopName cannot be blank.').css('color', 'red');
+        return false;
+    } else {
+        $('.field-productpost-shopname').find(".help-block-error").html('').removeAttr('style');
+    }
+
+    if (price == "")
+    {
+        $('.field-productpostcompareprice-price').find(".help-block-error").html('Price cannot be blank.').css('color', 'red');
+        return false;
+    } else {
+        $('.field-productpostcompareprice-price').find(".help-block-error").html('').removeAttr('style');
+    }
+
+    if (country == "")
+    {
+        $('.field-productpost-country').find(".help-block-error").html('Country cannot be blank.').css('color', 'red');
+        return false;
+    } else {
+        $('.field-productpost-country').find(".help-block-error").html('').removeAttr('style');
+    }
+
+    if (currency == "")
+    {
+        $('.field-productpost-currency').find(".help-block-error").html('Currency cannot be blank.').css('color', 'red');
+        return false;
+    } else {
+        $('.field-productpost-currency').find(".help-block-error").html('').removeAttr('style');
+    }
 
 
     var path = $baseUrl + "story/compare-price-story/";
@@ -1428,16 +1456,16 @@ function ComparePriceStory() {
                     var cell3 = row.insertCell(2);
                     var cell4 = row.insertCell(3);
                     var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
                     var rowCount = table.rows.length;
-
                     cell1.innerHTML = rowCount - 1;
                     cell2.innerHTML = JSONObject.country;
                     cell3.innerHTML = JSONObject.shopName
                     cell4.innerHTML = JSONObject.price;
-                    cell5.innerHTML = JSONObject.LocalPrice + '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    cell5.innerHTML = JSONObject.LocalPrice;
+                    cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
                     $(".bs-example-modal-lg").modal("hide");
-
                 } else {
                     alert('error');
                 }
@@ -1462,10 +1490,12 @@ function ComparePriceStory() {
                     $data += " <td>" + JSONObject.shopName + "</td>";
                     $data += "<td>" + JSONObject.price + "</td>";
                     $data += "<td>";
-                    $data += "" + JSONObject.LocalPrice + "<code>";
-                    $data += '<a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
-                    $data += "&nbsp;Edit Price</a></code></td>";
+                    $data += "" + JSONObject.LocalPrice + "</td>";
                     //$data += "</tr>";
+                    $data += "<td>";
+                    $data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    $data += "&nbsp;Edit Price</a></code>";
+                    $data += "</td>";
                     $('#compare-price-' + JSONObject.comparePriceId).html($data);
                     $(".bs-example-modal-lg").modal("hide");
                 } else {
@@ -1482,7 +1512,6 @@ function ComparePriceStory() {
 counter = function () {
 
     var $textarea = $('#productpost-shortdescription').val();
-
     if ($textarea.length == 0) {
         $('#wordCount').html(0);
         $('#totalChars').html(0);
@@ -1496,7 +1525,6 @@ counter = function () {
     var totalChars = $textarea.length;
     var charCount = $textarea.trim().length;
     var charCountNoSpace = $textarea.replace(regex, '').length;
-
     $('#wordCount').html(wordCount);
     $('#totalChars').html(totalChars);
     $('#charCount').html(charCount);
@@ -1509,7 +1537,6 @@ counter = function () {
         //alert(totalChars);
     }
 };
-
 $(document).ready(function () {
     //$('#count').click(counter);
     $('#productpost-shortdescription').change(counter);
@@ -1519,8 +1546,6 @@ $(document).ready(function () {
     $('#productpost-shortdescription').blur(counter);
     $('#productpost-shortdescription').focus(counter);
 });
-
-
 //
 $("#acceptTerms").click(function () {
     //alert('Accept Terms');
@@ -1531,7 +1556,6 @@ $("#acceptTerms").click(function () {
     $('#create-account').removeAttr("style");
     $('#create-account').val('CREATE ACCOUNT');
 });
-
 $('#loginform-accept-term').click(function () {
     //document.getElementById('loginform-accept-term').checked = true;
     //alert(document.getElementById('loginform-accept-term').checked);
@@ -1547,8 +1571,6 @@ $('#loginform-accept-term').click(function () {
     }
 
 });
-
-
 function StoriesRemove(id) {
     var path = $baseUrl + "story/stories-remove/";
     var $this = $('#removeItemStory-' + id);
@@ -1565,10 +1587,74 @@ function StoriesRemove(id) {
             if (status == "success") {
                 //var JSONObject = JSON.parse(data);
                 $('.item-to-stories-' + id).remove();
-
             } else {
                 alert('error');
             }
         }
     });
 }
+
+
+function CurrencyExchangeRate(id) {
+    alert(id);
+    var fx;
+    var demo = function (data) {
+        fx.rates = data.rates
+        var rate = fx(1).from("USD").to("THB")
+        alert("£1 = $" + rate.toFixed(4))
+    }
+    $.getJSON("http://api.fixer.io/latest", demo);
+}
+
+
+var str = window.location.pathname.split('/');
+if (str[1] == 'story') {
+    //alert('story');
+    var controller = str[1];
+    var id = str[2]
+    //alert(id);
+    var productPostId = $('#productPostId').val();
+    $.ajax({
+        url: $baseUrl + "story/compare-price-story-currency/?id=" + id,
+        type: "GET",
+        dataType: "JSON",
+        //data: {'id': id},
+        success: function (data, status) {
+            if (status == "success") {
+                //console.log(JSON.stringify(data));
+                var price = data[0].price;
+                var currency_code = data[0].currency_code;
+                // var fx;
+                $.each(data, function (i, field) {
+                    //console.log(JSON.stringify(field));
+                    //var fields = JSON.stringify(field);
+                    console.log(field.price + ':' + field.currency_code);
+                    var demo = function (data) {
+                        fx.rates = data.rates;
+                        var rate = fx(field.price).from(field.currency_code).to("THB");
+                        //alert(field.currency_code + "= THB" + '::' + +rate.toFixed(4));
+                        $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).toLocaleString());
+                    }
+//
+                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                });
+                //$('#local-price-85').html('xxxxx');
+            } else {
+                alert('error');
+            }
+        }
+    });
+
+    /*
+     var fx;
+     var demo = function (data) {
+     fx.rates = data.rates
+     var rate = fx(100).from("USD").to("THB")
+     //alert("£1 = $" + rate.toFixed(4))
+     }
+
+     $.getJSON("http://api.fixer.io/latest", demo)*/
+}
+
+
+
