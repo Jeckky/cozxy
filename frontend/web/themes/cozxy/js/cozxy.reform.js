@@ -1463,7 +1463,7 @@ function ComparePriceStory() {
                     cell3.innerHTML = JSONObject.shopName
                     cell4.innerHTML = JSONObject.price;
                     cell5.innerHTML = JSONObject.LocalPrice;
-                    cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    //cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
                     $(".bs-example-modal-lg").modal("hide");
                 } else {
