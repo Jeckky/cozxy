@@ -616,6 +616,7 @@ class DisplayMyStory extends Model {
                     'productPostId' => $value->productPostId,
                     'sort' => $sort,
                     'urlProduct' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
+                    'avatar' => ''
                 ];
             }
         }
@@ -697,6 +698,7 @@ class DisplayMyStory extends Model {
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                     'star' => $values[0],
                     'productPostId' => $value->productPostId,
+                    'avatar' => '',
                 ];
             }
         }

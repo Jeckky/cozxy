@@ -1596,7 +1596,7 @@ function StoriesRemove(id) {
 
 
 function CurrencyExchangeRate(id) {
-    alert(id);
+    //alert(id);
     var fx;
     var demo = function (data) {
         fx.rates = data.rates

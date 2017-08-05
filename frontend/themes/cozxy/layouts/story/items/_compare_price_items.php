@@ -9,9 +9,9 @@
     <td>
         <?php
         if (Yii::$app->user->id == $model['userId']) {
-            ?>
-            &nbsp;<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(<?= $model['comparePriceId'] ?>, 'edit',<?= $index ?>)"><i class="fa fa-pencil-square-o"></i>&nbsp;<span style="font-size: 11px;">Edit Price</span></a></code>
-            <?php
+            ?><!--
+                &nbsp;<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(<?= $model['comparePriceId'] ?>, 'edit',<?= $index ?>)"><i class="fa fa-pencil-square-o"></i>&nbsp;<span style="font-size: 11px;">Edit Price</span></a></code>
+            --><?php
         } else {
             echo '';
         }
