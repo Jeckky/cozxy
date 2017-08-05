@@ -1415,13 +1415,13 @@ function ComparePriceStory() {
         $('.field-productpostcompareprice-price').find(".help-block-error").html('').removeAttr('style');
     }
 
-    if (country == "")
-    {
-        $('.field-productpost-country').find(".help-block-error").html('Country cannot be blank.').css('color', 'red');
-        return false;
-    } else {
-        $('.field-productpost-country').find(".help-block-error").html('').removeAttr('style');
-    }
+    /* if (country == "")
+     {
+     $('.field-productpost-country').find(".help-block-error").html('Country cannot be blank.').css('color', 'red');
+     return false;
+     } else {
+     $('.field-productpost-country').find(".help-block-error").html('').removeAttr('style');
+     }*/
 
     if (currency == "")
     {
