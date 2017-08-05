@@ -1622,8 +1622,8 @@ if (str[1] == 'story') {
         success: function (data, status) {
             if (status == "success") {
                 //console.log(JSON.stringify(data));
-                var price = data[0].price;
-                var currency_code = data[0].currency_code;
+                // var price = data[0].price;
+                // var currency_code = data[0].currency_code;
                 // var fx;
                 $.each(data, function (i, field) {
                     //console.log(JSON.stringify(field));
