@@ -28,17 +28,18 @@ for ($i = 1; $i < 3; $i++):
             <?php
             if (isset($allBank) && count($allBank) > 0) {
                 foreach ($allBank as $bank):
+                    $html = ' <img src="' . $protocol . $bank->image . '" style="float: left;width: 20px;height: 20px;" />';
                     ?>
                     <div class="checkbox" style="margin-bottom: 1px;font-size: 7pt;">
                         <input type="checkbox" disabled="true">
-                        <?=
-                        Html::img(Yii::$app->urlManager->createAbsoluteUrl($bank->image, true), ['style' => 'float: left;width: 20px;height: 20px;'])
+                        <?php
+                        // Html::img(Yii::$app->urlManager->createAbsoluteUrl($bank->image, true), ['style' => 'float: left;width: 20px;height: 20px;'])
                         //$mpdf->Image('files/images/frontcover.jpg', 0, 0, 210, 297, 'jpg', '', true, false);
                         //  . Yii::$app->urlManager->createAbsoluteUrl($bank->image)
                         ?>
-                        <?= Yii::$app->urlManager->createAbsoluteUrl($bank->image, true) ?>
-            <!--                        <img src="<?php // yii\helpers\Url::to('@web' . $bank->image, true)                ?>" style="float: left;width: 20px;height: 20px;" />
-                        <img src="<?php // $protocol . $bank->image                ?>" style="float: left;width: 20px;height: 20px;" />-->
+                        <?= $html ?>
+            <!--                        <img src="<?php // yii\helpers\Url::to('@web' . $bank->image, true)                  ?>" style="float: left;width: 20px;height: 20px;" />
+                        <img src="<?php // $protocol . $bank->image                   ?>" style="float: left;width: 20px;height: 20px;" />-->
                         <?= $bank->title ?> (<?= $bank->description ?>)
                     </div>
                     <?php
@@ -66,7 +67,7 @@ for ($i = 1; $i < 3; $i++):
         </div>
         <!--<div style="margin-top: 0px;">-->
         <div style="margin-top: 50px;">
-            <!--<img src="<?php // $protocol . '/images/ContentGroup/zWnWm6Z1PY.png'               ?>" style="float: left;width: 70px;height: 50px;" />-->
+            <!--<img src="<?php // $protocol . '/images/ContentGroup/zWnWm6Z1PY.png'                  ?>" style="float: left;width: 70px;height: 50px;" />-->
         </div>
         <div style="height: 80px;padding: 10px;text-align: right;font-size: 7pt;margin-top: -40px;">
             ชื่อผู้นำฝาก/Desposit by_______________________โทร/Tel_____________________เจ้าหน้าที่ธนาคาร_________________________
