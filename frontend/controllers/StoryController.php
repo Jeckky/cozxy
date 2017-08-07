@@ -503,16 +503,21 @@ class StoryController extends MasterController {
             }
         }
 
-        $comparePrice = \common\models\costfit\ProductPostComparePrice::find()->where("comparePriceId=" . $comparePriceId)->one();
+        //$comparePrice = \common\models\costfit\ProductPostComparePrice::find()->where("comparePriceId=" . $comparePriceId)->one();
+        $comparePrice = \common\models\costfit\ProductPostComparePrice::find()
+        ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name')
+        ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+        ->where('product_post_compare_price.comparePriceId =' . $comparePriceId . ' and currency_info.status=2')->asArray()->one();
         $products = [];
 
         $products['comparePriceChange'] = [
             'comparePriceId' => $comparePrice['comparePriceId'],
             'userId' => $comparePrice['userId'],
             'productPostId' => $comparePrice['productPostId'],
-            'country' => $comparePrice['country'],
+            'currency_code' => $comparePrice['currency_code'],
+            'country' => $comparePrice['ccy_name'],
             'shopName' => $comparePrice['shopName'],
-            'price' => number_format($comparePrice['price'], 2),
+            'price' => $comparePrice['price'],
             'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($comparePrice['currency'], $price), 2)
         ];
 
