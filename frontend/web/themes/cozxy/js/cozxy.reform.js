@@ -1481,9 +1481,7 @@ function ComparePriceStory() {
                     $('#compare-price-' + productPostId).append($data);
                     /*clear input*/
                     $('#productpost-shopname').val('');
-                    $("#productpost-currency").select2({
-                        placeholder: "Select a State"
-                    });
+
                     $('#productpostcompareprice-price').val('');
                     $('#productpost-currency').val('');
                     $('#latitude').val('');
