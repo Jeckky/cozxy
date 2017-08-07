@@ -148,7 +148,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         'value' => function($model) {
                             if (($model->status == TopUp::TOPUP_STATUS_COMFIRM_PAYMENT) || ($model->status == TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)) {
                                 $customerName = User::userName($model->userId);
-                                $customerTel = User::userTel($model->userId);
+                                $customerTel = common\models\costfit\Address::userTel($model->userId);
                                 $taxId = '0105553036789';
                                 $topUpNo = $model->topUpNo;
                                 $tel = str_replace("-", "", $customerTel);
