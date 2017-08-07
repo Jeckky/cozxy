@@ -36,7 +36,7 @@ for ($i = 1; $i < 3; $i++):
             Branch:___________Date:___________<br>
             Customer name : <b><?= $customerName ?></b><br>
             Number(Ref.1) : <b><?= $topUpNo ?></b><br>
-            Telephone(Ref.2) :<b>0655366262</b>
+            Telephone(Ref.2) :<b><?= $tel ?></b>
         </div>
         <div class="row" style="margin-top: 10px;">
 

@@ -41,7 +41,8 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             'taxId' => $taxId,
             'barCode' => $barCode,
             'data' => $data,
-            'allBank' => $allBank
+            'allBank' => $allBank,
+            'tel' => $tel
         ]);
         ?>
     </div>

@@ -325,7 +325,8 @@ class TopUpController extends MasterController {
                     'taxId' => $taxId,
                     'barCode' => $barCode,
                     'data' => $data,
-                    'allBank' => $allBank
+                    'allBank' => $allBank,
+                    'tel' => $tel
         ]);
     }
 
@@ -335,8 +336,10 @@ class TopUpController extends MasterController {
         $allBank = \common\models\costfit\Bank::find()->where("status=1")
                 ->orderBy('createDateTime')
                 ->all();
+        $userTel = \common\models\costfit\Address::userTel(Yii::$app->user->id);
         $content = $this->renderPartial('bill_form', [
             'amount' => $_GET["amount"],
+            'tel' => $userTel,
             'customerName' => $_GET["customerName"],
             'customerTel' => $_GET["customerTel"],
             'topUpNo' => $_GET["topUpNo"],
@@ -796,7 +799,7 @@ class TopUpController extends MasterController {
             ]
         ]);
 
-
+        // $pdf->showImageErrors = true;
         // return the pdf output as per the destination setting
         return $pdf->render();
     }
