@@ -169,13 +169,13 @@ function ComparePriceStory() {
                     $data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
                     $data += "&nbsp;&nbsp;<span style=\"font-size: 11px;\">Edit Price</span></a></code>";
                     $data += "</td>";
-                    $('#compare-price-' + data.comparePriceId).html($data);
+                    $('#compare-price-' + data.comparePriceId).html($data).attr('class', 'info');
                     demo = function (data) {
                         fx.rates = data.rates
                         var rate = fx(price).from(currency_code).to("THB")
                         //alert("£1 = $" + rate.toFixed(4))
                         //$('#local-price-' + data.comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-                        $('#local-price-' + comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        $('#local-price-' + comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')).attr('class', 'warning');
                     }
                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
 
