@@ -36,6 +36,7 @@ class CozxyAsset extends AssetBundle {
         'js/cozxy.js',
         'js/cozxy.reform.js',
         'js/cozxy.unity.js',
+        'js/currency.exchange.rate.js',
         'js/cozxy.product.modal.js',
         'js/jquery.elevateZoom-3.0.8.min.js',
         'js/cozxy.script.js',

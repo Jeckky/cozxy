@@ -43,12 +43,14 @@ SCRIPT;
             echo kartik\select2\Select2::widget([
                 'name' => 'state_2',
                 'value' => '',
-                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', 'ctry_name'),
+                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue) {
+                    return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
                 'pluginOptions' => [
-                    'templateResult' => new JsExpression('format'),
-                    'templateSelection' => new JsExpression('format'),
-                    'escapeMarkup' => $escape,
+                    //'templateResult' => new JsExpression('format'),
+                    //'templateSelection' => new JsExpression('format'),
+                    //'escapeMarkup' => $escape,
                     'allowClear' => true
                 ],
             /* , 'addon' => [
@@ -148,7 +150,7 @@ SCRIPT;
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="sr-only" for="productpost-price">Price</label><!--฿-->
+                                    <label for="exampleInputEmail1">Price</label><!--฿-->
                                     <?= $form->field($modelComparePrices, 'price', ['template' => '
                                             <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
                                                 <div class="input-group col-sm-12">
@@ -194,7 +196,9 @@ SCRIPT;
                                     echo kartik\select2\Select2::widget([
                                         'name' => 'currencyModal',
                                         'value' => '',
-                                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', 'ctry_name'),
+                                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', function($model, $defaultValue) {
+                                            return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                                        }, 'currency_code'),
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
                                     ?>
