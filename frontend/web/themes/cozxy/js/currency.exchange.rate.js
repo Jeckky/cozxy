@@ -109,7 +109,7 @@ function ComparePriceStory() {
                     var rowCount = table.rows.length;
                     cell1.innerHTML = rowCount - 1;
                     cell2.innerHTML = data.currency_code + ' (' + data.country + ' )';
-                    cell3.innerHTML = data.shopName
+                    cell3.innerHTML = data.shopName;
                     cell4.innerHTML = data.currency_code + ' ' + data.price;
                     //console.log(data.price);
                     //$.each(data, function (i, field) {
@@ -204,8 +204,8 @@ function CurrencyExchangeRate(id) {
         //data: {'id': id},
         success: function (data, status) {
             if (status == "success") {
-                console.log(data.comparePrice);
-                console.log(data.currencyCode);
+                //console.log(data.comparePrice);
+                //console.log(data.currencyCode);
                 //console.log(JSON.stringify(data));
                 // var price = data[0].price;
                 // var currency_code = data[0].currency_code;
@@ -213,7 +213,7 @@ function CurrencyExchangeRate(id) {
                 var datax = data.comparePrice;
                 var currencyCodes = data.currencyCode;
                 var currencyNames = data.currencyName;
-                console.log(currencyCodes);
+                //console.log(currencyCodes);
                 $.each(datax, function (i, field) {
                     //console.log(JSON.stringify(field));
                     //var fields = JSON.stringify(field);
