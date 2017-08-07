@@ -1439,7 +1439,7 @@ function ComparePriceStory() {
         $.ajax({
             url: path,
             type: "POST",
-            //dataType: "JSON",
+            dataType: "JSON",
             data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
                 'country': country, 'currency': currency,
                 'statusPrice': statusPrice, 'productId': productId,
@@ -1447,8 +1447,9 @@ function ComparePriceStory() {
             },
             success: function (data, status) {
                 // console.log(data.price);
-                var JSONObject = JSON.parse(data);
+                //var JSONObject = JSON.parse(data);
                 if (status == "success") {
+
                     var table = document.getElementById("table-compare-price-cozxy");
                     var row = table.insertRow(-1);
                     var cell1 = row.insertCell(0);
@@ -1459,9 +1460,21 @@ function ComparePriceStory() {
                     var cell6 = row.insertCell(5);
                     var rowCount = table.rows.length;
                     cell1.innerHTML = rowCount - 1;
-                    cell2.innerHTML = JSONObject.country;
-                    cell3.innerHTML = JSONObject.shopName
-                    cell4.innerHTML = JSONObject.price;
+                    cell2.innerHTML = data.currency_code + ' (' + data.country + ' )';
+                    cell3.innerHTML = data.shopName
+                    cell4.innerHTML = data.currency_code + ' ' + data.price;
+                    console.log(data.price);
+                    //$.each(data, function (i, field) {
+                    var price = data.price;
+                    var currency_code = data.currency_code;
+                    demo = function (data) {
+                        fx.rates = data.rates
+                        var rate = fx(price).from(currency_code).to("THB")
+                        //alert("£1 = $" + rate.toFixed(4))
+                        cell5.innerHTML = 'THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+                    }
+                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                    //});
                     //cell5.innerHTML = JSONObject.LocalPrice;
                     //cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
@@ -1628,7 +1641,7 @@ if (str[1] == 'story') {
                 $.each(data, function (i, field) {
                     //console.log(JSON.stringify(field));
                     //var fields = JSON.stringify(field);
-                    console.log(field.price + ':' + field.currency_code);
+                    //console.log(field.price + ':' + field.currency_code);
                     var demo = function (data) {
                         fx.rates = data.rates;
                         var rate = fx(field.price).from(field.currency_code).to("THB");
