@@ -48,9 +48,9 @@ SCRIPT;
                 }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
                 'pluginOptions' => [
-                    'templateResult' => new JsExpression('format'),
-                    'templateSelection' => new JsExpression('format'),
-                    'escapeMarkup' => $escape,
+                    //'templateResult' => new JsExpression('format'),
+                    //'templateSelection' => new JsExpression('format'),
+                    //'escapeMarkup' => $escape,
                     'allowClear' => true
                 ],
             /* , 'addon' => [
