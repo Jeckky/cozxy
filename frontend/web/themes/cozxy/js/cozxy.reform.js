@@ -1481,7 +1481,7 @@ function ComparePriceStory() {
                     $('#compare-price-' + productPostId).append($data);
                     /*clear input*/
                     $('#productpost-shopname').val('');
-
+                    $('#productpost-currency').val('').trigger('change');
                     $('#productpostcompareprice-price').val('');
                     $('#productpost-currency').val('');
                     $('#latitude').val('');
