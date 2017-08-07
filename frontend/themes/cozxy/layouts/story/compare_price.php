@@ -43,7 +43,9 @@ SCRIPT;
             echo kartik\select2\Select2::widget([
                 'name' => 'state_2',
                 'value' => '',
-                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', 'ctry_name'),
+                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue) {
+                    return $model['currrency_symbol'] . '-' . $model['ctry_name'];
+                }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
                 'pluginOptions' => [
                     'templateResult' => new JsExpression('format'),
