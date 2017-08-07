@@ -141,23 +141,23 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             <?php echo $form->field($modelComparePrice, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!--<div class="col-md-6">
                                         <div class="form-group" style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Country</label>
-                                            <?php
-                                            echo $form->field($modelComparePrice, 'country')->widget(kartik\select2\Select2::classname(), [
-                                                //'options' => ['id' => 'address-countryid'],
-                                                'data' => $country,
-                                                'pluginOptions' => [
-                                                    'placeholder' => 'Select...',
-                                                    'loadingText' => 'Loading Country ...',
-                                                ],
-                                                'options' => ['placeholder' => 'Select Country ...'],
-                                            ])->label(FALSE);
-                                            ?>
+                                    <?php
+                                    /* echo $form->field($modelComparePrice, 'country')->widget(kartik\select2\Select2::classname(), [
+                                      //'options' => ['id' => 'address-countryid'],
+                                      'data' => $country,
+                                      'pluginOptions' => [
+                                      'placeholder' => 'Select...',
+                                      'loadingText' => 'Loading Country ...',
+                                      ],
+                                      'options' => ['placeholder' => 'Select Country ...'],
+                                      ])->label(FALSE); */
+                                    ?>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    </div>-->
+                                    <div class="col-md-12">
                                         <div class="form-group"  style="margin-top: 7px;">
                                             <label for="exampleInputEmail1">Currency</label>
                                             <?php

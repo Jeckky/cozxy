@@ -172,22 +172,22 @@ SCRIPT;
                                 </div>-->
                             </div>
 
-                            <div class="col-md-6">
+                            <!--<div class="col-md-6">
                                 <div class="form-group field-productpost-country" style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Country</label>
-                                    <?php
-                                    echo kartik\select2\Select2::widget([
-                                        'name' => 'countryModal',
-                                        'value' => '',
-                                        'data' => $country,
-                                        'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...', 'id' => 'productpost-country']
-                                    ]);
-                                    ?>
+                            <?php
+                            /* echo kartik\select2\Select2::widget([
+                              'name' => 'countryModal',
+                              'value' => '',
+                              'data' => $country,
+                              'options' => ['multiple' => FALSE, 'placeholder' => 'Select Country ...', 'id' => 'productpost-country']
+                              ]); */
+                            ?>
                                     <p class="help-block help-block-error"></p>
                                 </div>
-                            </div>
+                            </div>-->
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group field-productpost-currency"  style="margin-top: 7px;">
                                     <label for="exampleInputEmail1">Currency</label>
                                     <?php
