@@ -148,7 +148,7 @@ SCRIPT;
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="sr-only" for="productpost-price">Price</label><!--฿-->
+                                    <label for="exampleInputEmail1">Price</label><!--฿-->
                                     <?= $form->field($modelComparePrices, 'price', ['template' => '
                                             <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
                                                 <div class="input-group col-sm-12">

@@ -452,7 +452,12 @@ class StoryController extends MasterController {
     public function actionComparePriceStoryModified() {
         $postId = Yii::$app->request->post('postId');
         $comparePrice = \common\models\costfit\ProductPostComparePrice::find()->where('comparePriceId =' . $postId)->one();
-
+        /* $comparePrice = \common\models\costfit\ProductPostComparePrice::find()
+          ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name')
+          ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+          ->where('product_post_compare_price.comparePriceId =' . $postId . ' and currency_info.status=2')->asArray()->one();
+          echo '<pre>';
+          print_r($comparePrice); */
         if (isset($comparePrice)) {
             return json_encode($comparePrice->attributes);
         } else {

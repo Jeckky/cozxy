@@ -1334,6 +1334,15 @@ $(".bs-example-modal-lg-x").click(function () {
     });
 });
 function CozxyComparePriceModernBest(id, type, dataIndex) {
+    //$('.edit-price-' + id + ' i').removeClass('fa fa-pencil-square-o');
+    //$('.shopping-' + id + ' i').addClass('fa fa-times fa-spin');
+
+    $('.edit-price-' + id + ' i').removeClass('fa fa-pencil-square-o');
+    $('.edit-price-' + id + ' i').addClass('fa fa-pencil-square-o fa-spin');
+    setTimeout(function () {
+        $('.edit-price-' + id + ' i').removeClass('fa fa-pencil-square-o fa-spin');
+        $('.edit-price-' + id + ' i').addClass('fa fa-pencil-square-o');
+    }, 8000)
 
     var postId = id;
     if (postId == 0) {
@@ -1353,8 +1362,10 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
             //dataType: "JSON",
             data: {'postId': postId, 'type': type},
             success: function (data, status) {
+
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
+                    $('#productpost-currency').val(JSONObject.currency).trigger('change');
                     $('#productpost-shopname').val(JSONObject.shopName);
                     $('#productpostcompareprice-price').val(JSONObject.price);
                     $('#productpost-country').val(JSONObject.country);
@@ -1432,7 +1443,7 @@ function ComparePriceStory() {
         $('.field-productpost-currency').find(".help-block-error").html('').removeAttr('style');
     }
 
-
+    //alert(price);
     var path = $baseUrl + "story/compare-price-story/";
     $data = '';
     if (statusPrice == 'add') {
@@ -1477,7 +1488,7 @@ function ComparePriceStory() {
                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
                     //});
                     //cell5.innerHTML = JSONObject.LocalPrice;
-                    //cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
                     /*clear input*/
                     $('#productpost-shopname').val('');
@@ -1493,31 +1504,45 @@ function ComparePriceStory() {
             }
         });
     } else {
+        //alert('edit Price ::' + comparePriceId);
         $.ajax({
             url: path,
             type: "POST",
-            //dataType: "JSON",
+            dataType: "JSON",
             data: {'productPostId': productPostId, 'shopName': shopName, 'price': price,
                 'country': country, 'currency': currency, 'statusPrice': statusPrice,
                 'comparePriceId': comparePriceId, 'latitude': latitude, 'longitude': longitude
             },
             success: function (data, status) {
                 // console.log(data.price);
-                var JSONObject = JSON.parse(data);
+                //var JSONObject = JSON.parse(data);
                 if (status == "success") {
+                    var price = data.price;
+                    var currency_code = data.currency_code;
+                    var comparePriceId = data.comparePriceId;
                     //$data += "<tr id='compare-price-" + JSONObject.comparePriceId + "'>";
                     $data += "<td>" + dataIndex + "</td>";
-                    $data += "<td>" + JSONObject.country + "</td>";
-                    $data += " <td>" + JSONObject.shopName + "</td>";
-                    $data += "<td>" + JSONObject.price + "</td>";
-                    $data += "<td>";
-                    $data += "" + JSONObject.LocalPrice + "</td>";
+                    $data += "<td>" + data.currency_code + '(' + data.country + ")</td>";
+                    $data += " <td>" + data.shopName + "</td>";
+                    $data += "<td>" + data.currency_code + ' ' + data.price + "</td>";
+                    $data += '<td id="local-price-' + data.comparePriceId + '">-';
+
+                    $data += "</td>";
                     //$data += "</tr>";
                     $data += "<td>";
-                    //$data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
-                    //$data += "&nbsp;Edit Price</a></code>";
+                    $data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    $data += "&nbsp;&nbsp;<span style=\"font-size: 11px;\">Edit Price</span></a></code>";
                     $data += "</td>";
-                    $('#compare-price-' + JSONObject.comparePriceId).html($data);
+                    $('#compare-price-' + data.comparePriceId).html($data);
+                    demo = function (data) {
+                        fx.rates = data.rates
+                        var rate = fx(price).from(currency_code).to("THB")
+                        //alert("£1 = $" + rate.toFixed(4))
+                        //$('#local-price-' + data.comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        $('#local-price-' + comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    }
+                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+
                     $(".bs-example-modal-lg").modal("hide");
                 } else {
                     alert('error');
