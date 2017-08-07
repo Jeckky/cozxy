@@ -1633,7 +1633,7 @@ if (str[1] == 'story') {
                         fx.rates = data.rates;
                         var rate = fx(field.price).from(field.currency_code).to("THB");
                         //alert(field.currency_code + "= THB" + '::' + +rate.toFixed(4));
-                        $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).toLocaleString());
+                        $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     }
 //
                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
