@@ -1,4 +1,5 @@
 /*  By  Taninut.B , 7/5/2016 */
+$('.bs-example-modal-lg').removeAttr('tabindex');
 var $addToWishlistBtn = $('#addItemToWishlist');
 var $addedToCartMessage = $('.cart-message');
 var map;
@@ -1463,7 +1464,7 @@ function ComparePriceStory() {
                     cell2.innerHTML = data.currency_code + ' (' + data.country + ' )';
                     cell3.innerHTML = data.shopName
                     cell4.innerHTML = data.currency_code + ' ' + data.price;
-                    console.log(data.price);
+                    //console.log(data.price);
                     //$.each(data, function (i, field) {
                     var price = data.price;
                     var currency_code = data.currency_code;
@@ -1476,8 +1477,15 @@ function ComparePriceStory() {
                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
                     //});
                     //cell5.innerHTML = JSONObject.LocalPrice;
-                    //cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
+                    /*clear input*/
+                    $('#productpost-shopname').val('');
+                    $('#productpostcompareprice-price').val('');
+                    $('#productpost-country').val('');
+                    $('#productpost-currency').val('');
+                    $('#latitude').val('');
+                    $('#longitude').val('');
                     $(".bs-example-modal-lg").modal("hide");
                 } else {
                     alert('error');

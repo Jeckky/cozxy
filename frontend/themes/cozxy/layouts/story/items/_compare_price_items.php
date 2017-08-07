@@ -4,7 +4,7 @@
     <td><?= $model['place']; ?></td>
     <td><?php echo $model['currency_code'] . '&nbsp;' . $model['price']; ?></td>
     <td id="local-price-<?= $model['comparePriceId'] ?>">
-        <?//= $model['LocalPrice']; ?>
+        <?//= $model['LocalPrice']; ?>-
     </td>
     <td>
         <?php
