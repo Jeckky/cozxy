@@ -188,7 +188,7 @@ class StoryController extends MasterController {
                      * แยก Table ProductPostComparePrice จาก ProductPost
                      * Update : 07/05/2017
                      */
-                    if ($_POST["ProductPostComparePrice"]["shopName"] != '' && $_POST["ProductPostComparePrice"]["price"] != '' && $_POST["ProductPostComparePrice"]["country"] != '' && $_POST["ProductPostComparePrice"]["currency"] != '') {
+                    if ($_POST["ProductPostComparePrice"]["shopName"] != '' && $_POST["ProductPostComparePrice"]["price"] != '' && $_POST["ProductPostComparePrice"]["currency"] != '') {
                         $comparePrice->productPostId = Yii::$app->db->lastInsertID;
                         $comparePrice->userId = Yii::$app->user->identity->userId;
                         $comparePrice->productId = $parentId;
