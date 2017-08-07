@@ -189,19 +189,60 @@ function ComparePriceStory() {
 
 }
 
-
-
 function CurrencyExchangeRate(id) {
     //alert(id);
-    var fx;
-    var demo = function (data) {
-        fx.rates = data.rates
-        var rate = fx(1).from("USD").to("THB")
-        alert("£1 = $" + rate.toFixed(4))
-    }
-    $.getJSON("http://api.fixer.io/latest", demo);
-}
+    var currencyId = id;
+    var controller = str[1];
+    var id = str[2]
+    //alert(id);
+    var productPostId = $('#productPostId').val();
+    //alert('productPostId : ' + productPostId);
+    $.ajax({
+        url: $baseUrl + "story/compare-price-story-currency-exchange-rate/?id=" + id + '&currencyId=' + currencyId,
+        type: "GET",
+        dataType: "JSON",
+        //data: {'id': id},
+        success: function (data, status) {
+            if (status == "success") {
+                console.log(data.comparePrice);
+                console.log(data.currencyCode);
+                //console.log(JSON.stringify(data));
+                // var price = data[0].price;
+                // var currency_code = data[0].currency_code;
+                // var fx;
+                var datax = data.comparePrice;
+                var currencyCodes = data.currencyCode;
+                var currencyNames = data.currencyName;
+                console.log(currencyCodes);
+                $.each(datax, function (i, field) {
+                    //console.log(JSON.stringify(field));
+                    //var fields = JSON.stringify(field);
+                    //console.log(field.price + ':' + field.currency_code);
+                    var demo = function (datax) {
+                        fx.rates = datax.rates;
+                        var rate = fx(field.price).from(field.currency_code).to(currencyCodes);//to("THB");
+                        //alert(rate);
+                        //alert(field.currency_code + "= THB" + '::' + +rate.toFixed(4));
+                        $('#local-price-' + field.comparePriceId).html('<span style="color: #128a05;font-weight: bold;"> ' + currencyCodes + '</span> ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    }
+//
+                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                });
+                //$('#local-price-85').html('xxxxx');
+            } else {
+                alert('error');
+            }
+        }
+    });
 
+    /*var fx;
+     var demo = function (data) {
+     fx.rates = data.rates
+     var rate = fx(1).from("USD").to("THB")
+     alert("£1 = $" + rate.toFixed(4))
+     }
+     $.getJSON("http://api.fixer.io/latest", demo);*/
+}
 
 var str = window.location.pathname.split('/');
 if (str[1] == 'story') {

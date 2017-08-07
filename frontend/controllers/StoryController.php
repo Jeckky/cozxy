@@ -585,7 +585,9 @@ class StoryController extends MasterController {
     }
 
     public function actionComparePriceStoryCurrency() {
+
         $postId = $_GET['id'];
+
         $k = base64_decode(base64_decode($postId));
         $params = \common\models\ModelMaster::decodeParams($postId);
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
@@ -600,6 +602,42 @@ class StoryController extends MasterController {
         //print_r($comparePrice);
         if (isset($comparePrice)) {
             return \yii\helpers\Json::encode($comparePrice);
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionComparePriceStoryCurrencyExchangeRate() {
+
+        $postId = $_GET['id'];
+        if (isset($_GET['currencyId']) && !empty($_GET['currencyId'])) {
+            $currencyId = $_GET['currencyId'];
+            $dataCurrency = \common\models\costfit\CurrencyInfo::find()->where('currencyId=' . $currencyId)->one();
+            if (isset($dataCurrency) && !empty($dataCurrency)) {
+                //$currency_code = $dataCurrency['currency_code'];
+                $rss['currencyCode'] = $dataCurrency['currency_code'];
+                $rss['currencyName'] = $dataCurrency['currency_name'];
+            } else {
+                $rss['currencyCode'] = $dataCurrency['currency_code'];
+                $rss['currencyName'] = $dataCurrency['currency_name'];
+            }
+        }
+
+        $k = base64_decode(base64_decode($postId));
+        $params = \common\models\ModelMaster::decodeParams($postId);
+        $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
+        $productId = isset($params['productId']) ? $params['productId'] : NULL;
+        $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
+
+        $comparePrice = \common\models\costfit\ProductPostComparePrice::find()
+        ->select('`product_post_compare_price`.* ,`currency_info`.currency_code ')
+        ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+        ->where('product_post_compare_price.productPostId =' . $productPostId . ' and currency_info.status=2')->asArray()->all();
+        //echo '<pre>';
+        //print_r($comparePrice);
+        $rss['comparePrice'] = $comparePrice;
+        if (isset($comparePrice)) {
+            return \yii\helpers\Json::encode($rss);
         } else {
             return FALSE;
         }

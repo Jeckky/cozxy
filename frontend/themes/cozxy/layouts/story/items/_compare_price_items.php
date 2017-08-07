@@ -1,3 +1,4 @@
+<!--$url = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/flat/16/';-->
 <tr id="compare-price-<?= $model['comparePriceId'] ?>">
     <td><?= ++$index ?></td>
     <td><?= $model['currency_code']; ?> (<?= $model['ccy_name'] ?>)</td>
@@ -10,7 +11,8 @@
         <?php
         if (Yii::$app->user->id == $model['userId']) {
             ?>
-            &nbsp;<code>
+            &nbsp;
+            <code>
                 <a class="text-danger edit-price-<?= $model['comparePriceId'] ?>"  onclick="CozxyComparePriceModernBest(<?= $model['comparePriceId'] ?>, 'edit',<?= $index ?>)">
                     <i class="fa fa-pencil-square-o"></i>&nbsp;<span style="font-size: 11px;">Edit Price</span></a>
             </code>
