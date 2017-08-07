@@ -111,7 +111,6 @@ class StoryController extends MasterController {
          */
         $currency = new ArrayDataProvider(['allModels' => DisplayMyStory::CurrencyInfos()]);
 
-
         $country = ArrayHelper::map(Countries::find()->where("1")
         ->all(), 'countryId', 'countryName');
 
