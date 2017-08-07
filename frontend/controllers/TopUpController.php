@@ -284,6 +284,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $customerName = \common\models\costfit\Address::userName($userId);
         $customerTel = \common\models\costfit\Address::userTel($userId);
         $taxId = '0105553036789';
@@ -331,6 +334,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionPrintPaymentFormTopdf() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $header = FALSE;
         //$header = $this->renderPartial('header');
         $allBank = \common\models\costfit\Bank::find()->where("status=1")
@@ -505,7 +511,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionBillpay() {
-
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $k = base64_decode(base64_decode($_GET["epay"]));
         $topUpId = \common\models\ModelMaster::decodeParams($_GET["epay"]);
         $logo = \common\models\costfit\ContentGroup::find()->where("title='logoImageTop'")->one();
@@ -646,6 +654,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionSystemTopUp() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $userId = Yii::$app->user->id;
         $point = 0;
         $money = 0;
