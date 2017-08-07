@@ -44,7 +44,7 @@ SCRIPT;
                 'name' => 'state_2',
                 'value' => '',
                 'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue) {
-                    return $model['currrency_symbol'] . '-' . $model['ctry_name'];
+                    return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
                 }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
                 'pluginOptions' => [
@@ -197,7 +197,7 @@ SCRIPT;
                                         'name' => 'currencyModal',
                                         'value' => '',
                                         'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', function($model, $defaultValue) {
-                                            return $model['currrency_symbol'] . '-' . $model['ctry_name'];
+                                            return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
                                         }, 'currency_code'),
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
