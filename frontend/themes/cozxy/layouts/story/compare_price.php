@@ -194,7 +194,9 @@ SCRIPT;
                                     echo kartik\select2\Select2::widget([
                                         'name' => 'currencyModal',
                                         'value' => '',
-                                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', 'ctry_name', 'currency_code'),
+                                        'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', function($model, $defaultValue) {
+                                            return $model['currrency_symbol'] . '-' . $model['ctry_name'];
+                                        }, 'currency_code'),
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
                                     ?>
