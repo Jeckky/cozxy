@@ -598,6 +598,9 @@ class TopUpController extends MasterController {
     }
 
     public function actionHistory() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
         $model = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC');
         $topUps = TopUp::find()->where("status >1 and userId=" . Yii::$app->user->id)->orderBy('updateDateTime DESC')->all();
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();

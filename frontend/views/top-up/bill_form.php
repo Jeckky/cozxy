@@ -36,6 +36,7 @@ for ($i = 1; $i < 3; $i++):
                         //$mpdf->Image('files/images/frontcover.jpg', 0, 0, 210, 297, 'jpg', '', true, false);
                         //  . Yii::$app->urlManager->createAbsoluteUrl($bank->image)
                         ?>
+                        <img src="<?= yii\helpers\Url::to('@web' . $bank->image, true) ?>" style="float: left;width: 20px;height: 20px;" />
                         <img src="<?= $protocol . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
                         <?= $bank->title ?> (<?= $bank->description ?>)
                     </div>
