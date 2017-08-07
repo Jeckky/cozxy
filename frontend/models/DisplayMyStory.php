@@ -325,12 +325,17 @@ class DisplayMyStory extends Model {
         }
         if (isset($currency)) {
             $productPost = \common\models\costfit\ProductPostComparePrice::find()
-            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name  ')
+            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name ,`currency_info`.images ')
             ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
             ->where("product_post_compare_price.productPostId=" . $productPostId . " and product_post_compare_price.currency=" . $currency)
             ->orderBy($sortStr)
             ->all();
             foreach ($productPost as $value) {
+                if (isset($value->images)) {
+                    $urlImages = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/compare-price/16x10/' . $value->images;
+                } else {
+                    $urlImages = '';
+                }
                 $products[$value->comparePriceId] = [
                     'comparePriceId' => $value->comparePriceId,
                     'userId' => $value->userId,
@@ -341,12 +346,13 @@ class DisplayMyStory extends Model {
                     'LocalPrice' => "THB " . number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2),
                     'latitude' => $value->latitude, 'longitude' => $value->longitude,
                     'currency_code' => $value->currency_code,
-                    'ccy_name' => $value->ccy_name
+                    'ccy_name' => $value->ccy_name,
+                    'images' => $urlImages
                 ];
             }
         } else {
             $productPost = \common\models\costfit\ProductPostComparePrice::find()
-            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name ')
+            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name,`currency_info`.images ')
             ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
             ->where("product_post_compare_price.productPostId=" . $productPostId)
             ->orderBy($sortStr)
@@ -356,6 +362,11 @@ class DisplayMyStory extends Model {
                     $currency = number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2);
                 } else {
                     $currency = '';
+                }
+                if (isset($value->images)) {
+                    $urlImages = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/compare-price/16x10/' . $value->images;
+                } else {
+                    $urlImages = '';
                 }
                 $products[$value->comparePriceId] = [
                     'comparePriceId' => $value->comparePriceId,
@@ -367,7 +378,8 @@ class DisplayMyStory extends Model {
                     'LocalPrice' => "THB " . $currency,
                     'latitude' => $value->price, 'longitude' => $value->longitude,
                     'currency_code' => $value->currency_code,
-                    'ccy_name' => $value->ccy_name
+                    'ccy_name' => $value->ccy_name,
+                    'images' => $urlImages
                 ];
             }
         }

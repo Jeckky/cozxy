@@ -54,7 +54,7 @@ class ProductPostComparePrice extends \common\models\costfit\master\ProductPostC
     public function attributes() {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'currency_code', 'ccy_name'
+            'currency_code', 'ccy_name', 'images'
         ]);
     }
 

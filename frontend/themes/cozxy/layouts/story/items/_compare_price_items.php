@@ -1,7 +1,12 @@
 <!--$url = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/flat/16/';-->
 <tr id="compare-price-<?= $model['comparePriceId'] ?>">
     <td><?= ++$index ?></td>
-    <td><?= $model['currency_code']; ?> (<?= $model['ccy_name'] ?>)</td>
+    <td>
+        <div class="col-md-2" style="padding-right: 0cpx; padding-left:0px;">
+            <img src="<?= $model['images']; ?>" class="img-responsive">
+        </div>
+        <div class="col-md-10" style="padding-right: 0cpx; padding-left:0px; margin-left: -25px;"><?= $model['currency_code']; ?> (<?= $model['ccy_name'] ?>)</div>
+    </td>
     <td><?= $model['place']; ?></td>
     <td><?php echo $model['currency_code'] . '&nbsp;' . $model['price']; ?></td>
     <td id="local-price-<?= $model['comparePriceId'] ?>">
