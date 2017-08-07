@@ -37,13 +37,9 @@ for ($i = 1; $i < 3; $i++):
                         //$mpdf->Image('files/images/frontcover.jpg', 0, 0, 210, 297, 'jpg', '', true, false);
                         //  . Yii::$app->urlManager->createAbsoluteUrl($bank->image)
                         ?>
-                        <!--<img src="<?php // yii\helpers\Url::to('@web' . $bank->image, true)           ?>" style="float: left;width: 20px;height: 20px;" />-->
+                        <!--<img src="<?php // yii\helpers\Url::to('@web' . $bank->image, true)            ?>" style="float: left;width: 20px;height: 20px;" />-->
                         <img src="<?= $protocol . $bank->image ?>" style="float: left;width: 20px;height: 20px;" />
                         <?= $bank->title ?> (<?= $bank->description ?>)
-
-                        <object data="your.svg" type="image/svg+xml">
-                            <img src="<?= $protocol . $bank->image ?>" />
-                        </object>
 
                     </div>
                     <?php
@@ -71,7 +67,7 @@ for ($i = 1; $i < 3; $i++):
         </div>
         <!--<div style="margin-top: 0px;">-->
         <div style="margin-top: 50px;">
-            <!--<img src="<?php // $protocol . '/images/ContentGroup/zWnWm6Z1PY.png'                                    ?>" style="float: left;width: 70px;height: 50px;" />-->
+            <!--<img src="<?php // $protocol . '/images/ContentGroup/zWnWm6Z1PY.png'                                     ?>" style="float: left;width: 70px;height: 50px;" />-->
         </div>
         <div style="height: 80px;padding: 10px;text-align: right;font-size: 7pt;margin-top: -40px;">
             ชื่อผู้นำฝาก/Desposit by_______________________โทร/Tel_____________________เจ้าหน้าที่ธนาคาร_________________________
