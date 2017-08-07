@@ -1477,12 +1477,14 @@ function ComparePriceStory() {
                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
                     //});
                     //cell5.innerHTML = JSONObject.LocalPrice;
-                    cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
+                    //cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
                     $('#compare-price-' + productPostId).append($data);
                     /*clear input*/
                     $('#productpost-shopname').val('');
+                    $("#productpost-currency").select2({
+                        placeholder: "Select a State"
+                    });
                     $('#productpostcompareprice-price').val('');
-                    $('#productpost-country').val('');
                     $('#productpost-currency').val('');
                     $('#latitude').val('');
                     $('#longitude').val('');
@@ -1514,8 +1516,8 @@ function ComparePriceStory() {
                     $data += "" + JSONObject.LocalPrice + "</td>";
                     //$data += "</tr>";
                     $data += "<td>";
-                    $data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
-                    $data += "&nbsp;Edit Price</a></code>";
+                    //$data += '<code><a class="text-danger"  onclick="CozxyComparePriceModernBest(' + JSONObject.comparePriceId + ',' + '\'edit\'' + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>';
+                    //$data += "&nbsp;Edit Price</a></code>";
                     $data += "</td>";
                     $('#compare-price-' + JSONObject.comparePriceId).html($data);
                     $(".bs-example-modal-lg").modal("hide");
