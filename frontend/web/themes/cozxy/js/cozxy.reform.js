@@ -1258,6 +1258,11 @@ function sortStoriesCompare(type, status, productPostId, productId) {
         $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
     }
     var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
+
+    //console.log($currencyType);
+    //console.log($status);
+    //console.log($postId);
+
     $.ajax({
         type: "POST",
         url: $baseUrl + "story/sort-compare-stories/",
@@ -1270,6 +1275,54 @@ function sortStoriesCompare(type, status, productPostId, productId) {
             } else {
                 if (status == "success") {
                     $('.compare-price-ajax').html(data);
+                    //console.log(data);
+                    var str = window.location.pathname.split('/');
+                    var controller = str[1];
+                    var id = str[2]
+                    $.ajax({
+                        url: $baseUrl + "story/compare-price-story-currency/?id=" + id,
+                        type: "GET",
+                        dataType: "JSON",
+                        //data: {'id': id},
+                        success: function (data, status) {
+                            if (status == "success") {
+                                //console.log(JSON.stringify(data));
+                                // var price = data[0].price;
+                                // var currency_code = data[0].currency_code;
+                                // var fx;
+                                $.each(data, function (i, field) {
+                                    //console.log(JSON.stringify(field));
+                                    //var fields = JSON.stringify(field);
+                                    //console.log(field.price + ':' + field.currency_code);
+                                    var demo = function (data) {
+                                        fx.rates = data.rates;
+                                        var rate = fx(field.price).from(field.currency_code).to("THB");
+                                        //alert(field.currency_code + "= THB" + '::' + +rate.toFixed(4));
+                                        $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                                    }
+//
+                                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                                });
+                                //$('#local-price-85').html('xxxxx');
+                            } else {
+                                alert('error');
+                            }
+                        }
+                    });
+                    /*$.each(data, function (i, field) {
+                     //console.log(JSON.stringify(field));
+                     //var fields = JSON.stringify(field);
+                     //console.log(field.price + ':' + field.currency_code);
+                     var demo = function (data) {
+                     fx.rates = data.rates;
+                     var rate = fx(field.price).from(field.currency_code).to("THB");
+                     //alert(field.currency_code + "= THB" + '::' + +rate.toFixed(4));
+                     $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                     }
+                     //
+                     $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                     });*/
+
                 } else {
                     $('.compare-price-ajax').html('<center><br><br><br><br><br><br>No results found.</center>');
                 }
