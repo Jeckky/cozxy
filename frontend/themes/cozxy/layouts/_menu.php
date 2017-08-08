@@ -540,6 +540,6 @@ $this->registerJs("
             })
             $('.menuWrapper').on('hover', '.dropdown', function() {
                 $(this).find('.dropdown-menu.multi-level').css('display', 'block');
-        });
+        })
 ", \yii\web\View::POS_HEAD);
 ?>
