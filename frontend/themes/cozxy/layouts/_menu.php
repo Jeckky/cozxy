@@ -3,8 +3,8 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-?>
-<style type="text/css">
+
+$this->registerCss("
     #notify-cart-top-menu{
         display: block;  margin: 0; font-size: 12px;  padding:4px;
         line-height: 1; font-weight: 400; position: absolute; top: -1px;
@@ -32,6 +32,24 @@ use yii\bootstrap\ActiveForm;
         color: #000 !important;
         background-color: #fee60a !important;
         background-color: #fee60a !important;
+    }
+
+    .menu {
+        border-top: 1px solid #f5f3ef;
+        font-family: 'PT Sans Narrow', sans-serif;
+    }
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 10px;
+    }
+
+
+    .menuWrapper {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0 auto;
+        font-size: 0;
+        box-sizing: padding-box;
     }
 
     .dropdown {
@@ -101,7 +119,7 @@ use yii\bootstrap\ActiveForm;
     }
     .dropdown-submenu > a:after {
         display: block;
-        content: " ";
+        content: '';
         float: right;
         width: 0;
         height: 0;
@@ -205,7 +223,7 @@ use yii\bootstrap\ActiveForm;
 
     .dropdown-submenu>a:after {
         display: block;
-        content: " ";
+        content: '';
         float: right;
         width: 0;
         height: 0;
@@ -264,8 +282,9 @@ use yii\bootstrap\ActiveForm;
         border-left: 6px solid transparent;
         content: '';
     }
+");
+?>
 
-</style>
 <div class="bg-yellow1 topbar">
     <div class="container">
         <div class="row">
@@ -338,7 +357,7 @@ use yii\bootstrap\ActiveForm;
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         ?>
-                        <div class="col-xs-3">
+                        <div class="col-xs-3 menuWrapper">
                             <div class="dropdown">
                                 <a href="#" class="dropdown-menu-title u-menu-1"  id="dLabel" data-toggle="dropdown" data-target="#"></a>
                                 <?php
@@ -512,3 +531,15 @@ use yii\bootstrap\ActiveForm;
         </div>
     </div>
 </div>
+<?php
+$this->registerJs("
+         $(function() {
+            $('.dropdown-submenu').on('hover',function() {
+                $(this).find('.dropdown-menu').css('display', 'block');
+
+            })
+            $('.menuWrapper').on('hover', '.dropdown', function() {
+                $(this).find('.dropdown-menu.multi-level').css('display', 'block');
+        });
+", \yii\web\View::POS_HEAD);
+?>
