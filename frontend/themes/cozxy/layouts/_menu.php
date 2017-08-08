@@ -365,10 +365,10 @@ $this->registerCss("
                                 //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
                                 ?>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999;">
-                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#account">ACCOUNT DETAIL</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#account-detail">ACCOUNT DETAIL</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account#order-history">ORDER HISTORY</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account#my-shelves">MY SHELVES</a></li>
-                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#my-stories">MY STORIES</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#stories">MY STORIES</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>site/logout">LOGOUT</a></li>
                                     <li class="dropdown-submenu">
                                         <!-- <a data-toggle="dropdown" tabindex="-1" href="#">Hover me for more options</a>
