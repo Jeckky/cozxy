@@ -10,6 +10,261 @@ use yii\bootstrap\ActiveForm;
         line-height: 1; font-weight: 400; position: absolute; top: -1px;
         right:5px;color: #000 !important;  background-color: #fee60a; border: 1px #000 solid;
     }
+    #rcorners1 {
+        /*border-radius: 10px;
+        padding: 20px;
+        width: 150px;
+        height: 43px;
+        margin-top: 10px;*/
+        border-radius: 10px;
+        /* padding: 20px; */
+        width: 150px;
+        height: 43px;
+        margin-top: 11px;
+        line-height: 43px;
+        word-break: break-all;
+        text-align: center;
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    .w3-theme {
+        color: #000 !important;
+        background-color: #fee60a !important;
+        background-color: #fee60a !important;
+    }
+
+    .dropdown {
+        /* width: 130.9px; */
+        display: inline-block;
+        /* padding: 40px 10px 35px; */
+        /* border: 1px solid #f5f3ef; */
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .dropdown-menu {
+        padding: 0;
+        margin-top: 10px;
+    }
+    .dropdown-menu > li > a {
+        padding: 20px 20px;
+    }
+    .dropdown-submenu {
+        position: relative;
+    }
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: 8px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+    .dropdown-menu li {
+        border-bottom: 1px solid #f5f3ef;
+    }
+    .dropdown-menu li:last-child {
+        border-bottom: none;
+    }
+    .dropdown-submenu > .dropdown-menu:before {
+        content: '';
+        position: absolute;
+        bottom: 80%;
+        left: -6px;
+        border-bottom: 5px solid transparent;
+        border-right: 5px solid rgba(255, 255, 255, 0.9);
+        border-top: 5px solid transparent;
+        border-right-color: #ffffff;
+    }
+    .dropdown-submenu > .dropdown-menu:after {
+        content: '';
+        position: absolute;
+        bottom: 62%;
+        left: -11px;
+        width: 7%;
+        height: 70px;
+        background: transparent;
+    }
+    .dropdown-menu-title:after {
+        content: '';
+        position: absolute;
+        bottom: -13%;
+        left: -11px;
+        width: 117%;
+        height: 20px;
+        background: transparent;
+    }
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #fff;
+    }
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+    .dropdown-menu > li > a:hover,
+    .dropdown-menu > li > a:focus {
+        color: inherit;
+        text-decoration: none;
+        background: transparent;
+        padding-bottom: 15px;
+        border-bottom: 5px solid #fee60a;
+    }
+    .dropdown-menu.multi-level:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #ccc;
+        border-left: 7px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        content: '';
+    }
+    .dropdown-menu.multi-level:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #ffffff;
+        border-left: 6px solid transparent;
+        content: '';
+    }
+
+
+    .dropdown-menu {
+        padding: 0;
+        margin-top: 10px;
+    }
+
+
+    .dropdown-menu>li>a {
+        padding: 20px 20px;
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 105%;
+        margin-top: -6px;
+        margin-left: 0px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+    .dropdown-menu li {
+        border-bottom: 1px solid #f5f3ef;
+    }
+    .dropdown-menu li:last-child {
+        border-bottom: none;
+    }
+
+
+    .dropdown-submenu>.dropdown-menu:before {
+        content: '';
+        position: absolute;
+        bottom: 80%;
+        left: -6px;
+        border-bottom: 5px solid transparent;
+        border-right: 5px solid rgba(255,255,255,0.9);
+        border-top: 5px solid transparent;
+        border-right-color: rgba(255,255,255,1);
+    }
+
+
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu>a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover>a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left>.dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+
+    .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+        color: inherit;
+        text-decoration: none;
+        padding-bottom: 0;
+        background: transparent;
+        padding-bottom: 15px;
+        border-bottom: 5px solid #fee60a;
+    }
+
+    .dropdown-menu.multi-level:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #ccc;
+        border-left: 7px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        content: '';
+    }
+
+    .dropdown-menu.multi-level:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #ffffff;
+        border-left: 6px solid transparent;
+        content: '';
+    }
+
 </style>
 <div class="bg-yellow1 topbar">
     <div class="container">
@@ -25,19 +280,19 @@ use yii\bootstrap\ActiveForm;
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png') ?></a></div>
-            <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right">
+            <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right ">
                 <div class="row user-menu">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
-                        echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
+                        //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
                     } else {
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3">
-                        <a href="<?php echo Yii::$app->homeUrl; ?><?=isset(Yii::$app->user->id) ? 'my-account?act=2' : 'site/login'?>" class="u-menu-2">&nbsp;</a>
+                    <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-2' : '' ?>">
+                        <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=2' : 'site/login' ?>" class="u-menu-2 ">&nbsp;</a>
                     </div>
-                    <div class="col-xs-3"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
+                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
@@ -80,21 +335,50 @@ use yii\bootstrap\ActiveForm;
                             <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } else { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
                         <?php } ?>
                     </div>
-                    <div class="col-xs-3" >
-                        <?php
-                        if (isset(Yii::$app->user->identity->userId)) {
-                            echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
-                        } else {
-                            echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/login', ['class' => 'u-menu-4']);
-                        }
-                        //isset($_POST["search"]) ? $_POST["search"] : NULL
-                        if (isset($_GET["search"]) && !empty($_GET['search'])) {
-                            $search = $_GET["search"];
-                        } else {
-                            $search = '';
-                        }
+                    <?php
+                    if (isset(Yii::$app->user->identity->userId)) {
                         ?>
-                    </div>
+                        <div class="col-xs-3">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-menu-title u-menu-1"  id="dLabel" data-toggle="dropdown" data-target="#"></a>
+                                <?php
+                                //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
+                                //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
+                                ?>
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999;">
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#account">ACCOUNT DETAIL</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#order-history">ORDER HISTORY</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#my-shelves">MY SHELVES</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>my-account#my-stories">MY STORIES</a></li>
+                                    <li><a href="<?= Yii::$app->homeUrl ?>site/logout">LOGOUT</a></li>
+                                    <li class="dropdown-submenu">
+                                        <!-- <a data-toggle="dropdown" tabindex="-1" href="#">Hover me for more options</a>
+                                         <ul class="dropdown-menu">
+                                             <li><a tabindex="-1" href="<?= Yii::$app->homeUrl ?>my-account">ACCOUNT DETAIL</a></li>
+                                             <li><a href="#">ORDER HISTORY</a></li>
+                                             <li><a href="#">MY SHELVES</a></li>
+                                             <li><a href="#">MY STORIES</a></li>
+                                             <li><a href="<?= Yii::$app->homeUrl ?>site/logout">LOGOUT</a></li>
+                                         </ul>-->
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    <?php } else { ?>
+                        <div class="col-xs-6">
+                            <a href = "<?= Yii::$app->homeUrl ?>site/login">
+                                <p id = "rcorners1" class = "w3-theme">LOGIN / REGISTER</p>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                    if (isset($_GET["search"]) && !empty($_GET['search'])) {
+                        $search = $_GET["search"];
+                    } else {
+                        $search = '';
+                    }
+                    ?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12">
