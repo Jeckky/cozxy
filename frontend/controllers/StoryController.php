@@ -445,7 +445,12 @@ class StoryController extends MasterController {
             $sort = 'SORT_ASC';
             $icon = 'down';
         }
-        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'sort' => $sort, 'icon' => $icon, 'productPostId' => $postId, 'currency' => $currency, 'comparePrice' => $comparePrice, 'productPost' => $productPost, 'currencyId' => $currencyId]);
+
+        return $this->renderAjax('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices,
+            'country' => $country, 'sort' => $sort,
+            'icon' => $icon, 'productPostId' => $postId,
+            'currency' => $currency, 'comparePrice' => $comparePrice,
+            'productPost' => $productPost, 'currencyId' => $currencyId]);
     }
 
     public function actionComparePriceStoryModified() {
