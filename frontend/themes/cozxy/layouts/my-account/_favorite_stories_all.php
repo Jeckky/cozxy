@@ -4,7 +4,7 @@
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
             <div class="size20 size18-xs col-lg-7 col-md-7 col-sm-6 col-xs-6"><?= $title ?></div>
             <div class="size20 size18-xs col-lg-5 col-md-5 col-sm-6 col-xs-6 pull-right text-right" >
-                <a href="<?= Yii::$app->homeUrl ?>my-account?act=2" style="color: black;"> << Back to wishlist</a>
+                <a href="<?= Yii::$app->homeUrl ?>my-account?act=my-shelves" style="color: black;"> << Back to wishlist</a>
             </div>
         </div>
 
