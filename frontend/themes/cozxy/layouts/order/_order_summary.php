@@ -10,9 +10,9 @@ use yii\bootstrap\ActiveForm;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-cart',
-                    'action' => Yii::$app->homeUrl . 'checkout/confirm',
-                    'options' => ['class' => 'space-bottom'],
+            'id' => 'default-shipping-cart',
+            'action' => Yii::$app->homeUrl . 'checkout/confirm',
+            'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -37,7 +37,7 @@ use yii\bootstrap\ActiveForm;
 
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE SHOPPING</a> &nbsp;
+                        <a href="<?= Url::to(['/']) ?>" class="b btn-black" style="padding:12px 32px">CONTINUE SHOPPING</a> &nbsp;
                         <?php
                         if (($userPoint->currentPoint + $systemCoin) >= $order->summary) {
                             //throw new \yii\base\Exception($addressIdsummary);

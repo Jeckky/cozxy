@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 use yii\helpers\Html;
 
@@ -21,22 +22,22 @@ use yii\helpers\Html;
             <div class="table-responsive order-list">
                 <table class="table fc-g666">
                     <thead class="size18 size16-xs">
-                    <tr>
-                        <th class="col-sm-1 col-xs-1">Items</th>
-                        <th></th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-right">Price</th>
-                    </tr>
+                        <tr>
+                            <th class="col-sm-1 col-xs-1">Items</th>
+                            <th></th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-right">Price</th>
+                        </tr>
                     </thead>
                     <tbody class="size16 size14-xs">
-                    <?php for($i=1;$i<=5;$i++):?>
-                    <tr>
-                        <td><?=Html::img(['/imgs/product0'.$i.'.jpg'], ['class'=>'img-responsive'])?></td>
-                        <td>QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG</td>
-                        <td class="text-center">1</td>
-                        <td class="text-right">43,000 THB</td>
-                    </tr>
-                    <?php endfor;?>
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <tr>
+                                <td><?= Html::img(['/imgs/product0' . $i . '.jpg'], ['class' => 'img-responsive']) ?></td>
+                                <td>QUILTED NAPPA GANSEVOORT FLAP SHOULDER BAG</td>
+                                <td class="text-center">1</td>
+                                <td class="text-right">43,000 THB</td>
+                            </tr>
+                        <?php endfor; ?>
                     </tbody>
                 </table>
             </div>
@@ -46,7 +47,7 @@ use yii\helpers\Html;
             <div class="size24">&nbsp;</div>
             <div class="col-md-3 col-md-offset-6 col-sm-5 col-sm-offset-2 col-xs-5 size20 size16-xs b">Total</div><div class="col-md-3 col-sm-5 col-xs-7 text-right size20 size16-xs b">128,000 THB</div>
             <div class="size32">&nbsp;</div>
-            <div class="text-center"><a href="product.php" class="b btn-yellow">CONTINUE SHOPPING</a></div>
+            <div class="text-center"><a href="<?= Url::to(['/']) ?>"  class="b btn-yellow">CONTINUE SHOPPING</a></div>
             <div class="size32">&nbsp;</div>
         </div>
     </div>

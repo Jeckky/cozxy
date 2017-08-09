@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-cart',
-                    'action' => Yii::$app->homeUrl . 'checkout',
-                    'options' => ['class' => 'space-bottom'],
+            'id' => 'default-shipping-cart',
+            'action' => Yii::$app->homeUrl . 'checkout',
+            'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -38,22 +38,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/search/cozxy-product']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
+                        <a href="<?= Url::to(['/']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
                             SHOPPING</a> &nbsp;
                         <?php
                         if (isset($this->params['cart']['orderId'])) {
                             ?>
                             <input type="submit" value="CHECK OUT" class="b btn-yellow">
-                            <?php } ?>
-                        </div>
-                        <div class="size12 size10-xs">&nbsp;</div>
+                        <?php } ?>
                     </div>
+                    <div class="size12 size10-xs">&nbsp;</div>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
-            <!-- Total -->
-            <div class="col-lg-3 col-md-4">
-                <?= $this->render('_cart_total') ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+        <!-- Total -->
+        <div class="col-lg-3 col-md-4">
+            <?= $this->render('_cart_total') ?>
         </div>
 
     </div>
