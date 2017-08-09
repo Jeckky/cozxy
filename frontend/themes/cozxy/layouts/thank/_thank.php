@@ -19,7 +19,9 @@
                 }
             } else {
                 if (isset($_GET['verification'])) {
-                    echo 'Welcome to Cozxy.<br>We hope you enjoy our experience with us!';
+                    echo 'Welcome to Cozxy.<br>We hope you enjoy our experience with us!<br>';
+                    echo "We are fully committed in becoming the most efficient logistic network, Thai bred E-commerce startup in Thailand and throughout Asia."
+                    . " We are working hard with partners, traditional shops and SMEs to provide you with the best experience possible.";
                 } else {
                     //echo ' Thank you for registering on Cozxy!';
                     echo 'Verify your email to complete your registration<br>';
