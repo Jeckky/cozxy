@@ -311,9 +311,9 @@ class CartController extends MasterController {
             }
             $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
             if (isset($ch)) {
-                $res['heartbeat'] = 1;
+                $res['heart'] = 1;
             } else {
-                $res['heartbeat'] = 0;
+                $res['heart'] = 0;
             }
         }
         return \yii\helpers\Json::encode($res);
@@ -363,9 +363,9 @@ class CartController extends MasterController {
               } */
             $ch = Wishlist::find()->where("productId =" . $_POST['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
             if (isset($ch)) {
-                $res['heartbeat'] = 1;
+                $res['heart'] = 1;
             } else {
-                $res['heartbeat'] = 0;
+                $res['heart'] = 0;
             }
         }
         return \yii\helpers\Json::encode($res);

@@ -44,9 +44,9 @@ class ShelfController extends MasterController {
             $wishlist->save(false);
             $res['status'] = true;
             $allShelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type in(1,2)")
-                    ->orderBy('type')
-                    ->addOrderBy('title')
-                    ->all();
+            ->orderBy('type')
+            ->addOrderBy('title')
+            ->all();
             if ($productSuppId != 'no') {
 
                 if (isset($allShelf) && count($allShelf) > 0) {
@@ -58,7 +58,7 @@ class ShelfController extends MasterController {
                         if ($isAdd == 1) {
 
                             $text2 = "<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;color: #ffcc00;' id = 'heartbeat$productSuppId$shelf->productShelfId'>
-<i class = 'fa fa-heartbeat' aria-hidden = 'true'></i>
+<i class = 'fa fa-heart' aria-hidden = 'true'></i>
 </div>
 <div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;display: none;' id = 'heart-o$productSuppId$shelf->productShelfId'>
 <i class = 'fa fa-heart-o' aria-hidden = 'true'></i>
@@ -68,7 +68,7 @@ class ShelfController extends MasterController {
 <i class = 'fa fa-heart-o' aria-hidden = 'true'></i>
 </div>
 <div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;display: none;color: #ffcc00;' id = 'heartbeat$productSuppId$shelf->productShelfId'>
-<i class = 'fa fa-heartbeat' aria-hidden = 'true'></i>
+<i class = 'fa fa-heart' aria-hidden = 'true'></i>
 </div>";
                         }
                         $text3 = "</a></div>";
