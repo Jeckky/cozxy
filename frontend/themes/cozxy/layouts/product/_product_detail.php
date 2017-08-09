@@ -157,11 +157,11 @@ $val = rand(1, 10);
                             if (Yii::$app->user->id) {
                                 if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                     ?>
-                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
-                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i> ADD TO SHELF</div>
+                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
+                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
                                     </a>
                                 <?php } else { ?>
-                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
+                                    <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
                                         <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
                                     </a>
                                     <?php
@@ -248,7 +248,7 @@ $("#zoom-img").elevateZoom({
                                     if ($isAdd) {
                                         ?>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
-                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -258,7 +258,7 @@ $("#zoom-img").elevateZoom({
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
-                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
                                     <?php } ?>
                                 </a>

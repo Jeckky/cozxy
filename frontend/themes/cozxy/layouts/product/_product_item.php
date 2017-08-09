@@ -26,11 +26,11 @@ if (Yii::$app->controller->id == 'product') {
                     if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                         ?>
                         <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);">
-                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
+                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heartbeat-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>" style="display: none;">
-                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heartbeat" aria-hidden="true"></i></div>
+                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heartbeat-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                         </a>
                         <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heart-o-<?= $model['productSuppId'] ?>">
                             <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
@@ -118,7 +118,7 @@ if (Yii::$app->controller->id == 'product') {
                                     if ($isAdd) {
                                         ?>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
-                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -128,7 +128,7 @@ if (Yii::$app->controller->id == 'product') {
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
-                                            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
                                     <?php } ?>
                                 </a>
