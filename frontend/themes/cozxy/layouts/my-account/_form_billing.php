@@ -29,23 +29,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="select-style">
                     <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                         <option value="personal">Individual </option>
-                        <option value="company">Legal Entity (Company)</option>
+                        <!--<option value="company">Legal Entity (Company)</option>-->
                     </select>
                 </div>
+                <!--
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Company (option)</label>
-                            <?php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                        <?//php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Tax </label>
-                            <?php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                        <?//php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                         </div>
                     </div>
-                </div>
+                </div>-->
+                <br><br>
             </div>
 
             <div class="row">
