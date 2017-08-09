@@ -21,7 +21,8 @@
                 if (isset($_GET['verification'])) {
                     echo 'Welcome to Cozxy.<br>We hope you enjoy our experience with us!';
                 } else {
-                    echo ' Thank you for registering on Cozxy!';
+                    //echo ' Thank you for registering on Cozxy!';
+                    echo 'Thank you for register Page to be revised to include Check you e-mail message';
                 }
             }
             ?>
