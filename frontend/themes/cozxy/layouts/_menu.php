@@ -533,7 +533,7 @@ $this->registerCss("
                     <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-2' : '' ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
-                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
+                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
