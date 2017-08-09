@@ -222,7 +222,7 @@ $pickingId = rand(0, 9999);
                         <div class="row">
                             <div class="col-lg-12">
                                 Billing Address
-                                <a href="#" class="pull-right btn-g999 p-edit" data-toggle="modal" data-target=".bs-example-modal-lg">+
+                                <a href="#" class="pull-right p-edit btn-yellow" data-toggle="modal" data-target=".bs-example-modal-lg">+
                                     New Billing Address</a></div>
                             <div class="col-xs-12 size6">
                             </div>

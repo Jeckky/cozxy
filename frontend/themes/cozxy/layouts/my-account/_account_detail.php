@@ -46,9 +46,9 @@ use dosamigos\fileupload\FileUpload;
         ?>
 
         <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
-        <!--        --><?php //ActiveForm::begin();    ?>
+        <!--        --><?php //ActiveForm::begin();       ?>
         <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-        <!--        --><?php //ActiveForm::end();   ?>
+        <!--        --><?php //ActiveForm::end();      ?>
     </div>
     <div class="col-md-10">
         <?php
@@ -125,7 +125,7 @@ use dosamigos\fileupload\FileUpload;
 <div class="row">
     <div class="col-md-12">
         Billing Address
-        <?= \yii\bootstrap\Html::a('+ New Billing Address', \yii\helpers\Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit']) ?>
+        <?= \yii\bootstrap\Html::a('+ New Billing Address', \yii\helpers\Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit btn-yellow']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
