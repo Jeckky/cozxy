@@ -356,9 +356,11 @@ $this->registerCss("
         z-index: 1000;
         padding: 8px;
         width: 160px;
-        background-color: #000;
-        background-color: hsla(0, 0%, 20%, 0.9);
-        color: #fff;
+        /*background-color: #000;
+        background-color: hsla(0, 0%, 20%, 0.9);*/
+        background-color: #f5f5f5;
+        background-color:hsla(0.1,0.1,0.1,0.1);
+        color: #000;
         content: attr(data-tooltip);
         font-size: 14px;
         line-height: 1.2;
@@ -382,8 +384,8 @@ $this->registerCss("
     .tooltip-top:before {
         margin-left: -6px;
         margin-bottom: -12px;
-        border-top-color: #000;
-        border-top-color: hsla(0, 0%, 20%, 0.9);
+        border-top-color: #f5f5f5;
+        /*border-top-color: hsla(0.1,0.1,0.1,0.1)*//*hsla(0, 0%, 20%, 0.9)*/;
     }
 
     /* Horizontally align top/bottom tooltips */
@@ -423,7 +425,7 @@ $this->registerCss("
         margin-right: -12px;
         margin-bottom: 0;
         border-top-color: transparent;
-        border-left-color: #000;
+        border-left-color: #f5f5f5;
         border-left-color: hsla(0, 0%, 20%, 0.9);
     }
 
@@ -448,8 +450,8 @@ $this->registerCss("
         margin-top: -12px;
         margin-bottom: 0;
         border-top-color: transparent;
-        border-bottom-color: #000;
-        border-bottom-color: hsla(0, 0%, 20%, 0.9);
+        border-bottom-color: #f5f5f5;
+        /*border-bottom-color: hsla(0, 0%, 20%, 0.9);*/
     }
 
     .tooltip-bottom:hover:before,
@@ -756,6 +758,6 @@ $this->registerCss("
 
 <?php
 $this->registerJs("
-         
+
 ", \yii\web\View::POS_END);
 ?>
