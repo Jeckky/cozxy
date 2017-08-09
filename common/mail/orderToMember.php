@@ -294,6 +294,10 @@
                     info@cozxy.com<br>
                     064-184-7414 | 9.00-18.00 <br>
                 </div>
+                <div style="width: 100%;">
+                    By placing your order, you agree to cozxy.com’s Conditions of Use.
+                    <br>This email is an auto-generated email. Please do not reply.
+                </div>
             </div>
         </div>
         <br><br><br>
