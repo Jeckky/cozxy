@@ -222,7 +222,9 @@ $pickingId = rand(0, 9999);
                         <div class="row">
                             <div class="col-lg-12">
                                 Billing Address
+
                                 <a href="#" class="pull-right p-edit btn-yellow" data-toggle="modal" data-target=".bs-example-modal-lg">+
+
                                     New Billing Address</a></div>
                             <div class="col-xs-12 size6">
                             </div>
@@ -341,7 +343,7 @@ $pickingId = rand(0, 9999);
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="gridSystemModalLabel">+ Add New Billing Address</h4>
+                <h4 class="modal-title " id="gridSystemModalLabel">+ Add New Billing Address</h4>
             </div>
             <!-- Cart -->
             <div class="row">
@@ -361,23 +363,24 @@ $pickingId = rand(0, 9999);
                         <div class="select-style">
                             <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                                 <option value="personal">Individual</option>
-                                <option value="company">Legal Entity (Company)</option>
+                                <!--<option value="company">Legal Entity (Company)</option>-->
                             </select>
                         </div>
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Company (option)</label>
-                                    <?php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                                    <?//php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tax </label>
-                                    <?php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                                    <?//php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
+                        <br><br>
                     </div>
 
                     <div class="row">

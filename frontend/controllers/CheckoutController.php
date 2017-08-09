@@ -380,7 +380,7 @@ class CheckoutController extends MasterController {
                         $toMail = $toMails;
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $type = $member->firstname . ' ' . $member->lastname;
-                        $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
+                        $Subject = 'Your order has been received: ' . $order->invoiceNo;
                         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
                         $adress = [];
                         $adress['billingCompany'] = $addressId->company;
