@@ -150,7 +150,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -210,7 +210,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                 <?php if (isset($productNotSell)): ?>
                     <hr style="border-color:rgb(254, 230, 10)">
 
-                    <h3 class="b text-center-sm text-center-xs">PRODUCTS</h3>
+                    <h3 class="b text-center-sm text-center-xs">EXPLORE</h3>
                     <div class="row">
                         <!--PRODUCTS-->
                         <?php
@@ -237,7 +237,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
