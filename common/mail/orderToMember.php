@@ -74,11 +74,16 @@
                 </div>
                 <div class="content" style="background-color: #f5f5f5; padding: 30px;">
                     <p>
-                        <strong>Hello <?php echo $type; ?></strong>
+                        <strong>Hello <?php echo $type; ?>,</strong>
                     </p>
                     <p>
-                        Thank you for shopping with us. Please check your order below. We'll send a confirmation with your code to open your locker once your items are in! <br>
-                        If there are any changes, will will notify you via email and SMS.
+                        Thank you for shopping with us. Your order has been received for the following item. We’ll send a confirmation with your code to open your locker once your items are in!
+                    </p>
+                    <p>
+                        You can track your order with the link below or see it through Order History in My Account.
+                    </p>
+                    <p>
+                        Note: You will be notified via email and SMS for any changes in delivery schedule.
                     </p>
                     <p>
                         <a href="http://www.cozxy.com/profile/order">
