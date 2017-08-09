@@ -23,7 +23,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 <div class="top-up-index">
 
     <div class="bs-example" data-example-id="btn-tags" >
-        <span style="float: right; text-align: right;"><?php
+        <span style="text-align: left;"><?php
             /* if (isset($needMore) && $needMore != '') {
               if ($needMore == 0) {
               echo $ms;
@@ -32,6 +32,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
               }
               } */
             ?>
+
         </span>
     </div>
     <?php if (isset($needMore) && $needMore != '') { ?>

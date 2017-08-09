@@ -1,19 +1,23 @@
 <div class="panel panel-defailt">
     <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
-    <h3 class="page-header" style="margin:10px 20px;">My Story</h3>
-    <div class="panel-body text-center"> 
+    <h3 class="page-header" style="margin:10px 20px;">
+        My Story
+        <p class="size14 size14-xs" style="margin-top: 8px;float: right;"><a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank">  What's this? </a></p>
+    </h3>
+
+    <div class="panel-body text-center">
         <?php if ($StoryProductPost->allModels['myStoryTop']['title'] != NULL) { ?>
             <a href="<?= $StoryProductPost->allModels['myStoryTop']['urlView']; ?>">
                 <?php /*
-                <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
-                */?>
+                  <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
+                 */ ?>
 
                 <img src="<?php echo $productViews['image']; ?>" class="img-circle img-responsive" alt="" style="width:120px;">
             </a>
         <?php } else { ?>
             <?php /*
-            <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
-            */?>
+              <img src="<?php echo $StoryProductPost->allModels['myStoryTop']['image']; ?>" class="img-circle" alt="" style="width:120px;">
+             */ ?>
             <img src="<?php echo $productViews['image']; ?>" class="img-circle img-responsive" alt="" style="width:120px;">
 
         <?php } ?>
