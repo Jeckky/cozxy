@@ -251,7 +251,7 @@ class CheckoutController extends MasterController {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $order->cozxyCoin = 0;
-            $order->isPayNow = 0;
+            //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
 
