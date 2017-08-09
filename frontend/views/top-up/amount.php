@@ -15,14 +15,14 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 <br><br>
 <?php
 $form = ActiveForm::begin([
-]);
+        ]);
 ?><div class="container login-box">
     <div class="row">
         <?php if (isset($fromCheckout) && $fromCheckout != 'no') { ?>
             <input type="hidden" name="fromCheckout" value="yes">
         <?php } ?>
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">Cozxy.com - Payment is complete.</p>
+            <p class="size20 size18-xs">Choose your top-up balance.</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <table style="width: 100%">
@@ -36,8 +36,8 @@ $form = ActiveForm::begin([
                     <td style="text-align: left;width:50%;"><span style="margin-left: 20px;"><?= $data["name"] ?></span></td>
                 </tr>
                 <?php
-                if (isset($needMore) && $needMore != 0) {
-                    echo '<h4 style="color: #006666;">TOP UP ' . $needMore . ' Points Gross ' . number_format($needMore, 2) . ' THB</h4>';
+                if (isset($needMore) && $needMore != 0) {//ถ้ามาจากการ check out มีจำนวนที่ต้องเติมเพิ่ม
+                    echo '<h4 style="color: #006666;">TOP UP ' . number_format($needMore, 2) . ' Points Gross ' . number_format($needMore, 2) . ' THB</h4>';
                     ?>
                     <tr style="height: 50px;">
                         <td style="text-align: right;width:50%;">
@@ -56,19 +56,19 @@ $form = ActiveForm::begin([
                             Or other Amount:
                         <td style="text-align: left;width:50%;">
                             <span style="margin-left: 20px;">
-                                <input type="text" id="amount" name="otherAmount" style="height: 1cm;width: 150px;text-align: right;">
+                                <input type="text" id="amount" name="otherAmount" style="height: 1cm;width: 150px;text-align: right;" autofocus="true">
                                 <span>&nbsp;&nbsp;THB.</span>
                             </span>
                         </td>
                     </tr>
                     <?php
-                } else {//ถ้าไม่ได้มาจากหน้าเชคเอ้า
+                } else {//ถ้าไม่ได้มาจากหน้าเชคเอ้า ถ้ามี CART ให้แสดงจำนวนที่ต้องเติมเพิ่ม ถ้าไม่มี ว่าง
                     ?>
                     <tr style="height: 50px;">
                         <td style="text-align: right;width:50%;">Amount :</td>
                         <td style="text-align: left;width:50%;">
                             <span style="margin-left: 20px;">
-                                <input type="text" id="amount" name="amount" style="height: 1cm;width: 150px;text-align: right;"autofocus="true">
+                                <input type="text" id="amount" name="amount" value="<?= $topUpBalance != 0 ? $topUpBalance : '' ?>"style="height: 1cm;width: 150px;text-align: right;" autofocus="true">
                                 <span>&nbsp;&nbsp;THB.</span>
                             </span>
                         </td>

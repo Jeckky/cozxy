@@ -109,7 +109,7 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
                 if (data.errorCode === 1)
                 {
                     temp = temp - 1;
-                    alert("Cannot order more than the specified number.");
+                    alert("Sorry, there is not enough item left in stock.");
 //                    $('.incr-btn').popover('show');
                     //$('.quantity-sel').find('#quantity').val(temp);
                     $('.quantity-' + y).val(temp);
@@ -179,7 +179,7 @@ function proceed(data) {
 function deleteItemCart(ItemOrderId) {
     //alert(ItemOrderId);
 
-    if (confirm('Sure to delete item') == true) {
+    if (confirm('Are you sure you want to delete this item?') == true) {
         $.ajax({
             type: "POST",
             dataType: "JSON",

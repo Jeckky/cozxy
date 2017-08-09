@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">MY Top Up</p>
+            <p class="size20 size18-xs">Top Up</p>
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>

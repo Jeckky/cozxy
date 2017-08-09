@@ -51,7 +51,7 @@ use common\models\costfit\UserPoint;
     if ($needMore > 0) {//แสดงปุ่ม TOP UP เฉพาะตอนที่ point ไม่พอ
         if ($addressIdx != 0 && $addressIdx != '') {
             ?>
-            <input type="checkbox" name="isPay" id="isPay" >&nbsp;&nbsp;&nbsp;Pay immediately after top up
+            <input type="checkbox" name="isPay" id="isPay" checked="true">&nbsp;&nbsp;&nbsp;Pay immediately after top up
 
             <a href="<?=
             Url::to(['/top-up', 'checkout' => 'yes',

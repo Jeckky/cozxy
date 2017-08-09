@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 $form = ActiveForm::begin([
-    'id' => 'top-up'
-]);
+            'id' => 'top-up'
+        ]);
 if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
@@ -64,7 +64,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                             <td style="text-align: left;">
                                 <div class="radio">
                                     <div class="btn-group" data-toggle="buttons">
-                                        <label class="checkout_select_address">
+                                        <label class="checkout_select_address" style="cursor: auto;">
                                             <input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?= count($paymentMethod) == 1 ? 'checked' : '' ?>><?= $payment->title ?><br>
                                             <img src="<?= $baseUrl . '/images/Bank/master.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
                                             <img src="<?= $baseUrl . '/images/Bank/visa.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
@@ -107,7 +107,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
             }
             ?>
             <tr style="height: 50px;">
-                <td style="text-align: right;padding: 8px">Captcha :</td>
+                <td style="text-align: right;padding: 8px">Type in captcha :</td>
                 <td style="text-align: left;margin-top:0px; padding: 0px;">
                     <span style="margin-left: 20px;  padding: 0px;">
                         <input type="text" id="inputPass" name="inputPass" maxlength="6" style="width: 150px;text-align: center; margin-top:0px; padding: 0px; " required="true">

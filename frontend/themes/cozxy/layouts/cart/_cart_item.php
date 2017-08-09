@@ -31,7 +31,7 @@ $val = rand(1, 10);
         <div class="col-sm-3 fc-g666">
             <table style="width:100%" class="qty-cart">
                 <tr >
-                    <td style="width: 100px;">Quatity</td>
+                    <td style="width: 100px;">Quantity</td>
                     <td style="width:32px">:</td>
                     <td><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
                 </tr>

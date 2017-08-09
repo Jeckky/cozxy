@@ -14,15 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-cart',
-            'action' => Yii::$app->homeUrl . 'checkout',
-            'options' => ['class' => 'space-bottom'],
+                    'id' => 'default-shipping-cart',
+                    'action' => Yii::$app->homeUrl . 'checkout',
+                    'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
             <div class="row">
                 <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-                    <p class="size20 size18-xs">YOUR CART</p>
+                    <p class="size20 size18-xs">CART</p>
                 </div>
                 <input type="hidden" name="orderId" value="<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>">
                 <div class="col-xs-12 bg-white">
