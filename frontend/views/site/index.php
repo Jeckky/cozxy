@@ -150,7 +150,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -211,6 +211,13 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                     <hr style="border-color:rgb(254, 230, 10)">
 
                     <h3 class="b text-center-sm text-center-xs">EXPLORE</h3>
+
+                    <blockquote>
+                        <p>Explore details, prices and stories for other products coming soon.</p>
+                        <p>Find details, prices, and stories on other products coming to our website soon.</p>
+                        <!--<footer>Someone famous in <cite title="Source Title">Source</cite></footer>-->
+                    </blockquote>
+
                     <div class="row">
                         <!--PRODUCTS-->
                         <?php
@@ -237,7 +244,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();

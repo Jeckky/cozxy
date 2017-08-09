@@ -22,7 +22,8 @@
                     echo 'Welcome to Cozxy.<br>We hope you enjoy our experience with us!';
                 } else {
                     //echo ' Thank you for registering on Cozxy!';
-                    echo 'Thank you for register Page to be revised to include Check you e-mail message';
+                    echo 'Verify your email to complete your registration<br>';
+                    echo "Thank you for registering. Please check your email to verify your account before you can enjoy your experience at Cozxy.com.";
                 }
             }
             ?>
