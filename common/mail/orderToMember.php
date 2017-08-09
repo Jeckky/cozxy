@@ -80,7 +80,7 @@
                         Thank you for shopping with us. Your order has been received for the following item. We’ll send a confirmation with your code to open your locker once your items are in!
                     </p>
                     <p>
-                        You can track your order with the link below or see it through Order History in My Account.
+                        You can track your order with the link below or see it through <i>Order History</i> in  <i>My Account</i>.
                     </p>
                     <p>
                         Note: You will be notified via email and SMS for any changes in delivery schedule.
