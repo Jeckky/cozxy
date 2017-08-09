@@ -1527,6 +1527,8 @@ function StoriesRemove(id) {
 }
 
 
-
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
 

@@ -284,12 +284,234 @@ $this->registerCss("
     }
 ");
 ?>
+<style type="text/css">
+    /**
+     * Tooltip Styles
+     */
 
+    /* Base styles for the element that has a tooltip */
+    [data-tooltip],
+    .tooltip {
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        color: #000;
+    }
+
+    /* Base styles for the entire tooltip */
+    [data-tooltip]:before,
+    [data-tooltip]:after,
+    .tooltip:before,
+    .tooltip:after {
+        position: absolute;
+        visibility: hidden;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+        opacity: 0;
+        -webkit-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+        -moz-transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+        transition:
+            opacity 0.2s ease-in-out,
+            visibility 0.2s ease-in-out,
+            transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform:    translate3d(0, 0, 0);
+        transform:         translate3d(0, 0, 0);
+        pointer-events: none;
+    }
+
+    /* Show the entire tooltip on hover and focus */
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after,
+    [data-tooltip]:focus:before,
+    [data-tooltip]:focus:after,
+    .tooltip:hover:before,
+    .tooltip:hover:after,
+    .tooltip:focus:before,
+    .tooltip:focus:after {
+        visibility: visible;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+        opacity: 1;
+    }
+
+    /* Base styles for the tooltip's directional arrow */
+    .tooltip:before,
+    [data-tooltip]:before {
+        z-index: 1001;
+        border: 6px solid transparent;
+        background: transparent;
+        content: "";
+    }
+
+    /* Base styles for the tooltip's content area */
+    .tooltip:after,
+    [data-tooltip]:after {
+        z-index: 1000;
+        padding: 8px;
+        width: 160px;
+        background-color: #000;
+        background-color: hsla(0, 0%, 20%, 0.9);
+        color: #fff;
+        content: attr(data-tooltip);
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    /* Directions */
+
+    /* Top (default) */
+    [data-tooltip]:before,
+    [data-tooltip]:after,
+    .tooltip:before,
+    .tooltip:after,
+    .tooltip-top:before,
+    .tooltip-top:after {
+        bottom: 100%;
+        left: 50%;
+    }
+
+    [data-tooltip]:before,
+    .tooltip:before,
+    .tooltip-top:before {
+        margin-left: -6px;
+        margin-bottom: -12px;
+        border-top-color: #000;
+        border-top-color: hsla(0, 0%, 20%, 0.9);
+    }
+
+    /* Horizontally align top/bottom tooltips */
+    [data-tooltip]:after,
+    .tooltip:after,
+    .tooltip-top:after {
+        margin-left: -80px;
+    }
+
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after,
+    [data-tooltip]:focus:before,
+    [data-tooltip]:focus:after,
+    .tooltip:hover:before,
+    .tooltip:hover:after,
+    .tooltip:focus:before,
+    .tooltip:focus:after,
+    .tooltip-top:hover:before,
+    .tooltip-top:hover:after,
+    .tooltip-top:focus:before,
+    .tooltip-top:focus:after {
+        -webkit-transform: translateY(-12px);
+        -moz-transform:    translateY(-12px);
+        transform:         translateY(-12px);
+    }
+
+    /* Left */
+    .tooltip-left:before,
+    .tooltip-left:after {
+        right: 100%;
+        bottom: 50%;
+        left: auto;
+    }
+
+    .tooltip-left:before {
+        margin-left: 0;
+        margin-right: -12px;
+        margin-bottom: 0;
+        border-top-color: transparent;
+        border-left-color: #000;
+        border-left-color: hsla(0, 0%, 20%, 0.9);
+    }
+
+    .tooltip-left:hover:before,
+    .tooltip-left:hover:after,
+    .tooltip-left:focus:before,
+    .tooltip-left:focus:after {
+        -webkit-transform: translateX(-12px);
+        -moz-transform:    translateX(-12px);
+        transform:         translateX(-12px);
+    }
+
+    /* Bottom */
+    .tooltip-bottom:before,
+    .tooltip-bottom:after {
+        top: 100%;
+        bottom: auto;
+        left: 50%;
+    }
+
+    .tooltip-bottom:before {
+        margin-top: -12px;
+        margin-bottom: 0;
+        border-top-color: transparent;
+        border-bottom-color: #000;
+        border-bottom-color: hsla(0, 0%, 20%, 0.9);
+    }
+
+    .tooltip-bottom:hover:before,
+    .tooltip-bottom:hover:after,
+    .tooltip-bottom:focus:before,
+    .tooltip-bottom:focus:after {
+        -webkit-transform: translateY(12px);
+        -moz-transform:    translateY(12px);
+        transform:         translateY(12px);
+    }
+
+    /* Right */
+    .tooltip-right:before,
+    .tooltip-right:after {
+        bottom: 50%;
+        left: 100%;
+    }
+
+    .tooltip-right:before {
+        margin-bottom: 0;
+        margin-left: -12px;
+        border-top-color: transparent;
+        border-right-color: #000;
+        border-right-color: hsla(0, 0%, 20%, 0.9);
+    }
+
+    .tooltip-right:hover:before,
+    .tooltip-right:hover:after,
+    .tooltip-right:focus:before,
+    .tooltip-right:focus:after {
+        -webkit-transform: translateX(12px);
+        -moz-transform:    translateX(12px);
+        transform:         translateX(12px);
+    }
+
+    /* Move directional arrows down a bit for left/right tooltips */
+    .tooltip-left:before,
+    .tooltip-right:before {
+        top: 3px;
+    }
+
+    /* Vertically center tooltip content for left/right tooltips */
+    .tooltip-left:after,
+    .tooltip-right:after {
+        margin-left: 0;
+        margin-bottom: -16px;
+    }
+</style>
+<!--
+<div class="demo">
+    <p>Data attribute only <a href="#" data-tooltip="I’m the tooltip text">Tooltip</a></p>
+    <p><code>.tooltip</code> <a href="#" class="tooltip" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+    <p><code>.tooltip-top</code> <a href="#" class="tooltip-top" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+    <p><code>.tooltip-right</code> <a href="#" class="tooltip-right" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+    <p><code>.tooltip-bottom</code> <a href="#" class="tooltip-bottom" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+    <p><a href="#" class="tooltip-left" data-tooltip="I’m the tooltip text.">Tooltip</a> <code>.tooltip-left</code></p>
+</div>-->
 <div class="bg-yellow1 topbar">
     <div class="container">
         <div class="row">
             <div class="col-md-2 col-sm-3 col-xs-12 pull-right text-right"><a href="#" class="dismiss"><i class="fa fa-close fc-black"></i></a></div>
-            <div class="col-md-3 col-sm-4 col-xs-6 size12-xs"><!--<i class="fa fa-phone"></i>--><?= Html::img(Url::home() . 'imgs/i-phone.png') ?>&nbsp;&nbsp;Hotline: 098-394-859 &nbsp; </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 size12-xs"><!--<i class="fa fa-phone"></i>--><?= Html::img(Url::home() . 'imgs/i-phone.png') ?>&nbsp;&nbsp;Hotline: 064-184-7414 &nbsp; </div>
             <div class="col-md-7 col-sm-5 col-xs-6 size12-xs"><!--<i class="fa fa-truck"></i>--><?= Html::img(Url::home() . 'imgs/i-truck.png') ?>&nbsp;&nbsp;Free Shipping &nbsp; </div>
         </div>
     </div>
@@ -309,9 +531,9 @@ $this->registerCss("
                     }
                     ?>
                     <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-2' : '' ?>">
-                        <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 ">&nbsp;</a>
+                        <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
-                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3']) ?>
+                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
@@ -537,7 +759,6 @@ $this->registerJs("
          $(function() {
             $('.dropdown-submenu').on('hover',function() {
                 $(this).find('.dropdown-menu').css('display', 'block');
-
             })
             $('.menuWrapper').on('hover', '.dropdown', function() {
                 $(this).find('.dropdown-menu.multi-level').css('display', 'block');
