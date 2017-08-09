@@ -112,7 +112,7 @@ class TopUpController extends MasterController {
             if (isset($_POST["needMore"]) && $_POST["needMore"] != 0) {
                 $needMore = $_POST["needMore"];
             }
-
+            $topUpBalance = TopUp::cartBalance();
             $topUpDraf->status = TopUp::TOPUP_STATUS_E_PAYMENT_DRAFT;
             $topUpDraf->createDateTime = new \yii\db\Expression('NOW()');
             $topUpDraf->updateDateTime = new \yii\db\Expression('NOW()');
@@ -121,7 +121,8 @@ class TopUpController extends MasterController {
             return $this->render('amount', [
                         'data' => $data,
                         'fromCheckout' => $fromCheckout,
-                        'needMore' => $needMore
+                        'needMore' => $needMore,
+                        'topUpBalance' => $topUpBalance
             ]);
         }
         $amount = '';

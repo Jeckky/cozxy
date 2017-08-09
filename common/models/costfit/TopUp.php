@@ -56,4 +56,20 @@ class TopUp extends \common\models\costfit\master\TopUpMaster {
         }
     }
 
+    public static function cartBalance() {
+        $order = Order::find()->where("userId=" . Yii::$app->user->id . " and status<5")->one();
+        $topUpBalance = 0;
+        $userCurrentPoint = 0;
+        if (isset($order)) {
+            $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+            if (isset($userPoint)) {
+                $userCurrentPoint = $userPoint->currentPoint;
+            }
+            if ($userCurrentPoint < $order->summary) {
+                $topUpBalance = $order->summary - $userCurrentPoint;
+            }
+        }
+        return $topUpBalance;
+    }
+
 }
