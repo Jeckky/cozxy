@@ -23,38 +23,80 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="size12 size10-xs">&nbsp;</div>
             <!--TABs-->
             <ul class="nav nav-pills size18 size14-xs b" role="tablist">
-                <li role="presentation" <?= isset($_GET['act']) ? '' : 'class="active"'; ?>><a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Account Detail</a></li>
-                <li role="presentation"><a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">Order History</a></li>
+                <li role="presentation" <?php
+                if ($_GET['act'] == 'account-detail') {
+                    echo 'class="active" ';
+                }
+                ?>>
+                    <a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Account Detail</a>
+                </li>
+                <li role="presentation" <?php
+                if ($_GET['act'] == 'order-history') {
+                    echo 'class="active" ';
+                }
+                ?>>
+                    <a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">Order History</a>
+                </li>
                 <?php
                 if (isset($returnList) && count($returnList) > 0) {
                     ?>
-                    <li role="presentation"><a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a></li>
+                    <li role="presentation">
+                        <a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a>
+                    </li>
                 <?php } ?>
-                <li role="presentation" <?= isset($_GET['act']) ? 'class="active"' : ''; ?>><a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">My Shelves</a></li>
+                <li role="presentation" <?php
+                if ($_GET['act'] == 'my-shelves') {
+                    echo 'class="active" ';
+                }
+                ?>>
+                    <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">My Shelves</a>
+                </li>
                 <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
-                <li role="presentation"><a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a></li>
+                <li role="presentation" <?php
+                if ($_GET['act'] == 'stories') {
+                    echo 'class="active" ';
+                }
+                ?>>
+                    <a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a>
+                </li>
             </ul>
             <div class="size18 size14-xs">&nbsp;</div>
         </div>
         <div class="col-xs-12 bg-white myData">
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in <?= isset($_GET['act']) ? '' : 'active'; ?>" id="account-detail">
-                    <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'user')) ?>
+                <div role="tabpanel" class="tab-pane fade in <?php
+                if ($_GET['act'] == 'account-detail') {
+                    echo 'active';
+                }
+                ?>" id="account-detail">
+                     <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'user')) ?>
                 </div>
-                <div role="tabpanel" class="tab-pane fade in" id="order-history">
-                    <?= $this->render('_order_history', compact('orderHistory')) ?>
+                <div role="tabpanel" class="tab-pane fade in <?php
+                if ($_GET['act'] == 'order-history') {
+                    echo 'active';
+                }
+                ?>" id="order-history">
+                     <?= $this->render('_order_history', compact('orderHistory')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in" id="return-list">
                     <?= $this->render('_return_list', compact('returnList')) ?>
                 </div>
-                <div role="tabpanel" class="tab-pane fade in <?= isset($_GET['act']) ? 'active' : ''; ?>" id="my-shelves">
-                    <?= $this->render('_wish_list', compact('favoriteStory')) ?>
+                <div role="tabpanel" class="tab-pane fade in <?php
+                if ($_GET['act'] == 'my-shelves') {
+                    echo 'active';
+                }
+                ?>" id="my-shelves">
+                     <?= $this->render('_wish_list', compact('favoriteStory')) ?>
                 </div>
                 <!--<div role="tabpanel" class="tab-pane fade in" id="tracking">
                     <?//= $this->render('_tracking', compact('trackingOrder')) ?>
                 </div>-->
-                <div role="tabpanel" class="tab-pane fade in" id="stories">
-                    <?= $this->render('_stories', compact('productPost')) ?>
+                <div role="tabpanel" class="tab-pane fade in <?php
+                if ($_GET['act'] == 'stories') {
+                    echo 'active';
+                }
+                ?>" id="stories">
+                     <?= $this->render('_stories', compact('productPost')) ?>
                 </div>
             </div>
         </div>
@@ -63,3 +105,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="size32">&nbsp;</div>
+<?php
+$this->registerJs(
+''
+, \yii\web\View::POS_HEAD);
+?>
+
