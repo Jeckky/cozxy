@@ -86,11 +86,11 @@ if (Yii::$app->controller->id == 'product') {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
                 </button>
-                <h3>Save to Wish List</h3>
+                <h3>Save to shelves</h3>
             </div>
             <div class="modal-body" style="padding: 40px;">
-                <a style="cursor: pointer;" id="showCreateWishList">Create New Wish List Group</a>
-                <a style="cursor: pointer;display: none;" id="hideCreateWishList" >Create New Wish List Group</a>
+                <a style="cursor: pointer;" id="showCreateWishList">Create New shelves</a>
+                <a style="cursor: pointer;display: none;" id="hideCreateWishList" >Create New shelves</a>
                 <div id="newWishList" style="display: none;">
 
                     <h4>Name</h4>
