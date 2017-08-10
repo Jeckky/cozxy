@@ -213,7 +213,6 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                     <h3 class="b text-center-sm text-center-xs">EXPLORE</h3>
 
                     <blockquote style="font-size: 14px;">
-                        <p>Explore details, prices and stories for other products coming soon.</p>
                         <p>Find details, prices, and stories on other products coming to our website soon.</p>
                         <!--<footer>Someone famous in <cite title="Source Title">Source</cite></footer>-->
                     </blockquote>

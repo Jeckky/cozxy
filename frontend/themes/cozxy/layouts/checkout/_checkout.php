@@ -44,7 +44,7 @@ $pickingId = rand(0, 9999);
                             <div class="col-lg-12">
                                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
-                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;"> FAQs (What's this?)</a>
+                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;" target="_blank"> FAQs (What's this?)</a>
                             </div>
                         </div>
                     </div>
@@ -55,8 +55,8 @@ $pickingId = rand(0, 9999);
                             <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>">view all</a></span></h3>
                         </div>
                         <div class="col-lg-12" style="margin-top: -10px;">
-                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; 
-                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">FAQs (What's this?)</a>
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;" target="_blank">FAQs (What's this?)</a>
                         </div>
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
