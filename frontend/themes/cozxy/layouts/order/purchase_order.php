@@ -95,7 +95,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                         //echo '&nbsp;,';
                                         $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $address['countryId'] . "' ")->one();
                                         echo isset($Countries->attributes['localName']) ? ',' . $Countries->attributes['localName'] : '' . '-';
-                                        echo '<br>  ';
+                                        //echo '<br>  ';
                                         $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $address['zipcode'] . "' ")->one();
                                         echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
                                         echo '<br> Tel ';
@@ -115,7 +115,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                         //echo '&nbsp;';
                                         $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
                                         echo isset($Countries->attributes['localName']) ? ',' . $Countries->attributes['localName'] : '' . '';
-                                        echo '<br>';
+                                        //echo '<br>';
                                         $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $order->attributes['billingZipcode'] . "' ")->one();
                                         echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
                                         echo '<br> Tel ';
