@@ -28,7 +28,7 @@ class CheckoutController extends MasterController {
 
     public function actionIndex() {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
 
         // throw new \yii\base\Exception('aaaaa');

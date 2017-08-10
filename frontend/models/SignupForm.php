@@ -24,6 +24,7 @@ class SignupForm extends Model {
     public $yyyy;
     public $mm;
     public $dd;
+    public $cz;
 
     /**
      * @inheritdoc
@@ -98,7 +99,7 @@ class SignupForm extends Model {
         $user->createDateTime = new \yii\db\Expression("NOW()");
         $user->generateAuthKey();
         if ($user->save()) {
-            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
+            $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
             $toMail = $user->email;
             $emailSend = \common\helpers\Email::mailRegisterConfirm($toMail, $url);
             return $user;

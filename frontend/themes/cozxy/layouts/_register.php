@@ -34,7 +34,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                 <div class="col-lg-8 col-lg-offset-2">
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'options' => ['class' => 'registr-form']]); ?>
+                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => Url::to(['/site/signup?cz=' . time()]), 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?php // throw new \yii\base\Exception($model->scenario);  ?>
