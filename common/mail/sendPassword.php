@@ -36,7 +36,6 @@
                 text-align: center;
                 background-image: url("https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8xxxx") ;
                 background-repeat: repeat;
-                height: 260px;
                 color: #ffffff;
                 color: #000;
             }
@@ -55,34 +54,62 @@
                 </div>
                 <div class="content" style="background-color: #f5f5f5;">
                     <center>
-                        <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8sxxx"  width="100%" height="260" text-align="center" style=" height:260px; width:100% ;  text-align: center;  ">
+                        <table background="https://scontent.fbkk10-1.fna.fbcdn.net/v/t1.0-9/13627169_1304244949603614_4827214866156693546_n.jpg?oh=7f153e886b70ba02a5139fd2821c1c5f&oe=583185F8sxxx"  width="100%"text-align="center" style=" height:700px; width:100% ;  text-align: center;  ">
                             <tr>
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>Congratulation! Your order from COZXY.COM has arrived your locker at</strong></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b>"<?= $location ?>"</b></p>
-                                    <p>แผนที่</p>
+                                    <p style="color: #CE3C2D; font-size: 15px;"><b>Address: <?= $address ?></b></p>
+                                    <p>MAP</p>
+                                    <p><img src="<?= $img ?>" style="width: 700px;height: 440px;"></p>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>Please enter the following code at the locker :</strong></p>
-                                    <p style="color: #CE3C2D; font-size: 16px;"><b><?= $password ?></b></p>
+                                    <p style="color: #CE3C2D; font-size: 20px;"><b>" <?= $password ?> "</b></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b>You will recieve another one-time passcode at the locker to verify your indentity via SMS.</b></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b>Please have your phone with you to retrieve your order.</b></p>
                                     <p>
-                                        <a href="<?= Yii::$app->homeUrl ?>my-account?act=order-history" class="btn btn-yellow">View or manage your order here:</a>
+
+                                        <a class="btn btn-warning" href="<?= $url ?>" class="btn btn-yellow">View or manage your order here:</a>
                                     </p>
                                 </td>
                             </tr>
                         </table>
                     </center>
                     <br><br>
+
+
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    Cozxy Dot C Co., Ltd<br>
-                    Tax Identification Number 0105553036789 <br>
+                    Cozxy Dot Com Co., Ltd<br>
+                    tax Identification Number 0105553036789 <br>
                     5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220
-                    Tel: 02-101-0689 , Fax: 02-101-0689<br>
-
+                    For customer care please contact us at: customercare@cozxy.com or call 064-184-7414<br>
                 </div>
             </div>
         </div>
     </body>
 </html>
-
+<!--AIzaSyBuhR_9QIyJeA5Ss8DZKrjteY8yDIvEzoU-->
+<?php
+//$this->registerCss('
+//#map {
+//   width: 600px;
+//   height: 300px;
+//   background-color: grey;
+//        }
+//');
+//
+//$this->registerJs('
+// var map;
+//function initMap() {
+//       var uluru = {lat: ' . $lat . ', lng: ' . $lng . '};
+//        var map = new google.maps.Map(document.getElementById("map"), {
+//          zoom: 17,
+//          center: uluru
+//        });
+//        var marker = new google.maps.Marker({
+//          position: uluru,
+//          map: map
+//        });
+//      }', \yii\web\View::POS_HEAD);
+//$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
+?>

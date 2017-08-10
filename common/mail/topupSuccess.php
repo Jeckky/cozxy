@@ -97,7 +97,7 @@
                     <p style="color: #ff9016; font-size: 12px;">*** This email is automatically reported. Please do not reply.</p>
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    Cozxy Dot C Co., Ltd<br>
+                    Cozxy Dot Com Co., Ltd<br>
                     Tax Identification Number 0105553036789 <br>
                     5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220
                     Tel: 02-101-0689 , Fax: 02-101-0689<br>

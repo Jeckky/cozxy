@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "address_partner_file".
 *
-    * @property string $pfId
+    * @property integer $pfId
     * @property string $userId
     * @property string $name
     * @property integer $status

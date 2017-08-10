@@ -58,11 +58,11 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
-            <h4>Shelf's Name</h4>
+            <h4>Shelf Name</h4>
             <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
             <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>
-                <a class='btn btn-black' id='cancel-newWishList'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a class='btn btn-black' id='cancel-newWishList'>Cancel</a>&nbsp;&nbsp;&nbsp;
                 <a class='btn btn-yellow'id='create-newWishList' disabled>Create</a>
             </div>
         </div>
@@ -132,26 +132,38 @@ if (isset($favoriteStories)) {
     </a>
     <div id="showFavoriteItem" style="display:none;">
         <div class="row" style="padding: 20px;">
-            <?=
-            \yii\widgets\ListView::widget([
-                'dataProvider' => $favoriteStory,
-                'options' => [
-                    'tag' => false,
-                ],
-                'itemView' => function ($model) {
-                    return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
-                },
-                //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                //'layout'=>"{summary}{pager}{items}"
-                'layout' => "{items}",
-                'itemOptions' => [
-                    'tag' => false,
-                ],
-            ]);
-            ?>
+            <?php
+            if ($allFavorite == 0) {
+                ?>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left" style="margin-bottom:20px;cursor:pointer;">
+                    <h4>
+                        You have not added any stories to your favorite stories <span style="margin-left:20px;"><a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank"> What's this?</a></span>
+                    </h4>
+                </div>
+            <?php } else {
+                ?>
+                <?=
+                \yii\widgets\ListView::widget([
+                    'dataProvider' => $favoriteStory,
+                    'options' => [
+                        'tag' => false,
+                    ],
+                    'itemView' => function ($model) {
+                        return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
+                    },
+                    //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                    //'layout'=>"{summary}{pager}{items}"
+                    'layout' => "{items}",
+                    'itemOptions' => [
+                        'tag' => false,
+                    ],
+                ]);
+                ?>
+            <?php } ?>
         </div>
         <?php
         // throw new \yii\base\Exception(count($allFavorite));
+
         if (isset($allFavorite) && $allFavorite > 8) {
             ?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">

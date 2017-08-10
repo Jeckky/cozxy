@@ -18,21 +18,19 @@ use common\models\User;
 use common\helpers\Lockers;
 use common\helpers\Local;
 
-class LockersController extends LockersMasterController
-{
+class LockersController extends LockersMasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view', 'open-locker'],
                 'rules' => [
 // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -48,8 +46,7 @@ class LockersController extends LockersMasterController
      * By : Taninut.bm
      */
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
@@ -86,8 +83,7 @@ class LockersController extends LockersMasterController
      * By : Taninut.Bm
      */
 
-    public function actionLockers()
-    {
+    public function actionLockers() {
 
         $pickingId = Yii::$app->request->get('boxcode');
         if ($pickingId != '') {
@@ -137,13 +133,13 @@ class LockersController extends LockersMasterController
             // $point = PickingPoint::find()->where("pickingId=" . $pickingId)->one();
             $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
             return $this->render('lockers', [
-                'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                'citie' => $localNamecitie,
-                'countrie' => $localNamecountrie,
-                'state' => $localNamestate,
-                // 'point' => $point,
-                /* Customize Date 21/01/2017 , By Taninut.Bm */
-                'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
+                        'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        // 'point' => $point,
+                        /* Customize Date 21/01/2017 , By Taninut.Bm */
+                        'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
             ]);
         }
 
@@ -154,8 +150,7 @@ class LockersController extends LockersMasterController
      * แสดงข้อมูลของถุง ที่ต้องการใส่ช่องในล็อคเกอร์
      */
 
-    public function actionScanBag()
-    {
+    public function actionScanBag() {
 
         $request = Yii::$app->request;
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
@@ -226,19 +221,19 @@ class LockersController extends LockersMasterController
                 $text = 'หมายเลขถุงไม่ตรง กรุณาตรวจสอบอีกครั้ง';
                 // return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers?text=' . $text);
                 return $this->redirect(['scan-bag',
-                    'boxcode' => $boxcode,
-                    'code' => $channel,
-                    //'orderId' => $orderId,
-                    'model' => $model,
-                    // 'orderNo' => $orderNo,
-                    //'c' => $c,
-                    // 'orderItemId' => $orderItemId,
-                    //'bagNo' => $bagNo,
-                    'pickingItemsId' => $pickingItemsId,
-                    'text' => $text,
-                    'orderId' => $orderId
-                //'orderItemPackingId' => $orderItemPackingId,
-                //'channels' => $channels
+                            'boxcode' => $boxcode,
+                            'code' => $channel,
+                            //'orderId' => $orderId,
+                            'model' => $model,
+                            // 'orderNo' => $orderNo,
+                            //'c' => $c,
+                            // 'orderItemId' => $orderItemId,
+                            //'bagNo' => $bagNo,
+                            'pickingItemsId' => $pickingItemsId,
+                            'text' => $text,
+                            'orderId' => $orderId
+                                //'orderItemPackingId' => $orderItemPackingId,
+                                //'channels' => $channels
                 ]);
             }
             $orderId = OrderItemPacking::orderNo($queryOrderItemPackingId->orderItemId)->orderId;
@@ -275,14 +270,14 @@ class LockersController extends LockersMasterController
                     } else {
 
                         return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
+                                    'warning' => 'bagerror',
+                                    'model' => $model,
+                                    'code' => $channel,
+                                    'boxcode' => $boxcode,
+                                    'pickingItemsId' => $pickingItemsId,
+                                    'orderId' => $orderId,
+                                    'orderItemPackingId' => $orderItemPackingId,
+                                    'bagNo' => $OrderItemPacking->bagNo,
                         ]);
                     }
                 } else if ($countBag == 1) {
@@ -304,14 +299,14 @@ class LockersController extends LockersMasterController
                     } else {
                         throw new \yii\base\Exception("Else");
                         return $this->render('location', [
-                            'warning' => 'bagerror',
-                            'model' => $model,
-                            'code' => $channel,
-                            'boxcode' => $boxcode,
-                            'pickingItemsId' => $pickingItemsId,
-                            'orderId' => $orderId,
-                            'orderItemPackingId' => $orderItemPackingId,
-                            'bagNo' => $OrderItemPacking->bagNo,
+                                    'warning' => 'bagerror',
+                                    'model' => $model,
+                                    'code' => $channel,
+                                    'boxcode' => $boxcode,
+                                    'pickingItemsId' => $pickingItemsId,
+                                    'orderId' => $orderId,
+                                    'orderItemPackingId' => $orderItemPackingId,
+                                    'bagNo' => $OrderItemPacking->bagNo,
                         ]);
                         // exit();
                     }
@@ -366,30 +361,29 @@ class LockersController extends LockersMasterController
         // exit();
         $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
         return $this->render('scanbag', [
-            'dataProviderAllOrder' => $dataProviderAllOrder,
-            'dataProviderBag' => $dataProviderBag,
-            'dataProvider' => $dataProvider,
-            'listPoint' => $listPoint,
-            'citie' => $localNamecitie,
-            'countrie' => $localNamecountrie,
-            'state' => $localNamestate,
-            'listPointItems' => $listPointItems,
-            'model' => $model,
-            'boxcode' => $boxcode,
-            'channel' => $channel,
-            'pickingItemsId' => $pickingItemsId,
-            'bagNo' => $bagNo,
-            'orderId' => $orderId,
-            'orderItemPackingId' => $orderItemPackingId,
-            'c' => $c, 'typePickingPoint' => $typePickingPoint,
-            'text' => $text
-        //'VarBagDuplicate' => $BagDuplicate = 1,
+                    'dataProviderAllOrder' => $dataProviderAllOrder,
+                    'dataProviderBag' => $dataProviderBag,
+                    'dataProvider' => $dataProvider,
+                    'listPoint' => $listPoint,
+                    'citie' => $localNamecitie,
+                    'countrie' => $localNamecountrie,
+                    'state' => $localNamestate,
+                    'listPointItems' => $listPointItems,
+                    'model' => $model,
+                    'boxcode' => $boxcode,
+                    'channel' => $channel,
+                    'pickingItemsId' => $pickingItemsId,
+                    'bagNo' => $bagNo,
+                    'orderId' => $orderId,
+                    'orderItemPackingId' => $orderItemPackingId,
+                    'c' => $c, 'typePickingPoint' => $typePickingPoint,
+                    'text' => $text
+                        //'VarBagDuplicate' => $BagDuplicate = 1,
         ]);
         //}
     }
 
-    public function actionChangeSlot()
-    {
+    public function actionChangeSlot() {
 
         $queryList = Order::find()->where("orderId = '" . Yii::$app->request->get('orderId') . "' ")->one(); //หาorder ที่ รับ Order number มา
         $bagNo = Yii::$app->request->get('bagNo');
@@ -425,25 +419,24 @@ class LockersController extends LockersMasterController
             }
             $typePickingPoint = \common\models\costfit\PickingPointType::find()->where('pptId=' . $listPoint->type)->one();
             return $this->render('change', [
-                'order' => $queryList,
-                'dataProvider' => $dataProvider,
-                'listPoint' => $listPoint,
-                'citie' => $localNamecitie,
-                'countrie' => $localNamecountrie,
-                'state' => $localNamestate,
-                'point' => $listPoint,
-                'typePickingPoint' => $typePickingPoint,
-                'PickingPoints' => $PickingPoints,
-                'bagno' => $bagNo,
-                'oldPickingItemsId' => $pickingItemsId,
-                'code' => $code,
-                'boxcode' => $boxcode
+                        'order' => $queryList,
+                        'dataProvider' => $dataProvider,
+                        'listPoint' => $listPoint,
+                        'citie' => $localNamecitie,
+                        'countrie' => $localNamecountrie,
+                        'state' => $localNamestate,
+                        'point' => $listPoint,
+                        'typePickingPoint' => $typePickingPoint,
+                        'PickingPoints' => $PickingPoints,
+                        'bagno' => $bagNo,
+                        'oldPickingItemsId' => $pickingItemsId,
+                        'code' => $code,
+                        'boxcode' => $boxcode
             ]);
         }
     }
 
-    public function actionSaveChangeSlot()
-    {
+    public function actionSaveChangeSlot() {
         $bagNo = Yii::$app->request->get('bagNo');
         $orderId = Yii::$app->request->get('orderId');
         $old = Yii::$app->request->get('old');
@@ -461,26 +454,25 @@ class LockersController extends LockersMasterController
             $pickingId = $pickingItem->pickingId;
             $pickingItem->save(false);
             return $this->redirect(['lockers',
-                'boxcode' => $boxcode,
+                        'boxcode' => $boxcode,
             ]);
         }
         return $this->redirect(['scan-bag',
-            'boxcode' => $boxcode,
-            'code' => $code,
-            //'orderId' => $orderId,
-            // 'orderNo' => $orderNo,
-            //'c' => $c,
-            // 'orderItemId' => $orderItemId,
-            //'bagNo' => $bagNo,
-            'pickingItemsId' => $old,
-            'orderId' => $orderId
-        //'orderItemPackingId' => $orderItemPackingId,
-        //'channels' => $channels
+                    'boxcode' => $boxcode,
+                    'code' => $code,
+                    //'orderId' => $orderId,
+                    // 'orderNo' => $orderNo,
+                    //'c' => $c,
+                    // 'orderItemId' => $orderItemId,
+                    //'bagNo' => $bagNo,
+                    'pickingItemsId' => $old,
+                    'orderId' => $orderId
+                        //'orderItemPackingId' => $orderItemPackingId,
+                        //'channels' => $channels
         ]);
     }
 
-    public function checkOrder($orderId, $orderItemId)
-    {
+    public function checkOrder($orderId, $orderItemId) {
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId . " and orderItemId=" . $orderItemId)->one();
         if (isset($orderItem)) {
             return true;
@@ -495,8 +487,7 @@ class LockersController extends LockersMasterController
      * By : Taninut.Bm
      */
 
-    public function actionCloseChannel()
-    {
+    public function actionCloseChannel() {
         $request = Yii::$app->request;
 
         if ($request->isGet) { /* the request method is GET */
@@ -554,14 +545,14 @@ class LockersController extends LockersMasterController
                 ///lockers/lockers/scan-bag?model=1&code=aa-010&boxcode=10&pickingItemsId=112&orderId=&orderItemPackingId=&bagNo=BG20161019-0000008
             } else {
                 return $this->render('location', [
-                    'warning' => 'bagerror',
-                    'model' => $model,
-                    'code' => $channel,
-                    'boxcode' => $boxcode,
-                    'pickingItemsId' => $pickingItemsId,
-                    'orderId' => $orderId,
-                    'orderItemPackingId' => $orderItemPackingId,
-                    'bagNo' => $OrderItemPacking->bagNo,
+                            'warning' => 'bagerror',
+                            'model' => $model,
+                            'code' => $channel,
+                            'boxcode' => $boxcode,
+                            'pickingItemsId' => $pickingItemsId,
+                            'orderId' => $orderId,
+                            'orderItemPackingId' => $orderItemPackingId,
+                            'bagNo' => $OrderItemPacking->bagNo,
                 ]);
             }
         } else if ($countBag == 1) {
@@ -588,14 +579,14 @@ class LockersController extends LockersMasterController
             } else {
 
                 return $this->render('location', [
-                    'warning' => 'bagerror',
-                    'model' => $model,
-                    'code' => $channel,
-                    'boxcode' => $boxcode,
-                    'pickingItemsId' => $pickingItemsId,
-                    'orderId' => $orderId,
-                    'orderItemPackingId' => $orderItemPackingId,
-                    'bagNo' => $OrderItemPacking->bagNo,
+                            'warning' => 'bagerror',
+                            'model' => $model,
+                            'code' => $channel,
+                            'boxcode' => $boxcode,
+                            'pickingItemsId' => $pickingItemsId,
+                            'orderId' => $orderId,
+                            'orderItemPackingId' => $orderItemPackingId,
+                            'bagNo' => $OrderItemPacking->bagNo,
                 ]);
                 // exit();
             }
@@ -610,8 +601,7 @@ class LockersController extends LockersMasterController
      * By : Taninut.Bm
      */
 
-    public function actionReturnBag()
-    {
+    public function actionReturnBag() {
         //return
         $model = Yii::$app->request->get('model');
         $code = Yii::$app->request->get('code');
@@ -650,8 +640,7 @@ class LockersController extends LockersMasterController
         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?model=' . $model . '&code=' . $code . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&orderItemId=' . $orderItemId . '');
     }
 
-    static public function generatePassword($orderId)
-    {
+    static public function generatePassword($orderId) {
         $flag = false;
         $password = rand('00000000', '99999999');
         while ($flag == false) {
@@ -668,8 +657,7 @@ class LockersController extends LockersMasterController
         }
     }
 
-    static public function sendEmail($orderId, $orderItemId)
-    {
+    static public function sendEmail($orderId, $orderItemId) {
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
         if (isset($order) && !empty($order)) {
@@ -681,13 +669,15 @@ class LockersController extends LockersMasterController
                 $password = $order->password;
                 $picking = PickingPoint::find()->where("pickingId=" . $orderItem->pickingId)->one();
                 $location = $picking->title;
-                $email->mailSendPassword($toMail, $userName, $password, $location);
+                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'my-account?act=order-history';
+                $img = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . $picking->mapImages;
+                $address = $picking->description;
+                $email->mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address);
             }
         }
     }
 
-    public function actionChannels()
-    {
+    public function actionChannels() {
         /**
          *  เจ้าหน้าต้องตรวจสอบ "ช่อง" ของ lockers ก่อนที่จะไปสแกนถุง
          */
@@ -731,14 +721,14 @@ class LockersController extends LockersMasterController
                     $PickingPoints['type'] = 'booth'; //ประเภทปลายทงในการรับสินค้า
                 }
                 return $this->render('channels', [
-                    'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
-                    'citie' => $localNamecitie,
-                    'countrie' => $localNamecountrie,
-                    'state' => $localNamestate,
-                    /* old */
-                    //'point' => $point,
-                    /* Customize Date 25/01/2017   */
-                    'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
+                            'dataProvider' => $dataProvider, 'listPoint' => $listPoint,
+                            'citie' => $localNamecitie,
+                            'countrie' => $localNamecountrie,
+                            'state' => $localNamestate,
+                            /* old */
+                            //'point' => $point,
+                            /* Customize Date 25/01/2017   */
+                            'point' => $listPoint, 'typePickingPoint' => $typePickingPoint, 'PickingPoints' => $PickingPoints
                 ]);
             }
         } else { // ถ้าช่องไหนครวจสอบผ่าน มีข้อมูล
@@ -746,8 +736,7 @@ class LockersController extends LockersMasterController
         }
     }
 
-    public function actionRemarkChannels()
-    {
+    public function actionRemarkChannels() {
         //
         //pickingItemsId
         //remartDesc
@@ -767,8 +756,8 @@ class LockersController extends LockersMasterController
             // echo 'ok';
             \common\models\costfit\OrderItemPacking::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()"), 'status' => 9, 'userId' => Yii::$app->user->identity->userId, 'remark' => NULL,], ['pickingItemsId' => $pickingItemsId, 'status' => 8]); //, 'orderItemPackingId' => $orderItemPackingId
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
-            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
-            ->groupBy(['order_item_packing.bagNo'])->one();
+                            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+                            ->groupBy(['order_item_packing.bagNo'])->one();
             if (count($listOrderItemPacking) > 0) {
                 //$e->name = "sachin";
                 //$e->hobbies = "sports";
@@ -790,8 +779,8 @@ class LockersController extends LockersMasterController
             //echo $remarkDesc;
             \common\models\costfit\OrderItemPacking::updateAll(['status' => 10, 'type' => $type, 'remark' => $remarkDesc, 'userId' => Yii::$app->user->identity->userId, 'lastvisitDate' => new \yii\db\Expression("NOW()")], ['pickingItemsId' => $pickingItemsId, 'orderItemPackingId' => $orderItemPackingId]);
             $listOrderItemPacking = \common\models\costfit\OrderItemPacking::find()
-            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
-            ->groupBy(['order_item_packing.bagNo'])->one();
+                            ->where("pickingItemsId = '" . $pickingItemsId . "' ")
+                            ->groupBy(['order_item_packing.bagNo'])->one();
 
             // เก็บ Log แจ้งเตือนช่องของ Locker ต่างๆ //
             $remark = new \common\models\costfit\OrderItemPackingItems(); //Create an article and link it to the author
@@ -816,8 +805,7 @@ class LockersController extends LockersMasterController
         //echo 'ok ok ok Rememart Channels';
     }
 
-    public function actionChannelsPackingItems()
-    {
+    public function actionChannelsPackingItems() {
         $pickingItemsId = Yii::$app->request->post('pickingItemsId');
         $pickingId = Yii::$app->request->post('pickingId');
         $orderItemPackingId = Yii::$app->request->post('orderItemPackingId');
@@ -831,8 +819,7 @@ class LockersController extends LockersMasterController
         return json_encode($html);
     }
 
-    public function actionOpenLocker($id)
-    {
+    public function actionOpenLocker($id) {
 //        throw new \yii\base\Exception;
 //        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
         $locker = PickingPoint::find()->where("pickingId = $id")->one();
@@ -844,13 +831,12 @@ class LockersController extends LockersMasterController
         $response = \common\helpers\Locker::Open($locker, $num);
 
         return $this->render('open_locker', [
-            'response' => $response,
-            'msg' => "",
+                    'response' => $response,
+                    'msg' => "",
         ]);
     }
 
-    public function actionOpenLocker2($id)
-    {
+    public function actionOpenLocker2($id) {
 //        throw new \yii\base\Exception;
 //        $locker = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS)->one();
         $locker = PickingPoint::find()->where("pickingId = $id")->one();
@@ -860,13 +846,12 @@ class LockersController extends LockersMasterController
         $response = \common\helpers\Locker::Open2($locker, $num);
 
         return $this->render('open_locker', [
-            'response' => $response,
-            'msg' => "",
+                    'response' => $response,
+                    'msg' => "",
         ]);
     }
 
-    public function actionTestConnection($id)
-    {
+    public function actionTestConnection($id) {
         $locker = PickingPoint::find()->where("pickingId = $id")->one();
 
         echo file_get_contents("http://" . $locker->ip . "/iLockerDEMO/");
@@ -892,8 +877,7 @@ class LockersController extends LockersMasterController
 //        return $responses;
 //    }
 
-    public function actionSendSms()
-    {
+    public function actionSendSms() {
         $msg = 'ทดสอบการส่ง ข้อความของ www.cozxy.com';
         $url = "http://api.ants.co.th/sms/1/text/single";
         $method = "POST";
@@ -907,13 +891,12 @@ class LockersController extends LockersMasterController
         $response = \common\helpers\Sms::Send($method, $url, $data);
 
         return $this->render('sms', [
-            'response' => $response,
-            'msg' => $msg,
+                    'response' => $response,
+                    'msg' => $msg,
         ]);
     }
 
-    public function updateOrderId($orderItemId)
-    {
+    public function updateOrderId($orderItemId) {
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId in ($orderItemId)")->all();
         if (isset($orderItem) && count($orderItem) > 0) {
             foreach ($orderItem as $item):

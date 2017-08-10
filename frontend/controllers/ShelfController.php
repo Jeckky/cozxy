@@ -44,9 +44,9 @@ class ShelfController extends MasterController {
             $wishlist->save(false);
             $res['status'] = true;
             $allShelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type in(1,2)")
-            ->orderBy('type')
-            ->addOrderBy('title')
-            ->all();
+                    ->orderBy('type')
+                    ->addOrderBy('title')
+                    ->all();
             if ($productSuppId != 'no') {
 
                 if (isset($allShelf) && count($allShelf) > 0) {
@@ -105,7 +105,7 @@ class ShelfController extends MasterController {
             </div>
             <div id="editShelf' . $shelf->productShelfId . '" style="display: none;" class="col-md-12">
 
-                <h4>Shelf' . "'s" . ' Name</h4>
+                <h4>Shelf Name</h4>
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">

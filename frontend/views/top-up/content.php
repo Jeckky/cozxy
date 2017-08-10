@@ -7,7 +7,7 @@ use common\models\costfit\ProductSuppliers;
 <br><br>
 <div style="width: 100%;font-size: 10px;margin-top: 2px;margin-bottom: 10px;">
     <div style="width: 70%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;padding-top: 3px;">
-        Customers Name: <b><?= $customerName ?></b><br>
+        Customer Name: <b><?= $customerName ?></b><br>
         Address : <b><?= $address ?></b><br>
         Tax Identification Number : <b></b>
     </div>

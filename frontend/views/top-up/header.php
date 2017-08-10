@@ -13,10 +13,10 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <tr>
         <td colspan="2" style="padding: 5px; vertical-align: text-top; text-align: left;border:solid 0px #ffffff;width: 25%;">
 
-            <img src="<?= $baseUrl . $logo ?>" style="width: 80px;height: 50px;">
+            <img src="<?php // $baseUrl . $logo   ?>" style="width: 80px;height: 50px;">
 
         </td>
-        <td style="width: 50%;text-align: center;"> <h3>บริษัท คอซซี่ดอทคอม จำกัด</h3></td>
+        <td style="width: 50%;text-align: center;"> <h3>Cozxy Dot Com Co., Ltd.</h3></td>
         <td style="width: 25%;">
             <h3>
                 ใบเสร็จรับเงินล่วงหน้า

@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "wishlist".
 *
     * @property string $wishlistId
-    * @property string $productShelfId
+    * @property integer $productShelfId
     * @property string $userId
-    * @property string $productId
+    * @property integer $productId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
