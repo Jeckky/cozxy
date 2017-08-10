@@ -6,7 +6,9 @@ use common\models\costfit\ProductSuppliers;
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <a href="<?= $model['url'] ?>" class="fc-black"><img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;"></a>
+            <a href="<?= $model['url'] ?>" class="fc-black">
+                <img src="<?= $model['image'] ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
+            </a>
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>

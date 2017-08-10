@@ -19,10 +19,20 @@
                 }
             } else {
                 if (isset($_GET['verification'])) {
-                    echo 'Welcome to Cozxy.<br>We hope you enjoy our experience with us!';
+                    echo 'Welcome to Cozxy.<br><br>We hope you enjoy our experience with us!<br>';
+                    echo "We are fully committed in becoming the most efficient logistic network, Thai bred E-commerce startup in Thailand and throughout Asia."
+                    . " We are working hard with partners, traditional shops and SMEs to provide you with the best experience possible.";
+                    if (isset($_GET['cz']) && !empty($_GET['cz'])) {
+                        echo '<br><br>Please wait &nbsp;&nbsp;<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> ';
+                        //echo $this->redirect(Yii::$app->homeUrl . 'cart');
+                        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "cart";
+                        header("Location:" . $url, true, 301);
+                        exit();
+                    }
                 } else {
                     //echo ' Thank you for registering on Cozxy!';
-                    echo 'Thank you for register Page to be revised to include Check you e-mail message';
+                    echo 'Verify your email to complete your registration<br>';
+                    echo "Thank you for registering. Please check your email to verify your account before you can enjoy your experience at Cozxy.com.";
                 }
             }
             ?>

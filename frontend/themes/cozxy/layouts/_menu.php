@@ -364,6 +364,9 @@ $this->registerCss("
         content: attr(data-tooltip);
         font-size: 14px;
         line-height: 1.2;
+        -webkit-border-radius: 6px 6px 6px 6px;
+        -moz-border-radius: 6px 6px 6px;
+        border-radius: 6px 6px 6px 6px;
     }
 
     /* Directions */

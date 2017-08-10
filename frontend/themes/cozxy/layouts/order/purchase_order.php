@@ -35,7 +35,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
 </style>
 
 <div class="bs-callout bs-callout-warning" id="callout-formgroup-inputgroup">
-    <h3><i class="fa fa-file-text" aria-hidden="true"></i> Order No# <?php echo $order->orderNo; ?></h3>
+    <!--<h3><i class="fa fa-file-text" aria-hidden="true"></i> Order No# <?// echo $order->orderNo; ?></h3>-->
     <!--Support-->
     <section class="support">
         <div class="row">

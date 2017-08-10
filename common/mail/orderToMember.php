@@ -68,17 +68,22 @@
         </style>
 
         <div class="main">
-            <div class="main-leyouts">
+            <div class="main-leyouts" style="text-align: left;">
                 <div class="head title" style=" background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     <span style="color:  rgba(255,212,36,.9); ">COZXY</span>
                 </div>
                 <div class="content" style="background-color: #f5f5f5; padding: 30px;">
                     <p>
-                        <strong>Hello <?php echo $type; ?></strong>
+                        <strong>Hello <?php echo $type; ?>,</strong>
                     </p>
                     <p>
-                        Thank you for shopping with us. Please check your order below. We'll send a confirmation with your code to open your locker once your items are in! <br>
-                        If there are any changes, will will notify you via email and SMS.
+                        Thank you for shopping with us. Your order has been received for the following item. We’ll send a confirmation with your code to open your locker once your items are in!
+                    </p>
+                    <p>
+                        You can track your order with the link below or see it through <i>Order History</i> in  <i>My Account</i>.
+                    </p>
+                    <p>
+                        Note: You will be notified via email and SMS for any changes in delivery schedule.
                     </p>
                     <p>
                         <a href="http://www.cozxy.com/profile/order">
@@ -293,6 +298,10 @@
                     Bangkok 10220<br>
                     info@cozxy.com<br>
                     064-184-7414 | 9.00-18.00 <br>
+                </div>
+                <div style="width: 100%;">
+                    By placing your order, you agree to cozxy.com’s Conditions of Use.
+                    <br>This email is an auto-generated email. Please do not reply.
                 </div>
             </div>
         </div>

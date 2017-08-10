@@ -247,7 +247,12 @@ class SiteController extends MasterController {
                 }
 
                 $model->birthDate = $_POST["SignupForm"]['yyyy'] . '-' . $_POST["SignupForm"]['mm'] . '-' . $_POST["SignupForm"]['dd'];
-
+                if (isset($_GET['cz']) && !empty($_GET['cz'])) {
+                    $cz = $_GET['cz'];
+                } else {
+                    $cz = '';
+                }
+                $model->cz = $_GET['cz'];
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
@@ -267,12 +272,12 @@ class SiteController extends MasterController {
     }
 
     public function actionConfirm() {
-
+        $cz = $_GET['cz'];
         $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
         if (isset($user)) {
             $user->status = 1;
             $user->save(FALSE);
-            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete');
+            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz);
         } else {
 
         }

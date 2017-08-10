@@ -16,10 +16,10 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-address',
-                    'action' => Yii::$app->homeUrl . 'checkout/summary',
-                    'options' => ['class' => 'space-bottom'],
-                    'enableClientValidation' => false,
+            'id' => 'default-shipping-address',
+            'action' => Yii::$app->homeUrl . 'checkout/summary',
+            'options' => ['class' => 'space-bottom'],
+            'enableClientValidation' => false,
         ]);
         ?>
         <!-- Cart -->
@@ -41,12 +41,23 @@ $pickingId = rand(0, 9999);
                                 <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                 Ship to address
                             </div>
+                            <div class="col-lg-12">
+                                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
+                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Shipping -->
                     <div class="cart-detail" id="shipToCozxyBox">
-                        <h3>Ship to CozxyBox <span class="small"><a href="#">view all</a></span></h3>
+                        <div class="col-lg-12" style="padding-left:0px;">
+                            <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>">view all</a></span></h3>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: -10px;">
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+                        </div>
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
                                 <?php
@@ -109,9 +120,14 @@ $pickingId = rand(0, 9999);
 
                         <div class="row fc-g999">
                             <div class="col-xs-12">
+                                <h4>Address</h4>
+                                <div id="map-address-cozxy-box">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
                                 <h4>Map</h4>
                                 <div id="map" style="height:200px;"></div>
-
                             </div>
                         </div>
                     </div>
@@ -222,7 +238,9 @@ $pickingId = rand(0, 9999);
                         <div class="row">
                             <div class="col-lg-12">
                                 Billing Address
-                                <a href="#" class="pull-right btn-g999 p-edit" data-toggle="modal" data-target=".bs-example-modal-lg">+
+
+                                <a href="#" class="pull-right p-edit btn-yellow" data-toggle="modal" data-target=".bs-example-modal-lg">+
+
                                     New Billing Address</a></div>
                             <div class="col-xs-12 size6">
                             </div>
@@ -236,11 +254,11 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
-                                                $index = $index++;
+                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                        $index = $index++;
 
-                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                            }),
+                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                    }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -341,15 +359,15 @@ $pickingId = rand(0, 9999);
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="gridSystemModalLabel">+ Add New Billing Address</h4>
+                <h4 class="modal-title " id="gridSystemModalLabel">+ Add New Billing Address</h4>
             </div>
             <!-- Cart -->
             <div class="row">
 
                 <?php
                 $form = ActiveForm::begin([
-                            'id' => 'default-add-new-billing-address',
-                            'options' => ['class' => 'login-box'],
+                    'id' => 'default-add-new-billing-address',
+                    'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
@@ -361,23 +379,24 @@ $pickingId = rand(0, 9999);
                         <div class="select-style">
                             <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                                 <option value="personal">Individual</option>
-                                <option value="company">Legal Entity (Company)</option>
+                                <!--<option value="company">Legal Entity (Company)</option>-->
                             </select>
                         </div>
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Company (option)</label>
-                                    <?php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                                    <?//php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tax </label>
-                                    <?php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
+                                    <?//php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
+                        <br><br>
                     </div>
 
                     <div class="row">
@@ -607,7 +626,7 @@ $this->registerJs('
             if (data != "") {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
-
+                    $("#map-address-cozxy-box").html(JSONObject.description);
                     /* Map Google in latitude and longitude for cozxy*/
                     changeMap(JSONObject.latitude, JSONObject.longitude);
 

@@ -28,7 +28,7 @@ class CheckoutController extends MasterController {
 
     public function actionIndex() {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
 
         // throw new \yii\base\Exception('aaaaa');
@@ -49,7 +49,16 @@ class CheckoutController extends MasterController {
         $hash = 'add';
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        if (isset($userPoint)) {
+            if ($userPoint->currentPoint < $order->summary) {
+                $order->isPayNow = 1;
+            }
+        } else {
+            $order->isPayNow = 1;
+        }
 
+        $order->save(false);
         //Default address
         $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
 
@@ -242,7 +251,7 @@ class CheckoutController extends MasterController {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $order->cozxyCoin = 0;
-            $order->isPayNow = 0;
+            //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
 
@@ -371,7 +380,7 @@ class CheckoutController extends MasterController {
                         $toMail = $toMails;
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $type = $member->firstname . ' ' . $member->lastname;
-                        $Subject = 'Your Cozxy.com Order ' . $order->invoiceNo;
+                        $Subject = 'Your order has been received: ' . $order->invoiceNo;
                         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
                         $adress = [];
                         $adress['billingCompany'] = $addressId->company;
@@ -420,8 +429,7 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public
-    function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
+    public function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
 
@@ -470,8 +478,7 @@ class CheckoutController extends MasterController {
         return $userPoint;
     }
 
-    public
-    function updateSupplierStock($orderId) {
+    public function updateSupplierStock($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         foreach ($orderItems as $orderItem):
             $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
@@ -492,8 +499,7 @@ class CheckoutController extends MasterController {
         //endforeach;
     }
 
-    public
-    function updateUserPoint($userId, $point, $orderId, $systemCoin) {
+    public function updateUserPoint($userId, $point, $orderId, $systemCoin) {
         // throw new \yii\base\Exception($systemCoin);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
@@ -515,8 +521,7 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public
-    function actionCheckoutNewBilling() {
+    public function actionCheckoutNewBilling() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -570,6 +575,10 @@ class CheckoutController extends MasterController {
         } else {
             return '';
         }
+    }
+
+    function actionShipToCozxyBox() {
+        return $this->render('ship_to_cozxy_box');
     }
 
 }
