@@ -47,8 +47,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         <tbody>
                             <tr>
                                 <td>
-                                    <div class="col-sm-12" style="color: #000; font-size: 13px;">
-                                        <div class="col-sm-12">
+                                    <div class="col-sm-12" style="color: #000; font-size: 13px; padding-right: 0px;padding-left: 0px;">
+                                        <div class="col-sm-12" style="padding-right: 0px;padding-left: 0px;">
                                             <?php
                                             $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
                                             //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
@@ -66,7 +66,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                             }
                                             ?>
                                         </div>
-                                        <div class="col-sm-12"><strong>Note:</strong> You will be notified via Email and SMS for any changes in delivery schedule.</div>
+                                        <div class="col-sm-12"  style="padding-right: 0px;padding-left: 0px;"><strong>Note:</strong> You will be notified via Email and SMS for any changes in delivery schedule.</div>
                                     </div>
                                 </td>
                         </tbody>
@@ -77,7 +77,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td style="line-height: 20px;">
+                                <td style="line-height: 20px; padding: 0px;">
                                     <?php
                                     if (isset($addressIdsummary)) {
                                         $address = common\models\costfit\Address::find()->where('addressId=' . $addressIdsummary)->one();
@@ -168,7 +168,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Discount Coupons:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->total, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->discount, 2); ?></td>
                         </tr>
                         <!--<tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
