@@ -38,7 +38,7 @@ use common\models\costfit\Order;
 
     <br><br><br>
     <div style="border-bottom: 1px #000000 solid;" class="col-sm-12">
-        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
+        <h4 style="font-size: 14px;"><?= isset($statusText) ? 'Showing ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
     <?php
@@ -64,7 +64,7 @@ use common\models\costfit\Order;
                     } else {
                         $txt = yii\helpers\Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print', Yii::$app->homeUrl . "payment/print-receipt/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
                             , 'title' => Yii::t('app', ' ')]);
-                        $txt.= '&nbsp;' . yii\helpers\Html::a('<i class="fa fa-truck" aria-hidden="true"></i> รายละเอียด Tracking', Yii::$app->homeUrl . "my-account/detail-tracking/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
+                        $txt.= '&nbsp;' . yii\helpers\Html::a('<i class="fa fa-truck" aria-hidden="true"></i> Tracking code', Yii::$app->homeUrl . "my-account/detail-tracking/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
                             , 'title' => Yii::t('app', ' ')]);
                     }
                     if ($model['statusNum'] == Order::ORDER_STATUS_RECEIVED) {//รับของแล้ว
