@@ -294,10 +294,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $systemCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $systemCoin
         ]);
     }
 
@@ -321,10 +321,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $order->cozxyCoin
         ]);
     }
 
@@ -429,8 +429,7 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public
-            function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
+    public function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
 
@@ -479,8 +478,7 @@ class CheckoutController extends MasterController {
         return $userPoint;
     }
 
-    public
-            function updateSupplierStock($orderId) {
+    public function updateSupplierStock($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         foreach ($orderItems as $orderItem):
             $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
@@ -501,8 +499,7 @@ class CheckoutController extends MasterController {
         //endforeach;
     }
 
-    public
-            function updateUserPoint($userId, $point, $orderId, $systemCoin) {
+    public function updateUserPoint($userId, $point, $orderId, $systemCoin) {
         // throw new \yii\base\Exception($systemCoin);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
@@ -524,8 +521,7 @@ class CheckoutController extends MasterController {
         }
     }
 
-    public
-            function actionCheckoutNewBilling() {
+    public function actionCheckoutNewBilling() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -579,6 +575,10 @@ class CheckoutController extends MasterController {
         } else {
             return '';
         }
+    }
+
+    function actionShipToCozxyBox() {
+        return $this->render('ship_to_cozxy_box');
     }
 
 }
