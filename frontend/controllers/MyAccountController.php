@@ -453,7 +453,7 @@ class MyAccountController extends MasterController {
             $res['status'] = true;
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
-            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="' . Yii::$app->homeUrl . 'site/faqs" target="_blank"><h4>Your wishlist shelf is empty ?</h4></a></div>';
+            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;"><a href="' . Yii::$app->homeUrl . 'site/faqs" target="_blank" style="font-s">What' . "'s " . 'this? </a></span></h4></div>';
             $res['status'] = true;
         }
 

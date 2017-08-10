@@ -137,7 +137,7 @@ if (isset($favoriteStories)) {
                 ?>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left" style="margin-bottom:20px;cursor:pointer;">
                     <h4>
-                        <a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank">You have not added any stories to your favorite stories ?</a>
+                        You have not added any stories to your favorite stories <span style="margin-left:20px;"><a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank"> What's this?</a></span>
                     </h4>
                 </div>
             <?php } else {
