@@ -420,11 +420,13 @@ class MasterController extends MasterCommonController {
                 }
                 $text = 'khet ';
                 $textInfo = '';
+                $asterisk = '*';
+                $Notasterisk = '';
                 $list = \common\models\dbworld\Cities::find()
-                ->select(['cities.cityId', 'cities.stateId', 'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '")) as localName'])
+                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '") as localName'])
                 ->andWhere(['cities.stateId' => $cat_id])->asArray()
                 ->orderBy([
-                    'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"))' => SORT_ASC
+                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")' => SORT_ASC
                 ])
                 ->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
                 $selected = null;
@@ -754,12 +756,14 @@ class MasterController extends MasterCommonController {
                 }
                 $text = 'khet ';
                 $textInfo = '';
+                $asterisk = '*';
+                $Notasterisk = '';
                 $list = \common\models\dbworld\Cities::find()
-                ->select(['cities.cityId', 'cities.stateId', 'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '")) as localName'])
+                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '") as localName'])
                 ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
                 ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()
                 ->orderBy([
-                    'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"))' => SORT_ASC
+                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '")' => SORT_ASC
                 ])
                 ->all();
 
