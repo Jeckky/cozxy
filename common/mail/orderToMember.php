@@ -68,7 +68,7 @@
         </style>
 
         <div class="main">
-            <div class="main-leyouts">
+            <div class="main-leyouts" style="text-align: left;">
                 <div class="head title" style=" background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     <span style="color:  rgba(255,212,36,.9); ">COZXY</span>
                 </div>
