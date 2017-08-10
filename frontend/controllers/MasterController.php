@@ -423,10 +423,10 @@ class MasterController extends MasterCommonController {
                 $asterisk = '*';
                 $Notasterisk = '';
                 $list = \common\models\dbworld\Cities::find()
-                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '") as localName'])
+                ->select(['cities.cityId', 'cities.stateId', 'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")) as localName'])
                 ->andWhere(['cities.stateId' => $cat_id])->asArray()
                 ->orderBy([
-                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")' => SORT_ASC
+                    'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '"))' => SORT_ASC
                 ])
                 ->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
                 $selected = null;
@@ -484,22 +484,15 @@ class MasterController extends MasterCommonController {
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
                 }
-                $text = 'khet ';
-                $textInfo = '';
-                $asterisk = '*';
-                $Notasterisk = '';
+
                 $list = \common\models\dbworld\District::find()
-                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '") as localName'])
                 ->andWhere(['cityId' => $cat_id])->asArray()
-                ->orderBy([
-                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")' => SORT_ASC
-                ])
                 ->all();
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['districtId'], 'name' => ($cat_id == 1) ? 'Khet ' . $account['localName'] : $account['localName']];
+                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['districtId'];
                         if ($i == 0) {
                             if ($param3 != 'add') {
@@ -768,11 +761,11 @@ class MasterController extends MasterCommonController {
                 $asterisk = '*';
                 $Notasterisk = '';
                 $list = \common\models\dbworld\Cities::find()
-                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '") as localName'])
+                ->select(['cities.cityId', 'cities.stateId', 'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '")) as localName'])
                 ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
                 ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()
                 ->orderBy([
-                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '")' => SORT_ASC
+                    'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"),"' . $asterisk . '","' . $Notasterisk . '"))' => SORT_ASC
                 ])
                 ->all();
 
