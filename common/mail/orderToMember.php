@@ -269,7 +269,7 @@
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">Discount Coupons:</td>
-                                                <td style="text-align: right;"><?php echo number_format($order->total, 2); ?></td>
+                                                <td style="text-align: right;"><?php echo isset($order->discount) ? number_format($order->discount, 2) : '-'; ?></td>
                                             </tr>
                                             <!--<tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;"><!ส่วนลดพิเศษ / Extra Saving :</td>
