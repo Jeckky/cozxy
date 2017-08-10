@@ -252,7 +252,11 @@ class SiteController extends MasterController {
                 } else {
                     $cz = '';
                 }
-                $model->cz = $_GET['cz'];
+                if (isset($_GET['cz']) & !empty($_GET['cz'])) {
+                    $model->cz = $_GET['cz'];
+                } else {
+                    $model->cz = '';
+                }
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
