@@ -41,12 +41,23 @@ $pickingId = rand(0, 9999);
                                 <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                 Ship to address
                             </div>
+                            <div class="col-lg-12">
+                                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
+                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Shipping -->
                     <div class="cart-detail" id="shipToCozxyBox">
-                        <h3>Ship to CozxyBox <span class="small"><a href="#">view all</a></span></h3>
+                        <div class="col-lg-12">
+                            <h3>Ship to CozxyBox <span class="small"><a href="#">view all</a></span></h3>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: -10px;">
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+                        </div>
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
                                 <?php
@@ -109,9 +120,14 @@ $pickingId = rand(0, 9999);
 
                         <div class="row fc-g999">
                             <div class="col-xs-12">
+                                <h4>Address</h4>
+                                <div id="map-address-cozxy-box">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
                                 <h4>Map</h4>
                                 <div id="map" style="height:200px;"></div>
-
                             </div>
                         </div>
                     </div>
@@ -608,7 +624,7 @@ $this->registerJs('
             if (data != "") {
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
-
+                    $("#map-address-cozxy-box").html(JSONObject.description);
                     /* Map Google in latitude and longitude for cozxy*/
                     changeMap(JSONObject.latitude, JSONObject.longitude);
 

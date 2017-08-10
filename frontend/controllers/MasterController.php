@@ -419,7 +419,7 @@ class MasterController extends MasterCommonController {
                     $param3 = $params[2]; // get the value of input-type-3
                 }
 
-                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
+                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
