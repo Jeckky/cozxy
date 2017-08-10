@@ -30,13 +30,13 @@ return [
 //            'enablePrettyUrl' => true,
 //            'showScriptName' => FALSE,
 //        ],
-//        'urlManagerBackend' => [
-//            'class' => 'yii\web\urlManager',
-//            'baseUrl' => '/cost.fit-test/backend/web',
-//            'scriptUrl' => '/cost.fit-test/backend/web/index.php',
-//            'enablePrettyUrl' => true,
-//            'showScriptName' => FALSE,
-//        ],
+        /* 'urlManagerBackend' => [
+          'class' => 'yii\web\urlManager',
+          'baseUrl' => '/cost.fit-test/backend/web',
+          'scriptUrl' => '/cost.fit-test/backend/web/index.php',
+          'enablePrettyUrl' => true,
+          'showScriptName' => FALSE,
+          ], */
         'mail' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => false,

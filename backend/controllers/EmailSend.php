@@ -12,11 +12,11 @@ use Yii;
 
 class EmailSend {
 
-    public function mailSendPassword($toMail, $userName, $password, $location) {//ส่งรหัสผ่านที่ใช้ในการรับของให้ลูกค้า
-        Yii::$app->mail->compose('sendPassword', ['userName' => $userName, 'password' => $password, 'location' => $location])
+    public function mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address) {//ส่งรหัสผ่านที่ใช้ในการรับของให้ลูกค้า
+        Yii::$app->mail->compose('sendPassword', ['userName' => $userName, 'password' => $password, 'location' => $location, 'img' => $img, 'url' => $url, 'address' => $address])
                 ->setTo($toMail)//tomail
                 ->setFrom('online@daiigroup.com')
-                ->setSubject('รหัสผ่านสำหรับรับสินค้า Cozxy.com')
+                ->setSubject('Cozxy.com')
                 ->send();
     }
 

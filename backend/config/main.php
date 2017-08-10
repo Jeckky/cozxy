@@ -1,7 +1,7 @@
 <?php
 
 $params = array_merge(
-require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -122,7 +122,6 @@ return [
         ],
     ],
     'components' => [
-
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -133,7 +132,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
+                    [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
@@ -183,9 +182,9 @@ return [
             'driver' => 'GD', //GD or Imagick
         ],
         //'params' => [
-        // list of parameters
-        //'shippingScanTrayOnly' => TRUE,
-        //],
+// list of parameters
+//'shippingScanTrayOnly' => TRUE,
+//],
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD', //GD or Imagick
@@ -194,10 +193,11 @@ return [
     'as access' => [
         'class' => '\hscstudio\mimin\components\AccessControl',
         'allowActions' => [
-            // add wildcard allowed action here!
+// add wildcard allowed action here!
             'dashboard/*',
             'auth/*',
             'site/*',
+            'order/*',
             'debug/*',
             'mimin/*', // only in dev mode
 //            'management/*'

@@ -48,6 +48,10 @@ class MyAccountController extends MasterController {
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory', 'user'));
     }
 
+    public function actionMap() {
+        return $this->render('map');
+    }
+
     public function actionEditPersonalDetail() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -348,7 +352,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -401,7 +405,7 @@ class MyAccountController extends MasterController {
         $shelfType = ProductShelf::find()->where("productShelfId =" . $shelfId)->one();
         if ($shelfType->type == 2) {
             $text .= " <div id='editShelf" . $shelfId . "' style='display: none;' class='col-md-12'>
-            <h4>Shelf's Name</h4>
+            <h4>Shelf Name</h4>
             <input type='text' name='shelfName' class='fullwidth input-lg' id='shelfName" . $shelfId . "' style='margin-bottom: 10px;' value='" . $shelfType->title . "'>
             <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>
@@ -449,7 +453,7 @@ class MyAccountController extends MasterController {
             $res['status'] = true;
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
-            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> <h3>There are no item in "' . $group->title . '"</h3></div>';
+            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><a href="' . Yii::$app->homeUrl . 'site/faqs" target="_blank"><h4>Your wishlist shelf is empty ?</h4></a></div>';
             $res['status'] = true;
         }
 
@@ -521,7 +525,7 @@ class MyAccountController extends MasterController {
             </div>
             <div id="editShelf' . $shelf->productShelfId . '" style="display: none;" class="col-md-12">
 
-                <h4>Shelf' . "'s" . ' Name</h4>
+                <h4>Shelf Name</h4>
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">
@@ -585,7 +589,7 @@ class MyAccountController extends MasterController {
             </div>
             <div id="editShelf' . $shelf->productShelfId . '" style="display: none;" class="col-md-12">
 
-                <h4>Shelf' . "'s" . ' Name</h4>
+                <h4>Shelf Name</h4>
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">
@@ -614,8 +618,8 @@ class MyAccountController extends MasterController {
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-            'wishlists' => $wishlists,
-            'title' => $productShelf->title
+                    'wishlists' => $wishlists,
+                    'title' => $productShelf->title
         ]);
     }
 
@@ -623,8 +627,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-            'favoriteStory' => $favoriteStory,
-            'title' => 'Favorite stories'
+                    'favoriteStory' => $favoriteStory,
+                    'title' => 'Favorite stories'
         ]);
     }
 

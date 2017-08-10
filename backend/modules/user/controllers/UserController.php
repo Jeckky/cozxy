@@ -60,6 +60,19 @@ class UserController extends UserMasterController {
         ]);
     }
 
+    public function actionMailSend() {
+        $email = new \backend\controllers\EmailSend();
+        $toMail = 'saknakhngam@hotmail.com';
+        $userName = 'Surasak Nakngam';
+        $password = '123456';
+        $picking = \common\models\costfit\PickingPoint::find()->where("pickingId=20")->one();
+        $location = $picking->title;
+        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'my-account?act=order-history';
+        $img = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . $picking->mapImages;
+        $address = $picking->description;
+        $email->mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address);
+    }
+
     /**
      * Displays a single User model.
      * @param string $id

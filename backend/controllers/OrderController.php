@@ -12,14 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends \backend\controllers\BackendMasterController
-{
+class OrderController extends \backend\controllers\BackendMasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -34,14 +32,13 @@ class OrderController extends \backend\controllers\BackendMasterController
      * Lists all Order models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -50,10 +47,9 @@ class OrderController extends \backend\controllers\BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -62,15 +58,14 @@ class OrderController extends \backend\controllers\BackendMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Order();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->orderId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -81,15 +76,14 @@ class OrderController extends \backend\controllers\BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->orderId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -100,8 +94,7 @@ class OrderController extends \backend\controllers\BackendMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -114,8 +107,7 @@ class OrderController extends \backend\controllers\BackendMasterController
      * @return Order the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Order::findOne($id)) !== null) {
             return $model;
         } else {
