@@ -100,6 +100,7 @@ class CheckoutController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
+
         $shipTo = Yii::$app->request->post('shipping');
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');

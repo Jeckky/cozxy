@@ -5,11 +5,11 @@ if (count($trackingOrder->allModels) > 0) {
         <div class="track-list tracking-order-<?= $value['orderId'] ?>">
             <div class="row tk-head">
                 <div class="col-lg-4 col-md-4 col-sm-6">
-                    Status tracking code: <?= $value['invoiceNo'] ?>
+                    Tracking status code: <?= $value['invoiceNo'] ?>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-6">
                     <div class="col-lg-4 col-md-6"><?= $value['item'] ?> Item</div>
-                    <div class="col-lg-8 col-md-6">Shipping to <?php echo $value['firstname'] . '&nbsp;' . $value['lastname']; ?></div>
+                    <div class="col-lg-8 col-md-6">Ship to Cozxy at <?= $value['pickingPointName'] ?></div>
                 </div>
             </div>
             <div class="row tk-body">

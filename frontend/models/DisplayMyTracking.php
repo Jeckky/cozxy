@@ -44,6 +44,16 @@ class DisplayMyTracking {
         ->groupBy('orderId')
         ->all();
         foreach ($orderTracking as $items) {
+            if (isset($items->pickingId)) {
+                $pickingId = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $items->pickingId)->one();
+                if (isset($pickingId)) {
+                    $CozxyBox = $pickingId->title;
+                } else {
+                    $CozxyBox = '';
+                }
+            } else {
+                $CozxyBox = '';
+            }
             $products[$items->orderId] = [
                 'orderId' => $items->orderId,
                 'item' => $items->QIquantity,
@@ -54,6 +64,7 @@ class DisplayMyTracking {
                 'invoiceNo' => $items->invoiceNo,
                 'updateDateTime' => $items->updateDateTime,
                 'status' => $items->status,
+                'pickingPointName' => $CozxyBox,
             ];
         }
         return $products;
