@@ -49,7 +49,16 @@ class CheckoutController extends MasterController {
         $hash = 'add';
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        if (isset($userPoint)) {
+            if ($userPoint->currentPoint < $order->summary) {
+                $order->isPayNow = 1;
+            }
+        } else {
+            $order->isPayNow = 1;
+        }
 
+        $order->save(false);
         //Default address
         $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
 
@@ -242,7 +251,7 @@ class CheckoutController extends MasterController {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $order->cozxyCoin = 0;
-            $order->isPayNow = 0;
+            //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
 
@@ -285,10 +294,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $systemCoin
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $systemCoin
         ]);
     }
 
@@ -312,10 +321,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $order->cozxyCoin
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $order->cozxyCoin
         ]);
     }
 
@@ -421,7 +430,7 @@ class CheckoutController extends MasterController {
     }
 
     public
-    function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
+            function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
 
@@ -471,7 +480,7 @@ class CheckoutController extends MasterController {
     }
 
     public
-    function updateSupplierStock($orderId) {
+            function updateSupplierStock($orderId) {
         $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
         foreach ($orderItems as $orderItem):
             $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $orderItem->productSuppId)->one();
@@ -493,7 +502,7 @@ class CheckoutController extends MasterController {
     }
 
     public
-    function updateUserPoint($userId, $point, $orderId, $systemCoin) {
+            function updateUserPoint($userId, $point, $orderId, $systemCoin) {
         // throw new \yii\base\Exception($systemCoin);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (($order->invoiceNo == '') || ($order->invoiceNo == null)) {//ถ้ามีเลข invoince แล้ว ไม่ต้องตัด point, ไม่บันทึกรายการ
@@ -516,7 +525,7 @@ class CheckoutController extends MasterController {
     }
 
     public
-    function actionCheckoutNewBilling() {
+            function actionCheckoutNewBilling() {
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }

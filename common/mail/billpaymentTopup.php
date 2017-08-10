@@ -63,18 +63,18 @@
                         <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center;">
                             <tr>
                                 <td>
-                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>Dear <?php echo $username; ?></strong></p>
+                                    <p style="color: #ff9016; font-size: 20px; text-align: left;"><strong>Hello <?php echo $username; ?></strong></p>
 
                                     <table class="x_col1of2" width="50%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-spacing:0; border-collapse:collapse; font-size:14px">
                                         <tbody>
                                             <tr>
                                                 <td class="x_order-col x_pam" align="left" valign="top" style="border-collapse:collapse; padding-top:10px; padding-right:10px; padding-bottom:10px; padding-left:10px">
                                                     <div class="x_order-status-inner">
-                                                        <div class="x_color-grey" style="color:#646464">You have submitted a top-up request in Cozxy.com through <b><?= $paymentMethod == 1 ? 'Bill payment' : 'Credit card' ?></b> เพื่อซื้อ Point.</div>
+                                                        <div class="x_color-grey" style="color:#646464">You have requested to top up in cozxy.com through  <b><?= $paymentMethod == 1 ? 'bill payment' : 'credit card' ?></b></div>
                                                         <div class="x_pts" style="margin-top:5px; margin-bottom:10px">
-                                                            <strong>Total coins received : <?= $point ?> CozxyCoins</strong>
+                                                            <strong>Top-up amount : <?= $point ?> THB</strong>
                                                             <br>
-                                                            <strong>Amount : <?= number_format($money, 2) ?> THB</strong><br>
+                                                            <strong>Top-up to coins : <?= number_format($money, 2) ?> Cozxy Coins</strong><br>
                                                             <strong>Bank Options :</strong><br>
                                                             <?php
                                                             if (isset($bank) && count($bank) > 0) {

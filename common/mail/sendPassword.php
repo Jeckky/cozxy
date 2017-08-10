@@ -60,10 +60,14 @@
                                 <td>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>Congratulation! Your order from COZXY.COM has arrived your locker at</strong></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b>"<?= $location ?>"</b></p>
+                                    <p>แผนที่</p>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>Please enter the following code at the locker :</strong></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b><?= $password ?></b></p>
-                                    <p style="color: #CE3C2D; font-size: 16px;"><b>You will recieve another one-time passcode at the locker to verify your indentity</b></p>
-                                    <p style="color: #CE3C2D; font-size: 16px;"><b>Please have your phone with you to opon locker box.</b></p>
+                                    <p style="color: #CE3C2D; font-size: 16px;"><b>You will recieve another one-time passcode at the locker to verify your indentity via SMS.</b></p>
+                                    <p style="color: #CE3C2D; font-size: 16px;"><b>Please have your phone with you to retrieve your order.</b></p>
+                                    <p>
+                                        <a href="<?= Yii::$app->homeUrl ?>my-account?act=order-history" class="btn btn-yellow">View or manage your order here:</a>
+                                    </p>
                                 </td>
                             </tr>
                         </table>
