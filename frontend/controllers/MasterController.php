@@ -484,8 +484,10 @@ class MasterController extends MasterCommonController {
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
                 }
-
+                $asterisk = '*';
+                $Notasterisk = '';
                 $list = \common\models\dbworld\District::find()
+                ->select(['district.districtId', 'LTRIM(REPLACE(LOWER(district.localName), "' . $asterisk . '", "' . $Notasterisk . '")) as localName'])
                 ->andWhere(['cityId' => $cat_id])->asArray()
                 ->all();
                 $selected = null;
