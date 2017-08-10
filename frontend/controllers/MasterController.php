@@ -484,13 +484,22 @@ class MasterController extends MasterCommonController {
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
                 }
-
-                $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $cat_id])->asArray()->all();
+                $text = 'khet ';
+                $textInfo = '';
+                $asterisk = '*';
+                $Notasterisk = '';
+                $list = \common\models\dbworld\District::find()
+                ->select(['cities.cityId', 'cities.stateId', 'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '") as localName'])
+                ->andWhere(['cityId' => $cat_id])->asArray()
+                ->orderBy([
+                    'REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")' => SORT_ASC
+                ])
+                ->all();
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['districtId'], 'name' => ($cat_id == 1) ? 'Khet ' . $account['localName'] : $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['districtId'];
                         if ($i == 0) {
                             if ($param3 != 'add') {
