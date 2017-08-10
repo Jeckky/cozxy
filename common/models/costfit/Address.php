@@ -41,14 +41,19 @@ class Address extends \common\models\costfit\master\AddressMaster {
     public function rules() {
 
         return array_merge(parent::rules(), [//, 'countryId'
-                [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
+            ['tel', 'required', 'message' => 'Mobile Number cannot be blank.'],
+            ['provinceId', 'required', 'message' => 'Province cannot be blank.'],
+            ['amphurId', 'required', 'message' => 'City cannot be blank.'],
+            ['districtId', 'required', 'message' => 'District cannot be blank.'],
+            ['zipcode', 'required', 'message' => 'Zipcode cannot be blank.'],
+            [['firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
                 , 'required', 'on' => 'shipping_address'],
-                ['tel', 'number'],
-                ['zipcode', 'number'],
-                [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
+            ['tel', 'number'],
+            ['zipcode', 'number'],
+            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
                 , 'required', 'on' => 'checkout-billing-address'],
-                [['provinceId', 'amphurId', 'addressId'], 'required', 'on' => 'billing_address'],
-                [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel', 'email']
+            [['provinceId', 'amphurId', 'addressId'], 'required', 'on' => 'billing_address'],
+            [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'zipcode', 'type', 'isDefault', 'status', 'tel', 'email']
                 , 'required', 'on' => 'new_checkouts_billing_address'],
         ]);
     }
@@ -124,8 +129,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
             }
         } else {
             $address2 = Address::find()->where("userId=" . $userId . " and status=1")
-                    ->orderBy("createDateTime")
-                    ->one();
+            ->orderBy("createDateTime")
+            ->one();
             if (isset($address2)) {
                 if ($address2->company != NULL || $address2->company != '') {
                     return $address2->company;
@@ -145,8 +150,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
             return $name;
         } else {
             $address2 = Address::find()->where("userId=" . $userId . " and status=1")
-                    ->orderBy("createDateTime DESC")
-                    ->one();
+            ->orderBy("createDateTime DESC")
+            ->one();
             if (isset($address2)) {
                 $name = $address2->firstname . ' ' . $address2->lastname;
                 return $name;
@@ -163,8 +168,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
             return $tel;
         } else {
             $address2 = Address::find()->where("userId=" . $userId . " and status=1")
-                    ->orderBy("createDateTime DESC")
-                    ->one();
+            ->orderBy("createDateTime DESC")
+            ->one();
             if (isset($address2)) {
                 $tel = $address2->tel;
                 return $tel;
@@ -181,8 +186,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
             return $address;
         } else {
             $address2 = Address::find()->where("userId=" . $order->userId . " and status=1")
-                    ->orderBy("createDateTime DESC")
-                    ->one();
+            ->orderBy("createDateTime DESC")
+            ->one();
             if (isset($address2)) {
                 return $address2;
             } else {

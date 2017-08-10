@@ -28,7 +28,7 @@ class CheckoutController extends MasterController {
 
     public function actionIndex() {
         if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
 
         // throw new \yii\base\Exception('aaaaa');
@@ -100,6 +100,7 @@ class CheckoutController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
+
         $shipTo = Yii::$app->request->post('shipping');
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');

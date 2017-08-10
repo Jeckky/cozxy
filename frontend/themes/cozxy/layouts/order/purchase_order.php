@@ -42,13 +42,13 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
                 <div class="col-lg-6 col-md-6 ">
-                    <h5>Send Date<!--Picking Point--></h5>
+                    <!--<h5>Send DatePicking Point</h5>-->
                     <table class="table">
                         <tbody>
                             <tr>
                                 <td>
-                                    <div class="col-sm-12" style="color: #000; font-size: 13px;">
-                                        <div class="col-sm-12">
+                                    <div class="col-sm-12" style="color: #000; font-size: 13px; padding-right: 0px;padding-left: 0px;">
+                                        <div class="col-sm-12" style="padding-right: 0px;padding-left: 0px;">
                                             <?php
                                             $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
                                             //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
@@ -66,59 +66,59 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                             }
                                             ?>
                                         </div>
-                                        <div class="col-sm-12"><strong>Note:</strong> You will be notified via Email and SMS for any changes in delivery schedule.</div>
+                                        <div class="col-sm-12"  style="padding-right: 0px;padding-left: 0px;"><strong>Note:</strong> You will be notified via Email and SMS for any changes in delivery schedule.</div>
                                     </div>
                                 </td>
                         </tbody>
                     </table>
                 </div>
                 <div class = "col-lg-6 col-md-6 " style="border-left: 1px #f5f5f5 solid;">
-                    <h5>Billing  adress</h5>
+                    <h5>Billing address</h5>
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td style="line-height: 20px;">
+                                <td style="line-height: 20px; padding: 0px;">
                                     <?php
                                     if (isset($addressIdsummary)) {
                                         $address = common\models\costfit\Address::find()->where('addressId=' . $addressIdsummary)->one();
-                                        echo isset($address['company']) ? 'บริษัท' . $address['company'] . '<br>' : 'คุณ' . $address['firstname'] . " " . $address['lastname'] . '<br>';
-                                        echo isset($address['address']) ? $address['address'] : '';
+                                        echo isset($address['company']) ? '' . $address['company'] . '<br>' : '&nbsp;' . $address['firstname'] . " " . $address['lastname'] . '<br>';
+                                        echo isset($address['address']) ? ',' . $address['address'] : '';
                                         echo '<br>';
                                         $District = \common\models\dbworld\District::find()->where("districtId = '" . $address['districtId'] . "' ")->one();
-                                        echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
-                                        echo '&nbsp;,';
+                                        echo isset($District->attributes['localName']) ? ',' . $District->attributes['localName'] : '';
+                                        //echo '&nbsp;,';
                                         $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $address['amphurId'] . "' ")->one();
-                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                        echo '&nbsp;,';
+                                        echo isset($Cities->attributes['localName']) ? ',' . $Cities->attributes['localName'] : '';
+                                        //echo '&nbsp;,';
                                         $States = \common\models\dbworld\States::find()->where("stateId = '" . $address['provinceId'] . "' ")->one();
-                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                        echo '&nbsp;,';
+                                        echo isset($States->attributes['localName']) ? ',' . $States->attributes['localName'] : '';
+                                        //echo '&nbsp;,';
                                         $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $address['countryId'] . "' ")->one();
-                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . '-';
-                                        echo '<br> รหัสไปรษณีย์ ';
+                                        echo isset($Countries->attributes['localName']) ? ',' . $Countries->attributes['localName'] : '' . '-';
+                                        //echo '<br>  ';
                                         $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $address['zipcode'] . "' ")->one();
-                                        echo isset($zipCode) ? $zipCode->zipcode : '';
-                                        echo '<br> โทร ';
+                                        echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
+                                        echo '<br> Tel ';
                                         echo $address['tel'] . '<br>';
                                     } else {
-                                        echo isset($order->attributes['billingCompany']) ? 'บริษัท' . $order->attributes['billingCompany'] . '<br>' : 'คุณ' . $order->user->firstname . " " . $order->user->lastname . '<br>';
-                                        echo isset($order->attributes['billingAddress']) ? $order->attributes['billingAddress'] : '';
+                                        echo isset($order->attributes['billingCompany']) ? '' . $order->attributes['billingCompany'] . '<br>' : '&nbsp;' . $order->user->firstname . " " . $order->user->lastname . '<br>';
+                                        echo isset($order->attributes['billingAddress']) ? ',' . $order->attributes['billingAddress'] : '';
                                         echo '<br>';
                                         $District = \common\models\dbworld\District::find()->where("districtId = '" . $order->attributes['billingDistrictId'] . "' ")->one();
-                                        echo isset($District->attributes['localName']) ? $District->attributes['localName'] : '';
-                                        echo '&nbsp;';
+                                        echo isset($District->attributes['localName']) ? ',' . $District->attributes['localName'] : '';
+                                        //echo '&nbsp;';
                                         $Cities = \common\models\dbworld\Cities::find()->where("cityId = '" . $order->attributes['billingAmphurId'] . "' ")->one();
-                                        echo isset($Cities->attributes['localName']) ? $Cities->attributes['localName'] : '';
-                                        echo '&nbsp;';
+                                        echo isset($Cities->attributes['localName']) ? ',' . $Cities->attributes['localName'] : '';
+                                        //echo '&nbsp;';
                                         $States = \common\models\dbworld\States::find()->where("stateId = '" . $order->attributes['billingProvinceId'] . "' ")->one();
-                                        echo isset($States->attributes['localName']) ? $States->attributes['localName'] : '';
-                                        echo '&nbsp;';
+                                        echo isset($States->attributes['localName']) ? ',' . $States->attributes['localName'] : '';
+                                        //echo '&nbsp;';
                                         $Countries = \common\models\dbworld\Countries::find()->where("countryId = '" . $order->attributes['billingCountryId'] . "' ")->one();
-                                        echo isset($Countries->attributes['localName']) ? 'ประเทศ' . $Countries->attributes['localName'] : 'ประเทศ' . 'ไม่ระบุ';
-                                        echo '<br> รหัสไปรษณีย์ ';
+                                        echo isset($Countries->attributes['localName']) ? ',' . $Countries->attributes['localName'] : '' . '';
+                                        //echo '<br>';
                                         $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId = '" . $order->attributes['billingZipcode'] . "' ")->one();
-                                        echo isset($zipCode) ? $zipCode->zipcode : '';
-                                        echo '<br> โทร ';
+                                        echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
+                                        echo '<br> Tel ';
                                         echo $order->attributes['billingTel'] . '<br>';
                                     }
                                     ?>
@@ -168,7 +168,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Discount Coupons:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->total, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->discount, 2); ?></td>
                         </tr>
                         <!--<tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลดพิเศษ / Extra Saving :</td>
