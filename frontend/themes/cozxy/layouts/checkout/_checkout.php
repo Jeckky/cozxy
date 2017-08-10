@@ -55,7 +55,7 @@ $pickingId = rand(0, 9999);
                             <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>">view all</a></span></h3>
                         </div>
                         <div class="col-lg-12" style="margin-top: -10px;">
-                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; 
                             <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">FAQs (What's this?)</a>
                         </div>
                         <div class="row fc-g999">
