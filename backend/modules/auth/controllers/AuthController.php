@@ -41,6 +41,7 @@ class AuthController extends AuthMasterController
 
         $model = new LoginForm();
         $session = Yii::$app->session;
+        /*
         try {
             if (isset($_POST['LoginForm'])) {
 
@@ -74,6 +75,37 @@ class AuthController extends AuthMasterController
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
+            return $this->render('index');
+        }
+        */
+        if (isset($_POST['LoginForm'])) {
+            $model->attributes = $_POST['LoginForm'];
+            //echo $_POST['LoginForm']['rememberMe'];
+            //exit();
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+                \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
+                //Detect special conditions devices
+                $devices = \common\helpers\GetBrowser::UserAgent();
+                $article = new \common\models\costfit\UserVisit(); //Create an article and link it to the author
+                $article->userId = Yii::$app->user->identity->userId;
+
+                $article->device = $devices;
+                $article->lastvisitDate = new \yii\db\Expression('NOW()');
+                $article->createDateTime = new \yii\db\Expression('NOW()');
+                $article->save(FALSE);
+
+                //exit();
+                //return $this->redirect(['site/index']);
+                //return $this->redirect(Yii::$app->homeUrl);
+                return $this->goBack();
+            } else {
+                //  return $this->render('login', [
+                //     'model' => $model,
+                //  ]);
+                return $this->render('index');
+            }
+        } else {
             return $this->render('index');
         }
 

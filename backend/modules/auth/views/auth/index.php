@@ -90,7 +90,8 @@ $logo = common\models\costfit\ContentGroup::find()->where("lower(title)='logoima
         <div class="signin-form">
 
             <!-- Form -->
-            <?php $form = yii\bootstrap\ActiveForm::begin(['id' => 'signin-form_id', 'action' => $baseUrl . '/site/login', 'options' => ['class' => 'login-form']]); ?>
+            <?php //$form = yii\bootstrap\ActiveForm::begin(['id' => 'signin-form_id', 'action' => $baseUrl . '/site/login', 'options' => ['class' => 'login-form']]); ?>
+            <?php $form = yii\bootstrap\ActiveForm::begin(['id' => 'signin-form_id', 'options' => ['class' => 'login-form']]); ?>
 
             <div class="signin-text">
                 <span>Sign In to your account</span>
