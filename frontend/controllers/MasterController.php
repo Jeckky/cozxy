@@ -418,13 +418,22 @@ class MasterController extends MasterCommonController {
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
                 }
-
-                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
+                $text = 'khet ';
+                $textInfo = '';
+                $list = \common\models\dbworld\Cities::find()
+                ->select(['cities.cityId', 'cities.stateId', 'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '")) as localName'])
+                ->andWhere(['cities.stateId' => $cat_id])->asArray()
+                ->orderBy([
+                    'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"))' => SORT_ASC
+                ])
+                ->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
+                    //echo '<pre>';
+                    //print_r($list);
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['cityId'], 'name' => ($cat_id == 1) ? 'Khet ' . $account['localName'] : $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
                         if ($i == 0) {
                             if ($param3 != 'add') {
@@ -743,16 +752,22 @@ class MasterController extends MasterCommonController {
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
                 }
-
+                $text = 'khet ';
+                $textInfo = '';
                 $list = \common\models\dbworld\Cities::find()
+                ->select(['cities.cityId', 'cities.stateId', 'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '")) as localName'])
                 ->join("RIGHT JOIN", "$dbName[1].picking_point", "picking_point.amphurId = cities.cityId ")
-                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()->all();
+                ->andWhere(['cities.stateId' => $cat_id, 'status' => '1'])->asArray()
+                ->orderBy([
+                    'TRIM(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"))' => SORT_ASC
+                ])
+                ->all();
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['cityId'], 'name' => ($cat_id == 1) ? 'Khet ' . $account['localName'] : $account['localName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
 //                        if ($i == 0) {
 //                            $selected = $param1; //$account['stateId'];
