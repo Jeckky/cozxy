@@ -12,8 +12,8 @@ use Yii;
 
 class EmailSend {
 
-    public function mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address) {//ส่งรหัสผ่านที่ใช้ในการรับของให้ลูกค้า
-        Yii::$app->mail->compose('sendPassword', ['userName' => $userName, 'password' => $password, 'location' => $location, 'img' => $img, 'url' => $url, 'address' => $address])
+    public function mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address, $lat, $long) {//ส่งรหัสผ่านที่ใช้ในการรับของให้ลูกค้า
+        Yii::$app->mail->compose('sendPassword', ['userName' => $userName, 'password' => $password, 'location' => $location, 'img' => $img, 'url' => $url, 'address' => $address, 'lat' => $lat, 'long' => $long])
                 ->setTo($toMail)//tomail
                 ->setFrom('online@daiigroup.com')
                 ->setSubject('Cozxy.com')
