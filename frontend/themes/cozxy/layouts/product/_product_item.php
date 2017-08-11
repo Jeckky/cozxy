@@ -24,8 +24,7 @@ if (Yii::$app->controller->id == 'product') {
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-4">
-                        <?= Html::img(Url::home() . 'imgs/Asset30.png', ['width' => '50', 'height' => '30', 'style' => 'margin-top: -10px;']) ?>
-                        <!--<i class="fa fa-eye" aria-hidden="true"></i>-->
+                        <i class="fa fa-eye" aria-hidden="true"></i>
                     </div>
                 </a>
                 <?php
@@ -56,12 +55,9 @@ if (Yii::$app->controller->id == 'product') {
                 <?php
                 if ($model['maxQnty'] > 0) {
                     ?>
-                    <a  href="javascript:addItemToCartUnitys('<?= $model['productSuppId'] ?>',1,'<?= $model['maxQnty'] ?>','<?= $model['fastId'] ?>','<?= $model['productId'] ?>','<?= $model['supplierId'] ?>','<?= $model['receiveType'] ?>')" id="addItemsToCartMulti-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><img class='fa fa-cart-plus fa-spin' src='<?= Url::home() ?>imgs/Asset28.png' width='50' height='30' alt='' style='margin-top: -10px;'></div>"><!--<i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i>-->
+                    <a  href="javascript:addItemToCartUnitys('<?= $model['productSuppId'] ?>',1,'<?= $model['maxQnty'] ?>','<?= $model['fastId'] ?>','<?= $model['productId'] ?>','<?= $model['supplierId'] ?>','<?= $model['receiveType'] ?>')" id="addItemsToCartMulti-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
                         <div class="col-xs-4 shopping-<?= $model['productSuppId'] ?>">
-                        <!--<i id="cart-plus-<?//= $model['productSuppId'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i>-->
-                            <span id="cart-plus-<?= $model['productSuppId'] ?>">
-                                <?= Html::img(Url::home() . 'imgs/Asset28.png', ['width' => '50', 'height' => '30', 'style' => 'margin-top: -10px;', 'class' => 'fa fa-cart-plus']) ?>
-                            </span>
+                            <i id="cart-plus-<?= $model['productSuppId'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i>
                         </div>
                     </a>
                 <?php } ?>
@@ -77,9 +73,7 @@ if (Yii::$app->controller->id == 'product') {
                 echo '';
             }
             ?>
-
             <p class="size18 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= strtoupper($model['title']) ?></a></p>
-
             <?php
             if ($model['price'] > 0) {
                 ?><p>
