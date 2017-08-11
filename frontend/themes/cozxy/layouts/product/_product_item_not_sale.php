@@ -2,6 +2,8 @@
 
 use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
+use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
@@ -11,7 +13,10 @@ use common\models\costfit\ProductSuppliers;
             </a>
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
-                    <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                    <div class="col-xs-6">
+                        <?//= Html::img(Url::home() . 'imgs/Asset30.png', ['width' => '50', 'height' => '30', 'style' => 'margin-top: -10px;']) ?>
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
                 </a>
                 <?php /*
                   if ($model['wishList'] == 1) {// เคย wishList ไปแล้ว
