@@ -500,6 +500,8 @@ class MyAccountController extends MasterController {
             $productShelf->delete();
             $allshelf = ProductShelf::wishListGroup();
             $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+            $col10 = "col-lg-10 col-md-10 col-sm-9 col-xs-9";
+            $col2 = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
             if (isset($allshelf) && count($allshelf) > 0) {
                 foreach ($allshelf as $shelf):
 
@@ -512,13 +514,13 @@ class MyAccountController extends MasterController {
                     if ($shelf->type == 3) {
                         $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
                     }
-                    $text .= '<div class="col-lg-10 bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 1);" id="showGroup-' . $shelf->productShelfId . '">
+                    $text .= '<div class="' . $col10 . ' bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 1);" id="showGroup-' . $shelf->productShelfId . '">
                 ' . $a . ' ' . $shelf->title . '
             </div>
-            <div class="col-lg-10 bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 0);" id="hideGroup-' . $shelf->productShelfId . '">
+            <div class="' . $col10 . ' bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 0);" id="hideGroup-' . $shelf->productShelfId . '">
                 ' . $a . ' ' . $shelf->title . '
             </div>
-            <div class="col-lg-2 bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
+            <div class="' . $col2 . ' bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 1)" id="showEditShelf' . $shelf->productShelfId . '"></i>
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;display: none;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 0)" id="hideEditShelf' . $shelf->productShelfId . '"></i>&nbsp;&nbsp;&nbsp;
                 <i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:deleteShelf(' . $shelf->productShelfId . ')"></i>
@@ -551,7 +553,7 @@ class MyAccountController extends MasterController {
         $text = '';
         $productShelfId = $_POST['shelfId'];
         $title = $_POST['name'];
-        $productShelfs = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and title='" . $title . "' and status=1")->all();
+        $productShelfs = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and title='" . $title . "' and status=1 and productShelfId!=" . $_POST['shelfId'])->all();
         if (isset($productShelfs) && count($productShelfs) > 0) {
             $res['status'] = false;
             $res['error'] = 'This name already exists.';
@@ -563,6 +565,8 @@ class MyAccountController extends MasterController {
                 $productShelf->save(false);
                 $allshelf = ProductShelf::wishListGroup();
                 $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+                $col10 = "col-lg-10 col-md-10 col-sm-9 col-xs-9";
+                $col2 = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
                 if (isset($allshelf) && count($allshelf) > 0) {
                     foreach ($allshelf as $shelf):
 
@@ -576,13 +580,13 @@ class MyAccountController extends MasterController {
                             $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
                         }
 
-                        $text .= '<div class="col-lg-10 bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 1);" id="showGroup-' . $shelf->productShelfId . '">
+                        $text .= '<div class="' . $col10 . ' bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 1);" id="showGroup-' . $shelf->productShelfId . '">
                 ' . $a . ' ' . $shelf->title . '
             </div>
-            <div class="col-lg-10 bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 0);" id="hideGroup-' . $shelf->productShelfId . '">
+            <div class="' . $col10 . ' bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(' . $shelf->productShelfId . ', 0);" id="hideGroup-' . $shelf->productShelfId . '">
                 ' . $a . ' ' . $shelf->title . '
             </div>
-            <div class="col-lg-2 bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
+            <div class="' . $col2 . ' bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 1)" id="showEditShelf' . $shelf->productShelfId . '"></i>
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;display: none;" onclick="javascript:editShelf(' . $shelf->productShelfId . ', 0)" id="hideEditShelf' . $shelf->productShelfId . '"></i>&nbsp;&nbsp;&nbsp;
                 <i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:deleteShelf(' . $shelf->productShelfId . ')"></i>
