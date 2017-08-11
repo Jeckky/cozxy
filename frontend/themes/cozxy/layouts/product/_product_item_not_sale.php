@@ -14,8 +14,8 @@ use yii\helpers\Url;
             <div class="v-hover">
                 <a href="<?= $model['url'] ?>">
                     <div class="col-xs-6">
-                        <?= Html::img(Url::home() . 'imgs/Asset30.png', ['width' => '50', 'height' => '30', 'style' => 'margin-top: -10px;']) ?>
-                        <!--<i class="fa fa-eye" aria-hidden="true"></i>-->
+                        <?//= Html::img(Url::home() . 'imgs/Asset30.png', ['width' => '50', 'height' => '30', 'style' => 'margin-top: -10px;']) ?>
+                        <i class="fa fa-eye" aria-hidden="true"></i>
                     </div>
                 </a>
                 <?php /*
