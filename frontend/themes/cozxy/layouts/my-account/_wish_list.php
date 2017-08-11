@@ -58,7 +58,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
-            <h4>Shelf's Name</h4>
+            <h4>Shelf Name</h4>
             <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
             <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>

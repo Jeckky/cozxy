@@ -239,7 +239,7 @@ $("#zoom-img").elevateZoom({
                             $isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
                             ?> <hr>
                             <div class="row">
-                                <a href="javascript:addItemToWishlist(<?= $model['productSuppId'] ?>,<?= $group->productShelfId ?>,<?= $isAdd ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
+                                <a href="javascript:addItemToWishlist(<?= $model['productId'] ?>,<?= $group->productShelfId ?>,<?= $model['productSuppId'] ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pull-left text-left">
                                         <?= $group->title ?>
                                     </div>

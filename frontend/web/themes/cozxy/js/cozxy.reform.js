@@ -167,7 +167,7 @@ $(document).on('click', '#confirm-topup', function (e) {
  * @param {type} id
  * @returns {undefined}
  */
-function addItemToWishlist(id, shelfId) {
+function addItemToWishlist(id, shelfId, productSuppId) {
     var $pId = id;
     var str = window.location.pathname;
     var res = str.split("/");
@@ -192,19 +192,19 @@ function addItemToWishlist(id, shelfId) {
                  }, 8000);
                  } else {*/
                 // alert('13333');
-                $('.heart-' + $pId + ' i').removeClass('fa fa-heart-o');
-                $('.heart-' + $pId + ' i').addClass('fa fa-heartbeat');
-                $('#heart-o' + $pId + shelfId).hide();
-                $('#heartbeat' + $pId + shelfId).show();
+                $('.heart-' + productSuppId + ' i').removeClass('fa fa-heart-o');
+                $('.heart-' + productSuppId + ' i').addClass('fa fa-heart');
+                $('#heart-o' + productSuppId + shelfId).hide();
+                $('#heartbeat' + productSuppId + shelfId).show();
                 //}
                 //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {//ลบ
                 if (data.heartbeat == 0) {
-                    $('.heart-' + $pId + ' i').removeClass('fa fa-heartbeat');
-                    $('.heart-' + $pId + ' i').addClass('fa fa-heart-o');
+                    $('.heart-' + productSuppId + ' i').removeClass('fa fa-heart');
+                    $('.heart-' + productSuppId + ' i').addClass('fa fa-heart-o');
                 }
-                $('#heart-o' + $pId + shelfId).show();
-                $('#heartbeat' + $pId + shelfId).hide();
+                $('#heart-o' + productSuppId + shelfId).show();
+                $('#heartbeat' + productSuppId + shelfId).hide();
             }
         }
     });
