@@ -591,7 +591,7 @@ $this->registerCss("
                                 //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
                                 //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
                                 ?>
-                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999;">
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999; min-width: 160px;">
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=account-detail">ACCOUNT DETAIL</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=order-history">ORDER HISTORY</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=my-shelves">MY SHELVES</a></li>
