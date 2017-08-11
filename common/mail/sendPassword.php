@@ -62,6 +62,9 @@
                                     <p style="color: #CE3C2D; font-size: 15px;"><b>Address: <?= $address ?></b></p>
                                     <p>MAP</p>
                                     <p><img src="<?= $img ?>" style="width: 700px;height: 440px;"></p>
+                                    <p style="color: #0033ff; font-size: 15px;">or
+                                        <a href="http://www.google.com/maps/place/<?= $lat ?>,<?= $long ?>/@<?= $lat ?>,<?= $long ?>,17z"> Click here to see Google map.</a>
+                                    </p>
                                     <p style="color: #ff9016; font-size: 20px;"><strong>Please enter the following code at the locker :</strong></p>
                                     <p style="color: #CE3C2D; font-size: 20px;"><b>" <?= $password ?> "</b></p>
                                     <p style="color: #CE3C2D; font-size: 16px;"><b>You will recieve another one-time passcode at the locker to verify your indentity via SMS.</b></p>

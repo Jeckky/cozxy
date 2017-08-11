@@ -672,7 +672,9 @@ class LockersController extends LockersMasterController {
                 $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'my-account?act=order-history';
                 $img = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . $picking->mapImages;
                 $address = $picking->description;
-                $email->mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address);
+                $lat = $picking->latitude;
+                $long = $picking->longitude;
+                $email->mailSendPassword($toMail, $userName, $password, $location, $img, $url, $address, $lat, $long);
             }
         }
     }
