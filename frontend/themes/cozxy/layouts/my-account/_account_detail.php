@@ -47,9 +47,9 @@ use dosamigos\fileupload\FileUpload;
 
         <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
 
-        <!--        --><?php //ActiveForm::begin();        ?>
+        <!--        --><?php //ActiveForm::begin();         ?>
         <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-        <!--        --><?php //ActiveForm::end();       ?>
+        <!--        --><?php //ActiveForm::end();        ?>
 
     </div>
     <div class="col-md-10">
@@ -76,7 +76,7 @@ use dosamigos\fileupload\FileUpload;
 
 <div class="row">
     <div class="col-md-12">
-        CozxyCoin
+        CozxyCoin(CXC)
         <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit btn-yellow"><i class="fa fa-circle-thin"></i> Top Up</a>-->
         <?= \yii\bootstrap\Html::a('<i class="fa fa-circle-thin"></i> Top Up', \yii\helpers\Url::to(['/top-up']), ['class' => 'pull-right btn-g999 p-edit btn-yellow', 'style' => 'margin-right: 8px;']) ?>
         <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit" style="margin-right: 8px;"><i class="fa fa-history"></i> History</a>-->
