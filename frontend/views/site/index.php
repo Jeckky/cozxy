@@ -136,7 +136,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
@@ -179,7 +179,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
@@ -230,10 +230,10 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale', ['model' => $model]);
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                            //'layout'=>"{summary}{pager}{items}"
+                            //'layout'=>"{summary}p{pager}{items}"
                             'layout' => (Yii::$app->controller->action->id == "see-all-not-sale") ? "{summary}\n{items}\n<center>{pager}</center>\n" : "{items}",
 //                            'layout' => "{items}",
                             'itemOptions' => [

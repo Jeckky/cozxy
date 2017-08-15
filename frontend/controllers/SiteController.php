@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\costfit\Product;
+use common\models\costfit\ProductPost;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
@@ -78,12 +80,16 @@ class SiteController extends MasterController {
     public function actionIndex() {
         //echo Yii::getVersion();
         $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
-        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);
-        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+//        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
+        $productCanSell = Product::productForSale(6);
+//        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);
+        $productNotSell = Product::productForNotSale(6);
+//        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
+        $productStory = ProductPost::productStory(3);
         $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
-        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
+//        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
+        $promotions = Product::productPromotion(6);
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
@@ -143,7 +149,7 @@ class SiteController extends MasterController {
         Yii::$app->user->logout();
         $cookies = Yii::$app->request->cookies;
         $token = \common\helpers\Token::generateNewToken();
-        /** @var \iiifx\yii2\SecureRememberMe\components\Manager $rememberMe */
+        /** @var \\yii2\SecureRememberMe\components\Manager $rememberMe */
         //$rememberMe = Yii::$app->rememberMe;
         //$rememberMe->delete();
         return $this->goHome();
@@ -400,26 +406,25 @@ class SiteController extends MasterController {
 //        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
 //        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
-        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(), 'pagination' => ['defaultPageSize' => 15],]);
+//        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(), 'pagination' => ['defaultPageSize' => 15],]);
+        $promotions = Product::productPromotion();
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     public function actionSeeAllSale() {
 //        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
-        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(), 'pagination' => ['defaultPageSize' => 15],]);
+//        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(), 'pagination' => ['defaultPageSize' => 15],]);
 //        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
 //        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
+        $productCanSell = Product::productForSale();
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     public function actionSeeAllNotSale() {
-//        $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
-        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(), 'pagination' => ['defaultPageSize' => 15],]);
-//        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
-//        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', '')]);
+        $productNotSell = Product::productForNotSale();
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
