@@ -158,11 +158,11 @@ $val = rand(1, 10);
                                 if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                     ?>
                                     <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
-                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELVES</div>
+                                        <div class="heart-<?= $model['productSuppId'] ?>"> ADD TO SHELVES</div>
                                     </a>
                                 <?php } else { ?>
                                     <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
-                                        <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELVES</div>
+                                        <div class="heart-<?= $model['productSuppId'] ?>"> ADD TO SHELVES</div>
                                     </a>
                                     <?php
                                 }
@@ -217,6 +217,7 @@ $("#zoom-img").elevateZoom({
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
                 </button>
                 <h3>ADD TO SHELVES</h3>
+                Organize all your favorite items, dream gifts, and stories in customizable shelves so you can always come back and see them later!
             </div>
             <div class="modal-body" style="padding: 40px;">
                 <a style="cursor: pointer;" id="showCreateWishList">Create New shelf</a>

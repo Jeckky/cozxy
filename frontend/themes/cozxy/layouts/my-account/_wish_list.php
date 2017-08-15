@@ -200,7 +200,7 @@ if (isset($favoriteStories)) {
             </div>
             <div id="editShelf<?= $shelf->productShelfId ?>" style="display: none;" class="col-md-12">
 
-                <h4>Shelf's Name</h4>
+                <h4>Shelf Name</h4>
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName<?= $shelf->productShelfId ?>" style="margin-bottom: 10px;" value="<?= $shelf->title ?>">
                 <div class='text-right' style=''>
                     <input type="hidden" id="productSuppId" value="no">
