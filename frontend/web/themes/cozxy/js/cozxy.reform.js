@@ -150,7 +150,7 @@ $(document).on('click', '#confirm-topup', function (e) {
             return false;
         } else {
             if (parseInt(amount) < parseInt(currentAmount)) {
-                alert("In order to have sufficient coins to purchase your current cart, please top-up at least " + currentAmount + " COZXYCOINS.");
+                alert("In order to have sufficient COZXYCOINS(CXC) to purchase your current cart, please top-up at least " + currentAmount + " CXC(THB).");
                 return false;
             } else {
                 if (confirm(':: Confirm Amount ' + amount + ' THB ?')) {
