@@ -98,7 +98,7 @@ $(document).on('click', '#checkBot', function () {//test
         var billPayment = false;
     }
     if ((inputPass == '') || (inputPass != passPic)) {
-        alert('Incorrect verify, please recheck.');
+        alert('Please enter captcha to verify.');
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
