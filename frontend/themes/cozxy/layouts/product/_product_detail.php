@@ -169,7 +169,7 @@ $val = rand(1, 10);
                             } else {
                                 ?>
                                 <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
-                                    <div class="b btn-g999 size12" style="padding: 6px 16px;">ADD TO SHELF</div>
+                                    <div class="b btn-g999 size12" style="padding: 6px 16px;">ADD TO SHELVES</div>
                                 </a>
                             <?php } ?>
                             <?php
@@ -216,7 +216,7 @@ $("#zoom-img").elevateZoom({
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
                 </button>
-                <h3>Save to shelves</h3>
+                <h3>ADD TO SHELVES</h3>
             </div>
             <div class="modal-body" style="padding: 40px;">
                 <a style="cursor: pointer;" id="showCreateWishList">Create New shelf</a>
