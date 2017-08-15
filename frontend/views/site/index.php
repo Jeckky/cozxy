@@ -136,7 +136,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model]);
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'promotion' => 'yes']);
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
@@ -150,7 +150,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -243,7 +243,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
