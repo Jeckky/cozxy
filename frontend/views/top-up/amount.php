@@ -37,7 +37,7 @@ $form = ActiveForm::begin([
                 </tr>
                 <?php
                 if (isset($needMore) && $needMore != 0) {//ถ้ามาจากการ check out มีจำนวนที่ต้องเติมเพิ่ม
-                    echo '<h4 style="color: #006666;">TOP UP ' . number_format($needMore, 2) . ' Points Gross ' . number_format($needMore, 2) . ' THB</h4>';
+                    echo '<h4 style="color: #006666;">TOP UP ' . number_format($needMore, 2) . ' COZXYCOINS Gross ' . number_format($needMore, 2) . ' THB</h4>';
                     ?>
                     <tr style="height: 50px;">
                         <td style="text-align: right;width:50%;">
