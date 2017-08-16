@@ -17,5 +17,5 @@
             <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model['views'] ?></div>
             <div class="col-md-6"><i class="fa fa-star"></i> <?= $model['star'] ?></div>
         </div>
-    </div>
+    </div> 
 </div>
