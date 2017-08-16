@@ -8,6 +8,7 @@ use common\helpers\Base64Decode;
 use yii\data\ActiveDataProvider;
 use common\models\costfit\ProductSuppliers;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "product".
@@ -559,15 +560,34 @@ class Product extends \common\models\costfit\master\ProductMaster
         }
     }
 
-    public static function productForNotSale($n = NULL, $cat = FALSE)
+    public static function productForNotSale($n = NULL, $categoryId = NULL)
     {
+        $productInStock = ProductSuppliers::find()
+            ->select('productId')
+            ->where('result>0')
+            ->andWhere(['status' => 1])
+            ->andWhere(['approve' => 'approve'])
+            ->groupBy('productId')
+            ->asArray()
+            ->all();
+        $productInStock = array_values(ArrayHelper::map($productInStock, 'productId', 'productId'));
+
         $products = self::find()
-            ->leftJoin('category_to_product ctp', ['product.productId' => 'ctp.categoryId'])
-            ->where('ctp.productId is null && product.parentId is not null')
-//                ->orderBy(new Expression('rand()'))
-            ->orderBy('productId')
+            ->select('product.*')
+            ->leftJoin('product_suppliers ps', ['product.productId' => 'ps.productId'])
+            ->where('product.parentId is not null')
+            ->andWhere(['product.approve' => 'approve'])
+            ->andWhere(['product.status' => 1])
+            ->andWhere(['not in', 'product.productId', $productInStock])
+            ->orderBy(new Expression('rand()'))
+//            ->orderBy('product.productId')
             ->limit(isset($n) ? $n : 0);
 
+        if(isset($categoryId)) {
+            $products->leftJoin('category_to_product ctp', 'ctp.productId=product.productId');
+            $products->andWhere(['ctp.categoryId' => $categoryId]);
+        }
+
         return new ActiveDataProvider([
             'query' => $products,
             'pagination' => [
@@ -576,16 +596,19 @@ class Product extends \common\models\costfit\master\ProductMaster
         ]);
     }
 
-    public static function productForSale($n=Null)
+    public static function productForSale($n = Null, $categoryId = null)
     {
         $products = ProductSuppliers::find()
-                ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
-                ->join(" LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
-//            ->join('LEFT JOIN', 'category_to_product', 'product_suppliers.productSuppId=category_to_product.productId')
-                ->leftJoin('product p', 'product_suppliers.productId=p.productId')
-                ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
-//            ->andWhere('category_to_product.categoryId is not null')
-                ->orderBy(new Expression('rand()') . " , pps.price ASC  ");
+            ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
+            ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+            ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
+            ->orderBy(new Expression('rand()') . " , pps.price");
+
+        if(isset($categoryId)) {
+            $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
+            $products->andWhere(['ctp.categoryId' => $categoryId]);
+        }
 
         return new ActiveDataProvider([
             'query' => $products,
@@ -595,7 +618,8 @@ class Product extends \common\models\costfit\master\ProductMaster
         ]);
     }
 
-    public static function productPromotion($n = NULL, $cat = FALSE) {
+    public static function productPromotion($n = NULL, $cat = FALSE)
+    {
         $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->one();
         if(isset($promotionConfig)) {
             $productPromotionIds = $promotionConfig->value;
@@ -615,6 +639,38 @@ class Product extends \common\models\costfit\master\ProductMaster
             'query' => $products,
             'pagination' => [
                 'pageSize' => isset($n) ? $n : 12,
+            ]
+        ]);
+    }
+
+    public static function productForSaleByCategory($categoryId, $filter = [])
+    {
+        $products = CategoryToProduct::find()
+            ->from('category_to_product ctp')
+            ->leftJoin('product p', 'p.productId=ctp.productId')
+            ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
+            ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
+            ->where(['ps.approve' => 'approve'])
+            ->andWhere(['ctp.categoryId' => $categoryId])
+            ->andWhere(['>', 'ps.result', 0])
+            ->andWhere(['>', 'pps.price', 0])
+            ->orderBy('pps.price');
+
+        if($filter !== []) {
+            if(isset($filter['priceRange'])) {
+                $products->andWhere(['between', 'pps.price', $filter['priceRange']['min'], $filter['priceRange']['max']]);
+            }
+
+            if(isset($filter['brand'])) {
+                $products->leftJoin('brand b', 'b.brandId=p.brandId');
+                $products->andWhere(['in', 'b.brandId', $filter['brand']]);
+            }
+        }
+
+        return new ActiveDataProvider([
+            'query' => $products,
+            'pagination' => [
+                'pageSize' => 12,
             ]
         ]);
     }
