@@ -636,7 +636,7 @@ class FakeFactory extends Model {
     public static function SearchQuantityInOrder($productId) {
         $GetQty = \common\models\costfit\Order::find()
         ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
-        ->where('order_item.productId = ' . $productId . ' and order.status2 < 5')->count('order_item.quantity');
+        ->where('order_item.productId = ' . $productId . ' and order.status < 5')->count('order_item.quantity');
         if (isset($GetQty)) {
             return $GetQty;
         } else {
