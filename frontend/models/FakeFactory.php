@@ -358,7 +358,7 @@ class FakeFactory extends Model {
                 ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems)
                 ->orderBy('product_price_suppliers.price')
                 ->one();
-                $txtAlert = 'Ok';
+                $txtAlert = 'Ok'; // แสดงปุ่ม Add to cart , add to wishList หรือ SHELVES
             } else {
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
