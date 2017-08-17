@@ -16,10 +16,10 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
-            'enableClientValidation' => false,
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/summary',
+                    'options' => ['class' => 'space-bottom'],
+                    'enableClientValidation' => false,
         ]);
         ?>
         <!-- Cart -->
@@ -52,7 +52,7 @@ $pickingId = rand(0, 9999);
                     <!-- Shipping -->
                     <div class="cart-detail" id="shipToCozxyBox">
                         <div class="col-lg-12" style="padding-left:0px;">
-                            <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>">view all</a></span></h3>
+                            <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>" target="_blank">view all</a></span></h3>
                         </div>
                         <div class="col-lg-12" style="margin-top: -10px;">
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -254,11 +254,11 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
-                                        $index = $index++;
+                                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                                $index = $index++;
 
-                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                    }),
+                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                            }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -366,8 +366,8 @@ $pickingId = rand(0, 9999);
 
                 <?php
                 $form = ActiveForm::begin([
-                    'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box'],
+                            'id' => 'default-add-new-billing-address',
+                            'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
