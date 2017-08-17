@@ -24,8 +24,7 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-        //echo '<pre>';
-        //print_r($params);
+
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -50,8 +49,13 @@ class StoryController extends MasterController {
 
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
+        $productSuppliers = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productPost->productId)->one();
+        if (isset($productSuppliers)) {
+            $productSuppId = $productSuppliers->productSuppId;
+        }
         //echo '<pre>';
         //print_r($productPost);
+        //exit();
         // $product_image_suppliers = $productPost->attributes;
         $imgShowStory = '';
         //if (isset($product_image_suppliers['productId'])) {
