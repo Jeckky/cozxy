@@ -2,10 +2,10 @@
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">Ship to CozxyBox All</p>
+            <p class="size20 size18-xs">All CozxyBoxs.</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
-
+            <iframe src="https://www.google.com/maps/d/embed?mid=1e6XcPZosoBmfErBYckRLyTNPqv4" width="100%" height="600" style="border: #ffffff solid thin;"></iframe>
         </div>
     </div>
 </div>
