@@ -133,9 +133,11 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
             ->andWhere('product_post.productId is not null')
             ->andWhere('product_post.status =1')
             ->andWhere('p.productId is not null')
+            ->andWhere('product_post.isPublic=1')
 //            ->andWhere('pi.productId is not null')
-            ->groupBy('product_post.productId');
+//            ->groupBy('product_post.productId');
 //            ->orderBy('pi.ordering');
+        ;
 
         if(isset($categoryId)) {
             $productStories->andWhere(['p.categoryId'=>$categoryId]);
