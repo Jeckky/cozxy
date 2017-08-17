@@ -368,6 +368,8 @@ class FakeFactory extends Model {
                 ->one();
                 $txtAlert = 'No';
             }
+        } else {
+            $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
         }
 
         //echo '<pre>';
@@ -391,11 +393,11 @@ class FakeFactory extends Model {
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => $GetProductSuppliers['productSuppId'],
             'productId' => $GetProductSuppliers['productId'],
-            'supplierId' => $GetProductSuppliers['userId'],
+            //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
             'brandId' => $GetProductSuppliers['brandId'],
             'categoryId' => $GetProductSuppliers['categoryId'],
-            'receiveType' => $GetProductSuppliers['receiveType'],
+            //'receiveType' => $GetProductSuppliers['receiveType'],
             'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
@@ -408,11 +410,11 @@ class FakeFactory extends Model {
             //'images' => $imagAll,
             'image' => $productImagesMulti['productImagesOneTopz'],
             'images' => $productImagesMulti['imagAll'],
-            'maxQnty' => $GetProductSuppliers['result'],
+            'maxQnty' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
             'fastId' => FALSE,
-            'productId' => $GetProductSuppliers['productId'],
+            //'productId' => $GetProductSuppliers['productId'],
             'supplierId' => $GetProductSuppliers['userId'],
-            'receiveType' => $GetProductSuppliers['receiveType'],
+            'receiveType' => isset($GetProductSuppliers['receiveType']) ? $GetProductSuppliers['receiveType'] : '',
             'wishList' => $wishList,
             'sendDate' => '',
             'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
