@@ -96,7 +96,7 @@ class MyAccountController extends MasterController {
             $model->type = \common\models\costfit\Address::TYPE_BILLING;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
-                return $this->redirect(['/my-account']);
+                return $this->redirect(['/my-account', 'act'=>'account-detail']);
             }
         }
         //first billing address set default = 1
