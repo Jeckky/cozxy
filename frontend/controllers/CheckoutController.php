@@ -72,6 +72,8 @@ class CheckoutController extends MasterController {
             $pickingPoint = new \common\models\costfit\PickingPoint();
         }
 
+        //echo '<pre>';
+        //print_r($defaultAddress);
         /*
          * New Billing
          */
@@ -128,7 +130,10 @@ class CheckoutController extends MasterController {
         } else {
             $pickingMap = Null;
         }
+        //echo $addressId;
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
+        //echo '<pre>';
+        //print_r($myAddressInSummary);
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
 
         $order = Order::find()->where("orderId=" . $orderId)->one();

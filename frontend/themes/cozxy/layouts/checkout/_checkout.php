@@ -127,7 +127,7 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-xs-12">
                                 <h4>Map</h4>
-                                <div id="map" style="height:200px;"></div>
+                                <div id="map" style="height:450px;"></div>
                             </div>
                         </div>
                     </div>
@@ -571,7 +571,7 @@ $pickingId = rand(0, 9999);
 <?php
 $this->registerCss('
 #map {
-            height: 300px;
+            height: 450px;
         }
 ');
 
@@ -602,7 +602,7 @@ function changeMap(lats, lngs) {
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
         zoom: 11,
-        mapTypeId: "hybrid"
+        /*mapTypeId: "hybrid"*/
     });
 
     var marker = new google.maps.Marker({
