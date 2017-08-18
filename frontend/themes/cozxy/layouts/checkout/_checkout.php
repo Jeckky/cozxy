@@ -298,7 +298,7 @@ $pickingId = rand(0, 9999);
                                     if (isset($defaultAddress->countries)) {
                                         $countriesLocalName = $defaultAddress->countries->localName;
                                     } else {
-                                        $statesLocalName = '';
+                                        $countriesLocalName = '';
                                     }
                                     if (isset($defaultAddress->zipcode)) {
                                         $zipcode = $defaultAddress->zipcode;
