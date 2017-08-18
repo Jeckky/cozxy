@@ -94,36 +94,53 @@ class DisplayMyAccount extends Model {
         }
 
         foreach ($dataWishlist as $items) {
-            $dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
-            foreach ($dataProductSuppliers as $value) {
-                //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-                $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($value->price, 2);
-                $price = number_format($value->price, 2);
-                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-
-                if (Yii::$app->controller->id == 'my-account') {
-                    $title = isset($value->title) ? substr($value->title, 0, 35) : '';
-                } else {
-                    $title = isset($value->title) ? $value->title : '';
-                }
-                $products[$value->productSuppId] = [
-                    'wishlistId' => $items->wishlistId,
-                    'productSuppId' => $value->productSuppId,
-                    'image' => $productImagesThumbnail1,
-                    'brand' => isset($value->brand) ? $value->brand->title : '',
-                    'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-                    'brand' => isset($value->brand) ? $value->brand->title : '',
-                    'title' => $title,
-                    'price_s' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
-                    'price' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
-                    'maxQnty' => $value->result,
-                    'fastId' => FALSE,
-                    'productId' => $value->productId,
-                    'supplierId' => $value->userId,
-                    'receiveType' => $value->receiveType,
-                ];
+            //$dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
+            $value = ProductSuppliers::find()
+                    ->select('`product_price_suppliers`.*,`product_suppliers`.*')
+                    ->join('LEFT JOIN', 'product_price_suppliers', 'product_suppliers.productSuppId=product_price_suppliers.productSuppId')
+                    ->where('product_suppliers.productId=' . $items->productId . ' and product_suppliers.result>0 and product_price_suppliers.price!=0')
+                    ->orderBy('product_price_suppliers.price DESC')
+                    ->one();
+            if (isset($value)) {
+                // throw new \yii\base\Exception(print_r($value, true));
+            } else {
+                //  throw new \yii\base\Exception('nooooo');
             }
+
+            // foreach ($dataProductSuppliers as $value) {
+            //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
+            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
+            //$price_s = number_format($value->price, 2);
+            // $price = number_format($value->price, 2);
+            $price_s = number_format($value['price'], 2);
+            $price = number_format($value['price'], 2);
+            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
+
+            if (Yii::$app->controller->id == 'my-account') {
+                $title = isset($value['title']) ? substr($value['title'], 0, 35) : '';
+            } else {
+                $title = isset($value['title']) ? $value['title'] : '';
+            }
+            $products[$value['productSuppId']] = [
+                'wishlistId' => $items->wishlistId,
+                'productSuppId' => $value['productSuppId'],
+                'image' => $productImagesThumbnail1,
+                'brand' => isset($value['brand']) ? $value->brand->title : '',
+                //'url' => '',
+                'url' => Yii::$app->homeUrl . 'product/' . ProductSuppliers::encodeParams(['productId' => $value['productId'], 'productSupplierId' => $value['productSuppId']]),
+                'brand' => isset($value['brand']) ? $value->brand->title : '',
+                'title' => $title,
+                //'price_s' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
+                //'price' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
+                'price_s' => $price_s,
+                'price' => $price,
+                'maxQnty' => $value['result'],
+                'fastId' => FALSE,
+                'productId' => $value['productId'],
+                'supplierId' => $value['userId'],
+                'receiveType' => $value['receiveType'],
+            ];
+            // }
         }
         return $products;
     }
