@@ -116,14 +116,18 @@ $val = rand(1, 10);
                                 ?>
                                 <form id="optionForm">
                                     <div class="row login-box">
-                                        <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
-                                        <div class="col-sm-12 text-right quantity-sel size18">
-                                            <?php if (count($productGroupOptionValue) > 1): ?>
+
+                                        <?php if (count($productGroupOptionValue) > 1): ?>
+                                            <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
+                                            <div class="col-sm-12 text-right quantity-sel size18">
                                                 <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                            <?php else: ?>
-                                                <?= array_values($productGroupOptionValue)[0]; ?>
-                                            <?php endif; ?>
-                                        </div>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="col-sm-6 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
+                                            <div class="col-sm-6 text-right quantity-sel size18"><?= array_values($productGroupOptionValue)[0]; ?></div>
+                                        <?php endif; ?>
+
+
                                     </div>
                                     <hr>
                                 </form>
