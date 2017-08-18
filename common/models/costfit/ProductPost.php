@@ -128,14 +128,16 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster
     {
         $productStories = self::find()
             ->leftJoin('product p', 'p.productId=product_post.productId')
-            ->leftJoin('product_image pi', 'pi.productId=product_post.productId')
+//            ->leftJoin('product_image pi', 'pi.productId=product_post.productId')
             ->where(" product_post.userId != 0")
             ->andWhere('product_post.productId is not null')
             ->andWhere('product_post.status =1')
             ->andWhere('p.productId is not null')
-            ->andWhere('pi.productId is not null')
-            ->groupBy('product_post.productId')
-            ->orderBy('pi.ordering');
+            ->andWhere('product_post.isPublic=1')
+//            ->andWhere('pi.productId is not null')
+//            ->groupBy('product_post.productId');
+//            ->orderBy('pi.ordering');
+        ;
 
         if(isset($categoryId)) {
             $productStories->andWhere(['p.categoryId'=>$categoryId]);

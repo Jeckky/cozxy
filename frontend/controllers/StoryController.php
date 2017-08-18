@@ -18,6 +18,7 @@ use common\models\costfit\ProductShelf;
 use common\models\costfit\Currency;
 use common\models\dbworld\Countries;
 use common\models\costfit\FavoriteStory;
+use common\models\costfit\ProductPost;
 
 class StoryController extends MasterController {
 
@@ -543,7 +544,8 @@ class StoryController extends MasterController {
         $categoryId = $params['categoryId'];
 
 //$contentStory = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStory(99)]);
-        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 8]]);
+//        $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 8]]);
+        $productStory = ProductPost::productStory();
         return $this->render('contentstory', compact('productStory'));
     }
 
