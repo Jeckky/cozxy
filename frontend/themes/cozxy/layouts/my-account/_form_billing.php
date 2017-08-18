@@ -160,8 +160,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group">
                         <label for="">Zipcode</label>
                         <?php
-                        echo Html::hiddenInput('input-type-14', $model->districtId, ['id' => 'input-type-14']);
-                        echo Html::hiddenInput('input-type-42', $model->districtId, ['id' => 'input-type-42']);
+                        echo Html::hiddenInput('input-type-14', $model->zipcode, ['id' => 'input-type-14']);
+                        echo Html::hiddenInput('input-type-42', $model->zipcode, ['id' => 'input-type-42']);
                         echo Html::hiddenInput('input-type-44', $hash, ['id' => 'input-type-44']);
                         echo $form->field($model, 'zipcode')->widget(DepDrop::classname(), [
                             //'data' => [12 => 'Savings A/C 2'],
@@ -170,8 +170,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                             'pluginOptions' => [
                                 'depends' => ['address-districtid'],
-                                //'initialize' => true,
-                                //'initDepends' => ['address-countryid'],
+                                'initialize' => true,
+//                                'initDepends' => ['address-countryid'],
                                 'url' => Url::to(['child-zipcode-address']),
                                 'loadingText' => 'Loading zipcode ...',
                                 'params' => ['input-type-14', 'input-type-42', 'input-type-42']
@@ -205,7 +205,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    <a href="<?= Url::to(['/my-account', 'act'=>'account-detail']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                     &nbsp;
                     <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
                     <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
