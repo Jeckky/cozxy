@@ -98,21 +98,21 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             },
                             'update' => function ($url, $model) {
                                 $userType = common\models\costfit\Brand::find()->where('userId = ' . Yii::$app->user->identity->userId)->one();
-                                if (isset($userType)) {
-                                    if ($userType->userId == $model->userId) {
-                                        return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                            'title' => Yii::t('yii', 'update'),
-                                        ]);
-                                    } else {
-                                        //return Html::a('<i class="fa fa-pencil"></i>', '#', [
-                                        //'title' => Yii::t('yii', 'update'),
-                                        //]);
-                                    }
-                                } else {
-                                    return Html::a('<i class="fa fa-pencil"></i>', '#', [
-                                        'title' => Yii::t('yii', 'update'),
-                                    ]);
-                                }
+                                /* if (isset($userType)) {
+                                  if ($userType->userId == $model->userId) {
+                                  return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                  'title' => Yii::t('yii', 'update'),
+                                  ]);
+                                  } else {
+                                  //return Html::a('<i class="fa fa-pencil"></i>', '#', [
+                                  //'title' => Yii::t('yii', 'update'),
+                                  //]);
+                                  }
+                                  } else { */
+                                return Html::a('<i class="fa fa-pencil"></i>', '#', [
+                                    'title' => Yii::t('yii', 'update'),
+                                ]);
+                                //}
                             },
                             'delete' => function ($url, $model) {
                                 $userType = common\models\costfit\Brand::find()->where('userId = ' . Yii::$app->user->identity->userId)->one();

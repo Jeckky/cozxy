@@ -62,7 +62,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
             <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>
-                <a class='btn btn-black' id='cancel-newWishList'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a class='btn btn-black' id='cancel-newWishList'>CANCEL</a>&nbsp;&nbsp;&nbsp;
                 <a class='btn btn-yellow'id='create-newWishList' disabled>Create</a>
             </div>
         </div>
@@ -79,15 +79,15 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 
         <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? "" : "none" ?>;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
             <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-    <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
             </div>
         </a>
         <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: <?= $i == 0 ? 'none' : '' ?>;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
             <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-        <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
             </div>
         </a>
-            <?php if ($i == 0) { ?>
+        <?php if ($i == 0) { ?>
             <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>">
 
                 <?php
@@ -124,12 +124,12 @@ if (isset($favoriteStories)) {
     ?>
     <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
         <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-    <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
         </div>
     </a>
     <div id="showFavoriteItem" style="display:none;">
@@ -163,8 +163,8 @@ if (isset($favoriteStories)) {
         }
         ?>
     </div>
-    <?php }
-    ?>
+<?php }
+?>
 <div id="allShelf2">
     <?php
     //shelf
@@ -180,7 +180,7 @@ if (isset($favoriteStories)) {
                 <?= $a . '' . $shelf->title ?>
             </div>
             <div class="col-lg-10 bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>, 0);" id="hideGroup-<?= $shelf->productShelfId ?>">
-        <?= $a . '' . $shelf->title ?>
+                <?= $a . '' . $shelf->title ?>
             </div>
             <div class="col-lg-2 bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:editShelf(<?= $shelf->productShelfId ?>, 1)" id="showEditShelf<?= $shelf->productShelfId ?>"></i>
@@ -193,7 +193,7 @@ if (isset($favoriteStories)) {
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName<?= $shelf->productShelfId ?>" style="margin-bottom: 10px;" value="<?= $shelf->title ?>">
                 <div class='text-right' style=''>
                     <input type="hidden" id="productSuppId" value="no">
-                    <a href="javascript:cancelEditShelf(<?= $shelf->productShelfId ?>)"class="btn btn-black" id="cancelEditShelf<?= $shelf->productShelfId ?>">Cancle</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:cancelEditShelf(<?= $shelf->productShelfId ?>)"class="btn btn-black" id="cancelEditShelf<?= $shelf->productShelfId ?>">CANCEL</a>&nbsp;&nbsp;&nbsp;
                     <a href="javascript:updateShelf(<?= $shelf->productShelfId ?>)"class="btn btn-yellow"id="updateShelf<?= $shelf->productShelfId ?>">Update</a>
                 </div>
             </div>

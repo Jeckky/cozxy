@@ -109,7 +109,7 @@ class ShelfController extends MasterController {
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">
-                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancle</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">CANCEL</a>&nbsp;&nbsp;&nbsp;
                     <a href="javascript:updateShelf(' . $shelf->productShelfId . ')"class="btn btn-yellow"id="updateShelf' . $shelf->productShelfId . '">Update</a>
                 </div>
             </div>';
