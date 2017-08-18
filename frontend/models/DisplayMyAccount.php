@@ -102,18 +102,13 @@ class DisplayMyAccount extends Model {
                     ->orderBy('product_price_suppliers.price DESC')
                     ->one();
             if (isset($value)) {
-                // throw new \yii\base\Exception(print_r($value, true));
+                $maxQnty = $value['result'];
             } else {
-                //  throw new \yii\base\Exception('nooooo');
+                $value = \common\models\costfit\Product::find()->where("productId=" . $items->productId)->one();
+                $maxQnty = 0;
             }
-
-            // foreach ($dataProductSuppliers as $value) {
-            //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('ordering asc')->one();
-            //$productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $value->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-            //$price_s = number_format($value->price, 2);
-            // $price = number_format($value->price, 2);
-            $price_s = number_format($value['price'], 2);
-            $price = number_format($value['price'], 2);
+            $price_s = isset($value['price']) ? number_format($value['price'], 2) : '';
+            $price = isset($value['price']) ? number_format($value['price'], 2) : '';
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
 
             if (Yii::$app->controller->id == 'my-account') {
@@ -126,15 +121,12 @@ class DisplayMyAccount extends Model {
                 'productSuppId' => $value['productSuppId'],
                 'image' => $productImagesThumbnail1,
                 'brand' => isset($value['brand']) ? $value->brand->title : '',
-                //'url' => '',
                 'url' => Yii::$app->homeUrl . 'product/' . ProductSuppliers::encodeParams(['productId' => $value['productId'], 'productSupplierId' => $value['productSuppId']]),
                 'brand' => isset($value['brand']) ? $value->brand->title : '',
                 'title' => $title,
-                //'price_s' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
-                //'price' => isset($productPrice->price) ? number_format($productPrice->price, 2) : '',
                 'price_s' => $price_s,
                 'price' => $price,
-                'maxQnty' => $value['result'],
+                'maxQnty' => $maxQnty,
                 'fastId' => FALSE,
                 'productId' => $value['productId'],
                 'supplierId' => $value['userId'],
