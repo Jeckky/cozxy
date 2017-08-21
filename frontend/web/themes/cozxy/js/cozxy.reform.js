@@ -1532,3 +1532,23 @@ $(function () {
         $(this).find('.dropdown-menu.multi-level').css('display', 'block');
     })
 });
+
+
+function subscribe() {
+    var subscribe = $('#subscribe_email').val();
+    //alert(subscribe);
+    var path = $baseUrl + "site/subscribe";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'email': subscribe},
+        success: function (data, status) {
+            if (status == "success") {
+                $('.subscribe-email').html(data);
+            } else {
+
+            }
+        }
+    });
+}
