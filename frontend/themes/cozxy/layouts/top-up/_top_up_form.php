@@ -93,9 +93,9 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 <td style="text-align: left; ">
 <div class="radio">
 <div class="btn-group" data-toggle="buttons">
- <label class="checkout_select_address">
-     <input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''           ?>><?php // $payment->title           ?>
- </label>
+<label class="checkout_select_address">
+<input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''             ?>><?php // $payment->title             ?>
+</label>
 </div>
 </div>
 </td>

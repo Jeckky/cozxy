@@ -50,7 +50,7 @@ class DisplayMyStory extends Model {
                     'brand' => isset($items->brand) ? $items->brand->title : '',
                     'title' => $productPost['title'],
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($productPost['productPostId'])),
-                    'text' => 'WRITE YOUR STORIES'
+                    'text' => 'WRITE YOUR STORY'
                 ];
             } else {
                 $products['myStoryTop'] = [
@@ -61,7 +61,7 @@ class DisplayMyStory extends Model {
                     'brand' => NULL,
                     'title' => NULL,
                     'views' => NULL,
-                    'text' => isset(Yii::$app->user->id) ? 'WRITE YOUR STORIES' : 'Log in to write'
+                    'text' => isset(Yii::$app->user->id) ? 'WRITE YOUR STORY' : 'Log in to write'
                 ];
             }
         } else {
@@ -74,7 +74,7 @@ class DisplayMyStory extends Model {
                 'brand' => NULL,
                 'title' => NULL,
                 'views' => NULL,
-                'text' => isset(Yii::$app->user->id) ? 'WRITE YOUR STORIES' : 'Log in to write'
+                'text' => isset(Yii::$app->user->id) ? 'WRITE YOUR STORY' : 'Log in to write'
             ];
         }
         return $products;
