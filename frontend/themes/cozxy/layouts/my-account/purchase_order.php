@@ -34,7 +34,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                     <?= $this->render('@app/themes/cozxy/layouts/my-account/_tracking', ['trackingOrder' => $trackingOrder]) ?>
                     <br>
                     <div class="text-right">
-                        <a href="<?= \Yii::$app->homeUrl ?>my-account" class="b btn-yellow size16" style="margin:24px auto 12px"><i class="fa fa-arrow-left" aria-hidden="true"></i> Go to My Account</a>
+                        <a href="<?= \Yii::$app->homeUrl ?>my-account?act=order-history" class="b btn-yellow size16" style="margin:24px auto 12px"><i class="fa fa-arrow-left" aria-hidden="true"></i> Go to My Account</a>
                     </div>
                 </div>
             <?php } ?>
