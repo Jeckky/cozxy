@@ -5,7 +5,7 @@
     }
     .dropdown:hover > .dropdown-menu {
         display: block;
-        margin-top: 0px;
+        margin-top: 0px; 
     }
 </style>
 <div class="product-menu">
