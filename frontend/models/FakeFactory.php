@@ -428,10 +428,10 @@ class FakeFactory extends Model {
     public static function productSlideBanner($n, $status) {
         $products = [];
 //$brand = \common\models\costfit\Brand::find()->all();
-        $brand = \common\models\costfit\ProductSuppliers::find()
-        ->select(' `brand`.*, `product_suppliers`.*')
-        ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->groupBy(['product_suppliers.brandId'])
+        $brand = \common\models\costfit\Product::find()
+        ->select(' `brand`.*, `product`.*')
+        ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
+        ->groupBy(['product.brandId'])
         ->limit($n)->all();
 
         foreach ($brand as $items) {
