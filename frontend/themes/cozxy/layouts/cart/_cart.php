@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
                             // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                             ?>
-                            <input type="submit" value="CHECK OUT" class="b btn-yellow">
+                            <input type="submit" value="CHECK OUT" class="b btn-yellow" id="checkout-btn">
                         <?php } ?>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
