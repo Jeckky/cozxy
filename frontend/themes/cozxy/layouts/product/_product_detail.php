@@ -232,7 +232,7 @@ $("#zoom-img").elevateZoom({
                     <h4>Name</h4>
                     <input type="text" name="wishListName" class="fullwidth input-lg" id="wishListName" style="margin-bottom: 10px;">
                     <div class="text-right" style="">
-                        <a class="btn btn-black" id="cancel-newWishList">Cancle</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-black" id="cancel-newWishList">Cancel</a>&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
                         <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productSuppId'] ?>">
                     </div>

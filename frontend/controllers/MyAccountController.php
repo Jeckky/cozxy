@@ -405,7 +405,7 @@ class MyAccountController extends MasterController {
             <input type='text' name='shelfName' class='fullwidth input-lg' id='shelfName" . $shelfId . "' style='margin-bottom: 10px;' value='" . $shelfType->title . "'>
             <div class='text-right' style=''>
                 <input type='hidden' id='productSuppId' value='no'>
-                <a href='javascript:cancelEditShelf(" . $shelfId . ")'class='btn btn-black' id='cancelEditShelf" . $shelfId . "'>Cancle</a>&nbsp;&nbsp;&nbsp;
+                <a href='javascript:cancelEditShelf(" . $shelfId . ")'class='btn btn-black' id='cancelEditShelf" . $shelfId . "'>Cancel</a>&nbsp;&nbsp;&nbsp;
                 <a href='javascript:updateShelf(" . $shelfId . ")'class='btn btn-yellow'id='updateShelf" . $shelfId . "'>Update</a>
             </div>
         </div>";
@@ -437,7 +437,7 @@ class MyAccountController extends MasterController {
                 if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
                     $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $item['receiveType'] . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
-                    $text .= '<p><a class="btn-black-s">NO TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
                 $text .= '</div></div></div>';
             endforeach;
@@ -525,7 +525,7 @@ class MyAccountController extends MasterController {
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">
-                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancle</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancel</a>&nbsp;&nbsp;&nbsp;
                     <a href="javascript:updateShelf(' . $shelf->productShelfId . ')"class="btn btn-yellow"id="updateShelf' . $shelf->productShelfId . '">Update</a>
                 </div>
             </div>';
@@ -589,7 +589,7 @@ class MyAccountController extends MasterController {
                 <input type="text" name="shelfName" class="fullwidth input-lg" id="shelfName' . $shelf->productShelfId . '" style="margin-bottom: 10px;" value="' . $shelf->title . '">
                 <div class="text-right" style="">
                     <input type="hidden" id="productSuppId" value="no">
-                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancle</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:cancelEditShelf(' . $shelf->productShelfId . ')"class="btn btn-black" id="cancelEditShelf' . $shelf->productShelfId . '">Cancel</a>&nbsp;&nbsp;&nbsp;
                     <a href="javascript:updateShelf(' . $shelf->productShelfId . ')"class="btn btn-yellow"id="updateShelf' . $shelf->productShelfId . '">Update</a>
                 </div>
             </div>';

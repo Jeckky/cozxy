@@ -49,7 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">My Shelves</a>
+                    <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">
+                        My Shelves <button id="myShelvesPopover" type="button" class="" data-toggle="popover" title="My Shelves" data-content="Organize all your favorite items, dream gifts, and stories in customizable shelves so you can always come back and see them later!">?</button>
+                    </a>
                 </li>
                 <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
                 <li role="presentation" <?php
@@ -106,8 +108,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="size32">&nbsp;</div>
 <?php
-$this->registerJs(
-''
-, \yii\web\View::POS_HEAD);
+$this->registerJs("
+$(function () {
+  $('#myShelvesPopover').popover()
+})
+"
+, \yii\web\View::POS_END);
 ?>
 
