@@ -1,7 +1,7 @@
 <div class="panel panel-defailt">
     <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
     <h3 class="page-header" style="margin:10px 20px;">
-        My Story
+        MY STORY
         <p class="size14 size14-xs" style="margin-top: 8px;float: right;"><a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank">  What's this? </a></p>
     </h3>
 
