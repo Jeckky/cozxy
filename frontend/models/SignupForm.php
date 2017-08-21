@@ -100,7 +100,7 @@ class SignupForm extends Model {
         $user->generateAuthKey();
         if ($user->save()) {
 
-            if (isset($this->cz) && !empty($this->cz)) {
+            if (isset($this->cz) && !empty($this->cz)) {//Redirect ไปหน้า Cart
                 $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
             } else {
                 $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;

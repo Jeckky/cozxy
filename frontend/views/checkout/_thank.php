@@ -13,7 +13,7 @@
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <?php if ($res['status'] == 1): ?>
 
-                Your Cozxy.com Order  <a href="<?= Yii::$app->homeUrl . "profile/order" ?>"><?= isset($res['invoiceNo']) ? $res['invoiceNo'] : "-" ?></a><br>
+                Your Cozxy.com Order  <a href="<?= Yii::$app->homeUrl . "my-account/detail-tracking/" . common\models\ModelMaster::encodeParams(['orderId' => $res['orderId']]) . '/' . $res['orderNo'] ?>"><?= isset($res['invoiceNo']) ? $res['invoiceNo'] : "-" ?></a><br>
                 Thank you for shopping with us. Please check your order at View order list. We'll send a confirmation with your code to open your locker once your items are in! <br>
                 If there are any changes, will will notify you via email and SMS.
             <?php else: ?>

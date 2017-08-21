@@ -38,34 +38,34 @@ use common\models\costfit\Order;
 
     <br><br><br>
     <div style="border-bottom: 1px #000000 solid;" class="col-sm-12">
-        <h4 style="font-size: 14px;"><?= isset($statusText) ? 'Showing ' . '<code>' . $statusText . '</code>' : '' ?></h4>
+        <h4><?= isset($statusText) ? 'แสดงข้อมูล : ' . '<code>' . $statusText . '</code>' : '' ?></h4>
     </div>
 
     <?php
     echo \yii\grid\GridView::widget([
         'dataProvider' => $orderHistory,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                ['class' => 'yii\grid\SerialColumn'],
             'orderNo',
             'status',
-            [
+                [
                 'attribute' => 'updateDateTime',
                 'value' => function($model) {
                     return frontend\controllers\MasterController::dateThai($model['updateDateTime'], 4);
                 }
             ],
-            [
+                [
                 'attribute' => 'Action',
                 'format' => 'raw',
                 'value' => function($model) {
                     if ($model['statusNum'] < Order::ORDER_STATUS_E_PAYMENT_SUCCESS || $model['status'] == Order::ORDER_STATUS_E_PAYMENT_PENDING) { // ชำระเงินแล้ว
                         $txt = yii\helpers\Html::a('<i class="fa fa-search"></i>', Yii::$app->homeUrl . "my-account/purchase-order/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]), ['class' => 'btn btn-primary btn-xs', 'style' => 'padding: 3px 6px;'], [
-                            'title' => Yii::t('app', ' '),]);
+                                    'title' => Yii::t('app', ' '),]);
                     } else {
                         $txt = yii\helpers\Html::a('<i class="fa fa-print" aria-hidden="true"></i> Print', Yii::$app->homeUrl . "payment/print-receipt/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
-                            , 'title' => Yii::t('app', ' ')]);
-                        $txt.= '&nbsp;' . yii\helpers\Html::a('<i class="fa fa-truck" aria-hidden="true"></i> Tracking code', Yii::$app->homeUrl . "my-account/detail-tracking/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
-                            , 'title' => Yii::t('app', ' ')]);
+                                    , 'title' => Yii::t('app', ' ')]);
+                        $txt .= '&nbsp;' . yii\helpers\Html::a('<i class="fa fa-truck" aria-hidden="true"></i>Tracking Detail', Yii::$app->homeUrl . "my-account/detail-tracking/" . \common\models\ModelMaster::encodeParams(['orderId' => $model['orderId']]) . '/' . $model['orderNo'], ['class' => 'btn btn-black btn-xs', 'target' => '_blank', 'style' => 'padding: 3px 6px;'
+                                    , 'title' => Yii::t('app', ' ')]);
                     }
                     if ($model['statusNum'] == Order::ORDER_STATUS_RECEIVED) {//รับของแล้ว
                         $flag = false;
@@ -74,7 +74,7 @@ use common\models\costfit\Order;
                         if ($flag == true) {
                             if ($isMoreItem == true) {
                                 $txt = " " . yii\helpers\Html::a('<i class="fa fa-repeat" aria-hidden="true"></i> Return', Yii::$app->homeUrl . "return/returning?orderNo=" . $model['orderNo'], ['class' => 'btn btn-warning  btn-xs', 'style' => 'padding: 3px 6px;'
-                                    , 'title' => Yii::t('app', 'return')]);
+                                            , 'title' => Yii::t('app', 'return')]);
                             }
                         }
                     }

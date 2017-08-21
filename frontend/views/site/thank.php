@@ -8,5 +8,5 @@ $this->title = 'Thank';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= $this->render('@app/themes/cozxy/layouts/thank/_thank') ?>
+<?= $this->render('@app/themes/cozxy/layouts/thank/_thank', compact('modelUser')) ?>
 

@@ -72,6 +72,8 @@ class CheckoutController extends MasterController {
             $pickingPoint = new \common\models\costfit\PickingPoint();
         }
 
+        //echo '<pre>';
+        //print_r($defaultAddress);
         /*
          * New Billing
          */
@@ -129,7 +131,10 @@ class CheckoutController extends MasterController {
         } else {
             $pickingMap = Null;
         }
+        //echo $addressId;
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
+        //echo '<pre>';
+        //print_r($myAddressInSummary);
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
 
         $order = Order::find()->where("orderId=" . $orderId)->one();
@@ -295,10 +300,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $systemCoin
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $systemCoin
         ]);
     }
 
@@ -322,10 +327,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $order->cozxyCoin
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $order->cozxyCoin
         ]);
     }
 
@@ -353,7 +358,8 @@ class CheckoutController extends MasterController {
                 $this->updateBillingToOrder($addressId, $order->orderId, $systemCoin == NULL ? 0 : $systemCoin);
                 if ($order->save()) {
                     $res["status"] = 1;
-
+                    $res["orderId"] = $orderId;
+                    $res["orderNo"] = $order->orderNo;
                     $res["invoiceNo"] = $order->invoiceNo;
                     $res["message"] = "Successful transaction";
                     // Update Send Date field
