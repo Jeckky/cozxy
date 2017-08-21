@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "subscribe".
 *
-    * @property string $subscribe Id
+    * @property string $subscribeId
     * @property string $email
     * @property integer $status
     * @property string $createDateTime
@@ -42,7 +42,7 @@ return [
 public function attributeLabels()
 {
 return [
-    'subscribe Id' => Yii::t('subscribe', 'Subscribe  ID'),
+    'subscribeId' => Yii::t('subscribe', 'Subscribe ID'),
     'email' => Yii::t('subscribe', 'Email'),
     'status' => Yii::t('subscribe', 'Status'),
     'createDateTime' => Yii::t('subscribe', 'Create Date Time'),
