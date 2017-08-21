@@ -6,9 +6,9 @@ use yii\bootstrap\ActiveForm;
 use dosamigos\fileupload\FileUpload;
 ?>
 <div class="row">
-    <div class="col-md-2">Profile picture</div>
+    <div class="col-md-2">PROFILE PICTURE</div>
     <div class="col-md-10">
-        Personal Details<?= \yii\bootstrap\Html::a('Edit', \yii\helpers\Url::to(['my-account/edit-personal-detail']), ['class' => 'pull-right btn-g999 p-edit']) ?>
+        PERSONAL DETAILS<?= \yii\bootstrap\Html::a('EDIT', \yii\helpers\Url::to(['my-account/edit-personal-detail']), ['class' => 'pull-right btn-g999 p-edit']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
@@ -47,9 +47,9 @@ use dosamigos\fileupload\FileUpload;
 
         <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
 
-        <!--        --><?php //ActiveForm::begin();        ?>
+        <!--        --><?php //ActiveForm::begin();               ?>
         <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-        <!--        --><?php //ActiveForm::end();       ?>
+        <!--        --><?php //ActiveForm::end();              ?>
 
     </div>
     <div class="col-md-10">
@@ -76,11 +76,11 @@ use dosamigos\fileupload\FileUpload;
 
 <div class="row">
     <div class="col-md-12">
-        CozxyCoin
+        COZXY COIN
         <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit btn-yellow"><i class="fa fa-circle-thin"></i> Top Up</a>-->
-        <?= \yii\bootstrap\Html::a('<i class="fa fa-circle-thin"></i> Top Up', \yii\helpers\Url::to(['/top-up']), ['class' => 'pull-right btn-g999 p-edit btn-yellow', 'style' => 'margin-right: 8px;']) ?>
+        <?= \yii\bootstrap\Html::a('<i class="fa fa-circle-thin"></i> TOP UP', \yii\helpers\Url::to(['/top-up']), ['class' => 'pull-right btn-g999 p-edit btn-yellow', 'style' => 'margin-right: 8px;']) ?>
         <!--<a href="javascript:edit_profile(1);" class="pull-right btn-g999 p-edit" style="margin-right: 8px;"><i class="fa fa-history"></i> History</a>-->
-        <?= \yii\bootstrap\Html::a('<i class="fa fa-history"></i> Payment History', \yii\helpers\Url::to(['/top-up/history']), ['class' => 'pull-right btn-g999 p-edit', 'style' => 'margin-right: 8px;']) ?>
+        <?= \yii\bootstrap\Html::a('<i class="fa fa-history"></i> PAYMENT HISTORY', \yii\helpers\Url::to(['/top-up/history']), ['class' => 'pull-right btn-g999 p-edit', 'style' => 'margin-right: 8px;']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>
@@ -126,8 +126,8 @@ use dosamigos\fileupload\FileUpload;
 
 <div class="row">
     <div class="col-md-12">
-        Billing Address
-        <?= \yii\bootstrap\Html::a('+ New Billing Address', \yii\helpers\Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit btn-yellow']) ?>
+        BILLING ADDRESS
+        <?= \yii\bootstrap\Html::a('+ NEW BLLING ADDRESS', \yii\helpers\Url::to(['my-account/new-billing']), ['class' => 'pull-right btn-g999 p-edit btn-yellow']) ?>
     </div>
     <div class="col-xs-12 size6">&nbsp;</div>
 </div>

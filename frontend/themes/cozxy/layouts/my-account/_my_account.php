@@ -28,20 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Account Detail</a>
+                    <a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">ACCOUNT DETAIL</a>
                 </li>
                 <li role="presentation" <?php
                 if ($_GET['act'] == 'order-history') {
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">Order History</a>
+                    <a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">ORDER HISTORY</a>
                 </li>
                 <?php
                 if (isset($returnList) && count($returnList) > 0) {
                     ?>
                     <li role="presentation">
-                        <a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a>
+                        <a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">RETURN LIST</a>
                     </li>
                 <?php } ?>
                 <li role="presentation" <?php
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">My Shelves</a>
+                    <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">MY SHELVES</a>
                 </li>
                 <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
                 <li role="presentation" <?php
@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a>
+                    <a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">MY STORIES</a>
                 </li>
             </ul>
             <div class="size18 size14-xs">&nbsp;</div>
@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="size32">&nbsp;</div>
 <?php
 $this->registerJs(
-''
-, \yii\web\View::POS_HEAD);
+        ''
+        , \yii\web\View::POS_HEAD);
 ?>
 

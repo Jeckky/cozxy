@@ -6,7 +6,7 @@ use common\models\costfit\UserPoint;
 ?>
 <div class="col-xs-12 bg-yellow1" style="padding:18px;">
     <div class="rela size20">
-        Summary
+        SUMMARY
     </div>
 </div>
 
@@ -58,7 +58,7 @@ use common\models\costfit\UserPoint;
                 'needMore' => $needMore,
                 'orderId' => $orderId,
             ])
-            ?>"id="toTopUp" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP CozxyCoin</a>
+            ?>"id="toTopUp" class="b btn-success btn-block text-center" style="padding:12px 32px; margin:12px auto 12px">TOP UP COZXYCOIN</a>
 
             <input type="hidden" name="addressId" id="addressId" value="<?= $addressIdx ?>">
             <input type="hidden" name="orderId" id="orderId" value="<?= $this->params['cart']['orderId'] ?>">
