@@ -22,7 +22,7 @@ use kartik\select2\Select2;
                             <div class="col-md-6 col-xs-12">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        Ship to : <span class="size18">CozxyBox <?php echo $pickingMap['title'] ?></span>
+                                        Ship to : <span class="size18">address <?php echo $pickingMap['title'] ?></span>
                                     </div>
                                 </div>
 
