@@ -3,6 +3,10 @@
     .dropdown-menu {
         min-width: 460px;
     }
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0px; 
+    }
 </style>
 <div class="product-menu">
     <div class="container">
