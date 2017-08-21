@@ -451,4 +451,12 @@ class SiteController extends MasterController {
         }
     }
 
+    public function actionSubscribe() {
+        $email = trim($_POST['email']);
+        $subscribe = new \common\models\costfit\Subscribe();
+        $subscribe->email = $email;
+        $subscribe->save(FALSE);
+        echo 'Subscribe  Successful';
+    }
+
 }
