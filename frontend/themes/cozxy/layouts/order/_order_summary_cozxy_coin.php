@@ -1,6 +1,6 @@
 <div class="col-xs-12 bg-black" style="padding:18px;">
     <div class="rela" style="color: #FFF;">
-        CozxyCoin
+        COZXYCOIN
     </div>
 </div>
 <div class="col-xs-12 total-price bg-white">
@@ -33,7 +33,7 @@
                 <?php
                 if ($balance < 0) {
                     ?>
-                    <a href="/top-up?needMore=<?= ($order->summary - $userPoint->currentPoint) + $systemCoin ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP CozxyCoin</a>
+                    <a href="/top-up?needMore=<?= ($order->summary - $userPoint->currentPoint) + $systemCoin ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP COZXYCOIN</a>
                 <?php } ?>
             </div>
             <div class="price-detail">Your system coin balance:
@@ -52,7 +52,7 @@
                 <?php
                 if ($balance < 0) {
                     ?>
-                    <a href="/top-up?needMore=<?= $order->summary - $userPoint->currentPoint ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP CozxyCoin</a>
+                    <a href="/top-up?needMore=<?= $order->summary - $userPoint->currentPoint ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP COZXYCOIN</a>
                 <?php } ?>
             </div>
         <?php } ?>

@@ -43,7 +43,18 @@ $this->title = 'Sing In : COZXY.COM LOWEST PRICE PRODUCTS';
                 <div class="col-md-8 col-md-offset-2">
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <a href="<?= Url::to(['/site/signup?cz=' . time()]) ?>" class="btn-black-s text-center fullwidth"><span class="fc-yellow1">REGISTER</span></a>
+                    <?php
+                    if (isset($cz) && !empty($cz)) {
+                        ?>
+                        <a href="<?= Url::to(['/site/signup?cz=' . time()]) ?>" class="btn-black-s text-center fullwidth"><span class="fc-yellow1">REGISTER</span></a>
+                        <?php
+                    } else {
+                        ?>
+                        <a href="<?= Url::to(['/site/signup']) ?>" class="btn-black-s text-center fullwidth"><span class="fc-yellow1">REGISTER</span></a>
+                        <?php
+                    }
+                    ?>
+
                     <div class="size6">&nbsp;</div>
                     <div class="text-center"><a href="<?= Url::to(['/site/why-register']) ?>"><u class="fc-black">Why register?</u></a></div>
                 </div>

@@ -87,7 +87,7 @@
                     </p>
                     <p>
                         <a href="http://www.cozxy.com/profile/order">
-                            <input class="btn btn-black" type="submit" value=" Order status"  style=" background-color:#f1fa8c;text-align:center; !important">
+                            <input class="btn btn-black" type="submit" value=" Order status"  style=" background-color:#f1fa8c;text-align:center;">
                         </a>
                     </p>
                     <p>
@@ -150,7 +150,7 @@
                                             $i = 0;
                                             if (count($order) > 0) {
                                                 $listOrderItems = common\models\costfit\OrderItem::find()
-                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+                                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
                                                 foreach ($listOrderItems as $value1) {
                                                     /*
                                                      * # แยก Suppliers ไม่ซ้ำกัน
@@ -168,14 +168,16 @@
                                                         ?>
 
                                                         <?php
-                                                        $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
+                                                        //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
+                                                        $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->all();
                                                         $num = 0;
                                                         foreach ($GetOrder as $value) {
                                                             /*
                                                              * # แสดงข้อมูล Product ของแต่ละ Suppliers
                                                              * # เงือนไขของ Product Suppliers
                                                              */
-                                                            $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                                                            //$listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                                                            $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
                                                             ?>
                                                             <tr style=" border-bottom: 1px #000000 solid; text-align: left;">
                                                                 <td style="font-size: 12px;text-align: left;"><?php echo ++$i; ?></td>

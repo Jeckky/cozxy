@@ -184,14 +184,6 @@ function addItemToWishlist(id, shelfId, productSuppId) {
             if (data.status) {
                 //$('.wishlist-message').addClass('visible');
                 var $this = $('#addItemToWishlist-' + $pId);
-                /*if (res[1] != 'search') {
-                 alert('133334');
-                 $this.button('loading');
-                 setTimeout(function () {
-                 $this.button('reset');
-                 }, 8000);
-                 } else {*/
-                // alert('13333');
                 $('.heart-' + productSuppId + ' i').removeClass('fa fa-heart-o');
                 $('.heart-' + productSuppId + ' i').addClass('fa fa-heart');
                 $('#heart-o' + productSuppId + shelfId).hide();
@@ -1540,3 +1532,23 @@ $(function () {
         $(this).find('.dropdown-menu.multi-level').css('display', 'block');
     })
 });
+
+
+function subscribe() {
+    var subscribe = $('#subscribe_email').val();
+    //alert(subscribe);
+    var path = $baseUrl + "site/subscribe";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'email': subscribe},
+        success: function (data, status) {
+            if (status == "success") {
+                $('.subscribe-email').html(data);
+            } else {
+
+            }
+        }
+    });
+}

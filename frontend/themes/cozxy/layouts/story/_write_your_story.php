@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Write your story : ' . $productSupplier->title;
+$this->title = 'WRITE YOUR STORIES : ' . $productSupplier->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,16 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 if (Yii::$app->controller->action->id == 'update-stories') {
     $form = ActiveForm::begin([
-        'id' => 'story',
-        'method' => 'POST',
-        'options' => ['enctype' => 'multipart/form-data']
+                'id' => 'story',
+                'method' => 'POST',
+                'options' => ['enctype' => 'multipart/form-data']
     ]);
 } else {
     $form = ActiveForm::begin([
-        'id' => 'story',
-        'method' => 'POST',
-        'action' => Yii::$app->homeUrl . 'story/write-story',
-        'options' => ['enctype' => 'multipart/form-data']
+                'id' => 'story',
+                'method' => 'POST',
+                'action' => Yii::$app->homeUrl . 'story/write-story',
+                'options' => ['enctype' => 'multipart/form-data']
     ]);
 }
 ?>
@@ -70,7 +70,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
             </div>
             <div class="form-group login-box">
                 <label for="exampleInputEmail1">Title</label>
-                <?php echo $form->field($model, 'title')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?>
+                <?php echo $form->field($model, 'title')->textInput(['class' => 'fullwidth', 'placeholder' => 'Title'])->label(FALSE); ?>
             </div>
             <div class="form-group login-box">
                 <label for="exampleInputEmail1">Short Description</label>
@@ -92,11 +92,11 @@ if (Yii::$app->controller->action->id == 'update-stories') {
             <div class="form-group">
                 <?=
                 $form->field($model, 'description', ['options' => ['class' => '']])->widget(\yii\redactor\widgets\Redactor::className([
-                    'settings' => [
-                        'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
-                        'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
-                    ]
-                ]), [
+                            'settings' => [
+                                'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
+                                'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
+                            ]
+                        ]), [
                     'clientOptions' => [
                         'minHeight' => 350,
                         'lang' => 'en',
@@ -120,7 +120,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                             '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
                         ],
                     ]
-                ], ['style' => 'height:1000px;'])
+                        ], ['style' => 'height:1000px;'])
                 ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
@@ -132,13 +132,13 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Shop Name</label>
-                                    <?php echo $form->field($modelComparePrice, 'shopName')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
+                                    <?php echo $form->field($modelComparePrice, 'shopName')->textInput(['class' => 'fullwidth', 'placeholder' => 'Shop Name'])->label(FALSE); ?>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Price</label>
-                                            <?php echo $form->field($modelComparePrice, 'price')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'price')->textInput(['class' => 'fullwidth', 'placeholder' => 'Price'])->label(FALSE); ?>
                                         </div>
                                     </div>
                                     <!--<div class="col-md-6">
@@ -164,8 +164,8 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             echo $form->field($modelComparePrice, 'currency')->widget(kartik\select2\Select2::classname(), [
                                                 //'options' => ['id' => 'address-countryid'],
                                                 'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue) {
-                                                    return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
-                                                }, 'currency_code'),
+                                                            return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                                                        }, 'currency_code'),
                                                 'pluginOptions' => [
                                                     'placeholder' => 'Select...',
                                                     'loadingText' => 'Select Currency ...',
@@ -186,14 +186,14 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group compareprice-latitude">
-                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value, \'\')'])->label(FALSE);
+                                            <?php echo $form->field($modelComparePrice, 'latitude')->textInput(['class' => 'fullwidth', 'placeholder' => 'Location (latitude)', 'onchange' => 'changeMap(this.value, \'\')'])->label(FALSE);
                                             ?>
                                             <input type="hidden" id="latitude" value="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group compareprice-longitude">
-                                            <?php echo $form->field($modelComparePrice, 'longitude')->textInput([ 'class' => 'fullwidth', 'placeholder' => 'Location (longitude)', 'onchange' => 'changeMap(\'\',this.value)'])->label(FALSE); ?>
+                                            <?php echo $form->field($modelComparePrice, 'longitude')->textInput(['class' => 'fullwidth', 'placeholder' => 'Location (longitude)', 'onchange' => 'changeMap(\'\',this.value)'])->label(FALSE); ?>
                                             <input type="hidden" id="longitude" value="">
                                         </div>
                                     </div>

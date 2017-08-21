@@ -20,7 +20,7 @@ class DisplayMyAddress extends Model {
     public static function myAddresssSummary($addressId, $type = FALSE) {
         $products = [];
         $dataAddress = \common\models\costfit\Address::find()->where("addressId ='" . $addressId . "' and type =" . $type)->orderBy('addressId DESC')->one();
-
+        //echo 'countryName : ' . $dataAddress->countries->countryName;
         $products['myAddresss'] = [
             'addressId' => $dataAddress['addressId'],
             'userId' => $dataAddress['userId'],
@@ -29,11 +29,11 @@ class DisplayMyAddress extends Model {
             'company' => isset($dataAddress['company']) ? $dataAddress['company'] : '',
             'tax' => isset($dataAddress['tax']) ? $dataAddress['tax'] : '',
             'address' => isset($dataAddress['address']) ? $dataAddress['address'] : '' . ', ',
-            'country' => isset($dataAddress->countries->countryName) ? $dataAddress->countries->countryName : '' . ', ',
-            'province' => isset($dataAddress->states->localName) ? $dataAddress->states->localName : '' . ', ',
-            'amphur' => isset($dataAddress->cities->localName) ? $dataAddress->cities->localName : '' . ', ',
-            'district' => isset($dataAddress->district->localName) ? $dataAddress->district->localName : '' . ', ',
-            'zipcode' => isset($dataAddress->zipcodes->zipcode) ? $dataAddress->zipcodes->zipcode : '' . ', ',
+            'country' => isset($dataAddress->countries) ? $dataAddress->countries->countryName : '' . ', ',
+            'province' => isset($dataAddress->states) ? $dataAddress->states->localName : '' . ', ',
+            'amphur' => isset($dataAddress->cities) ? $dataAddress->cities->localName : '' . ', ',
+            'district' => isset($dataAddress->district) ? $dataAddress->district->localName : '' . ', ',
+            'zipcode' => isset($dataAddress->zipcodes) ? $dataAddress->zipcodes->zipcode : '' . ', ',
             'tel' => isset($dataAddress['tel']) ? $dataAddress['tel'] : '',
             'type' => isset($dataAddress['type']) ? $dataAddress['type'] : '',
             'isDefault' => isset($dataAddress['isDefault']) ? $dataAddress['isDefault'] : '',

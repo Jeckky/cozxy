@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php
                     //throw new \yii\base\Exception(print_r($this->params['cart']['orderId'], true));
                     foreach ($this->params['cart']['items'] as $item) {
-                        // throw new \yii\base\Exception(print_r($item["image"], true));
+                        //throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                         ?>
                         <?= $this->render('_cart_item', compact('item')); ?>
                         <?php
@@ -41,9 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a href="<?= Url::to(['/']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
                             SHOPPING</a> &nbsp;
                         <?php
-                        if (isset($this->params['cart']['orderId'])) {
+                        if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
+                            // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                             ?>
-                            <input type="submit" value="CHECK OUT" class="b btn-yellow">
+                            <input type="submit" value="CHECK OUT" class="b btn-yellow" id="checkout-btn">
                         <?php } ?>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>

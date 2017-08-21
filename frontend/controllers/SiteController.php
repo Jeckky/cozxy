@@ -103,6 +103,11 @@ class SiteController extends MasterController {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        if (isset($_GET['cz']) && !empty($_GET['cz'])) {
+            $cz = $_GET['cz'];
+        } else {
+            $cz = '';
+        }
 
         $model = new LoginForm();
 
@@ -132,10 +137,10 @@ class SiteController extends MasterController {
                 //  return $this->render('login', [
                 //     'model' => $model,
                 //  ]);
-                return $this->render('@app/themes/cozxy/layouts/_login', compact('model'));
+                return $this->render('@app/themes/cozxy/layouts/_login', compact('model', 'cz'));
             }
         } else {
-            return $this->render('@app/themes/cozxy/layouts/_login', compact('model'));
+            return $this->render('@app/themes/cozxy/layouts/_login', compact('model', 'cz'));
         }
     }
 
@@ -262,7 +267,8 @@ class SiteController extends MasterController {
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
                         //return $this->goHome();
-                        return $this->redirect(Yii::$app->homeUrl . 'site/thank');
+
+                        return $this->redirect(Yii::$app->homeUrl . 'site/thank' . '?token=' . $user->attributes['token']);
                     }
                 }
             } else {
@@ -283,7 +289,7 @@ class SiteController extends MasterController {
         if (isset($user)) {
             $user->status = 1;
             $user->save(FALSE);
-            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz);
+            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz . '&token=' . $_GET["token"]);
         } else {
 
         }
@@ -362,8 +368,10 @@ class SiteController extends MasterController {
     }
 
     public function actionThank() {
+        $token = $_GET['token'];
 
-        return $this->render('thank');
+        $modelUser = \common\models\costfit\User::find()->where('token ="' . $token . '" ')->one();
+        return $this->render('thank', compact('modelUser'));
     }
 
     public function actionForgetPassword() {
@@ -441,6 +449,14 @@ class SiteController extends MasterController {
         } else {
             return FALSE;
         }
+    }
+
+    public function actionSubscribe() {
+        $email = trim($_POST['email']);
+        $subscribe = new \common\models\costfit\Subscribe();
+        $subscribe->email = $email;
+        $subscribe->save(FALSE);
+        echo 'Subscribe  Successful';
     }
 
 }

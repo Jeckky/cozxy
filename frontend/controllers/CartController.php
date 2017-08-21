@@ -183,6 +183,7 @@ class CartController extends MasterController {
         $qnty = intval($orderItem->quantity);
         //throw new \yii\base\Exception($qnty);
         $orderId = $orderItem->orderId;
+
         if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["status"] = TRUE;
             $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
@@ -191,6 +192,12 @@ class CartController extends MasterController {
             $res["cart"] = $cartArray;
             $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
+            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
+            if (isset($orderItems) && count($orderItems) > 0) {
+                $res["showCheckout"] = "yes";
+            } else {
+                $res["showCheckout"] = "no";
+            }
         } else {
             $res["status"] = FALSE;
         }

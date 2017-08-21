@@ -44,7 +44,7 @@ $pickingId = rand(0, 9999);
                             <div class="col-lg-12">
                                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
-                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+                                <a href="" data-toggle="modal" data-target="#LockerModal" style="font-size: 12px;"><u>What's this?</u></a>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ $pickingId = rand(0, 9999);
                         </div>
                         <div class="col-lg-12" style="margin-top: -10px;">
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;">What's this?</a>
+
                         </div>
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
@@ -127,7 +127,7 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-xs-12">
                                 <h4>Map</h4>
-                                <div id="map" style="height:200px;"></div>
+                                <div id="map" style="height:450px;"></div>
                             </div>
                         </div>
                     </div>
@@ -298,7 +298,7 @@ $pickingId = rand(0, 9999);
                                     if (isset($defaultAddress->countries)) {
                                         $countriesLocalName = $defaultAddress->countries->localName;
                                     } else {
-                                        $statesLocalName = '';
+                                        $countriesLocalName = '';
                                     }
                                     if (isset($defaultAddress->zipcode)) {
                                         $zipcode = $defaultAddress->zipcode;
@@ -571,7 +571,7 @@ $pickingId = rand(0, 9999);
 <?php
 $this->registerCss('
 #map {
-            height: 300px;
+            height: 450px;
         }
 ');
 
@@ -602,7 +602,7 @@ function changeMap(lats, lngs) {
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
         zoom: 11,
-        mapTypeId: "hybrid"
+        /*mapTypeId: "hybrid"*/
     });
 
     var marker = new google.maps.Marker({
@@ -784,3 +784,17 @@ $this->registerJs('
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
+<div class="modal fade" id="LockerModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
+                </button>
+                <h3>COZXYBOX</h3>
+            </div>
+            <div class="modal-body" style="padding: 40px;">
+                <?= common\helpers\Faq::Faqs('Locker') ?>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>

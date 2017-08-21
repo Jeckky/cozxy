@@ -194,6 +194,9 @@ function deleteItemCart(ItemOrderId) {
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                     $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
                     $('.price-detail').find('.discountFormatText').html(data.cart.discountFormatText + ' THB');
+                    if (data.showCheckout == 'no') {
+                        $("#checkout-btn").hide();
+                    }
                     $.ajax({
                         type: "POST",
                         url: $baseUrl + "cart/get-product-quantity",
