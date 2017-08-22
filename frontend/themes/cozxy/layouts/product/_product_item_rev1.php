@@ -50,7 +50,7 @@ if (Yii::$app->controller->id == 'product') {
                 <?php
                 if ($model->result > 0) {
                     ?>
-                    <a  href="javascript:addItemToCartUnitys('<?= $model->productId ?>',1,'<?= $model->result ?>','FALSE','<?= $model->productId ?>','<?= $model->userId ?>','<?= $model->receiveType ?>')" id="addItemsToCartMulti-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model->productId ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                    <a  href="javascript:addItemToCartUnitys('<?= $model->productSuppId ?>',1,'<?= $model->result ?>','FALSE','<?= $model->productId ?>','<?= $model->userId ?>','<?= $model->receiveType ?>')" id="addItemsToCartMulti-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model->productId ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
                         <div class="col-xs-4 shopping-<?= $model->productId ?>"><i id="cart-plus-<?= $model->productId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>

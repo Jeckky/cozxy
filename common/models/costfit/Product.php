@@ -591,7 +591,9 @@ class Product extends \common\models\costfit\master\ProductMaster {
                 ->leftJoin('product p', 'product_suppliers.productId=p.productId')
                 ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
                 ->andWhere(['in', 'pps.productSuppId', explode(',', $productPromotionIds)])
-                ->orderBy(new Expression('rand()') . " , pps.price ASC  ");
+                ->orderBy(new Expression('rand()') . " , pps.price");
+
+        $p = $products->all();
 
         return new ActiveDataProvider([
             'query' => $products,
