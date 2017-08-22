@@ -436,15 +436,15 @@ class FakeFactory extends Model {
 
         foreach ($brand as $items) {
             if (isset($items->image)) {
-                $brandImages = \Yii::$app->homeUrl . $items->image;
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
-                    //$brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
+                    $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
                 } else {
-                    //$brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
+                    $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
                 }
             } else {
                 $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
             }
+            $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
             $products[$items->brandId] = [
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
