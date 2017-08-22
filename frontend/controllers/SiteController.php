@@ -37,12 +37,12 @@ class SiteController extends MasterController {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -88,7 +88,7 @@ class SiteController extends MasterController {
 //        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
         $productStory = ProductPost::productStory(3);
         $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', ''), 'pagination' => [
-            'pageSize' => 100,
+                'pageSize' => 100,
         ]]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
@@ -181,8 +181,8 @@ class SiteController extends MasterController {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                        'model' => $model,
-                        'msg' => $msg
+                'model' => $model,
+                'msg' => $msg
             ]);
         }
     }
@@ -197,7 +197,7 @@ class SiteController extends MasterController {
         $model = new ContactForm();
         $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
         return $this->redirect(['contact',
-                    'msg' => $msg,
+            'msg' => $msg,
         ]);
     }
 
@@ -213,8 +213,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('about', [
-                    'content' => $content
-                        ]
+            'content' => $content
+        ]
         );
     }
 
@@ -286,7 +286,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-                    'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
+            'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
         ]);
     }
 
@@ -324,7 +324,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('requestPasswordResetToken', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -349,7 +349,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('resetPassword', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -359,7 +359,7 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('faqs', [
-                    'content' => $content
+            'content' => $content
         ]);
     }
 
@@ -373,8 +373,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('terms-and-conditions', [
-                    'content' => $content
-                        ]
+            'content' => $content
+        ]
         );
     }
 
@@ -465,16 +465,16 @@ class SiteController extends MasterController {
     public function actionSubscribe() {
         $email = trim($_POST['email']);
 
-        $subscribe = Subscribe::find()->where(['email'=>$email])->one();
+        $subscribe = Subscribe::find()->where(['email' => $email])->one();
 
-        if(isset($subscribe)) {
+        if (isset($subscribe)) {
             return 'You are already subscribed!';
         }
 
         $subscribe = new \common\models\costfit\Subscribe();
         $subscribe->email = $email;
         $subscribe->save(FALSE);
-        echo 'Successful subscribe';
+        echo 'Thanks for signing up for Cozxy emails!';
     }
 
 }
