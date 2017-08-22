@@ -442,7 +442,8 @@ class FakeFactory extends Model {
                     $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
                 }
             } else {
-                $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
+                //$brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
+                $brandImages = '';
             }
             $products[$items->brandId] = [
                 'brandId' => $items->brandId,
