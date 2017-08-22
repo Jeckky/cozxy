@@ -6,6 +6,7 @@ use common\models\dbworld\States;
 use common\models\ModelMaster;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\db\Expression;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -271,6 +272,7 @@ class CheckoutController extends MasterController {
                 $order->shippingZipcode = $orderAddress['shippingZipcode'];
                 $order->shippingTel = $orderAddress['shippingTel'];
                 $order->email = $orderAddress['email'];
+                $order->pickingId = new Expression('NULL');
             }
             $order->save(false);
         }

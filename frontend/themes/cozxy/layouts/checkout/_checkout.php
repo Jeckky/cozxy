@@ -34,11 +34,11 @@ $pickingId = rand(0, 9999);
                         <div class="row">
                             <div class="col-lg-12">
                                 Choose shipping type : &nbsp; &nbsp; &nbsp;
-                                <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId)) ? false : true, ['value' => 1, 'class' => 'shippingOption']) ?>
+                                <?= Html::radio('shipping', ((isset($order->pickingId) && !empty($order->pickingId)) || !isset($order->shippingFirstname)) ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
                                 Ship to CozxyBox
                                 <!--   <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
                                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <?= Html::radio('shipping', (isset($order->pickingId) && !empty($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
+                                <?= Html::radio('shipping', (isset($order->shippingFirstname) && !isset($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                 Ship to address
                             </div>
                             <div class="col-lg-12">
@@ -67,6 +67,7 @@ $pickingId = rand(0, 9999);
                                     'pluginOptions' => [
                                         'placeholder' => 'Select Province',
                                         'loadingText' => 'Loading Province ...',
+                                        'allowClear' => true
                                     ],
                                     'options' => ['placeholder' => 'Select Province ...', 'name' => 'provinceId', 'id' => 'stateId'],
                                 ])->label(FALSE);
@@ -74,11 +75,11 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <?php
-                                echo Html::hiddenInput('input-type-11', $model->amphurId, ['id' => 'input-type-11']);
-                                echo Html::hiddenInput('input-type-22', $model->amphurId, ['id' => 'input-type-22']);
+                                echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
-                                    //'data' => [$pickingPoint->amphurId => $pickingPoint->citie->localName],
+                                    'data' => [$pickingPoint->amphurId => $pickingPoint->citie->localName],
                                     'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
