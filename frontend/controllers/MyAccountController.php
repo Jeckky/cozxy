@@ -62,7 +62,7 @@ class MyAccountController extends MasterController {
         if (isset($_POST["User"])) {
             $editPersonalDetail = \frontend\models\DisplayMyAccount::myAccountEditPersonalDetail($_POST["User"]);
             if ($editPersonalDetail == TRUE) {
-                return $this->redirect(['/my-account']);
+                return $this->redirect(['/my-account', 'act'=>'account-detail']);
             } else {
                 return $this->redirect(['/my-account/edit-personal-detail']);
             }
@@ -123,7 +123,7 @@ class MyAccountController extends MasterController {
 
             $editChangePassword = \frontend\models\DisplayMyAccount::myAccountChangePassword($_POST["User"]);
             if ($editChangePassword == TRUE) {
-                return $this->redirect(['/my-account']);
+                return $this->redirect(['/my-account', 'act'=>'account-detail']);
             } else {
                 return $this->redirect(['/my-account/change-password']);
             }
@@ -164,7 +164,7 @@ class MyAccountController extends MasterController {
             $model->type = \common\models\costfit\Address::TYPE_BILLING;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
-                return $this->redirect(['/my-account']);
+                return $this->redirect(['/my-account', 'act'=>'account-detail']);
             }
         }
         if (!isset($model->isDefault)) {
