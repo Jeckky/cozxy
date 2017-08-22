@@ -42,7 +42,7 @@ $(function() {
 	});
 });
 ', yii\web\View::POS_END);
-$this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
+$this->title = 'cozxy.com - Buy what fuels your passion';
 ?>
 
 <?php if (isset($slideGroup)): ?>
@@ -150,7 +150,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -243,7 +243,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();

@@ -19,6 +19,10 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
+        <meta name="KeyWords" content="">
+        <meta name="author" content="cozxy.com">
+        <meta itemprop="name" content="cozxy.com">
+        <meta itemprop="description" content="Shop luxury items, duty-free products, cosmetics, sunglasses and more online at cozxy.com. See where to get the best prices.">
         <?php $this->head() ?>
         <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
         <?php
