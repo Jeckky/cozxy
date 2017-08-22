@@ -444,7 +444,6 @@ class FakeFactory extends Model {
             } else {
                 $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
             }
-            $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
             $products[$items->brandId] = [
                 'brandId' => $items->brandId,
                 'image' => $brandImages,
