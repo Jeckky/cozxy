@@ -24,7 +24,7 @@ if (Yii::$app->controller->id == 'product') {
             <div class="v-hover">
                 <a href="<?= Url::to('product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                </a>
+                </a> 
                 <?php
                 if (Yii::$app->user->id) {
                     if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
