@@ -372,6 +372,7 @@ class FakeFactory extends Model {
         } else {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
             $GetProductCozxy = $GetProductSuppliers;
+            $txtAlert = 'No';
         }
 
         //echo '<pre>';
