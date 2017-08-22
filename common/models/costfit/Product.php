@@ -501,17 +501,25 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function productImageThumbnail($thumbnail = 1) {
         $productImageThumbnail = ProductImage::find()->where(['productId' => $this->productId])->orderBy('ordering')->one();
         if (!isset($productImageThumbnail)) {
-            return Base64Decode::DataImageSvg('Svg260x260');
-        }
-        if (file_exists(Yii::$app->basePath . "/web/" . $productImageThumbnail->imageThumbnail1)) {
-            return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
-        } else {
+            //return Base64Decode::DataImageSvg('Svg260x260');
             $productSupplers = \common\models\costfit\ProductSuppliers::find()->where(['productId' => $this->productId])->one();
-            $imagesSupplers = \common\models\costfit\ProductImageSuppliers::find()->where(['productSuppId' => $productSupplers->productSuppId])->orderBy('ordering')->one();
-            if (file_exists(Yii::$app->basePath . "/web/" . $imagesSupplers->imageThumbnail1)) {
-                return ($thumbnail == 1) ? $imagesSupplers->imageThumbnail1 : $imagesSupplers->imageThumbnail2;
+            $imagesSupplers = \common\models\costfit\ProductImageSuppliers::find()->where(['productSuppId' => $productSupplers['productSuppId']])->orderBy('ordering')->one();
+            if (file_exists(Yii::$app->basePath . "/web/" . $imagesSupplers['imageThumbnail1'])) {
+                return ($thumbnail == 1) ? $imagesSupplers['imageThumbnail1'] : $imagesSupplers['imageThumbnail2'];
             } else {
                 return Base64Decode::DataImageSvg('Svg260x260');
+            }
+        } else {
+            if (file_exists(Yii::$app->basePath . "/web/" . $productImageThumbnail['imageThumbnail1'])) {
+                return ($thumbnail == 1) ? $productImageThumbnail['imageThumbnail1'] : $productImageThumbnail['imageThumbnail2'];
+            } else {
+                $productSupplers = \common\models\costfit\ProductSuppliers::find()->where(['productId' => $this->productId])->one();
+                $imagesSupplers = \common\models\costfit\ProductImageSuppliers::find()->where(['productSuppId' => $productSupplers['productSuppId']])->orderBy('ordering')->one();
+                if (file_exists(Yii::$app->basePath . "/web/" . $imagesSupplers['imageThumbnail1'])) {
+                    return ($thumbnail == 1) ? $imagesSupplers['imageThumbnail1'] : $imagesSupplers['imageThumbnail2'];
+                } else {
+                    return Base64Decode::DataImageSvg('Svg260x260');
+                }
             }
         }
     }
