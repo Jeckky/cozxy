@@ -27,7 +27,7 @@ if (Yii::$app->controller->id == 'product') {
                 </a>
                 <?php
                 if (Yii::$app->user->id) {
-                    if (isset($model->product->isInWishlist())) {
+                    if (isset($model->product)) {
                         if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
                             ?>
                             <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
