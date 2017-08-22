@@ -18,11 +18,11 @@ if (Yii::$app->controller->id == 'product') {
 <div class="col-md-<?= $col ?> col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <a href="<?= Url::to(Yii::$app->homeUrl.'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
+            <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
                 <img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" data-holder-rendered="true" style="<?= $width ?>; <?= $height ?>;">
             </a>
             <div class="v-hover">
-                <a href="<?= Url::to(Yii::$app->homeUrl.'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
                 <?php
@@ -70,7 +70,7 @@ if (Yii::$app->controller->id == 'product') {
             ?>
 
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl.'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>" class="size18 b">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>" class="size18 b">
                     <?= strtoupper($model->title) ?>
                 </a>
             </p>
@@ -78,8 +78,8 @@ if (Yii::$app->controller->id == 'product') {
             <?php
             if ($model->price > 0) {
                 ?><p class="price">
-                    <span class="size16"><?= $model->price ?> THB</span><br>
-                    <span class="size10 onsale"><?= $model->product->price ?> THB</span>
+                    <span class="size16"><?= number_format($model->price, 2) ?> THB</span><br>
+                    <span class="size10 onsale"><?= number_format($model->product->price, 1) ?> THB</span>
                 </p>
                 <?php
             } else {
