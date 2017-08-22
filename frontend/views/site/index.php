@@ -150,14 +150,14 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-promotions"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-promotions/" class="subs-btn size14-xs">See All</a>
                         </div>
                         <br><br>
@@ -193,14 +193,14 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/" class="subs-btn size14-xs">See All</a>
                         </div>
                         <br><br>
@@ -243,14 +243,14 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-not-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-not-sale/" class="subs-btn size14-xs">See All</a>
                         </div>
                         <br><br>
@@ -282,7 +282,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
                         ?>
                     </div>
 
-                    <div class="col-sm-12 text-center" style="margin-top: 3px;">
+                    <div class="col-sm-12 text-center" style="margin-top: 15px;margin-bottom: 20px;">
                         <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
                     </div>
                     <br><br>
