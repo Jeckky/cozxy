@@ -87,14 +87,20 @@
         box-sizing: border-box;
     }
 </style>
+<?php
+if (isset($model->user->avatar)) {
+    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
+} else {
+    $avatar = \Yii::$app->homeUrl . 'images/user.png';
+}
+?>
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model->productPostId ?>"  style=" padding: 5px; ">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="card hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
-
         <div class="avatar">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
-                <img src="<?= isset($model->user->avatar) ? Yii::$app->homeUrl . '/images/user/avatar/' . $model->user->avatar : Yii::$app->homeUrl . '/images/user.png' ?>" alt=""/>
+                <img src="<?= $avatar ?>" alt=""/>
             </a>
         </div>
         <div class="info">
