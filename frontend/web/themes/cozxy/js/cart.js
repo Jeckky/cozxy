@@ -281,7 +281,6 @@ $('.cancelCouponCode').click(function () {
     }
 });
 function checkItemInOrder(orderId) {
-
     $.ajax({
         type: "POST",
         dataType: "JSON",
