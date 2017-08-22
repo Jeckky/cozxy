@@ -204,8 +204,6 @@ class SearchController extends MasterController {
             'pagination' => ['defaultPageSize' => 12]
         ]);
 
-
-
         $sortstatus = ($status == "price") ? "price" : (($status == "brand") ? "brand" : "new");
 
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
