@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="size12 size10-xs">&nbsp;</div>
             <!--TABs-->
             <ul class="nav nav-pills size18 size14-xs b" role="tablist">
-                <li role="presentation"><a href="<?= Yii::$app->homeUrl ?>my-account#account-detail" aria-controls="account-detail" role="tab">Account Detail</a></li>
+                <li role="presentation"><a href="<?= Yii::$app->homeUrl ?>my-account?act=account-detail" aria-controls="account-detail" role="tab">Account Detail</a></li>
                 <li role="presentation" class="active"><a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Top Up Detail</a></li>
                 <li role="presentation"><a href="<?= Yii::$app->homeUrl ?>top-up/history" aria-controls="order-history" role="tab" >Payment History</a></li>
             </ul>
