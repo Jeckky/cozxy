@@ -31,7 +31,12 @@ class ProductController extends MasterController {
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
 
-        $productId = $productIdParams; //\common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
+        $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
+        if (isset($productId)) {
+            $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
+        } else {
+            $productId = NULL;
+        }
         /*
          * Product Views - Frontend
          */
