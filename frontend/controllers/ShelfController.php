@@ -15,7 +15,7 @@ class ShelfController extends MasterController {
 
     public function actionCreate() {
         $title = $_POST['title'];
-        $productSuppId = $_POST['productSuppId'];
+        $productId = $_POST['productId'];
         $res = [];
         $text = '';
         $text1 = '';
@@ -47,27 +47,27 @@ class ShelfController extends MasterController {
                     ->orderBy('type')
                     ->addOrderBy('title')
                     ->all();
-            if ($productSuppId != 'no') {
+            if ($productId != 'no') {
 
                 if (isset($allShelf) && count($allShelf) > 0) {
                     foreach ($allShelf as $shelf):
-                        $isAdd = ProductShelf::isAddToWishList($productSuppId, $shelf->productShelfId);
+                        $isAdd = ProductShelf::isAddToWishList($productId, $shelf->productShelfId);
                         $text1 = "<hr><div class = 'row'>
-<a href = 'javascript:addItemToWishlist($productSuppId,$shelf->productShelfId,$isAdd);' id = 'addItemToWishlist-$productSuppId' style = 'color: #000;'>
+<a href = 'javascript:addItemToWishlist($productId,$shelf->productShelfId,$isAdd);' id = 'addItemToWishlist-$productId' style = 'color: #000;'>
 <div class = 'col-lg-8 col-md-8 col-sm-8 col-xs-8 pull-left text-left'>$shelf->title</div>";
                         if ($isAdd == 1) {
 
-                            $text2 = "<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;color: #ffcc00;' id = 'heartbeat$productSuppId$shelf->productShelfId'>
+                            $text2 = "<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productId$shelf->productShelfId' style = 'font-size: 25pt;color: #ffcc00;' id = 'heartbeat$productId$shelf->productShelfId'>
 <i class = 'fa fa-heart' aria-hidden = 'true'></i>
 </div>
-<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;display: none;' id = 'heart-o$productSuppId$shelf->productShelfId'>
+<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productId$shelf->productShelfId' style = 'font-size: 25pt;display: none;' id = 'heart-o$productId$shelf->productShelfId'>
 <i class = 'fa fa-heart-o' aria-hidden = 'true'></i>
 </div>";
                         } else {
-                            $text2 = "<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;' id = 'heart-o$productSuppId$shelf->productShelfId'>
+                            $text2 = "<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productId$shelf->productShelfId' style = 'font-size: 25pt;' id = 'heart-o$productId$shelf->productShelfId'>
 <i class = 'fa fa-heart-o' aria-hidden = 'true'></i>
 </div>
-<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productSuppId$shelf->productShelfId' style = 'font-size: 25pt;display: none;color: #ffcc00;' id = 'heartbeat$productSuppId$shelf->productShelfId'>
+<div class = 'col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-$productId$shelf->productShelfId' style = 'font-size: 25pt;display: none;color: #ffcc00;' id = 'heartbeat$productId$shelf->productShelfId'>
 <i class = 'fa fa-heart' aria-hidden = 'true'></i>
 </div>";
                         }
