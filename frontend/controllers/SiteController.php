@@ -37,12 +37,12 @@ class SiteController extends MasterController {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -179,8 +179,8 @@ class SiteController extends MasterController {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
-                'msg' => $msg
+                        'model' => $model,
+                        'msg' => $msg
             ]);
         }
     }
@@ -195,7 +195,7 @@ class SiteController extends MasterController {
         $model = new ContactForm();
         $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
         return $this->redirect(['contact',
-            'msg' => $msg,
+                    'msg' => $msg,
         ]);
     }
 
@@ -211,8 +211,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('about', [
-            'content' => $content
-        ]
+                    'content' => $content
+                        ]
         );
     }
 
@@ -284,17 +284,21 @@ class SiteController extends MasterController {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
+                    'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
         ]);
     }
 
     public function actionConfirm() {
-        $cz = $_GET['cz'];
         $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
         if (isset($user)) {
             $user->status = 1;
             $user->save(FALSE);
-            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz . '&token=' . $_GET["token"]);
+            if (isset($_GET['cz'])) {
+                $cz = $_GET['cz'];
+                return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz . '&token=' . $_GET["token"]);
+            } else {
+                return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $_GET["token"]);
+            }
         } else {
 
         }
@@ -318,7 +322,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -343,7 +347,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -353,7 +357,7 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('faqs', [
-            'content' => $content
+                    'content' => $content
         ]);
     }
 
@@ -367,8 +371,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('terms-and-conditions', [
-            'content' => $content
-        ]
+                    'content' => $content
+                        ]
         );
     }
 
