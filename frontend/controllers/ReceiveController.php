@@ -58,8 +58,8 @@ class ReceiveController extends MasterController
         $tel = '';
         $model = new \common\models\costfit\Receive();
         $res = [];
-        if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
-            $order = Order::find()->where("password='" . $_POST['Receive']['password'] . "'")->one();
+        if (isset($_REQUEST['Receive']['password']) && !empty($_REQUEST['Receive']['password'])) {
+            $order = Order::find()->where("password='" . $_REQUEST['Receive']['password'] . "'")->one();
             if (isset($order)) {
                 if ($order->status == Order::ORDER_STATUS_RECEIVED) {//16 = รับของแล้ว
                     $orderItem = OrderItem::find()->where("orderId=" . $order->orderId . " and status<" . Order::ORDER_STATUS_RECEIVED)->all();
@@ -71,14 +71,14 @@ class ReceiveController extends MasterController
                         $res["status"] = 300;
                         $res["error"] = "รายการนี้รับสินค้าไปแล้ว";
                         //print_r(Json::encode($res));
-                        echo Json::encode($res);
+                        return Json::encode($res);
                     }
                 } else {
                     if ($order->error >= Receive::ERROR_PASSWORD) {
                         $res["status"] = 302;
                         $res["error"] = "รายการนี้กรอกรหัสรับสินค้าผิดเกิน " . Receive::ERROR_PASSWORD . " ครั้งกรุณาติดต่อ cozxy.com";
                         //  print_r(Json::encode($res));
-                        echo Json::encode($res);
+                        return Json::encode($res);
                     } else {
                         $user = User::find()->where("userId='" . $order->userId . "'")->one();
                         if (isset($user) && !empty($user)) {
@@ -97,14 +97,15 @@ class ReceiveController extends MasterController
                             $res["name"] = $user->firstname . ' ' . $user->lastname;
                             $res["orderNo"] = $order->orderNo;
                             $res["orderId"] = $order->orderId;
+                            $res['server'] = $_SERVER;
                             //print_r(Json::encode($res));
-                            echo Json::encode($res);
+                            return Json::encode($res);
                         } else {
                             //$ms = 'ไม่เจอรายการสินค้า'; //301
                             $res["status"] = 301;
                             $res["error"] = "ไม่เจอรายการสินค้า";
                             //print_r(Json::encode($res));
-                            echo Json::encode($res);
+                            return Json::encode($res);
                         }
                     }
                 }
@@ -113,7 +114,7 @@ class ReceiveController extends MasterController
                 $res["status"] = 301;
                 $res["error"] = "ไม่เจอรายการสินค้า";
                 //print_r(Json::encode($res));
-                echo Json::encode($res);
+                return Json::encode($res);
             }
             //if ($ms != '') {//ถ้าไม่เจอรายการ แสดงข้อความ แล้วกลับไปหน้าเดิม
 //                return $this->render('error', [

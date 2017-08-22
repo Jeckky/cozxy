@@ -8,6 +8,7 @@
 
 namespace common\helpers;
 
+use common\models\costfit\ProductImage;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -118,7 +119,11 @@ class DataImageSystems {
                         } else {
                             $masterId = $items['productId'];
                             if (isset($masterId)) {
-                                $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->one();
+                                if(isset($productSuppId)) {
+                                    $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->one();
+                                } else {
+                                    $ImagesMaster = ProductImage::find()->where('productId=' . $producmasterId)->one();
+                                }
                                 if (isset($ImagesMaster->imageThumbnail1) && !empty($ImagesMaster->imageThumbnail1)) {
                                     if (file_exists(Yii::$app->basePath . "/web/" . $ImagesMaster->imageThumbnail1)) {
                                         $productimageThumbnail1 = \Yii::$app->homeUrl . $ImagesMaster->imageThumbnail1;

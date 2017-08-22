@@ -50,6 +50,11 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
         return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
+    }
+
     public static function findProductOptionsArray($productSuppId) {
         $res = [];
         $options = ProductGroupOptionValue::find()->where("productSuppId = $productSuppId")->groupBy("productGroupTemplateOptionId")->all();
@@ -61,6 +66,26 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
             ->andWhere("product_group_option_value.productSuppId IS NOT NULL")
             ->groupBy("value")
             ->all();
+            foreach ($optionValues as $value) {
+                $res[$o->productGroupTemplateOptionId][$value->productGroupOptionValueId] = $value->value;
+            }
+        }
+
+
+        return $res;
+    }
+
+    public static function findProductOptionsArrayByProductId($productId) {
+        $res = [];
+        $options = ProductGroupOptionValue::find()->where("productId = $productId")->groupBy("productGroupTemplateOptionId")->all();
+        foreach ($options as $o) {
+            $optionValues = ProductGroupOptionValue::find()
+                ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
+                ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
+                ->where("productGroupTemplateOptionId = $o->productGroupTemplateOptionId AND pg.productId = " . $o->product->parentId)
+                ->andWhere("product_group_option_value.productSuppId IS NOT NULL")
+                ->groupBy("value")
+                ->all();
             foreach ($optionValues as $value) {
                 $res[$o->productGroupTemplateOptionId][$value->productGroupOptionValueId] = $value->value;
             }

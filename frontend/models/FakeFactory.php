@@ -368,16 +368,15 @@ class FakeFactory extends Model {
                 ->one();
                 $txtAlert = 'No';
             }
-            $GetProductCozxy = $GetProductSuppliers->product;
         } else {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
-            $GetProductCozxy = $GetProductSuppliers;
             $txtAlert = 'No';
         }
 
         //echo '<pre>';
         //print_r($GetProductSuppliers);
-        //
+
+        $GetProductCozxy = isset($GetProductSuppliers->product) ? $GetProductSuppliers->product : $GetProductSuppliers;
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers->attributes['productId'], $GetProductSuppliers->attributes['productSuppId'], 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {
