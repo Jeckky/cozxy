@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="col-xs-3">
-                <h3 class="b text-center-sm text-center-xs">OTHER PRODUCTS</h3>
+                <h3 class="b text-center-sm text-center-xs">GOOD READ</h3>
                 <?php
                 echo \yii\widgets\ListView::widget([
                     'dataProvider' => $otherProducts,
@@ -66,7 +66,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                 ?>
             </div>
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;       ?>','<?php //echo $clickNum;      ?>','<?php //echo $countAllProduct;                          ?>','<?php //echo $limit_start;                         ?>','<?php //echo $limit_end;                         ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;        ?>','<?php //echo $clickNum;       ?>','<?php //echo $countAllProduct;                           ?>','<?php //echo $limit_start;                          ?>','<?php //echo $limit_end;                          ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
