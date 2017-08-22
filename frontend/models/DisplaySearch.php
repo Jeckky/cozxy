@@ -201,7 +201,7 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-            ->where("ps.brandId  = '" . isset($brandId) ? $brandId : '' . "' AND product.approve = 'approve' AND pps.status = 1")
+            ->where("ps.brandId  = '" . isset($brandId) ? $brandId : '0' . "' AND product.approve = 'approve' AND pps.status = 1")
             ->andWhere('pps.price > 0 AND ps.result > 0')
             ->groupBy('ps.productSuppId')
             ->all();
@@ -211,7 +211,7 @@ class DisplaySearch extends Model {
             ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
             ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-            ->where("ps.brandId  = '" . isset($brandId) ? $brandId : '' . "'  AND product.approve = 'approve' AND pps.status = 1")
+            ->where("ps.brandId  = '" . isset($brandId) ? $brandId : '0' . "'  AND product.approve = 'approve' AND pps.status = 1")
             ->andWhere('pps.price = 0 AND ps.result = 0')
             ->groupBy('ps.productSuppId')
             ->all();
