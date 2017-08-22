@@ -2,7 +2,7 @@
     <h3 class="page-header" style="margin:10px 20px;">Author</h3>
     <div class="panel-body text-center">
         <?php //$productImagesThumbnailNull = common\helpers\Base64Decode::DataImageSvg120x120(FALSE, FALSE, FALSE); ?>
-        <!--<img src="<?php // $productImagesThumbnailNull      ?>" class="img-responsive" alt="Big Bag" style="">-->
+        <!--<img src="<?php // $productImagesThumbnailNull        ?>" class="img-responsive" alt="Big Bag" style="">-->
         <a href="#">
             <img src="<?= $avatar ?>" alt=""  class="img-responsive img-circle" style="zoom:0.5;">
         </a>
@@ -36,8 +36,8 @@
 </style>
 
 <div class="panel panel-defailt text-center social-icon">
-    <a href="#"><i class="fa fa-facebook"></i></a>
-    <a href="#"><i class="fa fa-instagram"></i></a>
+    <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-facebook"></i></a>
+    <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-instagram"></i></a>
     <a href="#"><i class="fa fa-twitter"></i></a>
     <a href="#"><i class="fa fa-pinterest-p"></i></a>
 </div>

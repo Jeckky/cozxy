@@ -45,7 +45,7 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <a href="<?= Url::to(['/my-account']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    <a href="<?= Url::to(['/my-account', 'act'=>'account-detail']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                     &nbsp;
                     <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                     <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
