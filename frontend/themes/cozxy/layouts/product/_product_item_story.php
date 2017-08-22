@@ -10,7 +10,7 @@ use common\helpers\Base64Decode;
             </a>
         </div>
         <div class="product-txt">
-            <?php $pid = $model->product; ?>
+<?php $pid = $model->product; ?>
             <p class="brand">
                 <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
             </p>
