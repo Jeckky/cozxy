@@ -21,7 +21,7 @@ class ContentController extends ContentMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -52,8 +52,8 @@ class ContentController extends ContentMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'contentGroupId' => $_GET["contentGroupId"]
+                    'dataProvider' => $dataProvider,
+                    'contentGroupId' => $_GET["contentGroupId"]
         ]);
     }
 
@@ -64,7 +64,7 @@ class ContentController extends ContentMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -83,6 +83,7 @@ class ContentController extends ContentMasterController {
         }
         if (isset($_POST["Content"])) {
             $model->attributes = $_POST["Content"];
+            $model->headTitle = $_POST["Content"]["headTitle"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("Content[image]");
             if (isset($imageObj) && !empty($imageObj)) {
@@ -102,13 +103,13 @@ class ContentController extends ContentMasterController {
                     //Do Some Thing
                 }
                 return $this->redirect(['index',
-                    'contentGroupId' => $_GET["contentGroupId"]
+                            'contentGroupId' => $_GET["contentGroupId"]
                 ]);
             }
         }
         return $this->render('create', [
-            'model' => $model,
-            'contentGroup' => $contentGroup
+                    'model' => $model,
+                    'contentGroup' => $contentGroup
         ]);
     }
 
@@ -149,13 +150,13 @@ class ContentController extends ContentMasterController {
                     //Do Some Thing
                 }
                 return $this->redirect(['index',
-                    'contentGroupId' => $model->contentGroupId
+                            'contentGroupId' => $model->contentGroupId
                 ]);
             }
         }
         return $this->render('update', [
-            'model' => $model,
-            'contentGroup' => $contentGroup
+                    'model' => $model,
+                    'contentGroup' => $contentGroup
         ]);
     }
 
