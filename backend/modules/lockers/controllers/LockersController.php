@@ -2,6 +2,7 @@
 
 namespace backend\modules\lockers\controllers;
 
+use common\helpers\Locker;
 use Yii;
 use common\models\costfit\Store;
 use common\models\costfit\Order;
@@ -180,6 +181,7 @@ class LockersController extends LockersMasterController {
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPointItems = Lockers::GetPickingPointItemsParameters($boxcode, $channel);
 
+        $result = Locker::Open($listPoint, [$listPointItems->name]);
 
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $localNamecitie = Local::Cities($listPoint->amphurId);
