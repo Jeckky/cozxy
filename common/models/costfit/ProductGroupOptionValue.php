@@ -20,45 +20,39 @@ use \common\models\costfit\master\ProductGroupOptionValueMaster;
  * @property ProductGroupOption $productGroupOption
  * @property Product $product
  */
-class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroupOptionValueMaster
-{
+class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroupOptionValueMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductGroupTemplateOption()
-    {
+    public function getProductGroupTemplateOption() {
         return $this->hasOne(ProductGroupTemplateOption::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductSupp()
-    {
+    public function getProductSupp() {
         return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public static function findProductOptionsArray($productSuppId)
-    {
+    public static function findProductOptionsArray($productSuppId) {
         $res = [];
-        $options = ProductGroupOptionValue::find()->where("productSuppId = $productSuppId")->groupBy("productGroupTemplateOptionId")->all();
+        $options = ProductGroupOptionValue::find()->where("productSuppId =" . isset($productSuppId) ? $productSuppId : '')->groupBy("productGroupTemplateOptionId")->all();
         foreach ($options as $o) {
             $optionValues = ProductGroupOptionValue::find()
             ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
