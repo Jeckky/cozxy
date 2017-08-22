@@ -432,6 +432,7 @@ class FakeFactory extends Model {
         $brand = \common\models\costfit\Product::find()
         ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
+            ->where('brand.brandId is not null')
         ->groupBy(['product.brandId'])
         ->limit($n)->all();
 
