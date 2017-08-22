@@ -281,7 +281,7 @@ $("#zoom-img").elevateZoom({
                     <?php
                     $img = (isset($model['productSuppId'])) ? ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) : \common\models\costfit\Product::productImageThumbnail2($model['productId']);
                     ?>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl .$img ?>" style="border: #cccccc solid thin;"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl .$img ?>" style="border: #cccccc solid thin;" class="img-responsive"></div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
                         <?php
                         $product = isset($model['productSuppId']) ? ProductSuppliers::find()->where(['productSuppId'=>$model['productSuppId']])->one() : \common\models\costfit\Product::find()->where(['productId'=>$model['productId']])->one();
