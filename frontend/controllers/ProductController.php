@@ -31,7 +31,7 @@ class ProductController extends MasterController {
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
 
-        $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
+        $productId = $productIdParams;//\common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
          */
@@ -61,7 +61,7 @@ class ProductController extends MasterController {
 
         //$StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
-        $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
+        $productGroupOptionValues = isset($productSupplierId) ? ProductGroupOptionValue::findProductOptionsArray($productSupplierId) : NULL;
         return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 

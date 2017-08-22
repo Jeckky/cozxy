@@ -242,7 +242,7 @@ $("#zoom-img").elevateZoom({
                     $whishListGroup = ProductShelf::wishListGroupModal();
                     if (isset($whishListGroup) && count($whishListGroup) > 0) {
                         foreach ($whishListGroup as $group):
-                            $isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
+                            $isAdd = ProductShelf::isAddToWishList($model['productId'], $group->productShelfId);
                             ?> <hr>
                             <div class="row">
                                 <a href="javascript:addItemToWishlist(<?= $model['productId'] ?>,<?= $group->productShelfId ?>,<?= $model['productSuppId'] ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
@@ -277,10 +277,17 @@ $("#zoom-img").elevateZoom({
                 </div>
                 <div col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-left><hr style=""></div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl . ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) ?>" style="border: #cccccc solid thin;"></div>
+                    <?php
+                    $img = (isset($model['productSuppId'])) ? ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) : \common\models\costfit\Product::productImageThumbnail2($model['productId']);
+                    ?>
+                    ?>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl .$img ?>" style="border: #cccccc solid thin;"></div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
-                        <?= ProductSuppliers::productSupplierName($model['productSuppId'])->title ?><br>
-                        <?= ProductSuppliers::productSupplierName($model['productSuppId'])->shortDescription ?>
+                        <?php
+                        $product = isset($model['productSuppId']) ? ProductSuppliers::find()->where(['productSuppId'=>$model['productSuppId']])->one() : \common\models\costfit\Product::find()->where(['productId'=>$model['productId']])->one();
+                        ?>
+                        <?= $product->title ?><br>
+                        <?= $product->shortDescription ?>
                     </div>
                 </div>
 
