@@ -63,13 +63,13 @@ if (Yii::$app->controller->id == 'product') {
             }
             ?>
 
-            <p class="size18 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= strtoupper($model['title']) ?></a></p>
+            <p class="size14 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= strtoupper($model['title']) ?></a></p>
 
             <?php
             if ($model['price'] > 0) {
                 ?><p>
-                    <span class="size18" style="background-color: <?= isset($promotion) ? 'red' : '' ?>;"><?= $model['price'] ?> THB</span><br>
-                    <span class="size14 onsale"><?= $model['price_s'] ?> THB</span>
+                    <span class="size14" style="background-color: <?= isset($promotion) ? 'red' : '' ?>;"><?= $model['price'] ?> THB</span><br>
+                    <span class="size10 onsale"><?= $model['price_s'] ?> THB</span>
                 </p>
                 <?php
             } else {
