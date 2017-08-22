@@ -436,6 +436,7 @@ class FakeFactory extends Model {
 
         foreach ($brand as $items) {
             if (isset($items->image)) {
+                $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
                 if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
                     $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
                 } else {
