@@ -234,7 +234,7 @@ $("#zoom-img").elevateZoom({
                     <div class="text-right" style="">
                         <a class="btn btn-black" id="cancel-newWishList">Cancel</a>&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
-                        <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productId'] ?>">
+                        <input type="hidden" id="productId" name="productId" value="<?= $model['productId'] ?>">
                     </div>
                 </div>
                 <div id="allGroup">
@@ -281,10 +281,10 @@ $("#zoom-img").elevateZoom({
                     <?php
                     $img = (isset($model['productSuppId'])) ? ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) : \common\models\costfit\Product::productImageThumbnail2($model['productId']);
                     ?>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl .$img ?>" style="border: #cccccc solid thin;" class="img-responsive"></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl . $img ?>" style="border: #cccccc solid thin;" class="img-responsive"></div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
                         <?php
-                        $product = isset($model['productSuppId']) ? ProductSuppliers::find()->where(['productSuppId'=>$model['productSuppId']])->one() : \common\models\costfit\Product::find()->where(['productId'=>$model['productId']])->one();
+                        $product = isset($model['productSuppId']) ? ProductSuppliers::find()->where(['productSuppId' => $model['productSuppId']])->one() : \common\models\costfit\Product::find()->where(['productId' => $model['productId']])->one();
                         ?>
                         <?= $product->title ?><br>
                         <?= $product->shortDescription ?>

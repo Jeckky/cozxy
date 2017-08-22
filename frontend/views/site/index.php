@@ -123,7 +123,7 @@ $this->title = 'COZXY.COM LOWEST PRICE PRODUCTS';
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <?php if (isset($promotions)): ?>
+                <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
                     <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
                     <div class="row">
                         <?php

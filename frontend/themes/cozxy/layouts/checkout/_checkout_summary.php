@@ -172,7 +172,7 @@ use kartik\select2\Select2;
                     }
                     ?>
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                        <a href="<?= Url::to(['/checkout']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                     </div>

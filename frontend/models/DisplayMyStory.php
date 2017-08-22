@@ -56,7 +56,7 @@ class DisplayMyStory extends Model {
                 $products['myStoryTop'] = [
                     'productPostId' => NULL,
                     'image' => $productImagesThumbnailNull,
-                    'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
+                    'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productId' => $productId]) : Yii::$app->homeUrl . 'site/login',
                     'urlView' => '',
                     'brand' => NULL,
                     'title' => NULL,
@@ -69,7 +69,7 @@ class DisplayMyStory extends Model {
             $products['myStoryTop'] = [
                 'productPostId' => NULL,
                 'image' => $productImagesThumbnailNull,
-                'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productSuppId' => $productSupplierId]) : Yii::$app->homeUrl . 'site/login',
+                'url' => isset(Yii::$app->user->id) ? Yii::$app->homeUrl . 'story/write-your-story/' . \common\models\ModelMaster::encodeParams(['productId' => $productId]) : Yii::$app->homeUrl . 'site/login',
                 'urlView' => '',
                 'brand' => NULL,
                 'title' => NULL,

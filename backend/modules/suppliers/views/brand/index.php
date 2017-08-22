@@ -39,7 +39,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
                     //'brandId',
                     'title',
                     //'description:ntext',
@@ -83,7 +83,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     //echo $userType->userId . ' Vs ' . Yii::$app->user->identity->userId . '<br>';
                                     if ($userType->userId == $model->userId) {
                                         return Html::a('<i class="fa fa-eye"></i>', $url, [
-                                            'title' => Yii::t('yii', 'view'),
+                                                    'title' => Yii::t('yii', 'view'),
                                         ]);
                                     } else {
                                         //return Html::a('<i class="fa fa-eye"></i>', '#', [
@@ -92,7 +92,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     }
                                 } else {
                                     return Html::a('<i class="fa fa-eye"></i>', '#', [
-                                        'title' => Yii::t('yii', 'view'),
+                                                'title' => Yii::t('yii', 'view'),
                                     ]);
                                 }
                             },
@@ -109,8 +109,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                   //]);
                                   }
                                   } else { */
-                                return Html::a('<i class="fa fa-pencil"></i>', '#', [
-                                    'title' => Yii::t('yii', 'update'),
+                                return Html::a('<i class="fa fa-pencil"></i>', $url, [
+                                            'title' => Yii::t('yii', 'update'),
                                 ]);
                                 //}
                             },
@@ -119,9 +119,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 if (isset($userType)) {
                                     if ($userType->userId == $model->userId) {
                                         return Html::a('<i class="fa fa-trash-o"></i>', $url, [
-                                            'title' => Yii::t('yii', 'Delete'),
-                                            'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                            'data-method' => 'post',
+                                                    'title' => Yii::t('yii', 'Delete'),
+                                                    'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                                    'data-method' => 'post',
                                         ]);
                                     } else {
                                         // return Html::a('<i class="fa fa-trash-o"></i>', '#', [
@@ -132,15 +132,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     }
                                 } else {
                                     return Html::a('<i class="fa fa-trash-o"></i>', '#', [
-                                        'title' => Yii::t('yii', 'Delete'),
-                                        'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                        'data-method' => 'post',
+                                                'title' => Yii::t('yii', 'Delete'),
+                                                'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                                'data-method' => 'post',
                                     ]);
                                 }
                             },
                             'post' => function($url, $model) {
                                 return Html::a('<br><u>Post</u>', ['/suppliers/product-post', 'brandId' => $model->brandId], [
-                                    'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
+                                            'title' => Yii::t('app', 'Change today\'s lists'), 'target' => '_blank', 'data-pjax' => 0]);
                             },
                         ]
                     ],
