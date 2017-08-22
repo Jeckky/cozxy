@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 
-$this->title = 'WRITE YOUR STORIES : ' . $productSupplier->title;
+$this->title = 'WRITE YOUR STORIES : ' . $product->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -48,7 +48,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
     <div class="row">
         <div class="col-xs-12 bg-white">
             <h1 class="page-header">
-                <p style="margin: 0px;" class="size20 fc-g999">   <?= $productSupplier->title ?> </p>
+                <p style="margin: 0px;" class="size20 fc-g999">   <?= $product->title ?> </p>
             </h1>
             <div class="write-story-banner">
                 <?= Html::img(Yii::$app->homeUrl . $image, ['class' => 'img-responsive', 'style' => '100%']) ?>
@@ -222,8 +222,8 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                     ?>
                 </div>
                 <div class="col-md-6 text-right">
-                    <input type="hidden" name="productSuppId" value="<?= $productSupplier->productSuppId ?>">
-                    <input type="hidden" name="productSuppName" value="<?= $productSupplier->title ?>">
+                    <input type="hidden" name="productSuppId" value="<?= $product->productSuppId ?>">
+                    <input type="hidden" name="productSuppName" value="">
                     <button class="btn-yellow save-story" typ="submit">Save Story</button>
                 </div>
             </div>

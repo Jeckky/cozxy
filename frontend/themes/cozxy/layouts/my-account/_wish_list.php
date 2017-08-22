@@ -61,7 +61,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             <h4>Shelf Name &nbsp;&nbsp;&nbsp;<span style="font-size: 12pt;"><a href="" data-toggle="modal" data-target="#ShelfModal"><u>What's this?</u></a></span></h4>
             <input type='text' name='wishListName' class='fullwidth input-lg' id='wishListName' style='margin-bottom: 10px;'>
             <div class='text-right' style=''>
-                <input type='hidden' id='productSuppId' value='no'>
+                <input type='hidden' id='productId' value='no'>
                 <a class='btn btn-black' id='cancel-newWishList'>Cancel</a>&nbsp;&nbsp;&nbsp;
                 <a class='btn btn-yellow'id='create-newWishList' disabled>Create</a>
             </div>

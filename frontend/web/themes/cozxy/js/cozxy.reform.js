@@ -184,19 +184,19 @@ function addItemToWishlist(id, shelfId, productSuppId) {
             if (data.status) {
                 //$('.wishlist-message').addClass('visible');
                 var $this = $('#addItemToWishlist-' + $pId);
-                $('.heart-' + productSuppId + ' i').removeClass('fa fa-heart-o');
-                $('.heart-' + productSuppId + ' i').addClass('fa fa-heart');
-                $('#heart-o' + productSuppId + shelfId).hide();
-                $('#heartbeat' + productSuppId + shelfId).show();
+                $('.heart-' + id + ' i').removeClass('fa fa-heart-o');
+                $('.heart-' + id + ' i').addClass('fa fa-heart');
+                $('#heart-o' + id + shelfId).hide();
+                $('#heartbeat' + id + shelfId).show();
                 //}
                 //$(".fa fa-heart-o").html("<div class='col-xs-4'><i class='fa fa-heartbeat' aria-hidden='true'></i></div>");
             } else {//ลบ
                 if (data.heartbeat == 0) {
-                    $('.heart-' + productSuppId + ' i').removeClass('fa fa-heart');
-                    $('.heart-' + productSuppId + ' i').addClass('fa fa-heart-o');
+                    $('.heart-' + id + ' i').removeClass('fa fa-heart');
+                    $('.heart-' + id + ' i').addClass('fa fa-heart-o');
                 }
-                $('#heart-o' + productSuppId + shelfId).show();
-                $('#heartbeat' + productSuppId + shelfId).hide();
+                $('#heart-o' + id + shelfId).show();
+                $('#heartbeat' + id + shelfId).hide();
             }
         }
     });
@@ -444,7 +444,7 @@ $(document).on('click', '#create-newWishList', function (e) {
     var newWishList = $(this).parent().parent().parent().find('#newWishList');
     var showCreateWishList = $(this).parent().parent().parent().find('#showCreateWishList');
     var hideCreateWishList = $(this).parent().parent().parent().find('#hideCreateWishList');
-    var productSuppId = $(this).parent().find('#productSuppId').val();
+    var productId = $(this).parent().find('#productId').val();
     var allShelf2 = $(this).parent().parent().parent().parent().parent().find('#allShelf2');
     //alert(allShelf2.text);
     if (title != '') {
@@ -452,7 +452,7 @@ $(document).on('click', '#create-newWishList', function (e) {
             type: "POST",
             dataType: "JSON",
             url: $baseUrl + "shelf/create/",
-            data: {'title': title, 'productSuppId': productSuppId},
+            data: {'title': title, 'productId': productId},
             success: function (data)
             {
                 if (data.status) {
