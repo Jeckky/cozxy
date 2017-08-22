@@ -150,7 +150,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -243,7 +243,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -293,11 +293,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 
             <div class="col-md-3">
                 <?php if (isset($otherProducts)): ?>
-<<<<<<< HEAD
                     <h3 class="b text-center-sm text-center-xs">GOOD READS</h3>
-=======
-                    <h3 class="b text-center-sm text-center-xs">GOOD READ</h3>
->>>>>>> 85cf64a916b434870c180c1d5f50cf7381f6361b
+
                     <div class="row">
 
                         <?php
