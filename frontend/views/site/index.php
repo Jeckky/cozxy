@@ -294,7 +294,6 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-md-3">
                 <?php if (isset($otherProducts)): ?>
                     <h3 class="b text-center-sm text-center-xs">GOOD READS</h3>
-
                     <div class="row">
 
                         <?php
