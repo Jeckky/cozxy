@@ -23,7 +23,7 @@ class Faq {
 
     //put your code here
     public static function Faqs($title) {
-        $faq = \common\models\costfit\Content::find()->where("lower(title)='" . $title . "'")->one();
+        $faq = \common\models\costfit\Content::find()->where("lower(headTitle)='" . $title . "'")->one();
         if (isset($faq)) {
             return $faq->description;
         } else {

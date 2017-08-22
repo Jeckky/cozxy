@@ -757,7 +757,9 @@ class MasterController extends MasterCommonController {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
+
                 $text = 'khet ';
                 $textInfo = '';
                 $asterisk = '*';
@@ -782,6 +784,23 @@ class MasterController extends MasterCommonController {
 //                        } else {
 //                            $selected = $param1;
 //                        }
+                        if ($i == 0) {
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
+                        } else {
+                            if ($param3 != 'add') {
+
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
+                        }
                     }
 
                     // Shows how you can preselect a value

@@ -7,11 +7,11 @@ use yii\helpers\Url;
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="product-box">
         <div class="product-img text-center">
-            <a href="<?= Url::to('product/'.$model->encodeParams(['productId' => $model->productId]))  ?>" class="fc-black">
-                <img src="<?= $model->productImageThumbnail()?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
+            <a href="<?= Url::to('product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
+                <img src="<?= \Yii::$app->homeUrl . $model->productImageThumbnail() ?>" alt="" class="fullwidth img-responsive" style="width: 260px; height: 260px;">
             </a>
             <div class="v-hover">
-                <a href="<?= Url::to('product/'.$model->encodeParams(['productId'=>$model->productId]))?>">
+                <a href="<?= Url::to('product/' . $model->encodeParams(['productId' => $model->productId])) ?>">
                     <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
                 <?php
@@ -43,7 +43,7 @@ use yii\helpers\Url;
                 <span class="size14"><?= strtoupper($model->brand->title) ?></span>
             </p>
             <p class="name">
-                <a href="<?= Url::to('product/'.$model->encodeParams(['productId'=>$model->productId]))?>" class="size18 b"><?= strtoupper($model['title']) ?></a>
+                <a href="<?= Url::to('product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="size18 b"><?= strtoupper($model['title']) ?></a>
             </p>
         </div>
     </div>

@@ -216,6 +216,7 @@ function addItemToDefaultWishlist(id) {
                 //window.location = $baseUrl + "my-account?act=2&&p=" + data.title;
                 $('#heartbeat-' + id).show();
                 $('#heart-o-' + id).hide();
+                $('#bAdd' + id).html('<i class="fa fa-heart" aria-hidden="true"></i> ADD TO WISHLIST');
             } else {
                 alert(data.message);
             }
