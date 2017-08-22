@@ -28,20 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">Account Detail</a>
+                    <a href="#account-detail" aria-controls="account-detail" role="tab" data-toggle="tab">ACCOUNT DETAIL</a>
                 </li>
                 <li role="presentation" <?php
                 if ($_GET['act'] == 'order-history') {
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">Order History</a>
+                    <a href="#order-history" aria-controls="order-history" role="tab" data-toggle="tab">ORDER HISTORY</a>
                 </li>
                 <?php
                 if (isset($returnList) && count($returnList) > 0) {
                     ?>
                     <li role="presentation">
-                        <a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">Return List</a>
+                        <a href="#return-list" aria-controls="return-list" role="tab" data-toggle="tab">RETURN LIST</a>
                     </li>
                 <?php } ?>
                 <li role="presentation" <?php
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'class="active" ';
                 }
                 ?>>
-                    <a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">My Stories</a>
+                    <a href="#stories" aria-controls="stories" role="tab" data-toggle="tab">MY STORIES</a>
                 </li>
             </ul>
             <div class="size18 size14-xs">&nbsp;</div>
@@ -113,6 +113,6 @@ $(function () {
   $('#myShelvesPopover').popover()
 })
 "
-, \yii\web\View::POS_END);
+        , \yii\web\View::POS_END);
 ?>
 

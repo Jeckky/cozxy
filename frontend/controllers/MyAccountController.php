@@ -100,7 +100,7 @@ class MyAccountController extends MasterController {
             $model->type = \common\models\costfit\Address::TYPE_BILLING;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
-                return $this->redirect(['/my-account', 'act'=>'account-detail']);
+                return $this->redirect(['/my-account', 'act' => 'account-detail']);
             }
         }
         //first billing address set default = 1
@@ -453,7 +453,14 @@ class MyAccountController extends MasterController {
             $res['status'] = true;
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
-            $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;"><a href="' . Yii::$app->homeUrl . 'site/faqs" target="_blank" style="font-s">What' . "'s " . 'this? </a></span></h4></div>';
+            if ($group->type == 1) {
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#WishlistModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+            } else if ($group->type == 2) {
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your shelf is empty</h4></div>';
+            } else if ($group->type == 3) {
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#FavoriteModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+            }
+
             $res['status'] = true;
         }
 

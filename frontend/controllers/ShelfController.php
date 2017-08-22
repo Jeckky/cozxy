@@ -35,13 +35,13 @@ class ShelfController extends MasterController {
             $newShelf->createDateTime = new \yii\db\Expression('NOW()');
             $newShelf->updateDateTime = new \yii\db\Expression('NOW()');
             $newShelf->save(false);
-            $wishlist = new \common\models\costfit\Wishlist();
-            $wishlist->productShelfId = Yii::$app->db->getLastInsertID();
-            $wishlist->userId = Yii::$app->user->id;
-            $wishlist->productId = $productSuppId;
-            $wishlist->createDateTime = new \yii\db\Expression('NOW()');
-            $wishlist->updateDateTime = new \yii\db\Expression('NOW()');
-            $wishlist->save(false);
+            /* $wishlist = new \common\models\costfit\Wishlist();
+              $wishlist->productShelfId = Yii::$app->db->getLastInsertID();
+              $wishlist->userId = Yii::$app->user->id;
+              $wishlist->productId = $productSuppId;
+              $wishlist->createDateTime = new \yii\db\Expression('NOW()');
+              $wishlist->updateDateTime = new \yii\db\Expression('NOW()');
+              $wishlist->save(false); */
             $res['status'] = true;
             $allShelf = ProductShelf::find()->where("userId=" . Yii::$app->user->id . " and status=1 and type in(1,2)")
                     ->orderBy('type')
