@@ -69,7 +69,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function attributes() {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId'
+            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand'
         ]);
     }
 
@@ -586,12 +586,12 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
 
         $products = ProductSuppliers::find()
-                ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
-                ->join(" LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
-                ->leftJoin('product p', 'product_suppliers.productId=p.productId')
-                ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
-                ->andWhere(['in', 'pps.productSuppId', explode(',', $productPromotionIds)])
-                ->orderBy(new Expression('rand()') . " , pps.price");
+        ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
+        ->join(" LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+        ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+        ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
+        ->andWhere(['in', 'pps.productSuppId', explode(',', $productPromotionIds)])
+        ->orderBy(new Expression('rand()') . " , pps.price");
 
         $p = $products->all();
 
