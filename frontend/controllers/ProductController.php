@@ -30,8 +30,7 @@ class ProductController extends MasterController {
         $productViews = FakeFactory::productViews($productIdParams); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
-        echo $productIdParams;
-        exit();
+
         $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
 
         /*
