@@ -501,6 +501,15 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function productImageThumbnail($thumbnail = 1) {
         $productImageThumbnail = ProductImage::find()->where(['productId' => $this->productId])->orderBy('ordering')->one();
         if (!isset($productImageThumbnail)) {
+            return Base64Decode::DataImageSvg('Svg260x260');
+        }
+
+        return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
+    }
+
+    public function productImageThumbnail_test($thumbnail = 1) {
+        $productImageThumbnail = ProductImage::find()->where(['productId' => $this->productId])->orderBy('ordering')->one();
+        if (!isset($productImageThumbnail)) {
             //return Base64Decode::DataImageSvg('Svg260x260');
             $suppliers = ProductSuppliers::find()->where(['productId' => $this->productId])->one();
             if (isset($suppliers)) {
