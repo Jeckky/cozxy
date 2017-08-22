@@ -502,15 +502,20 @@ class Product extends \common\models\costfit\master\ProductMaster {
         $productImageThumbnail = ProductImage::find()->where(['productId' => $this->productId])->orderBy('ordering')->one();
         if (!isset($productImageThumbnail)) {
             //return Base64Decode::DataImageSvg('Svg260x260');
-            $suppliersImages = ProductImageSuppliers::find()->where(['productSuppId' => $this->productSuppId])->orderBy('ordering')->one();
-            if (isset($suppliersImages)) {
-                return ($thumbnail == 1) ? $suppliersImages->imageThumbnail1 : $suppliersImages->imageThumbnail2;
+            $suppliers = ProductSuppliers::find()->where(['productId' => $this->productId])->one();
+            if (isset($suppliers)) {
+                $suppliersImages = ProductImageSuppliers::find()->where(['productSuppId' => $suppliers->productSuppId])->orderBy('ordering')->one();
+                if (isset($suppliersImages)) {
+                    return ($thumbnail == 1) ? $suppliersImages->imageThumbnail1 : $suppliersImages->imageThumbnail2;
+                } else {
+                    return Base64Decode::DataImageSvg('Svg260x260');
+                }
             } else {
                 return Base64Decode::DataImageSvg('Svg260x260');
             }
+        } else {
+            return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
         }
-
-        return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
     }
 
     public function isInWishlist($productId = Null) {
