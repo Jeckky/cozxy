@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="size32">&nbsp;</div>
 <?php
 $this->registerJs(
-''
-, \yii\web\View::POS_HEAD);
+        ''
+        , \yii\web\View::POS_HEAD);
 ?>
 
