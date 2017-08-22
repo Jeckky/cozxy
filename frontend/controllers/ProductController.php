@@ -61,7 +61,12 @@ class ProductController extends MasterController {
 
         //$StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
-        $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
+        if (isset($productSupplierId)) {
+            $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
+        } else {
+            $productGroupOptionValues = NULL;
+        }
+
         return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 

@@ -52,7 +52,7 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
 
     public static function findProductOptionsArray($productSuppId) {
         $res = [];
-        $options = ProductGroupOptionValue::find()->where("productSuppId =" . isset($productSuppId) ? $productSuppId : '')->groupBy("productGroupTemplateOptionId")->all();
+        $options = ProductGroupOptionValue::find()->where("productSuppId = $productSuppId")->groupBy("productGroupTemplateOptionId")->all();
         foreach ($options as $o) {
             $optionValues = ProductGroupOptionValue::find()
             ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
