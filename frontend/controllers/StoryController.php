@@ -47,31 +47,28 @@ class StoryController extends MasterController {
         $productViews->save(FALSE);
 
         //throw new \yii\base\Exception(print_r($params, true));
-
+        $imgShowStory = '';
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
         $productPost = \common\models\costfit\ProductPost::find()->where("product_post.productPostId=" . $productPostId . ' ')->one();
         $productSuppliers = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productPost->productId)->one();
         if (isset($productSuppliers)) {
             $productSuppId = $productSuppliers->productSuppId;
+            $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)
+                            ->orderBy('ordering asc')->one();
+            if (isset($product_image)) {
+                $imgShowStory = $product_image->image;
+            }
         }
         //echo '<pre>';
         //print_r($productPost);
         //exit();
         // $product_image_suppliers = $productPost->attributes;
-        $imgShowStory = '';
         //if (isset($product_image_suppliers['productId'])) {
         if (isset($productId)) {
             $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPost->productId)
-                            ->orderBy('ordering asc')->limit(1)->one();
-
+                            ->orderBy('ordering asc')->one();
             if (isset($product_image)) {
                 $imgShowStory = $product_image->image;
-            } else {
-                $product_image = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)
-                                ->orderBy('ordering asc')->limit(1)->one();
-                if (isset($product_image)) {
-                    $imgShowStory = $product_image->image;
-                }
             }
         }
         // }
