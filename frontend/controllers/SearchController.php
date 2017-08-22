@@ -71,19 +71,24 @@ class SearchController extends MasterController {
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
         $category = Yii::$app->request->get('search');
+
         $categoryId = NULL;
 
-        $productCanSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearch($category, 12, FALSE),
-            'pagination' => ['defaultPageSize' => 12],
-        ]);
+        /* $productCanSell = new ArrayDataProvider(
+          [
+          'allModels' => DisplaySearch::productSearch($category, 12, FALSE),
+          'pagination' => ['defaultPageSize' => 12],
+          ]); */
+        $productCanSell = DisplaySearch::productSearch($category, 12, FALSE);
 
-        $productNotSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearchNotSale($category, 12, FALSE),
-            'pagination' => ['defaultPageSize' => 12],
-        ]);
+
+        /* $productNotSell = new ArrayDataProvider(
+          [
+          'allModels' => DisplaySearch::productSearchNotSale($category, 12, FALSE),
+          'pagination' => ['defaultPageSize' => 12],
+          ]); */
+
+        $productNotSell = DisplaySearch::productSearchNotSale($category, 12, FALSE);
 
 
         $productFilterBrand = new ArrayDataProvider(
@@ -91,8 +96,8 @@ class SearchController extends MasterController {
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
 
-
-        return $this->render('index', compact('productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
+        $catPrice = DisplaySearch::findAllPrice($categoryId);
+        return $this->render('index', compact('catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
     public function actionBrand($hash = FALSE) {
