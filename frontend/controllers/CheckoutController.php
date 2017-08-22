@@ -34,6 +34,7 @@ class CheckoutController extends MasterController {
         // throw new \yii\base\Exception('aaaaa');
 //        $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
         $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
+
         $pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
         $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
 
@@ -61,6 +62,7 @@ class CheckoutController extends MasterController {
         $order->save(false);
         //Default address
         $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
+
 
         if (isset($defaultAddress)) {
             $order->addressId = $defaultAddress->addressId;
@@ -299,10 +301,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $systemCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $systemCoin
         ]);
     }
 
@@ -326,10 +328,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $order->cozxyCoin
         ]);
     }
 
