@@ -51,6 +51,7 @@ class CheckoutController extends MasterController {
         $hash = 'add';
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
+
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
         if (isset($userPoint)) {
             if ($userPoint->currentPoint < $order->summary) {

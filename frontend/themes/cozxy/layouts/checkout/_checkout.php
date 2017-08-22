@@ -75,8 +75,8 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <?php
-                                echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
-                                echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                                echo Html::hiddenInput('input-type-11', $pickingPointLockersCool->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $pickingPointLockersCool->amphurId, ['id' => 'input-type-22']);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
                                     'data' => [$pickingPoint->amphurId => $pickingPoint->citie->localName],
