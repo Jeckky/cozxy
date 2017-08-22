@@ -82,11 +82,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Total -->
         <div class="col-xs-3">
             <div class="panel panel-defailt  ">
-                <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div> 
+                <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
                 <div class="text-center">
                     <div class="panel panel-defailt text-center social-icon">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/cozxydotcom/"><i class="fa fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/cozxy_thailand"><i class="fa fa-instagram"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
                         <a href="#"><i class="fa fa-pinterest-p"></i></a>
                     </div>
