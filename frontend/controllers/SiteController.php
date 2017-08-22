@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\costfit\Product;
 use common\models\costfit\ProductPost;
+use common\models\costfit\Subscribe;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
@@ -457,10 +458,17 @@ class SiteController extends MasterController {
 
     public function actionSubscribe() {
         $email = trim($_POST['email']);
+
+        $subscribe = Subscribe::find()->where(['email'=>$email])->one();
+
+        if(isset($subscribe)) {
+            return 'You are already subscribed!';
+        }
+
         $subscribe = new \common\models\costfit\Subscribe();
         $subscribe->email = $email;
         $subscribe->save(FALSE);
-        echo 'Subscribe  Successful';
+        echo 'Successful subscribe';
     }
 
 }
