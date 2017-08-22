@@ -154,16 +154,16 @@ $val = rand(1, 10);
                             <input type="hidden" id="receiveType" value="<?php echo $model['receiveType']; ?>">
 
                             <?php
-                            if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
+                            if (true) {//เช็คมีสินค้าในสต๊อก
                                 if (Yii::$app->user->id) {
                                     if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                         ?>
-                                        <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
-                                            <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
+                                        <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
+                                            <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
                                         </a>
                                     <?php } else { ?>
-                                        <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
-                                            <div class="heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
+                                        <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
+                                            <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
                                         </a>
                                         <?php
                                     }
@@ -216,7 +216,7 @@ $("#zoom-img").elevateZoom({
 
 ');
 ?>
-<div class="modal fade" id="wishListGroup<?= $model['productSuppId'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+<div class="modal fade" id="wishListGroup<?= $model['productId'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,7 +234,7 @@ $("#zoom-img").elevateZoom({
                     <div class="text-right" style="">
                         <a class="btn btn-black" id="cancel-newWishList">Cancel</a>&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-yellow"id="create-newWishList" disabled>Create</a>
-                        <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productSuppId'] ?>">
+                        <input type="hidden" id="productSuppId" name="productSuppId" value="<?= $model['productId'] ?>">
                     </div>
                 </div>
                 <div id="allGroup">
@@ -246,25 +246,25 @@ $("#zoom-img").elevateZoom({
                             $isAdd = ProductShelf::isAddToWishList($model['productId'], $group->productShelfId);
                             ?> <hr>
                             <div class="row">
-                                <a href="javascript:addItemToWishlist(<?= $model['productId'] ?>,<?= $group->productShelfId ?>,<?= $model['productSuppId'] ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
+                                <a href="javascript:addItemToWishlist(<?= $model['productId'] ?>,<?= $group->productShelfId ?>,<?= $model['productId'] ?>);" id="addItemToWishlist-<?= $model['productId'] ?>" style="color: #000;">
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 pull-left text-left">
                                         <?= $group->title ?>
                                     </div>
                                     <?php
-                                    //$isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
+                                    //$isAdd = ProductShelf::isAddToWishList($model['productId'], $group->productShelfId);
                                     if ($isAdd) {
                                         ?>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;color: #ffcc00;" id="heartbeat<?= $model['productId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;" id="heart-o<?= $model['productId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         </div>
                                     <?php } else { ?>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;" id="heart-o<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;" id="heart-o<?= $model['productId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart-o" aria-hidden="true"></i>
                                         </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productSuppId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;color: #ffcc00;" id="heartbeat<?= $model['productSuppId'] ?><?= $group->productShelfId ?>">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right text-right heart-<?= $model['productId'] ?><?= $group->productShelfId ?>" style="font-size: 25pt;display: none;color: #ffcc00;" id="heartbeat<?= $model['productId'] ?><?= $group->productShelfId ?>">
                                             <i class="fa fa-heart" aria-hidden="true"></i>
                                         </div>
                                     <?php } ?>
@@ -280,7 +280,6 @@ $("#zoom-img").elevateZoom({
                 <div class="row">
                     <?php
                     $img = (isset($model['productSuppId'])) ? ProductSuppliers::productImageSuppliersSmall($model['productSuppId']) : \common\models\costfit\Product::productImageThumbnail2($model['productId']);
-                    ?>
                     ?>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><img src="<?= Yii::$app->homeUrl .$img ?>" style="border: #cccccc solid thin;"></div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-left pull-right">
