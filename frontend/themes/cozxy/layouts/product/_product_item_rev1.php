@@ -27,19 +27,21 @@ if (Yii::$app->controller->id == 'product') {
                 </a>
                 <?php
                 if (Yii::$app->user->id) {
-                    if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
-                        ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                        </a>
-                    <?php } else { ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                        </a>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                        </a>
-                        <?php
+                    if (isset($model->product->isInWishlist())) {
+                        if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
+                            ?>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            </a>
+                        <?php } else { ?>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            </a>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                            </a>
+                            <?php
+                        }
                     }
                 } else {
                     ?>
