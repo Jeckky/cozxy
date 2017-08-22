@@ -2,7 +2,7 @@
 
     <div class="panel panel-defailt">
         <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
-        <h3 class="page-header" style="margin:10px 20px;">Recent Stories</h3>
+        <h3 class="page-header" style="margin:10px 20px;">RECENT STORIES</h3>
         <div class="size14 text-center">
             <a href="javascript:sortStoriesRecent('','view','product')">
                 Sort by view&nbsp;<?php if ($status == 'view') { ?>

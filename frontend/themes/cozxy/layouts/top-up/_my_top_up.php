@@ -11,8 +11,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs" style="float: left;margin-right: 20px;">Top Up</p>
-            <p class="size14 size14-xs" style="margin-top: 8px;"><a href="<?= Yii::$app->homeUrl ?>site/faqs" target="_blank">  What's this? </a></p>
+            <p class="size20 size18-xs" style="float: left;margin-right: 20px;">TOP UP</p>
+            <p class="size14 size14-xs" style="margin-top: 8px;">
+                <a href="" data-toggle="modal" data-target="#topupModal">  What's this? </a>
+            </p>
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
@@ -45,3 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="size32">&nbsp;</div>
+<div class="modal fade" id="topupModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
+                </button>
+                <h3>TOP UP</h3>
+            </div>
+            <div class="modal-body" style="padding: 40px;">
+                <?= common\helpers\Faq::Faqs('Top Up') ?>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>

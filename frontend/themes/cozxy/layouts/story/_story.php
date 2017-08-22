@@ -78,13 +78,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
                                                     ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                                 </div>
+
+                                                <div class="col-xs-4">
+                                                    <a class="btn btn-success btn-radio" onclick="CozxyComparePriceModernBest(0, 'add', '')">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
+                                                    </a>
+                                                    <input type="checkbox" id="middle-item" class="hidden">
+                                                </div>
                                             <?php } ?>
-                                            <div class="col-xs-4">
-                                                <a class="btn btn-success btn-radio" onclick="CozxyComparePriceModernBest(0, 'add', '')">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i> Add New Price
-                                                </a>
-                                                <input type="checkbox" id="middle-item" class="hidden">
-                                            </div>
                                             <div class="col-xs-4">
                                                 <a class="btn btn-warning btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
                                                 $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);

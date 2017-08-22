@@ -19,40 +19,48 @@ class ProductController extends MasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
 
-        //$productId = $params['productId'];
-        $productSupplierId = $params['productSupplierId'];
+        $productIdParams = $params['productId']; //เก็บ ProductId
+        //$productSupplierId = $params['productSupplierId'];
         if (isset($params['selectedOptions'])) {
             $selectedOptions = $params['selectedOptions'];
         } else {
             $selectedOptions = NULL;
         }
+
+        $productViews = FakeFactory::productViews($productIdParams); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
+        $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
+        $productViews = $productViews['ProductSuppliersDetail'];
+
         $productId = \common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
          */
-        $productViews = new \common\models\costfit\ProductPageViews();
+        $ProductPageViews = new \common\models\costfit\ProductPageViews();
         $cookies = Yii::$app->request->cookies;
         if (isset($cookies['orderToken'])) {
-            $productViews->token = $cookies['orderToken']->value;
+            $ProductPageViews->token = $cookies['orderToken']->value;
         } else {
-            $productViews->token = NULL;
+            $ProductPageViews->token = NULL;
         }
-        $productViews->productSuppId = $productSupplierId;
-        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
-        $productViews->updateDateTime = new \yii\db\Expression('NOW()');
-        $productViews->createDateTime = new \yii\db\Expression('NOW()');
-        $productViews->save(FALSE);
-
+        $ProductPageViews->productSuppId = $productSupplierId;
+        $ProductPageViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
+        $ProductPageViews->updateDateTime = new \yii\db\Expression('NOW()');
+        $ProductPageViews->createDateTime = new \yii\db\Expression('NOW()');
+        $ProductPageViews->save(FALSE);
+        /*
+         * End Product Views
+         */
         // $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
-        $productViews = FakeFactory::productViews($productSupplierId);
-        $productViews = $productViews[$productSupplierId];
+        //-- Old 16/08/2017--- $productViews = FakeFactory::productViews($productSupplierId);
 
         $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
 
-        $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
+        //$StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
+        $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productIdParams, $productSupplierId, FALSE, FALSE)]);
         $productPostId = isset($StoryProductPost->allModels['myStoryTop']['productPostId']) ? $StoryProductPost->allModels['myStoryTop']['productPostId'] : '';
 
-        $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
+        //$StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
+        $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArray($productSupplierId);
         return $this->render('index', compact('productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }

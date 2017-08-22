@@ -16,10 +16,10 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
-            'enableClientValidation' => false,
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/summary',
+                    'options' => ['class' => 'space-bottom'],
+                    'enableClientValidation' => false,
         ]);
         ?>
         <!-- Cart -->
@@ -44,7 +44,7 @@ $pickingId = rand(0, 9999);
                             <div class="col-lg-12">
                                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
-                                <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;" target="_blank"> FAQs (What's this?)</a>
+                                <a href="" data-toggle="modal" data-target="#LockerModal" style="font-size: 12px;"><u>What's this?</u></a>
                             </div>
                         </div>
                     </div>
@@ -52,11 +52,11 @@ $pickingId = rand(0, 9999);
                     <!-- Shipping -->
                     <div class="cart-detail" id="shipToCozxyBox">
                         <div class="col-lg-12" style="padding-left:0px;">
-                            <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>">view all</a></span></h3>
+                            <h3>Ship to CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>" target="_blank">view all</a></span></h3>
                         </div>
                         <div class="col-lg-12" style="margin-top: -10px;">
-                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-                            <a href="<?= Url::to(['/site/faqs#CozxyBox']) ?>" style="font-size: 12px;" target="_blank">FAQs (What's this?)</a>
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
                         </div>
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
@@ -254,11 +254,11 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
-                                        $index = $index++;
+                                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                                $index = $index++;
 
-                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                    }),
+                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                            }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -298,7 +298,7 @@ $pickingId = rand(0, 9999);
                                     if (isset($defaultAddress->countries)) {
                                         $countriesLocalName = $defaultAddress->countries->localName;
                                     } else {
-                                        $statesLocalName = '';
+                                        $countriesLocalName = '';
                                     }
                                     if (isset($defaultAddress->zipcode)) {
                                         $zipcode = $defaultAddress->zipcode;
@@ -366,8 +366,8 @@ $pickingId = rand(0, 9999);
 
                 <?php
                 $form = ActiveForm::begin([
-                    'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box'],
+                            'id' => 'default-add-new-billing-address',
+                            'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
@@ -571,7 +571,7 @@ $pickingId = rand(0, 9999);
 <?php
 $this->registerCss('
 #map {
-            height: 300px;
+            height: 450px;
         }
 ');
 
@@ -602,7 +602,7 @@ function changeMap(lats, lngs) {
     map = new google.maps.Map(document.getElementById("map"), {
         center: myLatLng,
         zoom: 11,
-        //mapTypeId: "hybrid"
+        /*mapTypeId: "hybrid"*/
     });
 
     var marker = new google.maps.Marker({
@@ -784,3 +784,17 @@ $this->registerJs('
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
+<div class="modal fade" id="LockerModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
+                </button>
+                <h3>COZXYBOX</h3>
+            </div>
+            <div class="modal-body" style="padding: 40px;">
+                <?= common\helpers\Faq::Faqs('Locker') ?>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>

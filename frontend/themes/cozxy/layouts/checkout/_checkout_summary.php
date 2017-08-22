@@ -22,7 +22,7 @@ use kartik\select2\Select2;
                             <div class="col-md-6 col-xs-12">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        Ship to : <span class="size18">CozxyBox <?php echo $pickingMap['title'] ?></span>
+                                        Ship to <span class="size18">address <?php echo $pickingMap['title'] ?></span>
                                     </div>
                                 </div>
 
@@ -155,6 +155,7 @@ use kartik\select2\Select2;
                                         <?php echo $myAddressInSummary['myAddresss']['district'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['province'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['zipcode'] ?>&nbsp;
+                                        <?php echo $myAddressInSummary['myAddresss']['country'] ?>&nbsp;
                                     </div>
                                     <div class="size12">&nbsp;</div>
 
@@ -173,7 +174,7 @@ use kartik\select2\Select2;
                     <div class="col-xs-12 text-right">
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
-                        <input type="hidden" name="orderId" value="<?= $order->orderId ?>"> 
+                        <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>

@@ -3,6 +3,10 @@
     .dropdown-menu {
         min-width: 460px;
     }
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0px; 
+    }
 </style>
 <div class="product-menu">
     <div class="container">
@@ -24,7 +28,7 @@
                                     <input type="hidden" name="max" id="max" value="100">
                                     <input type="hidden" name='categoryId' id="categoryId" value="<?php echo $categoryId; ?>">
                                 </div>
-                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR ALL</u></a> &nbsp;
                                 <a href="javascript:filterPriceCozxy()" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
@@ -49,7 +53,7 @@
                                 }
                                 ?>
                                 <div class="col-sm-12 text-right">
-                                    <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR</u></a> &nbsp;
+                                    <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR ALL</u></a> &nbsp;
                                     <a href="javascript:filterBrandCozxy(<?php echo $categoryId; ?>)" class="b btn-black-s size16">APPLY</a>
                                 </div>
                             <?php } ?>

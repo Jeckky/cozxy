@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\costfit\Product;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
@@ -39,23 +40,27 @@ class SearchController extends MasterController {
 
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $catPrice = DisplaySearch::findAllPrice($categoryId);
-        $productCanSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 15],
-        ]);
-
-        $productNotSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
-            'pagination' => ['defaultPageSize' => 15],
-        ]);
+//        $productCanSell = new ArrayDataProvider(
+//        [
+//            'allModels' => DisplaySearch::productSearchCategory('', $categoryId, '', ''),
+//            'pagination' => ['defaultPageSize' => 15],
+//        ]);
+//
+//        $productNotSell = new ArrayDataProvider(
+//        [
+//            'allModels' => DisplaySearch::productSearchCategoryNotSale('', $categoryId, '', ''),
+//            'pagination' => ['defaultPageSize' => 15],
+//        ]);
         $productSupplierId = '';
 
         $productFilterBrand = new ArrayDataProvider(
         [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
+
+        //$productCanSell = Product::productForSaleByCategory($categoryId);
+        $productCanSell = Product::productForSale(12, $categoryId);
+        $productNotSell = Product::productForNotSale(12, $categoryId);
 
 
         return $this->render('index', compact('productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));

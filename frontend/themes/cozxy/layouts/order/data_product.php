@@ -8,7 +8,7 @@
 $i = 0;
 if (count($order) > 0) {
     $listOrderItems = common\models\costfit\OrderItem::find()
-    ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+                    ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
     //echo '<pre>';
     //print_r($listOrderItems->attributes);
     //exit();
@@ -20,9 +20,7 @@ if (count($order) > 0) {
          */
         ?>
         <tr style="background-color:rgb(220, 220, 220) ; border-bottom: 1px #000000 solid; height: 25px;">
-            <td style="font-size: 12px;" colspan="7">
-                <strong><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></strong>
-            </td>
+            <td style="font-size: 12px;" colspan="7"><strong><?php echo isset($value1->user) ? $value1->user->code : '-'; ?></strong></td>
         </tr>
         <?php
         $GetOrderItemMasters = \common\models\costfit\OrderItem::find()->where("orderId=" . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->groupBy('receiveType')->all();
@@ -30,9 +28,9 @@ if (count($order) > 0) {
             //if ($value1->receiveType == 1) {
             ?>
             <tr style="background-color:#f1f1f1 ; border-bottom: 1px #000000 solid; height: 25px; text-align: left; color: #166db9;">
-                <td style="font-size: 12px; " colspan="7">
-                    <?php
-                    $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
+                <td style="font-size: 12px; " colspan="7"><?php
+                    // $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
+                    $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->groupBy('orderId')->one();
                     if (isset($GetOrder->pickingId)) {
                         $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
                         if (count($picking_point) > 0) {
@@ -65,22 +63,24 @@ if (count($order) > 0) {
                             echo ', ' . $StateslocalName;
                             echo ', ' . $CitieslocalName;
                         } elseif ($value1->receiveType == 2) {
-                            echo 'Pickup location :  <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
+                            echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Lockers ร้อน</span></strong>';
                         } elseif ($value1->receiveType == 3) {
-                            echo 'Pickup location :  <strong><span style="color: #0286c2;">Booth</span></strong>';
+                            echo 'Pickup location : ปลายทางที่ <strong><span style="color: #0286c2;">Booth</span></strong>';
                         }
                     }
                     ?></td>
             </tr>
             <?php
-            $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
+            //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->all();
+            $GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'])->all();
             $num = 0;
             foreach ($GetOrder as $value) {
                 /*
                  * # แสดงข้อมูล Product ของแต่ละ Suppliers
                  * # เงือนไขของ Product Suppliers
                  */
-                $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                //$listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
                 ?>
                 <tr style=" border-bottom: 1px #000000 solid;">
                     <td style="font-size: 12px;"><?php echo ++$i; ?></td>
@@ -96,9 +96,9 @@ if (count($order) > 0) {
             }
             //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
             ?>
-                                                                                                                                                                                                                                                                                                                        <!--<tr>
-                                                                                                                                                                                                                                                                                                                            <td style="font-size: 12px;" colspan="7">
-                                                                                                                                                                                                                                                                                                                                <strong>สถานที่รับของ :</strong><br>
+                                                                                                                                                                                                                                                                                                            <!--<tr>
+                                                                                                                                                                                                                                                                                                                <td style="font-size: 12px;" colspan="7">
+                                                                                                                                                                                                                                                                                                                    <strong>สถานที่รับของ :</strong><br>
             <?php
             /* if (isset($GetOrder->pickingId)) {
               $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
@@ -111,8 +111,8 @@ if (count($order) > 0) {
               echo ', ' . $Cities->localName;
               } */
             ?>
-                                                                                                                                                                                                                                                                                                                            </td>
-                                                                                                                                                                                                                                                                                                                        </tr>-->
+                                                                                                                                                                                                                                                                                                                </td>
+                                                                                                                                                                                                                                                                                                            </tr>-->
             <?php
             //} /* $value1->receiveType == 1 : Lockers */
         }

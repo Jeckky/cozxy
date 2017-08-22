@@ -29,18 +29,19 @@ class Locker
 //        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
         $params = array('iLockerHQ17', // generalprofile lockercode
-            'Cozxy Locker Demo', // generalprofile lockername
-            'Cozxy-01', // serialnumber
-            $num, // number lockers
-            $masterKey->value, // masterkey
-            'nimita', // username unlock
-            $locker->ip); // locker url
+                        'Cozxy Locker Demo', // generalprofile lockername
+                        'Cozxy-01', // serialnumber
+                        $num, // number lockers
+                        $masterKey->value, // masterkey
+                        'nimita', // username unlock
+                        $locker->ip); // locker url
         $result = self::call_webapi("open_locker", $params);
-        switch ($result['header']) {
+        switch($result['header']) {
             case 200 :
                 return $result['body'];
             default:
                 header('Error: ' . $result['error'], true, $result['header']);
+
                 return array('Error' => $result['header'] . ' ' . $result['error']);
         }
     }
@@ -89,11 +90,11 @@ class Locker
     {
         $resp_decode = json_decode($http_response);
         $resp = array();
-        if (isset($resp_decode) && count($resp_decode) > 0) {
-            foreach ($resp_decode as $key => $value) {
+        if(isset($resp_decode) && count($resp_decode) > 0) {
+            foreach($resp_decode as $key => $value) {
                 $resp[$key] = $value;
             }
-            switch ($http_code) {
+            switch($http_code) {
                 case 200:
                     return array("header" => $http_code, "body" => $resp);
                 default:
@@ -109,18 +110,19 @@ class Locker
 //        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
         $params = array('iLockerHQ17', // generalprofile lockercode
-            'Cozxy Locker Demo', // generalprofile lockername
-            'Cozxy-01', // serialnumber
-            $num, // number lockers
-            $masterKey->value, // masterkey
-            'nimita', // username unlock
-            $locker->ip); // locker url
+                        'Cozxy Locker Demo', // generalprofile lockername
+                        'Cozxy-01', // serialnumber
+                        $num, // number lockers
+                        $masterKey->value, // masterkey
+                        'nimita', // username unlock
+                        $locker->ip); // locker url
         $result = self::call_webapi2("open_locker", $params);
-        switch ($result['header']) {
+        switch($result['header']) {
             case 200 :
                 return $result['body'];
             default:
                 header('Error: ' . $result['error'], true, $result['header']);
+
                 return array('Error' => $result['header'] . ' ' . $result['error']);
         }
     }

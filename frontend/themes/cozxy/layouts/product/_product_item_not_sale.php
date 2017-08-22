@@ -34,15 +34,15 @@ use yii\helpers\Url;
                 if (Yii::$app->user->id) {
                     if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                         ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);">
-                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);">
+                            <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                         </a>
                     <?php } else { ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heartbeat-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
-                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);" id="heartbeat-<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                            <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                         </a>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productSuppId'] ?>);" id="heart-o-<?= $model['productSuppId'] ?>">
-                            <div class="col-xs-4 heart-<?= $model['productSuppId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                        <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);" id="heart-o-<?= $model['productId'] ?>">
+                            <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </a>
                         <?php
                     }
