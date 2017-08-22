@@ -150,7 +150,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -243,7 +243,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                        ] : [],
+                                ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();

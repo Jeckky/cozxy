@@ -46,7 +46,8 @@ class DisplayMyBrand {
         ->select(' `brand`.*,product_suppliers.categoryId')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
         ->where("product_suppliers.status = 1 and product_suppliers.approve = 'approve' ")
-        ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1')
+        ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1 ')
+        ->andWhere('brand.title is not null')
         ->groupBy(['product_suppliers.brandId'])
         ->all();
 
