@@ -239,10 +239,11 @@ $("#zoom-img").elevateZoom({
                 </div>
                 <div id="allGroup">
                     <?php
+                    // throw new \yii\base\Exception(print_r($model, true));
                     $whishListGroup = ProductShelf::wishListGroupModal();
                     if (isset($whishListGroup) && count($whishListGroup) > 0) {
                         foreach ($whishListGroup as $group):
-                            $isAdd = ProductShelf::isAddToWishList($model['productSuppId'], $group->productShelfId);
+                            $isAdd = ProductShelf::isAddToWishList($model['productId'], $group->productShelfId);
                             ?> <hr>
                             <div class="row">
                                 <a href="javascript:addItemToWishlist(<?= $model['productId'] ?>,<?= $group->productShelfId ?>,<?= $model['productSuppId'] ?>);" id="addItemToWishlist-<?= $model['productSuppId'] ?>" style="color: #000;">
