@@ -280,5 +280,23 @@ $('.cancelCouponCode').click(function () {
         });
     }
 });
+function checkItemInOrder(orderId) {
 
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: $baseUrl + "checkout/check-enough-item",
+        data: {'orderId': orderId},
+        success: function (data)
+        {
+            if (data.status) {
+                $("#soldoutItem").html(data.text);
+                $("#notEnough").modal();
+            } else {
+                $("#cart-item").submit();
+            }
+        }
+    });
+
+}
 //

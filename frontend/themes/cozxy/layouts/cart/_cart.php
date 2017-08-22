@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-cart',
+                    'id' => 'cart-item',
                     'action' => Yii::$app->homeUrl . 'checkout',
                     'options' => ['class' => 'space-bottom'],
         ]);
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
                             // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                             ?>
-                            <input type="submit" value="CHECK OUT" class="b btn-yellow" id="checkout-btn">
+                            <input type="button" value="CHECK OUT" class="b btn-yellow" id="checkout-btn" onclick="javascript:checkItemInOrder(<?= $this->params['cart']['orderId'] ?>)">
                         <?php } ?>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -61,3 +61,28 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="size32">&nbsp;</div>
+<style>
+    #notEnough .modal-dialog{
+        width:70%;
+    }
+</style>
+<div class="modal fade" id="notEnough">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3 class="modal-title">ITEMS SOLD OUT</h3>
+            </div>
+            <div class="modal-body" id="soldoutItem">
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-yellow" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
