@@ -429,15 +429,15 @@ class FakeFactory extends Model {
         $products = [];
 //$brand = \common\models\costfit\Brand::find()->all();
         $brand = \common\models\costfit\Product::find()
-        ->select(' `brand`.*, `product`.*')
+        ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
         ->groupBy(['product.brandId'])
         ->limit($n)->all();
 
         foreach ($brand as $items) {
-            if (isset($items->image) && !empty($items->image)) {
-                if (file_exists(Yii::$app->basePath . "/web/" . $items->image)) {
-                    $brandImages = \Yii::$app->homeUrl . substr($items->image, 1);
+            if (isset($items->imagebrand)) {
+                if (file_exists(Yii::$app->basePath . "/web/" . $items->imagebrand)) {
+                    $brandImages = \Yii::$app->homeUrl . substr($items->imagebrand, 1);
                 } else {
                     $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
                 }

@@ -592,4 +592,57 @@ class CheckoutController extends MasterController {
         return $this->render('ship_to_cozxy_box');
     }
 
+    public function actionCheckEnoughItem() {
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $_POST["orderId"])->all();
+        $res = [];
+        $header = $this->header();
+        $body = '';
+        $text = '';
+        $res["status"] = false;
+        $productResult = [];
+        if (isset($orderItems) && count($orderItems) > 0) {
+            foreach ($orderItems as $item):
+                $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $item->productSuppId)->one();
+                if (isset($productSupp)) {
+                    if ($productSupp->result < $item->quantity) {
+                        $productResult[$productSupp->productSuppId] = $item->quantity;
+                    }
+                }
+            endforeach;
+        }
+        if (count($productResult) > 0) {//ถ้ามีรายการที่ของไม่พอ
+            $res["status"] = true;
+            foreach ($productResult as $productSuppId => $quantity):
+                $productImage = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+                $productSupplier = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+                if (isset($productImage)) {
+                    $image = "<img src='" . Yii::$app->homeUrl . $productImage->imageThumbnail1 . "' class='img-responsive' style='width:150px;height:150px;'>";
+                } else {
+                    $image = '';
+                }
+                if ($productSupplier->result == 0) {
+                    $body .= '<tr><td>' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td>Please delete this item from your cart</td></tr>';
+                } else {
+                    $body .= '<tr><td>' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td>Please decrease this item to ' . $productSupplier->result . '</td></tr>';
+                }
+            endforeach;
+            $text = $header . $body . '</tbody>';
+        }
+        $res["text"] = $text;
+        return json_encode($res);
+    }
+
+    public function header() {
+        return '  <table class="table table-hover" style="width:100%">
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th> Can sale</th>
+              <th>Action</th>
+            </tr>
+            </thead><tbody>
+            ';
+    }
+
 }

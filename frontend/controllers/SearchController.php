@@ -105,10 +105,13 @@ class SearchController extends MasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $brandId = $params['brandId'];
-
-        $brand = \common\models\costfit\Brand::find()->where('brandId=' . $brandId)->one();
-        if (isset($brand)) {
-            $brandName = $brand['title'];
+        if (isset($brandId) && !empty($brandId)) {
+            $brand = \common\models\costfit\Brand::find()->where('brandId=' . $brandId)->one();
+            if (isset($brand)) {
+                $brandName = $brand['title'];
+            } else {
+                $brandName = '';
+            }
         } else {
             $brandName = '';
         }
