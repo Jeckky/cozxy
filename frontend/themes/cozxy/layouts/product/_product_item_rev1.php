@@ -22,7 +22,7 @@ if (Yii::$app->controller->id == 'product') {
                 <img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" data-holder-rendered="true" style="<?= $width ?>; <?= $height ?>;">
             </a>
             <div class="v-hover">
-                <a href="<?= Url::to(Yii::$app->homeUrl.'/product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl.'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
                 <?php
