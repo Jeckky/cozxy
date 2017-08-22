@@ -203,6 +203,7 @@ return [
 //            'management/*'
             'topup/*',
             'generate-model/*',
+            'lockers/*'
         ],
     ],
     'params' => $params,
