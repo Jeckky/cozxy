@@ -438,7 +438,7 @@ class FakeFactory extends Model {
 
         foreach ($brand as $items) {
             if (isset($items->imagebrand)) {
-                if (file_exists(Yii::$app->basePath . "/web/" . $items->imagebrand)) {
+                if (file_exists(Yii::$app->basePath . "/web" . $items->imagebrand)) {
                     $brandImages = \Yii::$app->homeUrl . substr($items->imagebrand, 1);
                 } else {
                     $brandImages = \common\helpers\Base64Decode::DataImageSvg112x64(FALSE, FALSE, FALSE);
