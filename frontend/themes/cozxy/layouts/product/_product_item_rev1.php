@@ -74,7 +74,6 @@ if (Yii::$app->controller->id == 'product') {
                     <?= strtoupper($model->title) ?>
                 </a>
             </p>
-
             <?php
             if ($model->price > 0) {
                 ?><p class="price">
