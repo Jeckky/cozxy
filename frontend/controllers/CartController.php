@@ -387,6 +387,12 @@ class CartController extends MasterController {
         if (isset($ws)) {
             Wishlist::deleteAll("wishlistId = " . $_POST['wishlistId'] . " AND userId = " . \Yii::$app->user->id);
             $length = count(Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
+            $itemInWishlist = count(Wishlist::find()->where("userId=" . Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->all());    //sak
+            if ($itemInWishlist == 0) {
+                $res["total"] = true;
+            } else {
+                $res["total"] = FALSE;
+            }
             $res["status"] = TRUE;
             $res["length"] = $length;
         } else {

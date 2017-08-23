@@ -11,7 +11,7 @@ $col2 = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
 ?>
 <?php
 
-function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
+function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType, $shelfId) {
     $quantity = 1;
     echo '
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
@@ -34,9 +34,9 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     }
     '<p class="size14 fc-g999">' . $txt . '</p>';
     if ($maxQnty > 0 && $price > 0) {
-        echo '<p><a href="javascript:addItemToCartUnitys(\'' . $productSuppId . '\',\'' . $quantity . '\',\'' . $maxQnty . '\',\'' . $fastId . '\',\'' . $productId . '\',\'' . $supplierId . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+        echo '<p><a href="javascript:addItemToCartUnitys(\'' . $productSuppId . '\',\'' . $quantity . '\',\'' . $maxQnty . '\',\'' . $fastId . '\',\'' . $productId . '\',\'' . $supplierId . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     } else {
-        echo '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+        echo '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     }
     echo '
                 </div>
@@ -96,7 +96,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 $wishlists = DisplayMyAccount::myAccountWishList($defalutWishlist->productShelfId, 8);
                 if (isset($wishlists) && count($wishlists) > 0) {
                     foreach ($wishlists as $value):
-                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType'], $defalutWishlist->productShelfId);
                     endforeach;
                 }
                 $isShowSeemore = DisplayMyAccount::wishlistItems($defalutWishlist->productShelfId);
@@ -220,7 +220,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 $wishlists = DisplayMyAccount::myAccountWishList($shelf->productShelfId, 8);
                 if (isset($wishlists) && count($wishlists) > 0) {
                     foreach ($wishlists as $value):
-                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType']);
+                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType'], $shelf->productShelfId);
                     endforeach;
                 }
                 $isShowSeemore = DisplayMyAccount::wishlistItems($shelf->productShelfId);

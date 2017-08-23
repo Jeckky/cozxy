@@ -62,7 +62,7 @@ class MyAccountController extends MasterController {
         if (isset($_POST["User"])) {
             $editPersonalDetail = \frontend\models\DisplayMyAccount::myAccountEditPersonalDetail($_POST["User"]);
             if ($editPersonalDetail == TRUE) {
-                return $this->redirect(['/my-account', 'act'=>'account-detail']);
+                return $this->redirect(['/my-account', 'act' => 'account-detail']);
             } else {
                 return $this->redirect(['/my-account/edit-personal-detail']);
             }
@@ -123,7 +123,7 @@ class MyAccountController extends MasterController {
 
             $editChangePassword = \frontend\models\DisplayMyAccount::myAccountChangePassword($_POST["User"]);
             if ($editChangePassword == TRUE) {
-                return $this->redirect(['/my-account', 'act'=>'account-detail']);
+                return $this->redirect(['/my-account', 'act' => 'account-detail']);
             } else {
                 return $this->redirect(['/my-account/change-password']);
             }
@@ -164,7 +164,7 @@ class MyAccountController extends MasterController {
             $model->type = \common\models\costfit\Address::TYPE_BILLING;
             $model->createDateTime = new \yii\db\Expression("NOW()");
             if ($model->save(FALSE)) {
-                return $this->redirect(['/my-account', 'act'=>'account-detail']);
+                return $this->redirect(['/my-account', 'act' => 'account-detail']);
             }
         }
         if (!isset($model->isDefault)) {
@@ -439,9 +439,9 @@ class MyAccountController extends MasterController {
                 }
                 $text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
                 if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
-                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $item['receiveType'] . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $item['receiveType'] . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
-                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
                 $text .= '</div></div></div>';
             endforeach;

@@ -597,7 +597,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
  * Delete items to cart in deleteWishlist
  */
 
-function deleteItemToWishlist(id) {
+function deleteItemToWishlist(id, shelfId) {
     //alert(id);
     var $this = $('#deletetemToWishlists-' + id);
     $this.button('loading');
@@ -606,14 +606,17 @@ function deleteItemToWishlist(id) {
     }, 8000);
     $.ajax({
         type: "POST",
+        dataType: "JSON",
         url: $baseUrl + "cart/delete-wishlist",
-        data: {'wishlistId': id},
-        success: function (data, status)
+        data: {wishlistId: id, shelfId: shelfId},
+        success: function (data)
         {
-            //alert(data);
-            if (status == "success") {
-                var JSONObject = JSON.parse(data);
+
+            if (data.status) {
                 $('.item-to-wishlist-' + id).remove();
+                if (data.total) {
+                    showWishlistGroup(shelfId, 1);
+                }
             } else {
                 /*
                  $('.name-lockers-cool').html('');
