@@ -5,13 +5,13 @@
         if (Yii::$app->user->identity->userId == $productPost->userId) {
             $txtStory = 'Dashboard';
         } else {
-            $txtStory = 'About';
+            $txtStory = 'ABOUT';
         }
     } else {
-        $txtStory = 'About';
+        $txtStory = 'ABOUT';
     }
     ?>
-    <h3 class="page-header" style="margin:10px 20px;"><?= $txtStory ?> This Story</h3>
+    <h3 class="page-header" style="margin:10px 20px;"><?= $txtStory ?> THIS STORY</h3>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-9">

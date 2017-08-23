@@ -2,7 +2,7 @@
     <?php
     if (isset(Yii::$app->user->identity->userId)) {
         ?>
-        <h3 class="page-header" style="margin:10px 20px;"><?= $productPost->userId != Yii::$app->user->identity->userId ? 'Rate this story' : 'Your story rate' ?></h3>
+        <h3 class="page-header" style="margin:10px 20px;"><?= $productPost->userId != Yii::$app->user->identity->userId ? 'RATE THIS STORY' : 'YOUR STORY RATE' ?></h3>
     <?php } else { ?>
         <h3 class="page-header" style="margin:10px 20px;">Story rate</h3>
     <?php } ?>

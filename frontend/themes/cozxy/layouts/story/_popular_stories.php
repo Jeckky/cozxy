@@ -4,7 +4,7 @@ use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ProductPost;
 ?>
 <div class="panel panel-defailt">
-    <h3 class="page-header" style="margin:10px 20px;">Popular Stories</h3>
+    <h3 class="page-header" style="margin:10px 20px;">POPULAR STORIES</h3>
     <div class="panel-body">
         <?php
         //throw new \yii\base\Exception(count($popularStories));
