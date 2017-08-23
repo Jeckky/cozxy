@@ -348,6 +348,10 @@ class CheckoutController extends MasterController {
             $systemCoin = $_GET['systemCoin'];
             $addressId = $_GET['addressId'];
         }
+        $isHasNotEnough = $this->CheckEnoughItem($orderId);
+        if ($isHasNotEnough == 1) {
+            return $this->redirect([Yii::$app->homeUrl . 'cart?fc=1']);
+        }
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $res = [];
         if (isset($order)) {
@@ -638,6 +642,26 @@ class CheckoutController extends MasterController {
         }
         $res["text"] = $text;
         return json_encode($res);
+    }
+
+    public function CheckEnoughItem($orderId) {
+        $orderItems = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        $productResult = [];
+        if (isset($orderItems) && count($orderItems) > 0) {
+            foreach ($orderItems as $item):
+                $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $item->productSuppId)->one();
+                if (isset($productSupp)) {
+                    if ($productSupp->result < $item->quantity) {
+                        $productResult[$productSupp->productSuppId] = $item->quantity;
+                    }
+                }
+            endforeach;
+        }
+        if (count($productResult) > 0) {
+            return 1; //มีไอเทมที่มีจำนวนไม่พอ
+        } else {
+            return 0; //ไอเทมครบผ่านได้
+        }
     }
 
     public function header() {

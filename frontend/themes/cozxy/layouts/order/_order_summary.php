@@ -3,6 +3,8 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+\frontend\assets\CartAsset::register($this);
 ?>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -10,7 +12,7 @@ use yii\bootstrap\ActiveForm;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-shipping-cart',
+                    'id' => 'confirm-checkout',
                     'action' => Yii::$app->homeUrl . 'checkout/confirm',
                     'options' => ['class' => 'space-bottom'],
         ]);
@@ -45,7 +47,8 @@ use yii\bootstrap\ActiveForm;
                             <input type="hidden" name="systemCoin" value="<?= $systemCoin ?>">
                             <input type="hidden" name="addressId" value="<?= $addressIdsummary ?>">
                             <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
-                            <input type="submit" value="Confirm" class="b btn-yellow">
+                            <input type="button" value="CONFIRM" class="b btn-yellow" onclick="javascript:checkItemInOrder(<?= $order->orderId ?>)">
+                            <!--<input type="submit" value="Confirm" class="b btn-yellow">-->
                         <?php } else {
                             ?>
                             <a href="/top-up?needMore=<?= $order->summary - $userPoint->currentPoint ?>" class="b btn-success" style="padding:12px 32px; margin:10px auto 12px">TOP UP COZXYCOIN</a>
@@ -71,3 +74,31 @@ use yii\bootstrap\ActiveForm;
 </div>
 
 <div class="size32">&nbsp;</div>
+<style>
+    #notEnough .modal-dialog{
+        width:70%;
+    }
+</style>
+<div class="modal fade" id="notEnough">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-yellow3">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3 class="modal-title">ITEMS SOLD OUT</h3>
+            </div>
+            <div style="padding: 15px;">Sorry, this item is no longer available. Please remove it from your cart. Add them to your wishlist and we’ll let you know when it’s back in stock!</div>
+
+            <div class="modal-body" id="soldoutItem">
+
+
+            </div>
+            <div class="modal-footer">
+                <a href="<?= Yii::$app->homeUrl ?>cart" class="btn btn-yellow"><< BACK TO CART</a>
+                <button type="button" class="btn  btn-black" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
