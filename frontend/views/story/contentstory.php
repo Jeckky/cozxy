@@ -3,7 +3,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Story See More';
+$this->title = 'See more stories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="size32">&nbsp;</div>
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">Story See More</p>
+            <p class="size20 size18-xs">See more stories</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
 
