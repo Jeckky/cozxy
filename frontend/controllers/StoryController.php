@@ -581,6 +581,13 @@ class StoryController extends MasterController {
         $favorite = FavoriteStory::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id . " and status=1")->one();
         if (isset($favorite)) {
             $favorite->delete();
+            $count = count(FavoriteStory::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id . " and status=1")->all());
+            if ($count == 0) {
+                $res['total'] = TRUE;
+                $res['text'] = "<h4>No story in fav item <span style='margin-left:20px;font-size:12pt;'><a href='' data-toggle='modal' data-target='#FavoriteModal'><u>What's this? </u></a></span></h4>";
+            } else {
+                $res['total'] = FALSE;
+            }
             $res['status'] = true;
         } else {
             $res['status'] = false;

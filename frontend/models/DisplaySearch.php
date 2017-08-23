@@ -30,7 +30,10 @@ class DisplaySearch extends Model
                 ->select('product_suppliers.*,product_price_suppliers.price ')
                 //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
                 ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+                ->leftJoin('product p', 'p.productId=product_suppliers.productId')
                 ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
+
+                ->andWhere('p.productId is not null')
                 ->andFilterWhere(['OR',
                                   //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                                   //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
@@ -49,8 +52,10 @@ class DisplaySearch extends Model
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
                 ->select('product_suppliers.*,product_price_suppliers.price ')
                 ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+                ->leftJoin('product p', 'p.productId=product_suppliers.productId')
                 ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
                     . ' product_price_suppliers.price > 0')
+                ->andWhere('p.productId is not null')
                 ->orderBy(new \yii\db\Expression('rand()'));
         }
 

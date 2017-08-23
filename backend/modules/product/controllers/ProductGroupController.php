@@ -934,11 +934,13 @@ class ProductGroupController extends ProductMasterController
     {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
         $model->status = 1;
+        $model->approve = 'approve';
         $model->save();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($product->categoryId, $product->productId);
             $product->status = 1;
+            $product->approve = 'approve';
             $product->save();
             if (isset($_GET["userId"]) && $_GET["userId"] != 0) {
                 $ps = \common\models\costfit\ProductSuppliers::find()->where("productId = $product->productId AND userId = " . $_GET["userId"] . " AND status = 99")->one();

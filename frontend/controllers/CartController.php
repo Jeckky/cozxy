@@ -389,7 +389,8 @@ class CartController extends MasterController {
             $length = count(Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
             $itemInWishlist = count(Wishlist::find()->where("userId=" . Yii::$app->user->id . " and productShelfId=" . $_POST['shelfId'])->all());    //sak
             if ($itemInWishlist == 0) {
-                $res["total"] = true;
+                $res["text"] = "<h4>No story in fav item <span style='margin-left:20px;font-size:12pt;'><a href='' data-toggle='modal' data-target='#FavoriteModal'><u>Whats this? </u></a></span></h4>";
+                $res["total"] = TRUE;
             } else {
                 $res["total"] = FALSE;
             }
