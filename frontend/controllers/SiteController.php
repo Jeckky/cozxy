@@ -195,7 +195,7 @@ class SiteController extends MasterController {
         $Subject = 'Email from customer contact';
         $mail = Email::mailContactCozxy($Subject, $customerMail, $customerName, $customerPhone, $customerMsg);
         $model = new ContactForm();
-        $msg = '* E-mail was sent to cozxy.com, please wait for contact from cozxy.com, thank you';
+        $msg = 'You form has been sent to cozxy.com. We will contact to you shortly. Thank you.';
         return $this->redirect(['contact',
             'msg' => $msg,
         ]);
