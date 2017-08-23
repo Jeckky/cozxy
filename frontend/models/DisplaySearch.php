@@ -136,7 +136,6 @@ class DisplaySearch extends Model
             ->andWhere(['product.status' => 1])
             ->andWhere(['not in', 'product.productId', $productInStock])
             ->orderBy(new Expression('rand()'))
-//            ->orderBy('product.productId')
             ->limit(isset($n) ? $n : 0);
 
         if(isset($search_hd)) {
