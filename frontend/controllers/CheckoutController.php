@@ -610,9 +610,9 @@ class CheckoutController extends MasterController {
                         $productResult[$productSupp->productSuppId] = $item->quantity;
                         $isWishlist = \common\models\costfit\Wishlist::find()->where("userId=" . Yii::$app->user->id . " and productId=" . $productSupp->productId . " and status=1")->one();
                         if (isset($isWishlist)) {
-                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12" id="bAdd' . $productSupp->productId . '" onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart-o" aria-hidden="true"></i> ADD TO WISHLIST</button>';
+                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12"  onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO WISHLIST</button>';
                         } else {
-                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12" onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO WISHLIST</button>';
+                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12" id="bAdd' . $productSupp->productId . '" onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart-o" aria-hidden="true"></i> ADD TO WISHLIST</button>';
                         }
                     }
                 }
@@ -634,7 +634,7 @@ class CheckoutController extends MasterController {
                     $body .= '<tr><td style="text-align:center;">' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td style="text-align:center;">' . $wishlist[$productSuppId] . '<br><br> Please decrease this item to ' . $productSupplier->result . '</td></tr>';
                 }
             endforeach;
-            $text = $header . $body . '</tbody>';
+            $text = $header . $body . '</tbody></table>';
         }
         $res["text"] = $text;
         return json_encode($res);

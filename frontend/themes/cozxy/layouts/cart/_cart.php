@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="modal-body" id="soldoutItem">
 
-                </table>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-yellow" data-dismiss="modal">Ok</button>
