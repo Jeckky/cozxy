@@ -373,11 +373,10 @@ class FakeFactory extends Model {
             $txtAlert = 'No';
         }
 
-        //echo '<pre>';
-        //print_r($GetProductSuppliers);
 
         $GetProductCozxy = isset($GetProductSuppliers->product) ? $GetProductSuppliers->product : $GetProductSuppliers;
-        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers->attributes['productId'], $GetProductSuppliers->attributes['productSuppId'], 'Svg116x116', 'Svg555x340');
+
+        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : NULL, 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {
             $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();

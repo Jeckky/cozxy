@@ -119,7 +119,7 @@ class DataImageSystems {
                         } else {
                             $masterId = $items['productId'];
                             if (isset($masterId)) {
-                                if(isset($productSuppId)) {
+                                if (isset($productSuppId)) {
                                     $ImagesMaster = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSuppId)->one();
                                 } else {
                                     $ImagesMaster = ProductImage::find()->where('productId=' . $producmasterId)->one();

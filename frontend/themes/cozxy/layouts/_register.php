@@ -117,7 +117,7 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                             <input type="number" name="SignupForm[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%">
                             -->
                         </div>
-                        <div class="col-sm-12">
+                        <!--<div class="col-sm-12">
                             <div class="checkbox">
                                 <label class="">
                                     <div >
@@ -125,8 +125,12 @@ $this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
                                     </div> I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-md-12">
+                            <div>
+                                <input type="checkbox" id="loginform-accept-term" name="User[acceptTerm]" value="1">
+                                I have read and agree with the <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg"> terms</a>
+                            </div>
                             <input type="submit" id="create-account" class="btn-yellow fullwidth" value="CREATE ACCOUNT" disabled style="background-color: #ccc;">
                         </div>
                     </div>
