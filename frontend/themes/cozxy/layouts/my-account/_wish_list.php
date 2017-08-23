@@ -6,6 +6,8 @@ use common\models\costfit\FavoriteStory;
 use common\models\costfit\ProductSuppliers;
 
 $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+$col10 = "col-lg-10 col-md-10 col-sm-9 col-xs-9";
+$col2 = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
 ?>
 <?php
 
