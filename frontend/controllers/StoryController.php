@@ -85,7 +85,6 @@ class StoryController extends MasterController {
         //$currency = ArrayHelper::map(Currency::find()->where("status=1 ")->orderBy('createDateTime')->all(), 'currencyId', 'title');
         $currency = new ArrayDataProvider(['allModels' => DisplayMyStory::CurrencyInfos()]);
 
-
         // $currency = \common\models\costfit\CurrencyInfo::find()->all();
         $country = ArrayHelper::map(Countries::find()->where("1")->all(), 'countryId', 'countryName');
         $model = new Currency();
