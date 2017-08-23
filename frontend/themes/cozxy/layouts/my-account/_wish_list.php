@@ -118,68 +118,70 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     }
     ?>
 </div>
-<?php
-//favorit story
-$favoriteStories = ProductShelf::favoriteStories();
-$allFavorite = FavoriteStory::allFavoriteStories();
-
-if (isset($favoriteStories)) {
-    $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-    ?>
-    <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
-        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
-        </div>
-    </a>
-    <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
-        <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-            <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
-        </div>
-    </a>
+<div id="fav">
     <?php
-    if ($allFavorite != FALSE) {
+//favorit story
+    $favoriteStories = ProductShelf::favoriteStories();
+    $allFavorite = FavoriteStory::allFavoriteStories();
+
+    if (isset($favoriteStories)) {
+        $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
         ?>
-        <div id="showFavoriteItem" style="display:none;">
-            <div class="row" style="padding: 20px;">
-                <?=
-                \yii\widgets\ListView::widget([
-                    'dataProvider' => $favoriteStory,
-                    'options' => [
-                        'tag' => false,
-                    ],
-                    'itemView' => function ($model) {
-                        return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
-                    },
-                    //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                    //'layout'=>"{summary}{pager}{items}"
-                    'layout' => "{items}",
-                    'itemOptions' => [
-                        'tag' => false,
-                    ],
-                ]);
+        <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
+        <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
+            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
+                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            </div>
+        </a>
+        <?php
+        if ($allFavorite != FALSE) {
+            ?>
+            <div id="showFavoriteItem" style="display:none;">
+                <div class="row" style="padding: 20px;">
+                    <?=
+                    \yii\widgets\ListView::widget([
+                        'dataProvider' => $favoriteStory,
+                        'options' => [
+                            'tag' => false,
+                        ],
+                        'itemView' => function ($model) {
+                            return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_items', ['model' => $model]);
+                        },
+                        //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                        //'layout'=>"{summary}{pager}{items}"
+                        'layout' => "{items}",
+                        'itemOptions' => [
+                            'tag' => false,
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <?php
+                // throw new \yii\base\Exception(count($allFavorite));
+                if (isset($allFavorite) && $allFavorite > 8) {
+                    ?>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                        <a href="<?= Yii::$app->homeUrl ?>my-account/all-favorite-story">See more favorite stories >></a>
+                    </div>
+                    <?php
+                }
                 ?>
             </div>
             <?php
-            // throw new \yii\base\Exception(count($allFavorite));
-            if (isset($allFavorite) && $allFavorite > 8) {
-                ?>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
-                    <a href="<?= Yii::$app->homeUrl ?>my-account/all-favorite-story">See more favorite stories >></a>
-                </div>
-                <?php
-            }
+        } else {
             ?>
-        </div>
-        <?php
-    } else {
-        ?>
-        <div id="showFavoriteItem" style="display:none;">
-            <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
-        </div>
-        <?php
+            <div class="<?= $fullCol ?>"id="showFavoriteItem" style="display:none;">
+                <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
+            </div>
+            <?php
+        }
     }
-}
-?>
+    ?>
+</div>
 <div id="allShelf2">
     <?php
     //shelf
@@ -234,7 +236,8 @@ if (isset($favoriteStories)) {
             <?php
         endforeach;
     }
-    ?></div>
+    ?>
+</div>
 <div class="modal fade" id="ShelfModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
     <div class="modal-dialog">
         <div class="modal-content">
