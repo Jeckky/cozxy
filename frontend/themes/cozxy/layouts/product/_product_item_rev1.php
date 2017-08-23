@@ -22,24 +22,26 @@ if (Yii::$app->controller->id == 'product') {
                 <img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" data-holder-rendered="true" style="<?= $width ?>; <?= $height ?>;">
             </a>
             <div class="v-hover">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
                 <?php
                 if (Yii::$app->user->id) {
-                    if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
-                        ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                        </a>
-                    <?php } else { ?>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                        </a>
-                        <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
-                            <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                        </a>
-                        <?php
+                    if (isset($model->product)) {
+                        if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
+                            ?>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            </a>
+                        <?php } else { ?>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            </a>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
+                                <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                            </a>
+                            <?php
+                        }
                     }
                 } else {
                     ?>
@@ -70,7 +72,7 @@ if (Yii::$app->controller->id == 'product') {
             ?>
 
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->product->productId])) ?>" class="size18 b">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
                     <?= strtoupper($model->title) ?>
                 </a>
             </p>
@@ -78,7 +80,7 @@ if (Yii::$app->controller->id == 'product') {
             if ($model->price > 0) {
                 ?><p class="price">
                     <span class="size16"><?= number_format($model->price, 2) ?> THB</span><br>
-                    <span class="size10 onsale"><?= number_format($model->product->price, 1) ?> THB</span>
+                    <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) : '' ?> THB</span>
                 </p>
                 <?php
             } else {
