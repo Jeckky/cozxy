@@ -355,7 +355,7 @@ class FakeFactory extends Model {
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
                 ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems)
+                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
                 ->orderBy('product_price_suppliers.price')
                 ->one();
                 $txtAlert = 'Ok'; // แสดงปุ่ม Add to cart , add to wishList หรือ SHELVES
@@ -432,7 +432,7 @@ class FakeFactory extends Model {
         $brand = \common\models\costfit\Product::find()
         ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
-            ->where('brand.brandId is not null')
+        ->where('brand.brandId is not null')
         ->groupBy(['product.brandId'])
         ->limit($n)->all();
 
