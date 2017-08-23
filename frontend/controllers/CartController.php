@@ -104,7 +104,7 @@ class CartController extends MasterController {
             $Qty = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
             $quantityMain = $Qty->result;
             //if ((int) $orderItem->quantity > (int) $quantityMain) {
-            if ((int) $orderItem->quantity >= (int) $quantityMain) {
+            if ((int) $orderItem->quantity > (int) $quantityMain) {
                 //echo $quantityMain . '<br>::';
                 //echo $orderItem->quantity;
                 // exit();
