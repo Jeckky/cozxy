@@ -103,6 +103,7 @@ class CartController extends MasterController {
         if (isset($productId)) {
             $Qty = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
             $quantityMain = $Qty->result;
+            //if ((int) $orderItem->quantity > (int) $quantityMain) {
             if ((int) $orderItem->quantity > (int) $quantityMain) {
                 //echo $quantityMain . '<br>::';
                 //echo $orderItem->quantity;
@@ -253,9 +254,9 @@ class CartController extends MasterController {
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class = "item" id = "item' . $item->orderItemId . '">'
-                        . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
-                        . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
-                        . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
+                . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
+                . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
@@ -568,15 +569,15 @@ class CartController extends MasterController {
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
-                    ->where("productSuppId in ($id) and approve = 'approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->where("productSuppId in ($id) and approve = 'approve'")
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         } else {
             $products = \common\models\costfit\ProductSuppliers::find()->where("approve = 'approve'")
-                    ->orderBy(new \yii\db\Expression('rand()'))
-                    ->limit(4)
-                    ->all();
+            ->orderBy(new \yii\db\Expression('rand()'))
+            ->limit(4)
+            ->all();
         }
         $this->subSubTitle = '';
         //echo '<pre>';
