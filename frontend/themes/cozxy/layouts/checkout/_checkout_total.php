@@ -3,6 +3,8 @@
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use common\models\costfit\UserPoint;
+
+\frontend\assets\CartAsset::register($this);
 ?>
 <div class="col-xs-12 bg-yellow1" style="padding:18px;">
     <div class="rela size20">
@@ -98,7 +100,7 @@ use common\models\costfit\UserPoint;
                     <input type="hidden" id="orderId" name="orderId" value="<?= $orderId; ?>">
                     <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
                     <input type="hidden" id="systemCoin" value="0" name="systemCoin">
-                    <input type="submit" value="PAY by CozxyCoin" class="b btn-yellow fullwidth">
+                    <input type="button" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?= $orderId ?>)">
                     <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
                     <?php ActiveForm::end(); ?>
                     <br>
@@ -159,4 +161,31 @@ use common\models\costfit\UserPoint;
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div>
+<style>
+    #notEnough .modal-dialog{
+        width:70%;
+    }
+</style>
+<div class="modal fade" id="notEnough">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-yellow3">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3 class="modal-title">ITEMS SOLD OUT</h3>
+            </div>
+            <div style="padding: 15px;">Sorry, this item is no longer available. Please remove it from your cart. Add them to your wishlist and we’ll let you know when it’s back in stock!</div>
+
+            <div class="modal-body" id="soldoutItem">
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-yellow" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
 </div>
