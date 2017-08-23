@@ -1,8 +1,8 @@
 <div class="panel panel-defailt">
-    <h3 class="page-header" style="margin:10px 20px;">Author</h3>
+    <h3 class="page-header" style="margin:10px 20px;">AUTHOR</h3>
     <div class="panel-body text-center">
         <?php //$productImagesThumbnailNull = common\helpers\Base64Decode::DataImageSvg120x120(FALSE, FALSE, FALSE); ?>
-        <!--<img src="<?php // $productImagesThumbnailNull        ?>" class="img-responsive" alt="Big Bag" style="">-->
+        <!--<img src="<?php // $productImagesThumbnailNull         ?>" class="img-responsive" alt="Big Bag" style="">-->
         <a href="#">
             <img src="<?= $avatar ?>" alt=""  class="img-responsive img-circle" style="zoom:0.5;">
         </a>
