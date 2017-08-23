@@ -265,7 +265,6 @@ function showFavorite(type) {
         $("#hidefav").show();
         $("#showfav").hide();
     } else {
-
         $("#showFavoriteItem").hide('fade-in');
         $("#hidefav").hide();
         $("#showfav").show();
@@ -394,8 +393,11 @@ function deleteItemFromFav(productPostId) {
             {
                 //alert(data);
                 if (data.status) {
-                    //alert('aaaaa');
                     $('#itemStory-' + productPostId).remove();
+                    if (data.total) {
+                        $("#showFavoriteItem").html(data.text);
+                        showFavorite(1);
+                    }
                 } else {
                     /*
                      $('.name-lockers-cool').html('');

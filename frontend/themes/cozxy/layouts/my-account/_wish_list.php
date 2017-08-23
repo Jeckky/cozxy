@@ -79,42 +79,30 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
         ?>
 
-        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
+        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: none;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
             <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
                 <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
             </div>
         </a>
-        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;display: none;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
+        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
             <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
                 <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
             </div>
         </a>
-        <?php if ($i == 0) { ?>
-            <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>">
 
-                <?php
-                $wishlists = DisplayMyAccount::myAccountWishList($defalutWishlist->productShelfId, 8);
-                if (isset($wishlists) && count($wishlists) > 0) {
-                    foreach ($wishlists as $value):
-                        product($value['wishlistId'], $value['image'], $value['brand'], $value['title'], $value['price_s'] . ' THB', $value['price_s'] . ' THB', $value['url'], $value['productSuppId'], $value['maxQnty'], $value['fastId'], $value['productId'], $value['supplierId'], $value['receiveType'], $defalutWishlist->productShelfId);
-                    endforeach;
-                }
-                $isShowSeemore = DisplayMyAccount::wishlistItems($defalutWishlist->productShelfId);
-                if ($isShowSeemore > 8) {
-                    ?>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
-                        <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $defalutWishlist->productShelfId ?>">See more >></a>
-                    </div>
-                    <?php
-                }
+        <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>">
+            <?php
+            $isShowSeemore = DisplayMyAccount::wishlistItems($defalutWishlist->productShelfId);
+            if ($isShowSeemore > 8) {
                 ?>
-            </div>
-            <?php
-        } else {
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right" style="margin-bottom:20px;cursor:pointer;">
+                    <a href="<?= Yii::$app->homeUrl ?>my-account/all-wishlist?s=<?= $defalutWishlist->productShelfId ?>">See more >></a>
+                </div>
+                <?php
+            }
             ?>
-            <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>"></div>
-            <?php
-        }
+        </div>
+        <?php
     }
     ?>
 </div>
