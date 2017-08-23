@@ -171,7 +171,7 @@ if (isset($favoriteStories)) {
     } else {
         ?>
         <div id="showFavoriteItem" style="display:none;">
-            <h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
+            <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
         </div>
         <?php
     }

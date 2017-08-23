@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 ?>>
                     <a href="#my-shelves" aria-controls="my-shelves" role="tab" data-toggle="tab">
-                        My SHELVES <button id="myShelvesPopover" type="button" class="" data-toggle="popover" title="My Shelves" data-content="Organize all your favorite items, dream gifts, and stories in customizable shelves so you can always come back and see them later!">?</button>
+                        MY SHELVES <!--   <button id="myShelvesPopover" type="button" class="" data-toggle="popover" title="My Shelves" data-content="Organize all your favorite items, dream gifts, and stories in customizable shelves so you can always come back and see them later!">?</button>-->
                     </a>
                 </li>
                 <!--<li role="presentation"><a href="#tracking" aria-controls="tracking" role="tab" data-toggle="tab">Tracking</a></li>-->
@@ -113,6 +113,6 @@ $(function () {
   $('#myShelvesPopover').popover()
 })
 "
-, \yii\web\View::POS_END);
+        , \yii\web\View::POS_END);
 ?>
 
