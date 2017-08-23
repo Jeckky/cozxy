@@ -32,8 +32,8 @@ class CozxyAsset extends AssetBundle {
     public $js = [
         'js/jquery.js',
         'js/bootstrap.min.js',
+        //'js/cozxy.js',
         'jquery.growl/notify.js',
-        'js/cozxy.js',
         'js/cozxy.reform.js',
         'js/cozxy.unity.js',
         'js/currency.exchange.rate.js',
@@ -41,6 +41,7 @@ class CozxyAsset extends AssetBundle {
         'js/jquery.elevateZoom-3.0.8.min.js',
         'js/cozxy.script.js',
         'fixer.io/money.js',
+        'js/cozxy.js',
     //'js/currency-real-time.js',
     //'js/search-filter.js'
     ];

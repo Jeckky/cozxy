@@ -105,7 +105,7 @@ class CartController extends MasterController {
           ตรวจสอบจำนวนสินค้าคงเหลือ
          */
         if (isset($productId)) {
-            $Qty = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
+            $Qty = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId . ' and productSuppId=' . $_POST['productSuppId'])->one();
             $quantityMain = $Qty->result;
             //if ((int) $orderItem->quantity > (int) $quantityMain) {
             if ((int) $orderItem->quantity > (int) $quantityMain) {

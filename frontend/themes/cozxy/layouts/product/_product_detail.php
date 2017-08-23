@@ -286,8 +286,8 @@ $("#zoom-img").elevateZoom({
                         <?php
                         $product = isset($model['productSuppId']) ? ProductSuppliers::find()->where(['productSuppId' => $model['productSuppId']])->one() : \common\models\costfit\Product::find()->where(['productId' => $model['productId']])->one();
                         ?>
-                        <?= $product->title ?><br>
-                        <?= $product->shortDescription ?>
+                        <?= isset($product->title) ? $product->title : '' ?><br>
+                        <?= isset($product->shortDescription) ? $product->shortDescription : '' ?>
                     </div>
                 </div>
 

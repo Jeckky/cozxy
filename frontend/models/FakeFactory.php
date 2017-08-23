@@ -355,7 +355,7 @@ class FakeFactory extends Model {
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
                 ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems)
+                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
                 ->orderBy('product_price_suppliers.price')
                 ->one();
                 $txtAlert = 'Ok'; // แสดงปุ่ม Add to cart , add to wishList หรือ SHELVES
@@ -373,11 +373,10 @@ class FakeFactory extends Model {
             $txtAlert = 'No';
         }
 
-        //echo '<pre>';
-        //print_r($GetProductSuppliers);
 
         $GetProductCozxy = isset($GetProductSuppliers->product) ? $GetProductSuppliers->product : $GetProductSuppliers;
-        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($GetProductSuppliers->attributes['productId'], $GetProductSuppliers->attributes['productSuppId'], 'Svg116x116', 'Svg555x340');
+
+        $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : 0, 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
         if (isset($GetProductSuppliers['categoryId'])) {
             $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
@@ -389,7 +388,7 @@ class FakeFactory extends Model {
         /*
          * wishList
          */
-        $wishList = \frontend\models\DisplayMyWishList::productWishList($GetProductSuppliers->attributes['productId']);
+        $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
 
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => $GetProductSuppliers['productSuppId'],
@@ -432,7 +431,7 @@ class FakeFactory extends Model {
         $brand = \common\models\costfit\Product::find()
         ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
-            ->where('brand.brandId is not null')
+        ->where('brand.brandId is not null')
         ->groupBy(['product.brandId'])
         ->limit($n)->all();
 
