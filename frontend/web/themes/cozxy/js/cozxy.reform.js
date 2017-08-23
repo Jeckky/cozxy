@@ -552,6 +552,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                             data: {},
                             success: function (data, status)
                             {
+
                                 if (status == "success") {
                                     $('#notify-cart-top-menu').removeAttr('style');
                                     $('#notify-cart-top-menu').html(data);
