@@ -388,7 +388,7 @@ class FakeFactory extends Model {
         /*
          * wishList
          */
-        $wishList = \frontend\models\DisplayMyWishList::productWishList($GetProductSuppliers->attributes['productId']);
+        $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
 
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => $GetProductSuppliers['productSuppId'],
