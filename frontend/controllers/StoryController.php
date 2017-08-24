@@ -312,6 +312,7 @@ class StoryController extends MasterController {
     public function actionSeeMore($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
 

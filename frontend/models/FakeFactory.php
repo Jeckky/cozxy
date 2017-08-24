@@ -300,6 +300,8 @@ class FakeFactory extends Model {
                 } else {
                     $productImagesThumbnail1 = \common\helpers\Base64Decode::DataImageSvg260x260(FALSE, FALSE, FALSE);
                 }
+                $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $productSuppId, 'Svg260x260');
+
                 $products[$value->productPostId] = [
                     'productId' => $value->productId,
                     'productPostId' => $value->productPostId,
