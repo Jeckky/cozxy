@@ -121,17 +121,30 @@ $(function() {
 });
 ');
 \frontend\assets\SearchAsset::register($this);
-
-if(isset($title) && !empty($title)) {
-    $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
-    $this->params['breadcrumbs'][] = $this->title;
+if ($site == 'category') {
+    if (isset($title) && !empty($title)) {
+        $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
+        $this->params['breadcrumbs'][] = $this->title;
+    } else {
+        $this->title = 'Search Categories ';
+        $this->params['breadcrumbs'][] = $this->title;
+        $title = '';
+    }
+    if (isset($_GET["search"]) && !empty($_GET['search'])) {
+        $search = 'SEARCH : ' . $_GET["search"];
+    }
 } else {
-    $this->title = 'Search Categories ';
-    $this->params['breadcrumbs'][] = $this->title;
-    $title = '';
-}
-if(isset($_GET["search"]) && !empty($_GET['search'])) {
-    $search = 'SEARCH : ' . $_GET["search"];
+    if (isset($title) && !empty($title)) {
+        $this->title = 'Search Brand ' . isset($title) ? strtoupper($title) : '';
+        $this->params['breadcrumbs'][] = $this->title;
+    } else {
+        $this->title = 'Search Brand ';
+        $this->params['breadcrumbs'][] = $this->title;
+        $title = '';
+    }
+    if (isset($_GET["search"]) && !empty($_GET['search'])) {
+        $search = 'SEARCH : ' . $_GET["search"];
+    }
 }
 ?>
 
@@ -146,7 +159,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
         <div class="row">
             <div class="col-xs-9">
                 <div class="brand-price-filter  col-sm-12">
-                    <?php if($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
+                    <?php if ($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
                         <div class="size16">&nbsp;</div>
                         <div class="alert alert-danger">
                             <h2>No item found</h2>
@@ -154,10 +167,10 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                     <?php endif; ?>
                     <div class="filter-product-cozxy col-sm-12">
 
-                        <?php if($productCanSell->getTotalCount() > 0): ?>
+                        <?php if ($productCanSell->getTotalCount() > 0): ?>
                             <h3 class="b">
                                 <?php
-                                if(isset($search)) {
+                                if (isset($search)) {
                                     echo $search . '(RECOMMENDED)';
                                 } else {
                                     echo strtoupper('category') . '::' . strtoupper($title) . '(RECOMMENDED)';
@@ -224,10 +237,10 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                         <?php endif; ?>
                     </div>
                     <div class="filter-product-cozxy-not-sale col-sm-12">
-                        <?php if($productNotSell->getTotalCount() > 0): ?>
+                        <?php if ($productNotSell->getTotalCount() > 0): ?>
                             <h3 class="b">
                                 <?php
-                                if(isset($search)) {
+                                if (isset($search)) {
                                     echo $search . '(PRODUCTS)';
                                 } else {
                                     echo strtoupper('category') . '::' . strtoupper($title) . '(PRODUCTS)';
@@ -294,7 +307,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                           ?>','<?php //echo $clickNum;                                                                                                                                                                                                          ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                          ?>','<?php //echo $limit_start;                                                                                                                                                                                                         ?>','<?php //echo $limit_end;                                                                                                                                                                                                        ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                ?>','<?php //echo $clickNum;                                                                                                                                                                                                               ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                               ?>','<?php //echo $limit_start;                                                                                                                                                                                                              ?>','<?php //echo $limit_end;                                                                                                                                                                                                             ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

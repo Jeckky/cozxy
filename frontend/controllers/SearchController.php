@@ -62,8 +62,13 @@ class SearchController extends MasterController {
         $productCanSell = Product::productForSale(12, $categoryId);
         $productNotSell = Product::productForNotSale(12, $categoryId);
 
-
-        return $this->render('index', compact('productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));
+        if ($categoryId != 'undefined') {
+            $site = 'category';
+        } else {
+            $category = FALSE;
+            $site = 'brand';
+        }
+        return $this->render('index', compact('site', 'productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));
     }
 
     public function actionCozxyProduct() {
@@ -95,9 +100,9 @@ class SearchController extends MasterController {
         [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
-
+        $site = 'brand';
         $catPrice = DisplaySearch::findAllPrice($categoryId);
-        return $this->render('index', compact('catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
+        return $this->render('index', compact('site', 'catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
     public function actionBrand($hash = FALSE) {
@@ -166,7 +171,11 @@ class SearchController extends MasterController {
             //print_r(explode(",", $brand));
             $brand = array_map('trim', explode(",", $brand));
         }
-
+        if ($categoryId != 'undefined') {
+            $categoryId = Yii::$app->request->get('categoryId');
+        } else {
+            $category = FALSE;
+        }
         $productFilterPriceNotsale = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAlls($categoryId, $brand, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 9]
@@ -177,9 +186,16 @@ class SearchController extends MasterController {
             'pagination' => ['defaultPageSize' => 9]
         ]);
 
-        $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        if ($categoryId != 'undefined') {
+            $category = \common\models\costfit\Category::findOne($categoryId)->title;
+            $site = 'category';
+        } else {
+            $category = FALSE;
+            $site = 'brand';
+        }
+
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
-            'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand]);
+            'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
     }
 
     public function actionSortCozxy() {

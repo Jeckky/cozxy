@@ -41,7 +41,6 @@ class CozxyAsset extends AssetBundle {
         'js/jquery.elevateZoom-3.0.8.min.js',
         'js/cozxy.script.js',
         'fixer.io/money.js',
-        'js/cozxy.js',
     //'js/currency-real-time.js',
     //'js/search-filter.js'
     ];

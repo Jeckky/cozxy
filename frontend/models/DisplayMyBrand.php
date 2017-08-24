@@ -49,6 +49,7 @@ class DisplayMyBrand {
         ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1 ')
         ->andWhere('brand.title is not null')
         ->groupBy(['product_suppliers.brandId'])
+        ->orderBy('brand.title')
         ->all();
 
 
