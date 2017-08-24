@@ -70,17 +70,17 @@ use common\models\costfit\User;
                   'textdirection',
                   'textexpander',
                   'video'], */
-                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize'],
+                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize', 'fullscreen'],
                 'buttons' => ['html', 'formatting', 'bold', 'italic', 'deleted', 'underline', 'horizontalrule',
                     'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent'
                     , 'link', 'image', 'file'],
-                'buttons' => [
-                    'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
-                    'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-                    'image', 'file', 'table', 'link', '|',
-                    'alignment', '|', 'horizontalrule',
-                    '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
-                ],
+            /* 'buttons' => [
+              'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
+              'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+              'image', 'file', 'table', 'link', '|',
+              'alignment', '|', 'horizontalrule',
+              '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
+              ], */
             ]
         ], ['style' => 'height:1000px;'])
         ?>
