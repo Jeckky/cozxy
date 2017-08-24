@@ -55,6 +55,7 @@ $this->registerCss("
     .dropdown {
         /* width: 130.9px; */
         display: inline-block;
+         padding: 0px 15px 0px;
         /* padding: 40px 10px 35px; */
         /* border: 1px solid #f5f3ef; */
         font-size: 11px;
@@ -527,7 +528,7 @@ $this->registerCss("
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png') ?></a></div>
             <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right ">
-                <div class="row user-menu">
+                <div class="row user-menu" style="margin-right: -1px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
@@ -591,7 +592,7 @@ $this->registerCss("
                                 //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
                                 //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
                                 ?>
-                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999; min-width: 160px;">
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999; min-width: 153px;">
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=account-detail">ACCOUNT DETAIL</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=order-history">ORDER HISTORY</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=my-shelves">MY SHELVES</a></li>
