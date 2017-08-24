@@ -68,7 +68,6 @@ function qSet(y, x, productSuppId, orderId, sendDate, orderItemId) {
                         if (status == "success") {
                             $('#notify-cart-top-menu').html(data);
                         } else {
-
                         }
                     }
                 });
