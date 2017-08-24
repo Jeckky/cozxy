@@ -60,16 +60,20 @@ use common\models\costfit\User;
                 'minHeight' => 350,
                 'lang' => 'en',
                 'clipboardUpload' => true,
-                'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
-                    'clips',
-                    'counter',
-                    'definedlinks',
-                    'filemanager',
-                    'limiter',
-                    'table',
-                    'textdirection',
-                    'textexpander',
-                    'video'],
+                /* 'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
+                  'clips',
+                  'counter',
+                  'definedlinks',
+                  'filemanager',
+                  'limiter',
+                  'table',
+                  'textdirection',
+                  'textexpander',
+                  'video'], */
+                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize'],
+                'buttons' => ['html', 'formatting', 'bold', 'italic', 'deleted', 'underline', 'horizontalrule',
+                    'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent'
+                    , 'link', 'image', 'file'],
                 'buttons' => [
                     'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
                     'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
@@ -114,7 +118,7 @@ use common\models\costfit\User;
                         theme: 'monokai'
                     }
                 });
-                
+
 
             }
 
