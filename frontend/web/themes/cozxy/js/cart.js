@@ -281,6 +281,7 @@ $('.cancelCouponCode').click(function () {
     }
 });
 function checkItemInOrder(orderId) {
+
     $.ajax({
         type: "POST",
         dataType: "JSON",
@@ -293,6 +294,7 @@ function checkItemInOrder(orderId) {
                 $("#notEnough").modal();
             } else {
                 $("#cart-item").submit();
+                $("#confirm-checkout").submit();
             }
         }
     });

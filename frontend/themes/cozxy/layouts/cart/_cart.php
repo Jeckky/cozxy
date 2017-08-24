@@ -88,3 +88,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+if (isset($fc)) {
+    // throw new \yii\base\Exception($fc);
+    if ($fc == 1) {
+        $js = 'javascript:checkItemInOrder(' . $this->params['cart']['orderId'] . ')';
+        $this->registerJs($js);
+    }
+}
+?>

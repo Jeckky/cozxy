@@ -90,7 +90,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             </div>
         </a>
 
-        <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>">
+        <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>" style="display: none;">
             <?php
             $isShowSeemore = DisplayMyAccount::wishlistItems($defalutWishlist->productShelfId);
             if ($isShowSeemore > 8) {
