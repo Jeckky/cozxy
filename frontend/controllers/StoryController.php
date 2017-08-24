@@ -79,7 +79,7 @@ class StoryController extends MasterController {
         //print_r($product_image->attributes);
         $popularStories = DisplayMyStory::popularStories($productPostId); //ที่มีการให้ดาว
         $popularStoriesNoneStar = DisplayMyStory::popularStoriesNoneStar($productPostId); //ที่ไม่มีการให้ดาว
-        $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productId);
+        $urlSeeAll = $this->createUrl($productPostId, $productSuppId, $productPost->productId);
         $sort = '';
 
         //$currency = ArrayHelper::map(Currency::find()->where("status=1 ")->orderBy('createDateTime')->all(), 'currencyId', 'title');
@@ -314,6 +314,7 @@ class StoryController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
+
         $seeMore = new \yii\data\ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryAll($n = false, $productId, $productSuppId)]);
         $otherProducts = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productOtherProducts()]);
         return $this->render('index', compact('seeMore', 'otherProducts'));
