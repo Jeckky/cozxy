@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * ProductPostController implements the CRUD actions for ProductPost model.
  */
-class ProductPostController extends ProductPostMasterController
-{
+class ProductPostController extends ProductPostMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,7 @@ class ProductPostController extends ProductPostMasterController
      * Lists all ProductPost models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPost::find()->where("userId = ''"),
         ]);
@@ -47,8 +44,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,15 +57,14 @@ class ProductPostController extends ProductPostMasterController
       ' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductPost();
         $folderName = "story"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
             $model->title = $_POST["ProductPost"]['title'];
-            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            //$model->shortDescription = $_POST["ProductPost"]['shortDescription'];
             $model->description = $_POST["ProductPost"]['description'];
             $model->productSelfId = 0;
             $model->userId = 0;
@@ -99,8 +94,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         $modelImage = $this->findModel($id);
@@ -109,7 +103,7 @@ class ProductPostController extends ProductPostMasterController
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
             $model->title = $_POST["ProductPost"]['title'];
-            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            //$model->shortDescription = $_POST["ProductPost"]['shortDescription'];
             $model->description = $_POST["ProductPost"]['description'];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductPost[image]");
@@ -141,8 +135,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -155,8 +148,7 @@ class ProductPostController extends ProductPostMasterController
      * @return ProductPost the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductPost::findOne($id)) !== null) {
             return $model;
         } else {

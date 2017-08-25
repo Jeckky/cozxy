@@ -10,6 +10,8 @@ use common\models\costfit\ProductSupp;
 use common\models\costfit\ProductSelf;
 use common\models\costfit\Brand;
 use common\models\costfit\User;
+use yii\helpers\Url;
+use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductPost */
@@ -47,33 +49,42 @@ use common\models\costfit\User;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 150]) ?>
 
-        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?//= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?php
-        echo $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className([
-            'settings' => [
-                'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
-                'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
-            ]
-        ]), [
-            'options' => [
-                'style' => 'height: 300px;'
-            ],
+
+        <?=
+        $form->field($model, 'description')->widget(CKEditor::className(), [
+            'preset' => 'custom',
             'clientOptions' => [
-                'lang' => 'th',
-                'observeLinks' => true,
-                'convertVideoLinks' => true,
-                'autoresize' => true,
-                'placeholder' => Yii::t('app', 'Redactor placeholder text'),
-                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize', 'imagemanager', 'fullscreen'],
-                'buttons' => ['html', 'formatting', 'bold', 'italic', 'deleted', 'underline', 'horizontalrule',
-                    'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent', 'link', 'image', 'file'],
-            // 'imageUpload' => Yii::$app->urlManager->createUrl(['news/upload']),
+                'toolbar' => [
+                    [
+                        'name' => 'row1',
+                        'items' => [
+                            'Source', '-',
+                            'Bold', 'Italic', 'Underline', 'Strike', '-',
+                            'Subscript', 'Superscript', 'RemoveFormat', '-',
+                            'TextColor', 'BGColor', '-',
+                            'NumberedList', 'BulletedList', '-',
+                            'Outdent', 'Indent', '-', 'Blockquote', '-',
+                            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'list', 'indent', 'blocks', 'align', 'bidi', '-',
+                            'Link', 'Unlink', 'Anchor', '-',
+                            'ShowBlocks', 'Maximize',
+                        ],
+                    ],
+                    [
+                        'name' => 'row2',
+                        'items' => [
+                            'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Iframe', '-',
+                            'NewPage', 'Print', 'Templates', '-',
+                            'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+                            'Undo', 'Redo', '-',
+                            'Find', 'SelectAll', 'Format', 'Font', 'FontSize',
+                        ],
+                    ],
+                ],
             ],
-        ]
-        );
+        ]);
         ?>
-
         <?//= $form->field($model, 'shopName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
