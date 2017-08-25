@@ -15,7 +15,9 @@ use common\models\costfit\User;
 /* @var $model common\models\costfit\ProductPost */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    .redactor span { display: inline-block;}
+</style>
 <div class="product-post-form">
 
     <?php
@@ -47,43 +49,33 @@ use common\models\costfit\User;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 150]) ?>
 
-        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?//= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?=
-        $form->field($model, 'description', ['options' => ['class' => '']])->widget(\yii\redactor\widgets\Redactor::className([
+        <?php
+        echo $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className([
             'settings' => [
                 'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
                 'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
             ]
         ]), [
+            'options' => [
+                'style' => 'height: 300px;'
+            ],
             'clientOptions' => [
-                'minHeight' => 350,
-                'lang' => 'en',
-                'clipboardUpload' => true,
-                /* 'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
-                  'clips',
-                  'counter',
-                  'definedlinks',
-                  'filemanager',
-                  'limiter',
-                  'table',
-                  'textdirection',
-                  'textexpander',
-                  'video'], */
-                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize', 'fullscreen'],
+                'lang' => 'th',
+                'observeLinks' => true,
+                'convertVideoLinks' => true,
+                'autoresize' => true,
+                'placeholder' => Yii::t('app', 'Redactor placeholder text'),
+                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize', 'imagemanager', 'fullscreen'],
                 'buttons' => ['html', 'formatting', 'bold', 'italic', 'deleted', 'underline', 'horizontalrule',
-                    'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent'
-                    , 'link', 'image', 'file'],
-            /* 'buttons' => [
-              'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
-              'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-              'image', 'file', 'table', 'link', '|',
-              'alignment', '|', 'horizontalrule',
-              '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
-              ], */
-            ]
-        ], ['style' => 'height:1000px;'])
+                    'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent', 'link', 'image', 'file'],
+            // 'imageUpload' => Yii::$app->urlManager->createUrl(['news/upload']),
+            ],
+        ]
+        );
         ?>
+
         <?//= $form->field($model, 'shopName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>
@@ -108,21 +100,5 @@ use common\models\costfit\User;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-    <?php $this->registerJs("
-           init.push(function () {
-            if (!$('html').hasClass('ie8')) {
-                $('#productpost-shortdescription').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
 
-
-            }
-
-        });
-
-", \yii\web\View::POS_END); ?>
 </div>
