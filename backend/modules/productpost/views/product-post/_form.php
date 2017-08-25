@@ -15,9 +15,7 @@ use common\models\costfit\User;
 /* @var $model common\models\costfit\ProductPost */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<style>
-    .redactor span { display: inline-block;}
-</style>
+
 <div class="product-post-form">
 
     <?php
@@ -49,7 +47,7 @@ use common\models\costfit\User;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 150]) ?>
 
-        <?//= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
         <?php
         echo $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className([
