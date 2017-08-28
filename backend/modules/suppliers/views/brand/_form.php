@@ -7,6 +7,7 @@ use yii\widgets\MaskedInput;
 use common\models\costfit;
 use yii\jui\DatePicker;
 use common\models\costfit\Brand;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Brand */
@@ -36,7 +37,22 @@ use common\models\costfit\Brand;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?php
+        echo $form->field($model, 'description')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                'filebrowserBrowseUrl' => 'browse-images',
+                'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::getAlias('@web') . $model->image, ['style' => 'width:164px;height:120px;margin-bottom: 10px;', 'class' => 'col-lg-offset-3']) : ''; ?>
 
@@ -68,7 +84,7 @@ use common\models\costfit\Brand;
 
 </div>
 <?php $this->registerJs("
-           init.push(function () {
+         /*  init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#brand-description').summernote({
                     height: 200,
@@ -78,6 +94,6 @@ use common\models\costfit\Brand;
                     }
                 });
             }
-        });
+        });*/
 
 ", \yii\web\View::POS_END); ?>

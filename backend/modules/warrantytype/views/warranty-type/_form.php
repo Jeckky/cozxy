@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\costfit;
 use yii\jui\DatePicker;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\WarrantyType */
@@ -35,8 +36,22 @@ use yii\jui\DatePicker;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 255]) ?>
 
-<?= $form->field($model, 'defimition', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
+        <?php
+        echo $form->field($model, 'defimition')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => 'browse-images',
+                //'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

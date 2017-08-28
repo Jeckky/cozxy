@@ -14,7 +14,7 @@ class AppAsset extends AssetBundle {
     public $css = [
     ];
     public $js = [
-        'themes/cozxy/js/cozxy.js',
+    //'themes/cozxy/js/cozxy.js',
     ];
     public $depends = [
         'frontend\assets\CozxyAsset',

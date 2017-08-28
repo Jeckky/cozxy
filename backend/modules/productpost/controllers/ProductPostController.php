@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * ProductPostController implements the CRUD actions for ProductPost model.
  */
-class ProductPostController extends ProductPostMasterController
-{
+class ProductPostController extends ProductPostMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,7 @@ class ProductPostController extends ProductPostMasterController
      * Lists all ProductPost models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
             'query' => ProductPost::find()->where("userId = ''"),
         ]);
@@ -47,8 +44,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -61,15 +57,14 @@ class ProductPostController extends ProductPostMasterController
       ' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductPost();
         $folderName = "story"; //  Size 553 x 484
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
             $model->title = $_POST["ProductPost"]['title'];
-            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            //$model->shortDescription = $_POST["ProductPost"]['shortDescription'];
             $model->description = $_POST["ProductPost"]['description'];
             $model->productSelfId = 0;
             $model->userId = 0;
@@ -99,8 +94,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         $modelImage = $this->findModel($id);
@@ -109,7 +103,7 @@ class ProductPostController extends ProductPostMasterController
         if (isset($_POST["ProductPost"])) {
             $model->attributes = $_POST["ProductPost"];
             $model->title = $_POST["ProductPost"]['title'];
-            $model->shortDescription = $_POST["ProductPost"]['shortDescription'];
+            //$model->shortDescription = $_POST["ProductPost"]['shortDescription'];
             $model->description = $_POST["ProductPost"]['description'];
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductPost[image]");
@@ -141,8 +135,7 @@ class ProductPostController extends ProductPostMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -155,13 +148,50 @@ class ProductPostController extends ProductPostMasterController
      * @return ProductPost the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductPost::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionUploadedFile() {
+
+    }
+
+    public function actionUploadImages() {
+        $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
+        $mime = \yii\helpers\FileHelper::getMimeType($uploadedFile->tempName);
+        $file = time() . "_" . $uploadedFile->name;
+
+        $user_id = Yii::$app->user->id; //Yii::$app->user->getId();
+
+        $url = Yii::$app->urlManager->createAbsoluteUrl('/images/story/' . $user_id . '/' . $file);
+        $uploadPath = Yii::getAlias('@webroot') . '/images/story/' . $user_id . '/' . $file;
+
+        if (!is_dir(Yii::getAlias('@webroot') . '/images/story/' . $user_id)) { //ถ้ายังไม่มี folder ให้สร้าง folder ตาม user id
+            mkdir(Yii::getAlias('@webroot') . '/images/story/' . $user_id);
+        }
+
+        //ตรวจสอบ
+        if ($uploadedFile == null) {
+            $message = "ไม่มีไฟล์ที่ Upload";
+        } else if ($uploadedFile->size == 0) {
+            $message = "ไฟล์มีขนาด 0";
+        } else if ($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
+            $message = "รูปภาพควรเป็น JPG หรือ PNG";
+        } else if ($uploadedFile->tempName == null) {
+            $message = "มีข้อผิดพลาด";
+        } else {
+            $message = "";
+            $move = $uploadedFile->saveAs($uploadPath);
+            if (!$move) {
+                $message = "ไม่สามารถนำไฟล์ไปไว้ใน Folder ได้กรุณาตรวจสอบ Permission Read/Write/Modify";
+            }
+        }
+        $funcNum = $_GET['CKEditorFuncNum'];
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 
 }

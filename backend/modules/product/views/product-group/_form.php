@@ -16,13 +16,13 @@ use yii\jui\DatePicker;
 
     <?php
     $form = ActiveForm::begin([
-                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label'
-                    ]
-                ]
+        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => '{label}<div class="col-sm-9">{input}</div>',
+            'labelOptions' => [
+                'class' => 'col-sm-3 control-label'
+            ]
+        ]
     ]);
     ?>
 
@@ -37,8 +37,7 @@ use yii\jui\DatePicker;
             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200, 'value' => isset($title) ? $title : false]) ?>
 
             <?=
-                    $form->field($model, 'description', ['options' => ['class' => 'row form-group']])
-                    ->textarea(['value' => isset($description) ? $description : false, 'style' => 'height:150px;'])
+            $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textarea(['value' => isset($description) ? $description : false, 'style' => 'height:150px;'])
             ?>
 
             <div class="form-group">

@@ -33,19 +33,20 @@ class StoryController extends MasterController {
         /*
          * Product Post View : Count Story
          */
-        $productViews = new \common\models\costfit\ProductPostView();
-        $productViews->productPostId = $productPostId;
-        $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : NULL;
-        $cookies = Yii::$app->request->cookies;
-        if (isset($cookies['orderToken'])) {
-            $productViews->token = $cookies['orderToken']->value;
-        } else {
-            $productViews->token = NULL;
+        if (isset($productPostId)) {
+            $productViews = new \common\models\costfit\ProductPostView();
+            $productViews->productPostId = $productPostId;
+            $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : NULL;
+            $cookies = Yii::$app->request->cookies;
+            if (isset($cookies['orderToken'])) {
+                $productViews->token = $cookies['orderToken']->value;
+            } else {
+                $productViews->token = NULL;
+            }
+            $productViews->updateDateTime = new \yii\db\Expression('NOW()');
+            $productViews->createDateTime = new \yii\db\Expression('NOW()');
+            $productViews->save(FALSE);
         }
-        $productViews->updateDateTime = new \yii\db\Expression('NOW()');
-        $productViews->createDateTime = new \yii\db\Expression('NOW()');
-        $productViews->save(FALSE);
-
         //throw new \yii\base\Exception(print_r($params, true));
         $imgShowStory = '';
         $ViewsRecentStories = DisplayMyStory::productViewsRecentStories($productPostId);
@@ -387,7 +388,7 @@ class StoryController extends MasterController {
             $productSupplier = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             //$productSuppImg = ProductImageSuppliers::find()->where("productSuppId=" . $productSupplier->productSuppId)->one();
             //$productSuppImg = \common\helpers\DataImageSystems::DataImageMaster($productSupplier->productId, $productSupplier->productSuppId, 'Svg555x340');
-
+            $product = Product::find()->where("productId=" . $productSupplier->productId)->one();
             if (isset($productId)) {
                 $product_image = \common\models\costfit\ProductImage::find()->where('productId=' . $productPostId)
                 ->orderBy('ordering asc')->limit(1)->one();
@@ -420,7 +421,8 @@ class StoryController extends MasterController {
                 'shelf' => $shelf,
                 'currency' => $currency,
                 'country' => $country,
-                'model' => $model
+                'model' => $model,
+                'product' => $product
             ]);
         }
     }
@@ -663,6 +665,40 @@ class StoryController extends MasterController {
         } else {
             return FALSE;
         }
+    }
+
+    public function actionUploadImages() {
+        $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
+        $mime = \yii\helpers\FileHelper::getMimeType($uploadedFile->tempName);
+        $file = time() . "_" . $uploadedFile->name;
+
+        $user_id = Yii::$app->user->id; //Yii::$app->user->getId();
+
+        $url = Yii::$app->urlManager->createAbsoluteUrl('/images/story/' . $user_id . '/' . $file);
+        $uploadPath = Yii::getAlias('@webroot') . '/images/story/' . $user_id . '/' . $file;
+
+        if (!is_dir(Yii::getAlias('@webroot') . '/images/story/' . $user_id)) { //ถ้ายังไม่มี folder ให้สร้าง folder ตาม user id
+            mkdir(Yii::getAlias('@webroot') . '/images/story/' . $user_id);
+        }
+
+        //ตรวจสอบ
+        if ($uploadedFile == null) {
+            $message = "ไม่มีไฟล์ที่ Upload";
+        } else if ($uploadedFile->size == 0) {
+            $message = "ไฟล์มีขนาด 0";
+        } else if ($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
+            $message = "รูปภาพควรเป็น JPG หรือ PNG";
+        } else if ($uploadedFile->tempName == null) {
+            $message = "มีข้อผิดพลาด";
+        } else {
+            $message = "";
+            $move = $uploadedFile->saveAs($uploadPath);
+            if (!$move) {
+                $message = "ไม่สามารถนำไฟล์ไปไว้ใน Folder ได้กรุณาตรวจสอบ Permission Read/Write/Modify";
+            }
+        }
+        $funcNum = $_GET['CKEditorFuncNum'];
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 
 }

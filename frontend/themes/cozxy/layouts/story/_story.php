@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use yii\helpers\HtmlPurifier;
 
 $this->title = isset($productPost->title) ? 'Stories ' . $productPost->title : '';
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <hr>
 
                     <p>
-                        <?= $productPost->description ?>
+                        <?= HtmlPurifier::process($productPost->description) ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
@@ -75,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <div class="col-xs-4">
                                                     <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
                                                     $productPost->encodeParams(
-                                                            ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                    ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
                                                     ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                                 </div>
 

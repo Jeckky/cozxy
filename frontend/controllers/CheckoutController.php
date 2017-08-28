@@ -71,7 +71,10 @@ class CheckoutController extends MasterController {
         }
 
         if (isset($order->pickingId) && !empty($order->pickingId)) {
-            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId])->one();
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
+            if (count($pickingPoint) <= 0) {
+                $pickingPoint = new \common\models\costfit\PickingPoint();
+            }
         } else {
             $pickingPoint = new \common\models\costfit\PickingPoint();
         }
@@ -305,10 +308,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $systemCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $systemCoin
         ]);
     }
 
@@ -332,10 +335,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $order->cozxyCoin
         ]);
     }
 

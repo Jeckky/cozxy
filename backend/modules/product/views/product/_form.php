@@ -10,6 +10,7 @@ use common\models\costfit\User;
 use common\models\costfit\ProductGroup;
 use common\models\costfit\Category;
 use common\models\costfit\Brand;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Product */
@@ -55,12 +56,54 @@ use common\models\costfit\Brand;
 
         <?= $form->field($model, 'optionName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
-        <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
-
+        <?php
+        echo $form->field($model, 'shortDescription')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => 'browse-images',
+                //'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
+        <?php
+        echo $form->field($model, 'description')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => 'browse-images',
+                //'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
+        <?php
+        echo $form->field($model, 'specification')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => 'browse-images',
+                //'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
         <?= $form->field($model, 'width', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
         <?= $form->field($model, 'height', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
