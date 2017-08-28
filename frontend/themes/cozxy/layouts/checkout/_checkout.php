@@ -63,7 +63,8 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                                     // 'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
-                                    'data' => \common\models\costfit\PickingPoint::availableProvince(),
+                                    //'data' => \common\models\costfit\PickingPoint::availableProvince(),
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select Province',
                                         'loadingText' => 'Loading Province ...',
