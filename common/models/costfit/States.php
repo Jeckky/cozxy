@@ -24,7 +24,7 @@ class States extends \common\models\costfit\master\StatesMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-            [['localName'], 'safe'],
+            [['stateId', 'localName'], 'safe'],
         ]);
     }
 
