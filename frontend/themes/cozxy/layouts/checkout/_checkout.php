@@ -62,16 +62,27 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-4 col-xs-12">
                                 <?php
                                 echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                                    //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
-                                    //'data' => \common\models\costfit\PickingPoint::availableProvince(),
-                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
+                                    //'options' => ['id' => 'address-countryid'],
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     'pluginOptions' => [
-                                        'placeholder' => 'Select Province',
-                                        'loadingText' => 'Loading Province ...',
-                                        'allowClear' => true
+                                        'placeholder' => 'Select...',
+                                        'loadingText' => 'Loading country ...',
                                     ],
-                                    'options' => ['placeholder' => 'Select Province ...', 'name' => 'provinceId', 'id' => 'stateId'],
+                                    'options' => ['placeholder' => 'Select country ...'],
                                 ])->label(FALSE);
+                                ?>
+                                <?php
+                                /* echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                                  //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
+                                  //'data' => \common\models\costfit\PickingPoint::availableProvince(),
+                                  'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
+                                  'pluginOptions' => [
+                                  'placeholder' => 'Select Province',
+                                  'loadingText' => 'Loading Province ...',
+                                  'allowClear' => true
+                                  ],
+                                  'options' => ['placeholder' => 'Select Province ...', 'name' => 'provinceId', 'id' => 'stateId'],
+                                  ])->label(FALSE); */
                                 ?>
                             </div>
                             <div class="col-md-4 col-xs-12">
