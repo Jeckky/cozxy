@@ -71,6 +71,7 @@ class CheckoutController extends MasterController {
         }
 
         echo $order->pickingId;
+        exit();
         if (isset($order->pickingId) && !empty($order->pickingId)) {
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId])->one();
         } else {
