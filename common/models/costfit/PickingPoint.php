@@ -164,6 +164,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         ->asArray()->all(), 'stateId', 'localName');
         echo '<pre>';
         print_r($available);
+        exit();
         return $available;
     }
 
