@@ -162,8 +162,11 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         ->groupBy('cpp.provinceId')
         ->orderBy('states.localName')
         ->asArray()->all();
-
-        return $available;
+        if (count($available) > 0) {
+            return $available;
+        } else {
+            return NULL;
+        }
     }
 
     public static function availableProvince_bk() {
