@@ -70,6 +70,7 @@ class CheckoutController extends MasterController {
             $order->addressId = $defaultAddress->addressId;
         }
 
+        echo $order->pickingId;
         if (isset($order->pickingId) && !empty($order->pickingId)) {
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId])->one();
         } else {
@@ -305,10 +306,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $systemCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $systemCoin
         ]);
     }
 
@@ -332,10 +333,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-                    'order' => $order,
-                    'userPoint' => $userPoint,
-                    'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin
+            'order' => $order,
+            'userPoint' => $userPoint,
+            'addressIdsummary' => $addressIdsummary,
+            'systemCoin' => $order->cozxyCoin
         ]);
     }
 
