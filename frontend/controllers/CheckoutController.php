@@ -70,9 +70,8 @@ class CheckoutController extends MasterController {
             $order->addressId = $defaultAddress->addressId;
         }
 
-
         if (isset($order->pickingId) && !empty($order->pickingId)) {
-            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId])->one();
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
             if (count($pickingPoint) <= 0) {
                 $pickingPoint = new \common\models\costfit\PickingPoint();
             }
