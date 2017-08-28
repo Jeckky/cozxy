@@ -162,9 +162,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         ->groupBy('cpp.provinceId')
         ->orderBy('states.localName')
         ->asArray()->all(), 'stateId', 'localName');
-        echo '<pre>';
-        print_r($available);
-        exit();
+
         return $available;
     }
 
