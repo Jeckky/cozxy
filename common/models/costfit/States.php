@@ -23,7 +23,9 @@ class States extends \common\models\costfit\master\StatesMaster {
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+            [['localName'], 'safe'],
+        ]);
     }
 
     /**
