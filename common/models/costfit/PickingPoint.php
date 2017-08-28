@@ -158,7 +158,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return ArrayHelper::map(States::find()->select(['states.stateId', 'states.localName'])
         ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
         ->where('cpp.status = 1')
-        ->groupBy('cpp.provinceId')
+        ->groupBy('cpp.provinceIdx')
         ->orderBy('states.localName')
         ->asArray()->all(), 'stateId', 'localName');
     }
