@@ -58,8 +58,11 @@ class ReceiveController extends MasterController
         $tel = '';
         $model = new \common\models\costfit\Receive();
         $res = [];
-        if (isset($_REQUEST['Receive']['password']) && !empty($_REQUEST['Receive']['password'])) {
-            $order = Order::find()->where("password='" . $_REQUEST['Receive']['password'] . "'")->one();
+        if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
+
+            $this->writeToFile('/tmp/receive_locker_code', print_r($_POST, true));
+
+            $order = Order::find()->where("password='" . $_POST['Receive']['password'] . "'")->one();
             if (isset($order)) {
                 if ($order->status == Order::ORDER_STATUS_RECEIVED) {//16 = รับของแล้ว
                     $orderItem = OrderItem::find()->where("orderId=" . $order->orderId . " and status<" . Order::ORDER_STATUS_RECEIVED)->all();

@@ -108,21 +108,4 @@ use common\models\costfit\User;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-    <?php $this->registerJs("
-           init.push(function () {
-            if (!$('html').hasClass('ie8')) {
-                $('#productpost-shortdescription').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
-
-
-            }
-
-        });
-
-", \yii\web\View::POS_END); ?>
 </div>

@@ -119,6 +119,7 @@ class PickingController extends PickingMasterController {
         if (isset($_POST["PickingPoint"])) {
 
             $model->status = $_POST["PickingPoint"]['status'];
+            $model->attributes = $_POST['PickingPoint'];
             $model->type = $receive;
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
@@ -126,9 +127,10 @@ class PickingController extends PickingMasterController {
             if (isset($imageObj) && !empty($imageObj)) {
                 $newFileName = Upload::UploadBasic('PickingPoint[mapImages]', $folderName, $uploadPath, '500', '500');
                 $model->mapImages = '/' . 'images/' . 'picking-point/' . $folderName . "/" . $newFileName;
-            } else {
-                echo 'No';
             }
+//            else {
+//                echo 'No';
+//            }
             if ($receive != 3) {
                 $PickingPointFormat = \common\models\costfit\PickingPointFormatLockers::find()->all();
             } else {

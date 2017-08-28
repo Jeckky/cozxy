@@ -28,13 +28,14 @@ class Locker
     {
 //        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
-        $params = array($locker->serialnumber,//'iLockerHQ17', // generalprofile lockercode
-                        $locker->generalprofile_lockercode,//'Cozxy Locker Demo', // generalprofile lockername
-                        $locker->generalprofile_lockername,//'Cozxy-01', // serialnumber
-                        $num, // number lockers
-                        $locker->masterkey,//$masterKey->value, // masterkey
-                        $locker->username_unlock,//'nimita', // username unlock
-                        $locker->ip); // locker url
+        $params = array(
+            $locker->generalprofile_lockercode,// generalprofile_lockercode
+            $locker->generalprofile_lockername,//'Cozxy-01', // generalprofile_lockercode
+            $locker->serialnumber,//'iLockerHQ17', // serialnumber
+            $num, // number lockers
+            $locker->masterkey,//$masterKey->value, // masterkey
+            $locker->username_unlock,//'nimita', // username unlock
+            $locker->ip); // locker url
         $result = self::call_webapi("open_locker", $params, $locker->token);
         switch($result['header']) {
             case 200 :
