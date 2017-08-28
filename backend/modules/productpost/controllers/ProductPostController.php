@@ -156,4 +156,42 @@ class ProductPostController extends ProductPostMasterController {
         }
     }
 
+    public function actionUploadedFile() {
+
+    }
+
+    public function actionUploadImages() {
+        $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
+        $mime = \yii\helpers\FileHelper::getMimeType($uploadedFile->tempName);
+        $file = time() . "_" . $uploadedFile->name;
+
+        $user_id = Yii::$app->user->id; //Yii::$app->user->getId();
+
+        $url = Yii::$app->urlManager->createAbsoluteUrl('/images/story/' . $user_id . '/' . $file);
+        $uploadPath = Yii::getAlias('@webroot') . '/images/story/' . $user_id . '/' . $file;
+
+        if (!is_dir(Yii::getAlias('@webroot') . '/images/story/' . $user_id)) { //ถ้ายังไม่มี folder ให้สร้าง folder ตาม user id
+            mkdir(Yii::getAlias('@webroot') . '/images/story/' . $user_id);
+        }
+
+        //ตรวจสอบ
+        if ($uploadedFile == null) {
+            $message = "ไม่มีไฟล์ที่ Upload";
+        } else if ($uploadedFile->size == 0) {
+            $message = "ไฟล์มีขนาด 0";
+        } else if ($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
+            $message = "รูปภาพควรเป็น JPG หรือ PNG";
+        } else if ($uploadedFile->tempName == null) {
+            $message = "มีข้อผิดพลาด";
+        } else {
+            $message = "";
+            $move = $uploadedFile->saveAs($uploadPath);
+            if (!$move) {
+                $message = "ไม่สามารถนำไฟล์ไปไว้ใน Folder ได้กรุณาตรวจสอบ Permission Read/Write/Modify";
+            }
+        }
+        $funcNum = $_GET['CKEditorFuncNum'];
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
+    }
+
 }

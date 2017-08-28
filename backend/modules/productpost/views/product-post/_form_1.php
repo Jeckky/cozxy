@@ -59,19 +59,43 @@ use mihaildev\ckeditor\CKEditor;
             'editorOptions' => [
                 'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
                 'inline' => false, //по умолчанию false
-                //
-                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
-                'contentsLangDirection' => 'th',
-                'height' => 400,
-                'filebrowserBrowseUrl' => 'browse-images',
-                'filebrowserUploadUrl' => 'upload-images',
-                //'extraPlugins' => ['imageuploader', 'image2'],
-                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
             ],
         ]);
         ?>
 
-
+        <?//=
+        $form->field($model, 'description')->widget(CKEditor::className(), [
+        'preset' => 'custom',
+        'clientOptions' => [
+        'toolbar' => [
+        [
+        'name' => 'row1',
+        'items' => [
+        'Source', '-',
+        'Bold', 'Italic', 'Underline', 'Strike', '-',
+        'Subscript', 'Superscript', 'RemoveFormat', '-',
+        'TextColor', 'BGColor', '-',
+        'NumberedList', 'BulletedList', '-',
+        'Outdent', 'Indent', '-', 'Blockquote', '-',
+        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'list', 'indent', 'blocks', 'align', 'bidi', '-',
+        'Link', 'Unlink', 'Anchor', '-',
+        'ShowBlocks', 'Maximize', 'Styles', 'Size'
+        ],
+        ],
+        [
+        'name' => 'row2',
+        'items' => [
+        'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Iframe', '-',
+        'NewPage', 'Print', 'Templates', '-',
+        'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+        'Undo', 'Redo', '-',
+        'Find', 'SelectAll', 'Format', 'Font', 'FontSize',
+        ],
+        ],
+        ],
+        ],
+        ]);
+        ?>
         <?//= $form->field($model, 'shopName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?//= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 20]) ?>

@@ -206,7 +206,7 @@ return [
             'lockers/*',
             'suppliers/*',
             'product/*',
-            'redactor/*'
+            'redactor/*',
         ],
     ],
     'params' => $params,
