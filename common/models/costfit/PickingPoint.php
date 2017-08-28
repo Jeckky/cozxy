@@ -155,12 +155,16 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     public static function availableProvince() {
         preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
-        return ArrayHelper::map(States::find()->select(['states.stateId', 'states.localName'])
+
+        $available = ArrayHelper::map(States::find()->select(['states.stateId', 'states.localName'])
         ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
         ->where('cpp.status = 1')
         ->groupBy('cpp.provinceId')
         ->orderBy('states.localName')
         ->asArray()->all(), 'stateId', 'localName');
+        echo '<pre>';
+        print_r($available);
+        return $available;
     }
 
 }
