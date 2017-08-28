@@ -36,7 +36,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return array_merge(parent::rules(), [
             [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
             //[['pickingId', 'LcpickingId'], 'required', 'on' => self::COZXY_PICKING_POINT_SUMMARY],
-            [['pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
+            [['provinceId', 'pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
         ]);
     }
 
