@@ -58,65 +58,7 @@ $pickingId = rand(0, 9999);
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
                         </div>
-                        <div class="row fc-g999">
-                            <div class="col-md-4 col-xs-12">
-
-                                <?php
-                                echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                                    //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
-                                    //'data' => \common\models\costfit\PickingPoint::availableProvince(),
-                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
-                                    'pluginOptions' => [
-                                        'placeholder' => 'Select Province',
-                                        'loadingText' => 'Loading Province ...',
-                                        'allowClear' => true
-                                    ],
-                                    'options' => ['placeholder' => 'Select Province ...', 'name' => 'provinceId', 'id' => 'stateId'],
-                                ])->label(FALSE);
-                                ?>
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <?php
-                                echo Html::hiddenInput('input-type-11', $pickingPointLockersCool->amphurId, ['id' => 'input-type-11']);
-                                echo Html::hiddenInput('input-type-22', $pickingPointLockersCool->amphurId, ['id' => 'input-type-22']);
-                                echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
-                                echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
-                                    'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName] : [],
-                                    'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
-                                    'type' => DepDrop::TYPE_SELECT2,
-                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                                    'pluginOptions' => [
-                                        'depends' => ['stateId'],
-                                        'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
-                                        'loadingText' => 'Loading amphur ...',
-                                        'params' => ['input-type-11', 'input-type-22', 'input-type-33'],
-                                        'initialize' => false,
-                                    ]
-                                ])->label(FALSE);
-                                ?>
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <?php
-                                echo Html::hiddenInput('input-type-13', $pickingPointLockersCool->provinceId, ['id' => 'input-type-13']);
-                                echo Html::hiddenInput('input-type-23', $pickingPointLockersCool->amphurId, ['id' => 'input-type-23']);
-                                echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
-                                echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-//                                        'model' => $pickingId,
-                                    'data' => [$pickingPoint->pickingId => $pickingPoint->title],
-                                    'attribute' => 'pickingId',
-                                    'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
-                                    'type' => DepDrop::TYPE_SELECT2,
-                                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                                    'pluginOptions' => [
-                                        'depends' => ['amphurId'],
-                                        'url' => Url::to(['child-picking-point']),
-                                        'loadingText' => 'Loading picking point ...',
-                                        'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33'],
-                                    //                                        'initialize' => false,
-                                    ]
-                                ])->label(FALSE);
-                                ?>
-                            </div>
+                        <div class="row fc-g999"> 
                         </div>
 
                         <div class="size18">&nbsp;</div>
