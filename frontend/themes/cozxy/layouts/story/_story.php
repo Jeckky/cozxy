@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use yii\helpers\HtmlPurifier;
 
 $this->title = isset($productPost->title) ? 'Stories ' . $productPost->title : '';
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,16 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h1 class="page-header"><?= $productPost->title ?> </h1>
 
                     <p>
-                        <?= isset($productPost->shortDescription) ? $productPost->shortDescription : '' ?>
+<?= isset($productPost->shortDescription) ? $productPost->shortDescription : '' ?>
                     </p>
                     <center>
-                        <?= Html::img(Yii::$app->homeUrl . $imgShowStory, ['class' => 'img-responsive', 'style' => '100%']) ?>
+<?= Html::img(Yii::$app->homeUrl . $imgShowStory, ['class' => 'img-responsive', 'style' => '100%']) ?>
                     </center>
 
                     <hr>
 
                     <p>
-                        <?= $productPost->description ?>
+<?= HtmlPurifier::process($productPost->description) ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
                     </p>
@@ -58,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-xs-12 compare-price-ajax">
                             <?php
                             ?>
-                            <?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
+<?= $this->render('@app/themes/cozxy/layouts/story/compare_price', ['modelComparePrices' => $modelComparePrices, 'country' => $country, 'productPostId' => $productPost->productPostId, 'productPost' => $productPost, 'comparePrice' => $comparePrice, 'currency' => $currency]) ?>
                         </div>
                     </div>
                 </div>
@@ -71,11 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="col-md-9">
                                     <form class="form-horizontal" role="form" style="margin-bottom: 15px;">
                                         <div class="row">
-                                            <?php if (Yii::$app->user->id == $productPost->userId) { ?>
+    <?php if (Yii::$app->user->id == $productPost->userId) { ?>
                                                 <div class="col-xs-4">
                                                     <a class="btn btn-primary btn-radio" href="<?= Yii::$app->homeUrl ?>story/update-stories/<?=
                                                     $productPost->encodeParams(
-                                                            ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
+                                                    ['productId' => $productPost->productId, 'productPostId' => $productPost->productPostId, 'productSuppId' => $productSuppId])
                                                     ?>" style="padding: 6px 16px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit My Stories</a>
                                                 </div>
 
@@ -85,11 +86,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     </a>
                                                     <input type="checkbox" id="middle-item" class="hidden">
                                                 </div>
-                                            <?php } ?>
+    <?php } ?>
                                             <div class="col-xs-4">
                                                 <a class="btn btn-warning btn-radio" href="<?= Yii::$app->homeUrl ?>product/<?=
-                                                $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);
-                                                ?>" style="padding: 6px 16px;"><i class="fa fa-eye" aria-hidden="true"></i> View Product</a>
+                                                   $productPost->encodeParams(['productId' => $productPost->productId, 'productSupplierId' => $productSuppId]);
+                                                   ?>" style="padding: 6px 16px;"><i class="fa fa-eye" aria-hidden="true"></i> View Product</a>
                                             </div>
                                         </div>
                                     </form>
@@ -111,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('_authors', ['productPost' => $productPost, 'productSuppId' => $productSuppId, 'avatar' => $avatar]) ?>
 
             <?= $this->render('_about_this_story', ['productPost' => $productPost]) ?>
-            <?= $this->render('_popular_stories', ['productSuppId' => $productSuppId, 'popularStories' => $popularStories, 'popularStoriesNoneStar' => $popularStoriesNoneStar, 'urlSeeAll' => $urlSeeAll]) ?>
+        <?= $this->render('_popular_stories', ['productSuppId' => $productSuppId, 'popularStories' => $popularStories, 'popularStoriesNoneStar' => $popularStoriesNoneStar, 'urlSeeAll' => $urlSeeAll]) ?>
         </div>
         <?php
         $js = "function top(){
