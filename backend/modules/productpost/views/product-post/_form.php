@@ -53,8 +53,6 @@ use mihaildev\ckeditor\CKEditor;
         <?//= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
         <?php
-//или c ActiveForm
-
         echo $form->field($model, 'description')->widget(CKEditor::className(), [
             'editorOptions' => [
                 'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать

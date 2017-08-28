@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use mihaildev\ckeditor\CKEditor;
 ?>
 <?php
 $form = ActiveForm::begin([
@@ -75,11 +76,59 @@ $form = ActiveForm::begin([
             ]); //->label('Brand');
             ?>
 
-            <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-            <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+            <?php
+            echo $form->field($model, 'shortDescription')->widget(CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    'filebrowserBrowseUrl' => 'browse-images',
+                    'filebrowserUploadUrl' => 'upload-images',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
 
-            <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+
+            <?php
+            echo $form->field($model, 'description')->widget(CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    'filebrowserBrowseUrl' => 'browse-images',
+                    'filebrowserUploadUrl' => 'upload-images',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
+
+
+            <?php
+            echo $form->field($model, 'specification')->widget(CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    'filebrowserBrowseUrl' => 'browse-images',
+                    'filebrowserUploadUrl' => 'upload-images',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
 
             <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
@@ -130,7 +179,7 @@ $form = ActiveForm::begin([
 <?php ActiveForm::end(); ?>
 
 <?php $this->registerJs("
-           init.push(function () {
+         /*  init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#product-description').summernote({
                     height: 200,
@@ -156,6 +205,6 @@ $form = ActiveForm::begin([
                 });
             }
 
-        });
+        });*/
 
 ", \yii\web\View::POS_END); ?>

@@ -9,6 +9,7 @@ use yii\jui\DatePicker;
 use common\models\costfit\PaymentMethod;
 use common\models\costfit\Bank;
 use common\models\costfit\Supplier;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\BankTransfer */
@@ -42,8 +43,23 @@ use common\models\costfit\Supplier;
 
         <?= $form->field($model, 'branch', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 25]) ?>
 
-        <?= $form->field($model, 'accNo', ['options' => ['class' => 'row form-group']])->widget(\yii\redactor\widgets\Redactor::className()) ?>
 
+        <?php
+        echo $form->field($model, 'options')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => 'browse-images',
+                //'filebrowserUploadUrl' => 'upload-images',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
         <?= $form->field($model, 'accName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 300]) ?>
 
         <?//= $form->field($model, 'accType', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 100]) ?>

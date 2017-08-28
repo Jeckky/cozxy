@@ -9,6 +9,7 @@ use yii\jui\DatePicker;
 use kartik\grid\GridView;
 use kartik\editable\Editable;
 use kartik\select2\Select2;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductGroup */
@@ -238,7 +239,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                     <div class="tab-content">
                         <div class="tab-pane <?= ($step == 1) ? " active" : " " ?>" role="tabpanel" id="step1">
-                            <h3>Step 1 - Create Product Group Name</h3>
+                            <h3>Step 1 - Create Product Group Name </h3>
                             <?= $form->errorSummary($model) ?>
 
                             <?=
@@ -286,11 +287,59 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
 
-                            <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-                            <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+                            <?php
+                            echo $form->field($model, 'shortDescription')->widget(CKEditor::className(), [
+                                'editorOptions' => [
+                                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                                    'inline' => false, //по умолчанию false
+                                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                                    'contentsLangDirection' => 'th',
+                                    'height' => 400,
+                                    'filebrowserBrowseUrl' => 'browse-images',
+                                    'filebrowserUploadUrl' => 'upload-images',
+                                    //'extraPlugins' => ['imageuploader', 'image2'],
+                                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                                ],
+                            ]);
+                            ?>
 
-                            <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+
+                            <?php
+                            echo $form->field($model, 'description')->widget(CKEditor::className(), [
+                                'editorOptions' => [
+                                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                                    'inline' => false, //по умолчанию false
+                                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                                    'contentsLangDirection' => 'th',
+                                    'height' => 400,
+                                    'filebrowserBrowseUrl' => 'browse-images',
+                                    'filebrowserUploadUrl' => 'upload-images',
+                                    //'extraPlugins' => ['imageuploader', 'image2'],
+                                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                                ],
+                            ]);
+                            ?>
+
+
+                            <?php
+                            echo $form->field($model, 'specification')->widget(CKEditor::className(), [
+                                'editorOptions' => [
+                                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                                    'inline' => false, //по умолчанию false
+                                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                                    'contentsLangDirection' => 'th',
+                                    'height' => 400,
+                                    'filebrowserBrowseUrl' => 'browse-images',
+                                    'filebrowserUploadUrl' => 'upload-images',
+                                    //'extraPlugins' => ['imageuploader', 'image2'],
+                                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                                ],
+                            ]);
+                            ?>
 
                             <?= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
@@ -398,11 +447,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active " : " ") : "active " ?> text-center">
                                             <a href="#masterProduct" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true"><br>Master<br>(<?= $dataProvider->getTotalCount() ?>)</a>
                                         </li>
-                                        <?php // if ($dataProvider2->totalItemCount > 0): ?>
+                                        <?php // if ($dataProvider2->totalItemCount > 0):  ?>
                                         <li role="presentation" class="<?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active " : " ") : " " ?> text-center">
                                             <a href="#myProduct" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false"><br>My Product<br>(<?= $dataProvider2->getTotalCount() ?>)</a>
                                         </li>
-                                        <?php // endif; ?>
+                                        <?php // endif;  ?>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
@@ -495,7 +544,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
         </div>
 
         <?php $this->registerJs("
-           init.push(function () {
+           /*init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#product-description').summernote({
                     height: 200,
@@ -513,7 +562,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 });
             }
 
-        });
+        });*/
 
 ", \yii\web\View::POS_END); ?>
 

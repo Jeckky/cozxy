@@ -102,14 +102,45 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                 //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
                         'contentsLangDirection' => 'th',
                         'height' => 400,
-                        'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'story/browse-images/',
-                        'filebrowserUploadUrl' => Yii::$app->homeUrl . 'story/upload-images/',
+                        'filebrowserBrowseUrl' => 'browse-images',
+                        'filebrowserUploadUrl' => 'upload-images',
                         //'extraPlugins' => ['imageuploader', 'image2'],
                         'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
                     ],
                 ]);
                 ?>
-
+                <?//=
+                $form->field($model, 'description', ['options' => ['class' => '']])->widget(\yii\redactor\widgets\Redactor::className([
+                'settings' => [
+                'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
+                'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
+                ]
+                ]), [
+                'clientOptions' => [
+                'minHeight' => 350,
+                'lang' => 'en',
+                'clipboardUpload' => true,
+                'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
+                'clips',
+                'counter',
+                'definedlinks',
+                'filemanager',
+                'limiter',
+                'table',
+                'textdirection',
+                'textexpander',
+                'video',
+                ],
+                'buttons' => [
+                'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
+                'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+                'image', 'file', 'table', 'link', '|',
+                'alignment', '|', 'horizontalrule',
+                '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
+                ],
+                ]
+                ], ['style' => 'height:1000px;'])
+                ?>
             </div>
             <div class="size12 size10-xs">&nbsp;</div>
             <?php if (Yii::$app->controller->action->id != 'update-stories') { ?>
