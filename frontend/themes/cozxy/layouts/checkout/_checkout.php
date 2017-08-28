@@ -273,13 +273,11 @@ $pickingId = rand(0, 9999);
                             <div class="size14">&nbsp;</div>
 
                             <div class="col-lg-1 col-md-2 col-sm-3 ">Name:</div>
-                            <div class="col-lg-11 col-md-10 col-sm-9 name-show"><?= isset($defaultAddress) ? $defaultAddress->firstname . ' ' . $defaultAddress->lastname : '&nbsp;
-                                    ' ?></div>
+                            <div class="col-lg-11 col-md-10 col-sm-9 name-show"><?= isset($defaultAddress) ? $defaultAddress->firstname . ' ' . $defaultAddress->lastname : '&nbsp;' ?></div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Address:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 address-show">
-                                <?//= isset($defaultAddress) ? $defaultAddress->address . ', ' . $defaultAddress->district->localName . ', ' . $defaultAddress->cities->localName . ', ' . $defaultAddress->states->localName . ', ' . $defaultAddress->countries->localName . ', ' . $defaultAddress->zipcode : '&nbsp;
-                                ' ?>
+                                <?//= isset($defaultAddress) ? $defaultAddress->address . ', ' . $defaultAddress->district->localName . ', ' . $defaultAddress->cities->localName . ', ' . $defaultAddress->states->localName . ', ' . $defaultAddress->countries->localName . ', ' . $defaultAddress->zipcode : '&nbsp;' ?>
                                 <?php
                                 if (isset($defaultAddress)) {
                                     $address = $defaultAddress->address;
@@ -317,14 +315,12 @@ $pickingId = rand(0, 9999);
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Email:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 email-show">
-                                <?= isset($defaultAddress) ? $defaultAddress->email : '&nbsp;
-                                    ' ?>
+                                <?= isset($defaultAddress) ? $defaultAddress->email : '&nbsp;' ?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-lg-1 col-md-2 col-sm-3">Tel:</div>
                             <div class="col-lg-11 col-md-10 col-sm-9 tel-show">
-                                <?= isset($defaultAddress) ? $defaultAddress->tel : '&nbsp;
-                                    ' ?>
+                                <?= isset($defaultAddress) ? $defaultAddress->tel : '&nbsp;' ?>
                             </div>
                             <div class="size12">&nbsp;</div>
                         </div>
@@ -577,218 +573,218 @@ $pickingId = rand(0, 9999);
 <?php
 $this->registerCss('
 #map {
-                                    height: 450px;
-                                    }
-                                    ');
+            height: 450px;
+        }
+');
 
 $this->registerJs('
-                                    var map;
-                                    function initMap() {
-                                    var myLatLng = { lat: 13.8713948, lng: 100.6151315 };
-                                    map = new google.maps.Map(document.getElementById("map"), {
-                                    center: myLatLng,
-                                    zoom: 16
-                                    });
+        var map;
+        function initMap() {
+            var myLatLng = { lat: 13.8713948, lng: 100.6151315 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: myLatLng,
+                zoom: 16
+            });
 
-                                    var marker = new google.maps.Marker({
-                                    map: map,
-                                    position: myLatLng,
-                                    title: "Hello World!"
-                                    });
-                                    }
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: "Hello World!"
+            });
+        }
 
 
 
-                                    function changeMap(lats, lngs) {
+function changeMap(lats, lngs) {
 
-                                    var myLatLng = {lat: Number(lats), lng: Number(lngs)}; // get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-                                    console.log(myLatLng);
-                                    //document.getElementById("map").innerHTML = "Paragraph changed!";
-                                    //$(".cart-detail").find("#map").html("xxxxxx");
-                                    map = new google.maps.Map(document.getElementById("map"), {
-                                    center: myLatLng,
-                                    zoom: 11,
-                                    /* mapTypeId: "hybrid" */
-                                    });
+    var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
+    console.log(myLatLng);
+    //document.getElementById("map").innerHTML = "Paragraph changed!";
+    //$(".cart-detail").find("#map").html("xxxxxx");
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng,
+        zoom: 11,
+        /*mapTypeId: "hybrid"*/
+    });
 
-                                    var marker = new google.maps.Marker({
-                                    map: map,
-                                    position: myLatLng,
-                                    title: "Hello World!"
-                                    });
-                                    }
-                                    ', \yii\web\View::POS_HEAD);
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: "Hello World!"
+    });
+}
+', \yii\web\View::POS_HEAD);
 
 $this->registerJs('
-                                    $("#LcpickingId").change(function(event, id, value) {
-                                    prev_val = $(this).val();
+    $("#LcpickingId").change(function (event, id, value) {
+    prev_val = $(this).val();
 
-                                    $.ajax({
-                                    type: "POST",
-                                    url: $baseUrl + "checkout/map-images-google",
-                                    data: {"pickingIds": prev_val},
-                                    success: function(data, status)
-                                    {
-                                    if(data != "") {
-                                    if(status == "success") {
-                                    var JSONObject = JSON.parse(data);
-                                    $("#map-address-cozxy-box").html(JSONObject.description);
-                                    /* Map Google in latitude and longitude for cozxy */
-                                    changeMap(JSONObject.latitude, JSONObject.longitude);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "checkout/map-images-google",
+        data: {"pickingIds": prev_val},
+        success: function (data, status)
+        {
+            if (data != "") {
+                if (status == "success") {
+                    var JSONObject = JSON.parse(data);
+                    $("#map-address-cozxy-box").html(JSONObject.description);
+                    /* Map Google in latitude and longitude for cozxy*/
+                    changeMap(JSONObject.latitude, JSONObject.longitude);
 
-                                    } else {
+                } else {
 
-                                    }
-                                    }
-                                    }
-                                    });
-                                    });
+                }
+            }
+        }
+    });
+});
 
 
-                                    if($("input[name=shipping]:checked").val() == 1) {
-                                    $("#shipToAddress").hide();
-                                    } else {
-                                    $("#shipToCozxyBox").hide();
-                                    $("#shipToAddress").show();
-                                    }
+    if($("input[name=shipping]:checked").val() == 1) {
+        $("#shipToAddress").hide();
+    } else {
+        $("#shipToCozxyBox").hide();
+        $("#shipToAddress").show();
+    }
 
-                                    $("input[name=shipping]").change(function(e){
-                                    var shipTo = $(this).val();
-                                    if(shipTo == 2) {
-                                    $("#shipToCozxyBox").hide();
-                                    $("#shipToAddress").show();
-                                    } else {
-                                    $("#shipToAddress").hide();
-                                    $("#shipToCozxyBox").show();
-                                    }
-                                    });
+    $("input[name=shipping]").change(function(e){
+        var shipTo = $(this).val();
+        if(shipTo == 2) {
+            $("#shipToCozxyBox").hide();
+            $("#shipToAddress").show();
+        } else {
+            $("#shipToAddress").hide();
+            $("#shipToCozxyBox").show();
+        }
+    });
 
-                                    $(" #order-shippingtel").keydown(function(e) {
-                                    // Allow: backspace, delete, tab, escape, enter and .
-                                    if($.inArray(e.keyCode, [         46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                                    // Allow: Ctrl+A, Command+A
-                                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                                    // Allow: home, end, left, right, down, up
-                                    (e.keyCode >= 35 && e.keyCode <= 40)) {
-                                    // let it happen, don\'t do anything
-                                    return;
-                                    }
-                                    // Ensure that it is a number and stop the keypress
-                                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                                    e.preventDefault();
-                                    }
-                                    });
+    $(" #order-shippingtel").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don\'t do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
-                                    function isEmail(email) {
-                                    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2, 4})+$/;
-                                    var a = regex.test(email);
-                                    return a;
-                                    }
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var a = regex.test(email);
+        return a;
+    }
 
-                                    $("#checkoutBtn").on("click", function(e){
-                                    e.preventDefault();
-                                    var error = 0;
-                                    var pickingId, addressId, shippingFirstname, shippingLastname, shippingAddress, shippingProvince, shippingAmphur, shippingDistrict, shippingZipcode, shippingTel, shippingEmail;
-                                    var shipTo = $("input[name=shipping]:checked").val();
+    $("#checkoutBtn").on("click", function(e){
+        e.preventDefault();
+        var error = 0;
+        var pickingId, addressId, shippingFirstname, shippingLastname, shippingAddress, shippingProvince, shippingAmphur, shippingDistrict, shippingZipcode, shippingTel, shippingEmail;
+        var shipTo =  $("input[name=shipping]:checked").val();
 
-                                    if(shipTo ==1) {
-                                    //ship to CozxyBox
-                                    pickingId = $.trim($("#LcpickingId").val());
+        if(shipTo ==1) {
+            //ship to CozxyBox
+            pickingId = $.trim($("#LcpickingId").val());
 
-                                    if((!pickingId) || (pickingId.length = 0)) {
-                                    $(".field-LcpickingId p").html("<span class=\"text-danger\">Please select picking location.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-LcpickingId p").html("");
-                                    }
+            if((!pickingId) || (pickingId.length = 0)) {
+                $(".field-LcpickingId p").html("<span class=\"text-danger\">Please select picking location.</span>");
+                error++;
+            } else {
+                $(".field-LcpickingId p").html("");
+            }
 
-                                    } else {
-                                    //ship to address
-                                    shippingFirstname = $.trim($("#order-shippingfirstname").val());
-                                    if((!shippingFirstname) || (shippingFirstname.length = 0)) {
-                                    $(".field-order-shippingfirstname p").html("<span class=\"text-danger\">Please fill your first name.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingfirstname p").html("");
-                                    }
+        } else {
+            //ship to address
+            shippingFirstname = $.trim($("#order-shippingfirstname").val());
+            if((!shippingFirstname) || (shippingFirstname.length = 0)) {
+                $(".field-order-shippingfirstname p").html("<span class=\"text-danger\">Please fill your first name.</span>");
+                error++;
+            } else {
+                $(".field-order-shippingfirstname p").html("");
+            }
 
-                                    shippingLastname = $.trim($("#order-shippinglastname").val());
-                                    if((!shippingLastname) || (shippingLastname.length = 0)) {
-                                    $(".field-order-shippinglastname p").html("<span class=\"text-danger\">Please fill your last name.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippinglastname p").html("");
-                                    }
+            shippingLastname = $.trim($("#order-shippinglastname").val());
+            if((!shippingLastname) || (shippingLastname.length = 0)) {
+                $(".field-order-shippinglastname p").html("<span class=\"text-danger\">Please fill your last name.</span>");
+                error++;
+            } else {
+                $(".field-order-shippinglastname p").html("");
+            }
 
-                                    shippingAddress = $.trim($("#order-shippingaddress").val());
-                                    if((!shippingAddress) || (shippingAddress.length = 0)) {
-                                    $(".field-order-shippingaddress p").html("<span class=\"text-danger\">Please fill your address.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingaddress p").html("");
-                                    }
+            shippingAddress = $.trim($("#order-shippingaddress").val());
+            if((!shippingAddress) || (shippingAddress.length = 0)) {
+                $(".field-order-shippingaddress p").html("<span class=\"text-danger\">Please fill your address.</span>");
+                error++;
+            } else {
+                $(".field-order-shippingaddress p").html("");
+            }
 
-                                    shippingProvince = $.trim($("#order-shippingprovinceid").val());
-                                    if((!shippingProvince) || (shippingProvince.length = 0)) {
-                                    $(".field-order-shippingprovinceid p").html("<span class=\"text-danger\">Please select your province.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingprovinceid p").html("");
-                                    }
+            shippingProvince = $.trim($("#order-shippingprovinceid").val());
+            if((!shippingProvince) || (shippingProvince.length = 0)) {
+                $(".field-order-shippingprovinceid p").html("<span class=\"text-danger\">Please select your province.</span>");
+                error++;
+            } else {
+                $(".field-order-shippingprovinceid p").html("");
+            }
 
-                                    shippingAmphur = $.trim($("#order-shippingamphurid").val());
-                                    if((!shippingAmphur) || (shippingAmphur.length = 0)) {
-                                    $(".field-order-shippingamphurid p").html("<span class=\"text-danger\">Please select your amphur</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingamphurid p").html("");
-                                    }
+            shippingAmphur = $.trim($("#order-shippingamphurid").val());
+            if((!shippingAmphur) || (shippingAmphur.length = 0)) {
+                $(".field-order-shippingamphurid p").html("<span class=\"text-danger\">Please select your amphur</span>");
+                error++;
+            } else {
+                $(".field-order-shippingamphurid p").html("");
+            }
 
-                                    shippingDistrict = $.trim($("#order-shippingdistrictid").val());
-                                    if((!shippingDistrict) || (shippingDistrict.length = 0)) {
-                                    $(".field-order-shippingdistrictid p").html("<span class=\"text-danger\">Please select your district.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingdistrictid p").html("");
-                                    }
+            shippingDistrict = $.trim($("#order-shippingdistrictid").val());
+            if((!shippingDistrict) || (shippingDistrict.length = 0)) {
+                $(".field-order-shippingdistrictid p").html("<span class=\"text-danger\">Please select your district.</span>");
+                error++;
+            } else {
+                $(".field-order-shippingdistrictid p").html("");
+            }
 
-                                    shippingTel = $.trim($("#order-shippingtel").val());
-                                    if((!shippingTel) || (shippingTel.length = 0)) {
-                                    $(".field-order-shippingtel p").html("<span class=\"text-danger\">Please fill your phone number.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-shippingtel p").html("");
-                                    }
+            shippingTel = $.trim($("#order-shippingtel").val());
+            if((!shippingTel) || (shippingTel.length = 0)) {
+                $(".field-order-shippingtel p").html("<span class=\"text-danger\">Please fill your phone number.</span>");
+                error++;
+            } else {
+                $(".field-order-shippingtel p").html("");
+            }
 
-                                    shippingEmail = $.trim($("#order-email").val());
-                                    if((!shippingEmail) || (shippingEmail.length = 0)) {
-                                    $(".field-order-email p").html("<span class=\"text-danger\">Please fill your e-mail.</span>");
-                                    error++;
-                                    } else if(!isEmail(shippingEmail)) {
-                                    $(".field-order-email p").html("<span class=\"text-danger\">Invalid e-mail.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-order-email p").html("");
-                                    }
-                                    }
+            shippingEmail = $.trim($("#order-email").val());
+            if((!shippingEmail) || (shippingEmail.length = 0)) {
+                $(".field-order-email p").html("<span class=\"text-danger\">Please fill your e-mail.</span>");
+                error++;
+            } else if(!isEmail(shippingEmail)) {
+                  $(".field-order-email p").html("<span class=\"text-danger\">Invalid e-mail.</span>");
+                error++;
+            } else {
+                $(".field-order-email p").html("");
+            }
+        }
 
-                                    addressId = $.trim($("#addressId").val());
+        addressId = $.trim($("#addressId").val());
 
-                                    if((!addressId) || (addressId.length = 0)) {
-                                    $(".field-addressId p").html("<span class=\"text-danger\">Please select billing address.</span>");
-                                    error++;
-                                    } else {
-                                    $(".field-addressId p").html("");
-                                    }
+        if((!addressId) || (addressId.length = 0)) {
+            $(".field-addressId p").html("<span class=\"text-danger\">Please select billing address.</span>");
+            error++;
+        } else {
+            $(".field-addressId p").html("");
+        }
 
-                                    if(error == 0) {
-                                    $("#default-shipping-address").submit();
-                                    }
-                                    });
+        if(error == 0) {
+            $("#default-shipping-address").submit();
+        }
+    });
 
-                                    ', \yii\web\View::POS_END);
+', \yii\web\View::POS_END);
 
-$this->registerJsFile('https: //maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 ?>
 <div class="modal fade" id="LockerModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
     <div class="modal-dialog">
