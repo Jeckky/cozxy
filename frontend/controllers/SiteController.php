@@ -317,7 +317,7 @@ class SiteController extends MasterController {
                 ]);
             }
         } else {
-            echo '3';
+
             return $this->render('verification', [
                 'model' => $user, 'data' => $data
             ]);
