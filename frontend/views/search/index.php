@@ -273,7 +273,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                         },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                        'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
+                                        'layout' => "{summary}\n{items}\n<div class ='col-sm-12 text-center'>{pager}</div>\n",
                                         //'layout' => "{items}",
                                         'itemOptions' => [
                                             'tag' => false,
