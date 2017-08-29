@@ -291,18 +291,36 @@ class SiteController extends MasterController {
     }
 
     public function actionConfirm() {
+        $cz = isset($_GET['cz']) ? $_GET['cz'] : '';
+        $token = isset($_GET['token']) ? $_GET['token'] : '';
         $user = \common\models\costfit\User::find()->where("token = '" . $_GET["token"] . "'")->one();
-        if (isset($user)) {
-            $user->status = 1;
-            $user->save(FALSE);
-            if (isset($_GET['cz'])) {
-                $cz = $_GET['cz'];
-                return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz . '&token=' . $_GET["token"]);
+        $user->scenario = 'verification';
+        $data = [];
+        $data['cz'] = $cz;
+        $data['token'] = $token;
+        if (count($user) > 0) {
+            if (isset($_POST['User']) && !empty($_POST['User'])) {
+                $user->attributes = $_POST['User'];
+                $token = $_POST['User']['token'];
+                $cz = $_POST['User']['cz'];
+                $user->status = 1;
+                $user->tel = $_POST['User']['tel'];
+                $user->save(FALSE);
+                if (isset($cz)) {
+                    return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&cz=' . $cz . '&token=' . $token);
+                } else {
+                    return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $token);
+                }
             } else {
-                return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $_GET["token"]);
+                return $this->render('verification', [
+                    'model' => $user, 'data' => $data
+                ]);
             }
         } else {
-
+            echo '3';
+            return $this->render('verification', [
+                'model' => $user, 'data' => $data
+            ]);
         }
     }
 
