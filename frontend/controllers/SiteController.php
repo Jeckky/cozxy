@@ -446,7 +446,7 @@ class SiteController extends MasterController {
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(), 'pagination' => ['defaultPageSize' => 15],]);
         $promotions = Product::productPromotion();
 
-        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        return $this->render('index', compact('otherProducts', 'promotions'));
     }
 
     public function actionSeeAllSale() {

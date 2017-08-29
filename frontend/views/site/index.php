@@ -136,7 +136,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
@@ -150,7 +150,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -193,7 +193,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
@@ -243,7 +243,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                        ] : [],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
