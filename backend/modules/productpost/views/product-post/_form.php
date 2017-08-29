@@ -10,6 +10,7 @@ use common\models\costfit\ProductSupp;
 use common\models\costfit\ProductSelf;
 use common\models\costfit\Brand;
 use common\models\costfit\User;
+use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\ProductPost */
@@ -49,40 +50,23 @@ use common\models\costfit\User;
 
         <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
-        <?=
-        $form->field($model, 'description', ['options' => ['class' => '']])->widget(\yii\redactor\widgets\Redactor::className([
-            'settings' => [
-                'uploadDir' => ['@webroot/images/story/' . Yii::$app->user->id],
-                'uploadUrl' => ['@web/images/story/' . Yii::$app->user->id],
-            ]
-        ]), [
-            'clientOptions' => [
-                'minHeight' => 350,
-                'lang' => 'en',
-                'clipboardUpload' => true,
-                /* 'plugins' => ['fullscreen', 'fontfamily', 'fontcolor', 'fontsize', 'imagemanager',
-                  'clips',
-                  'counter',
-                  'definedlinks',
-                  'filemanager',
-                  'limiter',
-                  'table',
-                  'textdirection',
-                  'textexpander',
-                  'video'], */
-                'plugins' => ['table', 'video', 'fontcolor', 'fontfamily', 'fontsize', 'fullscreen'],
-                'buttons' => ['html', 'formatting', 'bold', 'italic', 'deleted', 'underline', 'horizontalrule',
-                    'alignment', 'unorderedlist', 'orderedlist', 'outdent', 'indent'
-                    , 'link', 'image', 'file'],
-            /* 'buttons' => [
-              'formatting', '|', 'bold', 'italic', 'underline', 'deleted', '|',
-              'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-              'image', 'file', 'table', 'link', '|',
-              'alignment', '|', 'horizontalrule',
-              '|', '|', 'alignleft', 'aligncenter', 'alignright', 'justify'
-              ], */
-            ]
-        ], ['style' => 'height:1000px;'])
+        <?php
+//или c ActiveForm
+
+        echo $form->field($model, 'description')->widget(CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
         ?>
         <?//= $form->field($model, 'shopName', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
