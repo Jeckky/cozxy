@@ -74,11 +74,55 @@ $form = ActiveForm::begin([
             ]); //->label('Brand');
             ?>
 
-            <?= $form->field($model, 'shortDescription', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+            <?php
+            echo $form->field($model, 'shortDescription')->widget(mihaildev\ckeditor\CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                    //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
+            <?php
+            echo $form->field($model, 'description')->widget(mihaildev\ckeditor\CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                    //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
+            <?php
+            echo $form->field($model, 'specification')->widget(mihaildev\ckeditor\CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                    //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
 
-            <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
-
-            <?= $form->field($model, 'specification', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
 
             <? //= $form->field($model, 'price', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15])->label("Market Price"); ?>
 
@@ -126,7 +170,7 @@ $form = ActiveForm::begin([
 <?php ActiveForm::end(); ?>
 
 <?php $this->registerJs("
-           init.push(function () {
+          /* init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#productsuppliers-description').summernote({
                     height: 200,
@@ -144,6 +188,6 @@ $form = ActiveForm::begin([
                 });
             }
 
-        });
+        });*/
 
 ", \yii\web\View::POS_END); ?>

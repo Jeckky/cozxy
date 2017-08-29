@@ -36,7 +36,22 @@ use yii\redactor\widgets\Redactor;
 
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
-        <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+        <?php
+        echo $form->field($model, 'description')->widget(mihaildev\ckeditor\CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ]);
+        ?>
 
         <?= (isset($model->image) && !empty($model->image)) ? Html::img(Yii::$app->homeUrl . $model->image, ['style' => 'width:150px', 'class' => 'col-lg-offset-3']) : ''; ?>
 
@@ -69,18 +84,7 @@ use yii\redactor\widgets\Redactor;
     </div>
     <?php ActiveForm::end(); ?>
     <?php $this->registerJs("
-           init.push(function () {
-            if (!$('html').hasClass('ie8')) {
-                $('#category-description').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
-            }
 
-        });
 
 ", \yii\web\View::POS_END); ?>
 
