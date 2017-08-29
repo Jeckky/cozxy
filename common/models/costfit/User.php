@@ -64,7 +64,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['lastname', 'required'],
             ['email', 'unique'],
             'tel' => [['tel'], 'number'], //, 'min' => 8
-            ['tel', 'string', 'length' => [9, 10]],
+            ['tel', 'string', 'length' => [10]],
             ['newPassword', 'string', 'min' => 8],
             ['password', 'string', 'min' => 8],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
