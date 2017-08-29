@@ -95,6 +95,7 @@ class SiteController extends MasterController {
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
         $promotions = Product::productPromotion(6);
         $productBrand = Brand::allAvailableBrands();
+        $slideGroup = Content::banners();
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }

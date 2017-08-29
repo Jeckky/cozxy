@@ -47,7 +47,7 @@ class Brand extends \common\models\costfit\master\BrandMaster
     public static function allAvailableBrands()
     {
         $brands = self::find()
-            ->select('brand.image as image')
+            ->select('brand.image as image, brand.brandId as brandId')
             ->leftJoin('product p', 'p.brandId=brand.brandId')
             ->where('p.parentId is not null')
             ->andWhere(['p.approve'=>'approve'])
