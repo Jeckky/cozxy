@@ -53,6 +53,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const COZXY_PROFILE = 'profile';
     const COZXY_USER_BACKEND = 'user_backend';
     const COZXY_EDIT_PROFILE = 'editinfo';
+    const COZXY_CONFIRM = 'verification';
 
     /**
      * @inheritdoc
@@ -62,7 +63,8 @@ class User extends \common\models\costfit\master\UserMaster {
             ['firstname', 'required'],
             ['lastname', 'required'],
             ['email', 'unique'],
-            'tel' => [['tel'], 'string'], //, 'min' => 8
+            'tel' => [['tel'], 'number'], //, 'min' => 8
+            ['tel', 'string', 'length' => [9, 10]],
             ['newPassword', 'string', 'min' => 8],
             ['password', 'string', 'min' => 8],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
@@ -83,11 +85,13 @@ class User extends \common\models\costfit\master\UserMaster {
             //['username', 'email'],
             [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => 'register_new'],
+            [['tel'], 'required', 'on' => self::COZXY_CONFIRM],
         ]);
     }
 
     public function scenarios() {
         return [
+            self::COZXY_CONFIRM => ['tel'],
             self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm'],
             self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']],
             self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
