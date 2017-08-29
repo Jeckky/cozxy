@@ -78,7 +78,7 @@ if (Yii::$app->controller->id == 'product') {
             </p>
             <?php
             if ($model->price > 0) {
-                if (isset($hotDeal)) {
+                if (!isset($hotDeal)) {
                     ?>
 
                     <p class="price" style="height: 50px;">
