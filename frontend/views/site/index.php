@@ -150,7 +150,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
-                            'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<center>{pager}</center>\n" : "{items}",
+                            'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class='col-md-12 text-center'>{pager}</div>\n" : "{items}",
                             'itemOptions' => [
                                 'tag' => false,
                                 'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
@@ -193,7 +193,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
-                            'layout' => (Yii::$app->controller->action->id == "see-all-sale") ? "{summary}\n{items}\n<center>{pager}</center>\n" : "{items}",
+                            'layout' => (Yii::$app->controller->action->id == "see-all-sale") ? "{summary}\n{items}\n<div class='col-md-12 text-center'>{pager}</div>\n" : "{items}",
                             'itemOptions' => [
                                 'tag' => false,
                                 'pager' => (Yii::$app->controller->action->id == "see-all-sale") ? [
@@ -242,7 +242,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}p{pager}{items}"
-                            'layout' => (Yii::$app->controller->action->id == "see-all-not-sale") ? "{summary}\n{items}\n<center>{pager}</center>\n" : "{items}",
+                            'layout' => (Yii::$app->controller->action->id == "see-all-not-sale") ? "{summary}\n{items}\n<div class='col-md-12 text-center'>{pager}</div>\n" : "{items}",
 //                            'layout' => "{items}",
                             'itemOptions' => [
                                 'tag' => false,
