@@ -615,7 +615,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public static function productForSale($n = Null, $categoryId = null, $brandId=null) {
         $products = ProductSuppliers::find()
-        ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
+        ->select('product_suppliers.*, pps.price as price')
         ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
         ->leftJoin('product p', 'product_suppliers.productId=p.productId')
         ->where('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
@@ -630,8 +630,6 @@ class Product extends \common\models\costfit\master\ProductMaster {
             $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
             $products->andWhere(['b.brandId'=>$brandId]);
         }
-
-        $c = $products->count();
 
         return new ActiveDataProvider([
             'query' => $products,
