@@ -573,7 +573,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function productForNotSale($n = NULL, $categoryId = NULL) {
+    public static function productForNotSale($n = NULL, $categoryId = NULL, $brandId=null) {
         $productInStock = ProductSuppliers::find()
         ->select('productId')
         ->where('result>0')
@@ -600,6 +600,11 @@ class Product extends \common\models\costfit\master\ProductMaster {
             $products->andWhere(['ctp.categoryId' => $categoryId]);
         }
 
+        if (isset($brandId)) {
+            $products->leftJoin('brand b', 'b.brandId=product.brandId');
+            $products->andWhere(['b.brandId'=>$brandId]);
+        }
+
         return new ActiveDataProvider([
             'query' => $products,
             'pagination' => [
@@ -608,7 +613,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productForSale($n = Null, $categoryId = null) {
+    public static function productForSale($n = Null, $categoryId = null, $brandId=null) {
         $products = ProductSuppliers::find()
         ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
         ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
@@ -620,6 +625,13 @@ class Product extends \common\models\costfit\master\ProductMaster {
             $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
             $products->andWhere(['ctp.categoryId' => $categoryId]);
         }
+
+        if (isset($brandId)) {
+            $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
+            $products->andWhere(['b.brandId'=>$brandId]);
+        }
+
+        $c = $products->count();
 
         return new ActiveDataProvider([
             'query' => $products,

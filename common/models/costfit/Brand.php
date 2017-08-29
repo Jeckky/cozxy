@@ -4,6 +4,7 @@ namespace common\models\costfit;
 
 use Yii;
 use \common\models\costfit\master\BrandMaster;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "brand".
@@ -41,6 +42,20 @@ class Brand extends \common\models\costfit\master\BrandMaster
     public function getRootCategorys()
     {
         return $this->hasMany(Category::className(), ['brandId' => 'brandId'], ["parentId" => 0]);
+    }
+
+    public static function allAvailableBrands()
+    {
+        $brands = self::find()
+            ->select('brand.image as image')
+            ->leftJoin('product p', 'p.brandId=brand.brandId')
+            ->where('p.parentId is not null')
+            ->andWhere(['p.approve'=>'approve'])
+            ->andWhere(['p.status'=>1])
+            ->groupBy('brand.brandId')
+        ->all();
+
+        return $brands;
     }
 
 }

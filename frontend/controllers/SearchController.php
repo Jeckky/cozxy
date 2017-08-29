@@ -122,17 +122,21 @@ class SearchController extends MasterController {
             $brandName = '';
         }
 
-        $productCanSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
-            , 'pagination' => ['defaultPageSize' => 12]
-        ]);
+//        $productCanSell = new ArrayDataProvider(
+//        [
+//            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
+//            , 'pagination' => ['defaultPageSize' => 12]
+//        ]);
 
-        $productNotSell = new ArrayDataProvider(
-        [
-            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'notsale')
-            , 'pagination' => ['defaultPageSize' => 12]
-        ]);
+        $productCanSell = Product::productForSale(null, null, $brandId);
+
+//        $productNotSell = new ArrayDataProvider(
+//        [
+//            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'notsale')
+//            , 'pagination' => ['defaultPageSize' => 12]
+//        ]);
+
+        $productNotSell = Product::productForNotSale(null, null, $brandId);
 
         return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
     }

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\costfit\Brand;
 use common\models\costfit\Product;
 use common\models\costfit\ProductPost;
 use common\models\costfit\Subscribe;
@@ -87,12 +88,13 @@ class SiteController extends MasterController {
         $productNotSell = Product::productForNotSale(6);
 //        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
         $productStory = ProductPost::productStory(3);
-        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', ''), 'pagination' => [
-                'pageSize' => 100,
-        ]]);
+//        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', ''), 'pagination' => [
+//                'pageSize' => 100,
+//        ]]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
         $promotions = Product::productPromotion(6);
+        $productBrand = Brand::allAvailableBrands();
 
         return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
