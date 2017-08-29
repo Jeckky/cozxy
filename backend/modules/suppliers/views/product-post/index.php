@@ -43,7 +43,23 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
             <?= $form->field($model, 'status', ['options' => ['class' => 'row form-group']])->dropDownList(common\models\costfit\ProductPost::findStatusArray(), []) ?>
 
-            <?= $form->field($model, 'description', ['options' => ['class' => 'row form-group']])->textArea(['rows' => '6']) ?>
+
+            <?php
+            echo $form->field($model, 'description')->widget(mihaildev\ckeditor\CKEditor::className(), [
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                    'inline' => false, //по умолчанию false
+                    //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                    'contentsLangDirection' => 'th',
+                    'height' => 400,
+                    //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                    //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                    //'extraPlugins' => ['imageuploader', 'image2'],
+                    'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+                ],
+            ]);
+            ?>
 
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
@@ -54,7 +70,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
     </div>
     <?php ActiveForm::end(); ?>
     <?php $this->registerJs("
-           init.push(function () {
+         /*  init.push(function () {
             if (!$('html').hasClass('ie8')) {
                 $('#productpost-description').summernote({
                     height: 600,
@@ -67,9 +83,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
             }
 
-        });
-
-
+        });*/
 
 ", \yii\web\View::POS_END); ?>
 </div>

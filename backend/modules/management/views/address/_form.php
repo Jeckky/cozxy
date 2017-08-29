@@ -48,7 +48,22 @@ $yourbrowser = GetBrowser::Browser();
         <?= $form->field($model, 'tax', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 45])->label('เลขประจำตัวผู้เสียภาษี ') ?>
 
         <?= $form->field($model, 'address', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => true])->textArea(['rows' => '6'])->label('สถานที่ ') ?>
-
+        <?php
+        echo $form->field($model, 'address')->widget(mihaildev\ckeditor\CKEditor::className(), [
+            'editorOptions' => [
+                'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                'inline' => false, //по умолчанию false
+                //
+                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
+                'contentsLangDirection' => 'th',
+                'height' => 400,
+                //'filebrowserBrowseUrl' => Yii::$app->homeUrl . 'productpost/product-post/browse-images/',
+                //'filebrowserUploadUrl' => Yii::$app->homeUrl . 'productpost/product-post/upload-images/',
+                //'extraPlugins' => ['imageuploader', 'image2'],
+                'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
+            ],
+        ])->label('สถานที่ ');
+        ?>
         <?php
         // $catList = yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId = 'THA'")->asArray()->all(), 'stateId', 'stateName');
         echo $form->field($model, 'provinceId')->widget(kartik\select2\Select2::classname(), [
@@ -142,16 +157,6 @@ $yourbrowser = GetBrowser::Browser();
 </div>
 
 <?php $this->registerJs("
-           init.push(function () {
-            if (!$('html').hasClass('ie8')) {
-                $('#pickingpoint-address').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
-            }
-        });
+            
 
 ", \yii\web\View::POS_END); ?>

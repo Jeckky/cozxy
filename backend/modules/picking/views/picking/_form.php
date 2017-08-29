@@ -160,16 +160,6 @@ use kartik\widgets\Select2;
 
     </div>
     <?php $this->registerJs("
-           init.push(function () {
-            if (!$('html').hasClass('ie8')) {
-                $('#pickingpoint-descriptionx').summernote({
-                    height: 200,
-                    tabsize: 2,
-                    codemirror: {
-                        theme: 'monokai'
-                    }
-                });
-            }
-        });
+           
 
 ", \yii\web\View::POS_END); ?>
