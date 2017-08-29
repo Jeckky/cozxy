@@ -286,6 +286,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             ?>
 
                             <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]); ?>
+                            <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(); ?>
 
 
                             <?php

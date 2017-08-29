@@ -243,7 +243,7 @@ class ReceiveController extends MasterController
                         $data = json_encode(array(
                             "from" => "COZXY.COM",
 //            "to" => ["66937419977", "66616539889", "66836134241"],
-                            "to" => [$user->tel, "66836134241"],
+                            "to" => [$user->tel, "66813041313"],
                             "text" => $msg)
                         );
 

@@ -76,6 +76,7 @@ $form = ActiveForm::begin([
             ]); //->label('Brand');
             ?>
 
+            <?= $form->field($model, 'isbn', ['options' => ['class' => 'row form-group']])->textInput(); ?>
 
             <?php
             echo $form->field($model, 'shortDescription')->widget(CKEditor::className(), [
