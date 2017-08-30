@@ -125,7 +125,8 @@ class ModelMaster extends \yii\db\ActiveRecord
 //        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
 
         $text = json_encode($params);
-        $enc = mcrypt_encrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $text, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+//        $enc = mcrypt_encrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $text, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+        $enc = openssl_encrypt($text, "aes-256-cbc", Yii::$app->params['secureKey'], OPENSSL_RAW_DATA, substr(Yii::$app->params['secureKey'], 0, 16));
         $enc = str_replace(array('+', '/'), array('-', '_'), base64_encode($enc));
         return rawurlencode($enc);
     }
@@ -135,7 +136,8 @@ class ModelMaster extends \yii\db\ActiveRecord
 //	    return json_decode(Yii::$app->getSecurity()->decryptByPassword(base64_decode(base64_decode(urldecode($hash))), Yii::$app->params['secureKey']), true);
         $hash = str_replace(array('-', '_'), array('+', '/'), $hash);
         $enc = base64_decode($hash);
-        $enc = mcrypt_decrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $enc, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+//        $enc = mcrypt_decrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $enc, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+        $enc = openssl_decrypt($enc, "aes-256-cbc", Yii::$app->params['secureKey'], OPENSSL_RAW_DATA, substr(Yii::$app->params['secureKey'], 0, 16));
         return json_decode(trim($enc), true);
     }
 
@@ -144,7 +146,7 @@ class ModelMaster extends \yii\db\ActiveRecord
 //        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
 
         $text = json_encode($params);
-        $enc = mcrypt_encrypt(MCRYPT_BLOWFISH, Yii::$app->params['secureKey'], $text, MCRYPT_MODE_ECB, Yii::$app->params['secureVi']);
+        $enc = openssl_encrypt($text, "aes-256-cbc", Yii::$app->params['secureKey'], OPENSSL_RAW_DATA, substr(Yii::$app->params['secureKey'], 0, 16));
         $enc = str_replace(array('+', '/'), array('-', '_'), base64_encode($enc));
         //$enc = str_replace('-', '_', base64_encode(str_replace(array('+', '/'), array('-', ''), $enc)));
         return rawurlencode($enc);
