@@ -69,7 +69,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function attributes() {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand'
+            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result'
         ]);
     }
 
@@ -573,7 +573,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         }
     }
 
-    public static function productForNotSale($n = NULL, $categoryId = NULL, $brandId=null) {
+    public static function productForNotSale($n = NULL, $categoryId = NULL, $brandId = null) {
         $productInStock = ProductSuppliers::find()
         ->select('productId')
         ->where('result>0')
@@ -602,7 +602,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
         if (isset($brandId)) {
             $products->leftJoin('brand b', 'b.brandId=product.brandId');
-            $products->andWhere(['b.brandId'=>$brandId]);
+            $products->andWhere(['b.brandId' => $brandId]);
         }
 
         return new ActiveDataProvider([
@@ -613,7 +613,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productForSale($n = Null, $categoryId = null, $brandId=null) {
+    public static function productForSaleBk($n = Null, $categoryId = null, $brandId = null) {
         $products = ProductSuppliers::find()
         ->select('product_suppliers.*, pps.price as price')
         ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
@@ -628,7 +628,48 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
         if (isset($brandId)) {
             $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
-            $products->andWhere(['b.brandId'=>$brandId]);
+            $products->andWhere(['b.brandId' => $brandId]);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $products,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 12,
+            ]
+        ]);
+    }
+
+    public static function productForSale($n = Null, $categoryId = null, $brandId = null) {
+        /* $products = ProductSuppliers::find()
+          ->select('product_suppliers.*, pps.price as price')
+          ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+          ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+          ->where('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
+          ->orderBy(new Expression('rand()') . " , pps.price");
+         */
+        /*
+          SELECT * FROM cozxy_product_dev.product
+          LEFT JOIN `product_suppliers` `ps` ON product.productId=ps.productId
+          LEFT JOIN `product_price_suppliers` `pps` ON pps.productSuppId = ps.productSuppId
+          WHERE ps.status=1 and ps.approve="approve"
+          and ps.result > 0 AND pps.status =1 AND pps.price > 0
+          AND product.approve="approve" AND product.parentId is not null
+         */
+        $products = Product::find()
+        ->select('product.*, pps.price as price , ps.result as result, ps.productId as productId, ps.productSuppId as productSuppId')
+        ->leftJoin('product_suppliers ps', 'ps.productId=product.productId')
+        ->leftJoin("product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+        ->where('ps.status=1 and ps.approve="approve" and ps.result > 0 '
+        . ' AND pps.status =1 AND  pps.price > 0 AND product.approve="approve" AND product.parentId is not null')
+        ->orderBy(new Expression('rand()') . " , pps.price");
+        if (isset($categoryId)) {
+            $products->leftJoin('category_to_product ctp', 'ctp.productId=product.productId');
+            $products->andWhere(['ctp.categoryId' => $categoryId]);
+        }
+
+        if (isset($brandId)) {
+            $products->leftJoin('brand b', 'b.brandId=ps.brandId');
+            $products->andWhere(['b.brandId' => $brandId]);
         }
 
         return new ActiveDataProvider([
