@@ -613,7 +613,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productForSaleBk($n = Null, $categoryId = null, $brandId = null) {
+    public static function productForSale($n = Null, $categoryId = null, $brandId = null) {
         $products = ProductSuppliers::find()
         ->select('product_suppliers.*, pps.price as price')
         ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
@@ -639,7 +639,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productForSale($n = Null, $categoryId = null, $brandId = null) {
+    public static function productForSaleBk($n = Null, $categoryId = null, $brandId = null) {
         /* $products = ProductSuppliers::find()
           ->select('product_suppliers.*, pps.price as price')
           ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
