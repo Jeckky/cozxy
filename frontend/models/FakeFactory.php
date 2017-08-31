@@ -375,7 +375,12 @@ class FakeFactory extends Model {
             $txtAlert = 'No';
         }
 
-
+        $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
+        if (isset($marketPrice)) {
+            $market = $marketPrice->price;
+        } else {
+            $market = '';
+        }
         $GetProductCozxy = isset($GetProductSuppliers->product) ? $GetProductSuppliers->product : $GetProductSuppliers;
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : 0, 'Svg116x116', 'Svg555x340');
@@ -421,7 +426,8 @@ class FakeFactory extends Model {
             'sendDate' => '',
             'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
-            'txtAlert' => $txtAlert //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
+            'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
+            'marketPrice' => $market
         ];
 
         return $products;
@@ -434,8 +440,8 @@ class FakeFactory extends Model {
         ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
         ->where('brand.brandId is not null')
-            ->andWhere('product.parentId is not null')
-            ->andWhere(['product.approve'=>'approve'])
+        ->andWhere('product.parentId is not null')
+        ->andWhere(['product.approve' => 'approve'])
         ->groupBy(['product.brandId'])
         ->limit($n)->all();
 

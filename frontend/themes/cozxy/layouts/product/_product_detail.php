@@ -88,6 +88,7 @@ $val = rand(1, 10);
                         if ($model['price'] > 0) {
                             ?>
                             <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
+                            <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
                         <?php } ?>
                         <p class="size12 fc-g666">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></p>
                         <?php
