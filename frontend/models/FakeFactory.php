@@ -427,7 +427,7 @@ class FakeFactory extends Model {
             'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
             'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
             'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
-            'marketPrice' => $market
+            'marketPrice' => number_format($market, 2)
         ];
 
         return $products;
