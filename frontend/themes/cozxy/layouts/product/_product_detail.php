@@ -162,13 +162,13 @@ $val = rand(1, 10);
                                             ?>
                                             <a class="b btn-black-s size10">NOT AVAILABLE</a>
                                             <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
-                                                <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
+                                                <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
                                             </a>
                                         <?php } else { ?>
                                             <a class="b btn-black-s size10">NOT AVAILABLE</a>
                                             <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
-                                                <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
-                                            </a>
+                                                <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
+                                            </a><!--<i class="fa fa-heart" aria-hidden="true"></i>-->
                                             <?php
                                         }
                                     }
