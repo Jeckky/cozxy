@@ -66,9 +66,9 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                        'tag' => false,
 //                    ],
 //                ]);
-                $i=0;
-                foreach($slideGroup as $banner) {
-                    echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model'=>$banner, 'index'=>$i]);
+                $i = 0;
+                foreach ($slideGroup as $banner) {
+                    echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $banner, 'index' => $i]);
                     $i++;
                 }
                 ?>
@@ -114,8 +114,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                                ],
 //                            ]);
 
-                            foreach($productBrand as $brand) {
-                                echo $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model'=>$brand]);
+                            foreach ($productBrand as $brand) {
+                                echo $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model' => $brand]);
                             }
                             ?>
                         </div>
@@ -269,7 +269,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <?php if (isset($productStory)): ?>
                     <hr style="border-color:rgb(254, 230, 10)">
 
-                    <h3 class="b text-center-sm text-center-xs">PRODUCTS'STORIES</h3>
+                    <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>
                     <div class="row">
                         <!--Products' Stories-->
                         <?php
