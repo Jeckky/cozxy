@@ -156,30 +156,34 @@ $val = rand(1, 10);
 
                             <?php
                             if (true) {//เช็คมีสินค้าในสต๊อก
+                                if ($model['result'] <= 0) {
+                                    ?>
+                                    <a class="b btn-black-s size10">NOT AVAILABLE</a>
+                                    <?php
+                                }
                                 if (Yii::$app->user->id) {
                                     if (isset($model['productId']) && $model['productId'] != '') {
                                         if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                             ?>
                                             <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
-                                                <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
+                                                <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
                                             </a>
                                         <?php } else { ?>
                                             <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
-                                                <div class="heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO SHELF</div>
-                                            </a>
+                                                <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
+                                            </a><!--<i class="fa fa-heart" aria-hidden="true"></i>-->
                                             <?php
                                         }
                                     }
                                 } else {
                                     ?>
                                     <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
+
                                         <div class="b btn-g999 size12" style="padding: 6px 16px;">ADD TO SHELF</div>
                                     </a>
                                     <?php
                                 }
                             }
-                            ?>
-                            <?php
                             if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
                                 if ($model['result'] > 0) {
                                     echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size12"  style="margin:14px auto 2px;padding: 6px 16px;">ADD TO CART</a>';

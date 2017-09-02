@@ -56,7 +56,7 @@ $form = ActiveForm::begin([
                             Or other Amount:
                         <td style="text-align: left;width:50%;">
                             <span style="margin-left: 20px;">
-                                <input type="text" id="amount" name="otherAmount" style="height: 1cm;width: 150px;text-align: right;" autofocus="true">
+                                <input type="text" id="amount" name="otherAmount" style="height: 1cm;width: 150px;text-align: right;" autofocus="true" value="<?= isset($needMore) ? $needMore : '' ?>">
                                 <span>&nbsp;&nbsp;THB.</span>
                             </span>
                         </td>

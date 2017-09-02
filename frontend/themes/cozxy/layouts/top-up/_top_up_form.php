@@ -65,8 +65,9 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                             <td style="text-align: left;">
                                 <div class="radio">
                                     <div class="btn-group" data-toggle="buttons">
-                                        <label class="checkout_select_address" style="cursor: auto;">
-                                            <input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?= count($paymentMethod) == 1 ? 'checked' : '' ?>><?= $payment->title ?><br>
+                                        <label class="checkout_select_address" style="cursor: auto;" che>
+                                            <!--<input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?php // count($paymentMethod) == 1 ? 'checked' : ''    ?>><?php // $payment->title    ?><br>-->
+                                            <input type="radio" name="paymentType"  id="paymentMethod" value="credit" checked><?= $payment->title ?><br>
                                             <img src="<?= $baseUrl . '/images/Bank/master.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
                                             <img src="<?= $baseUrl . '/images/Bank/visa.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
                                             <img src="<?= $baseUrl . '/images/Bank/jcb.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
@@ -94,7 +95,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 <div class="radio">
 <div class="btn-group" data-toggle="buttons">
 <label class="checkout_select_address">
-<input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''             ?>><?php // $payment->title             ?>
+<input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''                 ?>><?php // $payment->title                 ?>
 </label>
 </div>
 </div>
