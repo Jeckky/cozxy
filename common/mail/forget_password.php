@@ -50,7 +50,7 @@
         <div class="main">
             <div class="main-leyouts">
                 <div class="head title" style=" background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
-                    <span style="color:  rgba(255,212,36,.9); ">Cozxy Forget Password Verification</span>
+                    <span style="color:  rgba(255,212,36,.9); ">COZXY password assistance</span>
                 </div>
                 <div class="content" style="background-color: #f5f5f5;">
                     <center>
@@ -59,8 +59,8 @@
                                 <td>
                                     <p style="color: #000000; font-size: 20px;">
                                         <strong>
-                                            Thank you on Cozxy<br>
-                                            Please click the forget password link to verify your account
+                                            Thank you for coming to COZXY.COM<br><br>
+                                            You have requested to change your password. Please click the following link to verify your account and reset your password.
                                         </strong>
                                     </p>
 
@@ -68,7 +68,11 @@
                                         <b>Click</b>
                                         <a href="<?php echo $url ?>" style="color: #ff9016; font-size: 16px;"><?php echo $url ?></a>
                                     </p>
-
+                                    <p style="color: #000000; font-size: 20px;">
+                                        If you did not authorize this request, please ignore this message. We take your account security very seriously, if you feel that your account has been compromised, please contact us at customercare@cozxy.com
+                                        <br>
+                                        This email is an auto-generated email. Please do not reply.
+                                    </p>
                                     <p style="color: #ff9016; font-size: 16px;">This email is an auto-generated email. <br> Please do not reply.</p>
                                 </td>
                             </tr>
