@@ -201,7 +201,7 @@ class StoryController extends MasterController {
                         $comparePrice->productId = $parentId;
                         $comparePrice->shopName = $_POST["ProductPostComparePrice"]["shopName"];
                         $comparePrice->price = $_POST["ProductPostComparePrice"]["price"];
-                        $comparePrice->country = $_POST["ProductPostComparePrice"]["country"];
+                        //$comparePrice->country = $_POST["ProductPostComparePrice"]["country"]; //ProductPostComparePrice[currency]
                         $comparePrice->currency = $_POST["ProductPostComparePrice"]["currency"];
                         $comparePrice->latitude = $_POST["ProductPostComparePrice"]["latitude"];
                         $comparePrice->longitude = $_POST["ProductPostComparePrice"]["longitude"];
