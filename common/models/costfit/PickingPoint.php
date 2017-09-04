@@ -34,7 +34,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     public function rules() {
         return array_merge(parent::rules(), [
-            [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
+                [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
             //[['pickingId', 'LcpickingId'], 'required', 'on' => self::COZXY_PICKING_POINT_SUMMARY],
             [['pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
         ]);
@@ -157,11 +157,11 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
 
         $available = \common\models\dbworld\States::find()->select(['states.stateId', 'states.localName'])
-        ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
-        ->where('cpp.status = 1')
-        ->groupBy('cpp.provinceId')
-        ->orderBy('states.localName')
-        ->asArray()->all();
+                        ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
+                        ->where('cpp.status = 1')
+                        ->groupBy('cpp.provinceId')
+                        ->orderBy('states.localName')
+                        ->asArray()->all();
         if (count($available) > 0) {
             return $available;
         } else {
@@ -173,11 +173,11 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
 
         $available = ArrayHelper::map(\common\models\dbworld\States::find()->select(['states.stateId', 'states.localName'])
-        ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
-        ->where('cpp.status = 1')
-        ->groupBy('cpp.provinceId')
-        ->orderBy('states.localName')
-        ->asArray()->all(), 'stateId', 'localName');
+                                ->leftJoin($dbName[1] . '.picking_point cpp', 'states.stateId=cpp.provinceId')
+                                ->where('cpp.status = 1')
+                                ->groupBy('cpp.provinceId')
+                                ->orderBy('states.localName')
+                                ->asArray()->all(), 'stateId', 'localName');
 
         return $available;
     }

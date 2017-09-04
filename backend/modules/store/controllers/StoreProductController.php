@@ -9,6 +9,8 @@ use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\StoreProductGroup;
+use common\models\costfit\Po;
+use common\models\costfit\PoItem;
 
 /**
  * StoreProductController implements the CRUD actions for StoreProduct model.
@@ -51,11 +53,11 @@ class StoreProductController extends StoreMasterController {
         // if (isset($_GET["storeId"])) {
         //  $query = StoreProduct::find()->where("storeId=" . $_GET["storeId"]);
         // } else {
-        if (isset($_GET['storeProductGroupId'])) {
-            $query = StoreProduct::find()->where("storeProductGroupId=" . $_GET["storeProductGroupId"]);
-            $storeProductGroupId = $_GET['storeProductGroupId'];
+        if (isset($_GET['poId'])) {
+            $query = PoItem::find()->where("poId=" . $_GET["poId"]);
+            $poId = $_GET['poId'];
         } else {
-            $query = StoreProduct::find();
+            $query = PoItem::find();
         }
         //  }
         $dataProvider = new ActiveDataProvider([
@@ -64,7 +66,7 @@ class StoreProductController extends StoreMasterController {
 
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
-                    'storeProductGroupId' => $storeProductGroupId
+                    'poId' => $poId
         ]);
     }
 
@@ -172,52 +174,52 @@ class StoreProductController extends StoreMasterController {
     }
 
     public function actionCheck() {
-        if (isset($_GET['storeProductGroupId'])) {
-            $model = StoreProductGroup::find()->where("storeProductGroupId='" . $_GET['storeProductGroupId'] . "'")->one();
+        if (isset($_GET['poId'])) {
+            $model = Po::find()->where("poId='" . $_GET['poId'] . "'")->one();
         }
         $msError = '';
         $errorId = '';
         if (isset($_POST["check"])) {
-            $inPo = StoreProduct::find()->where("storeProductId='" . $_POST['storeProductId'] . "'")->one();
-            if ($_POST["check"][$inPo->storeProductId] == 1) {
+            $inPo = PoItem::find()->where("poItemId='" . $_POST['poItemId'] . "'")->one();
+            if ($_POST["check"][$inPo->poItemId] == 1) {
                 $inPo->importQuantity = $inPo->quantity;
                 $inPo->status = 3;
                 $inPo->save(FALSE);
-                $this->checkPo($inPo->storeProductGroupId);
-                $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
+                $this->checkPo($inPo->poId);
+                $model = Po::find()->where("poId='" . $inPo->poId . "'")->one();
             } else {
                 //throw new \yii\base\Exception($_POST["quantity"][$inPo->storeProductId]);
-                if (!empty($_POST["remark"][$inPo->storeProductId]) && !empty($_POST["quantity"][$inPo->storeProductId])) {
-                    if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity < $inPo->quantity) {
-                        $inPo->importQuantity = $_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity;
-                        $inPo->remark = $_POST["remark"][$inPo->storeProductId];
+                if (!empty($_POST["remark"][$inPo->poItemId]) && !empty($_POST["quantity"][$inPo->poItemId])) {
+                    if ($_POST["quantity"][$inPo->poItemId] + $inPo->importQuantity < $inPo->quantity) {
+                        $inPo->importQuantity = $_POST["quantity"][$inPo->poItemId] + $inPo->importQuantity;
+                        $inPo->remark = $_POST["remark"][$inPo->poItemId];
                         $inPo->status = 2;
                         $inPo->save(FALSE);
-                        $this->checkPo($inPo->storeProductGroupId);
-                        $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
-                    } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity == $inPo->quantity) {
+                        $this->checkPo($inPo->poId);
+                        $model = Po::find()->where("poId='" . $inPo->poId . "'")->one();
+                    } else if ($_POST["quantity"][$inPo->poItemId] + $inPo->importQuantity == $inPo->quantity) {
                         $inPo->importQuantity = $inPo->quantity;
-                        $inPo->remark = $_POST["remark"][$inPo->storeProductId];
+                        $inPo->remark = $_POST["remark"][$inPo->poItemId];
                         $inPo->status = 3;
                         $inPo->save(FALSE);
-                        $this->checkPo($inPo->storeProductGroupId);
-                        $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
-                    } else if ($_POST["quantity"][$inPo->storeProductId] + $inPo->importQuantity > $inPo->quantity) {
+                        $this->checkPo($inPo->poId);
+                        $model = Po::find()->where("PoId='" . $inPo->poId . "'")->one();
+                    } else if ($_POST["quantity"][$inPo->poItemId] + $inPo->importQuantity > $inPo->quantity) {
                         $msError = 'input wrong quantity';
-                        $errorId = $inPo->storeProductId;
-                        $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
+                        $errorId = $inPo->poItemId;
+                        $model = Po::find()->where("poId='" . $inPo->poId . "'")->one();
                     }
                 } else {
                     // throw new \yii\base\Exception($inPo->storeProductId);
                     $msError = 'Empty import quantity or remark ';
-                    $errorId = $inPo->storeProductId;
-                    $model = StoreProductGroup::find()->where("storeProductGroupId='" . $inPo->storeProductGroupId . "'")->one();
+                    $errorId = $inPo->poItemId;
+                    $model = Po::find()->where("poId='" . $inPo->poId . "'")->one();
                 }
             }
-        } else if (isset($_POST["storeProductGroupId"])) {//if click submit but not choose
+        } else if (isset($_POST["poId"])) {//if click submit but not choose
             $msError = 'Not selected';
-            $errorId = $_POST["storeProductId"];
-            $model = StoreProductGroup::find()->where("storeProductGroupId='" . $_POST["storeProductGroupId"] . "'")->one();
+            $errorId = $_POST["poItemId"];
+            $model = Po::find()->where("poId='" . $_POST["poId"] . "'")->one();
         }
         return $this->render('check', ['model' => $model,
                     'msError' => $msError,
@@ -229,12 +231,12 @@ class StoreProductController extends StoreMasterController {
         $ms = '';
         $userId = Yii::$app->user->identity->userId; //login
         $model = new StoreProduct();
-        if (isset($_POST["StoreProductGroup"]['poNo']) && !empty($_POST["StoreProductGroup"]['poNo'])) {
-            $storeProductGroup = StoreProductGroup::find()->where("poNo='" . $_POST["StoreProductGroup"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
-            if (isset($storeProductGroup) && !empty($storeProductGroup)) {
-                $storeProducts = \common\models\costfit\StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroup->storeProductGroupId)->all();
-                if (isset($storeProducts) && !empty($storeProducts)) {
-                    $this->saveChooesPo($userId, $storeProductGroup->storeProductGroupId);
+        if (isset($_POST["po"]['poNo']) && !empty($_POST["po"]['poNo'])) {
+            $po = Po::find()->where("poNo='" . $_POST["po"]['poNo'] . "' and status=2")->one(); // เชค ที่สถานะเท่ากับตรวจรับแล้วเท่านั้น
+            if (isset($po)) {
+                $poItems = PoItem::find()->where("poId=" . $po->poId)->all();
+                if (isset($poItems) && !empty($poItems)) {
+                    $this->saveChooesPo($userId, $po->poId);
                 } else {
                     $ms = 'ไม่พบสินค้าใน PO นี้';
                 }
@@ -244,7 +246,7 @@ class StoreProductController extends StoreMasterController {
         } else {
             $ms = '';
         }
-        $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
+        $chooseId = Po::find()->where("status=5 and arranger=" . $userId)->all();
         return $this->render('choose_po', [
                     'model' => $model,
                     'ms' => $ms,
@@ -257,18 +259,18 @@ class StoreProductController extends StoreMasterController {
         $userId = Yii::$app->user->identity->userId;
         $id = $_GET['id'];
         $ms = '';
-        $delete = StoreProductGroup::find()->where("storeProductGroupId=" . $id)->one();
+        $delete = Po::find()->where("poId=" . $id)->one();
         if (isset($delete) && !empty($delete)) {
             $delete->status = 2;
             $delete->arranger = NULL;
             $delete->save(false);
-            $deleteItems = StoreProduct::find()->where("storeProductGroupId=" . $id)->all();
+            $deleteItems = PoItem::find()->where("poId=" . $id)->all();
             foreach ($deleteItems as $item):
                 $item->status = 2;
                 $item->save(FALSE);
             endforeach;
         }
-        $chooseId = StoreProductGroup::find()->where("status=5 and arranger=" . $userId)->all();
+        $chooseId = Po::find()->where("status=5 and arranger=" . $userId)->all();
         return $this->redirect(['choose-po',
                     'ms' => $ms,
                     'chooseId' => $chooseId
@@ -276,10 +278,10 @@ class StoreProductController extends StoreMasterController {
         );
     }
 
-    public function updateStoreProductGroupSummary($productStoreGroupId) {
+    public function updateStoreProductGroupSummary($poId) {
         $summary = 0;
-        $stg = StoreProductGroup::find()->where("storeProductGroupId =" . $productStoreGroupId)->one();
-        foreach ($stg->storeProducts as $sp) {
+        $stg = Po::find()->where("poId =" . $poId)->one();
+        foreach ($stg->poItem as $sp) {
             $summary += $sp->total;
         }
         $stg->summary = $summary;
@@ -287,9 +289,9 @@ class StoreProductController extends StoreMasterController {
     }
 
     public function checkPo($id) {
-        $checkPo = StoreProduct::find()->where("storeProductGroupId='" . $id . "' and status!=3")->all();
+        $checkPo = PoItem::find()->where("poId='" . $id . "' and status!=3")->all();
         if (count($checkPo) == 0) {
-            $changePoStatus = StoreProductGroup::find()->where("storeProductGroupId='" . $id . "'")->one();
+            $changePoStatus = Po::find()->where("poId='" . $id . "'")->one();
             $changePoStatus->receiveDate = new \yii\db\Expression('NOW()');
             $changePoStatus->status = 2;
             $changePoStatus->receiveBy = Yii::$app->user->identity->userId;
@@ -298,16 +300,16 @@ class StoreProductController extends StoreMasterController {
         }
     }
 
-    public function saveChooesPo($userId, $storeProductGroupId) {
-        $storeProductGroup = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
-        if (isset($storeProductGroup)) {
-            $storeProductGroup->status = 5;
-            $storeProductGroup->arranger = $userId;
-            $storeProductGroup->updateDateTime = new \yii\db\Expression('NOW()');
-            $storeProductGroup->save(false);
-            $storeProduct = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId)->all();
-            if (isset($storeProduct) && !empty($storeProduct)) {
-                foreach ($storeProduct as $item):
+    public function saveChooesPo($userId, $poId) {
+        $po = Po::find()->where("poId=" . $poId)->one();
+        if (isset($po)) {
+            $po->status = 5;
+            $po->arranger = $userId;
+            $po->updateDateTime = new \yii\db\Expression('NOW()');
+            $po->save(false);
+            $poItems = PoItem::find()->where("poId=" . $poId)->all();
+            if (isset($poItems) && !empty($poItems)) {
+                foreach ($poItems as $item):
                     $item->status = 5;
                     $item->save(false);
                 endforeach;
@@ -321,33 +323,33 @@ class StoreProductController extends StoreMasterController {
         $userId = Yii::$app->user->identity->userId;
         $po = '';
         $product = [];
-        $allPo = StoreProductGroup::find()->where("status=5 and arranger=" . $userId . " order by receiveDate")->all();
-        if (isset($_POST["StoreProduct"]['isbn']) && !empty($_POST["StoreProduct"]['isbn'])) {//สแกน บาร์โค้ดสินค้าเพื่อจัดเรียง
+        $allPo = Po::find()->where("status=5 and arranger=" . $userId . " order by receiveDate")->all();
+        if (isset($_POST["poItem"]['isbn']) && !empty($_POST["poItem"]['isbn'])) {//สแกน บาร์โค้ดสินค้าเพื่อจัดเรียง
             /* $products = \common\models\costfit\Product::find()->select("product.*,sp.*")->where("isbn ='" . $_POST["StoreProduct"]['isbn'] . "'")
               ->join("LEFT JOIN", 'store_product sp', 'product.productId=sp.productId and sp.storeProductGroupId in (' . $_POST['storeProductGroupId'] . ') and (sp.status=5 or sp.status=3)')
               ->orderBy('sp.createDateTime ASC')
               ->all(); */
             //$isbn = \common\models\costfit\Product::find()->where("isbn='" . $_POST["StoreProduct"]['isbn'] . "'")->one();
-            $storeProductIds = StoreProduct::find()->where("storeProductGroupId in (" . $_POST['storeProductGroupId'] . ")")->all();
+            $poItems = PoItem::find()->where("poId in (" . $_POST['poId'] . ")")->all();
             $suppId = '';
-            if (isset($storeProductIds) && !empty($storeProductIds)) {
-                foreach ($storeProductIds as $storeProductId):
-                    $suppId = $suppId . $storeProductId->productSuppId . ",";
+            if (isset($poItems) && count($poItems) > 0) {
+                foreach ($poItems as $poItem):
+                    $suppId = $suppId . $poItem->productSuppId . ",";
                 endforeach;
                 $suppId = substr($suppId, 0, -1);
             }
             // throw new \yii\base\Exception(print_r($storeProductIds, true));
-            $isbn = \common\models\costfit\ProductSuppliers::find()->where("isbn='" . $_POST["StoreProduct"]['isbn'] . "' and productSuppId in (" . $suppId . ")")->one();
+            $isbn = \common\models\costfit\ProductSuppliers::find()->where("isbn='" . $_POST["poItem"]['isbn'] . "' and productSuppId in (" . $suppId . ")")->one();
             if (isset($isbn) && !empty($isbn)) {
                 //$products = StoreProduct::find()->where("productId=" . $isbn->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
-                $products = StoreProduct::find()->where("productSuppId=" . $isbn->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                $products = PoItem::find()->where("productSuppId=" . $isbn->productSuppId . " and poId in (" . $_POST['poId'] . ") and status in (3,5)")->all();
             }
             //throw new \yii\base\Exception($isbn->productSuppId);
-            if (isset($products) && !empty($products)) {
+            if (isset($products) && count($products) > 0) {
                 return $this->render('arrange', [
                             'model' => $products,
-                            'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
-                            'isbn' => $_POST["StoreProduct"]['isbn'],
+                            'choosePo' => $_POST['poId'],
+                            'isbn' => $_POST["poItem"]['isbn'],
                             'allProducts' => $_POST['allProduct'],
                             'productSuppId' => $suppId
                 ]);
@@ -355,7 +357,7 @@ class StoreProductController extends StoreMasterController {
                 $ms = 'Imported products not found.';
                 return $this->render('arrange_index', [
                             'ms' => $ms,
-                            'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                            'choosePo' => $_POST['poId'],
                             'allProducts' => $_POST['allProduct'],
                             'productSuppId' => $suppId
                 ]);
@@ -369,22 +371,22 @@ class StoreProductController extends StoreMasterController {
             //$productId = \common\models\costfit\Product::find()->where("isbn ='" . $_POST['isbn'] . "'")->one();
             $productId = \common\models\costfit\ProductSuppliers::find()->where("isbn ='" . $_POST['isbn'] . "' and productSuppId in (" . $_POST['productSuppId'] . ")")->one();
             //$products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
-            $products = StoreProduct::find()->where("productSuppId=" . $productId->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+            $products = PoItem::find()->where("productSuppId=" . $productId->productSuppId . " and poId in (" . $_POST['poId'] . ") and status in (3,5)")->all();
             if (isset($_POST['slot']) && !empty($_POST['slot'])) {//จัดเรียง
                 $slot = \common\models\costfit\StoreSlot::find()->where("barcode='" . $_POST["slot"] . "'")->one();
-                if (isset($slot) && !empty($slot)) {
+                if (isset($slot)) {
                     if (isset($_POST['quantity']) && !empty($_POST['quantity'])) {
                         // throw new \yii\base\Exception(print_r($_POST['quantity'], true));
                         $i = 1; //เอาไว้นับจำนวน quantity ที่กรอกมา ว่ามีทั้งหมดกี่ po
-                        foreach ($_POST['quantity'] as $storeProductGroupId => $quantity):
+                        foreach ($_POST['quantity'] as $poId => $quantity):
                             if (($quantity != NULL) && ($quantity != 0)) {//ทำเฉพาะที่ได้กรอกจำนวนมาเท่านั้น
                                 $canSave = false;
-                                $canSave = $this->checkOver($storeProductGroupId, $quantity, $productId->productSuppId); // ค้างเชคฟังก์ชันนี้
+                                $canSave = $this->checkOver($poId, $quantity, $productId->productSuppId); // ค้างเชคฟังก์ชันนี้
                                 if ($canSave == true) {
-                                    $storeProductId = $this->findStoreProductId($storeProductGroupId, $productId->productSuppId);
-                                    StoreProduct::arrangeProductToSlot($storeProductId, $slot->storeSlotId, $quantity); //จัดเรียง
+                                    $poItemId = $this->findPoItemId($poId, $productId->productSuppId);
+                                    StoreProduct::arrangeProductToSlot($poItemId, $slot->storeSlotId, $quantity); //จัดเรียง
                                     $clear = false;
-                                    $clear = $this->checkClear($storeProductGroupId);
+                                    $clear = $this->checkClear($poId);
                                     if ($clear == true) {//ถ้า po นั้นจัดเรียงหมดแล้ว
                                         $clearPo = false;
                                         $clearPo = $this->checkClearPo($userId);
@@ -402,15 +404,15 @@ class StoreProductController extends StoreMasterController {
                                                 if ($ms == '') {
                                                     return $this->render('arrange_index', [
                                                                 'allProducts' => $_POST['allProduct'],
-                                                                'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                                                'choosePo' => $_POST['poId'],
                                                                 'ms' => $ms
                                                     ]);
                                                 } else {
                                                     //$products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
-                                                    $products = StoreProduct::find()->where("productSuppId=" . $productId->productSuppId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                                                    $products = PoItem::find()->where("productSuppId=" . $productId->productSuppId . " and poId in (" . $_POST['poId'] . ") and status in (3,5)")->all();
                                                     return $this->render('arrange', [
                                                                 'model' => $products,
-                                                                'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                                                'choosePo' => $_POST['poId'],
                                                                 'isbn' => $_POST['isbn'],
                                                                 'allProducts' => $_POST['allProduct'],
                                                                 'ms' => $ms,
@@ -426,13 +428,13 @@ class StoreProductController extends StoreMasterController {
                                             if ($ms == '') {
                                                 return $this->render('arrange_index', [
                                                             'allProducts' => $_POST['allProduct'],
-                                                            'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                                            'choosePo' => $_POST['poId'],
                                                 ]);
                                             } else {
-                                                $products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                                                $products = PoItem::find()->where("productSuppId=" . $productId->productSuppId . " and poId in (" . $_POST['poId'] . ") and status in (3,5)")->all();
                                                 return $this->render('arrange', [
                                                             'model' => $products,
-                                                            'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                                            'choosePo' => $_POST['poId'],
                                                             'isbn' => $_POST['isbn'],
                                                             'allProducts' => $_POST['allProduct'],
                                                             'ms' => $ms,
@@ -443,15 +445,15 @@ class StoreProductController extends StoreMasterController {
                                         }
                                     }
                                 } else {//ถ้าใส่จำนวนเกิน ยอดที่ import ใน po นั้น
-                                    $poNo = $this->findPo($storeProductGroupId);
+                                    $poNo = $this->findPo($poId);
                                     $failPo = $failPo . $poNo . ',';
                                     //$failPo = substr($failPo, 0, -1);
                                     $ms = $failPo . 'ไม่สามารถจัดเรียงได้เนื่องจากใส่จำนวนเกิน';
                                     if ($i == count($_POST['quantity'])) {
-                                        $products = StoreProduct::find()->where("productId=" . $productId->productId . " and storeProductGroupId in (" . $_POST['storeProductGroupId'] . ") and status in (3,5)")->all();
+                                        $products = PoItem::find()->where("productSuppId=" . $productId->productSuppId . " and poId in (" . $_POST['poId'] . ") and status in (3,5)")->all();
                                         return $this->render('arrange', [
                                                     'model' => $products,
-                                                    'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                                    'choosePo' => $_POST['poId'],
                                                     'isbn' => $_POST['isbn'],
                                                     'allProducts' => $_POST['allProduct'],
                                                     'ms' => $ms,
@@ -469,7 +471,7 @@ class StoreProductController extends StoreMasterController {
                     $ms = 'ไม่มี Slot " ' . $_POST['slot'] . ' "';
                     return $this->render('arrange', [
                                 'model' => $products,
-                                'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                                'choosePo' => $_POST['poId'],
                                 'isbn' => $_POST['isbn'],
                                 'allProducts' => $_POST['allProduct'],
                                 'ms' => $ms,
@@ -481,26 +483,26 @@ class StoreProductController extends StoreMasterController {
                 $ms = 'Please scan slot.';
                 return $this->render('arrange', [
                             'model' => $products,
-                            'chooseStoreProductGroup' => $_POST['storeProductGroupId'],
+                            'choosePo' => $_POST['storeProductGroupId'],
                             'isbn' => $_POST['isbn'],
                             'allProducts' => $_POST['allProduct'],
                             'ms' => $ms,
                             'productSuppId' => $_POST['productSuppId']
                 ]);
             }
-        }if (isset($allPo) && !empty($allPo)) {
+        }if (isset($allPo) && count($allPo) > 0) {
             foreach ($allPo as $all):
-                $po = $po . $all->storeProductGroupId . ",";
+                $po = $po . $all->poId . ",";
             endforeach;
             $po = substr($po, 0, -1);
-            $allProducts = StoreProduct::find()->where("storeProductGroupId in (" . $po . ")")
+            $allProducts = PoItem::find()->where("poId in (" . $po . ")")
                     ->orderBy("status DESC,productId ASC")
                     ->all();
-            if (isset($allProducts) && !empty($allProducts)) {
+            if (isset($allProducts) && count($allProducts) > 0) {
                 $i = 0;
                 foreach ($allProducts as $pro):
                     $check = false;
-                    $check = $this->checkDupProduct($pro->productId, $product);
+                    $check = $this->checkDupProduct($pro->productSuppId, $product);
                     if ($check == true) {
                         //$product[$i] = $pro->productId;//เปลี่ยนเป็นใช้ ProductSuppId
                         $product[$i] = $pro->productSuppId;
@@ -509,20 +511,20 @@ class StoreProductController extends StoreMasterController {
                 endforeach;
                 return $this->render('arrange_index', [
                             'allProducts' => $product,
-                            'chooseStoreProductGroup' => $po,
+                            'choosePo' => $po,
                             'ms' => $ms,
                 ]);
             }
         }
     }
 
-    public static function checkOver($storeProductGroupId, $quantity, $productId) {
+    public static function checkOver($poId, $quantity, $productSuppId) {
         $total = 0;
         //$storeProducts = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and productId=" . $productId)->one();
-        $storeProducts = StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and productSuppId=" . $productId)->one();
-        if (isset($storeProducts) && !empty($storeProducts)) {
+        $poItem = PoItem::find()->where("poId=" . $poId . " and productSuppId=" . $productSuppId)->one();
+        if (isset($poItem)) {
             //$storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->all();
-            $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productSuppId=" . $productId)->all();
+            $storeProductArranges = \common\models\costfit\StoreProductArrange::find()->where("poItemId=" . $poItem->poItemId . " and productSuppId=" . $productSuppId)->all();
             if (isset($storeProductArranges) && !empty($storeProductArranges)) {
                 foreach ($storeProductArranges as $storeProductArrange):
                     $total += $storeProductArrange->quantity;
@@ -531,8 +533,8 @@ class StoreProductController extends StoreMasterController {
 
             //throw new \yii\base\Exception($storeProductId . " total " . $total . " re " . $quantity);
             //$storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productId=" . $productId)->one();
-            $storeProduct = StoreProduct::find()->where("storeProductId=" . $storeProducts->storeProductId . " and productSuppId=" . $productId)->one();
-            if (($quantity + $total) <= $storeProduct->importQuantity) {
+            $poItem = PoItem::find()->where("poItemId=" . $poItem->poItemId . " and productSuppId=" . $productSuppId)->one();
+            if (($quantity + $total) <= $poItem->importQuantity) {
                 return true;
             } else {
                 return false;
@@ -542,14 +544,14 @@ class StoreProductController extends StoreMasterController {
         }
     }
 
-    public static function checkClear($storeProductGroupId) {
-        $storeProduct = count(StoreProduct::find()->where("storeProductGroupId=" . $storeProductGroupId . " and (status<4 or status=5)")->all()); //ยังไม่จัดเรียง จัดเรียงบางส่วน กำลังจัดเรียง
-        if ($storeProduct == 0) {//หมดสินค้าใน po ทั้งหมด ที่เลือกมาแล้ว
-            $storeProductGroups = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
+    public static function checkClear($poId) {
+        $poItem = count(PoItem::find()->where("poId=" . $poId . " and (status<4 or status=5)")->all()); //ยังไม่จัดเรียง จัดเรียงบางส่วน กำลังจัดเรียง
+        if ($poItem == 0) {//หมดสินค้าใน po ทั้งหมด ที่เลือกมาแล้ว
+            $po = Po::find()->where("poId=" . $poId)->one();
             //throw new \yii\base\Exception($storeProductGroupId);
             //foreach ($storeProductGroups as $storeProductGroup):
-            $storeProductGroups->status = 4;
-            $storeProductGroups->save(false);
+            $po->status = 4;
+            $po->save(false);
             // endforeach;
             return true;
         } else {
@@ -558,8 +560,8 @@ class StoreProductController extends StoreMasterController {
     }
 
     public static function checkClearPo($userId) {
-        $storeProductGroup = StoreProductGroup::find()->where("arranger=" . $userId . " and (status=5 or status=3)")->all();
-        if (isset($storeProductGroup) && !empty($storeProductGroup)) {
+        $po = Po::find()->where("arranger=" . $userId . " and (status=5 or status=3)")->all();
+        if (isset($po) && count($po) > 0) {
             return false;
         } else {
             return true;
@@ -580,14 +582,14 @@ class StoreProductController extends StoreMasterController {
         }
     }
 
-    public static function findStoreProductId($storeProductGroupId, $productId) {
+    public static function findPoItemId($poId, $productSuppId) {
         //$storeProduct = StoreProduct::find()->where("productId=" . $productId . " and storeProductGroupId=" . $storeProductGroupId)->one();
-        $storeProduct = StoreProduct::find()->where("productSuppId=" . $productId . " and storeProductGroupId=" . $storeProductGroupId)->one();
-        return $storeProduct->storeProductId;
+        $poItem = PoItem::find()->where("productSuppId=" . $productSuppId . " and poId=" . $poId)->one();
+        return $poItem->poItemId;
     }
 
-    public static function findPo($storeProductGroupId) {
-        $po = StoreProductGroup::find()->where("storeProductGroupId=" . $storeProductGroupId)->one();
+    public static function findPo($poId) {
+        $po = Po::find()->where("poId=" . $poId)->one();
         return $po->poNo;
     }
 

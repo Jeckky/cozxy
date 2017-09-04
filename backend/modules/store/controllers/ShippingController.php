@@ -53,16 +53,29 @@ class ShippingController extends StoreMasterController {
         if ($orderNo != '') {
             $query = Order::find()
                     ->select('*')
+                    //->join('LEFT JOIN', 'order_item', '`order`.orderId=`order_item`.orderId')
+                    //->select("`order`.*,`order_item`.*")
                     ->joinWith(['orderItems'])
                     //->where("(order_item.status = 6 or order_item.status = 14) and order.orderNo = '" . $orderNo . "'"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
                     ->where("order_item.status = 13"); //['order_item.status' => 6, 'order.orderNo' => $orderNo]
         } else {
+            $orderItems = OrderItem::find()->where("status=13 and pickingId is null")->all();
+            if (isset($orderItems) && count($orderItems) > 0) {//set picking point ตาม orderId
+                foreach ($orderItems as $item):
+                    $order = Order::find()->where("orderId=" . $item->orderId)->one();
+                    if (isset($order)) {
+                        $item->pickingId = $order->pickingId;
+                        $item->save(false);
+                    }
+                endforeach;
+            }
             $query = Order::find()
-                    //->select("`order`.*,oi.*")
+                    //->select("`order`.*,`order_item`.*")
                     //->join("RIGHT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
                     //->where("oi.status = 6 OR oi.status = 14");
                     ->select('*')
                     ->joinWith(['orderItems'])
+                    //->join('LEFT JOIN', 'order_item', '`order`.orderId=`order_item`.orderId')
                     ->where("order_item.status = 13");
         }
         $dataProvider = new ActiveDataProvider([

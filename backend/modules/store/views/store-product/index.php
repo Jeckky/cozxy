@@ -22,7 +22,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6">
                     <div class="btn-group pull-right">
                         <?php // Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product', ['create?storeProductGroupId=' . $_GET["storeProductGroupId"]], ['class' => 'btn btn-success btn-xs']) ?>
-                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product', ['create?storeProductGroupId=' . $storeProductGroupId], ['class' => 'btn btn-success btn-xs']) ?>
+                        <?= Html::a('<i class=\'glyphicon glyphicon-plus\'></i> Create Store Product', ['create?poId=' . $poId], ['class' => 'btn btn-success btn-xs']) ?>
                     </div>
                 </div>
             </div>
@@ -39,32 +39,33 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        [
                         'attribute' => 'storeId',
                         'value' => function($model) {
+
                             return isset($model->stores) ? $model->stores->title : NULL;
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'productId',
                         'value' => function($model) {
-                            return isset($model->product) ? $model->product->title : NULL;
+                            return isset($model->products) ? $model->products->title : NULL;
                         }
                     ],
-                    ['attribute' => 'isbn',
+                        ['attribute' => 'isbn',
                         'value' => function($model) {
-                            return isset($model->isbn) ? $model->isbn : NULL;
+                            return isset($model->products) ? $model->products->isbn : NULL;
                         }],
                     'paletNo',
                     'quantity',
-                    [
+                        [
                         'attribute' => 'price',
                         'value' => function($model) {
                             return number_format($model->price);
                         }
                     ],
-                    [
+                        [
                         'attribute' => 'total',
                         'value' => function($model) {
                             return number_format($model->total);
@@ -82,19 +83,19 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                             'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
-                                    'update' => function($url, $model, $id) {
-                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                            'update' => function($url, $model, $id) {
+                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $id, 'storeProductGroupId' => $model->poItemId], [
                                             'title' => Yii::t('app', 'Edit'),]);
                             },
-                                    'delete' => function($url, $model, $id) {
-                                return Html::a('<i class="fa fa-trash-o"></i>', ['delete', 'id' => $id, 'storeProductGroupId' => $model->storeProductGroupId], [
+                            'delete' => function($url, $model, $id) {
+                                return Html::a('<i class="fa fa-trash-o"></i>', ['delete', 'id' => $id, 'storeProductGroupId' => $model->poItemId], [
                                             'title' => Yii::t('app', 'Delete'), 'data-confirm' => 'Are you sure to delete']);
                             },]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
-            <?php Pjax::end(); ?>
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
+    <?php Pjax::end(); ?>
 </div>

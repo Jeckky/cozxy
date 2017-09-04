@@ -1,6 +1,7 @@
 <?php
 
 use common\models\costfit\StoreProductArrange;
+use common\models\costfit\Po;
 
 $form = yii\bootstrap\ActiveForm::begin([
             'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
@@ -18,7 +19,7 @@ $form = yii\bootstrap\ActiveForm::begin([
 <input type="hidden" name="isbn" value="<?= $isbn ?>">
 <input type="hidden" name="arrange" value="arrange">
 <!--<input type="hidden" name="storeProductId" value="<?//= $model->storeProductId ?>">-->
-<input type="hidden" name="storeProductGroupId" value="<?= $chooseStoreProductGroup ?>">
+<input type="hidden" name="poId" value="<?= $choosePo ?>">
 <input type="hidden" name="productSuppId" value="<?= $productSuppId ?>">
 
 <?php foreach ($allProducts as $product):
@@ -49,9 +50,9 @@ $form = yii\bootstrap\ActiveForm::begin([
                         ?>
                         <tr>
                             <th style="vertical-align: middle;">Quantity : </th>
-                            <th><?= \yii\helpers\Html::textInput('quantity[' . $po->storeProductGroupId . ']', NULL, ['class' => 'input-lg quantity' . $i]); ?> * <?= \common\models\costfit\StoreProductGroup::poNo($po->storeProductGroupId) ?> จำนวน <?= $po->importQuantity ?>
-                                ชิ้น จัดเรียงแล้ว <code><?= StoreProductArrange::countProductArrange($po->productId, $po->storeProductId) ?></code> ชิ้น
-                                ยังไม่จัดเรียง <code><?= $po->importQuantity - StoreProductArrange::countProductArrange($po->productId, $po->storeProductId) ?></code> ชิ้น
+                            <th><?= \yii\helpers\Html::textInput('quantity[' . $po->poId . ']', NULL, ['class' => 'input-lg quantity' . $i]); ?> * <?= Po::poNo($po->poId) ?> จำนวน <?= $po->importQuantity ?>
+                                ชิ้น จัดเรียงแล้ว <code><?= StoreProductArrange::countProductArrange($po->productSuppId, $po->poItemId) ?></code> ชิ้น
+                                ยังไม่จัดเรียง <code><?= $po->importQuantity - StoreProductArrange::countProductArrange($po->productSuppId, $po->poItemId) ?></code> ชิ้น
 
                             </th>
                         </tr>
