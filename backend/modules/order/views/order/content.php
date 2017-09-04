@@ -27,8 +27,10 @@ foreach ($poId as $id):
     } else {
         $showText = 'ไม่มีข้อมูล Supplier';
     }
+    echo Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $po->poNo, ['style' => 'width:70px;margin-top:30px;margin-left:620px;']);
     ?>
-    <br><br><br><br>
+
+    <br><br>
     <div style="width: 100%;font-size: 10px;margin-top: 2px;">
         <div style="width: 50%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
@@ -39,7 +41,7 @@ foreach ($poId as $id):
         <div style="width: 45%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -90px;">
-             <?php // $po = \common\models\costfit\StoreProductGroup::genPoNo(); ?>
+             <?php // $po = \common\models\costfit\StoreProductGroup::genPoNo();  ?>
             เลขที่ใบสั่งซื้อ / PO No : <?= $po->poNo ?><br>
             วันที่ / Date : <b><?= $this->context->dateThai($po->createDateTime, 1) ?></b><br>
             <br>

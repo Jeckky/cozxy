@@ -62,7 +62,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'attribute' => 'noProduct',
                         'label' => 'No. Of Product(s)',
                         'value' => function($model) {
-                            return count($model->storeProducts);
+                            return count($model->poItem);
                         }
                     ],
                         [
@@ -97,11 +97,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                                ]);
 //                            },
                             'product' => function($url, $model) {
-                                return Html::a('<br><u>Product</u>', ['/store/store-product', 'storeProductGroupId' => $model->storeProductGroupId], [
+                                return Html::a('<br><u>Product</u>', ['/store/store-product', 'poId' => $model->poId], [
                                             'title' => Yii::t('app', 'Change today\'s lists'),]);
                             },
                             'qc' => function($url, $model) {
-                                return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'storeProductGroupId' => $model->storeProductGroupId], [
+                                return Html::a('<br><u>ตรวจรับ</u>', ['/store/store-product/check', 'poId' => $model->poId], [
                                             'title' => Yii::t('app', 'check\'s lists'),]);
                             },
 //                            'arrange' => function($url, $model) {

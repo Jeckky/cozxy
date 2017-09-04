@@ -12,8 +12,16 @@ use common\models\costfit\PoItem;
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 //throw new \yii\base\Exception(print_r($supplierId, true));
 $supplier = User::supplierDetail($po->supplierId);
+
+if (isset($po)) {
+    echo Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $po->poNo, ['style' => 'width:70px;margin-top:30px;margin-left:620px;']);
+}
+if (isset($poId)) {
+    $po = common\models\costfit\Po::find()->where("poId" . $poId)->one();
+    echo Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $po->poNo, ['style' => 'width:70px;margin-top:30px;margin-left:620px;']);
+}
 ?>
-<br><br><br><br>
+<br><br>
 <div style="width: 100%;font-size: 10px;">
     <div style="width: 50%;height: 90px;border:solid 0.5px #000000;-webkit-border-radius:10px;
          -moz-border-radius:10px;
@@ -55,7 +63,7 @@ $supplier = User::supplierDetail($po->supplierId);
         <b>ระบุเลขที่ใบสั่งทุกครั้งในใบส่งของ</b>
     </div>
 </div>
-<table class="table" cellpadding="2" cellspacing="-2">
+<table class="table" cellpadding="2" cellspacing="-2" style="width: 100%;">
 
     <thead>
         <tr style="background-color: #cccccc;">
