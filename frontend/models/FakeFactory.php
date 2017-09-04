@@ -365,7 +365,7 @@ class FakeFactory extends Model {
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
                 ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("productId=" . $productIdParams)
+                ->where("productId=" . $productIdParams . ' and product_price_suppliers.status = 1')
                 ->orderBy('product_price_suppliers.price')
                 ->one();
                 $txtAlert = 'No';
@@ -437,7 +437,7 @@ class FakeFactory extends Model {
         $products = [];
 //$brand = \common\models\costfit\Brand::find()->all();
         $brand = \common\models\costfit\Product::find()
-        ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId,`brand`.title as title ,`brand`.description as description ')
+        ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId, `brand`.title as title, `brand`.description as description ')
         ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
         ->where('brand.brandId is not null')
         ->andWhere('product.parentId is not null')
