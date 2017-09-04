@@ -165,11 +165,11 @@ $val = rand(1, 10);
                                     if (isset($model['productId']) && $model['productId'] != '') {
                                         if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
                                             ?>
-                                            <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
+                                            <a href="" class="b btn-g999  " data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>"  style="margin:14px auto 2px;padding: 6px 16px;">
                                                 <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
                                             </a>
                                         <?php } else { ?>
-                                            <a href="" class="b btn-g999 size12" data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
+                                            <a href="" class="b btn-g999  " data-toggle="modal" data-target="#wishListGroup<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
                                                 <div class="heart-<?= $model['productId'] ?>">ADD TO SHELF</div>
                                             </a><!--<i class="fa fa-heart" aria-hidden="true"></i>-->
                                             <?php
