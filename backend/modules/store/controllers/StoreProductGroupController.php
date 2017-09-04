@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\costfit\Po;
 
 /**
  * StoreProductGroupController implements the CRUD actions for StoreProductGroup model.
@@ -21,7 +22,7 @@ class StoreProductGroupController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,21 +47,21 @@ class StoreProductGroupController extends StoreMasterController {
         if (!isset(Yii::$app->user->identity->userId)) {
             return $this->redirect($baseUrl . '/auth');
         }
-        $query = StoreProductGroup::find()->where("status=1");
-        $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
+        $query = Po::find()->where("status=1");
+        $passQc = Po::find()->where("status!=1 order by receiveDate DESC")->all();
         if (isset($_GET['fromDate']) && $_GET['fromDate'] != '') {
             //throw new \yii\base\Exception('aaa');
             if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
-                $passQc = StoreProductGroup::find()->where("receiveDate BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
+                $passQc = Po::find()->where("receiveDate BETWEEN '" . $_GET['fromDate'] . "' and '" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
             } else {
-                $passQc = StoreProductGroup::find()->where("receiveDate>='" . $_GET['fromDate'] . "' and status!=1 order by receiveDate DESC")->all();
+                $passQc = Po::find()->where("receiveDate>='" . $_GET['fromDate'] . "' and status!=1 order by receiveDate DESC")->all();
             }
         } else {
             // throw new \yii\base\Exception('bbbb');
             if (isset($_GET['toDate']) && $_GET['toDate'] != '') {
-                $passQc = StoreProductGroup::find()->where("receiveDate<='" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
+                $passQc = Po::find()->where("receiveDate<='" . $_GET['toDate'] . "' and status!=1 order by receiveDate DESC")->all();
             } else {
-                $passQc = StoreProductGroup::find()->where("status!=1 order by receiveDate DESC")->all();
+                $passQc = Po::find()->where("status!=1 order by receiveDate DESC")->all();
             }
         }
         //throw new \yii\base\Exception('cccc');
@@ -68,8 +69,8 @@ class StoreProductGroupController extends StoreMasterController {
             'query' => $query,
         ]);
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'passQc' => $passQc
+                    'dataProvider' => $dataProvider,
+                    'passQc' => $passQc
         ]);
     }
 
@@ -80,7 +81,7 @@ class StoreProductGroupController extends StoreMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -100,7 +101,7 @@ class StoreProductGroupController extends StoreMasterController {
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -123,7 +124,7 @@ class StoreProductGroupController extends StoreMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 

@@ -55,6 +55,10 @@ class Po extends \common\models\costfit\master\PoMaster {
         ];
     }
 
+    public function getPoItem() {
+        return $this->hasMany(PoItem::className(), ['poId' => 'poId'])->orderBy("status");
+    }
+
     public static function getStatusText($status) {
         $res = Po::findAllStatusArray();
         if (isset($res[$status])) {
