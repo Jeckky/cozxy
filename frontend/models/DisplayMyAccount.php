@@ -31,7 +31,7 @@ class DisplayMyAccount extends Model {
                 'company' => $items->company,
                 'tax' => $items->tax,
                 'address' => isset($items->address) ? $items->address : '' . ' , ',
-                'country' => isset($items->countries->countryName) ? $items->countries->countryName : '' . ' , ',
+                'country' => isset($items->countries->localName) ? $items->countries->localName : '' . ' , ',
                 'province' => isset($items->states->localName) ? $items->states->localName : '' . ' , ',
                 'amphur' => isset($items->cities->localName) ? $items->cities->localName : '' . ' , ',
                 'district' => isset($items->district->localName) ? $items->district->localName : '' . ' , ',
@@ -66,9 +66,9 @@ class DisplayMyAccount extends Model {
         $products = [];
         $dataUserPoint = UserPoint::find()->where('userId=' . \Yii::$app->user->id)->one();
         $dataTopUp = TopUp::find()
-                        ->select('*')
-                        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
-                        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
+        ->select('*')
+        ->join("LEFT JOIN", "payment_method", "payment_method.paymentMethodId = top_up.paymentMethod")
+        ->where('top_up.userId =' . \Yii::$app->user->id)->orderBy('top_up.updateDateTime desc')->one();
         $products[$dataUserPoint['userPointId']] = [
             'userPointId' => $dataUserPoint['userPointId'],
             'userId' => isset($dataUserPoint['userId']) ? $dataUserPoint['userId'] : '-',
@@ -86,21 +86,21 @@ class DisplayMyAccount extends Model {
         $products = [];
         if ($limit == 0) {
             $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
-                    ->all();
+            ->all();
         } else {
             $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
-                    ->limit($limit)
-                    ->all();
+            ->limit($limit)
+            ->all();
         }
 
         foreach ($dataWishlist as $items) {
             //$dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
             $value = ProductSuppliers::find()
-                    ->select('`product_price_suppliers`.*,`product_suppliers`.*')
-                    ->join('LEFT JOIN', 'product_price_suppliers', 'product_suppliers.productSuppId=product_price_suppliers.productSuppId')
-                    ->where('product_suppliers.productId=' . $items->productId . ' and product_suppliers.result>0 and product_price_suppliers.price!=0')
-                    ->orderBy('product_price_suppliers.price DESC')
-                    ->one();
+            ->select('`product_price_suppliers`.*,`product_suppliers`.*')
+            ->join('LEFT JOIN', 'product_price_suppliers', 'product_suppliers.productSuppId=product_price_suppliers.productSuppId')
+            ->where('product_suppliers.productId=' . $items->productId . ' and product_suppliers.result>0 and product_price_suppliers.price!=0')
+            ->orderBy('product_price_suppliers.price DESC')
+            ->one();
             if (isset($value)) {
                 $maxQnty = $value['result'];
             } else {
@@ -140,7 +140,7 @@ class DisplayMyAccount extends Model {
     public static function wishlistItems($shelfId) {
         $products = [];
         $dataWishlist = Wishlist::find()->where("userId = " . \Yii::$app->user->id . " and productShelfId=" . $shelfId)->orderBy('wishlistId DESC')
-                ->all();
+        ->all();
         if (isset($dataWishlist) && count($dataWishlist) > 0) {
             return count($dataWishlist);
         } else {
@@ -151,7 +151,7 @@ class DisplayMyAccount extends Model {
     public static function myAccountOrderHistory($status, $type) {
         $products = [];
         $dataOrder = Order::find()
-                        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
+        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
         foreach ($dataOrder as $value) {
             if ($value->orderNo == NULL) {
                 $orderNo = '-';
@@ -181,49 +181,49 @@ class DisplayMyAccount extends Model {
 
         if ($status == 'show1') { // Last 10 orders
             $dataOrder = Order::find()
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
-                    ->orderBy([
-                        'orderId' => SORT_DESC //Need this line to be fixed
-                    ])
-                    ->all();
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
+            ->orderBy([
+                'orderId' => SORT_DESC //Need this line to be fixed
+            ])
+            ->all();
         } else if ($status == 'show2') { // 15วันที่ผ่านมา
             $dataOrder = Order::find()
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 15 DAY) AND NOW()')
-                    ->all();
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 15 DAY) AND NOW()')
+            ->all();
         } else if ($status == 'show3') { // ระยะ 30 วันที่ผ่านมา
             $dataOrder = Order::find()
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()')
-                    ->all();
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 30 DAY) AND NOW()')
+            ->all();
         } else if ($status == 'show4') { // ระยะ 6 เดือนที่ผ่านมา
             // (NOW() - INTERVAL 1 MONTH) <= (NOW() )
             $dataOrder = Order::find()
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER)
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and (NOW() - INTERVAL 6 MONTH) <= NOW()')
-                    ->all();
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER)
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and (NOW() - INTERVAL 6 MONTH) <= NOW()')
+            ->all();
         } else if ($status == 'show5') { // คำสั่งซื้อในปี 2017
             $dataOrder = Order::find()
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)')
-                    ->all();
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)')
+            ->all();
         } else if ($status == 'show6') { // คำสั่งซื้อในปี 2016
             $dataOrder = Order::find()
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)-1  ')
-                    ->all();
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . " and orderNo= '" . $type . "' ")
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER . ' and YEAR(order.createDateTime) <=  YEAR(order.createDateTime)-1  ')
+            ->all();
         } else {
             $dataOrder = Order::find()
-                    ->where($whereArray)
-                    ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
-                    //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "  and orderNo= '" . $type . "' ")
-                    ->all();
+            ->where($whereArray)
+            ->andWhere(' status > ' . Order::ORDER_STATUS_REGISTER_USER)
+            //->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "  and orderNo= '" . $type . "' ")
+            ->all();
         }
 
         foreach ($dataOrder as $value) {
