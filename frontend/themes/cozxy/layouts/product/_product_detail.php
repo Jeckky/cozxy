@@ -179,14 +179,14 @@ $val = rand(1, 10);
                                     ?>
                                     <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
 
-                                        <div class="b btn-g999 size12" style="padding: 6px 16px;">ADD TO SHELF</div>
+                                        <div class="b btn-g999" style="padding: 6px 16px;">ADD TO SHELF</div>
                                     </a>
                                     <?php
                                 }
                             }
                             if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
                                 if ($model['result'] > 0) {
-                                    echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow size12"  style="margin:14px auto 2px;padding: 6px 16px;">ADD TO CART</a>';
+                                    echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 6px 16px;">ADD TO CART</a>';
                                 } else {
                                     echo ' ';
                                 }
