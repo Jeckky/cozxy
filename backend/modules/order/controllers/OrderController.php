@@ -201,6 +201,7 @@ class OrderController extends OrderMasterController {
     }
 
     public function actionDetail2() {
+        //throw new \yii\base\Exception($_POST['orderId']);
         $orders = \common\models\costfit\OrderItem::find()->where("orderId=" . $_POST['orderId'] . " and status=" . $_POST['status'])->all();
         $show = '';
         $pic = '';
@@ -208,16 +209,20 @@ class OrderController extends OrderMasterController {
         $thead = "<table class='table'><thead><th>No.</th><th>รูปภาพ</th><th>สินค้า</th><th>จำนวน</th><th>หน่วย</th></thead><tbody>";
         $tfoot = "</tbody></table>";
         $i = 1;
-        if (isset($orders) && !empty($orders)) {
+        if (isset($orders) && count($orders) > 0) {
             foreach ($orders as $order):
-                $product = \common\models\costfit\Product::find()->where("productId=" . $order->productId)->one();
+                $product = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $order->productSuppId)->one();
                 if (isset($product) && !empty($product)) {
-                    $image = \common\models\costfit\ProductImage::find()->where("productId=" . $order->productId)->one();
-                    if (isset($image) && !empty($image)) {
+                    $image = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId=" . $order->productSuppId)->one();
+                    if (isset($image)) {
                         $pic = $image->image;
-                        $unit = \common\models\costfit\Unit::find()->where("unitId=" . $product->unit)->one();
-                        if (isset($unit) && !empty($unit)) {
-                            $each = $unit->title;
+                        if ($product->unit) {
+                            $unit = \common\models\costfit\Unit::find()->where("unitId=" . $product->unit)->one();
+                            if (isset($unit)) {
+                                $each = $unit->title;
+                            }
+                        } else {
+                            $each = '';
                         }
                     }
                     $show = $show . "<tr><td>" . $i . "</td><td><img src='" . Yii::$app->homeUrl . $pic . "' width='100px;'/></td><td>" . $product->title . "</td><td>" . $order->quantity . "</td><td>" . $each . "</td></tr>";

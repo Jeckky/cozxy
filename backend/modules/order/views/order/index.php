@@ -150,3 +150,4 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
         </div>
     </div>
+</div>
