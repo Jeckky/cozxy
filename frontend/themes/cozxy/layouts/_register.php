@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Sing Up : COZXY.COM LOWEST PRICE PRODUCTS';
+$this->title = 'Sing Up : cozxy.com - Buy what fuels your passion';
 \frontend\assets\LoginRegisterAsset::register($this);
 ?>
 <style type="text/css">

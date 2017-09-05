@@ -36,7 +36,7 @@ $val = rand(1, 10);
                     <td><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
                 </tr>
                 <?php
-                $options = \common\models\costfit\ProductGroupOptionValue::find()->where(["productSuppId"=>$item["productSuppId"], 'status'=>1])->all();
+                $options = \common\models\costfit\ProductGroupOptionValue::find()->where(["productSuppId" => $item["productSuppId"], 'status' => 1])->groupBy('productGroupOptionId')->all();
                 foreach ($options as $option):
                     ?>
 
