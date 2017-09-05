@@ -31,9 +31,9 @@ $val = rand(1, 10);
         <div class="col-sm-3 fc-g666">
             <table style="width:100%" class="qty-cart">
                 <tr >
-                    <td style="width: 100px;">Quantity</td>
-                    <td style="width:32px">:</td>
-                    <td><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
+                    <td style="width: 70px;" class="size14">Quantity</td>
+                    <td style="width:32px" class="size14">:</td>
+                    <td class="size14"><div id="qty-cart-show-<?= $item['orderItemId'] ?>"><?= $item["qty"] ?></div></td>
                 </tr>
                 <?php
                 $options = \common\models\costfit\ProductGroupOptionValue::find()->where(["productSuppId" => $item["productSuppId"], 'status' => 1])->groupBy('productGroupOptionId')->all();
@@ -41,9 +41,9 @@ $val = rand(1, 10);
                     ?>
 
                     <tr>
-                        <td style="width: 100px;"><?= $option->productGroupTemplateOption->title; ?></td>
-                        <td>:</td>
-                        <td><?= $option->value ?></td>
+                        <td style="width:70px;" class="size14"><?= $option->productGroupTemplateOption->title; ?></td>
+                        <td class="size14">:</td>
+                        <td class="size14"><?= $option->value ?></td>
                     </tr>
                 <?php endforeach; ?>
 <!--                <tr>
@@ -57,7 +57,7 @@ $val = rand(1, 10);
         <div class="col-sm-1 fc-g666">
             <table style="width:100%; text-align: center;">
                 <tr>
-                    <td>Delete</td>
+                    <td class="size14">Delete</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
