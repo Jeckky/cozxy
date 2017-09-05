@@ -102,17 +102,23 @@ $val = rand(1, 10);
                         <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
                         if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-
+                            //echo '<pre>';
+                            //print_r($productGroupOptionValues);
                             foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
                                 $selected = "";
                                 if (isset($selectedOptions) && count($selectedOptions) > 0) {
+
                                     foreach ($selectedOptions as $selectedOption):
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));
+                                        //echo '<pre>';
+                                        //print_r($selectedOption);
                                         if ($selectedOption["productGroupTemplateOptionId"] == $productGroupTemplateOptionId) {
                                             $selected = $selectedOption["id"];
                                             break;
                                         }
                                     endforeach;
+                                } else {
+                                    $selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
                                 }
                                 ?>
                                 <form id="optionForm">

@@ -49,7 +49,7 @@ $(window).resize(function() { descSet(); });
         <div class="col-md-9">
             <div class="size48">&nbsp;</div>
             <?php
-            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues, 'selectedOptions' => $selectedOptions]);
+            echo $this->render('@app/themes/cozxy/layouts/product/_product_detail', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues, 'selectedOptions' => $selectedOptions, 'productGroupOptionValueSelect' => $productGroupOptionValueSelect]);
             ?>
             <div class="size24">&nbsp;</div>
             <?php
