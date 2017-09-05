@@ -25,6 +25,10 @@ class ProductGroupOptionsController extends MasterController {
         $productGroupValues = [];
         $i = 1;
         $pgov = NULL;
+
+
+
+
         foreach ($p as $title => $productGroupOptionValueId) {
             $pgov = ProductGroupOptionValue::find()->where("productGroupOptionValueId = $productGroupOptionValueId")->one();
             $productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
@@ -45,6 +49,7 @@ class ProductGroupOptionsController extends MasterController {
             }
             $j++;
         }
+
         $andWhereStr .= ")";
         $prodSupp = \common\models\costfit\ProductSuppliers::find()
         ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
@@ -53,10 +58,8 @@ class ProductGroupOptionsController extends MasterController {
         ->where("pg.productId = $pgov->productGroupId ")
         ->andWhere($andWhereStr)
         ->groupBy("pgov.productSuppId")
-        ->having("count(pgov.productSuppId) =" . count($productGroupValues))
+        //->having("count(pgov.productSuppId) =" . count($productGroupValues))
         ->one();
-
-
 
         //$token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
 
