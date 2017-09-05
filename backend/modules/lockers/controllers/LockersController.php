@@ -294,7 +294,7 @@ class LockersController extends LockersMasterController {
                         //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
                         \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
                         $this->generatePassword($orderId);
-                        //$this->sendEmail($orderId, $OrderItemPacking->orderItemId);
+                        $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&text=');
                         //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/close-channel?status=now&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '');
                         // }

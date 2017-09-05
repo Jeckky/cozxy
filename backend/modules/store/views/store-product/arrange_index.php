@@ -52,6 +52,7 @@ foreach ($allProducts as $product):
             <th style="vertical-align: middle;text-align: center;width: 20%;">สถานะ</th>
         </tr>
         <?php
+        // throw new \yii\base\Exception(print_r($allProducts, true));
         if (isset($allProducts) && !empty($allProducts)) {
             $i = 1;
             foreach ($allProducts as $product):

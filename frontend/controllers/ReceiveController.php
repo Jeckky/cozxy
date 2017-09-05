@@ -21,14 +21,12 @@ use common\models\costfit\PickingPointItems;
 /**
  * ReceiveController implements the CRUD actions for receive model.
  */
-class ReceiveController extends MasterController
-{
+class ReceiveController extends MasterController {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -43,8 +41,7 @@ class ReceiveController extends MasterController
      * Lists all receive models.
      * @return mixed
      */
-    public function beforeAction($action)
-    {
+    public function beforeAction($action) {
         if ($action->id == "index" || $action->id == "send-sms" || $action->id == "received" || $action->id == "gen-new-otp" || $action->id == "update-open-status" || $action->id == "alarm-open") {
             $this->enableCsrfValidation = false;
         }
@@ -52,8 +49,7 @@ class ReceiveController extends MasterController
         return parent::beforeAction($action);
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $ms = '';
         $tel = '';
         $model = new \common\models\costfit\Receive();
@@ -61,10 +57,10 @@ class ReceiveController extends MasterController
         if (isset($_POST['Receive']['password']) && !empty($_POST['Receive']['password'])) {
 
             $order = Order::find()
-            ->leftJoin('picking_point pp', 'order.pickingId=pp.pickingId')
-            ->where(['password'=>$_POST['Receive']['password']])
-            ->andWhere(['pp.serialnumber'=>$_POST['Receive']['locker']])
-            ->one();
+                    ->leftJoin('picking_point pp', 'order.pickingId=pp.pickingId')
+                    ->where(['password' => $_POST['Receive']['password']])
+                    ->andWhere(['pp.serialnumber' => $_POST['Receive']['locker']])
+                    ->one();
 
             if (isset($order)) {
                 if ($order->status == Order::ORDER_STATUS_RECEIVED) {//16 = รับของแล้ว
@@ -139,10 +135,9 @@ class ReceiveController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -151,15 +146,14 @@ class ReceiveController extends MasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new receive();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->receiveId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -170,15 +164,14 @@ class ReceiveController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->receiveId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -189,15 +182,13 @@ class ReceiveController extends MasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function actionSendSms()
-    {
+    public function actionSendSms() {
         $this->writeToFile('/tmp/receive-send-sms', print_r($_POST, true));
         $ms = '';
         $tel = $_POST['tel'];
@@ -224,6 +215,7 @@ class ReceiveController extends MasterController
                     $receive->status = 1;
                     $receive->createDateTime = new \yii\db\Expression('NOW()');
                     $receive->updateDateTime = new \yii\db\Expression('NOW()');
+                    $tel = "66" . substr($user->tel, 1);
                     if ($receive->save(false)) {
 //                        return $this->render('receive', [
 //                                    'userId' => $user->userId,
@@ -247,7 +239,7 @@ class ReceiveController extends MasterController
                         $data = json_encode(array(
                             "from" => "COZXY.COM",
 //            "to" => ["66937419977", "66616539889", "66836134241"],
-                            "to" => [$user->tel, "66813041313"],
+                            "to" => [$tel],
                             "text" => $msg)
                         );
 
@@ -264,8 +256,7 @@ class ReceiveController extends MasterController
         //throw new \yii\base\Exception($_POST['tel']);
     }
 
-    public function actionReceived()
-    {
+    public function actionReceived() {
         $ms = '';
         //$allLocker = '';
         $allLocker = [];
@@ -329,9 +320,11 @@ class ReceiveController extends MasterController
                             $res["orderId"] = $_POST['orderId'];
                             $res["numberLocker"] = $allLocker;
                             $res["refNo"] = $order->refNo;
-//                            $this->cctv($order->refNo, $user->email);
+                            //$res["isSuccess"] = true;
+                            //$this->cctv($order->refNo, $user->email);
                             //throw new \yii\base\Exception(print_r($res, true));
                             //print_r(Json::encode($res));
+                            $this->writeToFile("/tmp/receive", print_r($res, true));
                             echo Json::encode($res);
                         } else {
                             $res["status"] = 300;
@@ -398,8 +391,7 @@ class ReceiveController extends MasterController
         }
     }
 
-    public function actionGenNewOtp()
-    {
+    public function actionGenNewOtp() {
         $userId = $_POST["userId"];
         $orderId = $_POST["orderId"];
         $tel = $_POST["tel"];
@@ -437,13 +429,14 @@ class ReceiveController extends MasterController
         $res["refNo"] = $refNo;
 
         $user = \common\models\User::find()->where("userId =" . $order->userId)->one();
+        $tel = "66" . substr($user->tel, 1);
         $msg = 'รหัสเพื่อรับสินค้าจาก www.cozxy.com รหัส OTP คือ ' . $order->otp . " หมายเลขอ้างอิงคือ " . $order->refNo;
         $url = "http://api.ants.co.th/sms/1/text/single";
         $method = "POST";
         $data = json_encode(array(
             "from" => "COZXY.COM",
 //            "to" => ["66937419977", "66616539889", "66836134241"],
-            "to" => [$user->tel, "66836134241"],
+            "to" => [$tel],
             "text" => $msg)
         );
 
@@ -453,8 +446,7 @@ class ReceiveController extends MasterController
         //return $refNo;
     }
 
-    protected function checkTime($time)
-    {//กำหนดเวลา ของ OTP
+    protected function checkTime($time) {//กำหนดเวลา ของ OTP
         $now = date('Y-m-d H:i:s');
         $time_diff = strtotime($now) - strtotime($time);
         $time_diff_m = floor(($time_diff % 3600) / 60);
@@ -465,8 +457,7 @@ class ReceiveController extends MasterController
         }
     }
 
-    protected function check($alls, $new)
-    {
+    protected function check($alls, $new) {
         $a = 0;
         foreach ($alls as $all):
             if ($all == $new) {
@@ -487,8 +478,7 @@ class ReceiveController extends MasterController
      * @return receive the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = receive::findOne($id)) !== null) {
             return $model;
         } else {
@@ -496,8 +486,7 @@ class ReceiveController extends MasterController
         }
     }
 
-    protected function genOtp()
-    {
+    protected function genOtp() {
         $flag = false;
         $otp = rand('000000', '999999');
         while ($flag == false) {
@@ -511,8 +500,7 @@ class ReceiveController extends MasterController
         return $otp;
     }
 
-    protected function genRefNo()
-    {
+    protected function genRefNo() {
         $flag = false;
         $characters = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
         $ref = '';
@@ -536,8 +524,7 @@ class ReceiveController extends MasterController
         return $ref;
     }
 
-    protected function updateOrder($orderId, $otp, $userId, $password, $refNo)
-    {
+    protected function updateOrder($orderId, $otp, $userId, $password, $refNo) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
             $orderItems = OrderItem::find()->where("orderId=" . $order->orderId . " and status=15")->all(); //หาorderItem ที่สถานะ = นำจ่ายแล้ว
@@ -566,8 +553,7 @@ class ReceiveController extends MasterController
     }
 
     //Tritech API
-    public function actionUpdateOpenStatus()
-    {
+    public function actionUpdateOpenStatus() {
         $filePath = \Yii::$app->basePath . "/web" . "/tritech.html";
         if (!file_exists($filePath)) {
             $myfile = fopen($filePath, "w");
@@ -598,8 +584,7 @@ class ReceiveController extends MasterController
     }
 
     //Tritech API
-    public function actionAlarmOpen()
-    {
+    public function actionAlarmOpen() {
         $filePath = \Yii::$app->basePath . "/web" . "/tritech-alarm.html";
         if (!file_exists($filePath)) {
             $myfile = fopen($filePath, "w");
@@ -621,16 +606,14 @@ class ReceiveController extends MasterController
     }
 
     //
-    public function cctv($orderNo, $user)
-    {
+    public function cctv($orderNo, $user) {
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7001", $orderNo, $user);
 //        echo \common\helpers\Cctv::SendText("192.168.15.5", "7002");
 //        echo \common\helpers\Cctv::SendText("192.168.15.5", "7003");
 //        echo \common\helpers\Cctv::SendText("192.168.15.5", "7004");
     }
 
-    public function actionCctv()
-    {
+    public function actionCctv() {
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7001");
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7002");
         echo \common\helpers\Cctv::SendText("192.168.15.5", "7003");
