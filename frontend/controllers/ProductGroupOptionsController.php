@@ -14,16 +14,13 @@ use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
 use frontend\models\DisplayMyStory;
 
-class ProductGroupOptionsController extends MasterController
-{
+class ProductGroupOptionsController extends MasterController {
 
-    public function actionIndex($hash = FALSE)
-    {
+    public function actionIndex($hash = FALSE) {
 
     }
 
-    public function actionProductByOptions($hash = false)
-    {
+    public function actionProductByOptions($hash = false) {
         $p = $_POST;
         $productGroupValues = [];
         $i = 1;
@@ -60,7 +57,10 @@ class ProductGroupOptionsController extends MasterController
         ->one();
 
 
-        $token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
+
+        //$token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
+
+        $token = \common\models\ModelMaster::encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
 
         $res['token'] = $token;
 
