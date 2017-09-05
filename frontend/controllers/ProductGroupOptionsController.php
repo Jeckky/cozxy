@@ -14,20 +14,21 @@ use yii\data\ArrayDataProvider;
 use frontend\models\FakeFactory;
 use frontend\models\DisplayMyStory;
 
-class ProductGroupOptionsController extends MasterController
-{
+class ProductGroupOptionsController extends MasterController {
 
-    public function actionIndex($hash = FALSE)
-    {
+    public function actionIndex($hash = FALSE) {
 
     }
 
-    public function actionProductByOptions($hash = false)
-    {
+    public function actionProductByOptions($hash = false) {
         $p = $_POST;
         $productGroupValues = [];
         $i = 1;
         $pgov = NULL;
+
+
+
+
         foreach ($p as $title => $productGroupOptionValueId) {
             $pgov = ProductGroupOptionValue::find()->where("productGroupOptionValueId = $productGroupOptionValueId")->one();
             $productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
@@ -48,6 +49,7 @@ class ProductGroupOptionsController extends MasterController
             }
             $j++;
         }
+
         $andWhereStr .= ")";
         $prodSupp = \common\models\costfit\ProductSuppliers::find()
         ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
@@ -56,11 +58,12 @@ class ProductGroupOptionsController extends MasterController
         ->where("pg.productId = $pgov->productGroupId ")
         ->andWhere($andWhereStr)
         ->groupBy("pgov.productSuppId")
-        ->having("count(pgov.productSuppId) =" . count($productGroupValues))
+        //->having("count(pgov.productSuppId) =" . count($productGroupValues))
         ->one();
 
+        //$token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
 
-        $token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
+        $token = \common\models\ModelMaster::encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
 
         $res['token'] = $token;
 
