@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use common\models\costfit\StoreProductGroup;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
+use common\models\costfit\Po;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -188,9 +189,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
                             <td style="vertical-align: middle;text-align: center;width: 25%;"><?= $qc->poNo ?></td>
                             <td style="vertical-align: middle;text-align: center;width: 20%;"><?= isset($qc->receiveDate) ? $this->context->dateThai($qc->receiveDate, 2) : "-" ?></td>
-                            <td style="vertical-align: middle;text-align: center;width: 20%;"><?= StoreProductGroup::countProducts($qc->storeProductGroupId) ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 20%;"><?= Po::countProducts($qc->poId) ?></td>
                             <td style="vertical-align: middle;text-align: right;width: 20%;"><?= number_format($qc->summary, 2) ?></td>
-                            <td style="vertical-align: middle;text-align: center;width: 10%;"><?= StoreProductGroup::getStatusText($qc->status) ?></td>
+                            <td style="vertical-align: middle;text-align: center;width: 10%;"><?= Po::getStatusText($qc->status) ?></td>
                         </tr>
                         <?php
                         $i++;

@@ -80,8 +80,10 @@ class StoreProductGroupController extends StoreMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        $model = Po::find()->where("poId=" . $id)->one();
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    //'model' => $this->findModel($id),
+                    'model' => $model,
         ]);
     }
 

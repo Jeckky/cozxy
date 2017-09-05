@@ -168,8 +168,10 @@ if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty
                 [
                     'attribute' => 'สถานที่นำส่ง',
                     'value' => function($model) {
-                        $name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
-                        $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
+                        // throw new \yii\base\Exception(print_r($model, true));
+                        // $pickingPoint = PickingPoint::pickingDetailByorderId($model->orderId);
+                        //$name = isset($model->pickingpointitems->name) ? $model->pickingpointitems->name : '';
+                        // $code = isset($model->pickingpointitems->code) ? $model->pickingpointitems->code : '';
                         $title = isset($model->pickingpoint->title) ? $model->pickingpoint->title : '';
                         $localNamecitie = isset($model->pickingpoint->citie->localName) ? $model->pickingpoint->citie->localName : '';
                         $localNamestate = isset($model->pickingpoint->state->localName) ? $model->pickingpoint->state->localName : '';

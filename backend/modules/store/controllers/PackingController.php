@@ -370,7 +370,7 @@ class PackingController extends StoreMasterController {
 
     static function genTaxNo() {
         $orderItemPacking = OrderItemPacking::find()->where("1")
-                ->orderBy("TaxNo DESC")
+                ->orderBy("taxNo DESC")
                 ->one();
         $taxNo = "00001";
         if (isset($orderItemPacking)) {

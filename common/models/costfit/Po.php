@@ -76,6 +76,15 @@ class Po extends \common\models\costfit\master\PoMaster {
         return $prefix . date("Ym") . "-" . str_pad($max_code, 6, "0", STR_PAD_LEFT);
     }
 
+    public static function poNo($poId) {
+        $po = Po::find()->where("poId=" . $poId)->one();
+        if (isset($po)) {
+            return $po->poNo;
+        } else {
+            return 'Not Found';
+        }
+    }
+
     public static function findMaxPoNo($prefix = NULL) {
         $order = Order::findBySql("SELECT MAX(RIGHT(poNo,6)) as maxCode from `po` WHERE substr(poNo,1,2)='$prefix' order by poNo DESC ")->one();
 //        $order = Order::find()->select("MAX(RIGHT(orderNo,7)) as maxCode")
@@ -105,6 +114,11 @@ class Po extends \common\models\costfit\master\PoMaster {
         } else {
             return NULL;
         }
+    }
+
+    public static function countProducts($poId) {
+        $storeProduct = count(PoItem::find()->where("poId=" . $poId)->all());
+        return $storeProduct;
     }
 
 }

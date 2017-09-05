@@ -1,6 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use common\models\costfit\ProductSuppliers;
+use common\models\costfit\Po;
+use common\models\costfit\PoItem;
 
 $form = yii\bootstrap\ActiveForm::begin([
             'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
@@ -12,7 +15,7 @@ $form = yii\bootstrap\ActiveForm::begin([
             ]
         ]);
 ?>
-<input type="hidden" name="storeProductGroupId" value="<?= $chooseStoreProductGroup ?>">
+<input type="hidden" name="poId" value="<?= $choosePo ?>">
 <!--<input type="hidden" name="StoreProductGroup2[poNo]" value="<?//= \common\models\costfit\StoreProductGroup::findPoNo($storeProductGroupId) ?>">-->
 <?php
 //throw new \yii\base\Exception(print_r($allProducts, true));
@@ -29,7 +32,7 @@ foreach ($allProducts as $product):
         <tbody>
             <tr>
                 <th style="vertical-align: middle;text-align: center;"><h4><b>Scan Barcode สินค้า : </b></h4></th>
-                <td><?= \yii\helpers\Html::textInput('StoreProduct[isbn]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                <td><?= \yii\helpers\Html::textInput('poItem[isbn]', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
             </tr>
         </tbody>
     </table>
@@ -52,14 +55,14 @@ foreach ($allProducts as $product):
         if (isset($allProducts) && !empty($allProducts)) {
             $i = 1;
             foreach ($allProducts as $product):
-                $suppProduct = \common\models\costfit\ProductSuppliers::productSupplierName($product);
+                $suppProduct = ProductSuppliers::productSupplierName($product);
                 ?>
                 <tr>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?= $i ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 35%;"><?= $suppProduct->title ?></td>
                     <td style="vertical-align: middle;text-align: center;width: 20%;"><?= $suppProduct->isbn ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::quantity($product, $chooseStoreProductGroup) ?></td>
-                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= \common\models\costfit\StoreProduct::createStatus($product, $chooseStoreProductGroup) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= PoItem::quantity($product, $choosePo) ?></td>
+                    <td style="vertical-align: middle;text-align: center;width: 20%;"><?= PoItem::createStatus($product, $choosePo) ?></td>
                 </tr>
         <!--                <tr>
                     <td style="vertical-align: middle;text-align: center;width: 5%;"><?//= $i ?></td>

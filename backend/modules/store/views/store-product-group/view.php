@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\costfit\ProductSuppliers;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\StoreProductGroup */
-
-$this->title = $model->storeProductGroupId;
+//throw new \yii\base\Exception(print_r($model, true));
+$this->title = $model->poId;
 $this->params['breadcrumbs'][] = ['label' => 'Store Product Groups', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
@@ -17,9 +18,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
         <div class="panel-heading">
             <span class="panel-title">With buttons</span>
             <div class="panel-heading-controls">
-                <?= Html::a('Update', ['update', 'id' => $model->storeProductGroupId], ['class' => 'btn btn-xs btn-primary btn-outline']) ?>
+                <?= Html::a('Update', ['update', 'id' => $model->poId], ['class' => 'btn btn-xs btn-primary btn-outline']) ?>
                 <?=
-                Html::a('Delete', ['delete', 'id' => $model->storeProductGroupId], [
+                Html::a('Delete', ['delete', 'id' => $model->poId], [
                     'class' => 'btn btn-xs btn-outline btn-danger',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
@@ -44,7 +45,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
             </div>
             <div class="row">
                 <div class="col-lg-3" style="font-weight: bold">No of product</div>
-                <div class="col-lg-9"><?= count($model->storeProducts) ?></div>
+                <div class="col-lg-9"><?= count($model->poItem) ?></div>
             </div>
             <div class="row">
                 <div class="col-lg-3" style="font-weight: bold">Create Date</div>
@@ -71,8 +72,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($model->storeProducts as $item):
-                                $productSupp = common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
+                            foreach ($model->poItem as $item):
+                                $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                                 ?>
                                 <tr>
                                     <td><?= $i ?></td>

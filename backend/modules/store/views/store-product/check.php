@@ -37,12 +37,12 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
                 <?php
                 $i = 1;
-                foreach ($model->storeProducts as $product):
+                foreach ($model->poItem as $product):
                     //throw new \yii\base\Exception($product->products->units);
                     $form = ActiveForm::begin(['options' => [
                                     'enctype' => 'multipart/form-data'],
                                 'method' => 'POST',
-                                'action' => ['store-product/check']]); //อาจจะผิดตรงนี้ 
+                                'action' => ['store-product/check']]); //อาจจะผิดตรงนี้
                     ?>
 
                     <tr>
@@ -58,17 +58,17 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     <?php
                     if ($product->status == 1) {//ปกติ ยังไม่มีการกดรับ
                         ?>
-                        <input type="radio" name="check[<?= $product->storeProductId ?>]" value="1" onclick="hide(<?= $product->storeProductId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
-                        <input type="radio"  name="check[<?= $product->storeProductId ?>]" value="2" onclick="show(<?= $product->storeProductId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
-                        <div id="notAll<?= $product->storeProductId ?>" style="display: none;">
+                        <input type="radio" name="check[<?= $product->poItemId ?>]" value="1" onclick="hide(<?= $product->poItemId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="check[<?= $product->poItemId ?>]" value="2" onclick="show(<?= $product->poItemId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
+                        <div id="notAll<?= $product->poItemId ?>" style="display: none;">
                             <?php // throw new \yii\base\Exception($product->storeProductId); ?>
-                            <input type="text"  name="quantity[<?= $product->storeProductId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?= isset($product->products->units->title) ? $product->products->units->title : '' ?>
+                            <input type="text"  name="quantity[<?= $product->poItemId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?= isset($product->products->units->title) ? $product->products->units->title : '' ?>
                         </div>
                         <br>
-                        <input type="hidden" name="storeProductId" value="<?= $product->storeProductId ?>">
-                        <input type="hidden" name="storeProductGroupId" value="<?= $model->storeProductGroupId ?>">
-                        <div id="all<?= $product->storeProductId ?>" style="display: none;">
-                            <textarea  name="remark[<?= $product->storeProductId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
+                        <input type="hidden" name="poItemId" value="<?= $product->poItemId ?>">
+                        <input type="hidden" name="poId" value="<?= $model->poId ?>">
+                        <div id="all<?= $product->poItemId ?>" style="display: none;">
+                            <textarea  name="remark[<?= $product->poItemId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
                         </div>
 
                         <?= Html::submitButton('<i class=\'glyphicon glyphicon-plus\'></i> ยืนยัน', ['class' => 'btn btn-warning btn-md']) ?>
@@ -78,22 +78,22 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     } else if ($product->status == 2) {//รับแล้วแต่ยังไม่ครบ
                         echo "<b>Received " . $product->importQuantity . " " . $product->products->units->title . "</b><br><br>";
                         ?>
-                        <input type="radio" name="check[<?= $product->storeProductId ?>]" value="1" onclick="hide(<?= $product->storeProductId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
-                        <input type="radio"  name="check[<?= $product->storeProductId ?>]" value="2" onclick="show(<?= $product->storeProductId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
-                        <div id="notAll<?= $product->storeProductId ?>" style="display: none;">
-                            <input type="text"  name="quantity[<?= $product->storeProductId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?php echo $product->products->units->title; ?>
+                        <input type="radio" name="check[<?= $product->poItemId ?>]" value="1" onclick="hide(<?= $product->poItemId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
+                        <input type="radio"  name="check[<?= $product->poItemId ?>]" value="2" onclick="show(<?= $product->poItemId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
+                        <div id="notAll<?= $product->poItemId ?>" style="display: none;">
+                            <input type="text"  name="quantity[<?= $product->poItemId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?php echo $product->products->units->title; ?>
                         </div>
                         <br>
-                        <input type="hidden" name="storeProductId" value="<?= $product->storeProductId ?>">
-                        <input type="hidden" name="storeProductGroupId" value="<?= $model->storeProductGroupId ?>">
-                        <div id="all<?= $product->storeProductId ?>" style="display: none;">
-                            <textarea  name="remark[<?= $product->storeProductId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
+                        <input type="hidden" name="poItemId" value="<?= $product->poItemId ?>">
+                        <input type="hidden" name="poId" value="<?= $model->poId ?>">
+                        <div id="all<?= $product->poItemId ?>" style="display: none;">
+                            <textarea  name="remark[<?= $product->poItemId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
                         </div>
 
                         <?= Html::submitButton('<i class=\'glyphicon glyphicon-plus\'></i> ยืนยัน', ['class' => 'btn btn-warning btn-md']) ?>
                         <?php
                     }
-                    if ($product->storeProductId == $errorId) {
+                    if ($product->poItemId == $errorId) {
                         echo "<br><code>" . $msError . "</code>";
                     }
                     ?>

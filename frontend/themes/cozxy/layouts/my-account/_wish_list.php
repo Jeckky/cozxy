@@ -268,7 +268,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 <h3>MY FAVORITE STORY</h3>
             </div>
             <div class="modal-body" style="padding: 40px;">
-                <?= common\helpers\Faq::Faqs('My Shelf') ?>
+                <?= common\helpers\Faq::Faqs('My favorite story') ?>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
