@@ -29,7 +29,7 @@ class DisplayMyAddress extends Model {
             'company' => isset($dataAddress['company']) ? $dataAddress['company'] : '',
             'tax' => isset($dataAddress['tax']) ? $dataAddress['tax'] : '',
             'address' => isset($dataAddress['address']) ? $dataAddress['address'] : '' . ', ',
-            'country' => isset($dataAddress->countries) ? $dataAddress->countries->countryName : '' . ', ',
+            'country' => isset($dataAddress->countries) ? $dataAddress->countries->localName : '' . ', ',
             'province' => isset($dataAddress->states) ? $dataAddress->states->localName : '' . ', ',
             'amphur' => isset($dataAddress->cities) ? $dataAddress->cities->localName : '' . ', ',
             'district' => isset($dataAddress->district) ? $dataAddress->district->localName : '' . ', ',
