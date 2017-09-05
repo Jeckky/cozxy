@@ -19,8 +19,8 @@ use common\helpers\Base64Decode;
             </p>
         </div>
         <div class="row text-center">
-            <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model->averageStar() ?></div>
-            <div class="col-md-6"><i class="fa fa-star"></i> <?= $model->countView() ?></div>
+            <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model->countView() ?></div>
+            <div class="col-md-6"><i class="fa fa-star"></i> <?= $model->averageStar() ?></div>
             <p>&nbsp;</p>
         </div>
         <br>
