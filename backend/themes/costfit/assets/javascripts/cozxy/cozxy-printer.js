@@ -18,12 +18,12 @@ $(document).on('click', '.links', function (e) {
     var status = $(this).attr('status');
     var orderId = $(this).attr('orderId');
     var url = $baseUrl + 'order/order/detail2';
+    // alert(orderId + '->' + status);
     $.ajax({
         url: url,
-        data: {"status": status, "orderId": orderId},
+        data: {status: status, orderId: orderId},
         type: 'post',
         success: function (data) {
-            //alert(status);
             var JSONObject2 = JSON.parse(data);
             $(".item").html('' + JSONObject2 + '');
             $('.modal').modal('show');
