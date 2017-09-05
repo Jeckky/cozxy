@@ -55,8 +55,13 @@ if (Yii::$app->controller->id == 'product') {
                 ?>
                 <?php
                 if ($model['maxQnty'] > 0) {
+                    if ($model['receiveType'] != '') {
+                        $receiveType = $model['receiveType'];
+                    } else {
+                        $receiveType = 1;
+                    }
                     ?>
-                    <a  href="javascript:addItemToCartUnitys('<?= $model['productSuppId'] ?>',1,'<?= $model['maxQnty'] ?>','<?= $model['fastId'] ?>','<?= $model['productId'] ?>','<?= $model['supplierId'] ?>','<?= $model['receiveType'] ?>')" id="addItemsToCartMulti-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><img class='fa fa-cart-plus fa-spin' src='<?= Url::home() ?>imgs/Asset28.png' width='50' height='30' alt='' style='margin-top: -10px;'></div>"><!--<i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i>-->
+                    <a  href="javascript:addItemToCartUnitys('<?= $model['productSuppId'] ?>',1,'<?= $model['maxQnty'] ?>','<?= $model['fastId'] ?>','<?= $model['productId'] ?>','<?= $model['supplierId'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model['productSuppId'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><img class='fa fa-cart-plus fa-spin' src='<?= Url::home() ?>imgs/Asset28.png' width='50' height='30' alt='' style='margin-top: -10px;'></div>"><!--<i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i>-->
                         <div class="col-xs-4 shopping-<?= $model['productSuppId'] ?>">
                         <!--<i id="cart-plus-<?//= $model['productSuppId'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i>-->
                             <span id="cart-plus-<?= $model['productSuppId'] ?>">
