@@ -352,7 +352,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -439,7 +439,12 @@ class MyAccountController extends MasterController {
                 }
                 $text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
                 if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
-                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $item['receiveType'] . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    if ($item['receiveType'] != '') {
+                        $receiveType = $item['receiveType'];
+                    } else {
+                        $receiveType = 1;
+                    }
+                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
                     $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
@@ -629,8 +634,8 @@ class MyAccountController extends MasterController {
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-                    'wishlists' => $wishlists,
-                    'title' => $productShelf->title
+            'wishlists' => $wishlists,
+            'title' => $productShelf->title
         ]);
     }
 
@@ -638,8 +643,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-                    'favoriteStory' => $favoriteStory,
-                    'title' => 'Favorite stories'
+            'favoriteStory' => $favoriteStory,
+            'title' => 'Favorite stories'
         ]);
     }
 

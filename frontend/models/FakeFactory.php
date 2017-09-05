@@ -421,7 +421,7 @@ class FakeFactory extends Model {
             'fastId' => FALSE,
             //'productId' => $GetProductSuppliers['productId'],
             'supplierId' => $GetProductSuppliers['userId'],
-            'receiveType' => isset($GetProductSuppliers['receiveType']) ? $GetProductSuppliers['receiveType'] : '',
+            'receiveType' => isset($GetProductSuppliers['receiveType']) ? $GetProductSuppliers['receiveType'] : '1',
             'wishList' => $wishList,
             'sendDate' => '',
             'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',

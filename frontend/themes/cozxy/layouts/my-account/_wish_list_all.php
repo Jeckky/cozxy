@@ -9,6 +9,11 @@ $fullCol = "col-lg-12 col-md-12 col-sm-12 col-xs-12";
 
 function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType) {
     $quantity = 1;
+    if ($receiveType != '') {
+        $receiveType = $receiveType;
+    } else {
+        $receiveType = 1;
+    }
     echo '
 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
 			<div class="product-box">
