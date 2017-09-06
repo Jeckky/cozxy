@@ -15,8 +15,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="panel   panel-success">
     <?php
     $form = ActiveForm::begin([
-        'method' => 'POST',
-        'action' => ['lockers/index'],
+                'method' => 'POST',
+                'action' => ['lockers/index'],
     ]);
     ?>
     <div class="panel-heading ">

@@ -75,7 +75,7 @@ if (isset($listPointItems)) {
                                 }
                             ],
                                 [
-                                'attribute' => 'bagNo',
+                                'attribute' => 'Total Bag',
                                 'value' => function($model) {
                                     return 'จำนวน ' . \common\models\costfit\OrderItemPacking::countBagNo($model->bagNo) . "  ถุง";
                                     //return isset($model->NumberOfBagNo) ? 'จำนวน ' . $model->NumberOfBagNo . ' ถุง' : ''; // status items 6 : แพ็คใส่ถุงแล้ว
@@ -381,7 +381,7 @@ if (isset($listPointItems)) {
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
             </div>
-            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?>">-->
+            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ?>">-->
         </div>
         <?php
     }

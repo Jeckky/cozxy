@@ -51,9 +51,9 @@ class LockersController extends LockersMasterController {
 
         $codes = Yii::$app->request->post('codes');
         if ($codes != '') {
-            $queryPickingPoint = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "'")->one();
+            $queryPickingPoint = PickingPoint::find()->where("code = '" . $codes . "'")->one();
             if (count($queryPickingPoint) > 0) {
-                $query = \common\models\costfit\PickingPoint::find()->where("code = '" . $codes . "' and type =" . $queryPickingPoint->type)->one();
+                $query = PickingPoint::find()->where("code = '" . $codes . "' and type =" . $queryPickingPoint->type)->one();
 
                 if (count($query) > 0) {
                     $txt = 'ข้อมูลถูกต้อง กรุณารอสักครู่...';
@@ -171,7 +171,7 @@ class LockersController extends LockersMasterController {
         $c = Yii::$app->request->get('c');
         $orderItemId = Yii::$app->request->get('orderItemId');
         $bagNo = Yii::$app->request->get('bagNo');
-
+        $isOpen = Yii::$app->request->get('isOpen');
         $orderItemPackingId = Yii::$app->request->get('orderItemPackingId');
         $channels = Yii::$app->request->get('channels');
 
@@ -180,8 +180,9 @@ class LockersController extends LockersMasterController {
 
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $listPointItems = Lockers::GetPickingPointItemsParameters($boxcode, $channel);
-
-        $result = Locker::Open($listPoint, [$listPointItems->name]);
+        if ($isOpen == "1") {
+            $result = Locker::Open($listPoint, [$listPointItems->name]);
+        }
 
         /* Customize Date 25/01/2017 , By Taninut.Bm */
         $localNamecitie = Local::Cities($listPoint->amphurId);
@@ -264,10 +265,10 @@ class LockersController extends LockersMasterController {
                 if ($countBag > 1) {
                     // throw new \yii\base\Exception("Count Bag > 1");
                     if (count($listPointItems) > 0) {
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
+                        OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 14], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
-                        \common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
+                        Order::updateAll(['status' => 14], ['orderId' => $orderId]);
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&text=');
                     } else {
 
@@ -289,12 +290,12 @@ class LockersController extends LockersMasterController {
                     if (count($listPointItems) > 0) {
                         // if ($close == 'yes') {
                         //throw new \yii\base\Exception("Count Bag = 1");
-                        \common\models\costfit\OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
+                        OrderItemPacking::updateAll(['status' => 7, 'userId' => Yii::$app->user->identity->userId, 'pickingItemsId' => $listPointItems->pickingItemsId, 'shipDate' => new \yii\db\Expression("NOW()")], ['bagNo' => $bagNo]);
                         \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                         //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderId' => $orderId]);
-                        \common\models\costfit\Order::updateAll(['status' => 15], ['orderId' => $orderId]);
-                        $this->generatePassword($orderId);
-                        $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
+                        Order::updateAll(['status' => 15], ['orderId' => $orderId]);
+                        //$this->generatePassword($orderId);
+                        // $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                         return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/scan-bag?close=no&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '&text=');
                         //return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/close-channel?status=now&model=' . $model . '&code=' . $channel . '&boxcode=' . $boxcode . '&pickingItemsId=' . $pickingItemsId . '&orderId=' . $orderId . '&orderItemPackingId=' . $orderItemPackingId . '');
                         // }
@@ -394,11 +395,11 @@ class LockersController extends LockersMasterController {
         $pickingItemsId = Yii::$app->request->get('pickingItemsId');
         if (isset($queryList)) {
             $pickingPoint = $queryList->pickingId;
-            $listPoint = \common\helpers\Lockers::GetPickingPoint($pickingPoint);
+            $listPoint = Locker::GetPickingPoint($pickingPoint);
             $localNamecitie = \common\helpers\Local::Cities($listPoint->amphurId);
             $localNamestate = \common\helpers\Local::States($listPoint->provinceId);
             $localNamecountrie = \common\helpers\Local::Countries($listPoint->countryId);
-            $query = \common\helpers\Lockers::GetPickingPointItems($pickingPoint);
+            $query = Lockers::GetPickingPointItems($pickingPoint);
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
@@ -525,14 +526,15 @@ class LockersController extends LockersMasterController {
             /* Customize Date 25/01/2017   */
             $listPointItems = Lockers::GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId);
             if (count($listPointItems) > 0) {
+
                 if ($status == 'now') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
                     //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
                     //$Order = \common\models\costfit\OrderItem::find()->where("orderItemId = '" . $OrderItemPacking->orderItemId . "' ")->one();
                     $this->updateOrderId($orderItemId);
                     //\common\models\costfit\Order::updateAll(['status' => 14], ['orderId' => $orderId]);
-                    //$this->generatePassword($orderId);
-                    //$this->sendEmail($orderId);
+                    $this->generatePassword($orderId);
+                    $this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                     //LockersChannel($pickingId);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
@@ -564,10 +566,12 @@ class LockersController extends LockersMasterController {
             if (count($listPointItems) > 0) {
 
                 if ($status == 'now') {
+                    // throw new \yii\base\Exception($pickingItemsId);
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 0], ['pickingItemsId' => $listPointItems->pickingItemsId]);
-                    \common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                    //\common\models\costfit\OrderItem::updateAll(['status' => 15], ['orderItemId' => $OrderItemPacking->orderItemId]);
+                    $this->updateOrderItemInLocker($pickingItemsId);
                     //$this->generatePassword($orderId);
-                    //$this->sendEmail($orderId);
+                    //$this->sendEmail($orderId, $OrderItemPacking->orderItemId);
                     return $this->redirect(Yii::$app->homeUrl . 'lockers/lockers/lockers?boxcode=' . $boxcode);
                 } elseif ($status == 'latter') {
                     \common\models\costfit\PickingPointItems::updateAll(['status' => 1], ['pickingItemsId' => $listPointItems->pickingItemsId]);
@@ -647,7 +651,7 @@ class LockersController extends LockersMasterController {
         $password = rand('00000000', '99999999');
         while ($flag == false) {
             $order = Order::find()->where("password='" . $password . "' and status!=16")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
-            if (isset($order) && !empty($order)) {
+            if (isset($order)) {
                 $password = rand('00000000', '99999999');
             } else {
                 $flag = true;
@@ -662,9 +666,9 @@ class LockersController extends LockersMasterController {
     static public function sendEmail($orderId, $orderItemId) {
         $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
         $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $orderItemId)->one();
-        if (isset($order) && !empty($order)) {
+        if (isset($order)) {
             $user = \common\models\costfit\User::find()->where("userId=" . $order->userId)->one();
-            if (isset($user) && !empty($user)) {
+            if (isset($user)) {
                 $email = new EmailSend();
                 $toMail = $user->email;
                 $userName = $user->firstname . " " . $user->lastname;
@@ -907,6 +911,20 @@ class LockersController extends LockersMasterController {
                 $item->status = 15;
                 $item->updateDateTime = new \yii\db\Expression('NOW()');
                 $item->save(false);
+            endforeach;
+        }
+    }
+
+    public function updateOrderItemInLocker($pickingItemId) {
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=" . OrderItemPacking::PACKING_STATUS_EXPORT_TO_LOCKERS)->all();
+        if (isset($orderItemPacking) & count($orderItemPacking) > 0) {
+            foreach ($orderItemPacking as $item):
+                $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId=" . $item->orderItemId)->one();
+                if (isset($orderItem)) {
+                    $orderItem->status = \common\models\costfit\OrderItem::ORDERITEM_STATUS_IN_LOCKER; //15
+                    $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                    $orderItem->save(false);
+                }
             endforeach;
         }
     }
