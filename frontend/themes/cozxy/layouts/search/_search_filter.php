@@ -1,3 +1,6 @@
+<?php
+$UserAgent = common\helpers\GetBrowser::UserAgent();
+?>
 <!-- Product Menu -->
 <style type="text/css">
     .dropdown-menu {
@@ -37,7 +40,7 @@
             </div>
             <div class="dropdown items">
                 <div class="dropdown-toggle size18 size16-sm size14-xs"  data-toggle="dropdown">BRAND &nbsp; <i class="fa fa-angle-down" aria-hidden="true"></i></div>
-                <div class="dropdown-menu menu-filter-brand" style="min-width:256px; max-width: 460px;">
+                <div class="dropdown-menu menu-filter-brand " style="<?= ($UserAgent == 'mobile') ? 'min-width:256px;' : 'min-width: 460px;' ?> ">
                     <div class="row input-group">
                         <form method="post" action="">
                             <?php
