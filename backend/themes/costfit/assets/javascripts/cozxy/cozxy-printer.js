@@ -300,7 +300,8 @@ function newKey(key) {
     return a;
 }
 $(document).on('click', '.reprint', function (e) {
-    var url = $baseUrl + 'order/order/reprint-real-time';
+    //var url = $baseUrl + 'order/order/reprint-real-time';
+    var url = 'http://localhost/cozxy/backend/web/order/order/reprint-real-time';
     $.ajax({
         url: url,
         data: 'status=1',

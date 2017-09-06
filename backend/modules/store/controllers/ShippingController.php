@@ -205,7 +205,7 @@ class ShippingController extends StoreMasterController {
             $pickingItem = PickingPointItems::find()->where("pickingItemsId=" . $pickingItemId)->one();
 
             if (isset($_GET["bagNo"]) && $_GET["bagNo"] != '') {
-                $orderItemPackings = OrderItemPacking::find()->where("bagNo='" . $_GET["bagNo"] . "'")->all();
+                $orderItemPackings = OrderItemPacking::find()->where("bagNo='" . $_GET["bagNo"] . "' and pickingItemsId is null")->all();
                 if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
                     foreach ($orderItemPackings as $bag):
                         $flag = false;
@@ -218,7 +218,7 @@ class ShippingController extends StoreMasterController {
                         }
                     endforeach;
                 } else {
-                    $ms = 'This bagNo is not in this order';
+                    $ms = 'This bagNo is not in this order or already in locker.';
                 }
             }
             $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and (status=4 or status=5)")/* 5-->shipไป 1 รอบ แล้วต้องการใส่เพิ่ม */
@@ -260,8 +260,10 @@ class ShippingController extends StoreMasterController {
             $pickingItem->status = PickingPointItems::LOCKER_NOT_EMPTY;
             $pickingItem->save(false);
         }
-        $this->updateOrderItemPacking($orderItemPackingId); /* str use sql in() */
-        $this->updateOrderItems($orderItemPackingId);
+        //$this->updateOrderItemPacking($orderItemPackingId); /* str use sql in() */
+        $this->updateOrderItemPacking($pickingItemId);
+        //$this->updateOrderItems($orderItemPackingId);
+        $this->updateOrderItems($pickingItemId);
         $orderNo = '';
         $orderNo = $this->updateOrderBooked($orderId);
         if ($orderNo == '') {//ถ้าorderนั้น ship หมดแล้ว
@@ -282,9 +284,10 @@ class ShippingController extends StoreMasterController {
         }
     }
 
-    public function updateOrderItems($orderItemPackingId) {
-        $orderItemPacking = OrderItemPacking::find()->where("orderItemPackingId in ($orderItemPackingId)")->all();
-        if (isset($orderItemPacking) && count($orderItemPackingId) > 0) {
+    public function updateOrderItems($pickingItemId) {
+        //$orderItemPacking = OrderItemPacking::find()->where("orderItemPackingId in ($orderItemPackingId)")->all();
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
             $orderItems = [];
             $i = 0;
             foreach ($orderItemPacking as $packing):
@@ -317,9 +320,10 @@ class ShippingController extends StoreMasterController {
         }
     }
 
-    public function updateOrderItemPacking($orderItemPackingId) {
-        $orderItemPacking = OrderItemPacking::find()->where("orderItemPackingId in ($orderItemPackingId)")->all();
-        if (isset($orderItemPacking) && count($orderItemPackingId) > 0) {
+    public function updateOrderItemPacking($pickingItemId) {
+        //$orderItemPacking = OrderItemPacking::find()->where("orderItemPackingId in ($orderItemPackingId)")->all();
+        $orderItemPacking = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemId . " and status=" . OrderItemPacking::ORDER_STATUS_CLOSE_BAG)->all();
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $packing):
                 $packing->status = OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING;
                 $packing->shipper = Yii::$app->user->identity->userId;

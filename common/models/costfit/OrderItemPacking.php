@@ -217,12 +217,15 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function countBagNo($bagNo) {
+        //throw new \yii\base\Exception($bagNo);
         $result = OrderItemPacking::find()
 //->distinct('order_item_packing.bagNo')
 //->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
-                ->where(['order_item_packing.bagNo' => $bagNo])
-                ->count();
-        return $result;
+                ->where("bagNo='" . $bagNo . "'")
+                ->groupBy("bagNo")
+                ->all();
+        // throw new \yii\base\Exception(print_r($result, true));
+        return count($result);
     }
 
     static public function countQuantity($bagNo) {
@@ -387,7 +390,9 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function bagInLocker($pickingItemsId) {//ที่มีการจองไว้
-        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status in (5,7)")->all();
+        $orderItemPackings = OrderItemPacking::find()->where("pickingItemsId=" . $pickingItemsId . " and status in (5,7)")
+                ->groupBy("bagNo")
+                ->all();
         $bag = '';
         if (isset($orderItemPackings) && count($orderItemPackings) > 0) {
             foreach ($orderItemPackings as $picking):
