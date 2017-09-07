@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-md-9 col-sm-9 col-xs-12">
                 <?php if ($productCanSell->getTotalCount() > 0): ?>
-                    <h3 class="b" style="word-wrap: break-word;">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
+                    <h3 class="b" style="word-wrap: break-word;white-space: normal;">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
                         <div class="wf-container">
                             <?php
@@ -147,7 +147,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                     </div>
                 <?php endif; ?>
                 <?php if ($productNotSell->getTotalCount() > 0): ?>
-                    <h3 class="b" style="word-wrap: break-word;">PRODUCTS<?= ' :: ' . strtoupper($brandName) ?></h3>
+                    <h3 class="b" style="word-wrap: break-word;white-space: normal;">PRODUCTS<?= ' :: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
                         <div class="wf-container">
                             <div class="filter-product-cozxy-not-sale">
