@@ -631,7 +631,7 @@ $this->registerCss("
             </div>
             <div class="col-md-3 col-sm-6 col-xs-4 pull-left text-left" style="<?php
             if ($UserAgent == 'mobile') {
-                echo 'margin-top: 20px; width: 70%;';
+                echo 'margin-top: 20px; zoom:5';
             }
             ?>; ">
                 <a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a>
