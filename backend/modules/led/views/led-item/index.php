@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="led-item-index">
 
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background-color: #000;color: #ffcc00;font-size: 12pt;">
             <div class="row">
                 <div class="col-md-6"><?= $this->title ?></div>
                 <div class="col-md-6">
@@ -84,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
             ?>
+            <a class="btn pull-right btn-primary" href="<?= Yii::$app->homeUrl ?>led/led"> << BACK</a>
         </div>
     </div>
 </div>
