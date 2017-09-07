@@ -629,14 +629,16 @@ $this->registerCss("
                     ?>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-4 pull-left text-left" style="<?php if ($UserAgent == 'mobile') {
-                        echo '    margin-top: 20px;';
-                    } ?>; ">
+            <div class="col-md-3 col-sm-6 col-xs-4 pull-left text-left" style="<?php
+            if ($UserAgent == 'mobile') {
+                echo 'margin-top: 20px; width: 100%;';
+            }
+            ?>; ">
                 <a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="rela" style="height: 64px;">
-<?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => Yii::$app->homeUrl . 'search/cozxy-product/', 'options' => ['class' => 'registr-form']]); ?>
+                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => Yii::$app->homeUrl . 'search/cozxy-product/', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
                         <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
                     </div>
@@ -646,7 +648,7 @@ $this->registerCss("
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </div>
-<?php ActiveForm::end(); ?>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
@@ -703,7 +705,7 @@ $this->registerCss("
                         foreach ($cate as $key => $value) {
                             ?>
                             <div class="menu-item sub-<?= $value['categoryId'] ?>"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);"><?= $value['title'] ?></a><a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a></div>
-<?php } ?>
+                        <?php } ?>
                     </div>
                 </div>
                 <!-- Sub Category -->
@@ -728,13 +730,13 @@ $this->registerCss("
                                             foreach ($items['Children'] as $key => $sub) {
                                                 ?>
                                                 <div class="col-md-4"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($sub['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $sub['categoryId']]) ?>" class="fc-yellow2">– <?= $sub['title'] ?></a></div>
-                                        <?php } ?>
+                                            <?php } ?>
                                         </div>
                                     <?php } ?>
+                                <?php } ?>
                             <?php } ?>
-                        <?php } ?>
                         </div>
-<?php } ?>
+                    <?php } ?>
                     <!-- Item End -->
                 </div>
                 <!-- End Category -->
