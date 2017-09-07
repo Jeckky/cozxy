@@ -177,6 +177,11 @@ class StoreProductController extends StoreMasterController {
         if (isset($_GET['poId'])) {
             $model = Po::find()->where("poId='" . $_GET['poId'] . "'")->one();
         }
+        /* $productSupplier = \common\models\costfit\ProductSuppliers::find()->where("1")->all();
+          foreach ($productSupplier as $a):
+          $a->isbn = null;
+          $a->save(false);
+          endforeach; */
         $msError = '';
         $errorId = '';
         if (isset($_POST["check"])) {
@@ -516,6 +521,26 @@ class StoreProductController extends StoreMasterController {
                 ]);
             }
         }
+    }
+
+    public function actionSaveIsbn() {
+        $res = [];
+        $productSuppId = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
+        $checkDupplicate = \common\models\costfit\ProductSuppliers::find()->where("isbn='" . $_POST["isbn"] . "'")->one();
+        if (!isset($checkDupplicate)) {
+            $res["status"] = true;
+            if (isset($productSuppId)) {
+                $productSuppId->isbn = $_POST["isbn"];
+                $productSuppId->save(false);
+            } else {
+                $res["status"] = false;
+                $res["error"] = "Product not found";
+            }
+        } else {
+            $res["status"] = false;
+            $res["error"] = "Duplicate isbn";
+        }
+        return json_encode($res);
     }
 
     public static function checkOver($poId, $quantity, $productSuppId) {

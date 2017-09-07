@@ -61,7 +61,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <input type="radio" name="check[<?= $product->poItemId ?>]" value="1" onclick="hide(<?= $product->poItemId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
                         <input type="radio"  name="check[<?= $product->poItemId ?>]" value="2" onclick="show(<?= $product->poItemId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
                         <div id="notAll<?= $product->poItemId ?>" style="display: none;">
-                            <?php // throw new \yii\base\Exception($product->storeProductId); ?>
+                            <?php // throw new \yii\base\Exception($product->storeProductId);   ?>
                             <input type="text"  name="quantity[<?= $product->poItemId ?>]" style="width: 100px;" placeholder="จำนวนที่รับ"><?= isset($product->products->units->title) ? $product->products->units->title : '' ?>
                         </div>
                         <br>
@@ -70,14 +70,29 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div id="all<?= $product->poItemId ?>" style="display: none;">
                             <textarea  name="remark[<?= $product->poItemId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
                         </div>
-
-                        <?= Html::submitButton('<i class=\'glyphicon glyphicon-plus\'></i> ยืนยัน', ['class' => 'btn btn-warning btn-md']) ?>
-                        <?php
+                        <?php if ($product->products->isbn == null) { ?>
+                            <a class="btn btn-warning btn-md" id ="addIsbn<?= $product->poItemId ?>" data-toggle="modal" data-target="#isbn<?= $product->poItemId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
+                                <i class='glyphicon glyphicon-plus'></i> ISBN</a>
+                            <?=
+                            Html::submitButton('<i class=\'glyphicon glyphicon-check\'></i> ยืนยัน', ['class' => 'btn btn-success btn-md',
+                                'id' => "submit$product->poItemId",
+                                'style' => 'display:none;'
+                            ])
+                            ?>
+                        <?php } else {
+                            ?>
+                            <?=
+                            Html::submitButton('<i class=\'glyphicon glyphicon-check\'></i> ยืนยัน', ['class' => 'btn btn-success btn-md',
+                                'id' => "submit$product->poItemId",
+                            ])
+                            ?>
+                            <?php
+                        }
                     } else if ($product->status == 3) {//รับครบ
                         ?><b>Received</b><?php
-                    } else if ($product->status == 2) {//รับแล้วแต่ยังไม่ครบ
-                        echo "<b>Received " . $product->importQuantity . " " . $product->products->units->title . "</b><br><br>";
-                        ?>
+                        } else if ($product->status == 2) {//รับแล้วแต่ยังไม่ครบ
+                            echo "<b>Received " . $product->importQuantity . " " . $product->products->units->title . "</b><br><br>";
+                            ?>
                         <input type="radio" name="check[<?= $product->poItemId ?>]" value="1" onclick="hide(<?= $product->poItemId ?>)">&nbsp; ครบ &nbsp;&nbsp;&nbsp;
                         <input type="radio"  name="check[<?= $product->poItemId ?>]" value="2" onclick="show(<?= $product->poItemId ?>)">&nbsp; ไม่ครบ &nbsp;&nbsp;&nbsp;<br><br>
                         <div id="notAll<?= $product->poItemId ?>" style="display: none;">
@@ -104,6 +119,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                 <?php
                 $i++;
                 ActiveForm::end();
+
             endforeach;
             ?>
             </tbody>
@@ -126,6 +142,25 @@ $this->registerJS("function show(id)
         $('#notAll' + id).hide();
 
     }");
+?>
+<?php foreach ($model->poItem as $product): ?>
+    <div class="modal fade" id="isbn<?= $product->poItemId ?>" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closeWishlistModal"><i class="fa fa-times"></i>
+                    </button>
+                    <h4>ADD ISBN : <b><?= $product->products->title ?></b></h4>
+                </div>
+                <div class="modal-body" style="padding: 40px;">
+                    <h4>Scan product's isbn</h4><br>
+                    <input type="text" class="form-control" id="inputIsbn<?= $product->poItemId ?>" style="height: 50px;"><br>
+                    <button class="btn btn-primary btn-lg pull-right" onclick="javascript:saveIsbn(<?= $product->products->productSuppId ?>,<?= $product->poItemId ?>)">OK</button><br>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
+<?php endforeach;
 ?>
 <!--<script>
 
