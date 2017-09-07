@@ -28,7 +28,7 @@ $val = rand(1, 10);
                 <a href="javascript:qSet('<?= $id ?>',1,'<?= $item["productSuppId"] ?>','<?= $this->params['cart']['orderId'] ?>','<?= $item["sendDate"] ?>','<?= $item['orderItemId'] ?>');"><i class="fa fa-plus-circle" aria-hidden="true" style="color: #000"></i></a>
             </div>
         </div>
-        <div class="col-sm-3 fc-g666">
+        <div class="col-sm-3  col-xs-8 fc-g666">
             <table style="width:100%" class="qty-cart">
                 <tr >
                     <td style="width: 70px;" class="size14">Quantity</td>
@@ -46,15 +46,14 @@ $val = rand(1, 10);
                         <td class="size14"><?= $option->value ?></td>
                     </tr>
                 <?php endforeach; ?>
-<!--                <tr>
+<!--<tr>
 <td>Size</td>
 <td>:</td>
 <td>None</td>
 </tr>-->
-
             </table>
         </div>
-        <div class="col-sm-1 fc-g666">
+        <div class="col-sm-1 col-xs-4 fc-g666">
             <table style="width:100%; text-align: center;">
                 <tr>
                     <td class="size14">Delete</td>

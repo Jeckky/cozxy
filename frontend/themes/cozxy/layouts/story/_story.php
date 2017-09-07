@@ -21,6 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
     .space-20 {
         margin-top: 20px;
     }
+    .story-img img{
+        width: 100%;
+    }
 </style>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -42,9 +45,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <hr>
 
                     <p>
+                    <div class="story-img col-sm-12">
                         <?= HtmlPurifier::process($productPost->description) ?>
                         <input type="hidden" name="postId" value="<?= $productPost->productPostId ?>">
                         <input type="hidden" name="user" value="<?= $productPost->userId ?>">
+                    </div>
+
                     </p>
                     <div class="size12">&nbsp;</div>
 

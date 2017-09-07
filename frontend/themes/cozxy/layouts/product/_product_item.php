@@ -62,7 +62,7 @@ if (Yii::$app->controller->id == 'product') {
             if (isset($model['brand'])) {
                 ?>
                 <p class="brand">
-                    <span class="size14"><?= strtoupper($model['brand']) ?></span>
+                    <span class="size14"><?= isset($model['brand']) ? strtoupper($model['brand']) : 'NO BRAND' ?></span>
                 </p>
                 <?php
             }

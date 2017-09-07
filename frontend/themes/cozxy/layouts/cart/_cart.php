@@ -14,9 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'cart-item',
-                    'action' => Yii::$app->homeUrl . 'checkout',
-                    'options' => ['class' => 'space-bottom'],
+            'id' => 'cart-item',
+            'action' => Yii::$app->homeUrl . 'checkout',
+            'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <p class="size20 size18-xs">CART</p>
                 </div>
                 <input type="hidden" name="orderId" value="<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>">
-                <div class="col-xs-12 bg-white">
+                <div class="col-xs-12 col-sm-12 col-md-12 bg-white">
                     <!--Cart Items-->
                     <?php
                     //throw new \yii\base\Exception(print_r($this->params['cart']['orderId'], true));
