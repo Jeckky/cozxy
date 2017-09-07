@@ -300,8 +300,8 @@ function newKey(key) {
     return a;
 }
 $(document).on('click', '.reprint', function (e) {
-    //var url = $baseUrl + 'order/order/reprint-real-time';
-    var url = 'http://localhost/cozxy/backend/web/order/order/reprint-real-time';
+    var url = $baseUrl + 'order/order/reprint-real-time';
+    //var url = 'http://localhost/cozxy/backend/web/order/order/reprint-real-time';
     $.ajax({
         url: url,
         data: 'status=1',
@@ -660,4 +660,24 @@ function hideRemark(id) {
 }
 function showRemark(id) {
     $('#remark' + id).show();
+}
+function saveIsbn(productSuppId, poItemId) {
+    var isbn = $("#inputIsbn" + poItemId).val();
+    //var url = 'http://localhost/cozxy/backend/web/store/store-product/save-isbn';
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: $baseUrl + 'store/store-product/save-isbn',
+        // url: url,
+        data: {productSuppId: productSuppId, isbn: isbn},
+        success: function (data) {
+            if (data.status) {
+                $("#isbn" + poItemId).modal("hide");
+                $("#addIsbn" + poItemId).hide();
+                $("#submit" + poItemId).show();
+            } else {
+                alert(data.error);
+            }
+        },
+    });
 }
