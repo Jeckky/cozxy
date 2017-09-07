@@ -29,9 +29,9 @@ use common\models\costfit\ProductPost;
                         <a href="<?= $url ?>" class="fc-black"><?= $posts->title ?></a>
                     </div>
                     <div class="size6">&nbsp;</div>
-                    <div class="row text-center size12">
-                        <div class="col-md-6"><i class="fa fa-eye"></i> <?= ProductPost::getCountViews($post->productPostId) ?></div>
-                        <div class="col-md-6"><i class="fa fa-star"></i> <?= $value[0] ?></div>
+                    <div class="row text-center size14">
+                        <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-eye"></i> <?= ProductPost::getCountViews($post->productPostId) ?></div>
+                        <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-star"></i> <?= $value[0] ?></div>
                     </div>
                 </div>
                 <?php
@@ -56,9 +56,9 @@ use common\models\costfit\ProductPost;
                         <a href="<?= $url ?>" class="fc-black"><?= $posts->title ?></a>
                     </div>
                     <div class="size6">&nbsp;</div>
-                    <div class="row text-center size12">
-                        <div class="col-md-6"><i class="fa fa-eye"></i> <?= ProductPost::getCountViews($post->productPostId) ?></div>
-                        <div class="col-md-6"><i class="fa fa-star"></i> <?= $value[0] ?></div>
+                    <div class="row text-center size14">
+                        <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-eye"></i> <?= ProductPost::getCountViews($post->productPostId) ?></div>
+                        <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-star"></i> <?= $value[0] ?></div>
                     </div>
                 </div>
                 <?php

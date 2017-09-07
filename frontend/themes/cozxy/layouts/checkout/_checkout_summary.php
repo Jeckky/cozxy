@@ -145,11 +145,13 @@ use kartik\select2\Select2;
 
                                 <div class="row fc-g999">
 
-                                    <div class="col-lg-2 col-md-2 col-sm-12">Name:</div>
-                                    <div class="col-lg-10 col-md-10 col-sm-12"><?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?></div>
+                                    <div class="col-xs-3 col-md-3 col-sm-3">Name:</div>
+                                    <div class="col-xs-9 col-md-9 col-sm-9">
+                                        <?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?>
+                                    </div>
                                     <div class="size6">&nbsp;</div>
-                                    <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
-                                    <div class="col-lg-10 col-md-9 col-sm-12">
+                                    <div class="col-xs-3 col-md-3 col-sm-3">Address:</div>
+                                    <div class="col-xs-9 col-md-9 col-sm-9">
                                         <?php echo $myAddressInSummary['myAddresss']['address'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['amphur'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['district'] ?>&nbsp;

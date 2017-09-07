@@ -38,8 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                     <!-- E -->
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE
-                            SHOPPING</a> &nbsp;
+                        <a href="<?= Url::to(['/']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">CONTINUE SHOPPING</a>
                         <?php
                         if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
                             // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
