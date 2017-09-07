@@ -107,9 +107,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-list">
     <div class="container">
         <div class="row">
-            <div class="col-xs-9 ">
-                <?php if($productCanSell->getTotalCount() > 0): ?>
-                    <h3 class="b">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <?php if ($productCanSell->getTotalCount() > 0): ?>
+                    <h3 class="b" style="word-wrap: break-word;white-space: normal;">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
                         <div class="wf-container">
                             <?php
@@ -146,8 +146,8 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if($productNotSell->getTotalCount() > 0): ?>
-                    <h3 class="b">PRODUCTS<?= ' :: ' . strtoupper($brandName) ?></h3>
+                <?php if ($productNotSell->getTotalCount() > 0): ?>
+                    <h3 class="b" style="word-wrap: break-word;white-space: normal;">PRODUCTS<?= ' :: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
                         <div class="wf-container">
                             <div class="filter-product-cozxy-not-sale">
@@ -186,7 +186,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
 
                 <?php endif; ?>
             </div>
-            <div class="col-xs-3">
+            <div class="col-md-3 col-sm-3 col-xs-12">
                 <div class="size18">&nbsp;</div>
                 <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories') ?>
             </div>
