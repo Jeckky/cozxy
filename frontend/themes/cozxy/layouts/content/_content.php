@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="size32">&nbsp;</div>
     <div class="row">
         <!-- Cart -->
-        <div class="col-lg-9 col-md-8">
+        <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="row">
                 <div class="col-xs-12 bg-white">
                     <h1 class="page-header"><?= isset($content['title']) ? $content['title'] : '' ?></h1>
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <!-- Total -->
-        <div class="col-xs-3">
+        <div class="col-md-3 col-sm-3 col-xs-12">
             <div class="panel panel-defailt  ">
                 <div class="size14" style="background-color:rgb(254, 230, 10);">&nbsp;</div>
                 <div class="text-center">
