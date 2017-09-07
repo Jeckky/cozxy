@@ -56,6 +56,16 @@ class User extends \common\models\costfit\master\UserMaster {
     const COZXY_CONFIRM = 'verification';
 
     /**
+     * User Type bit
+     */
+    const USER_CUSTOMER = 0x1;
+    const USER_BACKEND = 0x2;
+    const USER_SUPPLIER = 0x4;
+    const USER_CONTENT = 0x8;
+    const USER_ACCOUNT = 0x10;
+    const USER_FINANCE = 0x20;
+
+    /**
      * @inheritdoc
      */
     public function rules() {
