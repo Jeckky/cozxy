@@ -526,8 +526,8 @@ $this->registerCss("
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png') ?></a></div>
-            <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right ">
+            <div class="col-md-3 col-sm-6 col-xs-6"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
+            <div class="col-md-3 col-sm-6 col-xs-6 pull-right text-right ">
                 <div class="row user-menu" style="margin-right: -1px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
