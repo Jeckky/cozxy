@@ -62,7 +62,7 @@ $(window).resize(function() { descSet(); });
                     echo '';
                 } else {
                     ?>
-                    <h3 class="b text-center-sm text-center-xs">HOT & NEW PRODUCT</h3>
+                    <h3 class="b text-center-sm text-center-xs">POPULAR ON COZXY</h3>
                     <div class="row  col-md-12">
                         <?php
                         echo \yii\widgets\ListView::widget([
