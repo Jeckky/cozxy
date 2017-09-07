@@ -158,14 +158,14 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 
         <div class="row">
             <div class="col-md-9 col-sm-9 col-xs-12">
-                <div class="brand-price-filter  col-sm-12" style="padding-right: 0px;padding-left: 0px;">
+                <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
                     <?php if ($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
                         <div class="size16">&nbsp;</div>
                         <div class="alert alert-danger">
                             <h2>No item found</h2>
                         </div>
                     <?php endif; ?>
-                    <div class="filter-product-cozxy col-sm-12" >
+                    <div class="filter-product-cozxy col-sm-12">
 
                         <?php if ($productCanSell->getTotalCount() > 0): ?>
                             <h3 class="b">
@@ -225,8 +225,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                         // Customzing options for pager container tag
                                         'options' => [
                                             'tag' => 'div',
-                                            'class' => 'pager-wrapper col-sm-12',
-                                            'id' => 'pager-container',
+                                        //'class' => 'pager-wrapper col-sm-12',
+                                        //'id' => 'pager-container',
                                         ],
                                     ]);
                                     yii\widgets\Pjax::end();
@@ -236,7 +236,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                             </div>
                         <?php endif; ?>
                     </div>
-                    <div class="filter-product-cozxy-not-sale col-sm-12" >
+                    <div class="filter-product-cozxy-not-sale col-sm-12">
                         <?php if ($productNotSell->getTotalCount() > 0): ?>
                             <h3 class="b">
                                 <?php
@@ -307,7 +307,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                             ?>','<?php //echo $clickNum;                                                                                                                                                                                                                            ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                            ?>','<?php //echo $limit_start;                                                                                                                                                                                                                           ?>','<?php //echo $limit_end;                                                                                                                                                                                                                          ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                 ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                ?>','<?php //echo $limit_start;                                                                                                                                                                                                                               ?>','<?php //echo $limit_end;                                                                                                                                                                                                                              ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
