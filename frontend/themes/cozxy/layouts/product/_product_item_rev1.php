@@ -75,7 +75,7 @@ if (Yii::$app->controller->id == 'product') {
                 </p>
                 <?php
             } else {
-                echo '';
+                echo 'NO BRAND';
             }
             ?>
 
