@@ -55,7 +55,7 @@ use yii\helpers\Url;
             </div>
         </div>
         <div class="product-txt" style="margin-bottom: 30px;">
-            <p class="size14 fc-g666" ><?= strtoupper($model['brand']) ?></p>
+            <p class="size14 fc-g666" ><?= isset($model['brand']) ? strtoupper($model['brand']) : 'no information' ?></p>
             <p class="size18 b" style="height:40px;"><a href="<?= $model['url'] ?>" class="fc-black"><?= strtoupper($model['title']) ?></a></p>
         </div>
     </div>

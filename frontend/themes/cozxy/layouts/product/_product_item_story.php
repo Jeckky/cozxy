@@ -12,7 +12,7 @@ use common\helpers\Base64Decode;
         <div class="product-txt">
             <?php $pid = $model->product; ?>
             <p class="brand">
-                <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
+                <span class="size14"><?= isset($model->product->brand->title) ? strtoupper($model->product->brand->title) : 'no information' ?></span>
             </p>
             <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="size18 b"><?= strtoupper($model->title) ?></a>

@@ -7,7 +7,7 @@
         </div>
         <div class="product-txt">
             <p class="brand">
-                <span class="size14"><?= strtoupper($model['brand']) ?></span>
+                <span class="size14"><?= isset($model['brand']) ? strtoupper($model['brand']) : 'no information' ?></span>
             </p>
             <p class="name" style="height:40px;">
                 <a href="<?= $model['url'] ?>" class="size18 b"><?= strtoupper($model['title']) ?></a>
@@ -17,5 +17,5 @@
             <div class="col-md-6"><i class="fa fa-eye"></i> <?= $model['views'] ?></div>
             <div class="col-md-6"><i class="fa fa-star"></i> <?= $model['star'] ?></div>
         </div>
-    </div> 
+    </div>
 </div>

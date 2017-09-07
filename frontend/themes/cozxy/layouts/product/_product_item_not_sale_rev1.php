@@ -40,7 +40,7 @@ use yii\helpers\Url;
         </div>
         <div class="product-txt">
             <p class="brand" >
-                <span class="size14"><?= strtoupper($model->brand->title) ?></span>
+                <span class="size14"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'no information' ?></span>
             </p>
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="size18 b"><?= strtoupper($model['title']) ?></a>
