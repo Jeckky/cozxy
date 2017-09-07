@@ -284,6 +284,8 @@ $this->registerCss("
         content: '';
     }
 ");
+
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 ?>
 <style type="text/css">
     /**
@@ -526,9 +528,9 @@ $this->registerCss("
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
-            <div class="col-md-3 col-sm-6 col-xs-12 pull-right text-right ">
-                <div class="row user-menu" style="margin-right: -1px;">
+            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : ''; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
+            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
+                <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
@@ -536,7 +538,7 @@ $this->registerCss("
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-2' : '' ?>">
+                    <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
                     <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
