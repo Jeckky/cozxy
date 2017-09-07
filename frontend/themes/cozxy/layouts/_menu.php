@@ -526,9 +526,8 @@ $this->registerCss("
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-4"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
             <div class="col-md-3 col-sm-6 col-xs-8 pull-right text-right ">
-                <div class="row user-menu" style="margin-right: -1px;">
+                <div class="row user-menu" style="margin-right: -1px;margin-top: 0px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
@@ -628,6 +627,7 @@ $this->registerCss("
                     ?>
                 </div>
             </div>
+            <div class="col-md-3 col-sm-6 col-xs-4 pull-left text-left"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => Yii::$app->homeUrl . 'search/cozxy-product/', 'options' => ['class' => 'registr-form']]); ?>
