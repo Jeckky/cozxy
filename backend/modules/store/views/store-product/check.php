@@ -70,7 +70,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                         <div id="all<?= $product->poItemId ?>" style="display: none;">
                             <textarea  name="remark[<?= $product->poItemId ?>]" style="height: 50px;" placeholder="Remark"></textarea>
                         </div>
-                        <?php if ($product->products->isbn == null) { ?>
+                        <?php if ($product->products->isbn == null || $product->products->isbn == '') { ?>
                             <a class="btn btn-warning btn-md" id ="addIsbn<?= $product->poItemId ?>" data-toggle="modal" data-target="#isbn<?= $product->poItemId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="margin:14px auto 2px;padding: 6px 16px;">
                                 <i class='glyphicon glyphicon-plus'></i> ISBN</a>
                             <?=
