@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
                             // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                             ?>
-                                <!--<a href="javascript:void(0)" class="b btn-yellow" id="checkout-btn" style="padding:12px 32px; margin:24px auto 12px; cursor: pointer;" onclick="javascript:checkItemInOrder(<?//= $this->params['cart']['orderId'] ?>)">CHECK OUT</a>-->
+                                    <!--<a href="javascript:void(0)" class="b btn-yellow" id="checkout-btn" style="padding:12px 32px; margin:24px auto 12px; cursor: pointer;" onclick="javascript:checkItemInOrder(<?//= $this->params['cart']['orderId'] ?>)">CHECK OUT</a>-->
                             <input type="button" value="CHECK OUT" class="b btn-yellow" id="checkout-btn" onclick="javascript:checkItemInOrder(<?= $this->params['cart']['orderId'] ?>)">
                         <?php } ?>
                     </div>

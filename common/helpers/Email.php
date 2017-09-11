@@ -94,4 +94,12 @@ class Email {
         ->send();
     }
 
+    public static function mailSubscribe($toMail, $url) {
+        \Yii::$app->mail->compose('subscribe', ['urlImg' => $url])
+        ->setTo($toMail)//tomail
+        ->setFrom('cozxy@cozxy.com')
+        ->setSubject('COZXY Subscribe')
+        ->send();
+    }
+
 }
