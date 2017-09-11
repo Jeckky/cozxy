@@ -547,4 +547,8 @@ class OrderController extends OrderMasterController {
         endforeach;
     }
 
+    public function actionPrintPickingPoint() {
+        return $this->render('picking_point');
+    }
+
 }

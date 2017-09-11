@@ -607,7 +607,7 @@ class PickingController extends StoreMasterController {
         $i = 0;
         if (isset($orderId) && !empty($orderId)) {
             $orders = OrderItem::find()->where("orderId = " . $orderId)->all();
-            if (isset($orders) && !empty($orders)) {
+            if (isset($orders) && count($orders) > 0) {
                 foreach ($orders as $order):
                     if ($order->status == OrderItem::ORDERITEM_PICKING) {
                         $i++;
