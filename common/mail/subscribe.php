@@ -27,8 +27,8 @@
             </tr>
             <tr>
                 <td><img src="<?php echo $urlImg; ?>subscribe_08.png" width="214" height="28" alt=""></td>
-                <td rowspan="2"><img src="<?php echo $urlImg; ?>subscribe_09.png" width="44" height="29" alt=""></td>
-                <td rowspan="2"><img src="<?php echo $urlImg; ?>subscribe_10.png" width="26" height="29" alt=""></td>
+                <td rowspan="2"><a href="https://www.facebook.com/cozxydotcom/"><img src="<?php echo $urlImg; ?>subscribe_09.png" width="44" height="29" alt=""></a></td>
+                <td rowspan="2"><a href="https://www.instagram.com/cozxy_thailand"><img src="<?php echo $urlImg; ?>subscribe_10.png" width="26" height="29" alt=""></a></td>
                 <td rowspan="2"><img src="<?php echo $urlImg; ?>subscribe_11.png" width="43" height="29" alt=""></td>
                 <td><img src="<?php echo $urlImg; ?>subscribe_12.png" width="212" height="28" alt=""></td>
                 <td><img src="<?php echo $urlImg; ?>spacer.gif" width="1" height="28" alt=""></td>
