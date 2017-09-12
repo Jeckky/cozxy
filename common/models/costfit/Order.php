@@ -437,7 +437,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 }
             }
         }
-        $result = $total - $this->discount;
+        if ($this->discount == null) {
+            $result = $total;
+        } else {
+            $result = $total - $this->discount;
+        }
         $this->total = $result;
         $this->totalExVat = $result * 0.93;
         $this->vat = ($result) * 0.07;

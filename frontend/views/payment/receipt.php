@@ -86,21 +86,20 @@ if (isset($billingCompany) && !empty($billingCompany)) {
                     <td colspan="5" class="text-right" class="foorter-purchase-order">ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / sub Total Include VAT :</td>
                     <td class="bg-purchase-order"><?php echo number_format($order->total, 2); ?></td>
                 </tr>
-
-                <tr>
-                    <td colspan="5" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
-                    <td class="bg-purchase-order"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
-                </tr>
+                <!--Comment by sak-->
+                <!--                <tr>
+                                    <td colspan="5" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
+                                    <td class="bg-purchase-order"><?php //echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free";      ?></td>
+                                </tr>-->
                 <!--
                 <tr>
                     <td colspan="6" class="text-right" class="foorter-purchase-order">ส่วนลด/Discount(3.00%) :</td>
                     <td class="bg-purchase-order"> - </td>
                 </tr>
-                -->
-                <tr >
+                  <tr >
                     <td colspan="5" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องวันที่ออกใบกำกับภาษีรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
-                    <td class="bg-purchase-order"><?php echo number_format($order->summary, 2); ?></td>
-                </tr>
+                    <td class="bg-purchase-order"><?php //echo number_format($order->summary, 2);     ?></td>
+                </tr>-->
 
             </tbody>
         </table>
