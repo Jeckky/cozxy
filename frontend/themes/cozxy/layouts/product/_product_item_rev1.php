@@ -81,7 +81,7 @@ if (Yii::$app->controller->id == 'product') {
 
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
-                    <?= strtoupper($model->title) ?>
+                    <?= strtoupper($model->product->title) ?>
                 </a>
             </p>
             <?php
