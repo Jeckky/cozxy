@@ -95,12 +95,12 @@ $(document).ready(function (e) {
                                 }
                             });
                         } else if (data.isMaxQuantitys == 'NO') {
-                            alert('Max quantity for this product');
+                            alert('Sorry. There are no stock available');
                             $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
                             $('#cart-plus-' + $productSuppId).addClass('fa fa-times');
                         }
                     } else {
-                        alert('Max quantity for this product');
+                        alert('Sorry. There are no stock available');
                         $('#cart-plus-' + $productSuppId).removeClass('fa fa-cart-plus fa-spin');
                         $('#cart-plus-' + $productSuppId).addClass('fa fa-times');
                     }
@@ -116,7 +116,7 @@ $(document).ready(function (e) {
                 alert("Can not be '0'");
             } else {
                 //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
-                alert("Max quantity for this product");
+                alert("Sorry. There are no stock available");
             }
         }
     });

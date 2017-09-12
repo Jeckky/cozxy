@@ -564,10 +564,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                 } else {
 
                     //console.log('No No');
-                    //alert('Max quantity for this product');
+                    //alert('Sorry. There are no stock available');
                     $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
                     $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
-                    $('.shopping-' + productSuppId + ' i').attr("title", "Max quantity for this product");
+                    $('.shopping-' + productSuppId + ' i').attr("title", "Sorry. There are no stock available");
                     setTimeout(function () {
                         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
                         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
@@ -589,7 +589,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
             alert("Can not be '0'");
         } else {
             //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
-            alert("Max quantity for this product");
+            alert("Sorry. There are no stock available");
         }
     }
 }
