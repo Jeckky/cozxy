@@ -15,6 +15,8 @@ use frontend\models\ContactForm;
 use common\helpers\PickingPoint;
 use common\models\costfit\Wishlist;
 use common\models\costfit\ProductShelf;
+use common\models\costfit\OrderItem;
+use common\models\costfit\Order;
 
 class CartController extends MasterController {
 
@@ -71,11 +73,11 @@ class CartController extends MasterController {
         $productId = $_GET['id'];
 
         $res = [];
-        $order = \common\models\costfit\Order::getOrder();
+        $order = Order::getOrder();
         if (!isset($order)) {
-            $order = new \common\models\costfit\Order();
+            $order = new Order();
             $order->token = \common\helpers\Token::getToken();
-            $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
+            $order->status = Order::ORDER_STATUS_DRAFT;
             $order->createDateTime = new \yii\db\Expression("NOW()");
             $order->paymentType = \common\models\costfit\PaymentMethod::TYPE_CREDIT_CARD;
             if (!$order->save(FALSE)) {
@@ -85,16 +87,16 @@ class CartController extends MasterController {
         //throw new \yii\base\Exception('orderId=' . $order->orderId);
         $fastid = '';
         if ($fastid == '') {
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
+            $orderItem = OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "")->one();
         } else {
-            $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "" . " and sendDate=" . $fastid)->one();
+            $orderItem = OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_POST['productSuppId'] . "" . " and sendDate=" . $fastid)->one();
         }
         //echo '<pre>';
         //print_r('fastid :' . $orderItem);
         //exit();
         if (!isset($orderItem)) {
             //echo 'test 1';
-            $orderItem = new \common\models\costfit\OrderItem();
+            $orderItem = new OrderItem();
             $orderItem->quantity = $_POST["quantity"];
         } else {
             //echo 'test 1';
@@ -132,10 +134,7 @@ class CartController extends MasterController {
         $orderItem->receiveType = $_POST['receiveType'];
         $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $fastid, NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
-        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1, 0, NULL, 'add');
-        //$orderItem->priceOnePiece = $orderItem->product->calProductPrice($id, 1);
         $orderItem->price = $productPrice["price"];
-        //throw new \yii\base\Exception($orderItem->priceOnePiece);
         $orderItem->subTotal = $orderItem->quantity * $orderItem->price;
         $orderItem->discountValue = isset($productPrice["discountValue"]) ? $productPrice["discountValue"] : 0;
         if (isset($productPrice["shippingDiscountValue"])) {
@@ -156,7 +155,7 @@ class CartController extends MasterController {
             $res["status"] = TRUE;
             $res["shoppingCart"] = $this->createShoppingCart($order->orderId);
             $res["orderItemId"] = $orderItemId;
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = Order::findCartArray();
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach ($cartArray["items"] as $item) {
@@ -184,20 +183,20 @@ class CartController extends MasterController {
         }
         $id = $_POST["id"];
         $res = [];
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
+        $orderItem = OrderItem::find()->where("orderItemId = " . $id)->one();
         $qnty = intval($orderItem->quantity);
         //throw new \yii\base\Exception($qnty);
         $orderId = $orderItem->orderId;
 
-        if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
+        if (OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["status"] = TRUE;
-            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+            $order = Order::find()->where("orderId=" . $orderId)->one();
             $order->save(); // Save For Cal new total
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = Order::findCartArray();
             $res["cart"] = $cartArray;
             $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
-            $orderItems = \common\models\costfit\OrderItem::find()->where("orderId = " . $orderId)->all();
+            $orderItems = OrderItem::find()->where("orderId = " . $orderId)->all();
             if (isset($orderItems) && count($orderItems) > 0) {
                 $res["showCheckout"] = "yes";
             } else {
@@ -213,10 +212,10 @@ class CartController extends MasterController {
     public function actionDeleteCoupon() {
         $res = [];
         $id = $_POST["id"];
-        $order = \common\models\costfit\Order::findOne($id);
+        $order = Order::findOne($id);
         $order->couponId = NULL;
         $order->save();
-        $cartArray = \common\models\costfit\Order::findCartArray();
+        $cartArray = Order::findCartArray();
         $res["cart"] = $cartArray;
         return \yii\helpers\Json::encode($res);
     }
@@ -249,7 +248,7 @@ class CartController extends MasterController {
 
     public function createShoppingCart($orderId) {
         $text = "";
-        $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        $showOrder = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($showOrder) && !empty($showOrder)) {
             $header = "<table id='cartTable' style='margin-top: -10px;
         font-size: 14px;
@@ -274,14 +273,14 @@ class CartController extends MasterController {
 
     public function actionAddCoupon() {
         $res = [];
-        $order = \common\models\costfit\Order::getOrder();
+        $order = Order::getOrder();
         $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
         if (isset($coupon)) {
             if (!$coupon->isExpired) {
                 $order->couponId = $coupon->couponId;
                 $order->save();
                 $res["status"] = TRUE;
-                $cartArray = \common\models\costfit\Order::findCartArray();
+                $cartArray = Order::findCartArray();
                 $res["cart"] = $cartArray;
             } else {
                 $res["status"] = FALSE;
@@ -447,13 +446,13 @@ class CartController extends MasterController {
 //        throw new \yii\base\Exception("max quantity = " . $maxQuantity);
         if ($_POST["quantity"] <= $maxQuantity) {
             if (isset($price)) {
-                $cart = \common\models\costfit\Order::findCartArray();
+                $cart = Order::findCartArray();
                 if ($sendDate != '') {
-                    $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
+                    $oi = OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
                 } else {
-                    $oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"])->one();
+                    $oi = OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"])->one();
                 }
-                //$oi = \common\models\costfit\OrderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
+                //$oi = orderItem::find()->where("productSuppId = " . $_POST["productSuppId"] . " AND orderId = " . $cart["orderId"] . " AND sendDate = " . $_POST["sendDate"])->one();
                 $oi->price = $price["price"];
                 $oi->quantity = $_POST["quantity"];
                 $oi->priceOnePiece = $oi->product->calProductPrice($_POST["productSuppId"], 1, 0, NULL, NULL);
@@ -467,7 +466,7 @@ class CartController extends MasterController {
                 }
 //                $oi->total = ($oi->price * $_POST["quantity"]) - $price["discountValue"];
                 $oi->save();
-                $cart = \common\models\costfit\Order::findCartArray();
+                $cart = Order::findCartArray();
                 $res["status"] = TRUE;
                 $res["price"] = $price["price"];
                 $res["priceText"] = $price["priceText"];
@@ -499,7 +498,7 @@ class CartController extends MasterController {
 
     public function actionSaveSlowest() {
         if (isset($_POST['orderId'])) {
-            $order = \common\models\costfit\Order::find()->where("orderId = " . $_POST['orderId'])->one();
+            $order = Order::find()->where("orderId = " . $_POST['orderId'])->one();
             if (isset($order)) {
                 if ($_POST['type'] == 1) {
                     $order->isSlowest = 1;
@@ -590,22 +589,22 @@ class CartController extends MasterController {
         //exit();
         $orderId = $this->view->params['cart']['orderId'];
         $GetOrderMasters = PickingPoint::GetOrderItemrGroupMaster($orderId);
-        $itemsLockers = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->all(); // status : 2
-        $itemsLockersCool = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->all(); // status : 1
-        $itemsBooth = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->all(); // status : 3
+        $itemsLockers = OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->all(); // status : 2
+        $itemsLockersCool = OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->all(); // status : 1
+        $itemsBooth = OrderItem::find()->where('orderId=' . $orderId . ' and receiveType =' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->all(); // status : 3
         return $this->render('cart_list_product_all', compact('products', 'GetOrderMasters', 'itemsLockers', 'itemsBooth', 'itemsLockersCool'));
     }
 
     public function actionGetProductQuantity() {
 
-        $order = \common\models\costfit\Order::getOrder();
+        $order = Order::getOrder();
         if (isset($order->attributes['orderId'])) {
             $orderId = $order->attributes['orderId'];
 
-            //$Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
-            $Product = \common\models\costfit\Order::find()->where('orderId=' . $orderId . ' and status=0')->one();
+            //$Product = Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
+            $Product = Order::find()->where('orderId=' . $orderId . ' and status=0')->one();
             if (count($Product) > 0) {
-                $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+                $orderItem = OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
                 if (isset($orderItem)) {
                     echo (int) $orderItem;
                 } else {
