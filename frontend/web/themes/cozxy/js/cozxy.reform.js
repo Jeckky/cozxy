@@ -564,10 +564,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                 } else {
 
                     //console.log('No No');
-                    //alert('Sorry. There are no stock available');
+                    //alert('Sorry, there is not enough item left in stock.');
                     $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
                     $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
-                    $('.shopping-' + productSuppId + ' i').attr("title", "Sorry. There are no stock available");
+                    $('.shopping-' + productSuppId + ' i').attr("title", "Sorry, there is not enough item left in stock.");
                     setTimeout(function () {
                         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
                         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
@@ -586,10 +586,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
         //$(this).parent().find('#maxQnty').val($maxQnty);
         if ($itemQnty == 0) {
             $(this).parent().find('#quantity').val(1);
-            alert("Sorry. There are no stock available");
+            alert("Sorry, there is not enough item left in stock.");
         } else {
             //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
-            alert("Sorry. There are no stock available");
+            alert("Sorry, there is not enough item left in stock.");
         }
     }
 }
