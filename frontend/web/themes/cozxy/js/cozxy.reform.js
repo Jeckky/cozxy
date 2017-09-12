@@ -586,7 +586,7 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
         //$(this).parent().find('#maxQnty').val($maxQnty);
         if ($itemQnty == 0) {
             $(this).parent().find('#quantity').val(1);
-            alert("Can not be '0'");
+            alert("Sorry. There are no stock available");
         } else {
             //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
             alert("Sorry. There are no stock available");
