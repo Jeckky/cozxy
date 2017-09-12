@@ -17,9 +17,7 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-xs-12">
                     <div class="zoom-box">
-                        <a href="<?php echo $model['image'] ?>" target="_blank">
-                            <img id="zoom-img" src="<?php echo $model['image'] ?>" class="fullwidth" alt="" data-zoom-image="<?php echo $model['image'] ?>">
-                        </a>
+                        <img id="zoom-img" src="<?php echo $model['image'] ?>" class="fullwidth" alt="" data-zoom-image="<?php echo $model['image'] ?>">
                     </div>
                 </div>
                 <div class="col-xs-12">

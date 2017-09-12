@@ -20,7 +20,7 @@ use yii\helpers\Html;
                         <input type="email" name="subscribe_email" id="subscribe_email" class="subs-input" placeholder="ENTER YOUR EMAIL ADDRESS">
                     </div>
                     <div class="col-sm-3 col-xs-4 text-right">
-                        <input type="submit" value="SUBMIT" class="subs-btn size14-xs" onclick="subscribe()">
+                        <input type="button" value="SUBMIT" class="subs-btn size14-xs" onclick="subscribe()">
                     </div>
                     <div class="col-sm-12 col-xs-12"><hr></div>
                 </div>

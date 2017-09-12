@@ -495,7 +495,15 @@ class SiteController extends MasterController {
         $subscribe = new \common\models\costfit\Subscribe();
         $subscribe->email = $email;
         $subscribe->save(FALSE);
+        $toMail = $email;
+        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'images/subscribe/images/';
+        $emailSend = \common\helpers\Email::mailSubscribe($toMail, $url);
+
         echo 'Thanks for signing up for Cozxy emails!';
+    }
+
+    public function actionSubscribeEmail() {
+        return $this->render('subscribe');
     }
 
 }

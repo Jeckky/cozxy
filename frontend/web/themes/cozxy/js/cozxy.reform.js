@@ -768,10 +768,22 @@ function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
             data = $form.data("yiiActiveForm");
+    //console.log(data.attributes);
     $.each(data.attributes, function () {
         this.status = 3;
+        //console.log(this);
     });
-    $form.yiiActiveForm("validate");
+    //$form.yiiActiveForm("validate");
+    $('#default-add-new-billing-address').yiiActiveForm("validate");
+    console.log($('#default-add-new-billing-address').find('.has-error').length);
+    //alert($form.yiiActiveForm("validate"));
+    if ($form.find('.has-error').length) {
+        // error
+        // alert('error');
+        return false;
+    }
+
+    //exit();
     var $this = $('#acheckoutNewBillingz');
     $this.button('loading');
     setTimeout(function () {
