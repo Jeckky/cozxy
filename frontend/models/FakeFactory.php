@@ -653,7 +653,7 @@ class FakeFactory extends Model {
         if (isset($cartOrderId['orderId'])) {
             $orderId = $cartOrderId['orderId'];
             $GetQty = \common\models\costfit\Order::find()
-            ->select(' count(order_item.quantity) as quantity')
+            ->select(' count(order_item.result) as result')
             ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
             ->where('order_item.productId = ' . $productId . ' and `order`.orderId =' . $orderId . ' and order.status < 5')->count('order_item.quantity');
         } else {
