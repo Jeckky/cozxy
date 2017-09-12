@@ -58,4 +58,13 @@ class Signature extends \common\models\costfit\master\SignatureMaster {
         }
     }
 
+    public static function checker() {
+        $signature = Signature::find()->where("position='checker'")->one();
+        if (isset($signature)) {
+            return $signature->image;
+        } else {
+            return '';
+        }
+    }
+
 }
