@@ -140,7 +140,7 @@ $pickingId = rand(0, 9999);
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);  ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);    ?>
                                 <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -226,7 +226,7 @@ $pickingId = rand(0, 9999);
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);  ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);    ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -406,20 +406,20 @@ $pickingId = rand(0, 9999);
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">First Name</label>
-                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME', 'value' => isset($getUserInfo['firstname']) ? $getUserInfo['firstname'] : ''])->label(false); ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Last Name</label>
-                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME', 'value' => isset($getUserInfo['lastname']) ? $getUserInfo['lastname'] : ''])->label(false); ?>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address</label>
-                        <?= $form->field($model, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
+                        <?= $form->field($NewBilling, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -539,13 +539,13 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email'])->label(false); ?>
+                                    <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email', 'value' => isset($getUserInfo['email']) ? $getUserInfo['email'] : ''])->label(false); ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Mobile Number</label>
-                                    <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number'])->label(false); ?>
+                                    <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number', 'value' => isset($getUserInfo['tel']) ? $getUserInfo['tel'] : ''])->label(false); ?>
                                 </div>
                             </div>
                         </div>

@@ -564,10 +564,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
                 } else {
 
                     //console.log('No No');
-                    //alert('Max quantity for this product');
+                    //alert('Sorry, there is not enough item left in stock.');
                     $('.shopping-' + productSuppId + ' i').removeClass('fa fa-cart-plus fa-spin');
                     $('.shopping-' + productSuppId + ' i').addClass('fa fa-times');
-                    $('.shopping-' + productSuppId + ' i').attr("title", "Max quantity for this product");
+                    $('.shopping-' + productSuppId + ' i').attr("title", "Sorry, there is not enough item left in stock.");
                     setTimeout(function () {
                         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-times');
                         $('.shopping-' + productSuppId + ' i').addClass('fa fa-cart-plus');
@@ -586,10 +586,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
         //$(this).parent().find('#maxQnty').val($maxQnty);
         if ($itemQnty == 0) {
             $(this).parent().find('#quantity').val(1);
-            alert("Can not be '0'");
+            alert("Sorry, there is not enough item left in stock.");
         } else {
             //alert($(this).parent().find('#quantity').val() + ' max ' + $(this).parent().find('#maxQnty').val());
-            alert("Max quantity for this product");
+            alert("Sorry, there is not enough item left in stock.");
         }
     }
 }
@@ -768,10 +768,22 @@ function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
             data = $form.data("yiiActiveForm");
+    //console.log(data.attributes);
     $.each(data.attributes, function () {
         this.status = 3;
+        //console.log(this);
     });
-    $form.yiiActiveForm("validate");
+    //$form.yiiActiveForm("validate");
+    $('#default-add-new-billing-address').yiiActiveForm("validate");
+    console.log($('#default-add-new-billing-address').find('.has-error').length);
+    //alert($form.yiiActiveForm("validate"));
+    if ($form.find('.has-error').length) {
+        // error
+        // alert('error');
+        return false;
+    }
+
+    //exit();
     var $this = $('#acheckoutNewBillingz');
     $this.button('loading');
     setTimeout(function () {

@@ -716,7 +716,7 @@ class MasterController extends MasterCommonController {
                 }
 
                 $list = \common\models\costfit\PickingPoint::find()
-                ->andWhere(['amphurId' => $cat_id, 'type' => $type, 'status' => '1'])->asArray()->all();
+                ->andWhere(['amphurId' => $cat_id, 'status' => '1'])->asArray()->all(); //, 'type' => $type : Locker เย็น , Locker ร้อน , booth
 
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {

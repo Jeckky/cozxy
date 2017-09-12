@@ -421,9 +421,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
         foreach ($this->orderItems as $item) {
             $total += $item->total;
         }
-        $this->totalExVat = $total * 0.93;
-        $this->vat = ($total) * 0.07;
-        $this->total = $total;
+        //$this->totalExVat = $total * 0.93;/**sak**/หักส่วนลดก่อนแล้วค่อยถอด VAT (การเงิน)
+        //$this->vat = ($total) * 0.07;
+        //$this->total = $total;
         $this->discount = null;
         if (isset($this->coupon) && isset($this->couponId)) {
             if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
@@ -432,11 +432,21 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 if (isset($this->coupon->discountValue)) {
                     $this->discount = $this->coupon->discountValue;
                 } else {
-                    $this->discount = $this->total * ($this->coupon->discountPercent / 100);
+                    // $this->discount = $this->total * ($this->coupon->discountPercent / 100);
+                    $this->discount = $total * ($this->coupon->discountPercent / 100);
                 }
             }
         }
-        $this->grandTotal = $this->total - $this->discount;
+        if ($this->discount == null) {
+            $result = $total;
+        } else {
+            $result = $total - $this->discount;
+        }
+        $this->total = $result;
+        $this->totalExVat = $result * 0.93;
+        $this->vat = ($result) * 0.07;
+        //$this->grandTotal = $this->total - $this->discount;
+        $this->grandTotal = $result;
         $this->shippingRate = $this->calculateShippingRate();
         $this->summary = $this->grandTotal + $this->calculateShippingRate();
         return TRUE;

@@ -2,7 +2,7 @@
 $urlImg = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'images/subscribe/images/';
 ?>
 <!-- Save for Web Slices (subscribe.png) -->
-<table id="Table_01" width="540" height="768" border="0" cellpadding="0" cellspacing="0">
+<table id="Table_01" width="540" height="768" border="0" cellpadding="0" cellspacing="0" >
     <tr>
         <td colspan="5">
             <img src="<?php echo $urlImg ?>subscribe_01.png" width="539" height="114" alt=""></td>
