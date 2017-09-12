@@ -368,4 +368,9 @@ class User extends \common\models\costfit\master\UserMaster {
         return $avatar;
     }
 
+    public static function getUserInfo($userId) {
+        $user = User::find()->where("userId=" . $userId)->one();
+        return $user;
+    }
+
 }

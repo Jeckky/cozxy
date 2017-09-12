@@ -84,6 +84,18 @@ class CheckoutController extends MasterController {
         /*
          * New Billing
          */
+        $getUserInfos = \common\models\costfit\User::getUserInfo(Yii::$app->user->id);
+        if (count($getUserInfos) > 0) {
+            $getUserInfo['firstname'] = $getUserInfos->firstname;
+            $getUserInfo['lastname'] = $getUserInfos->lastname;
+            $getUserInfo['email'] = $getUserInfos->email;
+            $getUserInfo['tel'] = $getUserInfos->tel;
+        } else {
+            $getUserInfo['firstname'] = '';
+            $getUserInfo['lastname'] = '';
+            $getUserInfo['email'] = '';
+            $getUserInfo['tel'] = '';
+        }
         $NewBilling = new \common\models\costfit\Address(['scenario' => 'new_checkouts_billing_address']);
         if (isset($_POST['Address'])) {
             $NewBilling->attributes = $_POST['Address'];
@@ -102,7 +114,7 @@ class CheckoutController extends MasterController {
             $NewBilling->isDefault = 0;
         }
 
-        return $this->render('index', compact('NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+        return $this->render('index', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
     public function actionSummary() {
