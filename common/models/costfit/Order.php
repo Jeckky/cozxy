@@ -421,7 +421,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         foreach ($this->orderItems as $item) {
             $total += $item->total;
         }
-        //$this->totalExVat = $total * 0.93;
+        //$this->totalExVat = $total * 0.93;/**sak**/หักส่วนลดก่อนแล้วค่อยถอด VAT (การเงิน)
         //$this->vat = ($total) * 0.07;
         //$this->total = $total;
         $this->discount = null;
@@ -441,7 +441,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $this->total = $result;
         $this->totalExVat = $result * 0.93;
         $this->vat = ($result) * 0.07;
-        $this->grandTotal = $this->total - $this->discount;
+        //$this->grandTotal = $this->total - $this->discount;
+        $this->grandTotal = $result;
         $this->shippingRate = $this->calculateShippingRate();
         $this->summary = $this->grandTotal + $this->calculateShippingRate();
         return TRUE;
