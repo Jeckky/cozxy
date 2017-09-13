@@ -526,19 +526,16 @@ class StoreProductController extends StoreMasterController {
     public function actionSaveIsbn() {
         $res = [];
         $productSuppId = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $_POST["productSuppId"])->one();
-        $checkDupplicate = \common\models\costfit\ProductSuppliers::find()->where("isbn='" . $_POST["isbn"] . "'")->one();
-        if (!isset($checkDupplicate)) {
+        $allProductSupp = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productSuppId->productId)->all();
+        if (isset($allProductSupp) && count($allProductSupp) > 0) {
+            foreach ($allProductSupp as $product):
+                $product->isbn = $_POST["isbn"];
+                $product->save(false);
+            endforeach;
             $res["status"] = true;
-            if (isset($productSuppId)) {
-                $productSuppId->isbn = $_POST["isbn"];
-                $productSuppId->save(false);
-            } else {
-                $res["status"] = false;
-                $res["error"] = "Product not found";
-            }
-        } else {
+        }else {
             $res["status"] = false;
-            $res["error"] = "Duplicate isbn";
+            $res["error"] = "Product not found";
         }
         return json_encode($res);
     }

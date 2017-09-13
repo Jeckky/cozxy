@@ -663,11 +663,11 @@ function showRemark(id) {
 }
 function saveIsbn(productSuppId, poItemId) {
     var isbn = $("#inputIsbn" + poItemId).val();
-    var url = 'http://localhost/cozxy/backend/web/store/store-product/save-isbn';
+    //var url = 'http://localhost/cozxy/backend/web/store/store-product/save-isbn';
+    var url = $baseUrl + 'store/store-product/save-isbn';
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        //url: $baseUrl + 'store/store-product/save-isbn',
         url: url,
         data: {productSuppId: productSuppId, isbn: isbn},
         success: function (data) {
@@ -675,6 +675,7 @@ function saveIsbn(productSuppId, poItemId) {
                 $("#isbn" + poItemId).modal("hide");
                 $("#addIsbn" + poItemId).hide();
                 $("#submit" + poItemId).show();
+                location.reload();
             } else {
                 alert(data.error);
             }
