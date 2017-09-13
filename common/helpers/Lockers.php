@@ -271,6 +271,7 @@ class Lockers {
     }
 
     public static function canClose($pickingItemsId) {
+
         $itemInBag = \common\models\costfit\OrderItemPacking::find()->where("status=5 and userId=" . Yii::$app->user->identity->userId . " and pickingItemsId=" . $pickingItemsId)->all();
         if (isset($itemInBag) && count($itemInBag) > 0) {
             return false;

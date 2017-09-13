@@ -86,7 +86,7 @@
                         Note: You will be notified via email and SMS for any changes in delivery schedule.
                     </p>
                     <p>
-                        <a href="http://www.cozxy.com/profile/order">
+                        <a href="http://www.cozxy.com/my-account?act=order-history">
                             <input class="btn btn-black" type="submit" value=" Order status"  style=" background-color:#f1fa8c;text-align:center;">
                         </a>
                     </p>
