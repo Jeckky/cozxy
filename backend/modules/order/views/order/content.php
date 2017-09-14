@@ -112,7 +112,7 @@ foreach ($poId as $id):
                 echo '<tr>';
                 echo '<td style="font-size: 8pt;height:30px;border-left: #000000 thin ridge;"><center>' . $i . '</center></td>';
                 $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
-                echo '<td style="font-size: 8pt;"><center>' . $productSupp->code . '</center></td>';
+                echo '<td style="font-size: 8pt;"><center>' . $productSupp->isbn . '</center></td>';
                 echo '<td style="font-size: 8pt;"><center>' . $productSupp->suppCode . '</center></td>';
                 echo '<td style="font-size: 8pt;"><center>' . $productSupp->merchantCode . '</center></td>';
                 echo '<td style="font-size: 6pt;"> ' . $productSupp->title . '</td>';
