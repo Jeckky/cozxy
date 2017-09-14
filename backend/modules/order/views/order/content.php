@@ -138,7 +138,7 @@ foreach ($poId as $id):
             echo '<td colspan="9"style="height:30px;">ไม่มีข้อมูล</td>';
             echo '</tr>';
         }
-        $vat = $allTotal * 0.07;
+        $vat = $allTotal * (100 / 107);
         ?>
         <tr>
             <td colspan="4" rowspan="3"  style="font-size: 7pt;border:#000000 thin solid;">"ทางบริษัทฯจะรับวางบิล เมื่อได้ส่งของครบตามใบสั่งซื้อ หรือมีการยกเลิกรายการเท่านั้น<br>
