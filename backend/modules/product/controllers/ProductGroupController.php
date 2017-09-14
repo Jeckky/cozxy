@@ -618,6 +618,9 @@ class ProductGroupController extends ProductMasterController {
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+            if (isset($_POST["Product"]["isbn"]) && !empty($_POST["Product"]["isbn"])) {
+                \common\models\costfit\Product::saveProductIsbn($model->productId, $_POST["Product"]["isbn"]); //save
+            }
             if ($model->save()) {
                 if (isset($_POST["ProductSuppliers"]["quantity"]) && !empty($_POST["ProductSuppliers"]["quantity"])) {
 //                    throw new \yii\base\Exception;
@@ -627,9 +630,6 @@ class ProductGroupController extends ProductMasterController {
                     $prodSupp->result = $prodSupp->result + $_POST["ProductSuppliers"]["quantity"];
                     $prodSupp->approve = 'new';
                     $prodSupp->createDateTime = new \yii\db\Expression("NOW()");
-                    if (isset($_POST["ProductSuppliers"]["isbn"]) && !empty($_POST["ProductSuppliers"]["isbn"])) {
-                        \common\models\costfit\Product::saveProductIsbn($model->productId, $_POST["ProductSuppliers"]["isbn"]); //save
-                    }
                     if ($prodSupp->save(FALSE)) {
                         if (isset($_POST["ProductPriceSuppliers"]['price'])) {
                             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], 'productSuppId = ' . $prodSupp->productSuppId);
