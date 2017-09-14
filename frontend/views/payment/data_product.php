@@ -83,7 +83,7 @@ if (count($order) > 0) {
                  * # เงือนไขของ Product Suppliers
                  */
                 if (isset($value1->receiveType) && !empty($value1->receiveType)) {
-                    //$listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppI=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();
+                    //$listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppI=' . $value['productSuppId'] . ' and receiveType=' . $value1->receiveType)->one();//ตอนนี้นยังไม่มีการกรอก recieve Type ทำให้ส่วนอื่นๆของProductSupplier ไม่แสดงด้วย
                     $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
                 } else {
                     $listOrderItemsShow = common\models\costfit\ProductSuppliers::find()->where('productSuppId=' . $value['productSuppId'])->one();
@@ -103,9 +103,9 @@ if (count($order) > 0) {
             }
             //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
             ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!--<tr>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                <td style="font-size: 12px;" colspan="7">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <strong>สถานที่รับของ :</strong><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!--<tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <td style="font-size: 12px;" colspan="7">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <strong>สถานที่รับของ :</strong><br>
             <?php
             /* if (isset($GetOrder->pickingId)) {
               $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
@@ -118,8 +118,8 @@ if (count($order) > 0) {
               echo ', ' . $Cities->localName;
               } */
             ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </tr>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </tr>-->
             <?php
             //} /* $value1->receiveType == 1 : Lockers */
         }
