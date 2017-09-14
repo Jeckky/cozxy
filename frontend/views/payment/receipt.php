@@ -89,7 +89,7 @@ if (isset($billingCompany) && !empty($billingCompany)) {
                 <!--Comment by sak-->
                 <!--                <tr>
                                     <td colspan="5" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
-                                    <td class="bg-purchase-order"><?php //echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free";                     ?></td>
+                                    <td class="bg-purchase-order"><?php //echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free";                      ?></td>
                                 </tr>-->
                 <!--
                 <tr>
@@ -98,7 +98,7 @@ if (isset($billingCompany) && !empty($billingCompany)) {
                 </tr>
                   <tr >
                     <td colspan="5" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องวันที่ออกใบกำกับภาษีรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
-                    <td class="bg-purchase-order"><?php //echo number_format($order->summary, 2);                    ?></td>
+                    <td class="bg-purchase-order"><?php //echo number_format($order->summary, 2);                     ?></td>
                 </tr>-->
 
             </tbody>
@@ -108,4 +108,4 @@ if (isset($billingCompany) && !empty($billingCompany)) {
 
     </body>
 </html>
-<div style="margin-left: 250px;">ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์ก็ต่อเมื่อบริษัทฯ ได้รับเงินคืนเรียบร้อยแล้ว</div>
+<div style="margin-left: 250px;">ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์ก็ต่อเมื่อบริษัทฯ ได้รับเงินเรียบร้อยแล้ว</div>
