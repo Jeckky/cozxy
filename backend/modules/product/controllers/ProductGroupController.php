@@ -628,7 +628,7 @@ class ProductGroupController extends ProductMasterController {
                     $prodSupp->approve = 'new';
                     $prodSupp->createDateTime = new \yii\db\Expression("NOW()");
                     if (isset($_POST["ProductSuppliers"]["isbn"]) && !empty($_POST["ProductSuppliers"]["isbn"])) {
-                        \common\models\costfit\Product::saveProductIsbn($model->productId); //save
+                        \common\models\costfit\Product::saveProductIsbn($model->productId, $_POST["ProductSuppliers"]["isbn"]); //save
                     }
                     if ($prodSupp->save(FALSE)) {
                         if (isset($_POST["ProductPriceSuppliers"]['price'])) {
