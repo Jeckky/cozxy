@@ -66,12 +66,14 @@ $pickingId = rand(0, 9999);
                                     //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     //'data' => \common\models\costfit\PickingPoint::availableProvince(),
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
+                                    'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select Province',
                                         'loadingText' => 'Loading Province ...',
                                         'allowClear' => true
                                     ],
-                                    'options' => ['placeholder' => 'Select Province ...', 'name' => 'provinceId', 'id' => 'stateId'],
+                                    'options' => ['placeholder' => 'Select Province ...',
+                                        'name' => 'provinceId', 'id' => 'stateId'],
                                 ])->label(FALSE);
                                 ?>
                             </div>
@@ -83,7 +85,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
                                     'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName] : [],
                                     'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['stateId'],
@@ -105,7 +107,7 @@ $pickingId = rand(0, 9999);
                                     'data' => [$pickingPoint->pickingId => $pickingPoint->title],
                                     'attribute' => 'pickingId',
                                     'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['amphurId'],
@@ -140,7 +142,7 @@ $pickingId = rand(0, 9999);
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);    ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);      ?>
                                 <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -156,6 +158,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'shippingProvinceId')->widget(kartik\select2\Select2::classname(), [
                                     //'options' => ['id' => 'address-countryid'],
                                     'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId='THA' AND stateId in (1,2,3,58,4,59)")->orderBy('localName')->asArray()->all(), 'stateId', 'localName'),
+                                    'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select province',
                                         'loadingText' => 'Loading Province ...',
@@ -171,8 +174,9 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-33', '1', ['id' => 'input-type-33']);
                                 echo $form->field($order, 'shippingAmphurId')->widget(DepDrop::classname(), [
                                     //'data' => [$order->shippingAmphurId => $order->shippingCities->localName],
+
                                     'options' => ['placeholder' => 'Select Amphur'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
 //                                            'initialize' => true,
@@ -191,8 +195,9 @@ $pickingId = rand(0, 9999);
                                 echo Html::hiddenInput('input-type-34', '1', ['id' => 'input-type-34']);
                                 echo $form->field($order, 'shippingDistrictId')->widget(DepDrop::classname(), [
                                     //'data' => [$order->shippingDistrictId => $order->shippingDistrict->localName],
+
                                     'options' => ['placeholder' => 'Select District'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -209,7 +214,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'shippingZipcode')->widget(DepDrop::classname(), [
                                     'data' => [$order->shippingZipcode => $order->shippingZipcode],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['order-shippingdistrictid'],
@@ -226,7 +231,7 @@ $pickingId = rand(0, 9999);
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);    ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);      ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -262,6 +267,7 @@ $pickingId = rand(0, 9999);
 
                                         return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
                                     }),
+                                    'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading Billing Address ...',
@@ -449,7 +455,7 @@ $pickingId = rand(0, 9999);
                                     'data' => [$NewBilling->provinceId => $NewBilling->provinceId],
                                     'options' => ['placeholder' => 'Select ...'],
                                     //'options' => ['id' => 'address-provinceidxxx'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -472,7 +478,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -495,7 +501,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'districtId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -518,7 +524,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'zipcode')->widget(DepDrop::classname(), [
                                     //'data' => [12 => 'Savings A/C 2'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_SELECT2,
+                                    'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['address-districtid'],
