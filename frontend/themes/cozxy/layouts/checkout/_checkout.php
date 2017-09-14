@@ -176,7 +176,7 @@ $pickingId = rand(0, 9999);
                                     //'data' => [$order->shippingAmphurId => $order->shippingCities->localName],
 
                                     'options' => ['placeholder' => 'Select Amphur'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
 //                                            'initialize' => true,
@@ -197,7 +197,7 @@ $pickingId = rand(0, 9999);
                                     //'data' => [$order->shippingDistrictId => $order->shippingDistrict->localName],
 
                                     'options' => ['placeholder' => 'Select District'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -214,7 +214,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'shippingZipcode')->widget(DepDrop::classname(), [
                                     'data' => [$order->shippingZipcode => $order->shippingZipcode],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['order-shippingdistrictid'],
@@ -455,7 +455,7 @@ $pickingId = rand(0, 9999);
                                     'data' => [$NewBilling->provinceId => $NewBilling->provinceId],
                                     'options' => ['placeholder' => 'Select ...'],
                                     //'options' => ['id' => 'address-provinceidxxx'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -478,7 +478,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'amphurId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -501,7 +501,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'districtId')->widget(DepDrop::classname(), [
                                     //'data' => [9 => 'Savings'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         //'initialize' => true,
@@ -524,7 +524,7 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($NewBilling, 'zipcode')->widget(DepDrop::classname(), [
                                     //'data' => [12 => 'Savings A/C 2'],
                                     'options' => ['placeholder' => 'Select ...'],
-                                    'type' => DepDrop::TYPE_DEFAULT,
+                                    'type' => DepDrop::TYPE_SELECT2,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                                     'pluginOptions' => [
                                         'depends' => ['address-districtid'],
