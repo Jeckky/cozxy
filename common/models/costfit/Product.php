@@ -724,4 +724,14 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
+    public static function saveProductIsbn($productId) {
+        $productSupp = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productId)->all();
+        if (isset($productSupp) && count($productSupp) > 0) {
+            foreach ($productSupp as $product):
+                $product->isbn = $_POST["isbn"];
+                $product->save(false);
+            endforeach;
+        }
+    }
+
 }

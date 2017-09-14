@@ -14,18 +14,16 @@ use common\helpers\Upload;
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
  */
-class ProductGroupController extends ProductMasterController
-{
+class ProductGroupController extends ProductMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
 // allow authenticated users
-                    [
+                        [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -45,8 +43,7 @@ class ProductGroupController extends ProductMasterController
      * Lists all ProductGroup models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $categoryId = Yii::$app->request->get('categoryId');
         $brandId = Yii::$app->request->get('brandId');
         $status = Yii::$app->request->get('status');
@@ -59,22 +56,22 @@ class ProductGroupController extends ProductMasterController
 
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
-                    ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                    ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+                            ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                            ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                    ->orderBy("product.updateDateTime DESC");
+                            ->orderBy("product.updateDateTime DESC");
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
-                ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
-                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                ->where("product.parentId is null ")
+                        ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                        ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                        ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                        ->where("product.parentId is null ")
 //                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
-                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
-                ->groupBy("product.productId")
-                ->orderBy("product.updateDateTime DESC");
+                        ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
+                        ->groupBy("product.productId")
+                        ->orderBy("product.updateDateTime DESC");
             }
         } else {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
@@ -84,28 +81,28 @@ class ProductGroupController extends ProductMasterController
             if ($ress !== FALSE) {
                 if (!isset($_GET["supplier"])) {
                     $query = \common\models\costfit\Product::find()
-                    ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
-                    ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
-                    ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                    ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+                            ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                            ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                            ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
-                    ->groupBy("ps.userId , pc.parentId")
-                    ->orderBy("product.updateDateTime DESC");
+                            ->groupBy("ps.userId , pc.parentId")
+                            ->orderBy("product.updateDateTime DESC");
 //                ->count();
 //                throw new \yii\base\Exception($query);
                 } else {
                     if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                         $query = \common\models\costfit\Product::find()
-                        ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                        ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+                                ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                                ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                        ->orderBy("product.updateDateTime DESC");
+                                ->orderBy("product.updateDateTime DESC");
                     }
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
-                ->orderBy("updateDateTime DESC");
+                        ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
+                        ->orderBy("updateDateTime DESC");
             }
         }
 
@@ -133,7 +130,7 @@ class ProductGroupController extends ProductMasterController
 
 
         return $this->render('101/index', [
-            'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
+                    'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
         ]);
     }
 
@@ -142,8 +139,7 @@ class ProductGroupController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView()
-    {
+    public function actionView() {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
         if (isset($_GET["userId"])) {
             $userId = $_GET["userId"];
@@ -158,22 +154,22 @@ class ProductGroupController extends ProductMasterController
         }
         $dataProvider = new ActiveDataProvider([
             'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
-            ->where("parentId = " . $_GET["productGroupId"]),
+                    ->where("parentId = " . $_GET["productGroupId"]),
         ]);
 
         $dataProvider2 = new ActiveDataProvider([
             'query' => \common\models\costfit\ProductSuppliers::find()
-            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-            ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId)
-            ->orderBy("productId ASC"),
+                    ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                    ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                    ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId)
+                    ->orderBy("productId ASC"),
         ]);
         return $this->render('101/view', [
-            'model' => $model,
-            'dataProvider' => $dataProvider,
-            'dataProvider2' => $dataProvider2,
-            'userId' => $userId,
-            'isMaster' => $isMaster
+                    'model' => $model,
+                    'dataProvider' => $dataProvider,
+                    'dataProvider2' => $dataProvider2,
+                    'userId' => $userId,
+                    'isMaster' => $isMaster
         ]);
     }
 
@@ -182,8 +178,7 @@ class ProductGroupController extends ProductMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreateOld()
-    {
+    public function actionCreateOld() {
         $model = new ProductGroup();
         $ms = '';
         if (isset($_POST["ProductGroup"])) {
@@ -205,10 +200,10 @@ class ProductGroupController extends ProductMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
-            'ms' => $ms,
-            'title' => isset($title) ? $title : false,
-            'description' => isset($description) ? $description : false
+                    'model' => $model,
+                    'ms' => $ms,
+                    'title' => isset($title) ? $title : false,
+                    'description' => isset($description) ? $description : false
         ]);
     }
 
@@ -218,8 +213,7 @@ class ProductGroupController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $ms = '';
         $model = $this->findModel($id);
         if (isset($_POST["ProductGroup"])) {
@@ -233,9 +227,9 @@ class ProductGroupController extends ProductMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
-            'description' => $model->description,
-            'ms' => $ms,
+                    'model' => $model,
+                    'description' => $model->description,
+                    'ms' => $ms,
         ]);
     }
 
@@ -245,8 +239,7 @@ class ProductGroupController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -259,8 +252,7 @@ class ProductGroupController extends ProductMasterController
      * @return ProductGroup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductGroup::findOne($id)) !== null) {
             return $model;
         } else {
@@ -270,8 +262,7 @@ class ProductGroupController extends ProductMasterController
 
     // Version 1.01 Wizard Of Product Group
 
-    public function actionCreate($step = null)
-    {
+    public function actionCreate($step = null) {
         $userId = Yii::$app->user->identity->userId;
         $ms = '';
         if (!isset($step)) { // For Access direct link without get step parameter
@@ -363,15 +354,15 @@ class ProductGroupController extends ProductMasterController
                 }
                 $dataProvider = new ActiveDataProvider([
                     'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
-                    ->where("parentId = " . $_GET["productGroupId"]),
+                            ->where("parentId = " . $_GET["productGroupId"]),
                 ]);
 
                 $dataProvider2 = new ActiveDataProvider([
                     'query' => \common\models\costfit\ProductSuppliers::find()
-                    ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                    ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                    ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
-                    ->orderBy("productId ASC"),
+                            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                            ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
+                            ->orderBy("productId ASC"),
                 ]);
                 break;
             case 5:// For Access direct link without get step parameter
@@ -408,29 +399,27 @@ class ProductGroupController extends ProductMasterController
         }
 
         return $this->render('101/step', [
-            'model' => $model,
-            'step' => $step,
-            'ms' => $ms,
-            'title' => isset($title) ? $title : false,
-            'description' => isset($description) ? $description : false,
-            'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL,
-            'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
-            'dataProvider2' => isset($dataProvider2) ? $dataProvider2 : NULL,
-            'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
-            'countProduct' => isset($countProduct) ? $countProduct : NULL,
+                    'model' => $model,
+                    'step' => $step,
+                    'ms' => $ms,
+                    'title' => isset($title) ? $title : false,
+                    'description' => isset($description) ? $description : false,
+                    'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL,
+                    'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
+                    'dataProvider2' => isset($dataProvider2) ? $dataProvider2 : NULL,
+                    'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
+                    'countProduct' => isset($countProduct) ? $countProduct : NULL,
         ]);
     }
 
-    public function actionDraft()
-    {
+    public function actionDraft() {
         $drafts = new ActiveDataProvider([
             'query' => \common\models\costfit\Product::find()->where("userId = $userId AND parentId IS NULL AND status = 99"),
         ]);
         return $this->render(["101/draft", "drafts" => $drafts]);
     }
 
-    public function saveProductsWithOption($options, $productGroupId)
-    {
+    public function saveProductsWithOption($options, $productGroupId) {
         $res = $this->prepareOptionArray($options);
         $productGroup = \common\models\costfit\Product::find()->where("productId = $productGroupId")->one();
         $productGroupImages = \common\models\costfit\ProductImage::find()->where("productId = $productGroupId")->all();
@@ -440,10 +429,10 @@ class ProductGroupController extends ProductMasterController
             $optionStr = "";
             $oCount = 1;
             foreach ($options as $productGroupOptionId => $value) {
-                $optionStr.=$productGroupOptionId;
+                $optionStr .= $productGroupOptionId;
                 $oCount++;
                 if ($oCount < count($options)) {
-                    $optionStr.=", ";
+                    $optionStr .= ", ";
                 }
             }
             $productGroupOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId = $productGroupId AND productGroupOptionId in ($optionStr)")->all();
@@ -504,8 +493,7 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
-    public function prepareOptionArray($options)
-    {
+    public function prepareOptionArray($options) {
         $res = [];
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
             //$res[$productGroupTemplateOptionId] = explode(", ", $optionArray);
@@ -514,8 +502,7 @@ class ProductGroupController extends ProductMasterController
         return $this->array_cartesian($res); // 2D array
     }
 
-    function array_cartesian($arrays)
-    {
+    function array_cartesian($arrays) {
         $result = array();
         $keys = array_keys($arrays);
         $arrays = array_values($arrays);
@@ -543,8 +530,7 @@ class ProductGroupController extends ProductMasterController
         return $result;
     }
 
-    public function actionUpload()
-    {
+    public function actionUpload() {
         ini_set('memory_limit', '1024M');
 
         //$model = new \common\models\costfit\productImageSuppliers();
@@ -559,8 +545,7 @@ class ProductGroupController extends ProductMasterController
         \common\helpers\Upload::UploadSuppliers($model);
     }
 
-    public function actionUploadSupplier()
-    {
+    public function actionUploadSupplier() {
         ini_set('memory_limit', '1024M');
 
         //$model = new \common\models\costfit\productImageSuppliers();
@@ -575,8 +560,7 @@ class ProductGroupController extends ProductMasterController
         \common\helpers\Upload::UploadSuppliers($model);
     }
 
-    public function actionUpdateGridEdit()
-    {
+    public function actionUpdateGridEdit() {
         if (!isset($_POST["type"]) || $_POST["type"] == 1) {
             $model = \common\models\costfit\Product::find()->where("productId = " . $_POST["productId"])->one();
             if (isset($_POST["Product"])) {
@@ -610,15 +594,14 @@ class ProductGroupController extends ProductMasterController
 
 
         return $this->renderAjax('101/_product_grid_form', [
-            'model' => $model,
-            'id' => $_POST["productId"],
-            'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL,
-            'type' => isset($_POST['type']) ? $_POST['type'] : NULL
+                    'model' => $model,
+                    'id' => $_POST["productId"],
+                    'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL,
+                    'type' => isset($_POST['type']) ? $_POST['type'] : NULL
         ]);
     }
 
-    public function actionUpdateProduct()
-    {
+    public function actionUpdateProduct() {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["id"])->one();
 
@@ -644,7 +627,9 @@ class ProductGroupController extends ProductMasterController
                     $prodSupp->result = $prodSupp->result + $_POST["ProductSuppliers"]["quantity"];
                     $prodSupp->approve = 'new';
                     $prodSupp->createDateTime = new \yii\db\Expression("NOW()");
-
+                    if (isset($_POST["ProductSuppliers"]["isbn"]) && !empty($_POST["ProductSuppliers"]["isbn"])) {
+                        \common\models\costfit\Product::saveProductIsbn($model->productId); //saveF
+                    }
                     if ($prodSupp->save(FALSE)) {
                         if (isset($_POST["ProductPriceSuppliers"]['price'])) {
                             \common\models\costfit\ProductPriceSuppliers::updateAll(['status' => 0], 'productSuppId = ' . $prodSupp->productSuppId);
@@ -716,8 +701,7 @@ class ProductGroupController extends ProductMasterController
 //        return $this->render('view', ['model' => $model]);
     }
 
-    public function actionMultipleDeleteProduct()
-    {
+    public function actionMultipleDeleteProduct() {
         $pk = Yii::$app->request->post('row_id');
         $productGroupId = Yii::$app->request->post('productGroupId');
         $productGroupTemplateId = Yii::$app->request->post('productGroupTemplateId');
@@ -746,8 +730,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => $tab]);
     }
 
-    public function actionDeleteProduct()
-    {
+    public function actionDeleteProduct() {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["id"])->one();
         \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
@@ -758,8 +741,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
     }
 
-    public function actionDeleteProductGroup()
-    {
+    public function actionDeleteProductGroup() {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
         foreach ($childs as $pg) {
@@ -777,8 +759,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(['index']);
     }
 
-    public function actionDeleteProductImage()
-    {
+    public function actionDeleteProductImage() {
         $model = \common\models\costfit\ProductImage::find()->where("productImageId = " . $_GET["id"])->one();
         $product = \common\models\costfit\Product::find()->where("productId = " . $model->productId)->one();
         if (\common\models\costfit\ProductImage::deleteAll("productImageId = " . $_GET["id"]) > 0) {
@@ -791,8 +772,7 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
-    public function actionDeleteProductSuppImage()
-    {
+    public function actionDeleteProductSuppImage() {
         $model = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId = " . $_GET["id"])->one();
         $product = \common\models\costfit\Product::find()->where("productId = " . $model->productSupp->productId)->one();
         if (\common\models\costfit\ProductImageSuppliers::deleteAll("productImageId = " . $_GET["id"]) > 0) {
@@ -805,15 +785,13 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
-    public function saveProductGroupStep($id, $step)
-    {
+    public function saveProductGroupStep($id, $step) {
         $product = \common\models\costfit\Product::find()->where("productId = " . $id)->one();
         $product->step = $step;
         $product->save();
     }
 
-    public function actionApproveProductGroup($id)
-    {
+    public function actionApproveProductGroup($id) {
         $product = \common\models\costfit\Product::find()->where("productId = $id")->one();
         $product->status = 1;
         $product->save();
@@ -821,8 +799,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect('index');
     }
 
-    public function actionChangeImageOrder()
-    {
+    public function actionChangeImageOrder() {
 //            throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\ProductImage::find()->where("productImageId = " . $_GET['id'])->one();
         if (isset($_POST["ProductImage"])) {
@@ -835,8 +812,7 @@ class ProductGroupController extends ProductMasterController
         return $this->render("101/_product_image_form", ['model' => $model]);
     }
 
-    public function actionChangeImageSuppOrder()
-    {
+    public function actionChangeImageSuppOrder() {
 //            throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId = " . $_GET['id'])->one();
         if (isset($_POST["ProductImageSuppliers"])) {
@@ -849,8 +825,7 @@ class ProductGroupController extends ProductMasterController
         return $this->render("101/_product_image_form", ['model' => $model]);
     }
 
-    public function actionBackToDraft($id)
-    {
+    public function actionBackToDraft($id) {
         $model = \common\models\costfit\Product::find()->where("productId = $id")->one();
         $model->status = 0;
         $model->save();
@@ -858,8 +833,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
     }
 
-    public function actionCreateMyProduct()
-    {
+    public function actionCreateMyProduct() {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
@@ -907,8 +881,7 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
-    public function actionSendApproveMyProduct()
-    {
+    public function actionSendApproveMyProduct() {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
 //        throw new \yii\base\Exception(count($model->products));
         foreach ($model->products as $product) {
@@ -930,8 +903,7 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"]]);
     }
 
-    public function actionApproveMyProduct()
-    {
+    public function actionApproveMyProduct() {
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
         $model->status = 1;
         $model->approve = 'approve';
@@ -962,18 +934,16 @@ class ProductGroupController extends ProductMasterController
         return $this->redirect(['index']);
     }
 
-    public function actionUpdateAllCategoryProduct()
-    {
+    public function actionUpdateAllCategoryProduct() {
         Yii::$app->db->createCommand()->truncateTable('category_to_product')->execute();
         $models = \common\models\costfit\Product::find()
-        ->where("status = 1")->all();
+                        ->where("status = 1")->all();
         foreach ($models as $model) {
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
         }
     }
 
-    public function actionDeleteProductSupp()
-    {
+    public function actionDeleteProductSupp() {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_GET["id"])->one();
         \common\models\costfit\ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
@@ -987,8 +957,7 @@ class ProductGroupController extends ProductMasterController
         }
     }
 
-    public function actionUpdateProductSupp()
-    {
+    public function actionUpdateProductSupp() {
         $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $_GET["id"])->one();
         $prodPriceSupp = \common\models\costfit\ProductPriceSuppliers::find()->where("productSuppId=" . $_GET["id"] . " AND status = 1")->one();
         if (!isset($prodPriceSupp)) {
