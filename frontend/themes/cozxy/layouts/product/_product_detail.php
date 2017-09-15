@@ -91,7 +91,7 @@ $val = rand(1, 10);
                         <p class="size12 fc-g666">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></p>
                         <?php
                         if (isset($model['shortDescription'])) {
-                            echo '<hr><p>' . $model['shortDescription'] . '<p><hr>';
+                            echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
                         } else {
                             echo '';
                         }

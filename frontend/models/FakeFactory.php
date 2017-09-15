@@ -428,8 +428,9 @@ class FakeFactory extends Model {
             'receiveType' => isset($GetProductSuppliers['receiveType']) ? $GetProductSuppliers['receiveType'] : '1',
             'wishList' => $wishList,
             'sendDate' => '',
-            'shortDescriptionCozxy' => isset($GetProductCozxy['specification']) ? $GetProductCozxy['specification'] : '',
-            'descriptionCozxy' => isset($GetProductCozxy['description']) ? $GetProductCozxy['description'] : '',
+            'shortDescriptionCozxy' => isset($marketPrice->shortDescription) ? $marketPrice->shortDescription : $GetProductCozxy['specification'],
+            'specificationDescriptionCozxy' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductCozxy['specification'],
+            'descriptionCozxy' => isset($marketPrice->description) ? $marketPrice->description : $GetProductCozxy['description'],
             'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
             'marketPrice' => number_format($market, 2)
         ];

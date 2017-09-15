@@ -27,11 +27,11 @@
                         <div class="size18 size14-xs">&nbsp;</div>
                         <div class="tab-content">
                             <div id="menu1" class="tab-pane fade in active">
-                                <p><?php echo $model['description'] ?></p>
+                                <p><?php echo $model['descriptionCozxy'] ?></p>
                                 <h3>&nbsp;</h3>
                             </div>
                             <div id="menu2" class="tab-pane fade">
-                                <p><?php echo $model['specification'] ?></p>
+                                <p><?php echo $model['specificationDescriptionCozxy'] ?></p>
                                 <h3>&nbsp;</h3>
                             </div>
                             <!--
