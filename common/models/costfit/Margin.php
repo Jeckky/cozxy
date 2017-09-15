@@ -17,8 +17,7 @@ use \common\models\costfit\master\MarginMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Margin extends \common\models\costfit\master\MarginMaster
-{
+class Margin extends \common\models\costfit\master\MarginMaster {
 
     public $category1Id;
     public $category2Id;
@@ -27,21 +26,18 @@ class Margin extends \common\models\costfit\master\MarginMaster
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function getSystemMargin($returnText = FALSE)
-    {
+    public static function getSystemMargin($returnText = FALSE) {
         $res = NULL;
         $model = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId is null AND supplierId is null AND status = 1")->orderBy("marginId DESC")->one();
         if (isset($model)) {
@@ -54,8 +50,7 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return $res;
     }
 
-    public static function getSupplierMargin($supplierId, $returnText = FALSE)
-    {
+    public static function getSupplierMargin($supplierId, $returnText = FALSE) {
         $res = NULL;
         $model = \common\models\costfit\Margin::find()->where("supplierId =" . $supplierId . " AND status = 1")->orderBy("marginId DESC")->one();
         if (isset($model)) {
@@ -68,8 +63,7 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return $res;
     }
 
-    public static function getBrandMargin($brandId, $returnText = FALSE)
-    {
+    public static function getBrandMargin($brandId, $returnText = FALSE) {
         $res = NULL;
         $model = \common\models\costfit\Margin::find()->where("brandId = $brandId AND categoryId is null AND supplierId is null AND status = 1")->orderBy("marginId DESC")->one();
         if (isset($model)) {
@@ -82,8 +76,7 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return $res;
     }
 
-    public static function getCategoryMargin($categoryId, $returnText = FALSE)
-    {
+    public static function getCategoryMargin($categoryId, $returnText = FALSE) {
         $res = NULL;
         $model = \common\models\costfit\Margin::find()->where("brandId is NULL AND categoryId = $categoryId AND supplierId is null AND status = 1")->orderBy("marginId DESC")->one();
         if (isset($model)) {
@@ -96,30 +89,32 @@ class Margin extends \common\models\costfit\master\MarginMaster
         return $res;
     }
 
-    public static function getProductSuppMargin($productSuppId)
-    {
+    public static function getProductSuppMargin($productSuppId) {
         $res = NULL;
         $model = ProductSuppliers::find()->where("approve = 'approve' AND productSuppId = $productSuppId")->one();
+        if (isset($model)) {
+            $systemMatgin = self::getSystemMargin(TRUE);
+            $brandMargin = self::getBrandMargin($model->brandId, TRUE);
+            $categoryMargin = self::getCategoryMargin($model->categoryId, TRUE);
 
-        $systemMatgin = self::getSystemMargin(TRUE);
-        $brandMargin = self::getBrandMargin($model->brandId, TRUE);
-        $categoryMargin = self::getCategoryMargin($model->categoryId, TRUE);
+            if (isset($brandMargin)) {
 
-        if (isset($brandMargin)) {
-
-            $res = $categoryMargin - $brandMargin;
-        } else {
-            $res = $categoryMargin;
-        }
-
-        if (isset($res)) {
-            return $res;
-        } else {
-            if (isset($systemMatgin)) {
-                return $systemMatgin;
+                $res = $categoryMargin - $brandMargin;
             } else {
-                throw new \yii\web\HttpException(500, 'Please Setup Cozxy Margin');
+                $res = $categoryMargin;
             }
+
+            if (isset($res)) {
+                return $res;
+            } else {
+                if (isset($systemMatgin)) {
+                    return $systemMatgin;
+                } else {
+                    throw new \yii\web\HttpException(500, 'Please Setup Cozxy Margin');
+                }
+            }
+        } else {
+            throw new \yii\web\HttpException(500, 'Please Setup Cozxy Margin');
         }
     }
 
