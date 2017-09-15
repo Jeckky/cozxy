@@ -122,7 +122,7 @@ class SignupForm extends Model {
                 $url = "http://api.ants.co.th/sms/1/text/single";
                 $method = "POST";
                 $data = json_encode(array(
-                    "from" => "Confirm OTP",
+                    "from" => "Cozxy OTP",
                     //"to" => ["66937419977", "66616539889", "66836134241"],
                     //"to" => ["66937419977"],
                     "to" => [$output],
