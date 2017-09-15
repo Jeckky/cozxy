@@ -12,6 +12,7 @@ use common\models\User;
 class SignupForm extends Model {
 
     const COZXY_REGIS = 'register';
+    const COZXY_BOOTH_REGIS = 'registerBooth';
 
     public $firstname;
     public $lastname;
@@ -25,6 +26,8 @@ class SignupForm extends Model {
     public $mm;
     public $dd;
     public $cz;
+    public $tel;
+    public $group;
 
     /**
      * @inheritdoc
@@ -38,6 +41,7 @@ class SignupForm extends Model {
             //['yyyy', 'required'],
             //['mm', 'required'],
             //['dd', 'required'],
+            ['tel', 'required'],
             [['birthday'], 'safe'],
             ['birthDate', 'required', 'message' => 'BirthDate cannot be blank.'],
             ['dd', 'required', 'message' => 'Date cannot be blank.'],
@@ -62,6 +66,7 @@ class SignupForm extends Model {
             ['password', 'string', 'min' => 8],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'dd', 'mm', 'yyyy'], 'required', 'on' => self::COZXY_REGIS],
+            [['tel', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_BOOTH_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
         ];
     }
@@ -69,6 +74,7 @@ class SignupForm extends Model {
     public function scenarios() {
         return [
             self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
+            self::COZXY_BOOTH_REGIS => ['tel', 'email', 'password', 'confirmPassword'],
         ];
     }
 
@@ -94,6 +100,7 @@ class SignupForm extends Model {
         $user->gender = $this->gender;
         $user->birthDate = $this->birthDate;
         $user->status = 0;
+        $user->tel = isset($this->tel) ? $this->tel : '';
         $user->token = \Yii::$app->security->generateRandomString(10);
         $user->lastvisitDate = new \yii\db\Expression("NOW()");
         $user->createDateTime = new \yii\db\Expression("NOW()");
@@ -105,14 +112,53 @@ class SignupForm extends Model {
             } else {
                 $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
             }
-
             $toMail = $user->email;
             $emailSend = \common\helpers\Email::mailRegisterConfirm($toMail, $url);
+
+            if ($this->group == 'booth') {
+                $input = $user->tel;
+                $output = '66' . substr($input, -9, -7) . substr($input, -7, -4) . substr($input, -4);
+                //$this->SendSms($input);
+                $msg = 'ทดสอบการส่ง ข้อความของ www.cozxy.com';
+                $url = "http://api.ants.co.th/sms/1/text/single";
+                $method = "POST";
+                $data = json_encode(array(
+                    "from" => "Test",
+                    //"to" => ["66937419977", "66616539889", "66836134241"],
+                    //"to" => ["66937419977"],
+                    "to" => [$output],
+                    "text" => $msg)
+                );
+                $response = \common\helpers\Sms::Send($method, $url, $data);
+                //echo '<pre>';
+                //print_r($data);
+                //exit();
+            }
             return $user;
         } else {
             return null;
         }
-//return $user->save(FALSE) ? $user : null;
+        //return $user->save(FALSE) ? $user : null;
+    }
+
+    public static function SendSmsTest($tel) {
+        $msg = 'ทดสอบการส่ง ข้อความของ www.cozxy.com';
+        $url = "http://api.ants.co.th/sms/1/text/single";
+        $method = "POST";
+        $data = json_encode(array(
+            "from" => "Test",
+            //"to" => ["66937419977", "66616539889", "66836134241"],
+            //"to" => ["66937419977"],
+            "to" => [$tel],
+            "text" => $msg)
+        );
+
+        $response = \common\helpers\Sms::Send($method, $url, $data);
+        return $response;
+        /* return $this->render('sms', [
+          'response' => $response,
+          'msg' => $msg,
+          ]); */
     }
 
 }
