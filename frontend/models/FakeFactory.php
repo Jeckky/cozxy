@@ -408,7 +408,8 @@ class FakeFactory extends Model {
             'brandId' => $GetProductSuppliers['brandId'],
             'categoryId' => $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
-            'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
+            //'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
+            'title' => isset($marketPrice->title) ? $marketPrice->title : $GetProductSuppliers['title'],
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
@@ -655,7 +656,7 @@ class FakeFactory extends Model {
             $GetQty = \common\models\costfit\Order::find()
             ->select(' count(order_item.quantity) as quantity')
             ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
-            ->where('order_item.productId = ' . $productId . ' and `order`.orderId =' . $orderId . ' and order.status < 5')->count('order_item.quantity');
+            ->where('order_item.productId = ' . $productId . ' and `order`.orderId = ' . $orderId . ' and order.status < 5')->count('order_item.quantity');
         } else {
             $GetQty = \common\models\costfit\Order::find()
             ->select(' count(order_item.quantity) as quantity')
