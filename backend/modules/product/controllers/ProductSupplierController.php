@@ -3,8 +3,9 @@
 namespace backend\modules\product\controllers;
 
 use Yii;
-use common\models\costfit\productSupplier;
+use common\models\costfit\ProductSuppliers;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -48,7 +49,7 @@ class ProductSupplierController extends ProductMasterController {
     public function actionIndex() {
 
         $dataProvider = new ActiveDataProvider([
-            'query' => ProductSupplier::find()->where("productId='" . $_GET['productId'] . "'"),
+            'query' => ProductSuppliers::find()->where("productId='" . $_GET['productId'] . "'"),
         ]);
 
         return $this->render('index', [
@@ -142,6 +143,31 @@ class ProductSupplierController extends ProductMasterController {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionProductSuppWaitForApprove()
+    {
+        $newProductSupps = ProductSuppliers::newProductSupp();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $newProductSupps,
+            'pagination' => [
+                'pageSize' => 8,
+            ]
+        ]);
+
+        return $this->render('product_supp_wait_for_approve', compact('dataProvider'));
+    }
+
+    public function actionApproveProductSupp()
+    {
+        if(isset($_POST['productSuppId'])) {
+            $productSupp = ProductSuppliers::find()->where(['productSuppId'=>$_POST['productSuppId']])->one();
+            $productSupp->status = 1;
+            $productSupp->approve = 'approve';
+            $productSupp->save(false);
+
+            return Json::encode(['result'=>true]);
         }
     }
 

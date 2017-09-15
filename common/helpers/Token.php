@@ -80,4 +80,14 @@ class Token
 //        }
     }
 
+    public static function randomNumber($digit=6)
+    {
+        $r = '';
+        for($i=1;$i<=$digit;$i++) {
+            $r .= mt_rand(0,9);
+        }
+
+        return $r;
+    }
+
 }

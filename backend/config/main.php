@@ -208,6 +208,7 @@ return [
             'product/*',
             'redactor/*',
             'gii/*',
+            'booth/*'
         ],
     ],
     'params' => $params,

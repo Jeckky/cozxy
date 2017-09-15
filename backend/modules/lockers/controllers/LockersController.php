@@ -650,11 +650,11 @@ class LockersController extends LockersMasterController {
 
     static public function generatePassword($orderId) {
         $flag = false;
-        $password = rand('00000000', '99999999');
+        $password = rand('100000', '999999');
         while ($flag == false) {
             $order = Order::find()->where("password='" . $password . "' and status!=16")->one(); //Gen OTP จนกว่าจะได้เลขไม่ซ้ำ
             if (isset($order)) {
-                $password = rand('00000000', '99999999');
+                $password = rand('100000', '999999');
             } else {
                 $flag = true;
                 $orders = Order::find()->where("orderId=" . $orderId)->one();

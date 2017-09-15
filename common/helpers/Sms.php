@@ -22,7 +22,7 @@ class Sms
 {
 
 //put your code here
-
+    const SMS_URL = "http://api.ants.co.th/sms/1/text/single";
 
     public static function Send($method, $url, $data = false)
     {
