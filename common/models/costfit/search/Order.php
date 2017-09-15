@@ -19,7 +19,7 @@ class Order extends OrderModel
     {
         return [
             [['orderId', 'userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
-            [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime'], 'safe'],
+            [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime', 'password'], 'safe'],
             [['summary'], 'number'],
         ];
     }
@@ -72,6 +72,60 @@ class Order extends OrderModel
             'shippingAmphurId' => $this->shippingAmphurId,
             'paymentType' => $this->paymentType,
             'status' => $this->status,
+            'createDateTime' => $this->createDateTime,
+            'updateDateTime' => $this->updateDateTime,
+        ]);
+
+        $query->andFilterWhere(['like', 'token', $this->token])
+            ->andFilterWhere(['like', 'orderNo', $this->orderNo])
+            ->andFilterWhere(['like', 'invoiceNo', $this->invoiceNo])
+            ->andFilterWhere(['like', 'billingCompany', $this->billingCompany])
+            ->andFilterWhere(['like', 'billingTax', $this->billingTax])
+            ->andFilterWhere(['like', 'billingAddress', $this->billingAddress])
+            ->andFilterWhere(['like', 'billingZipcode', $this->billingZipcode])
+            ->andFilterWhere(['like', 'billingTel', $this->billingTel])
+            ->andFilterWhere(['like', 'shippingCompany', $this->shippingCompany])
+            ->andFilterWhere(['like', 'shippingTax', $this->shippingTax])
+            ->andFilterWhere(['like', 'shippingAddress', $this->shippingAddress])
+            ->andFilterWhere(['like', 'shippingZipcode', $this->shippingZipcode])
+            ->andFilterWhere(['like', 'shippingTel', $this->shippingTel]);
+
+        return $dataProvider;
+    }
+
+    public function searchBooth($params)
+    {
+        $query = OrderModel::find();
+        $query->andWhere(['pickingId'=>20]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'orderId' => $this->orderId,
+            'userId' => $this->userId,
+            'summary' => $this->summary,
+            'sendDate' => $this->sendDate,
+            'billingCountryId' => $this->billingCountryId,
+            'billingProvinceId' => $this->billingProvinceId,
+            'billingAmphurId' => $this->billingAmphurId,
+            'shippingCountryId' => $this->shippingCountryId,
+            'shippingProvinceId' => $this->shippingProvinceId,
+            'shippingAmphurId' => $this->shippingAmphurId,
+            'paymentType' => $this->paymentType,
+            'status' => $this::ORDER_STATUS_E_PAYMENT_SUCCESS,
             'createDateTime' => $this->createDateTime,
             'updateDateTime' => $this->updateDateTime,
         ]);

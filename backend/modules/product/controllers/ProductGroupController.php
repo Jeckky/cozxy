@@ -2,6 +2,7 @@
 
 namespace backend\modules\product\controllers;
 
+use common\models\costfit\ProductSuppliers;
 use Yii;
 use common\models\costfit\ProductGroup;
 use yii\data\ActiveDataProvider;
@@ -53,7 +54,7 @@ class ProductGroupController extends ProductMasterController
         $title = Yii::$app->request->get('title');
 //        $isOwner = Yii::$app->request->post('isOwner');
 //User Type 4 = Supplier , 5= Content
-        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
+        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
 
             if (isset($_GET["supplier"])) {
 

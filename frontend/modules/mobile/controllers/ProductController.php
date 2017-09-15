@@ -61,10 +61,10 @@ class ProductController extends \common\controllers\MasterController
 
             $sd = strip_tags($pso->shortDescription);
             $sd = mb_substr($sd, 0, 60) . '...';
-            $ps[$i]['shortDescription'] = $sd;
+//            $ps[$i]['shortDescription'] = $sd;
 
-            $ps[$i]['description'] = $pso->description;
-            $ps[$i]['specification'] = $pso->specification;
+//            $ps[$i]['description'] = $pso->description;
+//            $ps[$i]['specification'] = $pso->specification;
             $ps[$i]['width'] = $pso->width;
             $ps[$i]['height'] = $pso->height;
             $ps[$i]['depth'] = $pso->depth;

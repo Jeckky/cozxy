@@ -2,6 +2,7 @@
 
 namespace common\models\costfit;
 
+use common\helpers\Token;
 use Yii;
 use \common\models\costfit\master\OrderMaster;
 use yii\data\ActiveDataProvider;
@@ -60,6 +61,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     const ORDER_STATUS_SEND = 15;
     const ORDER_STATUS_RECEIVED = 16;
     const ORDER_STATUS_CREATEPO = 17;
+    const ORDER_STATUS_BOOTH_PACKING = 18;
 //
     const CHECKOUT_STEP_WAIT_CHECKOUT = 0;
     const CHECKOUT_STEP_ADDRESS = 1;
@@ -969,6 +971,22 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $string = substr($string, 0, -1);
         }
         return $string;
+    }
+
+    public function orderPassword()
+    {
+        $flag = true;
+        while($flag) {
+            $password = Token::randomNumber();
+
+            $count = Order::find()->where(['<=', 'status', 16])->andWhere(['password'=>$password])->count();
+
+            if($count == 0) {
+                $flag = false;
+                return $password;
+            }
+        }
+
     }
 
 }
