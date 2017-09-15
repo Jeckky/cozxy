@@ -54,4 +54,20 @@ class BoothController extends MasterController {
         ]);
     }
 
+    public function actionConfirm() {
+        $token = $_GET['token'];
+        $model = \common\models\costfit\User::find()->where('token ="' . $token . '" ')->one();
+        $model->scenario = 'ConfirmRegisterBooth'; // calling scenario of update
+        if (isset($_POST["User"])) {
+            $editChangePassword = \frontend\models\DisplayMyAccount::ConfirmRegisterBooth($_POST['User']['password'], $token, $_POST['User']['email']);
+            if ($editChangePassword == TRUE) {
+                return $this->redirect(['/site/login']);
+            } else {
+                return $this->redirect(['/booth/confirm?token=' . $token]);
+            }
+        } else {
+            return $this->render('booth-confirm', compact('model'));
+        }
+    }
+
 }

@@ -7,9 +7,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Sing Up booth: cozxy.com - Buy what fuels your passion';
 \frontend\assets\LoginRegisterAsset::register($this);
 
-$input = "0616539889";
-
-echo $output = '66' . substr($input, -9, -7) . substr($input, -7, -4) . substr($input, -4);
+//$input = "0616539889";
+//echo $output = '66' . substr($input, -9, -7) . substr($input, -7, -4) . substr($input, -4);
 ?>
 <style type="text/css">
     .login-box .select-new {
@@ -40,8 +39,17 @@ echo $output = '66' . substr($input, -9, -7) . substr($input, -7, -4) . substr($
                     <div class="size14 hr-margin">&nbsp;</div>
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'options' => ['class' => 'registr-form']]); ?>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <?php // throw new \yii\base\Exception($model->scenario);   ?>
+                            <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php // throw new \yii\base\Exception($model->scenario);     ?>
                             <?= $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'MOBILE NUMBER'])->label(false); ?>
                         </div>
                     </div>

@@ -103,4 +103,14 @@ class Email {
         ->send();
     }
 
+    //put your code here
+    public static function mailRegisterConfirmBooth($toMail, $url) {//ส่งถึงสมาชิกให้ยืนยันอีเมล์
+        \Yii::$app->mail->compose('register_confirm', ['url' => $url])
+        //Yii::$app->mail->compose('register_confirm', ['url' => $url])
+        ->setTo($toMail)//tomail
+        ->setFrom('cozxy@cozxy.com')
+        ->setSubject('Cozxy Email Verification')
+        ->send();
+    }
+
 }

@@ -54,6 +54,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const COZXY_USER_BACKEND = 'user_backend';
     const COZXY_EDIT_PROFILE = 'editinfo';
     const COZXY_CONFIRM = 'verification';
+    const COZXY_CONFIRM_BOOTH = 'ConfirmRegisterBooth';
 
     /**
      * User Type bit
@@ -76,7 +77,7 @@ class User extends \common\models\costfit\master\UserMaster {
             'tel' => [['tel'], 'number'], //, 'min' => 8
             ['tel', 'string', 'length' => [10]],
             ['newPassword', 'string', 'min' => 8],
-            ['password', 'string', 'min' => 8],
+            ['password', 'string', 'min' => 6],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
@@ -96,6 +97,7 @@ class User extends \common\models\costfit\master\UserMaster {
             [['firstname', 'lastname', 'password', 'email', 'type', 'gender'], 'required', 'on' => self::COZXY_USER_BACKEND],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword'], 'required', 'on' => 'register_new'],
             [['tel'], 'required', 'on' => self::COZXY_CONFIRM],
+            [['password', 'email'], 'required', 'on' => self::COZXY_CONFIRM_BOOTH],
         ]);
     }
 
@@ -105,7 +107,8 @@ class User extends \common\models\costfit\master\UserMaster {
             self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm'],
             self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']],
             self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
-            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm']
+            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+            self::COZXY_CONFIRM_BOOTH => ['password', 'email']
         ];
     }
 

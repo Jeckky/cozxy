@@ -66,7 +66,7 @@ class SignupForm extends Model {
             ['password', 'string', 'min' => 8],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'dd', 'mm', 'yyyy'], 'required', 'on' => self::COZXY_REGIS],
-            [['tel', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_BOOTH_REGIS],
+            [['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_BOOTH_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
         ];
     }
@@ -74,7 +74,7 @@ class SignupForm extends Model {
     public function scenarios() {
         return [
             self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
-            self::COZXY_BOOTH_REGIS => ['tel', 'email', 'password', 'confirmPassword'],
+            self::COZXY_BOOTH_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'],
         ];
     }
 
@@ -85,7 +85,7 @@ class SignupForm extends Model {
      */
     public function signup() {
         //echo 'birthDate :' . $this->birthDate . '<br>';
-
+        $otp_code = strtoupper(substr(md5(uniqid()), 0, 6));   // A smart code to generate OTP PIN.
         if (!$this->validate()) {
             return null;
         }
@@ -96,6 +96,9 @@ class SignupForm extends Model {
         $user->username = $this->email;
         $user->setPassword($this->password);
         $user->password_hash = \Yii::$app->security->generatePasswordHash($this->password);
+        if ($this->group == 'booth') {
+            $user->password = $otp_code;
+        }
         $user->email = $this->email;
         $user->gender = $this->gender;
         $user->birthDate = $this->birthDate;
@@ -107,23 +110,19 @@ class SignupForm extends Model {
         $user->generateAuthKey();
         if ($user->save()) {
 
-            if (isset($this->cz) && !empty($this->cz)) {//Redirect ไปหน้า Cart
-                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
-            } else {
-                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
-            }
-            $toMail = $user->email;
-            $emailSend = \common\helpers\Email::mailRegisterConfirm($toMail, $url);
-
             if ($this->group == 'booth') {
+
+                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "booth/confirm?token=" . $user->token;
+                $toMail = $user->email;
+                $emailSend = \common\helpers\Email::mailRegisterConfirmBooth($toMail, $url);
                 $input = $user->tel;
                 $output = '66' . substr($input, -9, -7) . substr($input, -7, -4) . substr($input, -4);
                 //$this->SendSms($input);
-                $msg = 'ทดสอบการส่ง ข้อความของ www.cozxy.com';
+                $msg = $otp_code . ' คือรหัสยืนยันเข้าใช้งานของคุณ';
                 $url = "http://api.ants.co.th/sms/1/text/single";
                 $method = "POST";
                 $data = json_encode(array(
-                    "from" => "Test",
+                    "from" => "Confirm OTP",
                     //"to" => ["66937419977", "66616539889", "66836134241"],
                     //"to" => ["66937419977"],
                     "to" => [$output],
@@ -133,6 +132,15 @@ class SignupForm extends Model {
                 //echo '<pre>';
                 //print_r($data);
                 //exit();
+            } else {
+                if (isset($this->cz) && !empty($this->cz)) {//Redirect ไปหน้า Cart
+                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
+                } else {
+                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
+                }
+                $toMail = $user->email;
+
+                $emailSend = \common\helpers\Email::mailRegisterConfirmBooth($toMail, $url);
             }
             return $user;
         } else {
