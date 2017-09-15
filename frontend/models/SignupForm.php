@@ -42,6 +42,7 @@ class SignupForm extends Model {
             //['mm', 'required'],
             //['dd', 'required'],
             ['tel', 'required'],
+            ['tel', 'string', 'min' => 10],
             [['birthday'], 'safe'],
             ['birthDate', 'required', 'message' => 'BirthDate cannot be blank.'],
             ['dd', 'required', 'message' => 'Date cannot be blank.'],
