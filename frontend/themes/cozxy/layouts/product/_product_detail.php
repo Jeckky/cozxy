@@ -160,11 +160,11 @@ $val = rand(1, 10);
 
                             <?php
                             if (true) {//เช็คมีสินค้าในสต๊อก
-                                if ($model['result'] <= 0) {
-                                    ?>
-                                    <a class="b btn-black-s size10">NOT AVAILABLE</a>
-                                    <?php
-                                }
+                                //if ($model['result'] <= 0) {
+                                ?>
+                                <!--<a class="b btn-black-s size10">NOT AVAILABLE</a>--> 
+                                <?php
+                                //}
                                 if (Yii::$app->user->id) {
                                     if (isset($model['productId']) && $model['productId'] != '') {
                                         if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
@@ -182,8 +182,14 @@ $val = rand(1, 10);
                                 } else {
                                     ?>
                                     <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
-
                                         <div class="b btn-g999" style="padding: 5px 10px;">ADD TO SHELF</div>
+                                    </a>
+                                    <?php
+                                }
+                                if ($model['result'] <= 0) {
+                                    ?>
+                                    <a href="" class="b btn-g999 btn-black" style="margin:14px auto 2px;padding: 5px 10px; background-color: #000;">
+                                        <div>NOT AVAILABLE</div>
                                     </a>
                                     <?php
                                 }
