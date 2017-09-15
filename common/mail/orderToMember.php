@@ -86,7 +86,7 @@
                         Note: You will be notified via email and SMS for any changes in delivery schedule.
                     </p>
                     <p>
-                        <a href="http://www.cozxy.com/profile/order">
+                        <a href="http://www.cozxy.com/my-account?act=order-history">
                             <input class="btn btn-black" type="submit" value=" Order status"  style=" background-color:#f1fa8c;text-align:center;">
                         </a>
                     </p>
@@ -278,7 +278,7 @@
                                                 <td style="text-align: right;"><?//php echo number_format($order->discount, 2); ?></td>
                                             </tr>-->
                                             <tr style="font-size: 12px;">
-                                                <td colspan="6" style="text-align: right;">Shipping Free:</td>
+                                                <td colspan="6" style="text-align: right;">Shipping Fee:</td>
                                                 <td style="text-align: right;"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">

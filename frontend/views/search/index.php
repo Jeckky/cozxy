@@ -157,7 +157,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
     <div class="container">
 
         <div class="row">
-            <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
                     <?php if ($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
                         <div class="size16">&nbsp;</div>
@@ -198,7 +198,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                         'timeout' => 5000,
                                         'clientOptions' => [
                                             'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
-                                            'linkSelector' => '#cansale'
+                                            'linkSelector' => '#cansale',
                                         ]
                                     ]);
                                     echo \yii\widgets\ListView::widget([
@@ -272,8 +272,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                             return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
                                         },
                                         'emptyText' => ' ',
-                                        'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                        'layout' => "{summary}\n{items}\n<div class ='col-sm-12 text-center'>{pager}</div>\n",
+                                        'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-center'],
+                                        'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
                                         //'layout' => "{items}",
                                         'itemOptions' => [
                                             'tag' => false,
@@ -296,7 +296,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                 </div>
 
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="col-md-3 col-sm-12 col-xs-12">
                 <div class="size18">&nbsp;</div>
                 <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId', 'categoryId', 'productStory')) ?>
 
@@ -307,7 +307,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                  ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                 ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                 ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                ?>','<?php //echo $limit_end;                                                                                                                                                                                                                               ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

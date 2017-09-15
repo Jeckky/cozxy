@@ -70,7 +70,7 @@ class LockersController extends LockersMasterController {
                 $data = '';
             }
         } else {
-            $txt = 'ไม่พบข้อมูล กรุณา Scan Qr Code Picking Points อีกครั้ง...';
+            $txt = 'ไม่พบข้อมูล กรุณา Scan Qr Code ของ Locker อีกครั้ง...';
             $codes = 'no';
             $data = '';
         }
@@ -515,16 +515,18 @@ class LockersController extends LockersMasterController {
         // echo 'ทดสอบ ปิดช่อง';
         // OrderItemPacking  มากกว่า 1 รายการ
 
-        $countBag = Lockers::GetCountBag($orderId);
+        $countBag = Lockers::GetCountBag($orderId); //ใน order นี้เหลือ ถุงที่กำลังจัดส่งกี่ถุง
         //echo $countBag;
-
+        // throw new \yii\base\Exception($countBag);
         /* Customize Date 25/01/2017   */
         $OrderItemPacking = Lockers::GetOrderItemPacking($orderItemPackingId);
         //$orderItemId = Lockers::GetOrderItem($bagNo);
-        if ($countBag == 0) {
+        if ($countBag == 0) {//ถ้าเหลือ 0 แสดงว่าหมดแล้วให้ส่งรหัสผ่านทาง email ให้กับลูกค้า
 
             /* Customize Date 25/01/2017   */
             $listPointItems = Lockers::GetPickingPointItemsPickingItems($boxcode, $channel, $pickingItemsId);
+            // throw new \yii\base\Exception(count($listPointItems));
+
             if (count($listPointItems) > 0) {
 
                 if ($status == 'now') {

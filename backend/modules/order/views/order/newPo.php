@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
                         'value' => function($model) {
 
-                            return Html::a('รายละเอียด', [Yii::$app->homeUrl . 'order/order/reprint-po?storeProductGroupId=' . $model->poId], [
+                            return Html::a('รายละเอียด', [Yii::$app->homeUrl . 'order/order/reprint-po?poId=' . $model->poId], [
                                         'target' => '_blank',
                                             ]
                             );

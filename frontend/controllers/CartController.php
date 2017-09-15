@@ -533,11 +533,11 @@ class CartController extends MasterController {
     public function allProduct() {
         $products = \common\models\costfit\Product::find()->where("approve = 'approve'")->all();
         $productSuppId = [];
-        if (isset($products) && !empty($products)) {
+        if (isset($products) && count($products) > 0) {
             $i = 0;
             foreach ($products as $product):
                 $productSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId = " . $product->productId . " and approve = 'approve'")->all();
-                if (isset($productSuppliers) && !empty($productSuppliers)) {
+                if (isset($productSuppliers) && count($productSuppliers) > 0) {
                     $id = '';
                     foreach ($productSuppliers as $productSupplier):
                         $id = $id . $productSupplier->productSuppId . ",";
@@ -550,7 +550,7 @@ class CartController extends MasterController {
                     }
                 }
             endforeach;
-            if (isset($productSuppId) && !empty($productSuppId)) {
+            if (isset($productSuppId) && count($productSuppId) > 0) {
                 return $productSuppId;
             } else {
                 return '';

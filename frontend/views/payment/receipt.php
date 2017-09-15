@@ -32,7 +32,7 @@ if (isset($billingCompany) && !empty($billingCompany)) {
             <tr>
                 <td  colspan="4" style="text-align: left; vertical-align: text-top; padding: 5px; font-size: 12px; line-height: 20px;border-color: #000;">
                     ได้รับเงินจาก : <?php echo $billingUse; ?>
-                    <?php //echo $order->user->firstname;   ?> <?php //echo $order->user->lastname;   ?><br>
+                    <?php //echo $order->user->firstname;    ?> <?php //echo $order->user->lastname;    ?><br>
                     <!--เลขที่ประจำตัวผู้เสียภาษี :  <br>-->
                     <?php echo isset($order->billingAddress) ? $order->billingAddress : "-"; ?><br>
                     <?php echo isset($order->billingDistrict) ? $order->billingDistrict->localName : "-"; ?>
@@ -89,7 +89,7 @@ if (isset($billingCompany) && !empty($billingCompany)) {
                 <!--Comment by sak-->
                 <!--                <tr>
                                     <td colspan="5" class="text-right" class="foorter-purchase-order">ค่าจัดส่ง / Shipping :</td>
-                                    <td class="bg-purchase-order"><?php //echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free";      ?></td>
+                                    <td class="bg-purchase-order"><?php //echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free";                      ?></td>
                                 </tr>-->
                 <!--
                 <tr>
@@ -98,11 +98,14 @@ if (isset($billingCompany) && !empty($billingCompany)) {
                 </tr>
                   <tr >
                     <td colspan="5" class="text-right" class="foorter-purchase-order">ราคาสินค้าที่ต้องวันที่ออกใบกำกับภาษีรวมภาษีมูลค่าเพิ่ม/Total Include VAT :</td>
-                    <td class="bg-purchase-order"><?php //echo number_format($order->summary, 2);     ?></td>
+                    <td class="bg-purchase-order"><?php //echo number_format($order->summary, 2);                     ?></td>
                 </tr>-->
 
             </tbody>
         </table>
+        <?= $this->render('@frontend/views/payment/signature'); ?>
+        <br>
 
     </body>
 </html>
+<div style="margin-left: 250px;">ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์ก็ต่อเมื่อบริษัทฯ ได้รับเงินเรียบร้อยแล้ว</div>

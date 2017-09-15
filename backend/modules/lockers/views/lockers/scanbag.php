@@ -132,8 +132,9 @@ if (isset($listPointItems)) {
                         $itemInLocker = common\helpers\Lockers::ItemInLocker($pickingItemsId);
                         $orderItemIds = common\helpers\Lockers::orderItemInLocker($pickingItemsId);
                         $canClose = common\helpers\Lockers::canClose($pickingItemsId);
+
                         // if ($bagNo != '') {
-                        if ($canClose == true) {
+                        if ($canClose) {
                             ?>  <!--<a href="close-channel?status=latter&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>" class="btn btn-info"><i class="fa fa-hand-o-up"></i> 1.หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $bagNo; ?></a>
                                                                                                                                                                                                                     หรือ-->
                             <a href="close-channel?status=now&bagNo=<?php echo $bagNo; ?>&model=<?php echo $model; ?>&code=<?php echo $channel; ?>&boxcode=<?php echo $listPoint->pickingId; ?>&pickingItemsId=<?php echo $pickingItemsId; ?>&orderId=<?php echo $orderId; ?>&orderItemPackingId=<?php echo $orderItemPackingId; ?>&orderItemId=<?= $orderItemIds ?>" class="btn btn-danger"><i class="fa fa-hand-o-up"></i> คลิกตรงนี้ ต้องการปิดช่องนี้ทันที่ : หยิบใส่ช่อง <?php echo $channel; ?> , ถุง : <?php echo $itemInLocker; ?></a>
@@ -381,7 +382,7 @@ if (isset($listPointItems)) {
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>ไม่พบข้อมูล</strong> ชื่อช่องนี้ ลองใหม่อีกครั้ง...&nbsp; <img src="<?php echo Yii::$app->homeUrl; ?>/images/icon/default-loader.gif" height="30" >
             </div>
-            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ?>">-->
+            <!--<meta http-equiv="refresh" content="1; url=lockers?boxcode=<?php //echo $pickingId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ?>">-->
         </div>
         <?php
     }

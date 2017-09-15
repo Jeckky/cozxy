@@ -445,8 +445,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $result = $total - $this->discount;
         }
         $this->total = $result;
-        $this->totalExVat = $result * 0.93;
-        $this->vat = ($result) * 0.07;
+        $this->vat = ($result) * (100 / 107);
+        $this->totalExVat = $result - $this->vat;
+
         //$this->grandTotal = $this->total - $this->discount;
         $this->grandTotal = $result;
         $this->shippingRate = $this->calculateShippingRate();

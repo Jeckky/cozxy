@@ -29,10 +29,13 @@ class ProductController extends MasterController {
         } else {
             $selectedOptions = NULL;
         }
-
-        $productViews = FakeFactory::productViews($productIdParams); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
+        $cartOrderId = \common\models\costfit\Order::findCartArray();
+        //throw new \yii\base\Exception(print_r($cart['orderId'], true));
+        $productViews = FakeFactory::productViews($productIdParams, $cartOrderId); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
+
+
 
         $productId = $productIdParams; //\common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*

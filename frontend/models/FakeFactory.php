@@ -343,14 +343,17 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productViews($productIdParams) {
+    public static function productViews($productIdParams, $cartOrderId) {
         $products = [];
         //$imagAll = [];
         //$GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        $getOrderAndItems = \frontend\models\FakeFactory::SearchQuantityInOrder($productIdParams);
+
+        $getOrderAndItems = \frontend\models\FakeFactory::SearchQuantityInOrder($productIdParams, $cartOrderId);
         //echo 'getOrderAndItems :' . $getOrderAndItems;
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productIdParams)->one();
         if (isset($GetProductSuppliers)) {
+            //echo '<pre>';
+            //print_r($getOrderAndItems);
             $quantityOrderItems = $getOrderAndItems; //หาจำนวนสินค้าในเทเบิล OrderItems
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
             if ($resultProductSuppliers >= $quantityOrderItems) { //ถ้าจำนวนสินค้าใน เทเบิล product suppliers มีมากกว่าในเทเบิล orderItems ให้แสดงและค้นหาสินค้าที่มีในสต๊อก
@@ -646,10 +649,20 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function SearchQuantityInOrder($productId) {
-        $GetQty = \common\models\costfit\Order::find()
-        ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
-        ->where('order_item.productId = ' . $productId . ' and order.status < 5')->count('order_item.quantity');
+    public static function SearchQuantityInOrder($productId, $cartOrderId) {
+        if (isset($cartOrderId['orderId'])) {
+            $orderId = $cartOrderId['orderId'];
+            $GetQty = \common\models\costfit\Order::find()
+            ->select(' count(order_item.quantity) as quantity')
+            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
+            ->where('order_item.productId = ' . $productId . ' and `order`.orderId =' . $orderId . ' and order.status < 5')->count('order_item.quantity');
+        } else {
+            $GetQty = \common\models\costfit\Order::find()
+            ->select(' count(order_item.quantity) as quantity')
+            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
+            ->where('order_item.productId = ' . $productId . ' and order.status < 5')->count('order_item.quantity');
+        }
+
         if (isset($GetQty)) {
             return $GetQty;
         } else {

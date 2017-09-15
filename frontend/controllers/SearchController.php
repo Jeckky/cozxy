@@ -35,6 +35,7 @@ class SearchController extends MasterController {
             $k = base64_decode(base64_decode($hash));
             $params = \common\models\ModelMaster::decodeParams($hash);
             $categoryId = $params['categoryId'];
+
             $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         }
 

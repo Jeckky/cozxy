@@ -15,7 +15,7 @@
 
                 Your Cozxy.com Order  <a href="<?= Yii::$app->homeUrl . "my-account/detail-tracking/" . common\models\ModelMaster::encodeParams(['orderId' => $res['orderId']]) . '/' . $res['orderNo'] ?>"><?= isset($res['invoiceNo']) ? $res['invoiceNo'] : "-" ?></a><br>
                 Thank you for shopping with us. Please check your order at View order list. We'll send a confirmation with your code to open your locker once your items are in! <br>
-                If there are any changes, will will notify you via email and SMS.
+                If there are any changes, we will notify you via email and SMS.
             <?php else: ?>
 
                 <?= $res["message"]; ?>
@@ -24,7 +24,7 @@
             <div class="row" style="margin-top: 1cm;">
                 <div class="col-lg-6 col-md-6 col-sm-6 ">
                     <a href="<?= Yii::$app->homeUrl ?>" class="b btn-yellow">Go shopping</a>&nbsp;&nbsp;&nbsp;
-                    <a href="<?= Yii::$app->homeUrl . "my-account" ?>" class="b btn-black">View order list</a>
+                    <a href="<?= Yii::$app->homeUrl . "my-account?act=order-history" ?>" class="b btn-black">View order list</a>
                 </div>
             </div>
         </div>
