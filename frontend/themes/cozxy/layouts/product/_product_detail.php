@@ -81,7 +81,7 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-md-12 col-xs-12 product-select bg-white">
                     <div class="product-form">
-                        <h3 class="size20 size16-xs"><?php echo $model['title'] ?></h3>
+                        <h3 class="size20 size16-xs"><?php echo strtoupper($model['title']) ?></h3>
                         <?php
                         if ($model['price'] > 0) {
                             ?>
