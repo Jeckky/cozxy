@@ -382,7 +382,7 @@ class FakeFactory extends Model {
         if (isset($marketPrice)) {
             $market = $marketPrice->price;
         } else {
-            $market = '';
+            $market = 0;
         }
         $GetProductCozxy = isset($GetProductSuppliers->product) ? $GetProductSuppliers->product : $GetProductSuppliers;
 
