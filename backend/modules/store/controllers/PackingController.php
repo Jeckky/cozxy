@@ -266,8 +266,15 @@ class PackingController extends StoreMasterController {
         if (!isset(Yii::$app->user->identity->userId)) {
             return $this->redirect($baseUrl . '/auth');
         }
+        $extraDiscont = 0;
+        $orderNo = '';
         $orderItem = OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
+        $orderDiscount = Order::find()->where("orderId=" . $order->orderId)->one();
+        if (isset($orderDiscount)) {
+            $extraDiscont = $orderDiscount->discount;
+            $orderNo = $orderDiscount->orderNo;
+        }
         $fullYear = date('Y');
         $d = date('d');
         $year = substr($fullYear, 2, 2);
@@ -281,7 +288,9 @@ class PackingController extends StoreMasterController {
                     'orderId' => $order->orderId,
                     'taxNo' => $tax,
                     'date' => $date,
-                    'fullDate' => $fullDate
+                    'fullDate' => $fullDate,
+                    'extraDiscount' => $extraDiscont,
+                    'orderNo' => $orderNo
         ]);
     }
 
