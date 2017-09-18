@@ -32,8 +32,7 @@ use \common\models\costfit\master\ProductSuppliersMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster
-{
+class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMaster {
 
     /**
      * @inheritdoc
@@ -63,8 +62,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             [['brandId', 'categoryId', 'title'], 'required', 'on' => self::ADD_NEW_PRODUCT_SUPPLIERS],
         ]);
@@ -73,8 +71,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'categoryId' => 'หมวดหมู่',
             'brandId' => 'ยี่ห้อ',
@@ -102,17 +99,15 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
+    public function attributes() {
         return array_merge(parent::attributes(), [
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
             , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price',
-            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId'
+            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId', 'isbn'
         ]);
     }
 
-    public function findCheckoutStepArray()
-    {
+    public function findCheckoutStepArray() {
         return [
             self::SUPPLIERS_APPROVE => "อนุมัติ",
             self::SUPPLIERS_OLD => "สินค้าจาก Cozxy",
@@ -123,156 +118,138 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         ];
     }
 
-    public function getCheckoutStepText($step)
-    {
+    public function getCheckoutStepText($step) {
         $res = $this->findCheckoutStepArray();
-        if(isset($res[$step])) {
+        if (isset($res[$step])) {
             return $res[$step];
         } else {
             return NULL;
         }
     }
 
-    public function getBrand()
-    {
+    public function getBrand() {
         return $this->hasOne(Brand::className(), ['brandId' => 'brandId']);
     }
 
-    public function getImages()
-    {
+    public function getImages() {
         return $this->hasOne(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public function getImageSupp()
-    {
+    public function getImageSupp() {
         return $this->hasMany(ProductImageSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->hasOne(Category::className(), ['categoryId' => 'categoryId']);
     }
 
-    public function getProductOnePrice()
-    {
+    public function getProductOnePrice() {
         return $this->hasOne(ProductPriceSuppliers::className(), ['productSuppId' => 'productSuppId']);
     }
 
-    static public function getUser($userId)
-    {
+    static public function getUser($userId) {
         $userSuppliers = \common\models\costfit\User::find()->where('UserId =' . $userId)->one();
-        if(isset($userSuppliers)) {
+        if (isset($userSuppliers)) {
             return 'คุณ ' . $userSuppliers->firstname . ' ' . $userSuppliers->lastname;
         } else {
             return 'ไม่พบข้อมูล';
         }
     }
 
-    public static function productPrice($productSuppId)
-    {
+    public static function productPrice($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $lowestPrice = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
-        if(isset($lowestPrice) && !empty($lowestPrice)) {
+        if (isset($lowestPrice) && !empty($lowestPrice)) {
             return $lowestPrice->price;
         }
     }
 
-    public static function productImageSuppliers($productId)
-    {
+    public static function productImageSuppliers($productId) {
 //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
-        if(isset($image) && !empty($image)) {
+        if (isset($image) && !empty($image)) {
             return $image->imageThumbnail1;
         } else {
             return '';
         }
     }
 
-    public static function productImageSuppliersSmall($productId)
-    {
+    public static function productImageSuppliersSmall($productId) {
 //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productId . " and status=1")->orderBy("ordering ASC")->one();
-        if(isset($image) && !empty($image)) {
+        if (isset($image) && !empty($image)) {
             return $image->imageThumbnail2;
         } else {
             return '';
         }
     }
 
-    public static function productPriceSupplier($productSuppId)
-    {
+    public static function productPriceSupplier($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $price = ProductPriceSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->one();
-        if(isset($price) && !empty($price)) {
+        if (isset($price) && !empty($price)) {
             return $price->price;
         }
     }
 
-    public static function productSuppliersId($productSuppId)
-    {
+    public static function productSuppliersId($productSuppId) {
         $id = Product::find()->where("productSuppId=" . $productSuppId)->one();
-        if(isset($id) && !empty($id)) {
+        if (isset($id) && !empty($id)) {
             return $id->productId;
         }
     }
 
-    public static function productId($productSuppId)
-    {
+    public static function productId($productSuppId) {
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        if(isset($id)) {
+        if (isset($id)) {
             return $id->productId;
         }
     }
 
-    public static function supplier($productSuppId)
-    {
+    public static function supplier($productSuppId) {
 
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        if(isset($id) && !empty($id)) {
+        if (isset($id) && !empty($id)) {
             return $id->userId;
         }
     }
 
-    public static function productSupplierName($productSuppId)
-    {
+    public static function productSupplierName($productSuppId) {
         $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
-        if(isset($id) && !empty($id)) {
+        if (isset($id) && !empty($id)) {
             return $id;
         } else {
             return '';
         }
     }
 
-    public static function productOrder($productSuppId)
-    {
+    public static function productOrder($productSuppId) {
         $model = Order::find()
-            ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-            ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-            ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-            ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-                . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
-            ->all();
-        if(isset($model) && count($model) > 0) {
+        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+        ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+        ->all();
+        if (isset($model) && count($model) > 0) {
             return $model;
         } else {
             return '';
         }
     }
 
-    public static function productImagesSuppliers($productSuppId)
-    {
+    public static function productImagesSuppliers($productSuppId) {
 //throw new \yii\base\Exception($productSuppId);
         $image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId . " and status=1")->orderBy("ordering ASC")->all();
-        if(isset($image) && !empty($image)) {
+        if (isset($image) && !empty($image)) {
             return $image;
         }
     }
 
-    public static function ImagesFromPost($productPostId, $productSuppId)
-    {
+    public static function ImagesFromPost($productPostId, $productSuppId) {
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $img = '';
-        if(isset($productPost)) {
+        if (isset($productPost)) {
             //$image = ProductImageSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             /* $image = ProductImage::find()->where("productId=" . $productPost->productId)->one();
               if (isset($image)) {
@@ -286,13 +263,12 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $productImagesThumbnail1;
     }
 
-    public static function productSupplierGroupStory($productId)
-    {
+    public static function productSupplierGroupStory($productId) {
 
         $products = Product::find()->where("parentId=" . $productId)->all();
         $productIds = '';
-        if(isset($products) && count($products) > 0) {
-            foreach($products as $id):
+        if (isset($products) && count($products) > 0) {
+            foreach ($products as $id):
                 $productIds .= $id->productId . ",";
 
             endforeach;
@@ -300,7 +276,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         } else {
             $productIds .= $productId . ",";
         }
-        if($productIds != '') {
+        if ($productIds != '') {
             $productIds = substr($productIds, 0, -1);
         }
 
@@ -308,8 +284,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $productIds;
     }
 
-    public static function productParentId($productSuppId)
-    {
+    public static function productParentId($productSuppId) {
         $productSupplier = ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
 
         /* $product = Product::find()->where("productId = " . $productSupplier->productId)->one();
@@ -322,37 +297,32 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $productSupplier;
     }
 
-    public function getUnits()
-    {
+    public function getUnits() {
         return $this->hasOne(Unit::className(), ['unitId' => 'unit']);
     }
 
-    public static function bestSellers()
-    {
+    public static function bestSellers() {
         return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
-    public static function itemOnSales()
-    {
+    public static function itemOnSales() {
         return ProductSuppliers::find()->where("approve = 'approve' and result>0")->orderBy("rand()")->limit(6)->all();
     }
 
-    public function getProduct()
-    {
+    public function getProduct() {
         return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
-    public static function newProductSupp()
-    {
+    public static function newProductSupp() {
         return self::find()
-            ->leftJoin('product p', 'product_suppliers.productId=p.productId')
-            ->leftJoin('brand b', 'b.brandId=product_suppliers.brandId')
-            ->where('p.parentId is not null')
-            ->andWhere(['product_suppliers.approve' => 'new', 'product_suppliers.status' => 0])
-            ->andWhere(['p.approve' => 'approve'])
-            ->andWhere('p.brandId is not null')
-            ->andWhere('product_suppliers.brandId is not null')
-            ->andWhere('b.brandId is not null');
+        ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+        ->leftJoin('brand b', 'b.brandId=product_suppliers.brandId')
+        ->where('p.parentId is not null')
+        ->andWhere(['product_suppliers.approve' => 'new', 'product_suppliers.status' => 0])
+        ->andWhere(['p.approve' => 'approve'])
+        ->andWhere('p.brandId is not null')
+        ->andWhere('product_suppliers.brandId is not null')
+        ->andWhere('b.brandId is not null');
     }
 
 }
