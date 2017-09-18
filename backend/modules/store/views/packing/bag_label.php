@@ -9,8 +9,10 @@ use common\models\costfit\ProductSuppliers;
 use common\helpers\IntToBath;
 use common\models\costfit\Address;
 use common\models\costfit\User;
+use common\models\costfit\ContentGroup;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 ?>
 <html>
     <head>
@@ -47,7 +49,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
             </tr>
             <tr style="height: 100px;">
                 <td style="text-align: center; vertical-align: middle;">
-                    <img src="<?= Yii::$app->homeUrl ?>images/logo/cozxy.png" alt="cozxy.com" style="width: 110px;height: 65px;">
+                    <img src="<?= $baseUrl . $logo->image ?>" alt="cozxy.com" style="width: 110px;height: 65px;">
                 </td>
                 <td style="padding: 5px; vertical-align: text-top; text-align: center;">
                     <h2>
@@ -64,7 +66,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <table width="747"  cellpadding="3" cellspacing="0" style="font-size: 10pt;">
             <tr>
                 <td style="width: 33%;text-align: center;"><h2> </h2></td>
-                <td style="width: 34%;text-align: center;"><h2>ใบกำกับภาษี</h2></td>
+                <td style="width: 34%;text-align: center;"><h2>ใบเสร็จรับเงิน/ใบกำกับภาษี/ใบส่งของ</h2></td>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
                     <b>เลขที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL&nbsp;<?= $date . "-" . $taxNo ?><br><br>
                     <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $fullDate ?>
@@ -145,13 +147,13 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <tr>
         <td rowspan="3" colspan="4" style="text-align: left;border-top:#000 solid thin;border-right: #000 solid thin; "><b>หมายเหตุ</b></td>
         <td colspan="2" style="border-right: #000 solid thin;border-top: #000 solid thin;"><b>&nbsp;&nbsp;รวมเงิน</b></td>
-        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format(($total - ($total * 0.07)), 2) ?></td>
+        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format(($total - ($total * (100 / 107))), 2) ?></td>
     </tr>
     <tr>
     </tr>
     <tr>
         <td colspan="2" style="border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม 7%</b></td>
-        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format($total * 0.07, 2) ?></td>
+        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format($total * (100 / 107), 2) ?></td>
     </tr>
     <tr>
         <td colspan="4" style="text-align: center;border-top:#000 solid thin;border-right: #000 solid thin; ">(<?= IntToBath::changeToBath(number_format($total, 2)) ?>)</td>
@@ -182,7 +184,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
     <img src="<?= Yii::$app->homeUrl . $img ?>" style="width:50px;height: 50px;"><br>
     ----------------------------------------<br><br>
     ผู้มีอำนาจลงนาม<br>
-    วันที่_____/_____/_____
+    วันที่&nbsp;&nbsp;&nbsp;<?= $fullDate ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">
