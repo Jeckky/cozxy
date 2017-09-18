@@ -46,7 +46,6 @@ SCRIPT;
                 'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()
                 ->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue, $index = 1) {
                     //return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
-
                     return strtolower($model['ctry_name']) . ' (' . $model['currency_name'] . ')';
                 }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
