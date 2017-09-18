@@ -445,7 +445,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $result = $total - $this->discount;
         }
         $this->total = $result;
-        $this->vat = ($result) * (100 / 107);
+        $this->vat = $result - ($result * (100 / 107));
         $this->totalExVat = $result - $this->vat;
 
         //$this->grandTotal = $this->total - $this->discount;
@@ -974,20 +974,18 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $string;
     }
 
-    public function orderPassword()
-    {
+    public function orderPassword() {
         $flag = true;
-        while($flag) {
+        while ($flag) {
             $password = Token::randomNumber();
 
-            $count = Order::find()->where(['<=', 'status', 16])->andWhere(['password'=>$password])->count();
+            $count = Order::find()->where(['<=', 'status', 16])->andWhere(['password' => $password])->count();
 
-            if($count == 0) {
+            if ($count == 0) {
                 $flag = false;
                 return $password;
             }
         }
-
     }
 
 }
