@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\modules\mobile\controllers;
+namespace backend\modules\booth\controllers;
 
 use yii\web\Controller;
 
 /**
- * Default controller for the `mobile` module
+ * Default controller for the `booth` module
  */
 class DefaultController extends Controller
 {
@@ -15,7 +15,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        echo 'mobile';
-//        return $this->render('index');
+        return $this->render('index');
     }
 }

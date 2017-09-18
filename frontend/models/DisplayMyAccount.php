@@ -280,4 +280,19 @@ class DisplayMyAccount extends Model {
         }
     }
 
+    public static function ConfirmRegisterBooth($otp, $token, $email) {
+        $model = \common\models\costfit\User::find()->where("email ='" . $email . "' and token = '" . $token . "' and password ='" . $otp . "' ")->one();
+        if (isset($model)) {
+            //$model->password = $data['newPassword'];
+            $model->status = 1;
+            if ($model->save(FALSE)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
 }

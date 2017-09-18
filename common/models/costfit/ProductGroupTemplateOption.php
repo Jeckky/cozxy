@@ -20,29 +20,25 @@ use \common\models\costfit\master\ProductGroupTemplateOptionMaster;
  * @property ProductGroupTemplate $productGroupTemplate
  * @property ProductSuppliersOption[] $productSuppliersOptions
  */
-class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGroupTemplateOptionMaster
-{
+class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGroupTemplateOptionMaster {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function getTitle($productGroupTemplateOptionId)
-    {
+    public static function getTitle($productGroupTemplateOptionId) {
         $model = ProductGroupTemplateOption::findOne($productGroupTemplateOptionId);
-        return $model->title;
+        return strtoupper($model->title);
     }
 
 }

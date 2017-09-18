@@ -33,8 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="row">
 
                 <div class="col-xs-12 bg-white">
-                    <h1 class="page-header"><?= $productPost->title ?> </h1>
-
+                    <h1 class="page-header"><?= $productPost->title ?> <small>(<?php echo isset($productPost->product->title) ? $productPost->product->title : '-'; ?>)</small></h1>
+                    <div style="font-size: 12px; margin-top: -5px;">
+                        <a href="#"><i class="fa fa-clipboard" aria-hidden="true"></i> <?php echo isset($productPost->product->brand->title) ? $productPost->product->brand->title : '-'; ?></a>&nbsp;
+                        <span><i class="fa fa-calendar"></i>  <?= \Yii::$app->formatter->asDate($productPost->createDateTime, 'long') ?></span>&nbsp;
+                        <a href="#"><i class="fa fa-tags"></i> Stories</a>
+                    </div>
                     <p>
                         <?= isset($productPost->shortDescription) ? $productPost->shortDescription : '' ?>
                     </p>
