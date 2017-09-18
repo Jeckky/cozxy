@@ -32,10 +32,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 //                        //self.close();
 //                    }
             function print_window() {
-                //window.print();
+                window.print();
                 setTimeout(function () {
                     window.open('', '_self', '');
-                    // window.close();
+                    window.close();
                 }, 0);
             }
 
@@ -47,9 +47,6 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr style="height:20px;">
                 <td style="text-align: right;vertical-align: top;" colspan="3">สาขาที่ออกใบกำกับภาษี : สำนักงานใหญ่</td>
             </tr>
-            <tr style="height:20px;">
-                <td style="text-align: right;vertical-align: top;" colspan="3"></td>
-            </tr>
             <tr style="height: 100px;">
                 <td style="text-align: center; vertical-align: middle;">
                     <img src="<?= $baseUrl . $logo->image ?>" alt="cozxy.com" style="width: 110px;height: 65px;">
@@ -58,46 +55,40 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                     <h2>
                         บริษัท คอซซี่ดอทคอม จำกัด
                     </h2>
-                    เลขประจำตัวผู้เสียภาษี : 0105553036789<br>
                     เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสาวรีย์ กรุงเทพฯ 10220<br>
-                    โทร 02-101-0689, 064-184-7414 <br>
+                    โทร 02-101-0689 เลขประจำตัวผู้เสียภาษี   0105553036789 <br>
                 </td>
                 <td style="vertical-align:middle;">
-                    ใบเสร็จรับเงิน/ใบกำกับภาษี/ใบส่งของ<br>
-                    RECEIPT/TAX INVOICE/DELIVER ORDER<br>
-                    ต้นฉบับ<br>ORIGINAL<br>
-                    <img src="https://chart.googleapis.com/chart?chs=90x90&cht=qr&chl=<?= $bagNo ?>">
+                    <img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?= $bagNo ?>">
                 </td>
             </tr>
         </table>
-<!--        <table width="747"  cellpadding="3" cellspacing="0" style="font-size: 10pt;">
+        <table width="747"  cellpadding="3" cellspacing="0" style="font-size: 10pt;">
             <tr>
+                <td style="width: 27%;text-align: center;"><h2> </h2></td>
+                <td style="width: 40%;text-align: center;"><h2>ใบเสร็จรับเงิน/ใบกำกับภาษี/ใบส่งของ</h2></td>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
-
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                           ?>
+                    <b>เลขที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL&nbsp;<?= $date . "-" . $taxNo ?><br><br>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $fullDate ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                           ?>"></td>
-                <td style="width: 40%;text-align: center;"></td>
-
             </tr>
-        </table>-->
+        </table>
         <table width="750"  cellpadding="3" style="margin-top: 3px;font-size: 10pt;">
             <tr>
                 <td style="width: 50%;border: #000 solid thin;padding-left: 10px;">
                     <?php
                     $customer = Address::CompanyByOderId($orderId);
                     ?>
-                    <b>ได้รับเงินจาก</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= Order::findReciever($orderId) ?><br>
                     <b>รหัสลูกค้า</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $customer->tax != null ? $customer->tax : '' ?><br>
+                    <b>นามผู้ซื้อ</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= Order::findReciever($orderId) ?><br>
                     <b>ที่อยู่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= User::userAddressText($customer->addressId, false) ?><br><br>
-                    <b>โทรศัทท์</b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $customer->tel ?>
+                    <b>โทร</b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $customer->tel ?>
                     <b>&nbsp;&nbsp;&nbsp;โทรสาร&nbsp;&nbsp;&nbsp;<?= $customer->fax ?></b>
                 </td>
                 <td style="border: #000 solid thin;padding-left: 10px;">
-                    <b>เลขที่ใบกำกับ/Tax invoice no.</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL&nbsp;<?= $date . "-" . $taxNo ?><br>
-                    <b>เลขที่ใบสั่งซื้อ/Order no.</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL&nbsp;<?= $date . "-" . $taxNo ?><br>
-                    <b>สถานที่ส่งของ</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= PickingPoint::findPickingPoitItem($orderId) ?><br>
-                    <b>วันที่/Date</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $fullDate ?><br>
+                    <b>เลขประจำตัวผู้เสียภาษี</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0105553036789 <b>&nbsp;&nbsp;&nbsp;&nbsp;สาขา&nbsp;&nbsp;&nbsp;&nbsp;</b>00000<br>
+                    <b>เลขที่ใบกำกับ</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BL&nbsp;<?= $date . "-" . $taxNo ?><br>
+                    <b>สถานที่ส่งของ</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= PickingPoint::findPickingPoitItem($orderId) ?><br><br>
                     <b>ชื่อผู้ติดต่อ</b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </td>
             </tr>
@@ -107,8 +98,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                 <th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>รหัสสินค้า</center></th>
         <th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>รายการ</center></th>
     <th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>จำนวน</center></th>
+<th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>หน่วย</center></th>
 <th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>ราคา/หน่วย</center></th>
-<th colspan="2"style="border-bottom: #000 solid thin;border-bottom: #000 solid thin;"><center>จำนวนเงิน</center></th>
+<th style="border-right: #000 solid thin;border-bottom: #000 solid thin;"><center>ส่วนลด</center></th>
+<th style="border-bottom: #000 solid thin;border-bottom: #000 solid thin;"><center>จำนวนเงิน</center></th>
 </tr>
 
 <tbody>
@@ -125,8 +118,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                 echo '<td style="border-right: #000 solid thin;"><center>' . $item->code . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $item->title . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $orderItem->quantity . '</center></td>';
+                echo '<td style="border-right: #000 solid thin;"><center>' . Unit::unitName($item->productSuppId) . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . number_format(ProductSuppliers::productPrice($item->productSuppId), 2) . '</center></td>';
-                echo '<td colspan="2" style="text-align:right">' . number_format($orderItem->quantity * ProductSuppliers::productPrice($item->productSuppId), 2) . '</td>';
+                echo '<td style="border-right: #000 solid thin;"><center></center></td>';
+                echo '<td style="text-align:right">' . number_format($orderItem->quantity * ProductSuppliers::productPrice($item->productSuppId), 2) . '</td>';
                 echo '</tr>';
                 $total += ProductSuppliers::productPrice($item->productSuppId);
                 for ($empty = 0; $empty < 10 - count($orderItem); $empty++)://print ช่องว่าง
@@ -135,7 +130,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                     echo '<td style="border-right: #000 solid thin;"></td>';
                     echo '<td style="border-right: #000 solid thin;"></td>';
                     echo '<td style="border-right: #000 solid thin;"></td>';
-                    echo '<td colspan="2"><center></center></td>';
+                    echo '<td style="border-right: #000 solid thin;"></td>';
+                    echo '<td style="border-right: #000 solid thin;"></td>';
+                    echo '<td><center></center></td>';
                     echo '</tr>';
                 endfor;
                 $i++;
@@ -148,24 +145,24 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     }
     ?>
     <tr>
-        <td rowspan="3" colspan="3" style="text-align: left;border-top:#000 solid thin;border-right: #000 solid thin; "><b>หมายเหตุ</b></td>
-        <td style="border-right: #000 solid thin;border-top: #000 solid thin;"><b>&nbsp;&nbsp;รวมเงิน</b></td>
-        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format($total * (100 / 107), 2) ?></td>
+        <td rowspan="3" colspan="4" style="text-align: left;border-top:#000 solid thin;border-right: #000 solid thin; "><b>หมายเหตุ</b></td>
+        <td colspan="2" style="border-right: #000 solid thin;border-top: #000 solid thin;"><b>&nbsp;&nbsp;รวมเงิน</b></td>
+        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format(($total - ($total * (100 / 107))), 2) ?></td>
     </tr>
     <tr>
     </tr>
     <tr>
-        <td style="border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม 7%</b></td>
-        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format(($total - ($total * (100 / 107))), 2) ?></td>
+        <td colspan="2" style="border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม 7%</b></td>
+        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format($total * (100 / 107), 2) ?></td>
     </tr>
     <tr>
-        <td colspan="3" style="text-align: center;border-top:#000 solid thin;border-right: #000 solid thin; ">(<?= IntToBath::changeToBath(number_format($total, 2)) ?>)</td>
-        <td style = "border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;รวมทั้งสิ้น</b></td>
+        <td colspan="4" style="text-align: center;border-top:#000 solid thin;border-right: #000 solid thin; ">(<?= IntToBath::changeToBath(number_format($total, 2)) ?>)</td>
+        <td colspan = "2"style = "border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;รวมทั้งสิ้น</b></td>
         <td style = "border-top:#000 solid thin;text-align: right;"><?= number_format($total, 2)
     ?></td>
     </tr>
     <tr style="height: 30px;">
-        <td colspan="6" style="text-align: left;border-top:#000 solid thin;">
+        <td colspan="7" style="text-align: left;border-top:#000 solid thin;">
             สินค้าตามใบส่งของนี้ แม้จะได้ส่งมอบแก่ผู้ซื้อแล้วยังคงเป็นทรัพย์สินของผู้ขาย จนกว่าผู้ซื้อได้ชำระเงินเสร็จเรียบร้อยแล้ว
         </td>
     </tr>
