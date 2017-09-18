@@ -757,7 +757,13 @@ class ProductGroupController extends ProductMasterController {
         \common\models\costfit\Product::deleteAll("productId = " . $_GET["id"]);
 
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index',
+                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+                    'status' => isset($_GET["status"]) ? $_GET["status"] : ''
+        ]);
     }
 
     public function actionDeleteProductImage() {
