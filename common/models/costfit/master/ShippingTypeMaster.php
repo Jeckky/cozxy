@@ -7,9 +7,9 @@ use Yii;
 /**
 * This is the model class for table "shipping_type".
 *
-    * @property integer $shippingTypeId
+    * @property string $shippingTypeId
     * @property string $title
-    * @property integer $date
+    * @property string $date
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

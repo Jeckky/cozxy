@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "stock_history".
 *
     * @property string $stockHistoryId
-    * @property integer $orderItemId
-    * @property integer $productSuppId
-    * @property integer $quantity
+    * @property string $orderItemId
+    * @property string $productSuppId
+    * @property string $quantity
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

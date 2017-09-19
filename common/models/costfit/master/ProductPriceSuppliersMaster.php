@@ -9,10 +9,10 @@ use Yii;
 *
     * @property string $productPriceId
     * @property string $productSuppId
-    * @property integer $quantity
+    * @property string $quantity
     * @property string $price
     * @property integer $discountType
-    * @property integer $discountValue
+    * @property string $discountValue
     * @property string $description
     * @property integer $status
     * @property string $createDateTime

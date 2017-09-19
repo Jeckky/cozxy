@@ -10,7 +10,7 @@ use Yii;
     * @property string $supplierId
     * @property string $name
     * @property string $address
-    * @property integer $taxId
+    * @property string $taxId
     * @property string $tel
     * @property string $email
     * @property string $description

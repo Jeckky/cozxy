@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "configuration".
 *
-    * @property integer $configurationId
+    * @property string $configurationId
     * @property string $title
     * @property string $description
     * @property string $value
@@ -31,11 +31,10 @@ return 'configuration';
 public function rules()
 {
 return [
-            [['title', 'value'], 'required'],
+            [['title'], 'required'],
             [['status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title', 'description'], 'string', 'max' => 255],
-            [['value'], 'string', 'max' => 45],
+            [['title', 'description', 'value'], 'string', 'max' => 255],
         ];
 }
 

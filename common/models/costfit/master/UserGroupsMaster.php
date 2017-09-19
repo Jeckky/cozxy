@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "user_groups".
 *
-    * @property integer $user_group_Id
+    * @property string $user_group_Id
     * @property string $name
     * @property string $parent_id
     * @property integer $status

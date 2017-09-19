@@ -25,7 +25,9 @@ class Countries extends \common\models\dbworld\master\CountriesMaster {
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+            [['countryId', 'countryName', 'localName', 'webCode', 'region', 'continent', 'latitude', 'longitude', 'surfaceArea', 'population'], 'required', 'on' => 'countries_rules'],
+        ]);
     }
 
     /**

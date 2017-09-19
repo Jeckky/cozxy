@@ -42,14 +42,13 @@ return 'district';
 public function rules()
 {
 return [
-            [['districtId', 'cityId'], 'required'],
-            [['districtId', 'cityId', 'stateId', 'geographyId'], 'integer'],
+            [['cityId'], 'required'],
+            [['cityId', 'stateId', 'geographyId'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['code'], 'string', 'max' => 45],
             [['districtName'], 'string', 'max' => 50],
             [['localName'], 'string', 'max' => 100],
             [['countryId'], 'string', 'max' => 3],
-            [['districtId'], 'unique'],
         ];
 }
 

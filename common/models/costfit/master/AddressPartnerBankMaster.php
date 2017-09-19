@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "address_partner_bank".
 *
-    * @property integer $pbId
+    * @property string $pbId
     * @property string $userId
     * @property string $bankName
     * @property string $accountHolderName

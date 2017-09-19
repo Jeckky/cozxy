@@ -32,7 +32,7 @@ return [
             [['status'], 'integer'],
             [['createDateTime'], 'required'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['email'], 'string', 'max' => 20],
+            [['email'], 'string', 'max' => 200],
         ];
 }
 
