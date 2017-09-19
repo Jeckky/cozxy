@@ -22,7 +22,9 @@ class Cities extends \common\models\dbworld\master\CitiesMaster {
      * @inheritdoc
      */
     public function rules() {
-        return array_merge(parent::rules(), []);
+        return array_merge(parent::rules(), [
+            [['cityName', 'localName', 'stateId', 'countryId'], 'required', 'on' => 'cities_rules'],
+        ]);
     }
 
     /**

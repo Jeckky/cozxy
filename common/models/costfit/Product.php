@@ -74,7 +74,7 @@ class Product extends \common\models\costfit\master\ProductMaster
     {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result'
+            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result', 'isbn'
         ]);
     }
 

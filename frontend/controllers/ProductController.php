@@ -70,6 +70,9 @@ class ProductController extends MasterController {
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductId($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
         $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelect($productId, $productSupplierId);
+
+        //echo '<pre>';
+        //print_r($productGroupOptionValueSelect->attributes);
         return $this->render('index', compact('productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 

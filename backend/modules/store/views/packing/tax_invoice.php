@@ -4,8 +4,10 @@ use common\models\costfit\Order;
 use common\models\costfit\PickingPoint;
 use common\models\costfit\OrderItemPacking;
 use common\models\costfit\Product;
+use common\models\costfit\ContentGroup;
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
+$logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 ?>
 <html>
     <head>
@@ -39,7 +41,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
         <table width ="750"  cellpadding="2" cellspacing="0" style="border: 0px; text-align: center;">
             <tr style="height: 160px;">
                 <td colspan="2" style="text-align: left; vertical-align: middle;border: 0.5px slategray solid;border-right: 0px;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $baseUrl; ?>/images/logo/cozxy.png" alt="cozxy.com" width="110" height="65">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $baseUrl . $logo->image; ?>" alt="cozxy.com" width="110" height="65">
                 </td>
                 <td colspan="3" style="padding: 5px; vertical-align: text-top; text-align: center;border: 0.5px slategray solid;border-right: 0px;">
                     <h2>
@@ -49,7 +51,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                     โทร. 02-101-0689 เลขประจำตัวผู้เสียภาษี : 0105546109903 <br>
                 </td>
                 <td colspan="2" style="vertical-align: text-top; text-align: right; border: 0.5px slategray solid;">
-                    <?php //echo $title;         ?><br><h2><center> ใบกำกับภาษี</center></h2>
+                    <?php //echo $title;          ?><br><h2><center> ใบเสร็จรับเงิน/ใบกำกับภาษี/ใบส่งของ</center></h2>
                 </td>
             </tr>
         </table>

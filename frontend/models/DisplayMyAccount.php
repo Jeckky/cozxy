@@ -58,6 +58,7 @@ class DisplayMyAccount extends Model {
             'email' => isset($dataUser['email']) ? $dataUser['email'] : '&nbsp;-&nbsp;',
             'birthDate' => isset($dataUser['birthDate']) ? $dataUser['birthDate'] : FALSE,
             'gender' => isset($dataUser['gender']) ? $dataUser['gender'] : '',
+            'tel' => isset($dataUser['tel']) ? $dataUser['tel'] : '-',
         ];
         return $products;
     }
@@ -251,6 +252,7 @@ class DisplayMyAccount extends Model {
         $model->firstname = $data['firstname'];
         $model->lastname = $data['lastname'];
         $model->gender = $data['gender'];
+        $model->tel = $data['tel'];
         $model->birthDate = $birthDate;
         if ($model->save(FALSE)) {
             return TRUE;
@@ -275,6 +277,21 @@ class DisplayMyAccount extends Model {
         $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
         if ($model->save(FALSE)) {
             return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public static function ConfirmRegisterBooth($otp, $token, $email) {
+        $model = \common\models\costfit\User::find()->where("email ='" . $email . "' and token = '" . $token . "' and password ='" . $otp . "' ")->one();
+        if (isset($model)) {
+            //$model->password = $data['newPassword'];
+            $model->status = 1;
+            if ($model->save(FALSE)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         } else {
             return FALSE;
         }

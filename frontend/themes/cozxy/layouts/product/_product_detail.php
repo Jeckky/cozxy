@@ -81,7 +81,7 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-md-12 col-xs-12 product-select bg-white">
                     <div class="product-form">
-                        <h3 class="size20 size16-xs"><?php echo $model['title'] ?></h3>
+                        <h3 class="size20 size16-xs"><?php echo strtoupper($model['title']) ?></h3>
                         <?php
                         if ($model['price'] > 0) {
                             ?>
@@ -91,7 +91,7 @@ $val = rand(1, 10);
                         <p class="size12 fc-g666">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></p>
                         <?php
                         if (isset($model['shortDescription'])) {
-                            echo '<hr><p>' . $model['shortDescription'] . '<p><hr>';
+                            echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
                         } else {
                             echo '';
                         }
@@ -160,11 +160,11 @@ $val = rand(1, 10);
 
                             <?php
                             if (true) {//เช็คมีสินค้าในสต๊อก
-                                if ($model['result'] <= 0) {
-                                    ?>
-                                    <a class="b btn-black-s size10">NOT AVAILABLE</a>
-                                    <?php
-                                }
+                                //if ($model['result'] <= 0) {
+                                ?>
+                                <!--<a class="b btn-black-s size10">NOT AVAILABLE</a>-->
+                                <?php
+                                //}
                                 if (Yii::$app->user->id) {
                                     if (isset($model['productId']) && $model['productId'] != '') {
                                         if ($model['wishList'] == 1) { // เคย wishList ไปแล้ว
@@ -182,9 +182,15 @@ $val = rand(1, 10);
                                 } else {
                                     ?>
                                     <a href="<?= Yii::$app->homeUrl . 'site/login' ?>"  style="margin:14px auto 2px">
-
                                         <div class="b btn-g999" style="padding: 5px 10px;">ADD TO SHELF</div>
                                     </a>
+                                    <?php
+                                }
+                                if ($model['result'] <= 0) {
+                                    ?>
+                                    <div href="" class="b btn-g999 btn-black" style="margin:14px auto 2px;padding: 5px 10px; background-color: #000; cursor: default;">
+                                        <div>NOT AVAILABLE</div>
+                                    </div>
                                     <?php
                                 }
                             }

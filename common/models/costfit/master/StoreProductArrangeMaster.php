@@ -9,14 +9,15 @@ use Yii;
 *
     * @property string $storeProductArrangeId
     * @property string $storeProductId
+    * @property string $poItemId
     * @property string $productId
     * @property string $productSuppId
     * @property string $slotId
     * @property string $quantity
-    * @property integer $orderId
-    * @property integer $parentId
-    * @property integer $result
-    * @property integer $pickerId
+    * @property string $orderId
+    * @property string $parentId
+    * @property string $result
+    * @property string $pickerId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -38,7 +39,7 @@ public function rules()
 {
 return [
             [['storeProductId', 'productId', 'productSuppId', 'slotId', 'quantity', 'createDateTime'], 'required'],
-            [['storeProductId', 'productId', 'productSuppId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
+            [['storeProductId', 'poItemId', 'productId', 'productSuppId', 'slotId', 'orderId', 'parentId', 'result', 'pickerId', 'status'], 'integer'],
             [['quantity'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
         ];
@@ -52,6 +53,7 @@ public function attributeLabels()
 return [
     'storeProductArrangeId' => Yii::t('store_product_arrange', 'Store Product Arrange ID'),
     'storeProductId' => Yii::t('store_product_arrange', 'Store Product ID'),
+    'poItemId' => Yii::t('store_product_arrange', 'Po Item ID'),
     'productId' => Yii::t('store_product_arrange', 'Product ID'),
     'productSuppId' => Yii::t('store_product_arrange', 'Product Supp ID'),
     'slotId' => Yii::t('store_product_arrange', 'Slot ID'),

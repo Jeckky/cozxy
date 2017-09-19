@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "picking_point".
 *
-    * @property integer $pickingId
+    * @property string $pickingId
     * @property string $title
     * @property string $code
     * @property string $description
@@ -24,6 +24,12 @@ use Yii;
     * @property string $mapImages
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property string $serialnumber
+    * @property string $generalprofile_lockercode
+    * @property string $generalprofile_lockername
+    * @property string $masterkey
+    * @property string $username_unlock
+    * @property string $token
 */
 class PickingPointMaster extends \common\models\ModelMaster
 {
@@ -44,12 +50,14 @@ return [
             [['title', 'code', 'provinceId', 'amphurId', 'createDateTime'], 'required'],
             [['provinceId', 'amphurId', 'type', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
+            [['token'], 'string'],
             [['title', 'countryId'], 'string', 'max' => 45],
             [['code'], 'string', 'max' => 30],
             [['description'], 'string', 'max' => 250],
             [['ip', 'macAddress', 'authCode'], 'string', 'max' => 100],
             [['longitude', 'latitude'], 'string', 'max' => 50],
             [['mapImages'], 'string', 'max' => 150],
+            [['serialnumber', 'generalprofile_lockercode', 'generalprofile_lockername', 'masterkey', 'username_unlock'], 'string', 'max' => 255],
         ];
 }
 
@@ -76,6 +84,12 @@ return [
     'mapImages' => Yii::t('picking_point', 'Map Images'),
     'createDateTime' => Yii::t('picking_point', 'Create Date Time'),
     'updateDateTime' => Yii::t('picking_point', 'Update Date Time'),
+    'serialnumber' => Yii::t('picking_point', 'Serialnumber'),
+    'generalprofile_lockercode' => Yii::t('picking_point', 'Generalprofile Lockercode'),
+    'generalprofile_lockername' => Yii::t('picking_point', 'Generalprofile Lockername'),
+    'masterkey' => Yii::t('picking_point', 'Masterkey'),
+    'username_unlock' => Yii::t('picking_point', 'Username Unlock'),
+    'token' => Yii::t('picking_point', 'Token'),
 ];
 }
 }
