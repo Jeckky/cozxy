@@ -11,6 +11,7 @@ class LocalController extends ContentMasterController {
         $geography = \common\models\dbworld\Geography::findAll('');
         $states = \common\models\dbworld\States::findAll('');
         $zipcodes = \common\models\dbworld\Zipcodes::findAll('');
+
         return $this->render('index', compact('cities', 'countries', 'district', 'geography', 'states', 'zipcodes'));
     }
 
