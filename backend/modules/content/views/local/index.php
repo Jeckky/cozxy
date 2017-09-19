@@ -68,7 +68,7 @@ use kartik\depdrop\DepDrop;
                             <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
                             <div style="width: 100%; height: 200px; background-color: #f5efef;">&nbsp;</div>
                             <h2>ประเทศ</h2>
-                            <p>จำนวน:45K</p>
+                            <p>จำนวน: </p>
                             <span class="pull-right">&nbsp;</span>
                             <div class="offer">&nbsp;</div>
                             <div class="detail">
@@ -91,7 +91,7 @@ use kartik\depdrop\DepDrop;
                             <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
                             <div style="width: 100%; height: 200px; background-color: #f5efef;">&nbsp;</div>
                             <h2>จังหวัด</h2>
-                            <p>จำนวน:45K</p>
+                            <p>จำนวน: </p>
                             <span class="pull-right">&nbsp;</span>
                             <div class="offer">&nbsp;</div>
                             <div class="detail">
@@ -114,7 +114,7 @@ use kartik\depdrop\DepDrop;
                             <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
                             <div style="width: 100%; height: 200px; background-color: #f5efef;">&nbsp;</div>
                             <h2>เขต/อำเภอ</h2>
-                            <p>จำนวน:45K</p>
+                            <p>จำนวน: </p>
                             <span class="pull-right">&nbsp;</span>
                             <div class="offer">&nbsp;</div>
                             <div class="detail">
@@ -137,7 +137,7 @@ use kartik\depdrop\DepDrop;
                             <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
                             <div style="width: 100%; height: 200px; background-color: #f5efef;">&nbsp;</div>
                             <h2>แขวง/ตำบล</h2>
-                            <p>จำนวน:45K</p>
+                            <p>จำนวน: </p>
                             <span class="pull-right">&nbsp;</span>
                             <div class="offer">&nbsp;</div>
                             <div class="detail">
@@ -160,7 +160,7 @@ use kartik\depdrop\DepDrop;
                             <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
                             <div style="width: 100%; height: 200px; background-color: #f5efef;">&nbsp;</div>
                             <h2>รหัสไปรษณีย์</h2>
-                            <p>จำนวน:45K</p>
+                            <p>จำนวน: </p>
                             <span class="pull-right">&nbsp;</span>
                             <div class="offer">&nbsp;</div>
                             <div class="detail">
