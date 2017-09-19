@@ -188,9 +188,9 @@ $val = rand(1, 10);
                                 }
                                 if ($model['result'] <= 0) {
                                     ?>
-                                    <a href="" class="b btn-g999 btn-black" style="margin:14px auto 2px;padding: 5px 10px; background-color: #000;">
+                                    <div href="" class="b btn-g999 btn-black" style="margin:14px auto 2px;padding: 5px 10px; background-color: #000; cursor: default;">
                                         <div>NOT AVAILABLE</div>
-                                    </a>
+                                    </div>
                                     <?php
                                 }
                             }
