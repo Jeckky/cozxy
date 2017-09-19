@@ -162,7 +162,7 @@ $val = rand(1, 10);
                             if (true) {//เช็คมีสินค้าในสต๊อก
                                 //if ($model['result'] <= 0) {
                                 ?>
-                                <!--<a class="b btn-black-s size10">NOT AVAILABLE</a>--> 
+                                <!--<a class="b btn-black-s size10">NOT AVAILABLE</a>-->
                                 <?php
                                 //}
                                 if (Yii::$app->user->id) {

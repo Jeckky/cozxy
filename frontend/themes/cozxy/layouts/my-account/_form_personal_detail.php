@@ -25,9 +25,13 @@ use yii\bootstrap\ActiveForm;
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <p>Email</p>
-                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS', 'disabled'=>true])->label(false); ?>
+                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS', 'disabled' => true])->label(false); ?>
+                </div>
+                <div class="col-md-6">
+                    <p>Mobile phone</p>
+                    <?= $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'MOBILE PHONE'])->label(false); ?>
                 </div>
             </div>
             <div class="row">
@@ -45,7 +49,7 @@ use yii\bootstrap\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <a href="<?= Url::to(['/my-account', 'act'=>'account-detail']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                    <a href="<?= Url::to(['/my-account', 'act' => 'account-detail']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                     &nbsp;
                     <input type="submit" value="SAVE"  class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">
                     <!--<a href="<?//= Url::to(['/checkout/summary']) ?>" class="b btn-yellow" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>-->
