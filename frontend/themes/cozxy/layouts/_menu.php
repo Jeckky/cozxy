@@ -646,7 +646,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                                 $('#search').blur(function(event){
                                     if(event.which == 13 || event.keyCode == 13)
                                     {
-                                       $('#form').submit();
+                                       $('#register-form').submit();
                                     }
                                 });
                     ") ?>
