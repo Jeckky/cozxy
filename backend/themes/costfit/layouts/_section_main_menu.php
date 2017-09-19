@@ -267,6 +267,12 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </ul>
                 </li>
             <?php } ?>
+
+            <?php if(Yii::$app->user->identity->type&\common\models\costfit\User::USER_BOOTH > 0 || true):?>
+                <li class="mm-dropdown-supplier">
+                    <a href="<?php echo $baseUrl; ?>/booth/order"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Booth</span></a>
+                </li>
+            <?php endif;?>
         </ul> <!-- / .navigation -->
     </div> <!-- / #main-menu-inner -->
 </div> <!-- / #main-menu -->

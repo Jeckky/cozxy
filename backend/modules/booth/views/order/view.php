@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-3">
             <div class="panel panel-warning">
                 <div class="panel-heading">สแกนบาร์โค้ดสินค้า</div>
-                <div class="panel-body">
+                <div class="panel-body" id="productPanel">
                     <?php if($model->status != Order::ORDER_STATUS_RECEIVED && $model->status != Order::ORDER_STATUS_BOOTH_PACKING): ?>
                         <?php $form = ActiveForm::begin(['id' => 'barcodeForm']); ?>
                         <div class="form-group">
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-9">
             <div class="panel panel-info">
                 <div class="panel-heading">รายการสินค้า</div>
-                <div class="panel-body" id="productPanel">
+                <div class="panel-body">
                     <?= GridView::widget([
                         'dataProvider' => new \yii\data\ActiveDataProvider([
                             'query' => \common\models\costfit\OrderItem::find()->where(['orderId' => $model->orderId])

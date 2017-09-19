@@ -64,6 +64,7 @@ class User extends \common\models\costfit\master\UserMaster {
     const USER_CONTENT = 0x8;
     const USER_ACCOUNT = 0x10;
     const USER_FINANCE = 0x20;
+    const USER_BOOTH = 0x40;
 
     /**
      * @inheritdoc

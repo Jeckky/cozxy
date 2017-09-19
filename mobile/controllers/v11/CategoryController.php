@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\modules\mobile\controllers;
+namespace mobile\controllers\v1;
 
 use common\models\costfit\Category;
 use yii\helpers\Json;
@@ -9,6 +9,15 @@ use yii\filters\VerbFilter;
 
 class CategoryController extends \common\controllers\MasterController
 {
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            $this->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [
@@ -36,7 +45,7 @@ class CategoryController extends \common\controllers\MasterController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'index' => ['get'],
+//                    'index' => ['post'],
                 ],
             ],
         ];
@@ -44,11 +53,11 @@ class CategoryController extends \common\controllers\MasterController
 
     public function actionIndex()
     {
-//		if (isset($_SERVER['HTTP_ORIGIN'])) {
-//			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-//			header('Access-Control-Allow-Credentials: true');
-//			header('Access-Control-Max-Age: 86400');    // cache for 1 day
-//		}
+		if (isset($_SERVER['HTTP_ORIGIN'])) {
+			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+			header('Access-Control-Allow-Credentials: true');
+			header('Access-Control-Max-Age: 86400');    // cache for 1 day
+		}
 
         $categories = [];
         $cats = Category::mainCategories();

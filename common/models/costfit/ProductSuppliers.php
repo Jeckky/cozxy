@@ -355,4 +355,14 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             ->andWhere('b.brandId is not null');
     }
 
+    public static function findCheapest($productId)
+    {
+        return self::find()
+            ->leftJoin('product_price_suppliers pps', 'product_suppliers.productSuppId')
+            ->where(['product_suppliers.productId'=>$productId])
+            ->andWhere(['pps.status'=>1])
+            ->orderBy(['pps.price'=>SORT_ASC])
+            ->one();
+    }
+
 }

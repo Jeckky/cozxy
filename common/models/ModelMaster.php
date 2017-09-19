@@ -17,6 +17,9 @@ class ModelMaster extends \yii\db\ActiveRecord
     const USER_ASSET_TYPE_OWNER = 1;
     const USER_ASSET_TYPE_AGENCY = 2;
 
+    const STATUS_ACTIVE = 0x1;
+    const STATUS_INACTIVE = 0x2;
+
     public $searchText;
     public $monthFull = [
         1 => 'มกราคม',
