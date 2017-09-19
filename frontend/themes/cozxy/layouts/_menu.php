@@ -642,6 +642,14 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </div>
+                    <?= $this->registerJS("
+                                $('#search').blur(function(event){
+                                    if(event.which == 13 || event.keyCode == 13)
+                                    {
+                                       $('#form').submit();
+                                    }
+                                });
+                    ") ?>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
