@@ -74,7 +74,7 @@ use kartik\depdrop\DepDrop;
                             <div class="detail">
                                 <h2>ประเทศ</h2>
                                  <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
-                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:45K</p></div>
+                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:</p></div>
                                 <br>
                                 <a href="countries" class="btn btn-success">Add New</a>
                                 <a href="#" class="btn btn-info">Details</a>
@@ -97,7 +97,7 @@ use kartik\depdrop\DepDrop;
                             <div class="detail">
                                 <h2>จังหวัด</h2>
                                  <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
-                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:45K</p></div>
+                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:</p></div>
                                 <br>
                                 <a href="states" class="btn btn-success">Add New</a>
                                 <a href="#" class="btn btn-info">Details</a>
@@ -120,7 +120,7 @@ use kartik\depdrop\DepDrop;
                             <div class="detail">
                                 <h2>เขต/อำเภอ</h2>
                                  <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
-                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:45K</p></div>
+                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:</p></div>
                                 <br>
                                 <a href="cities" class="btn btn-success">Add New</a>
                                 <a href="#" class="btn btn-info">Details</a>
@@ -143,7 +143,7 @@ use kartik\depdrop\DepDrop;
                             <div class="detail">
                                 <h2>แขวง/ตำบล</h2>
                                  <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
-                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:45K</p></div>
+                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:</p></div>
                                 <br>
                                 <a href="district" class="btn btn-success">Add New</a>
                                 <a href="#" class="btn btn-info">Details</a>
@@ -166,7 +166,7 @@ use kartik\depdrop\DepDrop;
                             <div class="detail">
                                 <h2>รหัสไปรษณีย์</h2>
                                  <!--<img src="http://hpservicecenterschennai.in/images/hp_laptop_service_centers_in_guindy.png" alt="dsadas" />-->
-                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:45K</p></div>
+                                <div style="width: 100%;  height: 200px; background-color: #fee60a; vertical-align: middle; line-height: 200px;"><p>จำนวน:</p></div>
                                 <br>
                                 <a href="zipcodes" class="btn btn-success">Add New</a>
                                 <a href="#" class="btn btn-info">Details</a>
