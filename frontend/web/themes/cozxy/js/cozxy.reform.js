@@ -383,7 +383,7 @@ function unFavoriteStory(productPostId) {
     });
 }
 function deleteItemFromFav(productPostId) {
-    if (confirm('Are you sure to delete this favorite story')) {
+    if (confirm('Are you sure you want to delete this from your favorite stories?')) {
         $.ajax({
             type: "POST",
             dataType: "JSON",
