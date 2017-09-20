@@ -40,7 +40,7 @@ $val = rand(1, 10);
                                       </a>'; */
                                     ?>
                                     <a href="javascript:pic2Zoom('<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>','<?= isset($value['imageBig']) ? $value['imageBig'] : '' ?>');" class="item">
-                                        <img  src="<?= $value['imageThumbnail1'] ?>" width="116" height="116">
+                                        <img  src="<?= $value['imageThumbnail1'] ?>">
                                     </a>
                                     <?php
                                 }
