@@ -10,9 +10,9 @@ use Yii;
     * @property string $couponId
     * @property string $code
     * @property string $couponOwnerId
-    * @property integer $couponType
     * @property integer $noCoupon
     * @property integer $oneTimeUse
+    * @property integer $couponType
     * @property string $orderSummaryToDiscount
     * @property string $discountValue
     * @property string $discountPercent
@@ -40,7 +40,7 @@ public function rules()
 {
 return [
             [['code', 'noCoupon', 'startDate', 'endDate', 'createDateTime'], 'required'],
-            [['couponOwnerId', 'couponType', 'noCoupon', 'oneTimeUse', 'status'], 'integer'],
+            [['couponOwnerId', 'noCoupon', 'oneTimeUse', 'couponType', 'status'], 'integer'],
             [['orderSummaryToDiscount', 'discountValue', 'discountPercent'], 'number'],
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 50],
@@ -57,9 +57,9 @@ return [
     'couponId' => Yii::t('coupon', 'Coupon ID'),
     'code' => Yii::t('coupon', 'Code'),
     'couponOwnerId' => Yii::t('coupon', 'Coupon Owner ID'),
-    'couponType' => Yii::t('coupon', 'Coupon Type'),
     'noCoupon' => Yii::t('coupon', 'No Coupon'),
     'oneTimeUse' => Yii::t('coupon', 'One Time Use'),
+    'couponType' => Yii::t('coupon', 'Coupon Type'),
     'orderSummaryToDiscount' => Yii::t('coupon', 'Order Summary To Discount'),
     'discountValue' => Yii::t('coupon', 'Discount Value'),
     'discountPercent' => Yii::t('coupon', 'Discount Percent'),
