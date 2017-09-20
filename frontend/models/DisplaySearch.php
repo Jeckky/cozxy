@@ -882,8 +882,10 @@ class DisplaySearch extends Model {
     public static function productSortAlls($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE, $type = FALSE) {
         $products = [];
         $whereArray2 = [];
+        if ($cat != '') {
+            $whereArray2["category_to_product.categoryId"] = $cat;
+        }
 
-        $whereArray2["category_to_product.categoryId"] = $cat;
         if (isset($brand)) {
             $whereArray2["brand.brandId"] = $brand;
         }

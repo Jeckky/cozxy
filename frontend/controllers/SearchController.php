@@ -227,7 +227,12 @@ class SearchController extends MasterController {
 
         $sortstatus = ($status == "price") ? "price" : (($status == "brand") ? "brand" : "new");
 
-        $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        if ($categoryId != '') {
+            $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        } else {
+            $category = '';
+        }
+
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
     }
 
