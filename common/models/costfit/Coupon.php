@@ -19,29 +19,25 @@ use \common\models\costfit\master\CouponMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class Coupon extends \common\models\costfit\master\CouponMaster
-{
+class Coupon extends \common\models\costfit\master\CouponMaster {
 
     public $isExpired;
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public static function generateCouponCode($prefix = "")
-    {
+    public static function generateCouponCode($prefix = "") {
         $isDupplicate = TRUE;
         $code = \Yii::$app->security->generateRandomString(5);
         while ($isDupplicate) {
@@ -56,8 +52,7 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         return $prefix . $code;
     }
 
-    public static function getCouponAvailable($code)
-    {
+    public static function getCouponAvailable_BK($code) {
         $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $code . "'")->one();
         if (isset($coupon)) {
             $couponNoExpired = \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->one();
@@ -70,13 +65,35 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         }
     }
 
-    public static function findAvailableCouponArray()
-    {
+    public static function getCouponAvailable($code) {
+        $coupon = \common\models\costfit\Coupon::find()->where("code ='" . $code . "'")->one();
+        if (isset($coupon)) {
+            if ($coupon->oneTimeUse == 1) { // เช็คว่าถ้า coupon ที่ oneTimeUse = 1 และ มีใน Order แสดงว่าใช้แล้วและใช้ได้ครั้งเดียว
+                $orderCheckCoupon = \common\models\costfit\Order::find()->where('couponId=' . $coupon->couponId)->one();
+                if (isset($orderCheckCoupon)) {
+                    return NULL;
+                }
+            } else {
+                if (isset($coupon)) {
+                    $couponNoExpired = \common\models\costfit\Coupon::find()->where("code ='" . $code . "' AND startDate <= CURDATE() AND endDate >= CURDATE()")->one();
+                    if (!isset($couponNoExpired)) {
+                        $coupon->isExpired = TRUE;
+                    }
+                    return $coupon;
+                } else {
+                    return NULL;
+                }
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function findAvailableCouponArray() {
         return \common\models\costfit\Coupon::find()->where("startDate <= CURDATE() AND endDate >= CURDATE()")->all();
     }
 
-    public static function getCouponIsExpired($couponId)
-    {
+    public static function getCouponIsExpired($couponId) {
         $coupon = \common\models\costfit\Coupon::find()->where("startDate <= CURDATE() AND endDate >= CURDATE() AND couponId = " . $couponId)->one();
         if (isset($coupon)) {
             return FALSE;
@@ -85,8 +102,7 @@ class Coupon extends \common\models\costfit\master\CouponMaster
         }
     }
 
-    public function getCouponOwner()
-    {
+    public function getCouponOwner() {
         return $this->hasOne(CouponOwner::className(), ['couponOwnerId' => 'couponOwnerId']);
     }
 
