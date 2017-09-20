@@ -88,7 +88,7 @@ $val = rand(1, 10);
                             <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
                             <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
                         <?php } ?>
-                        <p class="size12 fc-g666">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></p>
+                        <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
                         <?php
                         if (isset($model['shortDescription'])) {
                             echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
