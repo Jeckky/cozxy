@@ -114,35 +114,36 @@ class Order extends OrderModel
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'orderId' => $this->orderId,
-            'userId' => $this->userId,
-            'summary' => $this->summary,
-            'sendDate' => $this->sendDate,
-            'billingCountryId' => $this->billingCountryId,
-            'billingProvinceId' => $this->billingProvinceId,
-            'billingAmphurId' => $this->billingAmphurId,
-            'shippingCountryId' => $this->shippingCountryId,
-            'shippingProvinceId' => $this->shippingProvinceId,
-            'shippingAmphurId' => $this->shippingAmphurId,
-            'paymentType' => $this->paymentType,
+//            'orderId' => $this->orderId,
+//            'userId' => $this->userId,
+//            'summary' => $this->summary,
+//            'sendDate' => $this->sendDate,
+//            'billingCountryId' => $this->billingCountryId,
+//            'billingProvinceId' => $this->billingProvinceId,
+//            'billingAmphurId' => $this->billingAmphurId,
+//            'shippingCountryId' => $this->shippingCountryId,
+//            'shippingProvinceId' => $this->shippingProvinceId,
+//            'shippingAmphurId' => $this->shippingAmphurId,
+//            'paymentType' => $this->paymentType,
             'status' => $this::ORDER_STATUS_E_PAYMENT_SUCCESS,
-            'createDateTime' => $this->createDateTime,
-            'updateDateTime' => $this->updateDateTime,
+//            'createDateTime' => $this->createDateTime,
+//            'updateDateTime' => $this->updateDateTime,
         ]);
 
-        $query->andFilterWhere(['like', 'token', $this->token])
-            ->andFilterWhere(['like', 'orderNo', $this->orderNo])
-            ->andFilterWhere(['like', 'invoiceNo', $this->invoiceNo])
-            ->andFilterWhere(['like', 'billingCompany', $this->billingCompany])
-            ->andFilterWhere(['like', 'billingTax', $this->billingTax])
-            ->andFilterWhere(['like', 'billingAddress', $this->billingAddress])
-            ->andFilterWhere(['like', 'billingZipcode', $this->billingZipcode])
-            ->andFilterWhere(['like', 'billingTel', $this->billingTel])
-            ->andFilterWhere(['like', 'shippingCompany', $this->shippingCompany])
-            ->andFilterWhere(['like', 'shippingTax', $this->shippingTax])
-            ->andFilterWhere(['like', 'shippingAddress', $this->shippingAddress])
-            ->andFilterWhere(['like', 'shippingZipcode', $this->shippingZipcode])
-            ->andFilterWhere(['like', 'shippingTel', $this->shippingTel]);
+        $query->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+//        $query->andFilterWhere(['like', 'token', $this->token])
+//            ->andFilterWhere(['like', 'orderNo', $this->orderNo])
+//            ->andFilterWhere(['like', 'invoiceNo', $this->invoiceNo])
+//            ->andFilterWhere(['like', 'billingCompany', $this->billingCompany])
+//            ->andFilterWhere(['like', 'billingTax', $this->billingTax])
+//            ->andFilterWhere(['like', 'billingAddress', $this->billingAddress])
+//            ->andFilterWhere(['like', 'billingZipcode', $this->billingZipcode])
+//            ->andFilterWhere(['like', 'billingTel', $this->billingTel])
+//            ->andFilterWhere(['like', 'shippingCompany', $this->shippingCompany])
+//            ->andFilterWhere(['like', 'shippingTax', $this->shippingTax])
+//            ->andFilterWhere(['like', 'shippingAddress', $this->shippingAddress])
+//            ->andFilterWhere(['like', 'shippingZipcode', $this->shippingZipcode])
+//            ->andFilterWhere(['like', 'shippingTel', $this->shippingTel]);
 
         return $dataProvider;
     }

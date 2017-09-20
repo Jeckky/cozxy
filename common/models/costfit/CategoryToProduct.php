@@ -80,5 +80,4 @@ class CategoryToProduct extends \common\models\costfit\master\CategoryToProductM
             $me = $parent;
         }
     }
-
 }

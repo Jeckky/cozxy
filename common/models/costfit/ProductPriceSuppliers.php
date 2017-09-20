@@ -80,4 +80,12 @@ class ProductPriceSuppliers extends \common\models\costfit\master\ProductPriceSu
         return $rankingPrice;
     }
 
+    public static function latestPrice($productSuppId)
+    {
+        return self::find()
+        ->where(['productSuppId'=>$productSuppId, 'status'=>1])
+        ->orderBy(['price'=>SORT_ASC])
+        ->one();
+    }
+
 }
