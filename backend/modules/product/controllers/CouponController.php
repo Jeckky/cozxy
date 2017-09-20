@@ -73,7 +73,9 @@ class CouponController extends ProductMasterController {
      * @return mixed
      */
     public function actionCreate() {
+
         $model = new Coupon();
+        $model->couponType = '1';
         if (isset($_GET["couponOwnerId"])) {
             $model->couponOwnerId = $_GET["couponOwnerId"];
         }
