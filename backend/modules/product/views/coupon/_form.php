@@ -52,7 +52,7 @@ use kartik\widgets\Select2;
             <label class="col-sm-3 control-label" for="coupon-type">Coupon Type</label>
             <div class="col-sm-9">
                 <?=
-                Html::activeRadioList($model, 'couponType', [1 => 'ใช้ได้แค่ครั้งเดียว', 4 => 'ใช้ได้จนกว่าหมดอายุ/หลายคน'], [
+                Html::activeRadioList($model, 'couponType', [1 => 'ใช้ได้แค่ครั้งเดียว/คน', 4 => 'ใช้ได้จนกว่าหมดอายุ/หลายคน'], [
                     'item' => function ($index, $label, $name, $checked, $value) {
                         $checked ? ' checked="checked"' : '';
                         return '<label class="radio-inline">' . Html::radio($name, $checked, ['value' => $value]) . $label . '</label>';
