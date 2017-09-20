@@ -5,8 +5,8 @@
         <h2 class="text-center"><?= $model->code; ?></h2>
     </a>
     <p class="text-center">
-        <a href="<?= Yii::$app->homeUrl ?>product/coupon/update?id=<?= $model->couponOwnerId ?>" class="btn btn-xs btn-primary">Update</a>
-        <a href="<?= Yii::$app->homeUrl ?>product/coupon/delete?id=<?= $model->couponOwnerId ?>" class="btn btn-xs btn-danger">Delete</a>
+        <a href="<?= Yii::$app->homeUrl ?>product/coupon/update?id=<?= $model->couponId ?>" class="btn btn-xs btn-primary">Update</a>
+        <a href="<?= Yii::$app->homeUrl ?>product/coupon/delete?id=<?= $model->couponId ?>" class="btn btn-xs btn-danger">Delete</a>
     </p>
 </div>
 <!--Categories Close-->

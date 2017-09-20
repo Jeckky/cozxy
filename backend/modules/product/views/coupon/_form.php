@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 use common\models\areawow;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\costfit\Coupon */
@@ -47,12 +48,28 @@ use common\models\areawow;
 
         <?= $form->field($model, 'oneTimeUse', ['options' => ['class' => 'row form-group']])->checkbox()->label("") ?>
 
+        <div class="row form-group field-coupon-type required">
+            <label class="col-sm-3 control-label" for="coupon-type">Coupon Type</label>
+            <div class="col-sm-9">
+                <?=
+                Html::activeRadioList($model, 'couponType', [1 => 'ใช้ได้แค่ครั้งเดียว', 4 => 'ใช้ได้จนกว่าหมดอายุ/หลายคน'], [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        $checked ? ' checked="checked"' : '';
+                        return '<label class="radio-inline">' . Html::radio($name, $checked, ['value' => $value]) . $label . '</label>';
+                    }
+                ])
+                ?>
+            </div>
+        </div>
+
+
+
+
         <?= $form->field($model, 'orderSummaryToDiscount', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
         <?= $form->field($model, 'discountValue', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 15]) ?>
 
         <?= $form->field($model, 'discountPercent', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 5]) ?>
-
 
         <?=
         $form->field($model, 'startDate', ['options' => ['class' => 'row form-group']])->widget(\yii\jui\DatePicker::classname(), [

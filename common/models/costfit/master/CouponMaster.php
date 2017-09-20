@@ -10,6 +10,7 @@ use Yii;
     * @property string $couponId
     * @property string $code
     * @property string $couponOwnerId
+    * @property integer $couponType
     * @property integer $noCoupon
     * @property integer $oneTimeUse
     * @property string $orderSummaryToDiscount
@@ -39,7 +40,7 @@ public function rules()
 {
 return [
             [['code', 'noCoupon', 'startDate', 'endDate', 'createDateTime'], 'required'],
-            [['couponOwnerId', 'noCoupon', 'oneTimeUse', 'status'], 'integer'],
+            [['couponOwnerId', 'couponType', 'noCoupon', 'oneTimeUse', 'status'], 'integer'],
             [['orderSummaryToDiscount', 'discountValue', 'discountPercent'], 'number'],
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['code'], 'string', 'max' => 50],
@@ -56,6 +57,7 @@ return [
     'couponId' => Yii::t('coupon', 'Coupon ID'),
     'code' => Yii::t('coupon', 'Code'),
     'couponOwnerId' => Yii::t('coupon', 'Coupon Owner ID'),
+    'couponType' => Yii::t('coupon', 'Coupon Type'),
     'noCoupon' => Yii::t('coupon', 'No Coupon'),
     'oneTimeUse' => Yii::t('coupon', 'One Time Use'),
     'orderSummaryToDiscount' => Yii::t('coupon', 'Order Summary To Discount'),
