@@ -16,7 +16,8 @@ class ProductController extends \common\controllers\MasterController
 {
     public function beforeAction($action)
     {
-        if ($action->id == 'for-sale' || $action->id=='not-sale' || $action->id=='view') {
+//        if ($action->id == 'for-sale' || $action->id=='not-sale' || $action->id=='view') {
+        if(in_array($action->id, ['for-sale', 'not-sale', 'view', 'isbn', 'search'])) {
             $this->enableCsrfValidation = false;
         }
 
@@ -239,7 +240,7 @@ class ProductController extends \common\controllers\MasterController
         $p = \common\models\costfit\ProductSuppliers::find()->select("* , pps.price ,product_suppliers.description as description , product_suppliers.specification as tags,tags")
             ->join("LEFT JOIN", 'product_price_suppliers pps', "pps.productSuppId = product_suppliers.productSuppId")
             ->where("product_suppliers.isbn = '$isbn' AND product_suppliers.approve='approve' and product_suppliers.status=1 AND product_suppliers.result>0")
-            ->orderBy(["pps.price"=>SORT_ASC])
+            ->orderBy(["pps.price" => SORT_ASC])
             ->one();
 
         if(isset($p)) {
@@ -319,6 +320,11 @@ class ProductController extends \common\controllers\MasterController
         }
 
         return Json::encode($res);
+    }
+
+    public function actionSearch()
+    {
+        $searchText = $_POST['text'];
     }
 
 }

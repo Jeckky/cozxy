@@ -44,6 +44,7 @@ $(function() {
 ', yii\web\View::POS_END);
 $this->title = 'cozxy.com - Buy what fuels your passion';
 ?>
+
 <?php if (isset($slideGroup)): ?>
     <div class="bg-white rela">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">

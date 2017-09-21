@@ -32,6 +32,7 @@ class DisplaySearch extends Model {
             ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
             ->andWhere('p.productId is not null')
             ->andWhere('p.parentId is not null')
+                ->andWhere(['product_price_suppliers.status'=>1])
             ->andFilterWhere(['OR',
                 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
@@ -882,10 +883,8 @@ class DisplaySearch extends Model {
     public static function productSortAlls($cat = FALSE, $brand = FALSE, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE, $type = FALSE) {
         $products = [];
         $whereArray2 = [];
-        if ($cat != '') {
-            $whereArray2["category_to_product.categoryId"] = $cat;
-        }
 
+        $whereArray2["category_to_product.categoryId"] = $cat;
         if (isset($brand)) {
             $whereArray2["brand.brandId"] = $brand;
         }
