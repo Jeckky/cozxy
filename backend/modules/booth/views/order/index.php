@@ -33,13 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     //            'orderId',
                     //            'pickingId',
                     //            'token:ntext',
-                    [
-                        'attribute' => 'password',
-                        'header' => 'Received Code',
-                        'value' => function ($model) {
-                            return $model->password;
-                        }
-                    ],
+//                    [
+//                        'attribute' => 'password',
+//                        'header' => 'Received Code',
+//                        'value' => function ($model) {
+//                            return $model->password;
+//                        }
+//                    ],
                     'orderNo',
                     'invoiceNo',
                     [

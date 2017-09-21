@@ -45,6 +45,8 @@ $(function() {
 $this->title = 'cozxy.com - Buy what fuels your passion';
 ?>
 
+<?=Yii::$app->request->csrfToken?>
+
 <?php if (isset($slideGroup)): ?>
     <div class="bg-white rela">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
