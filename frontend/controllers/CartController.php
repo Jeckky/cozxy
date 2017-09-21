@@ -152,7 +152,7 @@ class CartController extends MasterController {
                 $orderItemId = $orderItem->orderItemId;
             }
             //echo '<pre>';
-            //print_r($order->attributes);
+            //print_r($orderItem->attributes);
             $order->save();
 
 
