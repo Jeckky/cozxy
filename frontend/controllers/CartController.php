@@ -151,8 +151,8 @@ class CartController extends MasterController {
             } else {
                 $orderItemId = $orderItem->orderItemId;
             }
-            echo '<pre>';
-            print_r($order->attributes);
+            //echo '<pre>';
+            //print_r($order->attributes);
             $order->save();
 
 
