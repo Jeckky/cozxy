@@ -4,7 +4,7 @@ $this->title = 'Dashboard';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 
-<?php if(Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) { ?>
+<?php if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) { ?>
 
     <div class="page-header">
 
@@ -37,40 +37,40 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <div class="row">
         <div class="col-md-12">
             <div class="row" style="margin-bottom: 20px">
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('store/virtual'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "store/virtual" ?>" class="btn btn-lg btn-success">
-                            <i class="fa fa-archive"></i>
-                            Virtual Store
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('store/virtual'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "store/virtual" ?>" class="btn btn-lg btn-success">
+                        <i class="fa fa-archive"></i>
+                        Virtual Store
+                    </a>
                 <?php } ?>
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('picking/picking/virtual'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "picking/picking/virtual" ?>" class="btn btn-lg btn-warning">
-                            <i class="fa fa-archive"></i>
-                            Virtual PP
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('picking/picking/virtual'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "picking/picking/virtual" ?>" class="btn btn-lg btn-warning">
+                        <i class="fa fa-archive"></i>
+                        Virtual PP
+                    </a>
                 <?php } ?>
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('/management/role'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "management/role" ?>" class="btn btn-lg btn-danger">
-                            <i class="fa fa-lock"></i>
-                            Role
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/role'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "management/role" ?>" class="btn btn-lg btn-danger">
+                        <i class="fa fa-lock"></i>
+                        Role
+                    </a>
                 <?php } ?>
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('/product/product-group'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "product/product-group" ?>" class="btn btn-lg btn-info">
-                            <i class="fa fa-list"></i>
-                            Product
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/product/product-group'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "product/product-group" ?>" class="btn btn-lg btn-info">
+                        <i class="fa fa-list"></i>
+                        Product
+                    </a>
                 <?php } ?>
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('/management/user'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "management/user" ?>" class="btn btn-lg btn-default">
-                            <i class="fa fa-user"></i>
-                            User Role
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/user'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "management/user" ?>" class="btn btn-lg btn-default">
+                        <i class="fa fa-user"></i>
+                        User Role
+                    </a>
                 <?php } ?>
-                <?php if((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
-                        <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-success">
-                            <i class="fa fa-archive"></i>
-                        </a>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "project" ?>" class="btn btn-lg btn-success">
+                        <i class="fa fa-archive"></i>
+                    </a>
                 <?php } ?>
             </div>
         </div>
@@ -84,47 +84,47 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             -->
             <!-- Javascript -->
             <script>
-                init.push(function() {
+                init.push(function () {
                     var uploads_data = [
-                        <?php foreach ($circulations as $month => $value): ?>
-                        <?= "{day: $month, v: $value}," ?>
-                        <?php endforeach; ?>
-                        //                {day: '2014-03-10', v: 20},
-                        //                {day: '2014-03-11', v: 10},
-                        //                {day: '2014-03-12', v: 15},
-                        //                {day: '2014-03-13', v: 12},
-                        //                {day: '2014-03-14', v: 5},
-                        //                {day: '2014-03-15', v: 5},
-                        //                {day: '2014-03-16', v: 20}
+    <?php foreach ($circulations as $month => $value): ?>
+        <?= "{day: $month, v: $value}," ?>
+    <?php endforeach; ?>
+                    //                {day: '2014-03-10', v: 20},
+                    //                {day: '2014-03-11', v: 10},
+                    //                {day: '2014-03-12', v: 15},
+                    //                {day: '2014-03-13', v: 12},
+                    //                {day: '2014-03-14', v: 5},
+                    //                {day: '2014-03-15', v: 5},
+                    //                {day: '2014-03-16', v: 20}
                     ];
-                    Morris.Line({
-                        element: 'hero-graph',
-                        data: uploads_data,
-                        xkey: 'day',
-                        ykeys: ['v'],
-                        labels: ['Value'],
-                        lineColors: ['#fff'],
-                        lineWidth: 2,
-                        pointSize: 4,
-                        gridLineColor: 'rgba(255,255,255,.5)',
-                        resize: true,
-                        gridTextColor: '#fff',
-                        xLabels: "day",
-                        xLabelFormat: function(d) {
-                            return ['Jan',
-                                    'Feb',
-                                    'Mar',
-                                    'Apr',
-                                    'May',
-                                    'Jun',
-                                    'Jul',
-                                    'Aug',
-                                    'Sep',
-                                    'Oct',
-                                    'Nov',
-                                    'Dec'][d.getMonth()] + ' ' + d.getDate();
-                        },
-                    });
+                            Morris.Line({
+                                element: 'hero-graph',
+                                data: uploads_data,
+                                xkey: 'day',
+                                ykeys: ['v'],
+                                labels: ['Value'],
+                                lineColors: ['#fff'],
+                                lineWidth: 2,
+                                pointSize: 4,
+                                gridLineColor: 'rgba(255,255,255,.5)',
+                                resize: true,
+                                gridTextColor: '#fff',
+                                xLabels: "day",
+                                xLabelFormat: function (d) {
+                                    return ['Jan',
+                                        'Feb',
+                                        'Mar',
+                                        'Apr',
+                                        'May',
+                                        'Jun',
+                                        'Jul',
+                                        'Aug',
+                                        'Sep',
+                                        'Oct',
+                                        'Nov',
+                                        'Dec'][d.getMonth()] + ' ' + d.getDate();
+                                },
+                            });
                 });
             </script>
             <!-- / Javascript -->
@@ -171,7 +171,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             -->
             <!-- Javascript -->
             <script>
-                init.push(function() {
+                init.push(function () {
                     // Easy Pie Charts
                     var easyPieChartDefaults = {
                         animate: 2000,
@@ -286,16 +286,16 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <div class="col-sm-4 col-md-12">
                     <!-- Javascript -->
                     <script>
-                        init.push(function() {
+                        init.push(function () {
                             $("#stats-sparklines-3").pixelSparkline([275,
-                                                                     490,
-                                                                     397,
-                                                                     487,
-                                                                     339,
-                                                                     403,
-                                                                     402,
-                                                                     312,
-                                                                     300], {
+                                490,
+                                397,
+                                487,
+                                339,
+                                403,
+                                402,
+                                312,
+                                300], {
                                 type: 'line',
                                 width: '100%',
                                 height: '45px',
@@ -326,45 +326,45 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <div class="col-sm-4 col-md-12">
                     <!-- Javascript -->
                     <script>
-                        init.push(function() {
+                        init.push(function () {
                             $("#stats-sparklines-2").pixelSparkline(
-                                [275,
-                                 490,
-                                 397,
-                                 487,
-                                 339,
-                                 403,
-                                 402,
-                                 312,
-                                 300,
-                                 294,
-                                 411,
-                                 367,
-                                 319,
-                                 416,
-                                 355,
-                                 416,
-                                 371,
-                                 479,
-                                 279,
-                                 361,
-                                 312,
-                                 269,
-                                 402,
-                                 327,
-                                 474,
-                                 422,
-                                 375,
-                                 283,
-                                 384,
-                                 372], {
-                                    type: 'bar',
-                                    height: '36px',
-                                    width: '100%',
-                                    barSpacing: 2,
-                                    zeroAxis: false,
-                                    barColor: '#ffffff'
-                                });
+                                    [275,
+                                        490,
+                                        397,
+                                        487,
+                                        339,
+                                        403,
+                                        402,
+                                        312,
+                                        300,
+                                        294,
+                                        411,
+                                        367,
+                                        319,
+                                        416,
+                                        355,
+                                        416,
+                                        371,
+                                        479,
+                                        279,
+                                        361,
+                                        312,
+                                        269,
+                                        402,
+                                        327,
+                                        474,
+                                        422,
+                                        375,
+                                        283,
+                                        384,
+                                        372], {
+                                type: 'bar',
+                                height: '36px',
+                                width: '100%',
+                                barSpacing: 2,
+                                zeroAxis: false,
+                                barColor: '#ffffff'
+                            });
                         });
                     </script>
                     <!-- / Javascript -->
@@ -405,45 +405,45 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 <div class="col-sm-4 col-md-12">
                     <!-- Javascript -->
                     <script>
-                        init.push(function() {
+                        init.push(function () {
                             $("#stats-sparklines-2").pixelSparkline(
-                                [275,
-                                 490,
-                                 397,
-                                 487,
-                                 339,
-                                 403,
-                                 402,
-                                 312,
-                                 300,
-                                 294,
-                                 411,
-                                 367,
-                                 319,
-                                 416,
-                                 355,
-                                 416,
-                                 371,
-                                 479,
-                                 279,
-                                 361,
-                                 312,
-                                 269,
-                                 402,
-                                 327,
-                                 474,
-                                 422,
-                                 375,
-                                 283,
-                                 384,
-                                 372], {
-                                    type: 'bar',
-                                    height: '36px',
-                                    width: '100%',
-                                    barSpacing: 2,
-                                    zeroAxis: false,
-                                    barColor: '#ffffff'
-                                });
+                                    [275,
+                                        490,
+                                        397,
+                                        487,
+                                        339,
+                                        403,
+                                        402,
+                                        312,
+                                        300,
+                                        294,
+                                        411,
+                                        367,
+                                        319,
+                                        416,
+                                        355,
+                                        416,
+                                        371,
+                                        479,
+                                        279,
+                                        361,
+                                        312,
+                                        269,
+                                        402,
+                                        327,
+                                        474,
+                                        422,
+                                        375,
+                                        283,
+                                        384,
+                                        372], {
+                                type: 'bar',
+                                height: '36px',
+                                width: '100%',
+                                barSpacing: 2,
+                                zeroAxis: false,
+                                barColor: '#ffffff'
+                            });
                         });
                     </script>
                     <!-- / Javascript -->
@@ -496,7 +496,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         -->
         <!-- Javascript -->
         <script>
-            init.push(function() {
+            init.push(function () {
                 $('#dashboard-support-tickets .panel-body > div').slimScroll({
                     height: 300,
                     alwaysVisible: true,
@@ -507,7 +507,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         </script>
         <!-- / Javascript -->
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-success widget-support-tickets" id="dashboard-support-tickets">
                 <div class="panel-heading">
                     <span class="panel-title"><i class="panel-title-icon fa fa-bullhorn"></i>Latest Buy</span>
@@ -526,20 +526,20 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                           status 4 : 'ยืนยันชำระเงิน',
                           status 5 : 'ชำระบัตรเครดิตสำเร็จ',
                          *  */
-                        foreach($newOrder as $valueO) {
-                            if($valueO->status == 2) {
+                        foreach ($newOrder as $valueO) {
+                            if ($valueO->status == 2) {
                                 $status = 'Pending';
                                 $text = 'รอการชำระเงิน';
                                 $class = 'label-warning';
-                            } elseif($valueO->status == 3) {
+                            } elseif ($valueO->status == 3) {
                                 $status = 'Rejected';
                                 $text = 'ชำระบัตรเครดิตไม่สำเร็จ';
                                 $class = 'label-dange';
-                            } elseif($valueO->status == 4) {
+                            } elseif ($valueO->status == 4) {
                                 $status = 'In progress';
                                 $text = 'ยืนยันชำระเงิน';
                                 $class = 'label-info';
-                            } elseif($valueO->status == 5) {
+                            } elseif ($valueO->status == 5) {
                                 $status = 'Completed';
                                 $text = 'ชำระบัตรเครดิตสำเร็จ';
                                 $class = 'label-success';
@@ -579,7 +579,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         -->
         <!-- Javascript -->
         <script>
-            init.push(function() {
+            init.push(function () {
                 $('#dashboard-recent .panel-body > div').slimScroll({
                     height: 300,
                     alwaysVisible: true,
@@ -590,7 +590,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         </script>
         <!-- / Javascript -->
 
-        <div class="col-md-6">
+        <div class="col-md-12">
 
             <div class="panel panel-dark panel-light-green">
                 <div class="panel-heading">
@@ -607,41 +607,41 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </div> <!-- / .panel-heading -->
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Full Name</th>
-                        <th>E-mail</th>
-                        <th>สมัครผ่าน</th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>E-mail</th>
+                            <th>สมัครผ่าน</th>
+                        </tr>
                     </thead>
                     <tbody class="valign-middle">
-                    <?php
-                    $num = 1;
-                    foreach($newUser as $valueU) {
-                        ?>
-                        <tr>
-                            <td><?php echo $num; ?></td>
-                            <td>
-                                <?php
-                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
-                                if(Yii::$app->user->identity->gender == 0) {
-                                    ?>
-                                    <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
-                                <?php } elseif(Yii::$app->user->identity->gender == 1) { ?>
-                                    <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
-                                <?php } ?>
-                                <a href="#" title=""><?php echo $valueU->email ?></a>
-                            </td>
-                            <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
-                                <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
-                            <td><?php echo $valueU->email; ?></td>
-                            <td><?php echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web'; ?></td>
-                        </tr>
                         <?php
-                        $num = $num++;
-                    }
-                    ?>
+                        $num = 1;
+                        foreach ($newUser as $valueU) {
+                            ?>
+                            <tr>
+                                <td><?php echo $num; ?></td>
+                                <td>
+                                    <?php
+                                    //echo 'gender :: ' . Yii::$app->user->identity->gender;
+                                    if (Yii::$app->user->identity->gender == 0) {
+                                        ?>
+                                        <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                    <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                                        <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                    <?php } ?>
+                                    <a href="#" title=""><?php echo $valueU->email ?></a>
+                                </td>
+                                <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
+                                    <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
+                                <td><?php echo $valueU->email; ?></td>
+                                <td><?php echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web'; ?></td>
+                            </tr>
+                            <?php
+                            $num = $num++;
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div> <!-- / .panel -->
@@ -649,7 +649,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         </div>
         <!-- /11. $RECENT_ACTIVITY -->
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- 18. $FOLLOWERS ========  Followers=========== -->
             <div class="panel widget-followers">
                 <div class="panel-heading">
@@ -658,15 +658,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                 <div class="panel-body">
                     <?php
-                    foreach($userVisit as $key => $valueV) {
+                    foreach ($userVisit as $key => $valueV) {
                         ?>
                         <div class="follower">
                             <?php
                             //echo 'gender :: ' . Yii::$app->user->identity->gender;
-                            if(Yii::$app->user->identity->gender == 0) {
+                            if (Yii::$app->user->identity->gender == 0) {
                                 ?>
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
-                            <?php } elseif(Yii::$app->user->identity->gender == 1) { ?>
+                            <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
                             <?php } ?>
                             <div class="body">
@@ -698,17 +698,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         <div class="col-md-5">
             <!-- Javascript -->
             <script>
-                init.push(function() {
+                init.push(function () {
                     $('.widget-tasks .panel-body').pixelTasks().sortable({
                         axis: "y",
                         handle: ".task-sort-icon",
-                        stop: function(event, ui) {
+                        stop: function (event, ui) {
                             // IE doesn't register the blur when sorting
                             // so trigger focusout handlers to remove .ui-state-focus
                             ui.item.children(".task-sort-icon").triggerHandler("focusout");
                         }
                     });
-                    $('#clear-completed-tasks').click(function() {
+                    $('#clear-completed-tasks').click(function () {
                         $('.widget-tasks .panel-body').pixelTasks('clearCompletedTasks');
                     });
                 });
@@ -721,13 +721,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     </div>
 
     <?php
-} else if(Yii::$app->user->identity->type == 5) {
+} else if (Yii::$app->user->identity->type == 5) {
     ?>
     <div class="col-md-12" style="font-size: 36px;">
         &nbsp;Welcome to Supplier
     </div>
     <?php
-} else if(Yii::$app->user->identity->type == 6) {
+} else if (Yii::$app->user->identity->type == 6) {
     ?>
     <div class="col-md-12" style="font-size: 36px;">
         &nbsp;Welcome to ACCOUNT

@@ -292,6 +292,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $shipping = 0;
         $items = [];
         if (isset($order)) {
+
             $orderItems = OrderItem::find()->where("orderId=" . $order->orderId)->orderBy("receiveType ASC")->all();
             foreach ($orderItems as $item) {
                 $resceiveTitle = ($item->productSupplier->receiveType == 1) ? "COLD" : ($item->productSupplier->receiveType == 2 ? "HOT" : "BOOTH");
@@ -372,6 +373,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 $res["orderMessage"] = $order->orderMessage;
             }
         } else {
+
             $res = [
                 'total' => $total,
                 'isSlowest' => FALSE,
@@ -438,15 +440,22 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 }
             }
         }
+
+        /*
+         * เพิ่ม round() ปัดเศษขึ้น
+         * By Taninut.Bm
+         * Create 21/9/2017
+         */
         if ($this->discount == null) {
-            $result = $total;
+            $result = round($total, 2);
         } else {
-            $result = $total - $this->discount;
+            $result = round($total, 2) - round($this->discount, 2);
         }
+
         $this->total = $result;
         $this->vat = $result - ($result * (100 / 107));
         $this->totalExVat = $result - $this->vat;
-
+        //echo $this->vat;
         //$this->grandTotal = $this->total - $this->discount;
         $this->grandTotal = $result;
         $this->shippingRate = $this->calculateShippingRate();
