@@ -2,7 +2,9 @@
 
 namespace backend\modules\booth\controllers;
 
+use common\helpers\Email;
 use common\models\costfit\OrderItem;
+use common\models\costfit\User;
 use Yii;
 use common\models\costfit\Order;
 use common\models\costfit\search\Order as OrderSearch;
@@ -160,6 +162,10 @@ class OrderController extends BoothMasterController
                         "to" => [$tel],
                         "text" => 'Order No. : '.$order->orderNo.'\r\n รหัสรับสินค้า : '.$order->password
                     ]));
+
+                    $user = User::find()->where(['userId'=>$order->userId])->one();
+
+                    Email::boothReceiveCode($user->username, $order->password, $order->orderNo);
                 }
 
                 $res['result'] = true;

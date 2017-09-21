@@ -113,4 +113,14 @@ class Email {
         ->send();
     }
 
+    public static function boothReceiveCode($toMail, $receiveCode, $orderNo)
+    {
+        \Yii::$app->mail->compose('booth_receive_code', ['receiveCode'=>$receiveCode, 'orderNo'=>$orderNo])
+            //Yii::$app->mail->compose('register_confirm', ['url' => $url])
+            ->setTo($toMail)//tomail
+            ->setFrom('cozxy@cozxy.com')
+            ->setSubject('Cozxy Receive Code')
+            ->send();
+    }
+
 }
