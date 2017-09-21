@@ -78,7 +78,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
      */
     public function rules() {
         return array_merge(parent::rules(), [
-                [['pickingId'], 'required', 'on' => 'ship_to_cozxy_box'],
+            [['pickingId'], 'required', 'on' => 'ship_to_cozxy_box'],
         ]);
     }
 
@@ -109,7 +109,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'quantity',
             'isbn',
             'title', 'QIquantity'
-                /* use end */
+        /* use end */
         ]);
     }
 
@@ -139,7 +139,6 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $quantity = 0;
         $shipping = 0;
         $items = [];
-        ;
         if (isset($order)) {
             $receiveTypeArray = [];
             foreach ($order->orderItems as $item) {
@@ -775,7 +774,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -791,7 +790,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }
