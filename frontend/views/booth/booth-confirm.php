@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group">
                         <label for="exampleInputEmail1">EMAIL</label>
                         <?=
-                        $form->field($model, 'email')->textInput(['class' => 'fullwidth pwd1', 'placeholder' => 'EMAIL', 'value' => ''])->label(false);
+                        $form->field($model, 'email')->textInput(['class' => 'fullwidth pwd1', 'placeholder' => 'EMAIL'])->label(false);
                         ?>
                     </div>
                 </div>

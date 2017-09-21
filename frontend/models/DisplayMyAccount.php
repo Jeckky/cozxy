@@ -283,7 +283,12 @@ class DisplayMyAccount extends Model {
     }
 
     public static function ConfirmRegisterBooth($otp, $token, $email) {
-        $model = \common\models\costfit\User::find()->where("email ='" . $email . "' and token = '" . $token . "' and password ='" . $otp . "' ")->one();
+        if ($token != '') {
+            $model = \common\models\costfit\User::find()->where("email ='" . $email . "' and token = '" . $token . "' and password ='" . $otp . "' ")->one();
+        } else {
+            $model = \common\models\costfit\User::find()->where("email ='" . $email . "'  and password ='" . $otp . "' ")->one();
+        }
+
         if (isset($model)) {
             //$model->password = $data['newPassword'];
             $model->status = 1;

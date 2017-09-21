@@ -40,7 +40,9 @@ class BoothController extends MasterController {
 
                 if ($user = $model->signup()) {
                     if (Yii::$app->getUser()->login($user)) {
-                        return $this->redirect(Yii::$app->homeUrl . 'site/thank' . '?token=' . $user->attributes['token']);
+                        //return $this->redirect(Yii::$app->homeUrl . 'site/thank' . '?token=' . $user->attributes['token']);
+                        return $this->redirect(Yii::$app->homeUrl . 'booth/confirm' . '?token=' . $user->attributes['token']);
+                        // http://cozxy.com/booth/confirm?token=F80-SBgXV9
                     }
                 }
             } else {
@@ -55,11 +57,19 @@ class BoothController extends MasterController {
     }
 
     public function actionConfirm() {
-        $token = $_GET['token'];
-        $model = \common\models\costfit\User::find()->where('token ="' . $token . '" ')->one();
-        $model->scenario = 'ConfirmRegisterBooth'; // calling scenario of update
+        $token = '';
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+            $model = \common\models\costfit\User::find()->where('token ="' . $token . '" ')->one();
+        } else {
+            $model = new \common\models\costfit\User();
+            $model->scenario = 'ConfirmRegisterBooth'; // calling scenario of update
+        }
+
         if (isset($_POST["User"])) {
             $editChangePassword = \frontend\models\DisplayMyAccount::ConfirmRegisterBooth($_POST['User']['password'], $token, $_POST['User']['email']);
+            //echo $editChangePassword;
+            //exit();
             if ($editChangePassword == TRUE) {
                 return $this->redirect(['/site/login']);
             } else {
