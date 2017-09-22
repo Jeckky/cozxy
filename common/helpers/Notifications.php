@@ -143,4 +143,9 @@ class Notifications {
         //'SELECT sum(summary)  FROM costfit_test.`order`  where status => 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))';
     }
 
+    public static function DashboarUserBooth() {
+        $UserBotth = \common\models\costfit\User::find()->where(' password IS NOT NULL and type = 1 and month(createDateTime) > 7 and   year(createDateTime) > 2016 ')->all();
+        return $UserBotth;
+    }
+
 }

@@ -3,7 +3,7 @@
 $this->title = 'Dashboard';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <?php if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) { ?>
 
     <div class="page-header">
