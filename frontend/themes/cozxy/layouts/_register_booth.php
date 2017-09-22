@@ -83,7 +83,7 @@ $this->title = 'Sing Up booth: cozxy.com - Buy what fuels your passion';
                 <div class="col-md-8 col-md-offset-2">
                     <p class="size18"><?php echo strtoupper('Confirm Register(Booth)'); ?></p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <a href="<?= Url::to(['/booth/confirm']) ?>" class="btn-black-s btn-success text-center fullwidth"><span class="fc-yellow1">CONFIRM BOOTH</span></a>
+                    <a href="<?= Url::to(['/booth/confirm']) ?>" class="btn-black-s text-center fullwidth"><span class="fc-yellow1">CONFIRM BOOTH</span></a>
                     <div class="size6">&nbsp;</div>
                 </div>
             </div>
