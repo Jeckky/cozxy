@@ -125,7 +125,7 @@ class Notifications {
 
     public static function DashboarMovementorderLastMONTH() {
         $orderLastMONTH = \common\models\costfit\Order::find()
-        ->where(' `order`.status >= 5  and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')->sum('summary');
+        ->where(' `order`.status >= 5  and (month(`createDateTime`) = month(now())+1 OR month(`createDateTime`) = month(now())) AND Year(`createDateTime`) = Year(now()) Order By `createDateTime`  ')->sum('summary');
         return $orderLastMONTH;
     }
 
