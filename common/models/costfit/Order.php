@@ -447,14 +447,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
          * Create 21/9/2017
          */
         if ($this->discount == null) {
-            $result = round($total, 2);
+            $result = round($total, 0, PHP_ROUND_HALF_UP);
         } else {
-            $result = round($total, 2) - round($this->discount, 2);
+            $result = round($total, 0, PHP_ROUND_HALF_UP) - round($this->discount, 0, PHP_ROUND_HALF_UP);
         }
 
         $this->total = $result;
         $this->vat = $result - ($result * (100 / 107));
-        $this->totalExVat = $result - $this->vat;
+        $this->totalExVat = $result - round($this->vat, 0, PHP_ROUND_HALF_UP);
         //echo $this->vat;
         //$this->grandTotal = $this->total - $this->discount;
         $this->grandTotal = $result;

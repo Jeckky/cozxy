@@ -65,8 +65,13 @@ class CozxyCalculatesCart {
      */
 
     public static function FormulaSubTotal($TotalExVat, $vat) {
-        $result = $TotalExVat + $vat;
+        $result = ( $TotalExVat + $vat);
         return $result;
+    }
+
+    public static function FormulaTotal($total, $coupon) {
+        $result = ( $total - $coupon);
+        return round($result, 0, PHP_ROUND_HALF_UP);
     }
 
 }
