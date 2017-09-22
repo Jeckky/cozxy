@@ -79,6 +79,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['tel', 'string', 'length' => [10]],
             ['newPassword', 'string', 'min' => 8],
             ['password', 'string', 'min' => 6],
+            ['password', 'required', 'message' => 'OTP cannot be blank.'],
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
 //            ['email', 'uniqueEmail'],
             ['email', 'email'],
