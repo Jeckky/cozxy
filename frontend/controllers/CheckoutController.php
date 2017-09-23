@@ -24,6 +24,7 @@ use common\models\costfit\UserPoint;
 use common\models\costfit\PointUsed;
 use frontend\models\DisplayMyAddress;
 use yii\data\ArrayDataProvider;
+use common\helpers\CozxyCalculatesCart;
 
 class CheckoutController extends MasterController {
 
@@ -317,13 +318,16 @@ class CheckoutController extends MasterController {
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
-
+        $CozxyCalculatesCart['total'] = number_format(CozxyCalculatesCart::FormulaTotal(), 2);
+        $CozxyCalculatesCart['TotalExVat'] = number_format(CozxyCalculatesCart::FormulaTotalExVat(), 2);
+        $CozxyCalculatesCart['vat'] = number_format(CozxyCalculatesCart::FormulaVAT(), 2);
+        $CozxyCalculatesCart['SubTotal'] = number_format(CozxyCalculatesCart::FormulaSubTotal(), 2);
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
             'order' => $order,
             'userPoint' => $userPoint,
             'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $systemCoin
+            'systemCoin' => $systemCoin, 'CozxyCalculatesCart' => $CozxyCalculatesCart
         ]);
     }
 
@@ -365,7 +369,7 @@ class CheckoutController extends MasterController {
         }
         $isHasNotEnough = $this->CheckEnoughItem($orderId);
         if ($isHasNotEnough == 1) {
-            return $this->redirect([Yii::$app->homeUrl . 'cart?fc=1']);
+            return $this->redirect([Yii::$app->homeUrl . 'cart?fc = 1']);
         }
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $res = [];
@@ -396,12 +400,12 @@ class CheckoutController extends MasterController {
                         endforeach;
                     } else {
                         foreach ($order->orderItems as $item):
-                            //$date = \common\models\costfit\ShippingType::find()->where('shippingTypeId=' . $item->sendDate)->one();
+                            //$date = \common\models\costfit\ShippingType::find()->where('shippingTypeId = ' . $item->sendDate)->one();
                             $item->sendDateTime = date('Y-m-d', strtotime("+1 day"));
                             $item->save();
                         endforeach;
                     }
-                    $member = \common\models\costfit\User::find()->where('userId=' . $order->userId)->one();
+                    $member = \common\models\costfit\User::find()->where('userId = ' . $order->userId)->one();
                     if (isset($member)) {
                         if (isset($member->email)) {
                             $toMails = $member->email;
@@ -443,7 +447,7 @@ class CheckoutController extends MasterController {
 
                         $adress['billingTel'] = $addressId->tel;
 
-                        $orderList = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
+                        $orderList = \common\models\costfit\Order::find()->where('orderId = ' . $orderId)->one();
                         $receiveType = [];
                         $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
 
@@ -602,7 +606,7 @@ class CheckoutController extends MasterController {
         $model->type = \common\models\costfit\Address::TYPE_BILLING;
         $model->createDateTime = new \yii\db\Expression("NOW()");
         if ($model->save(FALSE)) {
-            return '<option value="' . Yii::$app->db->lastInsertID . '">Billing Address :' . $firstname . ' ' . $lastname . '</option>';
+            return '<option value = "' . Yii::$app->db->lastInsertID . '">Billing Address :' . $firstname . ' ' . $lastname . '</option>';
         } else {
             return '';
         }
@@ -629,9 +633,9 @@ class CheckoutController extends MasterController {
                         $productResult[$productSupp->productSuppId] = $item->quantity;
                         $isWishlist = \common\models\costfit\Wishlist::find()->where("userId=" . Yii::$app->user->id . " and productId=" . $productSupp->productId . " and status=1")->one();
                         if (isset($isWishlist)) {
-                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12"  onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart" aria-hidden="true"></i> ADD TO WISHLIST</button>';
+                            $wishlist[$productSupp->productSuppId] = '<button type = "button" class = "btn btn-yellow size12" onclick = "javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class = "fa fa-heart" aria-hidden = "true"></i> ADD TO WISHLIST</button>';
                         } else {
-                            $wishlist[$productSupp->productSuppId] = '<button type="button" class="btn btn-yellow size12" id="bAdd' . $productSupp->productId . '" onclick="javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class="fa fa-heart-o" aria-hidden="true"></i> ADD TO WISHLIST</button>';
+                            $wishlist[$productSupp->productSuppId] = '<button type = "button" class = "btn btn-yellow size12" id = "bAdd' . $productSupp->productId . '" onclick = "javascript:addItemToDefaultWishlist(' . $productSupp->productId . ')"><i class = "fa fa-heart-o" aria-hidden = "true"></i> ADD TO WISHLIST</button>';
                         }
                     }
                 }
@@ -643,14 +647,16 @@ class CheckoutController extends MasterController {
                 $productImage = \common\models\costfit\ProductImageSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
                 $productSupplier = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
                 if (isset($productImage)) {
-                    $image = "<img src = '" . Yii::$app->homeUrl . $productImage->imageThumbnail1 . "' class = 'img-responsive' style = 'width:150px;height:150px;'>";
+                    $image = "<img src = '" . Yii::$app->homeUrl . $productImage->imageThumbnail1 . "' class = 'img-responsive' style = 'width:150px;
+        height:150px;
+        '>";
                 } else {
                     $image = '';
                 }
                 if ($productSupplier->result == 0) {
-                    $body .= '<tr><td style="text-align:center;">' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td style="text-align:center;">' . $wishlist[$productSuppId] . '<br><br> Please delete this item from your cart</td></tr>';
+                    $body .= '<tr><td style = "text-align:center;">' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td style = "text-align:center;">' . $wishlist[$productSuppId] . '<br><br> Please delete this item from your cart</td></tr>';
                 } else {
-                    $body .= '<tr><td style="text-align:center;">' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td style="text-align:center;">' . $wishlist[$productSuppId] . '<br><br> Please decrease this item to ' . $productSupplier->result . '</td></tr>';
+                    $body .= '<tr><td style = "text-align:center;">' . $image . '<br>' . $productSupplier->title . '</td><td>' . $quantity . '</td><td>' . $productSupplier->result . '</td><td style = "text-align:center;">' . $wishlist[$productSuppId] . '<br><br> Please decrease this item to ' . $productSupplier->result . '</td></tr>';
                 }
             endforeach;
             $text = $header . $body . '</tbody></table>';
@@ -680,18 +686,18 @@ class CheckoutController extends MasterController {
     }
 
     public function header() {
-        return '  <table class="table table-hover" style="width:100%
+        return ' <table class = "table table-hover" style = "width:100%
 
                     ">
-            <thead>
-            <tr>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th> Available</th>
-              <th></th>
-            </tr>
-            </thead><tbody>
-            ';
+        <thead>
+        <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th> Available</th>
+        <th></th>
+        </tr>
+        </thead><tbody>
+        ';
     }
 
 }

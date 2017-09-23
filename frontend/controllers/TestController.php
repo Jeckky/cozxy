@@ -40,10 +40,10 @@ class TestController extends MasterController {
         }
         //echo '<pre>';
         //print_r($Order->attributes);
-        $total = CozxyCalculatesCart::FormulaTotal($OrderItemSumTotal, $couponValue);
-        $TotalExVat = CozxyCalculatesCart::FormulaTotalExVat($total);
-        $vat = CozxyCalculatesCart::FormulaVAT($TotalExVat);
-        $SubTotal = CozxyCalculatesCart::FormulaSubTotal($TotalExVat, $vat);
+        $total = CozxyCalculatesCart::FormulaTotal();
+        $TotalExVat = CozxyCalculatesCart::FormulaTotalExVat();
+        $vat = CozxyCalculatesCart::FormulaVAT();
+        $SubTotal = CozxyCalculatesCart::FormulaSubTotal();
 
         echo '<br>Total : ' . number_format($total, 2);
         echo '<br>TotalExVat : ' . number_format($TotalExVat, 2);
