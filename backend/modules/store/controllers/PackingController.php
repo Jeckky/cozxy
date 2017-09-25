@@ -272,7 +272,9 @@ class PackingController extends StoreMasterController {
         $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         $orderDiscount = Order::find()->where("orderId=" . $order->orderId)->one();
         if (isset($orderDiscount)) {
-            $extraDiscont = $orderDiscount->discount;
+            if ($orderDiscount->discount != null) {
+                $extraDiscont = $orderDiscount->discount;
+            }
             $orderNo = $orderDiscount->orderNo;
         }
         $fullYear = date('Y');

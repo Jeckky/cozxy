@@ -43,26 +43,34 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php
                     //throw new \yii\base\Exception(print_r($model, true));
                     ?>
-                    <?php
+                    <?=
                     DetailView::widget([
                         'model' => $model,
                         'attributes' => [
+                            /* [
+                              'attribute' => 'userId',
+                              'value' => function ($model) {
+                              $user = $model->user;
+
+                              return $user->firstname . ' ' . $user->lastname;
+                              }
+                              ], */
                                 [
                                 'attribute' => 'userId',
-                                'value' => function ($model) {
-                                    $user = $model->user;
-
-                                    return $user->firstname . ' ' . $user->lastname;
-                                }
+                                'value' => $model->user->firstname . ' ' . $model->user->lastname
                             ],
                             'orderNo',
                             'invoiceNo',
                             'summary',
+                            /*  [
+                              'attribute' => 'status',
+                              'value' => function ($model) {
+                              return $model->getStatusText($model->status);
+                              }
+                              ], */
                                 [
                                 'attribute' => 'status',
-                                'value' => function ($model) {
-                                    return $model->getStatusText($model->status);
-                                }
+                                'value' => $model->getStatusText($model->status)
                             ],
                         //            'pickingId',
                         //            'token:ntext',
@@ -120,6 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ])
                     ?>
+                    <a href="<?= Yii::$app->homeUrl ?>booth/order/print-reciept?orderId=<?= $model->orderId ?>" class="btn btn-success pull-right" target="_blank" style="display: <?= $model->status == 16 ? '' : 'none' ?>;" id="printReciept">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Print
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -235,6 +247,7 @@ $this->registerJs("
                 if(data.result == 1) {
                     alert('รหัสยืนยันถูกต้อง สามารถรับสินค้าได้');
                     $('#orderPanel').html('<h4>รับสินค้าเรียบร้อยแล้ว</h4>');
+                    $('#printReciept').show();
                 } else {
                     alert('รหัสไม่ถูกต้อง ไม่สามารถรับสินค้าได้');
                 }

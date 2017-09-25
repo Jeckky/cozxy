@@ -208,6 +208,15 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         }
     }
 
+    static public function findItemInBagReceived($bagNo) {
+        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status=8")->all();
+        if (isset($orderItems) && !empty($orderItems)) {
+            return $orderItems;
+        } else {
+            return '';
+        }
+    }
+
     public function getOrderItems() {
         return $this->hasMany(OrderItem::className(), ['orderItemId' => 'orderItemId']); //[Order :: ปลายทาง ,  OrderItem :: ต้นทาง]
     }
