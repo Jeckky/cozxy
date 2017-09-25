@@ -10,25 +10,23 @@ use common\models\costfit\Order as OrderModel;
 /**
  * Order represents the model behind the search form about `\common\models\costfit\Order`.
  */
-class Order extends OrderModel
-{
+class Order extends OrderModel {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['orderId', 'userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
-            [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime', 'password'], 'safe'],
-            [['summary'], 'number'],
+                [['orderId', 'userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
+                [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime', 'password'], 'safe'],
+                [['summary'], 'number'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ class Order extends OrderModel
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = OrderModel::find();
 
         // add conditions that should always apply here
@@ -77,26 +74,25 @@ class Order extends OrderModel
         ]);
 
         $query->andFilterWhere(['like', 'token', $this->token])
-            ->andFilterWhere(['like', 'orderNo', $this->orderNo])
-            ->andFilterWhere(['like', 'invoiceNo', $this->invoiceNo])
-            ->andFilterWhere(['like', 'billingCompany', $this->billingCompany])
-            ->andFilterWhere(['like', 'billingTax', $this->billingTax])
-            ->andFilterWhere(['like', 'billingAddress', $this->billingAddress])
-            ->andFilterWhere(['like', 'billingZipcode', $this->billingZipcode])
-            ->andFilterWhere(['like', 'billingTel', $this->billingTel])
-            ->andFilterWhere(['like', 'shippingCompany', $this->shippingCompany])
-            ->andFilterWhere(['like', 'shippingTax', $this->shippingTax])
-            ->andFilterWhere(['like', 'shippingAddress', $this->shippingAddress])
-            ->andFilterWhere(['like', 'shippingZipcode', $this->shippingZipcode])
-            ->andFilterWhere(['like', 'shippingTel', $this->shippingTel]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo])
+                ->andFilterWhere(['like', 'invoiceNo', $this->invoiceNo])
+                ->andFilterWhere(['like', 'billingCompany', $this->billingCompany])
+                ->andFilterWhere(['like', 'billingTax', $this->billingTax])
+                ->andFilterWhere(['like', 'billingAddress', $this->billingAddress])
+                ->andFilterWhere(['like', 'billingZipcode', $this->billingZipcode])
+                ->andFilterWhere(['like', 'billingTel', $this->billingTel])
+                ->andFilterWhere(['like', 'shippingCompany', $this->shippingCompany])
+                ->andFilterWhere(['like', 'shippingTax', $this->shippingTax])
+                ->andFilterWhere(['like', 'shippingAddress', $this->shippingAddress])
+                ->andFilterWhere(['like', 'shippingZipcode', $this->shippingZipcode])
+                ->andFilterWhere(['like', 'shippingTel', $this->shippingTel]);
 
         return $dataProvider;
     }
 
-    public function searchBooth($params)
-    {
+    public function searchBooth($params) {
         $query = OrderModel::find();
-        $query->andWhere(['pickingId'=>20]);
+        $query->andWhere(['pickingId' => 20]);
 
         // add conditions that should always apply here
 
@@ -147,4 +143,5 @@ class Order extends OrderModel
 
         return $dataProvider;
     }
+
 }

@@ -32,11 +32,11 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 //                        //self.close();
 //                    }
             function print_window() {
-                window.print();
-                setTimeout(function () {
-                    window.open('', '_self', '');
-                    window.close();
-                }, 0);
+                 window.print();
+                 setTimeout(function () {
+                 window.open('', '_self', '');
+                 window.close();
+                 }, 0);
             }
 
         </script>
@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                             ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                   ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                             ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                   ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -115,20 +115,21 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     <?php
     $i = 1;
     $empty = 20;
-    $orderItems = OrderItemPacking::findItemInBag($bagNo);
+    $orderItems = OrderItemPacking::findItemInBagReceived($bagNo);
     $total = 0;
     if (isset($orderItems) && !empty($orderItems)) {
         foreach ($orderItems as $orderItem):
             $item = Product::findProducts($orderItem->orderItemId);
             if (isset($item) && !empty($item)) {
                 echo '<tr style="height: 25px;">';
-                echo '<td style="border-right: #000 solid thin;"><center>' . $item->code . '</center></td>';
+                echo '<td style="border-right: #000 solid thin;"><center>' . $item->isbn . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $item->title . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $orderItem->quantity . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . number_format(ProductSuppliers::productPrice($item->productSuppId), 2) . '</center></td>';
                 echo '<td colspan="2" style="text-align:right">' . number_format($orderItem->quantity * ProductSuppliers::productPrice($item->productSuppId), 2) . '</td>';
                 echo '</tr>';
                 $total += ProductSuppliers::productPrice($item->productSuppId);
+
                 $i++;
             } else {
                 echo '<tr><td colspan="4"><center>ไม่มีรายการสินค้า</center></td></tr>';
@@ -191,10 +192,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                      ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                      ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">

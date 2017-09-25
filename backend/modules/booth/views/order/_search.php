@@ -10,11 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="order-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-        'id'=>'search-form'
-    ]); ?>
+    <?php
+    $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+                'id' => 'search-form'
+    ]);
+    ?>
 
     <?//= $form->field($model, 'orderId') ?>
 
@@ -126,10 +128,10 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'updateDateTime') ?>
 
-    <?php // echo $form->field($model, 'email') ?>
+    <?php // echo $form->field($model, 'email')  ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'id'=>'searchBtn']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'id' => 'searchBtn']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
@@ -141,7 +143,7 @@ use yii\widgets\ActiveForm;
 $this->registerJs("
 $('#searchBtn').click(function(e){
     e.preventDefault();
-    
+
     if($('#order-orderno').val().length > 0) {
         $('#search-form').submit();
     } else {
