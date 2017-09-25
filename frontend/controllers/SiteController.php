@@ -83,9 +83,9 @@ class SiteController extends MasterController {
         //echo Yii::getVersion();
         $slideGroup = new ArrayDataProvider(['allModels' => FakeFactory::productSlideGroup('', '')]);
 //        $productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(6, FALSE)]);
-        $productCanSell = Product::productForSale(6);
+        $productCanSell = Product::productForSale(12);
 //        $productNotSell = new ArrayDataProvider(['allModels' => FakeFactory::productForNotSale(6)]);
-        $productNotSell = Product::productForNotSale(6);
+        $productNotSell = Product::productForNotSale(12);
 //        $productStory = new ArrayDataProvider(['allModels' => FakeFactory::productStory(3)]);
         $productStory = ProductPost::productStory(3);
 //        $productBrand = new ArrayDataProvider(['allModels' => FakeFactory::productSlideBanner('', ''), 'pagination' => [
@@ -93,7 +93,7 @@ class SiteController extends MasterController {
 //        ]]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
-        $promotions = Product::productPromotion(6);
+        $promotions = Product::productPromotion(12);
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
 

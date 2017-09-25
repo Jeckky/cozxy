@@ -151,9 +151,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td colspan="6">&nbsp;</td>
                             <td >&nbsp;</td>
                         </tr>
-                        <tr>
+                        <tr><?//php echo number_format($order->totalExVat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?>
+                            </td>
                         </tr>
 
                         <!--
@@ -162,9 +163,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td class="bg-purchase-order"> - </td>
                         </tr>
                         -->
-                        <tr>
+                        <tr> <?//php echo number_format($order->vat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Discount Coupons:</td>
@@ -178,9 +180,10 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Shipping:</td>
                             <td class="bg-purchase-order text-right"><?php echo ($order->shippingRate > 0) ? number_format($order->shippingRate, 2) : "Free"; ?></td>
                         </tr>
-                        <tr >
+                        <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?></td>
+                            <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

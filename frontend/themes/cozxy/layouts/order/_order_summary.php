@@ -12,9 +12,9 @@ use yii\bootstrap\ActiveForm;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'confirm-checkout',
-                    'action' => Yii::$app->homeUrl . 'checkout/confirm',
-                    'options' => ['class' => 'space-bottom'],
+            'id' => 'confirm-checkout',
+            'action' => Yii::$app->homeUrl . 'checkout/confirm',
+            'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
                     <?=
                     $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order,
                         'addressIdsummary' => $addressIdsummary,
-                        'systemCoin' => $systemCoin
+                        'systemCoin' => $systemCoin, 'CozxyCalculatesCart' => $CozxyCalculatesCart
                     ])
                     ?>
 

@@ -49,7 +49,17 @@ class DashboardController extends DashboardMasterController {
         $orderLastDay = Notifications::DashboarMovementorderLastDay();
         $orderLastWeek = Notifications::DashboarMovementorderLastWeek();
         $orderLastMONTH = Notifications::DashboarMovementorderLastMONTH();
-        return $this->render('index', compact('orderLastYes', 'orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
+        $UserBooth = Notifications::DashboarUserBooth();
+
+
+        $DataRow = $UserBooth;
+        $arrdata[0] = ['', 'วันที่สมัคร'];
+
+        for ($i = 0, $m = sizeof($DataRow); $i < $m; $i++) {
+            $arrdata[$i + 1] = [$DataRow[$i]['email'], $DataRow[$i]['createDateTime']];
+        }
+
+        return $this->render('index', compact('arrdata', 'orderLastYes', 'orderLastDay', 'orderLastWeek', 'orderLastMONTH', 'userVisit', 'circulations', 'orderToday', 'todaySummary', 'earnToday', 'newUser', 'newOrder', 'userCount', 'userlastvisitDate', 'orderLast'));
     }
 
     public function actionFlowchart($id) {

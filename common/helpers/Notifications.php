@@ -125,7 +125,7 @@ class Notifications {
 
     public static function DashboarMovementorderLastMONTH() {
         $orderLastMONTH = \common\models\costfit\Order::find()
-        ->where(' `order`.status >= 5  and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')->sum('summary');
+        ->where(' `order`.status >= 5  and (month(`createDateTime`) = month(now())+1 OR month(`createDateTime`) = month(now())) AND Year(`createDateTime`) = Year(now()) Order By `createDateTime`  ')->sum('summary');
         return $orderLastMONTH;
     }
 
@@ -141,6 +141,11 @@ class Notifications {
         //' SELECT sum(summary) FROM costfit_test.`order`  where status >= 5 and date(`order`.`createDateTime`)>= date_add(curdate(),interval  0 day)';
         //'SELECT sum(summary) fROM costfit_test.`order` where status => 5 and date(createDateTime)>=date_add(curdate(),interval -1 week)  ';
         //'SELECT sum(summary)  FROM costfit_test.`order`  where status => 5 and MONTH(date_add(curdate(),interval  0 day))-1 <= MONTH(date_add(curdate(),interval  1 MONTH))';
+    }
+
+    public static function DashboarUserBooth() {
+        $UserBotth = \common\models\costfit\User::find()->where(' password IS NOT NULL and type = 1 and month(createDateTime) > 7 and   year(createDateTime) > 2016 ')->all();
+        return $UserBotth;
     }
 
 }
