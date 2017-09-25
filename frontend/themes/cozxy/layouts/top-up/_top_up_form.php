@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
 $form = ActiveForm::begin([
-            'id' => 'top-up'
-        ]);
+    'id' => 'top-up'
+]);
 if (isset($paymentMethod) && count($paymentMethod) > 0) {
     $count = count($paymentMethod);
 }
@@ -66,7 +66,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
                                 <div class="radio">
                                     <div class="btn-group" data-toggle="buttons">
                                         <label class="checkout_select_address" style="cursor: auto;" che>
-                                            <!--<input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?php // count($paymentMethod) == 1 ? 'checked' : ''    ?>><?php // $payment->title    ?><br>-->
+                                            <!--<input type="radio" name="paymentType"  id="paymentMethod" value="credit"<?php // count($paymentMethod) == 1 ? 'checked' : ''             ?>><?php // $payment->title             ?><br>-->
                                             <input type="radio" name="paymentType"  id="paymentMethod" value="credit" checked><?= $payment->title ?><br>
                                             <img src="<?= $baseUrl . '/images/Bank/master.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
                                             <img src="<?= $baseUrl . '/images/Bank/visa.png' ?>" style="float: left;width:50px;height:30px;margin-right: 10px;border: #009999 thin solid;">
@@ -95,7 +95,7 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
 <div class="radio">
 <div class="btn-group" data-toggle="buttons">
 <label class="checkout_select_address">
-<input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''                 ?>><?php // $payment->title                 ?>
+<input type="radio" name="paymentType"  id="paymentMethod2" value="bill"<?php // count($paymentMethod) == 1 ? 'checked' : ''                          ?>><?php // $payment->title                          ?>
 </label>
 </div>
 </div>
@@ -108,16 +108,17 @@ if (isset($paymentMethod) && count($paymentMethod) > 0) {
             //  endforeach;
             // }
             ?>
-            <tr style="height: 50px;">
-                <td style="text-align: right;padding: 8px">Type in captcha :</td>
-                <td style="text-align: left;margin-top:0px; padding: 0px;">
-                    <span style="margin-left: 20px;  padding: 0px;">
-                        <input type="text" id="inputPass" name="inputPass" maxlength="6" style="width: 150px;text-align: center; margin-top:0px; padding: 0px; " required="true">
-                        <input type="text" id="passwordPic" style="width:80px;height: 28px;background-color: #000;color:#ffcc33;text-align: center;border: 0 #000 solid;" disabled="true" value="<?= $data["number"] ?>">
-                        <span>&nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true" id="refreshPass" style="color: #fc0;font-size: 14pt;cursor: pointer;"></i></span>
-                    </span>
-                </td>
-            </tr>
+<!--<tr style="height: 50px;">
+    <td style="text-align: right;padding: 8px">Type in captcha :</td>
+    <td style="text-align: left;margin-top:0px; padding: 0px;">
+        <span style="margin-left: 20px;  padding: 0px;">
+            <input type="hidden" id="inputPass" name="inputPass" maxlength="6" value="1234" style="width: 150px;text-align: center; margin-top:0px; padding: 0px; " required="true">
+            <input type="text" id="passwordPic" style="width:80px;height: 28px;background-color: #000;color:#ffcc33;text-align: center;border: 0 #000 solid;" disabled="true" value="<?= $data["number"] ?>">
+            <span>&nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true" id="refreshPass" style="color: #fc0;font-size: 14pt;cursor: pointer;"></i></span>
+        </span>
+    </td>
+</tr>-->
+            <input type="hidden" id="inputPass" name="inputPass" maxlength="6" value="1234"  required="true">
             <tr style="height: 50px;">
                 <td style="text-align: right;"></td>
                 <td style="text-align: left;">

@@ -97,20 +97,21 @@ $(document).on('click', '#checkBot', function () {//test
     } else {
         var billPayment = false;
     }
-    if ((inputPass == '') || (inputPass != passPic)) {
-        alert('Please enter captcha to verify.');
-        $.ajax({
-            type: 'POST',
-            dataType: 'JSON',
-            url: $baseUrl + '/top-up/random-pass',
-            data: {data: '1'},
-            success: function (data) {
-                if (data.pass) {
-                    $("#passwordPic").val(data.pass);
-                }
-            }
-        });
-    } else if (creditCard == false && billPayment == false) {
+    /*if ((inputPass == '') || (inputPass != passPic)) {
+     alert('Please enter captcha to verify.');
+     $.ajax({
+     type: 'POST',
+     dataType: 'JSON',
+     url: $baseUrl + '/top-up/random-pass',
+     data: {data: '1'},
+     success: function (data) {
+     if (data.pass) {
+     $("#passwordPic").val(data.pass);
+     }
+     }
+     });
+     } else*/
+    if (creditCard == false && billPayment == false) {
         alert("Please select payment method.");
     } else {
         $("#top-up").submit();
