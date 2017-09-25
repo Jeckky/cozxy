@@ -22,7 +22,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
     <div class="row" style="background-color: #fff;">
 
         <div class="col-lg-9 col-md-8 cart-body">
-            <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order]) ?>
+            <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order, 'cartCalculates' => $cartCalculates]) ?>
             <hr>
             <?php
             if (isset($trackingOrder) && !empty($trackingOrder)) {

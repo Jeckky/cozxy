@@ -151,8 +151,10 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                             <?php
                                             echo $form->field($modelComparePrice, 'currency')->widget(kartik\select2\Select2::classname(), [
                                                 //'options' => ['id' => 'address-countryid'],
-                                                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue) {
-                                                    return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                                                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()
+                                                ->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue, $index = 1) {
+                                                    //return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                                                    return strtolower($model['ctry_name']) . ' (' . $model['currency_name'] . ')';
                                                 }, 'currency_code'),
                                                 'pluginOptions' => [
                                                     'placeholder' => 'Select...',
@@ -161,6 +163,7 @@ if (Yii::$app->controller->action->id == 'update-stories') {
                                                 'options' => ['placeholder' => 'Select Currency ...'],
                                             ])->label(FALSE);
                                             ?>
+
                                         </div>
                                     </div>
                                 </div>

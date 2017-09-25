@@ -366,7 +366,7 @@ class MyAccountController extends MasterController {
         $this->title = 'Cozxy.com | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
-
+        $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($params['orderId']);
 
         if (isset($params['orderId'])) {
             $order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId = "' . $params['orderId'] . '" ')->one();
@@ -376,11 +376,11 @@ class MyAccountController extends MasterController {
             } else {
                 $userPoint = $this->CreateUserPoint($order->userId);
             }
-
+            //echo $params['orderId'];
             $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking($params['orderId'])]);
 
             //$orderItem = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
-            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint', 'trackingOrder'));
+            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint', 'trackingOrder', 'cartCalculates'));
         } else {
             return $this->redirect(['my-account']);
         }

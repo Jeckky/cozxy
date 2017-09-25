@@ -11,9 +11,6 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 
 $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->orderId]);
-
-//echo '<pre>';
-//print_r($order->attributes);
 ?>
 <style>
     .table{
@@ -153,7 +150,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr><?//php echo number_format($order->totalExVat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->totalExVat, 2); ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);               ?>
                             </td>
                         </tr>
 
@@ -165,7 +162,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr> <?//php echo number_format($order->vat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->vat, 2); ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                ?>
                             </td>
                         </tr>
                         <tr>
@@ -182,7 +179,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
-                            <td class="bg-purchase-order text-right"><?php echo number_format($order->summary, 2); ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                 ?>
                             </td>
                         </tr>
                     </tbody>

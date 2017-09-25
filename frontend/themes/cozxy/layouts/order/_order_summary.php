@@ -27,7 +27,7 @@ use yii\bootstrap\ActiveForm;
                     <?=
                     $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order,
                         'addressIdsummary' => $addressIdsummary,
-                        'systemCoin' => $systemCoin, 'CozxyCalculatesCart' => $CozxyCalculatesCart
+                        'systemCoin' => $systemCoin, 'cartCalculates' => $cartCalculates
                     ])
                     ?>
 

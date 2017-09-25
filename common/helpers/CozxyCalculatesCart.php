@@ -40,21 +40,48 @@ use yii\data\ActiveDataProvider;
  */
 class CozxyCalculatesCart {
 
-    public static function UserOrder() {
+    public static function UserOrder($orderIdParams) {
+        $orderIdParams = $orderIdParams;
+        //echo $orderIdParams;
+        //exit();
         $cartOrderId = \common\models\costfit\Order::findCartArray();
-        //throw new \yii\base\Exception(print_r($cartOrderId['orderId'], true));
-        $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id)->orderBy('orderId desc')->one();
-        if (isset($Order->orderId)) {
-            $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $Order->orderId)->sum('total');
+        //echo '<pre>';
+        // print_r($cartOrderId);
+        ///throw new \yii\base\Exception(print_r($cartOrderId['orderId'], true));
+
+        if (isset($cartOrderId['orderId'])) {
+            //echo '1';
+            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $cartOrderId['orderId'])->orderBy('orderId desc')->one();
+            if (isset($Order->orderId)) {
+                $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $Order->orderId)->sum('total');
+            } else {
+                $OrderItemSumTotal = 0;
+            }
+            if (isset($Order->couponId)) {
+                $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
+                $couponValue = $coupon->discountValue;
+            } else {
+                $couponValue = 0;
+            }
         } else {
-            $OrderItemSumTotal = 0;
+            //echo '1.1';
+            //echo '1.3';
+            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $orderIdParams)->orderBy('orderId desc')->one();
+            $orderId = $Order->attributes['orderId'];
+            if (isset($orderId)) {
+                $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId)->sum('total');
+            } else {
+                $OrderItemSumTotal = 0;
+            }
+            if (isset($Order->couponId)) {
+                $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
+                $couponValue = $coupon->discountValue;
+            } else {
+                $couponValue = 0;
+            }
         }
-        if (isset($Order->couponId)) {
-            $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
-            $couponValue = $coupon->discountValue;
-        } else {
-            $couponValue = 0;
-        }
+
+
         $OrderTotle = $OrderItemSumTotal - $couponValue;
         return round($OrderTotle, 0, PHP_ROUND_HALF_UP);
     }
@@ -66,8 +93,8 @@ class CozxyCalculatesCart {
       $SubTotal = CozxyCalculatesCart::FormulaSubTotal($TotalExVat, $vat);
      */
 
-    public static function FormulaTotal() {
-        $result = \common\helpers\CozxyCalculatesCart::UserOrder();
+    public static function FormulaTotal($orderIdParams) {
+        $result = \common\helpers\CozxyCalculatesCart::UserOrder($orderIdParams);
         return round($result, 0, PHP_ROUND_HALF_UP);
     }
 
@@ -75,8 +102,8 @@ class CozxyCalculatesCart {
      * ราคาสินค้าไม่รวมภาษี
      */
 
-    public static function FormulaTotalExVat() {
-        $total = \common\helpers\CozxyCalculatesCart::UserOrder();
+    public static function FormulaTotalExVat($orderIdParams) {
+        $total = \common\helpers\CozxyCalculatesCart::UserOrder($orderIdParams);
         $result = $total / 1.07;
         return round($result, 0, PHP_ROUND_HALF_UP);
     }
@@ -85,8 +112,8 @@ class CozxyCalculatesCart {
      * ภาษีมูลค่าเพิ่ม VAT 7%
      */
 
-    public static function FormulaVAT() {
-        $TotalExVat = \common\helpers\CozxyCalculatesCart::FormulaTotalExVat();
+    public static function FormulaVAT($orderIdParams) {
+        $TotalExVat = \common\helpers\CozxyCalculatesCart::FormulaTotalExVat($orderIdParams);
         $result = $TotalExVat * 0.07;
         return round($result, 0, PHP_ROUND_HALF_UP);
     }
@@ -103,9 +130,9 @@ class CozxyCalculatesCart {
      * ราคาสินค้ารวมภาษีมูลค่าเพิ่ม
      */
 
-    public static function FormulaSubTotal() {
-        $TotalExVat = \common\helpers\CozxyCalculatesCart::FormulaTotalExVat();
-        $vat = \common\helpers\CozxyCalculatesCart::FormulaVAT();
+    public static function FormulaSubTotal($orderIdParams) {
+        $TotalExVat = \common\helpers\CozxyCalculatesCart::FormulaTotalExVat($orderIdParams);
+        $vat = \common\helpers\CozxyCalculatesCart::FormulaVAT($orderIdParams);
         $result = ( $TotalExVat + $vat);
         return $result;
     }
@@ -114,11 +141,12 @@ class CozxyCalculatesCart {
         echo $this->content;
     }
 
-    public static function ShowCalculatesCartCart() {
-        $CozxyCalculatesCart['total'] = number_format(CozxyCalculatesCart::FormulaTotal(), 2);
-        $CozxyCalculatesCart['TotalExVat'] = number_format(CozxyCalculatesCart::FormulaTotalExVat(), 2);
-        $CozxyCalculatesCart['vat'] = number_format(CozxyCalculatesCart::FormulaVAT(), 2);
-        $CozxyCalculatesCart['SubTotal'] = number_format(CozxyCalculatesCart::FormulaSubTotal(), 2);
+    public static function ShowCalculatesCartCart($orderIdParams) {
+
+        $CozxyCalculatesCart['total'] = number_format(CozxyCalculatesCart::FormulaTotal($orderIdParams), 2);
+        $CozxyCalculatesCart['TotalExVat'] = number_format(CozxyCalculatesCart::FormulaTotalExVat($orderIdParams), 2);
+        $CozxyCalculatesCart['vat'] = number_format(CozxyCalculatesCart::FormulaVAT($orderIdParams), 2);
+        $CozxyCalculatesCart['SubTotal'] = number_format(CozxyCalculatesCart::FormulaSubTotal($orderIdParams), 2);
         return $CozxyCalculatesCart;
     }
 

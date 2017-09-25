@@ -311,23 +311,21 @@ class CheckoutController extends MasterController {
         $addressIdsummary = $order->addressId;
         //
         $systemCoin = Yii::$app->request->post('systemCoin');
-
+        $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
             $userPoint = $issetPoint;
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
-        $CozxyCalculatesCart['total'] = number_format(CozxyCalculatesCart::FormulaTotal(), 2);
-        $CozxyCalculatesCart['TotalExVat'] = number_format(CozxyCalculatesCart::FormulaTotalExVat(), 2);
-        $CozxyCalculatesCart['vat'] = number_format(CozxyCalculatesCart::FormulaVAT(), 2);
-        $CozxyCalculatesCart['SubTotal'] = number_format(CozxyCalculatesCart::FormulaSubTotal(), 2);
+
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
             'order' => $order,
             'userPoint' => $userPoint,
             'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $systemCoin, 'CozxyCalculatesCart' => $CozxyCalculatesCart
+            'systemCoin' => $systemCoin,
+            'cartCalculates' => $cartCalculates
         ]);
     }
 
