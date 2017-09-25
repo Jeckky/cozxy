@@ -447,7 +447,8 @@ class CheckoutController extends MasterController {
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId = ' . $orderId)->one();
                         $receiveType = [];
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType);
+                        $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType, $cartCalculates);
 
                         return $this->render('_thank', compact('res'));
                     }

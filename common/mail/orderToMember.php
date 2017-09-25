@@ -150,7 +150,7 @@
                                             $i = 0;
                                             if (count($order) > 0) {
                                                 $listOrderItems = common\models\costfit\OrderItem::find()
-                                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
+                                                ->select('orderId,productSuppId,supplierId,receiveType')->where('orderId=' . $order->orderId)->groupBy('supplierId')->all();
                                                 foreach ($listOrderItems as $value1) {
                                                     /*
                                                      * # แยก Suppliers ไม่ซ้ำกัน
@@ -263,11 +263,11 @@
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">Total Before VAT:</td>
-                                                <td style="text-align: right;"><?php echo number_format($order->totalExVat, 2); ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2)   ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">VAT 7%:</td>
-                                                <td style="text-align: right;"><?php echo number_format($order->vat, 2); ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);  ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">Discount Coupons:</td>
@@ -283,7 +283,7 @@
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;"> Order Total: </td>
-                                                <td style="text-align: right;"><?php echo number_format($order->summary, 2); ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);  ?></td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -37,8 +37,8 @@ class Email {
         ->send();
     }
 
-    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType) {//ส่งรายการ Order ให้สมาชิก
-        \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType])
+    public static function mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType, $cartCalculates) {//ส่งรายการ Order ให้สมาชิก
+        \Yii::$app->mail->compose('orderToMember', ['url' => $url, 'type' => $type, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType, 'cartCalculates' => $cartCalculates])
         ->setTo($toMail)//tomail
         ->setFrom('cozxy@cozxy.com')
         ->setSubject($Subject)
@@ -113,14 +113,13 @@ class Email {
         ->send();
     }
 
-    public static function boothReceiveCode($toMail, $receiveCode, $orderNo)
-    {
-        \Yii::$app->mail->compose('booth_receive_code', ['receiveCode'=>$receiveCode, 'orderNo'=>$orderNo])
-            //Yii::$app->mail->compose('register_confirm', ['url' => $url])
-            ->setTo($toMail)//tomail
-            ->setFrom('cozxy@cozxy.com')
-            ->setSubject('Cozxy Receive Code')
-            ->send();
+    public static function boothReceiveCode($toMail, $receiveCode, $orderNo) {
+        \Yii::$app->mail->compose('booth_receive_code', ['receiveCode' => $receiveCode, 'orderNo' => $orderNo])
+        //Yii::$app->mail->compose('register_confirm', ['url' => $url])
+        ->setTo($toMail)//tomail
+        ->setFrom('cozxy@cozxy.com')
+        ->setSubject('Cozxy Receive Code')
+        ->send();
     }
 
 }
