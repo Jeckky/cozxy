@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-danger">
                 <div class="panel-heading">รหัสรับสินค้า</div>
                 <div class="panel-body" id="orderPanel">
-                    <?php if($model->status != Order::ORDER_STATUS_RECEIVED): ?>
+                    <?php if ($model->status != Order::ORDER_STATUS_RECEIVED): ?>
                         <?php $form = ActiveForm::begin(['id' => 'orderForm']); ?>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="รหัสรับสินค้า" id="orderCode" <?= ($model->status != $model::ORDER_STATUS_BOOTH_PACKING) ? 'disabled' : '' ?>>
@@ -40,10 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel">
                 <div class="panel-heading">รายละเอียดใบสั่งซื้อ</div>
                 <div class="panel-body">
-                    <?= DetailView::widget([
+                    <?php
+                    //throw new \yii\base\Exception(print_r($model, true));
+                    ?>
+                    <?php
+                    DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            [
+                                [
                                 'attribute' => 'userId',
                                 'value' => function ($model) {
                                     $user = $model->user;
@@ -54,67 +58,68 @@ $this->params['breadcrumbs'][] = $this->title;
                             'orderNo',
                             'invoiceNo',
                             'summary',
-                            [
+                                [
                                 'attribute' => 'status',
                                 'value' => function ($model) {
                                     return $model->getStatusText($model->status);
                                 }
                             ],
-                            //            'pickingId',
-                            //            'token:ntext',
-                            //            'totalExVat',
-                            //            'vat',
-                            //            'total',
-                            //            'discount',
-                            //            'grandTotal',
-                            //            'shippingRate',
-                            //            'orderId',
-                            //            'userId',
-                            //            'userCoin',
-                            //            'cozxyCoin',
-                            //            'sendDate',
-                            //            'addressId',
-                            //            'isPayNow',
-                            //            'billingFirstname',
-                            //            'billingLastname',
-                            //            'billingCompany',
-                            //            'billingTax',
-                            //            'billingAddress:ntext',
-                            //            'billingCountryId',
-                            //            'billingProvinceId',
-                            //            'billingAmphurId',
-                            //            'billingDistrictId',
-                            //            'billingZipcode',
-                            //            'billingTel',
-                            //            'shippingFirstname',
-                            //            'shippingLastname',
-                            //            'shippingCompany',
-                            //            'shippingTax',
-                            //            'shippingAddress:ntext',
-                            //            'shippingCountryId',
-                            //            'shippingProvinceId',
-                            //            'shippingAmphurId',
-                            //            'shippingDistrictId',
-                            //            'shippingZipcode',
-                            //            'shippingTel',
-                            //            'paymentType',
-                            //            'couponId',
-                            //            'checkStep',
-                            //            'note:ntext',
-                            //            'paymentDateTime',
-                            //            'isSlowest',
-                            //            'color',
-                            //            'pickerId',
-                            //            'password',
-                            //            'otp',
-                            //            'refNo',
-                            //            'status',
-                            //            'error',
-                            //            'createDateTime',
-                            //            'updateDateTime',
-                            //            'email:email',
+                        //            'pickingId',
+                        //            'token:ntext',
+                        //            'totalExVat',
+                        //            'vat',
+                        //            'total',
+                        //            'discount',
+                        //            'grandTotal',
+                        //            'shippingRate',
+                        //            'orderId',
+                        //            'userId',
+                        //            'userCoin',
+                        //            'cozxyCoin',
+                        //            'sendDate',
+                        //            'addressId',
+                        //            'isPayNow',
+                        //            'billingFirstname',
+                        //            'billingLastname',
+                        //            'billingCompany',
+                        //            'billingTax',
+                        //            'billingAddress:ntext',
+                        //            'billingCountryId',
+                        //            'billingProvinceId',
+                        //            'billingAmphurId',
+                        //            'billingDistrictId',
+                        //            'billingZipcode',
+                        //            'billingTel',
+                        //            'shippingFirstname',
+                        //            'shippingLastname',
+                        //            'shippingCompany',
+                        //            'shippingTax',
+                        //            'shippingAddress:ntext',
+                        //            'shippingCountryId',
+                        //            'shippingProvinceId',
+                        //            'shippingAmphurId',
+                        //            'shippingDistrictId',
+                        //            'shippingZipcode',
+                        //            'shippingTel',
+                        //            'paymentType',
+                        //            'couponId',
+                        //            'checkStep',
+                        //            'note:ntext',
+                        //            'paymentDateTime',
+                        //            'isSlowest',
+                        //            'color',
+                        //            'pickerId',
+                        //            'password',
+                        //            'otp',
+                        //            'refNo',
+                        //            'status',
+                        //            'error',
+                        //            'createDateTime',
+                        //            'updateDateTime',
+                        //            'email:email',
                         ],
-                    ]) ?>
+                    ])
+                    ?>
                 </div>
             </div>
         </div>
@@ -125,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-warning">
                 <div class="panel-heading">สแกนบาร์โค้ดสินค้า</div>
                 <div class="panel-body" id="productPanel">
-                    <?php if($model->status != Order::ORDER_STATUS_RECEIVED && $model->status != Order::ORDER_STATUS_BOOTH_PACKING): ?>
+                    <?php if ($model->status != Order::ORDER_STATUS_RECEIVED && $model->status != Order::ORDER_STATUS_BOOTH_PACKING): ?>
                         <?php $form = ActiveForm::begin(['id' => 'barcodeForm']); ?>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="บาร์โค้ดสินค้า" id="pBarcode">
@@ -133,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <input type="submit" value="ตรวจสอบสินค้า" class="btn btn-block btn-warning" id="pSubmit">
                         <input type="hidden" value="<?= $model->orderId ?>" id="orderId">
                         <?php ActiveForm::end(); ?>
-                    <?php elseif($model->status == Order::ORDER_STATUS_BOOTH_PACKING): ?>
+                    <?php elseif ($model->status == Order::ORDER_STATUS_BOOTH_PACKING): ?>
                         <h4>หยิบสินค้าใส่ถุงครบแล้ว</h4>
                     <?php else: ?>
                         <h4>รับสินค้าเรียบร้อยแล้ว</h4>
@@ -145,10 +150,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-info">
                 <div class="panel-heading">รายการสินค้า</div>
                 <div class="panel-body">
-                    <?= GridView::widget([
+                    <?=
+                    GridView::widget([
                         'dataProvider' => new \yii\data\ActiveDataProvider([
                             'query' => \common\models\costfit\OrderItem::find()->where(['orderId' => $model->orderId])
-                        ]),
+                                ]),
                         'rowOptions' => function ($model) {
                             $options = ['id' => 'r' . $model->orderItemId];
                             $options['class'] = ($model->status == 16) ? 'success' : '';
@@ -156,8 +162,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $options;
                         },
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                [
                                 'attribute' => 'productId',
                                 'value' => function ($model) {
                                     return $model->product->title;
@@ -165,12 +171,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'quantity',
                             'total',
-                            [
+                                [
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{view}'
                             ],
                         ],
-                    ]); ?>
+                    ]);
+                    ?>
                 </div>
             </div>
         </div>
@@ -182,12 +189,12 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerJs("
     $('#pSubmit').click(function(e) {
         e.preventDefault();
-        
+
         $('#barcodeForm').addClass('form-loading');
-        
+
         var barcode = $('#pBarcode').val();
         var orderId = $('#orderId').val();
-        
+
         $.ajax({
             url:'" . Yii::$app->homeUrl . "booth/order/check-barcode',
             data:{barcode:barcode, orderId:orderId},
@@ -198,11 +205,11 @@ $this->registerJs("
                     alert('รายการสินค้าถูกต้อง สามารถหยิบใส่ถุงได้');
                     $('#r'+data.orderItemId).addClass('success');
                     $('#barcodeForm').removeClass('form-loading');
-                    
+
                     if(data.isPackingComplete == 1) {
                         $('#productPanel').html('<h4>หยิบสินค้าใส่ถุงครบแล้ว</h4>');
                         $('#orderPanel').append('<p class=alert>'+data.msg+'</p>');
-                       
+
                         $('#oSubmit').prop('disabled', false);
                         $('#orderCode').prop('disabled', false);
                     }
@@ -212,13 +219,13 @@ $this->registerJs("
             }
         });
     });
-    
+
     $('#orderForm').click(function(e) {
         e.preventDefault();
-        
+
         var orderCode = $('#orderCode').val();
         var orderId = $('#orderId').val();
-        
+
         $.ajax({
             url:'" . Yii::$app->homeUrl . "booth/order/booth-check-order-code',
             data:{orderCode:orderCode, orderId:orderId},
