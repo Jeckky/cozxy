@@ -176,7 +176,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 [
-                                'attribute' => 'image',
+                                'attribute' => 'Image',
                                 'format' => 'html',
                                 'value' => function($model) {
                                     return '<div align="center">' . Html::img($model->productSupplier->images->image, ['style' => 'width:100px;height:100px;']) . '</div>';
@@ -190,7 +190,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                             ],
                             'quantity',
-                            'total',
+                                [
+                                'attribute' => 'Total',
+                                'value' => function ($model) {
+
+                                    return number_format($model->total, 2);
+                                }
+                            ],
                         /*  [
                           'class' => 'yii\grid\ActionColumn',
                           'template' => '{view}'
