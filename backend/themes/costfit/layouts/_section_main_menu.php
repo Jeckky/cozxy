@@ -40,7 +40,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             </div>
         </div>
 
-        <ul class="navigation"> 
+        <ul class="navigation">
+            <?php if(!in_array(Yii::$app->user->id, [83,84])):?>
             <?php
             //$this->view->params['listDataProviderMenu']['menuBackend']
             //$this->params['listDataProviderMenu']['menuBackend']
@@ -267,6 +268,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     </ul>
                 </li>
             <?php } ?>
+            <?php endif;?>
 
             <?php if(Yii::$app->user->identity->type&\common\models\costfit\User::USER_BOOTH > 0 || true):?>
                 <li class="mm-dropdown-supplier">
