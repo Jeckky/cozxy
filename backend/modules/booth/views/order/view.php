@@ -176,17 +176,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 [
+                                'attribute' => 'image',
+                                'format' => 'html',
+                                'value' => function($model) {
+                                    return '<div align="center">' . Html::img($model->productSupplier->images->image, ['style' => 'width:100px;height:100px;']) . '</div>';
+                                }
+                            ],
+                                [
                                 'attribute' => 'productId',
                                 'value' => function ($model) {
+
                                     return $model->product->title;
                                 }
                             ],
                             'quantity',
                             'total',
-                                [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template' => '{view}'
-                            ],
+                        /*  [
+                          'class' => 'yii\grid\ActionColumn',
+                          'template' => '{view}'
+                          ], */
                         ],
                     ]);
                     ?>
