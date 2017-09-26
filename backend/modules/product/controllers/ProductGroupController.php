@@ -997,5 +997,47 @@ class ProductGroupController extends ProductMasterController {
         return $this->render("101/supplier/_product_supp_form", ['model' => $model, 'prodPriceSupp' => $prodPriceSupp]);
     }
 
+    public function actionMultipleDelete() {
+        if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
+            foreach ($_GET['selection'] as $productId):
+                $childs = \common\models\costfit\Product::find()->where("parentId = " . $productId)->all();
+                foreach ($childs as $pg) {
+                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
+                    \common\models\costfit\ProductImage::deleteAll("productId = " . $pg->productId);
+                    \common\models\costfit\Product::deleteAll("productId = " . $pg->productId);
+//            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
+                }
+                \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $productId);
+                \common\models\costfit\ProductImage::deleteAll("productId = " . $productId);
+                \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $productId);
+                \common\models\costfit\Product::deleteAll("productId = " . $productId);
+            endforeach;
+        }
+        return $this->redirect(['index',
+                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+                    'status' => isset($_GET["status"]) ? $_GET["status"] : ''
+        ]);
+        /* if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
+          foreach ($_GET['selection'] as $productId):
+          $products = \common\models\costfit\Product::find()->where("productId=$productId or parentId=$productId")->all();
+          if (isset($products) && count($products) > 0) {
+          foreach ($products as $product):
+          $productSuppliers = ProductSuppliers::find()->where("productId=$product->productId")->all();
+          if (isset($productSuppliers) && count($productSuppliers) > 0) {
+          foreach ($productSuppliers as $productSupp):
+          $productSupp->delete();
+          endforeach;
+          }
+          $product->delete();
+          endforeach;
+          }
+          endforeach;
+          } */
+        return $this->redirect(['101/index']);
+    }
+
     // Version 1.01 Wizard Of Product Group
 }

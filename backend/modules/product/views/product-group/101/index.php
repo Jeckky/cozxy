@@ -149,7 +149,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                throw new \yii\base\Exception($dataProvider->getCount());
                 ?>
 
-                <?php // throw new \yii\base\Exception($dataProvider->getTotalCount()); ?>
+                <?php
+                $form = ActiveForm::begin([
+                            'method' => 'GET',
+                            'id' => 'multi-delete',
+                            'action' => 'multiple-delete',
+                            'options' => ['class' => 'form-horizontal'],
+                ]);
+                ?>
                 <?=
                 GridView::widget([
                     'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -237,7 +244,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             }
                         ],
                         // 'updateDateTime',
-                        ['class' => 'yii\grid\ActionColumn',
+                        ['class' => 'yii\grid\CheckboxColumn'],
+                            ['class' => 'yii\grid\ActionColumn',
                             'header' => 'Actions',
                             'options' => [
                                 'style' => 'width:5%'
@@ -309,8 +317,52 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ],
                 ]);
                 ?>
+                <?php if (isset($_GET["brandId"])) {//ส่งไปยัง multiple delete เพื่อกลับมาหน้าเดิมแล้ว fillter ไม่หาย ?>
+                    <input type="hidden" name="brandId" value="<?= $_GET["brandId"] ?>">
+                    <?php
+                }
+                if (isset($_GET["categoryId"])) {
+                    ?>
+                    <input type="hidden" name="categoryId" value="<?= $_GET["categoryId"] ?>">
+                    <?php
+                }
+                if (isset($_GET["title"])) {
+                    ?>
+                    <input type="hidden" name="title" value="<?= $_GET["title"] ?>">
+                    <?php
+                }
+                if (isset($_GET["supplier"])) {
+                    ?>
+                    <input type="hidden" name="supplier" value="<?= $_GET["supplier"] ?>">
+                    <?php
+                }
+                if (isset($_GET["status"])) {
+                    ?>
+                    <input type="hidden" name="status" value="<?= $_GET["status"] ?>">
+                <?php }
+                ?>
+
+                <?php ActiveForm::end(); ?>
+                <div class="btn btn-danger pull-right" id="multi">Multiple Delete</div>
             <?php endif; ?>
         </div>
     </div>
     <?php Pjax::end(); ?>
 </div>
+<?php
+/* $js = "$(document).on('click', '#multi', function (e) {
+  if(confirm(Are you sure to delete selected items?)){
+  $('#multi-delete').submit();
+  }else{
+  return false;
+  }
+  });"; */
+$js = "$(document).on('click', '#multi', function (e) {
+  if (confirm('Are you sure to delete selected items?')) {
+  $('#multi-delete').submit();
+  }else{
+  return false;
+  }
+});";
+$this->registerJs($js);
+?>
