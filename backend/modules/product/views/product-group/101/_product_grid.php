@@ -31,8 +31,8 @@ if (isset($dataProvider)) {
         'dataProvider' => $dataProvider,
 //                                                'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'kartik\grid\SerialColumn'],
-            [
+                ['class' => 'kartik\grid\SerialColumn'],
+                [
                 'class' => 'kartik\grid\ExpandRowColumn',
                 'expandOneOnly' => true,
                 'value' => function ($model, $key, $index, $column) {
@@ -63,7 +63,14 @@ if (isset($dataProvider)) {
                     return (Yii::$app->controller->action->id != "view") ? $model->title . " " . Html::button("Edit", ['onclick' => (isset($type) && $type == 2) ? "productModal$type($model->productSuppId)" : "productModal$type($model->productId)", 'class' => 'btn btn-primary btn-xs']) : $model->title;
                 }
             ],
-            [
+                [
+                'attribute' => 'Image',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img(Yii::$app->homeUrl . $model->images->image, ["style" => "width:80px;heidht:80px;"]);
+                }
+            ],
+                [
                 'attribute' => 'price',
                 'format' => 'raw',
                 'label' => 'Market Price',
@@ -72,7 +79,7 @@ if (isset($dataProvider)) {
                     return $model->price;
                 }
             ],
-            [
+                [
                 'attribute' => 'option',
                 'format' => 'html',
                 'options' => ['style' => 'width:10%;text-align:left'],
@@ -80,12 +87,12 @@ if (isset($dataProvider)) {
                     $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")->all();
                     $optionStr = "";
                     foreach ($options as $option) {
-                        $optionStr.= $option->productGroupOption->name . "-" . $option->value . "<br>";
+                        $optionStr .= $option->productGroupOption->name . "-" . $option->value . "<br>";
                     }
                     return $optionStr;
                 }
             ],
-            [
+                [
                 'attribute' => 'Product Supplier',
                 'visible' => (!isset($type) || $type == 1) ? FALSE : TRUE,
                 'format' => 'html',
@@ -100,7 +107,7 @@ if (isset($dataProvider)) {
                     }
                 }
             ],
-            ['attribute' => 'status',
+                ['attribute' => 'status',
 //                'visible' => (!isset($type) || $type == 1) ? FALSE : TRUE,
                 'options' => [
                     'style' => 'width:7%'
@@ -115,7 +122,7 @@ if (isset($dataProvider)) {
 //                        'vAlign' => 'middle',
 //                    ],
             ['class' => '\kartik\grid\CheckboxColumn'],
-            [
+                [
                 'class' => 'kartik\grid\ActionColumn',
                 'visible' => function($model) {
                     if (Yii::$app->controller->action->id != "view") {
@@ -161,8 +168,8 @@ if (isset($dataProvider)) {
                     "update" => function ($url, $model, $key) use ($isProductSupp) {
                         if (!$isProductSupp) {
                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId], [
-                                'title' => Yii::t('app', 'Toogle Active'),
-                                'data-pjax' => '0',
+                                        'title' => Yii::t('app', 'Toogle Active'),
+                                        'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
                             ]);
                         } else {
@@ -173,8 +180,8 @@ if (isset($dataProvider)) {
                             }
 
                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
-                                'title' => Yii::t('app', 'Toogle Active'),
-                                'data-pjax' => '0',
+                                        'title' => Yii::t('app', 'Toogle Active'),
+                                        'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
                             ]);
                         }

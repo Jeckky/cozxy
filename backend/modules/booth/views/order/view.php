@@ -179,7 +179,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'Image',
                                 'format' => 'html',
                                 'value' => function($model) {
-                                    return '<div align="center">' . Html::img($model->productSupplier->images->image, ['style' => 'width:100px;height:100px;']) . '</div>';
+                                    return '<div align="center">' . Html::img(Yii::$app->homeUrl . $model->productSupplier->images->image, ['style' => 'width:100px;height:100px;']) . '</div>';
                                 }
                             ],
                                 [

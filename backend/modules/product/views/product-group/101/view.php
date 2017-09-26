@@ -14,7 +14,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 <div class="product-group-index">
 
 
-    <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
+    <?php
+    Pjax::begin(['id' => 'employee-grid-view']);
+    ?>
 
 
 
@@ -115,7 +117,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 $productGroup = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
                 if ($ress !== FALSE && $productGroup->status == 99) {
                     ?>
-                    <?php // echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning']) ?>
+                    <?php // echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning'])  ?>
                     <h3 style="color: tomato">Approve Product Supplier ?</h3>
                     <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
                     <?php
@@ -127,15 +129,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?php
                     else:
                         $countDraft = \common\models\costfit\ProductSuppliers::find()
-                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
-                        ->count();
+                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
+                                ->count();
                         $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
-                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
-                        ->count();
+                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
+                                ->count();
                         ?>
                         <?php if ($countDraft > 0): ?>
                             <h3 style="color: tomato">Send Approve My Product ?</h3>

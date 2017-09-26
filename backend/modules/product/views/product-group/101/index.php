@@ -165,9 +165,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
 //                    'productGroupId',
                         ['attribute' => 'title',
                             'format' => "raw",
-                            'options' => ['style' => 'width:60%'],
+                            'options' => ['style' => 'width:40%'],
                             'value' => function ($model) {
                                 return $model->title;
+                            }
+                        ],
+                            ['attribute' => 'Image',
+                            'format' => "raw",
+                            'value' => function ($model) {
+                                return isset($model->images->image) ? Html::img(Yii::$app->homeUrl . $model->images->image, ["style" => "width:80px;height:80px;"]) : null;
                             }
                         ],
                             ['attribute' => 'supplier',
@@ -182,6 +188,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     $text = "Master";
                                 }
                                 return $text;
+                            }
+                        ],
+                            ['attribute' => 'Market Price',
+                            'visible' => ($ress !== FALSE) ? TRUE : FALSE,
+                            'format' => "raw",
+                            'options' => ['style' => 'width:15%'],
+                            'value' => function ($model) {
+                                return number_format($model->price, 2);
                             }
                         ],
 //                        ['attribute' => 'userId',

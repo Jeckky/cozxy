@@ -60,7 +60,7 @@ class ProductGroupController extends ProductMasterController {
                             ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                             ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                            ->orderBy("product.updateDateTime DESC");
+                            ->orderBy("product.createDateTime DESC");
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
@@ -72,7 +72,7 @@ class ProductGroupController extends ProductMasterController {
 //                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
                         ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
                         ->groupBy("product.productId")
-                        ->orderBy("product.updateDateTime DESC");
+                        ->orderBy("product.createDateTime DESC");
             }
         } else {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
@@ -88,7 +88,7 @@ class ProductGroupController extends ProductMasterController {
                             ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
                             ->groupBy("ps.userId , pc.parentId")
-                            ->orderBy("product.updateDateTime DESC");
+                            ->orderBy("product.createDateTime DESC");
 //                ->count();
 //                throw new \yii\base\Exception($query);
                 } else {
@@ -97,13 +97,13 @@ class ProductGroupController extends ProductMasterController {
                                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
                                 ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                                ->orderBy("product.updateDateTime DESC");
+                                ->orderBy("product.createDateTime DESC");
                     }
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
                         ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
-                        ->orderBy("updateDateTime DESC");
+                        ->orderBy("createDateTime DESC");
             }
         }
 
@@ -154,7 +154,7 @@ class ProductGroupController extends ProductMasterController {
             $isMaster = FALSE;
         }
         $dataProvider = new ActiveDataProvider([
-            'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
+            'query' => \common\models\costfit\Product::find()->orderBy("createDateTime DESC")
                     ->where("parentId = " . $_GET["productGroupId"]),
         ]);
 
@@ -163,7 +163,7 @@ class ProductGroupController extends ProductMasterController {
                     ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
                     ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
                     ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId)
-                    ->orderBy("productId ASC"),
+                    ->orderBy("createDateTime DESC"),
         ]);
         return $this->render('101/view', [
                     'model' => $model,
