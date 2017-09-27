@@ -852,6 +852,7 @@ class ProductGroupController extends ProductMasterController {
             $ps->productId = $product->productId;
             $ps->userId = \Yii::$app->user->id;
             $ps->approve = 'new';
+            //$ps->code = \common\helpers\Product::generateProductCode();
             $ps->status = 0;
             $ps->createDateTime = new \yii\db\Expression("NOW()");
             if ($ps->save(FALSE)) {
@@ -882,9 +883,9 @@ class ProductGroupController extends ProductMasterController {
             }
         }
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
-            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
+            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
         } else {
-            return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"]]);
+            return $this->redirect(["view", "step" => $model->step, "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $model->productGroupTemplateId]);
         }
     }
 
@@ -907,7 +908,7 @@ class ProductGroupController extends ProductMasterController {
             }
         }
 
-        return $this->redirect(["view", "productGroupId" => $_GET["productGroupId"], 'userId' => $_GET["userId"]]);
+        return $this->redirect(["view", "step" => $model->step, "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $model->productGroupTemplateId, 'userId' => $_GET["userId"]]);
     }
 
     public function actionApproveMyProduct() {
@@ -926,6 +927,7 @@ class ProductGroupController extends ProductMasterController {
                 if (isset($ps)) {
 //                    $ps->userId = \Yii::$app->user->id;
                     $ps->approve = 'approve';
+                    $ps->code = \common\helpers\Product::generateProductCode();
                     $ps->approvecreateDateTime = new \yii\db\Expression("NOW()");
                     $ps->status = 1;
                     if ($ps->save(FALSE)) {
