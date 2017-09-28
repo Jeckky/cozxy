@@ -84,13 +84,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for=""><?php echo strtoupper('Mobile Phone Number*') ?></label>
-                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Phone Number'])->label(false); ?>
+                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'MOBILE PHONE NUMBER'])->label(false); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for=""><?php echo strtoupper('E-mail Address') ?></label>
-                            <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'E-mail Address'])->label(false); ?>
+                            <?php echo $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'E-MAIL ADDRESS'])->label(false); ?>
                         </div>
                     </div>
                 </div>
