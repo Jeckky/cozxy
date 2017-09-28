@@ -30,7 +30,7 @@ class CozxyAsset extends AssetBundle {
         'fonts/fonts.css',
     ];
     public $js = [
-        'js/jquery.js',
+        'js/js.v2/jquery.js',
         'js/bootstrap.min.js',
         'js/cozxy.js',
         'jquery.growl/notify.js',
@@ -39,7 +39,7 @@ class CozxyAsset extends AssetBundle {
         'js/currency.exchange.rate.js',
         'js/cozxy.product.modal.js',
         'js/jquery.elevateZoom-3.0.8.min.js',
-        'js/cozxy.script.js',
+        'js/js.v2/cozxy.script.js',
         'fixer.io/money.js',
     //'js/currency-real-time.js',
     //'js/search-filter.js'
