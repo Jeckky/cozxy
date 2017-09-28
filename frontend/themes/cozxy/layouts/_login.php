@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Sing In : cozxy.com - Buy what fuels your passion';
+$this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
 \frontend\assets\LoginRegisterAsset::register($this);
 ?>
 <div class="container login-box">

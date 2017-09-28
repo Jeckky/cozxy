@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Sing Up booth: cozxy.com - Buy what fuels your passion';
+$this->title = 'Sign Up at CozxyBooth - Buy what fuels your passion';
 \frontend\assets\LoginRegisterAsset::register($this);
 
 //$input = "0616539889";

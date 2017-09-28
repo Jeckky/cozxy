@@ -19,7 +19,7 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <meta name="KeyWords" content="">
+        <meta name="KeyWords" content="cozxy ,online ,cosmetics">
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
         <meta itemprop="description" content="Shop luxury items, duty-free products, cosmetics, sunglasses and more online at cozxy.com. See where to get the best prices. Find our opening discounts here!">
