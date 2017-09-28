@@ -414,7 +414,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                         'options' => ['placeholder' => 'ระบุได้หลาย Option ที่มี เช่นสี เป็น Red,Green,Yellow', 'multiple' => true],
                                                         'pluginOptions' => [
                                                             'tags' => true,
-                                                            'maximumInputLength' => 20
+                                                            'maximumInputLength' => 200
                                                         ],
                                                     ]);
                                                     ?>
