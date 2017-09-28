@@ -32,11 +32,11 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 //                        //self.close();
 //                    }
             function print_window() {
-                 window.print();
-                 setTimeout(function () {
-                 window.open('', '_self', '');
-                 window.close();
-                 }, 0);
+                window.print();
+                setTimeout(function () {
+                    window.open('', '_self', '');
+                    window.close();
+                }, 0);
             }
 
         </script>
@@ -59,8 +59,8 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                         บริษัท คอซซี่ดอทคอม จำกัด
                     </h2>
                     เลขประจำตัวผู้เสียภาษี : 0105553036789<br>
-                    เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสาวรีย์ กรุงเทพฯ 10220<br>
-                    โทร 02-101-0689, 064-184-7414 <br>
+                    เลขที่ 5 ซอยรามอินทรา 5 แยก 4 แขวงอนุสาวรีย์ เขตบางเขน กรุงเทพฯ 10220<br>
+                    โทรศัพท์ 02-101-0689, 064-184-7414 <br>
                 </td>
                 <td style="vertical-align:middle;">
                     ใบเสร็จรับเงิน/ใบกำกับภาษี/ใบส่งของ<br>
@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                   ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                    ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                   ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                    ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -192,10 +192,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                      ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                       ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                      ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                       ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">
