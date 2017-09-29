@@ -360,7 +360,22 @@ $pickingId = rand(0, 9999);
 </div>
 
 <div class="size32">&nbsp;</div>
-
+<style type="text/css">
+    hr{
+        margin-top: 0px;
+    }
+    .form-billing-my-account-top{
+        margin-top: -35px;
+    }
+    #address-isdefault .radioNewCozxy  {
+        margin-left: 50px;
+    }
+    footer .form-modal-footer{
+        padding: 15px;
+        text-align: center;
+        border-top: 0px solid #e5e5e5;
+    }
+</style>
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -368,7 +383,7 @@ $pickingId = rand(0, 9999);
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title " id="gridSystemModalLabel">+ Add New Billing Address</h4>
+                <h4 class="modal-title " id="gridSystemModalLabel"><?php echo strtoupper('Add New Billing Address') ?></h4>
             </div>
             <!-- Cart -->
             <div class="row">
@@ -384,7 +399,7 @@ $pickingId = rand(0, 9999);
                     <div class="size24">&nbsp;</div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Billing type *</label>
+                        <label for="exampleInputEmail1"><?php echo strtoupper('Billing type *'); ?></label>
                         <div class="select-style">
                             <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                                 <option value="personal">Individual</option>
@@ -411,26 +426,43 @@ $pickingId = rand(0, 9999);
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">First Name</label>
-                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME', 'value' => isset($getUserInfo['firstname']) ? $getUserInfo['firstname'] : ''])->label(false); ?>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('First Name'); ?></label>
+                                <?= $form->field($NewBilling, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRST NAME', 'value' => isset($getUserInfo['firstname']) ? $getUserInfo['firstname'] : ''])->label(false); ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Last Name</label>
-                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME', 'value' => isset($getUserInfo['lastname']) ? $getUserInfo['lastname'] : ''])->label(false); ?>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Last Name'); ?></label>
+                                <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LAST NAME', 'value' => isset($getUserInfo['lastname']) ? $getUserInfo['lastname'] : ''])->label(false); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Mobile Phone Number*'); ?></label>
+                                <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Phone Number', 'value' => isset($getUserInfo['tel']) ? $getUserInfo['tel'] : ''])->label(false); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo strtoupper('E-mail Address'); ?></label>
+                                <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'E-mail Address', 'value' => isset($getUserInfo['email']) ? $getUserInfo['email'] : ''])->label(false); ?>
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="col-md-11" style="margin-left: 15px;">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
-                        <?= $form->field($NewBilling, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
+                        <?php echo strtoupper('Address') ?>
+                        <hr>
                     </div>
+                </div>
+
+                <div class="col-md-10 col-md-offset-1">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Countries</label>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Countries'); ?></label>
                                 <?php
                                 echo $form->field($NewBilling, 'countryId')->widget(kartik\select2\Select2::classname(), [
                                     //'options' => ['id' => 'address-countryid'],
@@ -444,9 +476,9 @@ $pickingId = rand(0, 9999);
                                 ?>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Province</label>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Province'); ?></label>
                                 <?php
                                 echo Html::hiddenInput('input-type-1', $NewBilling->provinceId, ['id' => 'input-type-1']);
                                 echo Html::hiddenInput('input-type-2', $NewBilling->provinceId, ['id' => 'input-type-2']);
@@ -470,7 +502,7 @@ $pickingId = rand(0, 9999);
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">City</label>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('City'); ?></label>
                                 <?php
                                 echo Html::hiddenInput('input-type-11', $NewBilling->amphurId, ['id' => 'input-type-11']);
                                 echo Html::hiddenInput('input-type-22', $NewBilling->amphurId, ['id' => 'input-type-22']);
@@ -493,7 +525,7 @@ $pickingId = rand(0, 9999);
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">District</label>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('District'); ?></label>
                                 <?php
                                 echo Html::hiddenInput('input-type-13', $NewBilling->districtId, ['id' => 'input-type-13']);
                                 echo Html::hiddenInput('input-type-33', $NewBilling->districtId, ['id' => 'input-type-33']);
@@ -516,7 +548,7 @@ $pickingId = rand(0, 9999);
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Zipcode</label>
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Zipcode'); ?></label>
                                 <?php
                                 echo Html::hiddenInput('input-type-14', $NewBilling->districtId, ['id' => 'input-type-14']);
                                 echo Html::hiddenInput('input-type-42', $NewBilling->districtId, ['id' => 'input-type-42']);
@@ -538,35 +570,35 @@ $pickingId = rand(0, 9999);
                                 ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
-                                    <?php echo $form->field($NewBilling, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'Email', 'value' => isset($getUserInfo['email']) ? $getUserInfo['email'] : ''])->label(false); ?>
-                                </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo strtoupper('Address'); ?></label>
+                                <?= $form->field($NewBilling, 'address')->textarea(['class' => 'fullwidth', 'placeholder' => 'ADDRESS'])->label(false); ?>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Mobile Number</label>
-                                    <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Number', 'value' => isset($getUserInfo['tel']) ? $getUserInfo['tel'] : ''])->label(false); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Default address</label>
-                            <?php echo $form->field($NewBilling, 'isDefault')->radioList([1 => 'Yes', 0 => 'No'], ['itemOptions' => ['class' => 'radio', 'id' => 'address-isDefault']])->label(false); ?>
                         </div>
 
                     </div>
-
-                    <div class="size24">&nbsp;</div>
                 </div>
+
+                <div class="col-md-11" style="margin-left: 15px;">
+                    <div class="form-group">
+                        <?php echo strtoupper('Default address') ?>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <?php echo $form->field($NewBilling, 'isDefault')->inline(true)->radioList([1 => 'YES', 0 => 'NO'], ['itemOptions' => ['class' => 'radioNewCozxy', 'id' => 'address-isDefault']])->label(false); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="size24">&nbsp;</div>
+
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer form-modal-footer" style=" border-top: 0px solid #e5e5e5; text-align: center;">
                 <a href="#" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px" data-dismiss="modal" aria-label="Close">CANCEL</a>
                 &nbsp;
                 <a href="javascript:checkoutNewBilling()" class="b btn-yellow" id="acheckoutNewBillingz" data-loading-text="<i class='fa fa-circle-o-notch fa-spin' aria-hidden='true'></i> Processing New Billing" style="padding:12px 32px; margin:24px auto 12px">SAVE</a>
