@@ -53,7 +53,7 @@ class ProductGroupController extends ProductMasterController {
 //User Type 4 = Supplier , 5= Content
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
 
-            if (isset($_GET["supplier"])) {
+            if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
 
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
@@ -124,6 +124,7 @@ class ProductGroupController extends ProductMasterController {
             $query->andWhere("product.title LIKE '%$title%'");
         }
         if (isset($query)) {
+            $query->addOrderBy('product.createDateTime DESC');
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
             ]);
@@ -710,7 +711,7 @@ class ProductGroupController extends ProductMasterController {
         $tab = 1;
         if (count($pk) > 0) {
             foreach ($pk as $key => $value) {
-                if (!isset($_GET["type"]) || empty($_GET["type"]) || $_GET["type"] == 1) {
+                if (!isset($_POST["type"]) || empty($_POST["type"]) || $_POST["type"] == 1) {
                     if (!isset($model)) {
                         $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
                     }
@@ -743,7 +744,8 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionDeleteProductGroup() {
-//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+        //throw new \yii\base\Exception(print_r($_GET["id"]));
+        //throw new \yii\base\Exception(print_r(Yii::$app->request->get(), true));
         $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
         foreach ($childs as $pg) {
             \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
@@ -751,18 +753,18 @@ class ProductGroupController extends ProductMasterController {
             \common\models\costfit\Product::deleteAll("productId = " . $pg->productId);
 //            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
         }
-        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
-        \common\models\costfit\ProductImage::deleteAll("productId = " . $_GET["id"]);
-        \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $_GET["id"]);
-        \common\models\costfit\Product::deleteAll("productId = " . $_GET["id"]);
+        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . Yii::$app->request->get('id'));
+        \common\models\costfit\ProductImage::deleteAll("productId = " . Yii::$app->request->get('id'));
+        \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . Yii::$app->request->get('id'));
+        \common\models\costfit\Product::deleteAll("productId = " . Yii::$app->request->get('id'));
 
 
         return $this->redirect(['index',
-                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
-                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
-                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
-                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
-                    'status' => isset($_GET["status"]) ? $_GET["status"] : ''
+                    'brandId' => Yii::$app->request->get('brandId'),
+                    'categoryId' => Yii::$app->request->get('categoryId'),
+                    'title' => Yii::$app->request->get('title'),
+                    'supplier' => Yii::$app->request->get('supplier'),
+                    'status' => Yii::$app->request->get('status')
         ]);
     }
 
@@ -1004,7 +1006,9 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionMultipleDelete() {
+        //throw new \yii\base\Exception(print_r($_GET['selection'], true));
         if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
+
             foreach ($_GET['selection'] as $productId):
                 $childs = \common\models\costfit\Product::find()->where("parentId = " . $productId)->all();
                 foreach ($childs as $pg) {

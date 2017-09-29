@@ -47,10 +47,12 @@
             <div class="price-detail">Balance:
                 <?php
                 $balance = $userPoint->currentPoint - $order->summary;
-                ?>
-                <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance, 2) ?></div>
-                <?php
-                if ($balance < 0) {
+                if ($order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {
+                    ?>
+                    <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance, 2) ?></div>
+                    <?php
+                }
+                if ($balance < 0 && $order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {
                     ?>
                     <a href="/top-up?needMore=<?= $order->summary - $userPoint->currentPoint ?>" class="b btn-success btn-block fullwidth text-center" style="padding:12px 32px; margin:10px auto 12px">TOP UP COZXYCOIN</a>
                 <?php } ?>
