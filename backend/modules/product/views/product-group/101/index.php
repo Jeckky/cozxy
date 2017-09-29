@@ -153,7 +153,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 $form = ActiveForm::begin([
                             'method' => 'GET',
                             'id' => 'multi-delete',
-                            'action' => 'multiple-delete',
+                            'action' => Yii::$app->homeUrl . 'product/product-group/multiple-delete',
                             'options' => ['class' => 'form-horizontal'],
                 ]);
                 ?>
@@ -250,7 +250,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             'options' => [
                                 'style' => 'width:5%'
                             ],
-                            'template' => '{update} {delete}',
+                            'template' => '{update} {deleteOne}',
                             'buttons' => [
                                 'update' => function ($url, $model) use ($ress) {
                                     if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
@@ -296,21 +296,43 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                         }
                                     }
                                 },
-                                'delete' => function ($url, $model) {
+                                'deleteOne' => function ($url, $model) {
 //                                    if (($model->status == 0) && $model->userId == Yii::$app->user->id) {
-                                    return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group',
-                                                'id' => isset($model->productId) ? $model->productId : $model->productTempId,
-                                                'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
-                                                'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
-                                                'title' => isset($_GET["title"]) ? $_GET["title"] : '',
-                                                'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
-                                                'status' => isset($_GET["status"]) ? $_GET["status"] : '',
-                                                    ], [
-                                                'title' => Yii::t('yii', 'Delete'),
-                                                'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
-                                                'data-method' => 'post',
+                                    //$param = 'id=';
+                                    /* '&&categoryId=' . isset($_GET["categoryId"]) ? $_GET["categoryId"] : '' .
+                                      '&&title=' . isset($_GET["title"]) ? $_GET["title"] : '' .
+                                      '&&supplier=' . isset($_GET["supplier"]) ? $_GET["supplier"] : '' .
+                                      '&&status=' . isset($_GET["status"]) ? $_GET["status"] : ''; */
+                                    // throw new \yii\base\Exception($param);
+                                    // return '<a href="' . Yii::$app->homeUrl . 'product/product-group/delete-product-group?' . $param . '"><i class="fa fa-trash-o"></i></a>';
+                                    /* return Html::a('<i class="fa fa-trash-o"></i>', ['delete-product-group',
+                                      'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+                                      'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+                                      'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+                                      'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+                                      'status' => isset($_GET["status"]) ? $_GET["status"] : '',
+                                      'id' => isset($model->productId) ? $model->productId : $model->productTempId
+                                      ], [
+                                      'title' => Yii::t('yii', 'Delete'),
+                                      'data-confirm' => Yii::t('yii', 'Are you sure to delete this item?'),
+                                      ]); */
+                                    return yii\bootstrap\Html::a('<i class="fa fa-trash-o"></i>', ['product-group/delete-product-group'], [
+                                                'data' => [
+                                                    'method' => 'get',
+                                                    'confirm' => 'Are you sure to delete this item?',
+                                                    'params' => [
+                                                        'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+                                                        'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+                                                        'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+                                                        'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+                                                        'status' => isset($_GET["status"]) ? $_GET["status"] : '',
+                                                        'id' => isset($model->productId) ? $model->productId : $model->productTempId
+                                                    ]
+                                                ]
                                     ]);
-//                                    }
+
+
+//
                                 },
                             ]
                         ],
