@@ -23,6 +23,7 @@ AppAsset::register($this);
         <meta name="author" content="cozxy.com">
         <meta itemprop="name" content="cozxy.com">
         <meta name="description" content="Shop luxury items, duty-free products, cosmetics, sunglasses and more online at cozxy.com. See where to get the best prices. Find our opening discounts here!">
+
         <?php $this->head() ?>
         <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
         <?php

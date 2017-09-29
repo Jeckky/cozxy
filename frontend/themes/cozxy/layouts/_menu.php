@@ -524,7 +524,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         </div>
     </div>
 </div>
-
+<div class="topOpener"></div>
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">

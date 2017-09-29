@@ -1,75 +1,90 @@
 $(function () {
-    $('.topbar .dismiss').on('touchstart click', function () {
-        $('.topbar').slideUp();
-        $('.topOpener').slideDown();
-        return false;
-    });
-    $('.topOpener').on('touchstart click', function () {
-        $('.topbar').slideDown();
-        $('.topOpener').slideUp();
-    });
-    $('.gotoTop').on('touchstart click', function () {
-        $('html,body').animate({scrollTop: 0});
-        return false;
-    });
-    // Scroll Script
-    $(window).scroll(function () {
-        var $this = $(this), $top = $(".smallTop");
-        if ($this.scrollTop() > 384) {
-            $top.fadeIn(384);
-        } else {
-            $top.fadeOut(384);
+    //http://blog.grayghostvisuals.com/css/touchevents/
+    //grab the object
+    var el = document.getElementById('nodetarget');
+    //custom function handler for event
+    function touchStart(event) {
+        event.preventDefault();
+        var numtouch = event.touches.length;
+        alert(numtouch);
+    }
+    //add event listener
+    el.addEventListener('touchstart', touchStart, false);
+
+    /*$('.topbar .dismiss').on('touchstart click', function () {
+     $('.topbar').slideUp();
+     $('.topOpener').slideDown();
+     return false;
+     });
+     $('.topOpener').on('touchstart click', function () {
+     $('.topbar').slideDown();
+     $('.topOpener').slideUp();
+     });
+     */
+
+});
+$('.gotoTop').on('touchstart click', function () {
+    $('html,body').animate({scrollTop: 0});
+    return false;
+});
+// Scroll Script
+$(window).scroll(function () {
+    var $this = $(this), $top = $(".smallTop");
+    if ($this.scrollTop() > 384) {
+        $top.fadeIn(384);
+    } else {
+        $top.fadeOut(384);
+    }
+});
+// Category Script (PC)
+$('.menu-category').on('touchstart click', function () {
+    categoryOff();
+    $(this).addClass('active');
+});
+$('.menu-category').mouseover(function () {
+    categoryOff();
+    $('#categories').collapse('show');
+    $(this).addClass('active');
+});
+$('.topbar').mouseover(function () {
+    categoryOff();
+    $('#categories').collapse('hide');
+});
+$('.headbar').mouseover(function () {
+    categoryOff();
+    $('#categories').collapse('hide');
+});
+// Category Script (SM)
+var mobc = $('.main-category').html();
+$('.mob-maincate').html(mobc);
+$('.mobcategories').on('touchstart click', function () {
+    $('body').css('overflow-y', 'hidden');
+    $('.xs-category').slideDown(384);
+});
+var mouseo_x = 0;
+var mouseo_y = 0;
+var mouseo_z = 0;
+$('.menubar').hover(function () {
+    mouseo_x = 1;
+}, function () {
+    mouseo_x = 0;
+});
+$('.main-category').hover(function () {
+    mouseo_y = 1;
+}, function () {
+    mouseo_y = 0;
+});
+$('.sub2menu').hover(function () {
+    mouseo_z = 1;
+}, function () {
+    mouseo_z = 0;
+});
+$('.container .row').hover(function () {
+    setTimeout(function () {
+        if ((mouseo_x + mouseo_y + mouseo_z) <= 0) {
+            categoryOut();
         }
-    });
-    // Category Script (PC)
-    $('.menu-category').on('touchstart click', function () {
-        categoryOff();
-        $(this).addClass('active');
-    });
-    $('.menu-category').mouseover(function () {
-        categoryOff();
-        $('#categories').collapse('show');
-        $(this).addClass('active');
-    });
-    $('.topbar').mouseover(function () {
-        categoryOff();
-        $('#categories').collapse('hide');
-    });
-    $('.headbar').mouseover(function () {
-        categoryOff();
-        $('#categories').collapse('hide');
-    });
-    // Category Script (SM)
-    var mobc = $('.main-category').html();
-    $('.mob-maincate').html(mobc);
-    $('.mobcategories').on('touchstart click', function () {
-        $('body').css('overflow-y', 'hidden');
-        $('.xs-category').slideDown(384);
-    });
-    var mouseo_x = 0;
-    var mouseo_y = 0;
-    var mouseo_z = 0;
-    $('.menubar').hover(function () {
-        mouseo_x = 1;
-    }, function () {
-        mouseo_x = 0;
-    });
-    $('.main-category').hover(function () {
-        mouseo_y = 1;
-    }, function () {
-        mouseo_y = 0;
-    });
-    $('.sub2menu').hover(function () {
-        mouseo_z = 1;
-    }, function () {
-        mouseo_z = 0;
-    });
-    $('.container .row').hover(function () {
-        setTimeout(function () {
-            if ((mouseo_x + mouseo_y + mouseo_z) <= 0) {
-                categoryOut();
-            }
-        }, 512);
+    }, 512);
     });
 });
 // Sub Category Script (PC)

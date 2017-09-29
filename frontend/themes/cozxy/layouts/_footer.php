@@ -63,7 +63,7 @@ use yii\helpers\Html;
     </div>
 </div>
 
-<div class="topOpener"></div>
+<!--<div class="topOpener"></div>-->
 <div class="hidden-md hidden-lg">
     <div class="gotoTop smallTop" style="display:none"><div class="align-middle middle-center" style="padding-top:8px"><span class="glyphicon glyphicon-menu-up"></span></div></div>
 </div>
