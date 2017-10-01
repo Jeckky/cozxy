@@ -105,7 +105,8 @@ class CozxyCalculatesCart {
     public static function FormulaTotalExVat($orderIdParams) {
         $total = \common\helpers\CozxyCalculatesCart::UserOrder($orderIdParams);
         $result = $total / 1.07;
-        return round($result, 0, PHP_ROUND_HALF_UP);
+        //return round($result, 0, PHP_ROUND_HALF_UP);
+        return $result;
     }
 
     /*
@@ -115,7 +116,8 @@ class CozxyCalculatesCart {
     public static function FormulaVAT($orderIdParams) {
         $TotalExVat = \common\helpers\CozxyCalculatesCart::FormulaTotalExVat($orderIdParams);
         $result = $TotalExVat * 0.07;
-        return round($result, 0, PHP_ROUND_HALF_UP);
+        //return round($result, 0, PHP_ROUND_HALF_UP);
+        return $result;
     }
 
     /*
