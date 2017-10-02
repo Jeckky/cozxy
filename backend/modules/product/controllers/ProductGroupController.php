@@ -54,7 +54,6 @@ class ProductGroupController extends ProductMasterController {
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
 
             if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
-
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
                             ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -80,18 +79,24 @@ class ProductGroupController extends ProductMasterController {
             $userEx = explode(',', $userRe);
             $ress = array_search(26, $userEx);
             if ($ress !== FALSE) {
-                if (!isset($_GET["supplier"])) {
+                if (!isset($_GET["supplier"]) || $_GET["supplier"] == '') {
+                    /* $query = \common\models\costfit\Product::find()
+                      ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                      ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                      ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                      ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+                      //                ->where("product.parentId is null  ")
+                      ->groupBy("ps.userId , pc.parentId")
+                      ->orderBy("product.createDateTime DESC"); */
                     $query = \common\models\costfit\Product::find()
-                            ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                             ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
                             ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
                             ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
                             ->groupBy("ps.userId , pc.parentId")
                             ->orderBy("product.createDateTime DESC");
-//                ->count();
-//                throw new \yii\base\Exception($query);
                 } else {
+
                     if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                         $query = \common\models\costfit\Product::find()
                                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -102,8 +107,8 @@ class ProductGroupController extends ProductMasterController {
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                        ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
-                        ->orderBy("createDateTime DESC");
+                                ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
+                                ->orderBy("createDateTime DESC")->all();
             }
         }
 
@@ -325,7 +330,7 @@ class ProductGroupController extends ProductMasterController {
                 if (isset($_GET["productGroupTemplateId"])) {
                     $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
                     foreach ($productGroupTemplateOptions as $pto) {
-                        $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId=' . $pto->productGroupTemplateOptionId)->one();
+                        $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId = ' . $pto->productGroupTemplateOptionId)->one();
                         if (isset($pgo)) {
                             continue;
                         } else {
@@ -760,11 +765,11 @@ class ProductGroupController extends ProductMasterController {
 
 
         return $this->redirect(['index',
-                    'brandId' => Yii::$app->request->get('brandId'),
-                    'categoryId' => Yii::$app->request->get('categoryId'),
-                    'title' => Yii::$app->request->get('title'),
-                    'supplier' => Yii::$app->request->get('supplier'),
-                    'status' => Yii::$app->request->get('status')
+                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+                    'status' => isset($_GET["status"]) ? $_GET["status"] : '',
         ]);
     }
 
@@ -1006,7 +1011,7 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionMultipleDelete() {
-        //throw new \yii\base\Exception(print_r($_GET['selection'], true));
+        // throw new \yii\base\Exception(print_r($_GET['selection'], true));
         if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
 
             foreach ($_GET['selection'] as $productId):

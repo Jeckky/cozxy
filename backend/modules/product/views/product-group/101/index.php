@@ -145,8 +145,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
             <?php if (isset($dataProvider)): ?>
                 <?php
-//                throw new \yii\base\Exception(print_r($dataProvider->getKeys(), TRUE));
-//                throw new \yii\base\Exception($dataProvider->getCount());
+                //throw new \yii\base\Exception(print_r($dataProvider, TRUE));
+                //throw new \yii\base\Exception($dataProvider->getCount());
                 ?>
 
                 <?php
@@ -318,7 +318,6 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                       ]); */
                                     return yii\bootstrap\Html::a('<i class="fa fa-trash-o"></i>', ['product-group/delete-product-group'], [
                                                 'data' => [
-                                                    'method' => 'get',
                                                     'confirm' => 'Are you sure to delete this item?',
                                                     'params' => [
                                                         'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
@@ -330,16 +329,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                                     ]
                                                 ]
                                     ]);
-
-
-//
                                 },
                             ]
                         ],
                     ],
                 ]);
                 ?>
-                <?php if (isset($_GET["brandId"])) {//ส่งไปยัง multiple delete เพื่อกลับมาหน้าเดิมแล้ว fillter ไม่หาย ?>
+                <?php if (isset($_GET["brandId"])) {//ส่งไปยัง multiple delete เพื่อกลับมาหน้าเดิมแล้ว fillter ไม่หาย  ?>
                     <input type="hidden" name="brandId" value="<?= $_GET["brandId"] ?>">
                     <?php
                 }
