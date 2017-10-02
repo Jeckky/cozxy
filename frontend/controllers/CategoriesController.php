@@ -90,6 +90,8 @@ class CategoriesController extends MasterController {
                 $branch[] = $element;
             }
         }
+// echo '<pre>';
+//print_r($branch);
         return $branch;
     }
 
@@ -103,6 +105,12 @@ class CategoriesController extends MasterController {
         ->all();
 
         echo count($cate);
+    }
+
+    public static function actionTreeTest() {
+        $tree = \frontend\controllers\CategoriesController::actionTreeSub();
+        echo '<pre>';
+        print_r($tree);
     }
 
 }
