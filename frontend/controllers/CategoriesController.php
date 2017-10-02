@@ -111,6 +111,7 @@ class CategoriesController extends MasterController {
         $tree = \frontend\controllers\CategoriesController::actionTreeSub();
         echo '<pre>';
         print_r($tree);
+        //return json_encode($tree);
     }
 
 }

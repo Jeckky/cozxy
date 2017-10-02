@@ -53,4 +53,8 @@ class TestController extends MasterController {
         echo "<br> sum :" . number_format($SubTotal, 2);
     }
 
+    public function actionCategory() {
+        return $this->render('index');
+    }
+
 }
