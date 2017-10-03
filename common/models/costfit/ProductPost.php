@@ -101,7 +101,9 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     public static function userPost($productPostId) {
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $user = User::find()->where("userId=" . $productPost->userId)->one();
-        $name = $user->firstname . " " . $user->lastname;
+        $firstname = isset($user->firstname) ? $user->firstname : '';
+        $lastname = isset($user->lastname) ? $user->lastname : '';
+        $name = $firstname . " " . $lastname;
 
         return $name;
     }

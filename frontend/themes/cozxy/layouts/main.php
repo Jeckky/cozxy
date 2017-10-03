@@ -51,6 +51,7 @@ AppAsset::register($this);
 
     </body>
 </html>
+
 <?php
 $this->registerJs("
 <!-- Hotjar Tracking Code for www.cozxy.com -->
