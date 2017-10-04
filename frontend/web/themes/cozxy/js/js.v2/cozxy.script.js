@@ -1,6 +1,17 @@
+
 $(function () {
+    /*$('.topbar').on('touchstart click', function (event) {
+     alert(event.type);
+     if (event.type == "touchstart")
+     $(this).off('click').on('click', function (e) {
+     e.preventDefault();
+     alert('xxxx');
+     });
+     //your code here
+     });*/
 
-
+});
+$(function () {
 
     //http://blog.grayghostvisuals.com/css/touchevents/
     //grab the object
@@ -14,18 +25,15 @@ $(function () {
      //add event listener
      el.addEventListener('touchstart', touchStart, false);
      */
-    /*$('.topbar .dismiss').on('touchstart click', function () {
-     $('.topbar').slideUp();
-     $('.topOpener').slideDown();
-     return false;
-     });
-     $('.topOpener').on('touchstart click', function () {
-     $('.topbar').slideDown();
-     $('.topOpener').slideUp();
-     });
-     */
-
-
+    $('.topbar .dismiss').on('touchstart click', function () {
+        $('.topbar').slideUp();
+        $('.topOpener').slideDown();
+        return false;
+    });
+    $('.topOpener').on('touchstart click', function () {
+        $('.topbar').slideDown();
+        $('.topOpener').slideUp();
+    });
     $('.gotoTop').on('touchstart click', function () {
         $('html,body').animate({scrollTop: 0});
         return false;
