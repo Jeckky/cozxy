@@ -700,7 +700,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         $cate = \common\models\costfit\CategoryToProduct::find()
                         ->select('`category`.categoryId , `category`.title , `category`.parentId ')
                         ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
-                        ->where("parentId IS NULL")
+                        ->where("category.parentId IS NULL AND category.status=1")
                         ->groupBy('category_to_product.categoryId')
                         //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
                         ->all();
