@@ -26,4 +26,3 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
 </td>
 </tr>
 </table>
-
