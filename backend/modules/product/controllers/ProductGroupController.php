@@ -11,7 +11,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use beastbytes\wizard\WizardBehavior;
 use common\helpers\Upload;
-
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
  */

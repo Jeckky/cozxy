@@ -277,7 +277,10 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     public static function supplierDetail($userId) {
-        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
+        //$detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
+        $detail = Address::find()->where("userId=" . $userId)
+                ->orderBy("createDateTime DESC")
+                ->one();
         if (isset($detail)) {
             return $detail;
         } else {
@@ -363,7 +366,7 @@ class User extends \common\models\costfit\master\UserMaster {
      */
     public function getRoles() {
         return $this->hasMany(\hscstudio\mimin\models\AuthAssignment::className(), [
-            'user_id' => 'userId',
+                    'user_id' => 'userId',
         ]);
     }
 
