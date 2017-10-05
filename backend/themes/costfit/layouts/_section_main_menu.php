@@ -41,240 +41,242 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
         </div>
 
         <ul class="navigation">
-            <?php if(!in_array(Yii::$app->user->id, [83,84])):?>
-            <?php
-            //$this->view->params['listDataProviderMenu']['menuBackend']
-            //$this->params['listDataProviderMenu']['menuBackend']
-            if (isset($this->params['listDataProviderMenu']['menuBackend'])) {
-                $menuBackend = $this->params['listDataProviderMenu']['menuBackend'];
-                foreach ($menuBackend as $key => $value) {
-                    if (!isset($value['items'])) {
-                        ?>
-                        <li>
-                            <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>">
-                                <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value["label"]; ?> </span></a>
-                        </li>
-                        <?php
-                    } else {
-                        ?>
-                        <li class="mm-dropdown">
-                            <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
-                            <?php
-                            foreach ($value["items"] as $key => $value1) {
-                                ?>
-                                <ul>
-                                    <?php
-                                    if (!isset($value1['items'])) {
-                                        ?>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo isset($value1['url']) ? $baseUrl . "/" . $value1['url'][0] : "#"; ?>">
-                                                <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['label']; ?></span></a>
-                                        </li>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <li class="mm-dropdown">
-                                            <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text"><?php echo isset($value1['label']) ? $value1['label'] : "value1 blank"; ?></span></a>
-                                            <?php
-                                            foreach ($value1["items"] as $key => $value2) {
-                                                ?>
-                                                <ul>
-                                                    <li>
-                                                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['url'][0]; ?>"><span class="mm-text"><?php echo $value2['label']; ?></span></a>
-                                                    </li>
-                                                </ul>
-                                                <?php
-                                            }
-                                            ?>
-                                        </li>
-                                        <?php
-                                    }
-                                    ?>
-                                </ul>
-                                <?php
-                            }
+            <?php if (!in_array(Yii::$app->user->id, [83, 84])): ?>
+                <?php
+                //$this->view->params['listDataProviderMenu']['menuBackend']
+                //$this->params['listDataProviderMenu']['menuBackend']
+                if (isset($this->params['listDataProviderMenu']['menuBackend'])) {
+                    $menuBackend = $this->params['listDataProviderMenu']['menuBackend'];
+                    ///echo '<pre>';
+                    ///print_r($menuBackend);
+                    foreach ($menuBackend as $key => $value) {
+                        if (!isset($value['items'])) {
                             ?>
-                        </li>
-                        <?php
-                    }
-                }
-            }
-            ?>
-            <!--
-            <li>
-                <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                     ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
-            </li>
-
-            <li class="mm-dropdown">
-                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
-                <ul>
-                    <li>
-                        <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                      ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
-                    </li>
-                </ul>
-            </li>-->
-            <?php
-            //echo Yii::$app->user->identity->type;
-            if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) {
-                ?>
-                <li class="mm-dropdown">
-                    <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Flow Chart  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
-                    <ul>
-                        <li class="mm-dropdown">
-                            <a tabindex="-1" href="#"><span class="mm-text">Frontend</span><span class="label label-warning">2</span></a>
-                            <ul>
-                                <li>
-                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="mm-dropdown">
-                            <a tabindex="-1" href="#"><span class="mm-text">Backend</span><span class="label label-warning">2</span></a>
-                            <ul>
-                                <li>
-                                    <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=order"><span class="mm-text">Order</span></a>
-                                </li>
-                                <li class="mm-dropdown">
-                                    <a tabindex="-1" href="#"><span class="mm-text">Store</span></a>
+                            <li>
+                                <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>">
+                                    <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value["label"]; ?> </span></a>
+                            </li>
+                            <?php
+                        } else {
+                            ?>
+                            <li class="mm-dropdown">
+                                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
+                                <?php
+                                foreach ($value["items"] as $key => $value1) {
+                                    ?>
                                     <ul>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=importProduct"><span class="mm-text">Import Product</span></a>
-                                        </li>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=qc"><span class="mm-text">QC</span></a>
-                                        </li>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=sortProduct"><span class="mm-text">จัดเรียงสินค้า</span></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="mm-dropdown">
-                                    <a tabindex="-1" href="#"><span class="mm-text">Product</span></a>
-                                    <ul>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=productPrice"><span class="mm-text">ตั้งราคาสินค้า</span></a>
-                                        </li>
-                                        <li>
-                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=productPick"><span class="mm-text">หยิบสินค้า</span></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-            <?php } ?>
-            <!--            <li class="mm-dropdown">
-                            <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
-                            <ul>
-                                <li>
-                                    <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.1</span><span class="badge badge-danger">12</span><span class="label label-info">21</span></a>
-                                </li>
-                                <li>
-                                    <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.2</span></a>
-                                </li>
-                                <li class="mm-dropdown">
-                                    <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.3</span><span class="label label-warning">5</span></a>
-                                    <ul>
-                                        <li>
-                                            <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.1</span></a>
-                                        </li>
-                                        <li class="mm-dropdown">
-                                            <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
-                                            <ul>
-                                                <li class="mm-dropdown">
-                                                    <a tabindex="-1" href="#"><span class="mm-text">Menu level 3.1</span></a>
+                                        <?php
+                                        if (!isset($value1['items'])) {
+                                            ?>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo isset($value1['url']) ? $baseUrl . "/" . $value1['url'][0] : "#"; ?>">
+                                                    <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['label']; ?></span></a>
+                                            </li>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <li class="mm-dropdown">
+                                                <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text"><?php echo isset($value1['label']) ? $value1['label'] : "value1 blank"; ?></span></a>
+                                                <?php
+                                                foreach ($value1["items"] as $key => $value2) {
+                                                    ?>
                                                     <ul>
                                                         <li>
-                                                            <a tabindex="-1" href="#"><span class="mm-text">Menu level 4.1</span></a>
+                                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['url'][0]; ?>"><span class="mm-text"><?php echo $value2['label']; ?></span></a>
                                                         </li>
                                                     </ul>
-                                                </li>
-                                                <li>
-                                                    <a tabindex="-1" href="#"><span class="mm-text">Menu level 3.2</span></a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
-                                        </li>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
                                     </ul>
-                                </li>
-                            </ul>
-                        </li>-->
+                                    <?php
+                                }
+                                ?>
+                            </li>
+                            <?php
+                        }
+                    }
+                }
+                ?>
+                <!--
+                <li>
+                    <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                              ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                </li>
 
-            <!--Suppliers-->
-            <?php if (Yii::$app->user->identity->type == 4) { ?>
-                <li class="mm-dropdown-supplier">
-                    <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Suppliers</span></a>
+                <li class="mm-dropdown">
+                    <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                     <ul>
                         <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers"><span class="mm-text">Old Product</span></a>
-                        </li>
-
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/po"><span class="mm-text">ใบ Po</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers/order-list"><span class="mm-text">Order List</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
+                            <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                               ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                         </li>
                     </ul>
-                </li>
-            <?php } ?>
-            <?php if (Yii::$app->user->identity->type == 5) { ?>
-                <li class="mm-dropdown-supplier">
-                    <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Content</span></a>
+                </li>-->
+                <?php
+                //echo Yii::$app->user->identity->type;
+                if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) {
+                    ?>
+                    <li class="mm-dropdown">
+                        <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">Flow Chart  </span><span class="label label-danger">new</span><span class="badge badge-primary">1</span></a>
+                        <ul>
+                            <li class="mm-dropdown">
+                                <a tabindex="-1" href="#"><span class="mm-text">Frontend</span><span class="label label-warning">2</span></a>
+                                <ul>
+                                    <li>
+                                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=frontOrder"><span class="mm-text">Order</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mm-dropdown">
+                                <a tabindex="-1" href="#"><span class="mm-text">Backend</span><span class="label label-warning">2</span></a>
+                                <ul>
+                                    <li>
+                                        <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=order"><span class="mm-text">Order</span></a>
+                                    </li>
+                                    <li class="mm-dropdown">
+                                        <a tabindex="-1" href="#"><span class="mm-text">Store</span></a>
+                                        <ul>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=importProduct"><span class="mm-text">Import Product</span></a>
+                                            </li>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=qc"><span class="mm-text">QC</span></a>
+                                            </li>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=sortProduct"><span class="mm-text">จัดเรียงสินค้า</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="mm-dropdown">
+                                        <a tabindex="-1" href="#"><span class="mm-text">Product</span></a>
+                                        <ul>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=productPrice"><span class="mm-text">ตั้งราคาสินค้า</span></a>
+                                            </li>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/dashboard/dashboard/flowchart?id=productPick"><span class="mm-text">หยิบสินค้า</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
 
-                    <ul>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers"><span class="mm-text">Old Product</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/po"><span class="mm-text">ใบ Po</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers/order-list"><span class="mm-text">Order List</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
-                        </li>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
-                        </li>
+                <?php } ?>
+                <!--            <li class="mm-dropdown">
+                                <a href="#"><i class="menu-icon fa fa-sitemap"></i><span class="mm-text">Menu levels</span><span class="badge badge-primary">6</span></a>
+                                <ul>
+                                    <li>
+                                        <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.1</span><span class="badge badge-danger">12</span><span class="label label-info">21</span></a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.2</span></a>
+                                    </li>
+                                    <li class="mm-dropdown">
+                                        <a tabindex="-1" href="#"><span class="mm-text">Menu level 1.3</span><span class="label label-warning">5</span></a>
+                                        <ul>
+                                            <li>
+                                                <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.1</span></a>
+                                            </li>
+                                            <li class="mm-dropdown">
+                                                <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
+                                                <ul>
+                                                    <li class="mm-dropdown">
+                                                        <a tabindex="-1" href="#"><span class="mm-text">Menu level 3.1</span></a>
+                                                        <ul>
+                                                            <li>
+                                                                <a tabindex="-1" href="#"><span class="mm-text">Menu level 4.1</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a tabindex="-1" href="#"><span class="mm-text">Menu level 3.2</span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a tabindex="-1" href="#"><span class="mm-text">Menu level 2.2</span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>-->
 
-                    </ul>
-                </li>
-            <?php } ?>
-            <?php if (Yii::$app->user->identity->type == 6) { ?>
-                <li class="mm-dropdown-supplier">
-                    <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Content</span></a>
-                    <ul>
-                        <li>
-                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/"><span class="mm-text">My Acoount</span></a>
-                        </li>
-                    </ul>
-                </li>
-            <?php } ?>
-            <?php endif;?>
+                <!--Suppliers-->
+                <?php if (Yii::$app->user->identity->type == 4) { ?>
+                    <li class="mm-dropdown-supplier">
+                        <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Suppliers</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers"><span class="mm-text">Old Product</span></a>
+                            </li>
 
-            <?php if(Yii::$app->user->identity->type&\common\models\costfit\User::USER_BOOTH > 0 || true):?>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/po"><span class="mm-text">ใบ Po</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers/order-list"><span class="mm-text">Order List</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if (Yii::$app->user->identity->type == 5) { ?>
+                    <li class="mm-dropdown-supplier">
+                        <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Content</span></a>
+
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers"><span class="mm-text">Old Product</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/brand"><span class="mm-text">Brand</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/po"><span class="mm-text">ใบ Po</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/suppliers/product-suppliers/order-list"><span class="mm-text">Order List</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group"><span class="mm-text">Product Group</span></a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/product/product-group-template"><span class="mm-text">Product Group Template</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if (Yii::$app->user->identity->type == 6) { ?>
+                    <li class="mm-dropdown-supplier">
+                        <a href="#"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Content</span></a>
+                        <ul>
+                            <li>
+                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/"><span class="mm-text">My Acoount</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php } ?>
+            <?php endif; ?>
+
+            <?php if (Yii::$app->user->identity->type & \common\models\costfit\User::USER_BOOTH > 0 || true): ?>
                 <li class="mm-dropdown-supplier">
                     <a href="<?php echo $baseUrl; ?>/booth/order"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Booth</span></a>
                 </li>
-            <?php endif;?>
+            <?php endif; ?>
         </ul> <!-- / .navigation -->
     </div> <!-- / #main-menu-inner -->
 </div> <!-- / #main-menu -->
