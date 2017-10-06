@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use beastbytes\wizard\WizardBehavior;
 use common\helpers\Upload;
+
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
  */
@@ -23,7 +24,7 @@ class ProductGroupController extends ProductMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
 // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +54,7 @@ class ProductGroupController extends ProductMasterController {
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
 
             if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
+
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
                             ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -61,6 +63,7 @@ class ProductGroupController extends ProductMasterController {
                             ->orderBy("product.createDateTime DESC");
                 }
             } else {
+
                 $query = \common\models\costfit\Product::find()
                         ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                         ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -95,7 +98,6 @@ class ProductGroupController extends ProductMasterController {
                             ->groupBy("ps.userId , pc.parentId")
                             ->orderBy("product.createDateTime DESC");
                 } else {
-
                     if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                         $query = \common\models\costfit\Product::find()
                                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -624,6 +626,7 @@ class ProductGroupController extends ProductMasterController {
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+            $this->saveBrandToParent($_POST["Product"]["brandId"], $_GET["id"]); //เมื่อมีการแก้ไข แบรนด์ที่ตัวลูก ตัวแม่เปลี่ยนด้วย เดิมไม่เปลี่ยน // edit by sak
             if (isset($_POST["Product"]["isbn"]) && !empty($_POST["Product"]["isbn"])) {
                 \common\models\costfit\Product::saveProductIsbn($model->productId, $_POST["Product"]["isbn"]); //save
             }
@@ -1051,6 +1054,17 @@ class ProductGroupController extends ProductMasterController {
           endforeach;
           } */
         return $this->redirect(['101/index']);
+    }
+
+    public function saveBrandToParent($brandId, $productId) {
+        $product = \common\models\costfit\Product::find()->where("productId=" . $productId)->one();
+        if (isset($product)) {
+            $parent = \common\models\costfit\Product::find()->where("productId=" . $product->parentId)->one();
+            if (isset($parent)) {
+                $parent->brandId = $brandId;
+                $parent->save();
+            }
+        }
     }
 
     // Version 1.01 Wizard Of Product Group
