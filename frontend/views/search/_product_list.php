@@ -82,7 +82,7 @@ if (isset($sortstatus)) {
             },
             'emptyText' => ' ',
             'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-            'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
+            'layout' => "{summary}\n{items}\n<div class ='  col-lg-offset-3'>{pager}</div>\n",
             //'layout' => "{items}",
             'itemOptions' => [
                 'tag' => false,
@@ -133,7 +133,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
             , 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
             'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-            'layout' => "{summary}\n{items}\n<div class ='col-sm-12 col-lg-offset-3'>{pager}</div>\n",
+            'layout' => "{summary}\n{items}\n<div class ='  col-lg-offset-3'>{pager}</div>\n",
             //'layout' => "{items}",
             'itemOptions' => [
                 'tag' => false,
