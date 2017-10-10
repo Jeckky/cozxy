@@ -361,7 +361,6 @@ $(document).on('click', '.deleteR', function () {
             }
             //$('#returnList').fadeToggle('fade')
         },
-
     });
 });
 $(document).on('click', '#incr-return', function () {
@@ -388,7 +387,6 @@ $(document).on('click', '#incr-return', function () {
                 alert(data.messege);
             }
         },
-
     });
 
 });
@@ -679,6 +677,31 @@ function saveIsbn(productSuppId, poItemId) {
             } else {
                 alert(data.error);
             }
+        },
+    });
+}
+function enableEdit(id) {
+    $("#optionValue" + id).removeAttr('disabled');
+    $("#edit" + id).hide();
+    $("#save" + id).show();
+}
+function saveEdit(id) {
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
+    // var url = $baseUrl + 'product/product-group/edit-option';
+    var newVal = $("#optionValue" + id).val();
+    $.ajax({
+        url: url,
+        data: {id: id, newVal: newVal},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (!data.status) {
+                alert(data.error);
+            }
+            $("#optionValue" + id).attr('disabled', 'disabled');
+            $("#edit" + id).show();
+            $("#save" + id).hide();
+
         },
     });
 }

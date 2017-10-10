@@ -181,14 +181,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <div class="panel-body">
                 <?php
                 $form = ActiveForm::begin([
-                    'enableClientValidation' => ($step == 2 || $step == 3 || $step == 4 || $step == 5) ? false : TRUE,
-                    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                    'fieldConfig' => [
-                        'template' => '{label}<div class="col-sm-9">{input}</div>',
-                        'labelOptions' => [
-                            'class' => 'col-sm-3 control-label'
-                        ]
-                    ]
+                            'enableClientValidation' => ($step == 2 || $step == 3 || $step == 4 || $step == 5) ? false : TRUE,
+                            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                            'fieldConfig' => [
+                                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                                'labelOptions' => [
+                                    'class' => 'col-sm-3 control-label'
+                                ]
+                            ]
                 ]);
                 ?>
                 <div class="wizard" style="padding:10px;">
@@ -244,16 +244,16 @@ $this->params['pageHeader'] = Html::encode($this->title);
 
                             <?=
                             $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(common\models\costfit\ProductGroupTemplate::find()->all(), 'productGroupTemplateId', function ($model) {
-                                $title = $model->title . " - Option : ";
-                                foreach ($model->productGroupTemplateOptions as $k => $option) {
-                                    $title .= $option->title;
-                                    if ($k < count($model->productGroupTemplateOptions) - 1) {
-                                        $title .= ",";
-                                    }
-                                }
-                                return $title;
-                            })
-                            , ['prompt' => '-- Select Option Template --'])
+                                        $title = $model->title . " - Option : ";
+                                        foreach ($model->productGroupTemplateOptions as $k => $option) {
+                                            $title .= $option->title;
+                                            if ($k < count($model->productGroupTemplateOptions) - 1) {
+                                                $title .= ",";
+                                            }
+                                        }
+                                        return $title;
+                                    })
+                                    , ['prompt' => '-- Select Option Template --'])
                             ?>
 
                             <?php
@@ -456,11 +456,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
-                                            <?= $this->render("_product_grid", ["dataProvider" => $dataProvider]); ?>
+                                            <?=
+                                            $this->render("_product_grid", [
+                                                "dataProvider" => $dataProvider,
+                                                'productGroupId' => isset($productGroupId) ? $productGroupId : NULL,
+                                                'templateId' => isset($productGroupTemplateId) ? $productGroupTemplateId : NULL,
+                                            ]);
+                                            ?>
                                         </div>
                                         <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 2) ? "active in " : " ") : " " ?> " role="tabpanel" id="myProduct" aria-labelledby="profile-tab">
                                             <?php if ($dataProvider2->getTotalCount() > 0): ?>
-                                                <?= $this->render("_product_grid", ["dataProvider" => $dataProvider2, 'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>", 'type' => 2, 'isProductSupp' => TRUE]); ?>
+                                                <?=
+                                                $this->render("_product_grid", [
+                                                    "dataProvider" => $dataProvider2,
+                                                    'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>",
+                                                    'type' => 2, 'isProductSupp' => TRUE,
+                                                    'productGroupId' => isset($productGroupId) ? $productGroupId : NULL,
+                                                    'templateId' => isset($productGroupTemplateId) ? $productGroupTemplateId : NULL,
+                                                ]);
+                                                ?>
                                             <?php else: ?>
                                                 <center>
                                                     <h3>Create My Product</h3>
