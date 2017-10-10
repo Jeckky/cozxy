@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle {
     public $depends = [
         'yii\web\YiiAsset',
         'backend\assets\CostFitAsset',
+        //'backend\assets\CozxyAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
 

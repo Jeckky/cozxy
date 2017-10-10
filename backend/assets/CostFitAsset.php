@@ -11,7 +11,6 @@ class CostFitAsset extends AssetBundle {
 
     public $sourcePath = '@backend/themes/costfit/assets';
     //public $baseUrl = '@web';
-
     public $css = [
         'stylesheets/bootstrap.min.css',
         'stylesheets/pixel-admin.min.css',

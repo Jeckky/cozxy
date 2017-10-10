@@ -88,6 +88,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             //return $model->user_group_Id;
 //                            $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($model->user_group_Id);
 //                            return $getUserGroup['name'];
+                            //echo '<pre>';
+                            //print_r($model->roles);
+                            // Get table : auth_assignment
                             $roles = [];
                             foreach ($model->roles as $role) {
                                 $roles[] = $role->item_name;
