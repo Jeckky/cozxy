@@ -14,6 +14,7 @@ use yii\data\ActiveDataProvider;
 use common\helpers\Notifications;
 use common\helpers\CozxyUnity;
 use hscstudio\mimin\components\Mimin;
+use common\helpers\menuBackend;
 
 /**
  * Site controller
@@ -37,33 +38,39 @@ class BackendMasterController extends MasterController {
               ],
               ]); */
 
-            $backendMenuArray = [];
-            $dataProvider = \common\models\costfit\Menu::find()->where("parent_id = 0")->all();
-            foreach ($dataProvider as $k => $menu) {
-                $backendMenuArray[$k]['label'] = $menu->name;
-                $childs = \common\models\costfit\Menu::find()->where("parent_id = $menu->menuId")->all();
-                if (isset($childs) && count($childs) > 0) {
-                    foreach ($childs as $j => $child) {
-                        $childs2 = \common\models\costfit\Menu::find()->where("parent_id = $child->menuId")->all();
-                        if (isset($childs2) && count($childs2) > 0) {
-                            foreach ($childs2 as $l => $child2) {
-                                $backendMenuArray[$k]["items"][$j]["label"] = $child->name;
-                                $backendMenuArray[$k]["items"][$j]["items"][$l] = ['label' => $child2->name, 'url' => [$child2->link]];
-                            }
-                        } else {
-                            $backendMenuArray[$k]["items"][$j]['label'] = $child->name;
-                            $backendMenuArray[$k]["items"][$j]['url'] = [$child->link];
-                        }
-                    }
-                } else {
-                    $backendMenuArray[$k]['url'] = [$menu->link];
-                }
-            }
+            /* $backendMenuArray = [];
+              $dataProvider = \common\models\costfit\Menu::find()->where("parent_id = 0 ")->all();
+              foreach ($dataProvider as $k => $menu) {
+              $backendMenuArray[$k]['label'] = $menu->name;
+              $childs = \common\models\costfit\Menu::find()->where("parent_id = $menu->menuId")->all();
+
+              //in_array($value->item_name, $test
+              if (isset($childs) && count($childs) > 0) {
+
+              foreach ($childs as $j => $child) {
+              $childs2 = \common\models\costfit\Menu::find()->where("parent_id = $child->menuId")->all();
+              // $test = explode(',', $model->assignment);
+              if (isset($childs2) && count($childs2) > 0) {
+              foreach ($childs2 as $l => $child2) {
+              $backendMenuArray[$k]["items"][$j]["label"] = $child->name;
+              $backendMenuArray[$k]["items"][$j]["items"][$l] = ['label' => $child2->name, 'url' => [$child2->link]];
+              }
+              } else {
+              $backendMenuArray[$k]["items"][$j]['label'] = $child->name;
+              $backendMenuArray[$k]["items"][$j]['url'] = [$child->link];
+              }
+              }
+              } else {
+              $backendMenuArray[$k]['url'] = [$menu->link];
+              }
+              } */
+
+            //$backendMenus = Mimin::filterMenu($backendMenuArray);
+            //$backendMenus = $backendMenuArray;
+            //$menuRbac = menuBackend::getMenuRbac();
+            $backendMenus = menuBackend::getMenuSystem();
             //echo '<pre>';
-            //print_r($backendMenus)
-            $backendMenus = Mimin::filterMenu($backendMenuArray);
-            //echo '<pre>';
-            //print_r($backendMenus)
+            //print_r($menuSystem);
             //throw new \yii\base\Exception(print_r($backendMenus, true));
             $firstname = Yii::$app->user->identity->firstname;
             $type = Yii::$app->user->identity->type;

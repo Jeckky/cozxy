@@ -73,62 +73,95 @@ use kartik\widgets\Select2;
             <?php
             //echo $actions;
             //exit();
-            if ($actions == 'update') {
-                echo TreeGrid::widget([
-                    'dataProvider' => $listViewLevels,
-                    'keyColumnName' => 'user_group_Id',
-                    'parentColumnName' => 'parent_id',
-                    'parentRootValue' => '0', //first parentId value
-                    'pluginOptions' => [
-                    //'initialState' => 'collapsed',
-                    ],
-                    'columns' => [
-                        [
-                            'attribute' => 'Name',
-                            'format' => 'raw',
-                            'value' => function($data, $key, $index, $column) {
-                                $getUserGroup = common\models\costfit\Menu::find()->select('user_group_Id')->where('menuId =' . $_GET['id'])->one();
-                                $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
-                                $test = explode(',', $ListMenuGroup);
-                                if (in_array($data->user_group_Id, $test)) {
-                                    $checked = 'checked';
-                                } else {
-                                    $checked = ' ';
-                                }
-                                return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
-                            },
-                        ],
-                    // 'name',
-                    //'user_group_Id',
-                    //'parent_id',
-                    //['class' => 'yii\grid\ActionColumn']
-                    ]
-                ]);
-            } else {
-                echo TreeGrid::widget([
-                    'dataProvider' => $listViewLevels,
-                    'keyColumnName' => 'user_group_Id',
-                    'parentColumnName' => 'parent_id',
-                    'parentRootValue' => '0', //first parentId value
-                    'pluginOptions' => [
-                    //'initialState' => 'collapsed',
-                    ],
-                    'columns' => [
-                        [
-                            'attribute' => 'Name',
-                            'format' => 'raw',
-                            'value' => function($data, $key, $index, $column) {
-                                return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" /> &nbsp;' . $data->name;
-                            },
-                        ],
-                    // 'name',
-                    //'user_group_Id',
-                    //'parent_id',
-                    //['class' => 'yii\grid\ActionColumn']
-                    ]
-                ]);
-            }
+            /* if ($actions == 'update') {
+              echo TreeGrid::widget([
+              'dataProvider' => $listViewLevels,
+              'keyColumnName' => 'user_group_Id',
+              'parentColumnName' => 'parent_id',
+              'parentRootValue' => '0', //first parentId value
+              'pluginOptions' => [
+              //'initialState' => 'collapsed',
+              ],
+              'columns' => [
+              [
+              'attribute' => 'Name',
+              'format' => 'raw',
+              'value' => function($data, $key, $index, $column) {
+              $getUserGroup = common\models\costfit\Menu::find()->select('user_group_Id')->where('menuId =' . $_GET['id'])->one();
+              $ListMenuGroup = str_replace('[', '', str_replace(']', '', $getUserGroup->user_group_Id));
+              $test = explode(',', $ListMenuGroup);
+              if (in_array($data->user_group_Id, $test)) {
+              $checked = 'checked';
+              } else {
+              $checked = ' ';
+              }
+              return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->user_group_Id . '" ' . $checked . '/> &nbsp;' . $data->name;
+              },
+              ],
+              // 'name',
+              //'user_group_Id',
+              //'parent_id',
+              //['class' => 'yii\grid\ActionColumn']
+              ]
+              ]);
+              } else {
+              echo TreeGrid::widget([
+              'dataProvider' => $listViewLevels,
+              'keyColumnName' => 'item_name',
+              'parentColumnName' => 'item_name',
+              'parentRootValue' => '0', //first parentId value
+              'pluginOptions' => [
+              //'initialState' => 'collapsed',
+              ],
+              'columns' => [
+              [
+              'attribute' => 'Name',
+              'format' => 'raw',
+              'value' => function($data, $key, $index, $column) {
+              return '<input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class"px" value="' . $data->item_name . '" /> &nbsp;' . $data->item_name;
+              },
+              ],
+              // 'name',
+              //'user_group_Id',
+              //'parent_id',
+              //['class' => 'yii\grid\ActionColumn']
+              ]
+              ]);
+              } */
             ?>
+            <div class="form-group">
+                <div class=" col-sm-9">
+                    <?php
+                    if ($actions == 'update') {
+                        foreach ($listViewLevels as $value) {
+                            $test = explode(',', $model->assignment);
+                            if (in_array($value->name, $test)) {
+                                $checked = 'checked';
+                            } else {
+                                $checked = ' ';
+                            }
+                            ?>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class="px" value="<?php echo $value->name; ?>" <?php echo $checked; ?>> <span class="lbl"><?php echo $value->name; ?></span>
+                                </label>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        foreach ($listViewLevels as $value) {
+                            ?>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="user_group_Id[]" name="Menu[user_group_Id][]" class="px" value="<?php echo $value->name; ?>"> <span class="lbl"><?php echo $value->name; ?></span>
+                                </label>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 

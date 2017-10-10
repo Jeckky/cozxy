@@ -68,12 +68,27 @@ class BoothController extends MasterController {
 
         if (isset($_POST["User"])) {
             $editChangePassword = \frontend\models\DisplayMyAccount::ConfirmRegisterBooth($_POST['User']['password'], $token, $_POST['User']['email']);
-            //echo $editChangePassword;
-            //exit();
             if ($editChangePassword == TRUE) {
                 return $this->redirect(['/site/login']);
             } else {
-                return $this->redirect(['/booth/confirm?token=' . $token]);
+                if ($token != '') {
+                    if ($editChangePassword == TRUE) {
+                        return $this->redirect(['/booth/confirm?token=' . $token]);
+                    } else {
+                        $model->attributes = $_POST["User"];
+                        $model->email = $_POST["User"]['email'];
+                        $model->password = $_POST["User"]['password'];
+                        $model->addError('password', 'Incorrect OTP');
+                        //return $this->redirect(['/booth/confirm?token=' . $token]);
+                        return $this->render('booth-confirm', compact('model'));
+                    }
+                } else {
+                    $model->attributes = $_POST["User"];
+                    $model->email = $_POST["User"]['email'];
+                    $model->password = $_POST["User"]['password'];
+                    $model->addError('password', 'Incorrect OTP');
+                    return $this->render('booth-confirm', compact('model'));
+                }
             }
         } else {
             return $this->render('booth-confirm', compact('model'));

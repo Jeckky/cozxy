@@ -81,9 +81,11 @@ class MenuController extends ManagementMasterController {
                     $rules .= $value . ',';
                 }
                 $listRules = substr($rules, 0, -1);
-                $getRules = '[' . $listRules . ']';
+                //$getRules = '[' . $listRules . ']';
+                $getRules = $listRules;
             } else {
-                $getRules = '[]';
+                //$getRules = '[]';
+                $getRules = '';
             }
 
             if (isset($_POST["Menu"]['parent_id']) || empty($_POST["Menu"]['parent_id'])) {
@@ -92,7 +94,8 @@ class MenuController extends ManagementMasterController {
                 $model->parent_id = $_POST["Menu"]['parent_id'];
             }
 
-            $model->user_group_Id = $getRules;
+            $model->user_group_Id = 0;
+            $model->assignment = $getRules;
             $model->createDateTime = new \yii\db\Expression('NOW()');
 
             //echo '<pre>';
@@ -101,9 +104,13 @@ class MenuController extends ManagementMasterController {
                 return $this->redirect(['index']);
             }
         }
-        $listViewLevels = new ActiveDataProvider([
-            'query' => \common\models\costfit\UserGroups::find(),
-        ]);
+        /* $listViewLevels = new ActiveDataProvider([
+          //'query' => \common\models\costfit\UserGroups::find(),
+          'query' => \common\models\costfit\AuthAssignment::find(),
+          ]); */
+        $listViewLevels = \common\models\costfit\AuthItem::find()->where('type=1')->all();
+
+
         return $this->render('create', [
             'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
@@ -135,11 +142,14 @@ class MenuController extends ManagementMasterController {
                     $rules .= $value . ',';
                 }
                 $listRules = substr($rules, 0, -1);
-                $getRules = '[' . $listRules . ']';
+                //$getRules = '[' . $listRules . ']';
+                $getRules = $listRules;
             } else {
-                $getRules = '[]';
+                //$getRules = '[]';
+                $getRules = '';
             }
-            $model->user_group_Id = $getRules;
+            $model->user_group_Id = 0;
+            $model->assignment = $getRules;
             if (isset($_POST["Menu"]['parent_id'])) {
                 //echo 'isset';
                 $model->parent_id = ($_POST["Menu"]['parent_id'] == '') ? 0 : $_POST["Menu"]['parent_id'];
@@ -152,11 +162,14 @@ class MenuController extends ManagementMasterController {
                 return $this->redirect(['index']);
             }
         }
-        $listViewLevels = new ActiveDataProvider([
-            'query' => \common\models\costfit\UserGroups::find()
-        //->select('(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $id . '  limit 1) as MenuGroup'),
-        //\common\models\costfit\UserGroups::find(),
-        ]);
+        /*
+          $listViewLevels = new ActiveDataProvider([
+          'query' => \common\models\costfit\UserGroups::find()
+          //->select('(select menu.user_group_Id from costfit_dev.menu where menuId = ' . $id . '  limit 1) as MenuGroup'),
+          //\common\models\costfit\UserGroups::find(),
+          ]); */
+
+        $listViewLevels = \common\models\costfit\AuthItem::find()->where('type=1')->all();
         return $this->render('update', [
             'model' => $model, 'listViewLevels' => $listViewLevels, 'actions' => $actions
         ]);
