@@ -120,6 +120,9 @@ return [
         'elastic-search' => [
             'class' => 'app\modules\elasticsearch\ElasticSearch',
         ],
+        'productmanager' => [
+            'class' => 'backend\modules\productmanager\ProductManager',
+        ],
     ],
     'components' => [
         'user' => [
@@ -208,7 +211,8 @@ return [
             'product/*',
             'redactor/*',
             'gii/*',
-            'booth/*'
+            'booth/*',
+            'productmanager/*'
         ],
     ],
     'params' => $params,

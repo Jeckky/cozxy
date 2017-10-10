@@ -42,7 +42,7 @@ class Category extends \common\models\costfit\master\CategoryMaster
 
     public function getChilds()
     {
-        return $this->hasMany(Category::className(), ['parentId' => 'categoryId']);
+        return $this->hasMany(Category::className(), ['parentId' => 'categoryId'])->orderBy('title');
     }
 
     public function getCategoryWithParentArray()
