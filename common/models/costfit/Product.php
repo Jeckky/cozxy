@@ -782,4 +782,10 @@ class Product extends \common\models\costfit\master\ProductMaster {
                         ->one();
     }
 
+    public function productOptions()
+    {
+        $productOptions = ProductGroupOptionValue::find()->where(['productId'=>$this->productId])->all();
+        return ArrayHelper::map($productOptions, 'productGroupOptionValueId', 'value');
+    }
+
 }
