@@ -87,7 +87,6 @@ class RoleController extends ManagementMasterController {
             $admin->description = $_POST['AuthItem']['description'];
             $auth->add($admin);
             $model->save();
-
             //$modelA->status = $_POST['AuthItem']['status'];
             //$modelA->save(FALSE);
             return $this->redirect(['view', 'id' => $model->name]);

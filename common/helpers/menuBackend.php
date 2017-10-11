@@ -21,15 +21,18 @@ use common\models\costfit\AuthItemChild;
  * @author it
  */
 class menuBackend {
+    /*
+     * หา Menu กับ Group และ User ที่เหมือนกันและได้รับสิทธิ์
+     */
 
-    //put your code here
     public static function getMenuRbac() {
-
         $query = new \yii\db\Query;
         $query = AuthItemChild::find()
         ->select('*')
         ->join('INNER JOIN', 'auth_assignment', 'auth_item_child.parent = auth_assignment.item_name')
-        ->where('user_id = ' . Yii::$app->user->identity->userId)
+        ->join('LEFT JOIN', 'auth_item', 'auth_item.name = auth_assignment.item_name')
+        ->where('auth_assignment.user_id = ' . Yii::$app->user->identity->userId)
+        ->andWhere('auth_item.description = 1')
         ->groupBy('parent');
         $command = $query->createCommand();
         $data = $command->queryAll();
@@ -42,6 +45,7 @@ class menuBackend {
         $getMenuRbac = menuBackend::getMenuRbac();
         foreach ($getMenuRbac as $r => $rbac) {
             $backendMenuArrayRbac[$r] = $rbac['parent'];
+            //echo $backendMenuArrayRbac[$r];
             $dataProvider = \common\models\costfit\Menu::find()->where("parent_id = 0 and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
             foreach ($dataProvider as $k => $menu) {
                 //echo $menu->assignment;
