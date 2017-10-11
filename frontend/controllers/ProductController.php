@@ -105,11 +105,15 @@ class ProductController extends MasterController {
 
         //echo '<pre>';
         //print_r($params);
-        // exit();
+        //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId
         //$productSupplierId = $params['productSupplierId'];
+        //echo $productIdParams;
+        //exit();
         if (isset($params['selectedOptions'])) {
             $selectedOptions = $params['selectedOptions'];
+            // echo $selectedOptions;
+            // exit();
         } else {
             $selectedOptions = NULL;
         }

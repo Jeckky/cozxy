@@ -11,7 +11,7 @@ $val = rand(1, 10);
 ?>
 
 <!-- Product Detail Old -->
-<div class="product-detail">product detail sample xx
+<div class="product-detail">
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
@@ -105,7 +105,7 @@ $val = rand(1, 10);
                             foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
                                 $selected = "";
                                 if (isset($selectedOptions) && count($selectedOptions) > 0) {
-                                    echo 'test 1';
+                                    //echo 'test 1';
                                     foreach ($selectedOptions as $selectedOption):
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));
                                         //echo '<pre>';
@@ -116,9 +116,11 @@ $val = rand(1, 10);
                                         }
                                     endforeach;
                                 } else {
-                                    echo 'test 2';
+                                    //echo 'test 2 ก่อนเปลียน select option';
                                     $selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
                                 }
+                                //echo '<pre>';
+                                //echo 'productGroupTemplateOptionId :' . $productGroupTemplateOptionId;
                                 ?>
                                 <form id="optionForm">
                                     <div class="row login-box">
@@ -224,7 +226,9 @@ $(".productOption").on("change", function(){
         dataType:"json"
     })
     .done(function( data ) {
-        window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        //window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
+
     });
 });
 $("#zoom-img").elevateZoom({

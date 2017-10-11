@@ -112,7 +112,7 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
             ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
             ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
             ->where("productGroupTemplateOptionId = $o->productGroupTemplateOptionId AND pg.productId = " . $o->product->parentId)
-            ->andWhere("product_group_option_value.productSuppId IS NOT NULL")
+            //->andWhere("product_group_option_value.productSuppId IS NOT NULL")
             ->groupBy("value")
             ->all();
             foreach ($optionValues as $value) {
