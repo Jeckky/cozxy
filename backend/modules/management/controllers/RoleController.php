@@ -13,11 +13,9 @@ use yii\filters\AccessControl;
 /**
  * AuthItemController implements the CRUD actions for AuthItem model.
  */
-class RoleController extends ManagementMasterController
-{
+class RoleController extends ManagementMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -41,8 +39,7 @@ class RoleController extends ManagementMasterController
      * Lists all AuthItem models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new AuthItemSearch([
             'type' => 1
         ]);
@@ -63,8 +60,7 @@ class RoleController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $model = $this->findModel($id);
 
         return $this->render('view', [
@@ -77,17 +73,26 @@ class RoleController extends ManagementMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new AuthItem();
-
         if ($model->load(Yii::$app->request->post())) {
+            $model->attributes = $_POST['AuthItem'];
             $auth = Yii::$app->authManager;
             $admin = $auth->createRole($model->name);
+            //echo '<pre>';
+            //print_r($auth);
+            //echo '<br>';
+            //print_r($admin);
+            //exit();
+            $admin->description = $_POST['AuthItem']['description'];
             $auth->add($admin);
             $model->save();
+
+            //$modelA->status = $_POST['AuthItem']['status'];
+            //$modelA->save(FALSE);
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
+            $model->status = '1';
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -100,13 +105,14 @@ class RoleController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->attributes = $_POST['AuthItem'];
             $auth = Yii::$app->authManager;
             $admin = $auth->createRole($model->name);
+            $admin->description = $_POST['AuthItem']['description'];
             $auth->update($model->name, $admin);
             $model->save();
             return $this->redirect(['view', 'id' => $model->name]);
@@ -123,8 +129,7 @@ class RoleController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
         $auth = Yii::$app->authManager;
         $admin = $auth->createRole($model->name);
@@ -140,8 +145,7 @@ class RoleController extends ManagementMasterController
      * @return AuthItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = AuthItem::findOne($id)) !== null) {
             return $model;
         } else {
@@ -149,8 +153,7 @@ class RoleController extends ManagementMasterController
         }
     }
 
-    public function actionPermission($roleName, $permissionName)
-    {
+    public function actionPermission($roleName, $permissionName) {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $auth = Yii::$app->authManager;
         $roleExist = $auth->getRole($roleName);

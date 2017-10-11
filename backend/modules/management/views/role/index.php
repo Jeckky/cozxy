@@ -53,18 +53,39 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <?=
             GridView::widget([
+                'tableOptions' => ['class' => 'table table-hover'],
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
                 'dataProvider' => $dataProvider,
+                'rowOptions' => function($model) {
+                    if ($model->name != 'Admin' && $model->name != 'Administrator High' && $model->name != 'Super Admin') {
+                        //return ['class' => 'danger'];
+                    } else {
+                        return ['class' => 'success '];
+                    }
+                },
                 'pager' => [
                     'options' => ['class' => 'pagination pagination-xs']
                 ],
                 'options' => [
-                    'class' => 'table-light'
+                    'class' => 'table-light '
                 ],
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
+                    [
+                        'attribute' => 'description',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            if ($model->description == 1) {
+                                return 'Show';
+                            } else if ($model->description == 2) {
+                                return 'Hidden';
+                            } else {
+                                return '-';
+                            }
+                        }
+                    ],
                     ['class' => 'yii\grid\ActionColumn',
                         'header' => 'Actions',
                         'template' => '{view} {update} {delete}',

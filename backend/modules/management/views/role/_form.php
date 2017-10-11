@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'description')->radioList(['1' => 'Show', 2 => 'Hidden'])->label('status'); ?>
+
     <?php $form->field($model, 'type')->textInput() ?>
 
     <?php $form->field($model, 'description')->textarea(['rows' => 6]) ?>
