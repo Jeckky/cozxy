@@ -94,8 +94,10 @@ class AuthController extends AuthMasterController {
                 $article->save(FALSE);
 
                 $login = \common\models\costfit\User::find()->where("userId= " . Yii::$app->user->identity->userId)->one();
-
+                //echo '<pre>';
+                //print_r($login);
                 $checkType = $login->attributes;
+                //echo $checkType['type'];
                 if ($checkType['type'] == 1) {
                     return $this->render('index');
                 } else {
