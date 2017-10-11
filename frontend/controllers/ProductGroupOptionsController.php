@@ -51,9 +51,18 @@ class ProductGroupOptionsController extends MasterController {
         }
 
         $andWhereStr .= ")";
-        $prodSupp = \common\models\costfit\ProductSuppliers::find()
-        ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
-        ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
+        /* $prodSupp = \common\models\costfit\ProductSuppliers::find()
+          ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
+          ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
+          ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
+          ->where("pg.productId = $pgov->productGroupId ")
+          ->andWhere($andWhereStr)
+          ->groupBy("pgov.productSuppId")
+          //->having("count(pgov.productSuppId) =" . count($productGroupValues))
+          ->one(); */
+        $prodSupp = \common\models\costfit\Product::find()
+        ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productId = product.productId")
+        ->join("LEFT JOIN", "product p", "p.productId = product.productId")
         ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
         ->where("pg.productId = $pgov->productGroupId ")
         ->andWhere($andWhereStr)
@@ -63,7 +72,7 @@ class ProductGroupOptionsController extends MasterController {
 
         //$token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
 
-        $token = \common\models\ModelMaster::encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
+        $token = \common\models\ModelMaster::encodeParams(['productId' => $prodSupp->productId, "selectedOptions" => $productGroupValues]);
 
         $res['token'] = $token;
 

@@ -74,6 +74,8 @@ class AuthController extends AuthMasterController {
           return $this->render('index');
           }
          */
+
+
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
             //echo $_POST['LoginForm']['rememberMe'];
@@ -91,11 +93,21 @@ class AuthController extends AuthMasterController {
                 $article->createDateTime = new \yii\db\Expression('NOW()');
                 $article->save(FALSE);
 
+                $login = \common\models\costfit\User::find()->where("userId= " . Yii::$app->user->identity->userId)->one();
+                //echo '<pre>';
+                //print_r($login);
+                $checkType = $login->attributes;
+                //echo $checkType['type'];
+                if ($checkType['type'] == 1) {
+                    return $this->render('index');
+                } else {
+                    $this->redirect(Yii::$app->getUrlManager()->getBaseUrl() . '/dashboard');
+                }
                 //exit();
                 //return $this->redirect(['site/index']);
                 //return $this->redirect(Yii::$app->homeUrl);
                 //return $this->goBack();
-                $this->redirect(Yii::$app->getUrlManager()->getBaseUrl() . '/dashboard');
+                //$this->redirect(Yii::$app->getUrlManager()->getBaseUrl() . '/dashboard');
             } else {
                 //  return $this->render('login', [
                 //     'model' => $model,

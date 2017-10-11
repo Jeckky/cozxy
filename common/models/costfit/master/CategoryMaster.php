@@ -15,6 +15,7 @@ use Yii;
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
+    * @property integer $level
     *
             * @property Product[] $products
             * @property ProductGroupCategory[] $productGroupCategories
@@ -37,7 +38,7 @@ public function rules()
 return [
             [['title', 'createDateTime'], 'required'],
             [['description'], 'string'],
-            [['parentId', 'status'], 'integer'],
+            [['parentId', 'status', 'level'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
             [['image'], 'string', 'max' => 255],
@@ -58,6 +59,7 @@ return [
     'status' => Yii::t('category', 'Status'),
     'createDateTime' => Yii::t('category', 'Create Date Time'),
     'updateDateTime' => Yii::t('category', 'Update Date Time'),
+    'level' => Yii::t('category', 'Level'),
 ];
 }
 

@@ -17,6 +17,7 @@ use Yii;
     * @property string $parents
     * @property integer $sort
     * @property integer $status
+    * @property string $assignment
     * @property string $createDateTime
     * @property string $updateDateTime
 */
@@ -42,6 +43,7 @@ return [
             [['levelId', 'link'], 'string', 'max' => 100],
             [['user_group_Id', 'desc'], 'string', 'max' => 200],
             [['name'], 'string', 'max' => 50],
+            [['assignment'], 'string', 'max' => 255],
         ];
 }
 
@@ -61,6 +63,7 @@ return [
     'parents' => Yii::t('menu', 'Parents'),
     'sort' => Yii::t('menu', 'Sort'),
     'status' => Yii::t('menu', 'Status'),
+    'assignment' => Yii::t('menu', 'Assignment'),
     'createDateTime' => Yii::t('menu', 'Create Date Time'),
     'updateDateTime' => Yii::t('menu', 'Update Date Time'),
 ];
