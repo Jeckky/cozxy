@@ -305,7 +305,7 @@ class TopupController extends TopupMasterController {
             'method' => $method,
             'textBath' => $textBath
         ]);
-        //$content = '';
+        //$header = '';
         CozxyUnity::actionMpdfDocument($content, $header, $title);
     }
 

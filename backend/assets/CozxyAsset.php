@@ -11,7 +11,6 @@ class CozxyAsset extends AssetBundle {
 
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-
     public $css = [
         'css/bootstrap.min.css',
         'css/pixeladmin.min.css',
@@ -31,7 +30,6 @@ class CozxyAsset extends AssetBundle {
         //'js/cozxy/cozxy-unity.min.js', // By Taninut.bm , create date 06/02/2017 , ย่อขนาด บีบอัดไฟล์
         'js/cozxy/cozxy-printer.js',
     ];
-
     public $depends = [
         'yii\web\JqueryAsset'
     ];

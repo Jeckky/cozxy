@@ -11,6 +11,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use beastbytes\wizard\WizardBehavior;
 use common\helpers\Upload;
+use common\models\costfit\ProductGroupTemplate;
+use common\models\costfit\ProductGroupTemplateOption;
+use common\models\costfit\ProductGroupOptionValue;
+use common\models\costfit\ProductGroupOption;
+
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
  */
@@ -23,7 +28,7 @@ class ProductGroupController extends ProductMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
 // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +58,7 @@ class ProductGroupController extends ProductMasterController {
         if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
 
             if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
+
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
                             ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -61,6 +67,7 @@ class ProductGroupController extends ProductMasterController {
                             ->orderBy("product.createDateTime DESC");
                 }
             } else {
+
                 $query = \common\models\costfit\Product::find()
                         ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
                         ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -95,7 +102,6 @@ class ProductGroupController extends ProductMasterController {
                             ->groupBy("ps.userId , pc.parentId")
                             ->orderBy("product.createDateTime DESC");
                 } else {
-
                     if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                         $query = \common\models\costfit\Product::find()
                                 ->join("LEFT JOIN", "user u", "u.userId = product.userId")
@@ -175,7 +181,9 @@ class ProductGroupController extends ProductMasterController {
                     'dataProvider' => $dataProvider,
                     'dataProvider2' => $dataProvider2,
                     'userId' => $userId,
-                    'isMaster' => $isMaster
+                    'isMaster' => $isMaster,
+                    'productGroupId' => $_GET["productGroupId"],
+                    'templateId' => $_GET["productGroupTemplateId"]
         ]);
     }
 
@@ -266,7 +274,7 @@ class ProductGroupController extends ProductMasterController {
         }
     }
 
-    // Version 1.01 Wizard Of Product Group
+// Version 1.01 Wizard Of Product Group
 
     public function actionCreate($step = null) {
         $userId = Yii::$app->user->identity->userId;
@@ -279,13 +287,18 @@ class ProductGroupController extends ProductMasterController {
             case 1:
                 if (isset($_GET["productGroupId"])) {
                     $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
-                    //User Type 4 = Supplier , 5= Content
+//User Type 4 = Supplier , 5= Content
 //                    if (Yii::$app->user->identity->type == 4) {
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
                     if ($model->step) {
                         if ($model->step != 1) {
-                            return $this->redirect(['create', 'step' => $model->step, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
+                            return $this->redirect(['create',
+                                        'step' => $model->step,
+                                        'productGroupTemplateId' => $model->productGroupTemplateId,
+                                        //'productGroupId' => $_GET["productGroupId"]
+                                        'productGroupId' => $model->productId
+                            ]);
                         }
                     }
 //                    }
@@ -327,13 +340,13 @@ class ProductGroupController extends ProductMasterController {
             case 3:
                 $this->saveProductGroupStep($_GET["productGroupId"], 3);
                 if (isset($_GET["productGroupTemplateId"])) {
-                    $productGroupTemplateOptions = \common\models\costfit\ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
+                    $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId = " . $_GET["productGroupTemplateId"])->all();
                     foreach ($productGroupTemplateOptions as $pto) {
-                        $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId = ' . $pto->productGroupTemplateOptionId)->one();
+                        $pgo = ProductGroupOption::find()->where("productGroupId = " . $_GET["productGroupId"] . ' AND productGroupTemplateOptionId = ' . $pto->productGroupTemplateOptionId)->one();
                         if (isset($pgo)) {
                             continue;
                         } else {
-                            $pgo = new \common\models\costfit\ProductGroupOption();
+                            $pgo = new ProductGroupOption();
                         }
 
                         $pgo->productGroupId = $_GET["productGroupId"];
@@ -354,9 +367,14 @@ class ProductGroupController extends ProductMasterController {
                 }
                 break;
             case 4:
+
                 $this->saveProductGroupStep($_GET["productGroupId"], 4);
                 if (isset($_POST["next"])) {
-                    return $this->redirect(['create', 'step' => 5, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+
+                    return $this->redirect(['create',
+                                'step' => 5,
+                                'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                                'productGroupId' => $_GET["productGroupId"]]);
                 }
                 $dataProvider = new ActiveDataProvider([
                     'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
@@ -415,6 +433,8 @@ class ProductGroupController extends ProductMasterController {
                     'dataProvider2' => isset($dataProvider2) ? $dataProvider2 : NULL,
                     'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
                     'countProduct' => isset($countProduct) ? $countProduct : NULL,
+                    'productGroupId' => isset($_GET["productGroupId"]) ? $_GET["productGroupId"] : NULL,
+                    'productGroupTemplateId' => isset($_GET["productGroupTemplateId"]) ? $_GET["productGroupTemplateId"] : NULL,
         ]);
     }
 
@@ -441,7 +461,7 @@ class ProductGroupController extends ProductMasterController {
                     $optionStr .= ", ";
                 }
             }
-            $productGroupOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productGroupId = $productGroupId AND productGroupOptionId in ($optionStr)")->all();
+            $productGroupOptionValues = ProductGroupOptionValue::find()->where("productGroupId = $productGroupId AND productGroupOptionId in ($optionStr)")->all();
             if (count($productGroupOptionValues) == count($options)) {
                 continue;
             }
@@ -463,12 +483,12 @@ class ProductGroupController extends ProductMasterController {
 //                        $countOption++;
 //                        continue;
 //                    } else {
-                    $productGroupOptionValue = new \common\models\costfit\ProductGroupOptionValue();
+                    $productGroupOptionValue = new ProductGroupOptionValue();
 //                    }
                     $productGroupOptionValue->productId = $productId;
                     $productGroupOptionValue->productGroupId = $productGroupId;
                     $productGroupOptionValue->productGroupTemplateOptionId = $productGroupTemplateOptionId;
-                    $pgo = \common\models\costfit\ProductGroupOption::find()->where("productGroupId = $productGroupId AND productGroupTemplateOptionId = $productGroupTemplateOptionId")->one();
+                    $pgo = ProductGroupOption::find()->where("productGroupId = $productGroupId AND productGroupTemplateOptionId = $productGroupTemplateOptionId")->one();
                     $productGroupOptionValue->productGroupOptionId = $pgo->productGroupOptionId;
                     $productGroupOptionValue->productGroupTemplateId = $model->productGroupTemplateId;
                     $productGroupOptionValue->value = $value;
@@ -502,7 +522,7 @@ class ProductGroupController extends ProductMasterController {
     public function prepareOptionArray($options) {
         $res = [];
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-            //$res[$productGroupTemplateOptionId] = explode(", ", $optionArray);
+//$res[$productGroupTemplateOptionId] = explode(", ", $optionArray);
             $res[$productGroupTemplateOptionId] = $optionArray;
         }
         return $this->array_cartesian($res); // 2D array
@@ -539,7 +559,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionUpload() {
         ini_set('memory_limit', '1024M');
 
-        //$model = new \common\models\costfit\productImageSuppliers();
+//$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImage();
         $model->productId = $_GET["id"];
         /*
@@ -554,7 +574,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionUploadSupplier() {
         ini_set('memory_limit', '1024M');
 
-        //$model = new \common\models\costfit\productImageSuppliers();
+//$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImageSuppliers();
         $model->productSuppId = $_GET["id"];
         /*
@@ -624,6 +644,7 @@ class ProductGroupController extends ProductMasterController {
         if (isset($_POST["Product"])) {
             $model->attributes = $_POST["Product"];
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
+            $this->saveBrandToParent($_POST["Product"]["brandId"], $_GET["id"]); //เมื่อมีการแก้ไข แบรนด์ที่ตัวลูก ตัวแม่เปลี่ยนด้วย เดิมไม่เปลี่ยน // edit by sak
             if (isset($_POST["Product"]["isbn"]) && !empty($_POST["Product"]["isbn"])) {
                 \common\models\costfit\Product::saveProductIsbn($model->productId, $_POST["Product"]["isbn"]); //save
             }
@@ -647,12 +668,12 @@ class ProductGroupController extends ProductMasterController {
                             $pps->save();
                         }
 
-                        $productOptionValuess = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId IS NULL")->all();
+                        $productOptionValuess = ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId IS NULL")->all();
 //                        throw new \yii\base\Exception(count($productOptionValues));
                         foreach ($productOptionValuess as $ov) {
-                            $productOptionValues = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId = $prodSupp->productSuppId AND productGroupTemplateOptionId = $ov->productGroupTemplateOptionId")->one();
+                            $productOptionValues = ProductGroupOptionValue::find()->where("productId = $model->productId AND productSuppId = $prodSupp->productSuppId AND productGroupTemplateOptionId = $ov->productGroupTemplateOptionId")->one();
                             if (!isset($productOptionValues)) {
-                                $productOptionValues = new \common\models\costfit\ProductGroupOptionValue();
+                                $productOptionValues = new ProductGroupOptionValue();
                             }
                             $productOptionValues->attributes = $ov->attributes;
                             $productOptionValues->productSuppId = $prodSupp->productSuppId;
@@ -679,11 +700,20 @@ class ProductGroupController extends ProductMasterController {
                     }
                 }
 
-                return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId]);
+                return $this->redirect(['create',
+                            'step' => 4,
+                            'productGroupTemplateId' => $model->productGroupTemplateId,
+                            'productGroupId' => $model->parentId,
+                ]);
             }
         }
 
-        return $this->render("101/_product_form", ['model' => $model, 'prodPriceSupp' => $prodPriceSupp, 'prodSupp' => $prodSupp]);
+        return $this->render("101/_product_form", [
+                    'model' => $model,
+                    'prodPriceSupp' => $prodPriceSupp,
+                    'prodSupp' => $prodSupp,
+                    'productGroupId' => $model->parentId
+        ]);
 //        $model = new Proyecto;
 //
 //        if (isset($_POST['hasEditable'])) {
@@ -719,13 +749,13 @@ class ProductGroupController extends ProductMasterController {
                     if (!isset($model)) {
                         $model = \common\models\costfit\Product::find()->where("productId = " . $value)->one();
                     }
-                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $value);
+                    ProductGroupOptionValue::deleteAll("productId = " . $value);
                     \common\models\costfit\ProductImage::deleteAll("productId = " . $value);
                     \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $value);
                     \common\models\costfit\Product::deleteAll("productId = " . $value);
                 } else {
                     $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $value)->one();
-                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productSuppId = " . $value);
+                    ProductGroupOptionValue::deleteAll("productSuppId = " . $value);
                     \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $value);
                     \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $value);
                     $tab = 2;
@@ -739,7 +769,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionDeleteProduct() {
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["id"])->one();
-        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
+        ProductGroupOptionValue::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\ProductImage::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\ProductSuppliers::deleteAll("productId = " . $_GET["id"]);
         \common\models\costfit\Product::deleteAll("productId = " . $_GET["id"]);
@@ -748,18 +778,18 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionDeleteProductGroup() {
-        //throw new \yii\base\Exception(print_r($_GET["id"]));
-        //throw new \yii\base\Exception(print_r(Yii::$app->request->get(), true));
+//throw new \yii\base\Exception(print_r($_GET["id"]));
+//throw new \yii\base\Exception(print_r(Yii::$app->request->get(), true));
         $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
         foreach ($childs as $pg) {
-            \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
+            ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
             \common\models\costfit\ProductImage::deleteAll("productId = " . $pg->productId);
             \common\models\costfit\Product::deleteAll("productId = " . $pg->productId);
 //            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
         }
-        \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . Yii::$app->request->get('id'));
+        ProductGroupOptionValue::deleteAll("productId = " . Yii::$app->request->get('id'));
         \common\models\costfit\ProductImage::deleteAll("productId = " . Yii::$app->request->get('id'));
-        \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . Yii::$app->request->get('id'));
+        ProductGroupOption::deleteAll("productGroupId = " . Yii::$app->request->get('id'));
         \common\models\costfit\Product::deleteAll("productId = " . Yii::$app->request->get('id'));
 
 
@@ -858,7 +888,7 @@ class ProductGroupController extends ProductMasterController {
             $ps->productId = $product->productId;
             $ps->userId = \Yii::$app->user->id;
             $ps->approve = 'new';
-            //$ps->code = \common\helpers\Product::generateProductCode();
+//$ps->code = \common\helpers\Product::generateProductCode();
             $ps->status = 0;
             $ps->createDateTime = new \yii\db\Expression("NOW()");
             if ($ps->save(FALSE)) {
@@ -876,9 +906,9 @@ class ProductGroupController extends ProductMasterController {
                     }
                 }
 
-                $povs = \common\models\costfit\ProductGroupOptionValue::find()->where("productId = $product->productId AND productSuppId IS NULL")->all();
+                $povs = ProductGroupOptionValue::find()->where("productId = $product->productId AND productSuppId IS NULL")->all();
                 foreach ($povs as $pov) {
-                    $psov = new \common\models\costfit\ProductGroupOptionValue();
+                    $psov = new ProductGroupOptionValue();
                     $psov->attributes = $pov->attributes;
                     $psov->productSuppId = $ps->productSuppId;
                     $psov->createDateTime = new \yii\db\Expression("NOW()");
@@ -889,9 +919,18 @@ class ProductGroupController extends ProductMasterController {
             }
         }
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
-            return $this->redirect(["create", "step" => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $_GET["productGroupId"], 'tab' => 2]);
+            return $this->redirect(["create",
+                        "step" => 4,
+                        'productGroupTemplateId' => $model->productGroupTemplateId,
+                        'productGroupId' => $_GET["productGroupId"],
+                        'tab' => 2
+            ]);
         } else {
-            return $this->redirect(["view", "step" => $model->step, "productGroupId" => $_GET["productGroupId"], 'productGroupTemplateId' => $model->productGroupTemplateId]);
+            return $this->redirect(["view",
+                        "step" => $model->step,
+                        "productGroupId" => $_GET["productGroupId"],
+                        'productGroupTemplateId' => $model->productGroupTemplateId
+            ]);
         }
     }
 
@@ -965,7 +1004,7 @@ class ProductGroupController extends ProductMasterController {
         $productGroupTemplateId = $model->product->productGroupTemplateId;
         $step = $model->product->step;
         $userId = $model->userId;
-        \common\models\costfit\ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
+        ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
 
@@ -1010,20 +1049,20 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionMultipleDelete() {
-        // throw new \yii\base\Exception(print_r($_GET['selection'], true));
+// throw new \yii\base\Exception(print_r($_GET['selection'], true));
         if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
 
             foreach ($_GET['selection'] as $productId):
                 $childs = \common\models\costfit\Product::find()->where("parentId = " . $productId)->all();
                 foreach ($childs as $pg) {
-                    \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
+                    ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
                     \common\models\costfit\ProductImage::deleteAll("productId = " . $pg->productId);
                     \common\models\costfit\Product::deleteAll("productId = " . $pg->productId);
 //            \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $pg->productId);
                 }
-                \common\models\costfit\ProductGroupOptionValue::deleteAll("productId = " . $productId);
+                ProductGroupOptionValue::deleteAll("productId = " . $productId);
                 \common\models\costfit\ProductImage::deleteAll("productId = " . $productId);
-                \common\models\costfit\ProductGroupOption::deleteAll("productGroupId = " . $productId);
+                ProductGroupOption::deleteAll("productGroupId = " . $productId);
                 \common\models\costfit\Product::deleteAll("productId = " . $productId);
             endforeach;
         }
@@ -1050,8 +1089,202 @@ class ProductGroupController extends ProductMasterController {
           }
           endforeach;
           } */
-        return $this->redirect(['101/index']);
+        return $this->redirect(['index']);
     }
 
-    // Version 1.01 Wizard Of Product Group
+    public function actionAddOption() {
+        $productGroupId = '';
+        $templateId = '';
+        $options = [];
+        $optionValue = [];
+        if (isset($_GET['id']) && isset($_GET['template'])) {
+            $productGroupId = $_GET['id'];
+            $templateId = $_GET['template'];
+            $productOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $templateId)
+                    ->orderBy("createDateTime")
+                    ->all();
+            if (isset($productOptions) && count($productOptions) > 0) {
+                foreach ($productOptions as $option):
+                    $options[$option->productGroupTemplateOptionId] = $option->title; //option
+                endforeach;
+            }
+            return $this->render('101/_add_product_options', [
+                        'templateId' => $_GET['template'],
+                        'productGroupId' => $_GET['id'],
+                        'options' => $options,
+                        'error' => isset($_GET['error']) ? $_GET['error'] : ''
+            ]);
+        } else {
+//throw new \yii\base\ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
+            throw new \ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
+        }
+//        throw new \yii\base\Exception($productGroupId);
+    }
+
+    public function actionEditOption() {
+        $optionValueId = $_POST['id'];
+        $newVal = $_POST['newVal'];
+        $res = [];
+        $productGroupOptionValue = ProductGroupOptionValue::find()->where("productGroupOptionValueId=" . $optionValueId)->one();
+        if (isset($productGroupOptionValue)) {
+            $checkDup = ProductGroupOptionValue::find()
+                    ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $newVal . "'")
+                    ->all();
+            if (isset($checkDup) && count($checkDup) > 0) {
+                $res['status'] = false;
+                $res['error'] = 'Option ซ้ำ';
+            } else {
+                $allOld = ProductGroupOptionValue::find()
+                        ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $productGroupOptionValue->value . "'")
+                        ->all();
+                if (isset($allOld) && count($allOld) > 0) {
+                    foreach ($allOld as $value):
+                        $value->value = $newVal;
+                        $value->updateDateTime = new \yii\db\Expression('NOW()');
+                        $value->save(false);
+                    endforeach;
+                }
+
+                $productGroupOptionValue->value = $newVal;
+                $productGroupOptionValue->updateDateTime = new \yii\db\Expression('NOW()');
+                $productGroupOptionValue->save(false);
+                $res['status'] = true;
+            }
+        } else {
+            $res['status'] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function actionAddNewProduct() {
+        if (isset($_POST['newProduct'])) {
+            $empty = $this->checkEmptyInput($_POST['newProduct']);
+            $dupplicate = $this->checkDupplicate($_POST['newProduct'], $_POST['productGroupId'], $_POST['templateId']);
+            if ($empty) {
+                $error = '<code>กรุณากรอกข้อมูล</code>';
+            }
+            if ($dupplicate) {
+                $error = '<code>มีข้อมูลที่นี้อยู่แล้ว</code>';
+            }
+            if ($empty || $dupplicate) {
+                return $this->redirect(['add-option',
+                            'id' => $_POST['productGroupId'],
+                            'template' => $_POST['templateId'],
+                            'error' => isset($error) ? $error : ''
+                ]);
+            }
+            $parent = \common\models\costfit\Product::find()->where("productId=" . $_POST['productGroupId'])->one();
+            $product = new \common\models\costfit\Product();
+            $product->userId = Yii::$app->user->id;
+            $product->parentId = $parent->productId;
+            $product->brandId = $parent->brandId;
+            $product->categoryId = $parent->categoryId;
+            $product->productGroupTemplateId = $parent->productGroupTemplateId;
+            $product->title = $parent->title;
+            $product->shortDescription = $parent->shortDescription;
+            $product->description = $parent->description;
+            $product->specification = $parent->specification;
+            $product->price = $parent->price;
+            $product->approve = $parent->approve;
+            $product->status = $parent->status;
+            $product->createDateTime = new \yii\db\Expression('NOW()');
+            $product->updateDateTime = new \yii\db\Expression('NOW()');
+            $product->save(false);
+            $id = Yii::$app->db->getLastInsertID();
+            foreach ($_POST['newProduct'] as $productGroupTemplateOptionId => $value):
+                $productGroup = new ProductGroupOptionValue();
+                $productGroup->productGroupTemplateOptionId = $productGroupTemplateOptionId;
+                $productGroup->value = $value;
+                $productGroup->productGroupId = $_POST['productGroupId'];
+                $productGroup->productGroupTemplateId = $_POST['templateId'];
+                $productGroup->createDateTime = new \yii\db\Expression('NOW()');
+                $productGroup->updateDateTime = new \yii\db\Expression('NOW()');
+                $productGroup->status = 1;
+                $productGroupOption = ProductGroupOptionValue::find()
+                        ->where("productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and productGroupId=" . $_POST['productGroupId'])
+                        ->one();
+                $productGroup->productGroupOptionId = $productGroupOption->productGroupOptionId;
+                $productGroup->productId = $id;
+                $productGroup->save(false);
+            endforeach;
+            return $this->redirect(['view',
+                        'productGroupId' => $_POST['productGroupId'],
+                        'productGroupTemplateId' => $_POST['templateId'],
+                        'step' => '4',
+                        'userId' => Yii::$app->user->id
+            ]);
+        }else {
+            throw new \ErrorException('เกิดข้อผิดพลาด!!!');
+        }
+    }
+
+    public function actionEditTitle() {
+        $productGroupId = $_POST['id'];
+        $res = [];
+        $productGroup = \common\models\costfit\Product::find()->where("productId=" . $productGroupId)->one();
+        if (isset($productGroup)) {
+            $productGroup->title = $_POST['newVal'];
+            $productGroup->updateDateTime = new \yii\db\Expression('NOW()');
+            $productGroup->save(false);
+            $res["message"] = "Success";
+            $res["status"] = true;
+        } else {
+            $res["message"] = "Error";
+            $res["status"] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function saveBrandToParent($brandId, $productId) {
+        $product = \common\models\costfit\Product::find()->where("productId=" . $productId)->one();
+        if (isset($product)) {
+            $parent = \common\models\costfit\Product::find()->where("productId=" . $product->parentId)->one();
+            if (isset($parent)) {
+                $parent->brandId = $brandId;
+                $parent->save();
+            }
+        }
+    }
+
+    public function checkEmptyInput($data) {
+        $i = 0;
+        $allAtrributes = count($data);
+        foreach ($data as $value):
+            if ($value == '') {
+                $i++;
+            }
+        endforeach;
+        if ($i == $allAtrributes) {
+            return 1; //ไม่มีการกรอกข้อมูล
+        } else {
+            return 0;
+        }
+    }
+
+    public function checkDupplicate($data, $productGroupId, $templateId) {
+        $allAtrributes = count($data);
+        $i = 0;
+        $productGroup = ProductGroupOptionValue::find()
+                ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId)
+                ->groupBy('productId')
+                ->all(); //เพื่อหา ProductId แต่ละตัวออกมาที่มีtemplateIdเดียวกัน
+        if (isset($productGroup) && count($productGroup) > 0) {
+            foreach ($productGroup as $product):
+                foreach ($data as $productGroupTemplateOptionId => $value):
+                    $productId = ProductGroupOptionValue::find()
+                            ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId . " and productId=" . $product->productId . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and value='" . $value . "'")
+                            ->one();
+                    if (isset($productId)) {
+                        $i++;
+                    }
+                endforeach;
+            endforeach;
+        }
+        if ($i >= $allAtrributes) {
+            return 1; //ซ้ำ
+        } else {
+            return 0;
+        }
+    }
+
 }

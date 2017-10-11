@@ -6,16 +6,16 @@ use mihaildev\ckeditor\CKEditor;
 ?>
 <?php
 $form = ActiveForm::begin([
-    'id' => 'product-form',
-    'enableClientValidation' => FALSE,
-    'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-    'fieldConfig' => [
-        'template' => '{label}<div class="col-sm-9">{input}</div>',
-        'labelOptions' => [
-            'class' => 'col-sm-3 control-label'
-        ]
-    ]
-]);
+            'id' => 'product-form',
+            'enableClientValidation' => FALSE,
+            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'fieldConfig' => [
+                'template' => '{label}<div class="col-sm-9">{input}</div>',
+                'labelOptions' => [
+                    'class' => 'col-sm-3 control-label'
+                ]
+            ]
+        ]);
 ?>
 <div class="product-group-form">
 
