@@ -274,7 +274,7 @@ class ProductGroupController extends ProductMasterController {
         }
     }
 
-    // Version 1.01 Wizard Of Product Group
+// Version 1.01 Wizard Of Product Group
 
     public function actionCreate($step = null) {
         $userId = Yii::$app->user->identity->userId;
@@ -287,7 +287,7 @@ class ProductGroupController extends ProductMasterController {
             case 1:
                 if (isset($_GET["productGroupId"])) {
                     $model = \common\models\costfit\Product::find()->where("productId = " . $_GET["productGroupId"])->one();
-                    //User Type 4 = Supplier , 5= Content
+//User Type 4 = Supplier , 5= Content
 //                    if (Yii::$app->user->identity->type == 4) {
 //                        return $this->redirect(['create', 'step' => 3, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->productId]);
 //                    } else {
@@ -522,7 +522,7 @@ class ProductGroupController extends ProductMasterController {
     public function prepareOptionArray($options) {
         $res = [];
         foreach ($options as $productGroupTemplateOptionId => $optionArray) {
-            //$res[$productGroupTemplateOptionId] = explode(", ", $optionArray);
+//$res[$productGroupTemplateOptionId] = explode(", ", $optionArray);
             $res[$productGroupTemplateOptionId] = $optionArray;
         }
         return $this->array_cartesian($res); // 2D array
@@ -559,7 +559,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionUpload() {
         ini_set('memory_limit', '1024M');
 
-        //$model = new \common\models\costfit\productImageSuppliers();
+//$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImage();
         $model->productId = $_GET["id"];
         /*
@@ -574,7 +574,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionUploadSupplier() {
         ini_set('memory_limit', '1024M');
 
-        //$model = new \common\models\costfit\productImageSuppliers();
+//$model = new \common\models\costfit\productImageSuppliers();
         $model = new \common\models\costfit\ProductImageSuppliers();
         $model->productSuppId = $_GET["id"];
         /*
@@ -778,8 +778,8 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionDeleteProductGroup() {
-        //throw new \yii\base\Exception(print_r($_GET["id"]));
-        //throw new \yii\base\Exception(print_r(Yii::$app->request->get(), true));
+//throw new \yii\base\Exception(print_r($_GET["id"]));
+//throw new \yii\base\Exception(print_r(Yii::$app->request->get(), true));
         $childs = \common\models\costfit\Product::find()->where("parentId = " . $_GET["id"])->all();
         foreach ($childs as $pg) {
             ProductGroupOptionValue::deleteAll("productId = " . $pg->productId);
@@ -888,7 +888,7 @@ class ProductGroupController extends ProductMasterController {
             $ps->productId = $product->productId;
             $ps->userId = \Yii::$app->user->id;
             $ps->approve = 'new';
-            //$ps->code = \common\helpers\Product::generateProductCode();
+//$ps->code = \common\helpers\Product::generateProductCode();
             $ps->status = 0;
             $ps->createDateTime = new \yii\db\Expression("NOW()");
             if ($ps->save(FALSE)) {
@@ -1049,7 +1049,7 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionMultipleDelete() {
-        // throw new \yii\base\Exception(print_r($_GET['selection'], true));
+// throw new \yii\base\Exception(print_r($_GET['selection'], true));
         if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
 
             foreach ($_GET['selection'] as $productId):
@@ -1115,7 +1115,7 @@ class ProductGroupController extends ProductMasterController {
                         'error' => isset($_GET['error']) ? $_GET['error'] : ''
             ]);
         } else {
-            //throw new \yii\base\ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
+//throw new \yii\base\ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
             throw new \ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
         }
 //        throw new \yii\base\Exception($productGroupId);
@@ -1179,11 +1179,13 @@ class ProductGroupController extends ProductMasterController {
             $product->parentId = $parent->productId;
             $product->brandId = $parent->brandId;
             $product->categoryId = $parent->categoryId;
+            $product->productGroupTemplateId = $parent->productGroupTemplateId;
             $product->title = $parent->title;
             $product->shortDescription = $parent->shortDescription;
             $product->description = $parent->description;
             $product->specification = $parent->specification;
             $product->price = $parent->price;
+            $product->approve = $parent->approve;
             $product->status = $parent->status;
             $product->createDateTime = new \yii\db\Expression('NOW()');
             $product->updateDateTime = new \yii\db\Expression('NOW()');
@@ -1209,10 +1211,28 @@ class ProductGroupController extends ProductMasterController {
                         'productGroupId' => $_POST['productGroupId'],
                         'productGroupTemplateId' => $_POST['templateId'],
                         'step' => '4',
+                        'userId' => Yii::$app->user->id
             ]);
         }else {
-
+            throw new \ErrorException('เกิดข้อผิดพลาด!!!');
         }
+    }
+
+    public function actionEditTitle() {
+        $productGroupId = $_POST['id'];
+        $res = [];
+        $productGroup = \common\models\costfit\Product::find()->where("productId=" . $productGroupId)->one();
+        if (isset($productGroup)) {
+            $productGroup->title = $_POST['newVal'];
+            $productGroup->updateDateTime = new \yii\db\Expression('NOW()');
+            $productGroup->save(false);
+            $res["message"] = "Success";
+            $res["status"] = true;
+        } else {
+            $res["message"] = "Error";
+            $res["status"] = false;
+        }
+        return json_encode($res);
     }
 
     public function saveBrandToParent($brandId, $productId) {

@@ -44,7 +44,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <table class="table table-bordered table-striped table-hover">
                         <tr>
                             <th style="width: 10%">Product Group</th>
-                            <td><?= $model->title; ?></td>
+                            <td>
+                                <span id="masterTitle"><?= $model->title; ?>&nbsp;&nbsp;&nbsp;</span>
+                                <input type="text" id="productTitle" value="<?= $model->title; ?>" style="height: 40px;display: none;">
+                                <a class="btn btn-warning pull-right" id="editProductGroup" href="javascript:changeProductGroupTitle()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+                                <a class="btn btn-success pull-right" id="saveChangeProductGroup" href="javascript:savceChangeProductGroupTitle(<?= $productGroupId ?>)" style="display: none;"><i class="fa fa-check" aria-hidden="true"></i> Save</a>
+                            </td>
                         </tr>
                         <tr>
                             <th>Description </th>
@@ -130,7 +135,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 $productGroup = \common\models\costfit\Product::find()->where("productId=" . $_GET["productGroupId"])->one();
                 if ($ress !== FALSE && $productGroup->status == 99) {
                     ?>
-                    <?php // echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning'])    ?>
+                    <?php // echo Html::a("<i class='glyphicon glyphicon-check'></i> Approve", ['approve-product-group', 'id' => $_GET["productGroupId"]], ['class' => 'btn btn-warning'])     ?>
                     <h3 style="color: tomato">Approve Product Supplier ?</h3>
                     <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
                     <?php

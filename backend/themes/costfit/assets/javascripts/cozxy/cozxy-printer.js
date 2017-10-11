@@ -686,8 +686,8 @@ function enableEdit(id) {
     $("#save" + id).show();
 }
 function saveEdit(id) {
-    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
-    // var url = $baseUrl + 'product/product-group/edit-option';
+    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
+    var url = $baseUrl + 'product/product-group/edit-option';
     var newVal = $("#optionValue" + id).val();
     $.ajax({
         url: url,
@@ -704,4 +704,39 @@ function saveEdit(id) {
 
         },
     });
+}
+function changeProductGroupTitle() {
+
+    $("#masterTitle").hide();
+    $("#editProductGroup").hide();
+    $("#productTitle").show();
+    $("#saveChangeProductGroup").show();
+}
+function savceChangeProductGroupTitle(id) {
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
+    // var url = $baseUrl + 'product/product-group/edit-option';
+    var newVal = $("#productTitle").val();
+    if (confirm('Are you sure to change this title to "' + newVal + '"')) {
+        $.ajax({
+            url: url,
+            data: {id: id, newVal: newVal},
+            dataType: 'JSON',
+            type: 'post',
+            success: function (data) {
+                if (!data.status) {
+                    alert(data.message);
+                } else {
+                    $("#masterTitle").text(newVal);
+                    $("#masterTitle").show();
+                    $("#editProductGroup").show();
+                    $("#productTitle").hide();
+                    $("#saveChangeProductGroup").hide();
+                }
+
+            },
+        });
+    } else {
+        return false;
+    }
+
 }
