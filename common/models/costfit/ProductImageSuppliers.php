@@ -20,29 +20,25 @@ use yii\web\UploadedFile;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSuppliersMaster
-{
+class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSuppliersMaster {
 
     /**
      * @inheritdoc
      */
     public $productId;
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), []);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), []);
     }
 
-    public function upload()
-    {
+    public function upload() {
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
                 $file->saveAs('uploads/' . $file->baseName . '.' . $file->extension);
@@ -53,8 +49,7 @@ class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSu
         }
     }
 
-    public static function findMaxOrdering($productSuppId)
-    {
+    public static function findMaxOrdering($productSuppId) {
         $max = ProductImageSuppliers::find()->where("productSuppId = $productSuppId")->max("ordering");
         if (!isset($max)) {
             $max = 1;
@@ -62,9 +57,19 @@ class ProductImageSuppliers extends \common\models\costfit\master\ProductImageSu
         return $max;
     }
 
-    public function getProductSupp()
-    {
+    public function getProductSupp() {
         return $this->hasOne(ProductSuppliers::className(), ['productSuppId' => 'productSuppId']);
+    }
+
+    public static function productImages($productSuppId) {
+        $images = ProductImageSuppliers::find()->where("productSuppId = $productSuppId")
+                ->orderBy("ordering ASC")
+                ->all();
+        if (isset($images) && count($images) > 0) {
+            return $images;
+        } else {
+            return 0;
+        }
     }
 
 }

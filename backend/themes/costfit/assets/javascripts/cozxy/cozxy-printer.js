@@ -713,8 +713,8 @@ function changeProductGroupTitle() {
     $("#saveChangeProductGroup").show();
 }
 function savceChangeProductGroupTitle(id) {
-    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
-    // var url = $baseUrl + 'product/product-group/edit-option';
+    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
+    var url = $baseUrl + 'product/product-group/edit-option';
     var newVal = $("#productTitle").val();
     if (confirm('Are you sure to change this title to "' + newVal + '"')) {
         $.ajax({
@@ -739,4 +739,36 @@ function savceChangeProductGroupTitle(id) {
         return false;
     }
 
+}
+function orderingImage(id, total, action) {
+    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image';
+    var url = $baseUrl + 'product/product-group/edit-option';
+    $.ajax({
+        url: url,
+        data: {id: id, total: total, action: action},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (data.status) {
+                $("#ordering" + id).text(data.ordering);
+            } else {
+                return false;
+            }
+        },
+    });
+}
+function changeImageStatus(id) {
+    // var url = 'http://localhost/cozxy/backend/web/product/product-group/image-active';
+    var url = $baseUrl + 'product/product-group/edit-option';
+    $.ajax({
+        url: url,
+        data: {id: id},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (!data.status) {
+                alert("เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ");
+            }
+        },
+    });
 }
