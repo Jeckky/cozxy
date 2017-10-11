@@ -74,7 +74,7 @@ class AuthController extends AuthMasterController {
           return $this->render('index');
           }
          */
-        $model->attributes = $_POST['LoginForm'];
+
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];

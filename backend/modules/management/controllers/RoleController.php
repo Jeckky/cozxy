@@ -91,7 +91,7 @@ class RoleController extends ManagementMasterController {
             //$modelA->save(FALSE);
             return $this->redirect(['view', 'id' => $model->name]);
         } else {
-            $model->status = '1';
+            $model->description = '1';
             return $this->render('create', [
                 'model' => $model,
             ]);

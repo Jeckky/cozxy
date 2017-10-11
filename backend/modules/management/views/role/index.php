@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     if ($model->name != 'Admin' && $model->name != 'Administrator High' && $model->name != 'Super Admin') {
                         //return ['class' => 'danger'];
                     } else {
-                        return ['class' => 'success '];
+                        return ['class' => 'warning'];
                     }
                 },
                 'pager' => [
@@ -74,13 +74,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
                     [
-                        'attribute' => 'description',
+                        'attribute' => 'status',
                         'format' => 'html',
                         'value' => function($model) {
                             if ($model->description == 1) {
-                                return 'Show';
+                                return '<div class="text-success">Show</div>';
                             } else if ($model->description == 2) {
-                                return 'Hidden';
+                                return '<div class="text-danger">Hidden</div>';
                             } else {
                                 return '-';
                             }
