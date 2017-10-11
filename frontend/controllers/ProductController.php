@@ -151,9 +151,9 @@ class ProductController extends MasterController {
 
         //$StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productId, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
-        $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductId($productId);
+        $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
-        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelect($productId, $productSupplierId);
+        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productSupplierId);
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);

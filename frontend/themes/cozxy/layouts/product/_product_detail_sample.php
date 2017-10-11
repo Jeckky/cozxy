@@ -105,7 +105,7 @@ $val = rand(1, 10);
                             foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
                                 $selected = "";
                                 if (isset($selectedOptions) && count($selectedOptions) > 0) {
-
+                                    echo 'test 1';
                                     foreach ($selectedOptions as $selectedOption):
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));
                                         //echo '<pre>';
@@ -116,6 +116,7 @@ $val = rand(1, 10);
                                         }
                                     endforeach;
                                 } else {
+                                    echo 'test 2';
                                     $selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
                                 }
                                 ?>
@@ -134,6 +135,8 @@ $val = rand(1, 10);
                                 </form>
                                 <?php
                             endforeach;
+                        }else {
+                            echo 'test 3';
                         }
                         ?>
                         <?php
