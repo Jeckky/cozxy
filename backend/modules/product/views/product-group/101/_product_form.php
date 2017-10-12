@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
+use froala\froalaeditor\FroalaEditorWidget;
 ?>
 <?php
 $form = ActiveForm::begin([
@@ -18,9 +19,6 @@ $form = ActiveForm::begin([
         ]);
 ?>
 <div class="product-group-form">
-
-
-
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
             <span class="panel-title"><h3 style="color:#ffcc00;">Product <?= $model->title; ?> Edit</h3></span>
@@ -95,7 +93,6 @@ $form = ActiveForm::begin([
             ]);
             ?>
 
-
             <?php
             echo $form->field($model, 'description')->widget(CKEditor::className(), [
                 'editorOptions' => [
@@ -112,7 +109,6 @@ $form = ActiveForm::begin([
                 ],
             ]);
             ?>
-
 
             <?php
             echo $form->field($model, 'specification')->widget(CKEditor::className(), [
