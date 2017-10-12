@@ -138,7 +138,7 @@ $val = rand(1, 10);
                                 <?php
                             endforeach;
                         }else {
-                            echo 'test 3';
+                            //echo 'test 3';
                         }
                         ?>
                         <?php
