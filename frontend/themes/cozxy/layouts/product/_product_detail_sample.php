@@ -110,7 +110,7 @@ $val = rand(1, 10);
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));
                                         //echo '<pre>';
                                         //print_r($selectedOption);
-                                        if ($selectedOption["productGroupTemplateOptionId"] == $productGroupTemplateOptionId) {
+                                        if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
                                             $selected = $selectedOption["id"];
                                             break;
                                         }
@@ -227,6 +227,7 @@ $(".productOption").on("change", function(){
     })
     .done(function( data ) {
         //window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        //window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
         window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
 
     });
