@@ -15,14 +15,12 @@ use Imagine\Image\BoxInterface;
 /**
  * Upload 15/12/2016 By Taninut.Bm
  */
-class Upload
-{
+class Upload {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
 //
         ];
@@ -32,10 +30,9 @@ class Upload
      * Upload ครั้งละรูป
      */
 
-    public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height)
-    {
+    public static function UploadBasic($fileName, $folderName, $uploadPath, $width, $height) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
-        if(isset($file)) {
+        if (isset($file)) {
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
             $file->saveAs($uploadPath . '/' . $newFileName);
             $originalFile = $uploadPath . '/' . $newFileName; // originalFile
@@ -54,11 +51,10 @@ class Upload
      * 6/1/2017
      */
 
-    public static function UploadMultiple($fileName, $folderName, $uploadPath, $width, $height)
-    {
+    public static function UploadMultiple($fileName, $folderName, $uploadPath, $width, $height) {
         $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName;
 
-        if(isset($_FILES['image'])) {
+        if (isset($_FILES['image'])) {
             $file = \yii\web\UploadedFile::getInstanceByName('image');
             $original_name = $file->baseName;
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
@@ -79,8 +75,7 @@ class Upload
      * Upload ครั้งละหลายรูป ของ Suppliers
      */
 
-    public static function UploadSuppliers($model)
-    {
+    public static function UploadSuppliers($model) {
 //$uploadPath = Yii::getAlias('@root') . '/uploads/';
         $folderName = "ProductImageSuppliers"; //  Size 553 x 484
         $folderThumbnail = "thumbnail"; // Size 553 x 484
@@ -91,7 +86,7 @@ class Upload
         $uploadPath1 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail;
         $uploadPath2 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail1;
         $uploadPath3 = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail2;
-        if(isset($_FILES['image'])) {
+        if (isset($_FILES['image'])) {
             $file = \yii\web\UploadedFile::getInstanceByName('image');
             $original_name = $file->baseName;
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
@@ -115,14 +110,16 @@ class Upload
             $model->image = 'images/' . $folderName . '/' . $newFileName; // Size 553 x 484
             $model->imageThumbnail1 = 'images/' . $folderName . '/' . $folderThumbnail1 . '/' . $newFileName; // Size 356 x 390
             $model->imageThumbnail2 = 'images/' . $folderName . '/' . $folderThumbnail2 . '/' . $newFileName; // Size 137 x 130
-            if((new \ReflectionClass($model))->getShortName() != "ProductImage") {
+            if ((new \ReflectionClass($model))->getShortName() != "ProductImage") {
                 $model->productSuppId = Yii::$app->request->get('id');
                 $model->ordering = \common\models\costfit\ProductImageSuppliers::findMaxOrdering($model->productSuppId) + 1;
+            } else {
+                $model->ordering = \common\models\costfit\ProductImage::findMaxOrdering($model->productId) + 1;
             }
             //$model->original_name = $file->name;
             $model->title = 'suppliers';
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            if($model->save(FALSE)) {
+            if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
             } else {
                 echo \yii\helpers\Json::encode($model->getErrors());
@@ -146,8 +143,7 @@ class Upload
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVCategory($fileName, $folderName, $uploadPath)
-    {
+    public static function UploadCSVCategory($fileName, $folderName, $uploadPath) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         //echo '<pre>';
@@ -164,26 +160,26 @@ class Upload
         $ext = explode('.', $file->name);
         //echo current($ext) . "<br>"; //: Run example » แสดงค่าของ ตัวแรก
         //echo end($ext); //Run example » แสดงค่าของ ตัวสุดท้าย
-        if(end($ext) == 'csv') {
+        if (end($ext) == 'csv') {
             $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-            if($upload) {
+            if ($upload) {
                 $row = 1;
                 define('CSV_PATH', $uploadPath);
                 $csv_file = CSV_PATH . '/' . $newFileName;
                 $handle = fopen($csv_file, "r");
                 //print_r($handle);
                 //exit();
-                if($handle) {
+                if ($handle) {
                     $row = 1;
                     //echo '<pre>';
-                    while(($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
                         //print_r(fgetcsv($handle, 1000, ","));
-                        if($row > 1) {
+                        if ($row > 1) {
                             $newModel = new \common\models\costfit\ImportCategory;
                             $hasil = explode(",", $line[0]);
                             //print_r($hasil[1]);
                             $getModel = \common\models\costfit\ImportCategory::find()->where('categoryId=' . $hasil[0])->one();
-                            if(isset($getModel)) {
+                            if (isset($getModel)) {
                                 //echo 'Yes';
                                 //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
                                 $getModel->title = isset($hasil[1]) ? $hasil[1] : '';
@@ -217,28 +213,27 @@ class Upload
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVBrand($fileName, $folderName, $uploadPath)
-    {
+    public static function UploadCSVBrand($fileName, $folderName, $uploadPath) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         $ext = explode('.', $file->name);
-        if(end($ext) == 'csv') {
+        if (end($ext) == 'csv') {
             $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-            if($upload) {
+            if ($upload) {
                 $row = 1;
                 define('CSV_PATH', $uploadPath);
                 $csv_file = CSV_PATH . '/' . $newFileName;
                 $handle = fopen($csv_file, "r");
-                if($handle) {
+                if ($handle) {
                     $row = 1;
                     //echo '<pre>';
-                    while(($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
                         //print_r($line);
-                        if($row > 1) {
+                        if ($row > 1) {
                             $newModel = new \common\models\costfit\ImportBrand;
                             $hasil = explode(",", $line[0]);
                             $getModel = \common\models\costfit\ImportBrand::find()->where('brandId=' . $hasil[0])->one();
-                            if(isset($getModel)) {
+                            if (isset($getModel)) {
                                 //echo 'Yes';
                                 //$getModel->categoryId = isset($hasil[0]) ? $hasil[0] : '';
                                 $getModel->brandId = isset($hasil[0]) ? $hasil[0] : '';
@@ -271,23 +266,22 @@ class Upload
      * emial : taninut.b@cozxy.com , sodapew17@gmial.com
      */
 
-    public static function UploadCSVProduct($fileName, $folderName, $uploadPath)
-    {
+    public static function UploadCSVProduct($fileName, $folderName, $uploadPath) {
         $file = \yii\web\UploadedFile::getInstanceByName($fileName);
         $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
         $ext = explode('.', $file->name);
-        if(end($ext) == 'csv') {
+        if (end($ext) == 'csv') {
             $upload = $file->saveAs($uploadPath . '/' . $newFileName);
-            if($upload) {
+            if ($upload) {
                 $row = 1;
                 define('CSV_PATH', $uploadPath);
                 $csv_file = CSV_PATH . '/' . $newFileName;
                 $handle = fopen($csv_file, "r");
-                if($handle) {
+                if ($handle) {
                     $row = 1;
-                    while(($line = fgetcsv($handle, 1000, ",")) != FALSE) {
+                    while (($line = fgetcsv($handle, 1000, ",")) != FALSE) {
                         //print_r($line);
-                        if($row > 1) {
+                        if ($row > 1) {
                             $newModel = new \common\models\costfit\ImportProduct();
                             $hasil = explode(",", $line[0]);
                             //print_r($hasil[1]);
@@ -297,7 +291,7 @@ class Upload
                              */
 
                             $getModel = \common\models\costfit\ImportProduct::find()->where('productId=' . $hasil[0])->one();
-                            if(isset($getModel)) {
+                            if (isset($getModel)) {
                                 //echo 'Yes';
                                 $getModel->brandId = isset($hasil[1]) ? $hasil[1] : '';
                                 $getModel->categoryId = isset($hasil[2]) ? $hasil[2] : '';
@@ -352,8 +346,7 @@ class Upload
         return 'warning';
     }
 
-    public static function UploadProductImage($model, $ordering)
-    {
+    public static function UploadProductImage($model, $ordering) {
         $imagePath = 'images/ProductImage/';
         $thumbnail1Path = $imagePath . 'thumbnail1/';
         $thumbnail2Path = $imagePath . 'thumbnail2/';
@@ -362,7 +355,7 @@ class Upload
         $uploadPath = $uploadBasePath . $imagePath;
         $uploadPath1 = $uploadBasePath . $thumbnail1Path;
         $uploadPath2 = $uploadBasePath . $thumbnail2Path;
-        if(isset($_FILES['image'])) {
+        if (isset($_FILES['image'])) {
             $file = \yii\web\UploadedFile::getInstanceByName('image');
             $newFileName = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
 
@@ -383,7 +376,7 @@ class Upload
             $model->ordering = $ordering;
             $model->title = $file->baseName;
             $model->createDateTime = new \yii\db\Expression('NOW()');
-            if($model->save(FALSE)) {
+            if ($model->save(FALSE)) {
                 echo \yii\helpers\Json::encode($file);
             } else {
                 echo \yii\helpers\Json::encode($model->getErrors());

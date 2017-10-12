@@ -23,7 +23,6 @@ if (!isset($isProductSupp)) {
 $type = !isset($type) ? 1 : $type;
 //echo "Grid Type=" . $type . "<br>";
 if (isset($dataProvider)) {
-
     $gridId = (!isset($type) || $type == 1) ? "product-grid1" : "product-grid2";
     Pjax::begin(['id' => 'pjax' . $gridId]);
     echo GridView::widget([
@@ -48,14 +47,6 @@ if (isset($dataProvider)) {
                     }
                 }
                     ],
-//                    'productId',
-//                                                    [
-//                                                        'attribute' => 'title',
-//                                                        'format' => 'raw',
-//                                                        'value' => function($model) {
-//                                                            return Html::a($model->title, ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]], ['data-pjax' => 0]);
-//                                                        }
-//                                                    ],
                     [
                         'attribute' => 'title',
                         'format' => 'raw',
@@ -167,18 +158,35 @@ if (isset($dataProvider)) {
                                                     }
                                                 ],
                                                 'buttons' => [
-                                                    "update" => function ($url, $model, $key) use ($isProductSupp) {
+                                                    "update" => function ($url, $model, $key) use ($isProductSupp, $templateId) {
+
                                                         if (!$isProductSupp) {
-                                                            return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", ['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $model->parentId], [
+                                                            return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", ['update-product',
+                                                                        'id' => $model->productId,
+                                                                        'step' => 4,
+                                                                        'productGroupTemplateId' => $templateId,
+                                                                        'productGroupId' => $model->parentId], [
                                                                         'title' => Yii::t('app', 'Toogle Active'),
                                                                         'data-pjax' => '0',
 //                                                                    'data-toggle-active' => $model->productId
                                                             ]);
                                                         } else {
+
                                                             if (Yii::$app->controller->action->id == "create") {
-                                                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
+                                                                $params = ['update-product-supp',
+                                                                    'id' => $model->productSuppId,
+                                                                    'step' => 4,
+                                                                    'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                                                                    'productGroupId' => $model->product->parentId
+                                                                ];
                                                             } else {
-                                                                $params = ['update-product-supp', 'id' => $model->productSuppId, 'step' => 'view', 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
+                                                                $params = ['update-product-supp',
+                                                                    'id' => $model->productSuppId,
+                                                                    'step' => 'view',
+                                                                    'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL,
+                                                                    'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                                                                    'productGroupId' => $model->product->parentId
+                                                                ];
                                                             }
 
                                                             return Html::a("<span class = 'glyphicon glyphicon-pencil'></span>", $params, [
@@ -228,7 +236,7 @@ if (isset($dataProvider)) {
                                                 'panel' => [
                                                     'type' => GridView::TYPE_PRIMARY,
                                                     'heading' => !isset($gridTitle) ? "<span style='color:white;font-weight:bold'>Product Editor</span>" : $gridTitle,
-                                                    'footer' => isset($templateId) ? "<a class='btn btn-success pull-left' href='add-option?id=" . $productGroupId . "&template=" . $templateId . "'>+ Create / Edit options</a><input type='button' class='btn btn-info pull-right' value='Multiple Delete' id='MyButton$gridId' >" : '',
+                                                    'footer' => isset($createNew) ? "<a class='btn btn-success pull-left' href='add-option?id=" . $productGroupId . "&template=" . $templateId . "'>+ Create / Edit options</a><input type='button' class='btn btn-info pull-right' value='Multiple Delete' id='MyButton$gridId' >" : '',
                                                 ],
 //        'showFooter' => true,
                                             ]);

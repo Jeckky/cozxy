@@ -7,7 +7,8 @@ use yii\widgets\ActiveForm;
 $form = ActiveForm::begin([
             'id' => 'product-form',
             'enableClientValidation' => FALSE,
-            'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+            'options' => ['class' => 'panel panel-default form-horizontal',
+                'enctype' => 'multipart/form-data'],
             'fieldConfig' => [
                 'template' => '{label}<div class="col-sm-9">{input}</div>',
                 'labelOptions' => [
