@@ -12,6 +12,7 @@ use Yii;
     * @property string $description
     * @property string $rule_name
     * @property resource $data
+    * @property integer $status
     * @property integer $created_at
     * @property integer $updated_at
     *
@@ -39,7 +40,7 @@ public function rules()
 {
 return [
             [['name', 'type'], 'required'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
+            [['type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['description', 'data'], 'string'],
             [['name', 'rule_name'], 'string', 'max' => 64],
             [['rule_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthRuleMaster::className(), 'targetAttribute' => ['rule_name' => 'name']],
@@ -57,6 +58,7 @@ return [
     'description' => Yii::t('auth_item', 'Description'),
     'rule_name' => Yii::t('auth_item', 'Rule Name'),
     'data' => Yii::t('auth_item', 'Data'),
+    'status' => Yii::t('auth_item', 'Status'),
     'created_at' => Yii::t('auth_item', 'Created At'),
     'updated_at' => Yii::t('auth_item', 'Updated At'),
 ];

@@ -77,8 +77,8 @@ use yii\widgets\Pjax;
                         'complete' => "function(file){
                             uploadCount -= 1;
 //                            if(uploadCount == 0) {
-                                //    location.reload();
-                                $.pjax({container:'#image-grid-pjax'});
+                                    location.reload();
+                               // $.pjax({container:'#image-grid-pjax'});
 //                            }
                                 myDropzone.removeFile(file);
                         }",

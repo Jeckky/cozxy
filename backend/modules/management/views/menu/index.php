@@ -44,9 +44,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     [
                         'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',
                         'format' => 'raw',
-                        'value' => function($data) {
-                            $getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
-                            return $getUserGroup['name'];
+                        'value' => function($data, $index) {
+                            //$test = explode(',', $data->assignment);
+                            return $data->assignment;
+                            //$getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
+                            //$getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
+                            //return $getUserGroup['name'];
                         },
                     ],
                     [

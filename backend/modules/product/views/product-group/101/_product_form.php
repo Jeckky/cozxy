@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
+use froala\froalaeditor\FroalaEditorWidget;
 ?>
 <?php
 $form = ActiveForm::begin([
@@ -18,9 +19,6 @@ $form = ActiveForm::begin([
         ]);
 ?>
 <div class="product-group-form">
-
-
-
     <div class="panel panel-default">
         <div class="panel-heading"  style="background-color: #000;vertical-align: middle;">
             <span class="panel-title"><h3 style="color:#ffcc00;">Product <?= $model->title; ?> Edit</h3></span>
@@ -95,7 +93,6 @@ $form = ActiveForm::begin([
             ]);
             ?>
 
-
             <?php
             echo $form->field($model, 'description')->widget(CKEditor::className(), [
                 'editorOptions' => [
@@ -112,7 +109,6 @@ $form = ActiveForm::begin([
                 ],
             ]);
             ?>
-
 
             <?php
             echo $form->field($model, 'specification')->widget(CKEditor::className(), [
@@ -149,7 +145,10 @@ $form = ActiveForm::begin([
             <div class="row">
                 <div class="col-lg-12">
                     <?php
-                    echo $this->render("_image_grid", ['id' => $model->productId]);
+                    echo $this->render("_image_grid", [
+                        'id' => $model->productId,
+                        'productGroupTemplateId' => $productGroupTemplateId
+                    ]);
                     ?>
                 </div>
             </div>
@@ -157,11 +156,15 @@ $form = ActiveForm::begin([
             <div class="row">
                 <div class="col-lg-12">
                     <?php
-                    echo $this->render("_image_form", ["id" => $model->productId]);
+                    echo $this->render("_image_form", [
+                        "id" => $model->productId,
+                        'productGroupTemplateId' => $productGroupTemplateId
+                    ]);
+                    //throw new \yii\base\Exception($productGroupTemplateId);
                     ?>
                 </div>
             </div>
-
+            <input type='hidden' name='productGroupTemplateId' value='<?= $productGroupTemplateId ?>' >
             <div class="form-group">
                 <div class="col-sm-9 col-sm-offset-3">
                     <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

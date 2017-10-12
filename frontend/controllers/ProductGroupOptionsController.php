@@ -31,10 +31,12 @@ class ProductGroupOptionsController extends MasterController {
 
         foreach ($p as $title => $productGroupOptionValueId) {
             $pgov = ProductGroupOptionValue::find()->where("productGroupOptionValueId = $productGroupOptionValueId")->one();
-            $productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
+            //$productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
             $productGroupValues[$i]["value"] = $pgov->value;
+            $productGroupValues[$i]["pGTOId"] = $pgov->productGroupTemplateOptionId;
             $productGroupValues[$i]["id"] = $productGroupOptionValueId;
-
+            $productGroupValuesSp1[$i]["id"] = $productGroupOptionValueId;
+            $productGroupValuesSp1[$i]["pGTOId"] = $pgov->productGroupTemplateOptionId;
 //            if ($i < count($p)) {
 //                $productGroupValues.=",";
 //            }
@@ -43,7 +45,8 @@ class ProductGroupOptionsController extends MasterController {
         $andWhereStr = "(";
         $j = 1;
         foreach ($productGroupValues as $k => $op) {
-            $andWhereStr.= "( productGroupTemplateOptionId = " . $op["productGroupTemplateOptionId"] . " AND value='" . $op["value"] . "')";
+            // $andWhereStr.= "( productGroupTemplateOptionId = " . $op["productGroupTemplateOptionId"] . " AND value='" . $op["value"] . "')";
+            $andWhereStr.= "( productGroupTemplateOptionId = " . $op["pGTOId"] . " AND value='" . $op["value"] . "')";
             if ($j < count($productGroupValues)) {
                 $andWhereStr.=" OR ";
             }
@@ -51,20 +54,45 @@ class ProductGroupOptionsController extends MasterController {
         }
 
         $andWhereStr .= ")";
-        $prodSupp = \common\models\costfit\ProductSuppliers::find()
-        ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
-        ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
+        /* $prodSupp = \common\models\costfit\ProductSuppliers::find()
+          ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
+          ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
+          ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
+          ->where("pg.productId = $pgov->productGroupId ")
+          ->andWhere($andWhereStr)
+          ->groupBy("pgov.productSuppId")
+          //->having("count(pgov.productSuppId) =" . count($productGroupValues))
+          ->one(); */
+        /* $prodSupp = \common\models\costfit\Product::find()
+          ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productId = product.productId")
+          //->join("LEFT JOIN", "product p", "p.productId = product.productIdx")
+          ->join("LEFT JOIN", "product pg", "pg.productId = product.parentId")
+          ->where("pg.productId = $pgov->productGroupId ")
+          ->andWhere($andWhereStr)
+          ->groupBy("pgov.productSuppId")
+          //->having("count(pgov.productSuppId) =" . count($productGroupValues))
+          ->one(); */
+
+        $productMaster = ProductGroupOptionValue::find()
+        ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
         ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
-        ->where("pg.productId = $pgov->productGroupId ")
+        ->where("pg.productId = $pgov->productGroupId ") //AND pg.productIdc = " . $pgov->product->parentId)
+        //->andWhere("product_group_option_value.productSuppId IS NOT NULL")
         ->andWhere($andWhereStr)
-        ->groupBy("pgov.productSuppId")
-        //->having("count(pgov.productSuppId) =" . count($productGroupValues))
+        ->groupBy("value")
         ->one();
 
+
         //$token = $prodSupp->encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
-
-        $token = \common\models\ModelMaster::encodeParams(['productId' => $prodSupp->productId, 'productSupplierId' => $prodSupp->productSuppId, "selectedOptions" => $productGroupValues]);
-
+        //echo '<pre>';
+        //print_r($productGroupValues);
+        //echo '<pre>';
+        //print_r($productGroupValuesSp1);
+        //exit();
+        $token = $productMaster->encodeParams(['productId' => $productMaster->productId, "selectedOptions" => $productGroupValuesSp1]);
+        //echo '<pre>';
+        //print_r(\common\models\ModelMaster::decodeParams($token));
+        //exit();
         $res['token'] = $token;
 
         echo Json::encode($res);

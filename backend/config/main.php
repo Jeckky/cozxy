@@ -197,21 +197,21 @@ return [
         'class' => '\hscstudio\mimin\components\AccessControl',
         'allowActions' => [
             // add wildcard allowed action here!
-            'dashboard/*',
+            //'dashboard/*',
             'auth/*',
             'site/*',
-            'order/*',
+            //'order/*',
             'debug/*',
             'mimin/*', // only in dev mode
             //            'management/*'
-            'topup/*',
+            //'topup/*',
             'generate-model/*',
-            'lockers/*',
-            'suppliers/*',
-            'product/*',
+            //'lockers/*',
+            //'suppliers/*',
+            // 'product/*',
             'redactor/*',
             'gii/*',
-            'booth/*',
+            //'booth/*',
             'productmanager/*'
         ],
     ],
