@@ -93,9 +93,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade <?= (isset($_GET['tab'])) ? (($_GET['tab'] == 1) ? "active in " : " ") : "active in " ?>  " role="tabpanel" id="masterProduct" aria-labelledby="home-tab">
                         <?=
-                        $this->render("_product_grid", ["dataProvider" => $dataProvider,
+                        $this->render("_product_grid", [
+                            "dataProvider" => $dataProvider,
                             'productGroupId' => $productGroupId,
-                            'templateId' => $templateId
+                            'templateId' => $templateId,
+                            'createNew' => 1
                         ]);
                         ?>
 
@@ -108,6 +110,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                     "dataProvider" => $dataProvider2,
                                     'gridTitle' => "<span style='color:white;font-weight:bold'>My Product</span>",
                                     'type' => 2,
+                                    'templateId' => $templateId,
+                                    'productGroupId' => $productGroupId,
                                     'isProductSupp' => TRUE,
                                 ]);
                                 ?>

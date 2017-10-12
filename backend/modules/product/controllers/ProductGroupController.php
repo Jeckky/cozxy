@@ -315,7 +315,11 @@ class ProductGroupController extends ProductMasterController {
                         if ($productGroupId == 0) {
                             $productGroupId = $model->productId;
                         }
-                        return $this->redirect(['create', 'step' => 2, 'productGroupTemplateId' => $model->productGroupTemplateId, 'productGroupId' => $productGroupId]);
+                        return $this->redirect(['create',
+                                    'step' => 2,
+                                    'productGroupTemplateId' => $model->productGroupTemplateId,
+                                    'productGroupId' => $productGroupId
+                        ]);
                     }
                 }
                 break;
@@ -701,20 +705,22 @@ class ProductGroupController extends ProductMasterController {
                         throw new \yii\base\Exception(print_r($prodSupp->errors, true));
                     }
                 }
-
-                return $this->redirect(['create',
+                //throw new \yii\base\Exception($_POST["productGroupTemplateId"]);
+                return $this->redirect(['view',
                             'step' => 4,
-                            'productGroupTemplateId' => $model->productGroupTemplateId,
+                            'productGroupTemplateId' => $_POST["productGroupTemplateId"],
                             'productGroupId' => $model->parentId,
+                            'tab' => 1
                 ]);
             }
         }
-
+        //throw new \yii\base\Exception($model->productGroupTemplateId);
         return $this->render("101/_product_form", [
                     'model' => $model,
                     'prodPriceSupp' => $prodPriceSupp,
                     'prodSupp' => $prodSupp,
-                    'productGroupId' => $model->parentId
+                    'productGroupId' => $model->parentId,
+                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
         ]);
 //        $model = new Proyecto;
 //
@@ -765,7 +771,13 @@ class ProductGroupController extends ProductMasterController {
             }
         }
 
-        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => $tab]);
+        return $this->redirect(['view',
+                    'step' => 4,
+                    'productGroupTemplateId' => $productGroupTemplateId,
+                    'userId' => Yii::$app->user->id,
+                    'productGroupId' => $productGroupId,
+                    'tab' => $tab
+        ]);
     }
 
     public function actionDeleteProduct() {
@@ -809,10 +821,16 @@ class ProductGroupController extends ProductMasterController {
         $product = \common\models\costfit\Product::find()->where("productId = " . $model->productId)->one();
         if (\common\models\costfit\ProductImage::deleteAll("productImageId = " . $_GET["id"]) > 0) {
             if (isset($_GET["action"]) && $_GET["action"] == "update") {
-
-                return $this->redirect(['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
+                return $this->redirect(['update-product',
+                            'id' => $model->productId,
+                            'step' => 4,
+                            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                            'productGroupId' => $_GET["productGroupId"]]);
             } else {
-                return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
+                return $this->redirect(['create',
+                            'step' => $_GET["step"],
+                            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                            'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
             }
         }
     }
@@ -934,10 +952,12 @@ class ProductGroupController extends ProductMasterController {
                         'tab' => 2
             ]);
         } else {
+            //throw new \yii\base\Exception($_GET["productGroupId"]);
             return $this->redirect(["view",
                         "step" => $model->step,
                         "productGroupId" => $_GET["productGroupId"],
-                        'productGroupTemplateId' => $model->productGroupTemplateId
+                        'productGroupTemplateId' => $model->productGroupTemplateId,
+                        'tab' => 2
             ]);
         }
     }
@@ -1006,20 +1026,32 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionDeleteProductSupp() {
-//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+
         $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_GET["id"])->one();
         $productGroupId = $model->product->parentId;
         $productGroupTemplateId = $model->product->productGroupTemplateId;
         $step = $model->product->step;
+        //throw new \yii\base\Exception($model->productId);
         $userId = $model->userId;
         ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
 
         if (isset($_GET["step"])) {
-            return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => 2]);
+            return $this->redirect(['create',
+                        'step' => 4,
+                        'productGroupTemplateId' => $productGroupTemplateId,
+                        'productGroupId' => $productGroupId,
+                        'tab' => 2
+            ]);
         } else {
-            return $this->redirect(["view", 'step' => $step, "productGroupId" => $productGroupId, 'productGroupTemplateId' => $productGroupTemplateId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId, 'tab' => 2]);
+            return $this->redirect(["view",
+                        'step' => 4,
+                        "productGroupId" => $productGroupId,
+                        'productGroupTemplateId' => $productGroupTemplateId,
+                        'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId,
+                        'tab' => 2
+            ]);
         }
     }
 
@@ -1049,12 +1081,17 @@ class ProductGroupController extends ProductMasterController {
                                 'productGroupId' => $model->product->parentId,
                                 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL,
                                 'productGroupTemplateId' => $model->product->productGroupTemplateId,
-                                'productGroupId' => $model->product->parentId, 'tab' => 2, 'step' => 4]);
+                                'productGroupId' => $model->product->parentId,
+                                'tab' => 2,
+                                'step' => 4
+                    ]);
                 } else {
                     return $this->redirect(['create',
-                                'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                                'step' => 4,
+                                'productGroupTemplateId' => $model->product->productGroupTemplateId,
                                 'productGroupId' => $model->product->parentId,
-                                'tab' => 2]);
+                                'tab' => 2
+                    ]);
                 }
             }
         }
@@ -1269,7 +1306,36 @@ class ProductGroupController extends ProductMasterController {
             }
         } else {
             $ordering = $productImage->ordering - 1;
-            if ($ordering == 0) {
+            if ($ordering <= 0) {
+                $ordering = 1;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        }
+        $productImage->ordering = $ordering;
+        $productImage->save(false);
+        $res["ordering"] = $ordering;
+        return json_encode($res);
+    }
+
+    public function actionEditSortImageMaster() {
+        $imageId = $_POST["id"];
+        $type = $_POST["action"];
+        $totalImgage = $_POST["total"];
+        $res = [];
+        $productImage = \common\models\costfit\ProductImage::find()->where("productImageId=" . $imageId)->one();
+        if ($type == 1) {
+            $ordering = $productImage->ordering + 1;
+            if ($ordering > $totalImgage) {
+                $ordering = $totalImgage;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        } else {
+            $ordering = $productImage->ordering - 1;
+            if ($ordering <= 0) {
                 $ordering = 1;
                 $res["status"] = false;
             } else {
@@ -1286,6 +1352,25 @@ class ProductGroupController extends ProductMasterController {
         $productImageId = $_POST['id'];
         $res = [];
         $productImage = \common\models\costfit\ProductImageSuppliers::find()->where("productImageId=" . $productImageId)->one();
+        if ($productImage->status == 1) {
+            $productImage->status = 2;
+        } else if ($productImage->status == 2) {
+            $productImage->status = 1;
+        } else {
+            $productImage->status = 1;
+        }
+        if ($productImage->save(false)) {
+            $res["status"] = true;
+        } else {
+            $res["status"] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function actionImageMasterActive() {
+        $productImageId = $_POST['id'];
+        $res = [];
+        $productImage = \common\models\costfit\ProductImage::find()->where("productImageId=" . $productImageId)->one();
         if ($productImage->status == 1) {
             $productImage->status = 2;
         } else if ($productImage->status == 2) {

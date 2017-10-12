@@ -53,5 +53,4 @@ $images = ProductImageSuppliers::productImages($id);
     }
     ?>
 </tbody>
-
 </table>
