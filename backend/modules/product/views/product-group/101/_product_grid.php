@@ -141,7 +141,7 @@ if (isset($dataProvider)) {
                                                     if (Yii::$app->controller->action->id == "create") {
                                                         $params = ['delete-product-supp', 'id' => $model->productSuppId, 'step' => 4, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                                                     } else {
-                                                        $params = ['delete-product-supp', 'id' => $model->productSuppId];
+                                                        $params = ['delete-product-supp', 'id' => $model->productSuppId, 'productGroupTemplateId' => $model->product->productGroupTemplateId, 'productGroupId' => $model->product->parentId];
                                                     }
                                                     return \yii\helpers\Url::toRoute($params);
                                                 } else {
@@ -176,7 +176,7 @@ if (isset($dataProvider)) {
                                                                 $params = ['update-product-supp',
                                                                     'id' => $model->productSuppId,
                                                                     'step' => 4,
-                                                                    'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                                                                    'productGroupTemplateId' => $templateId,
                                                                     'productGroupId' => $model->product->parentId
                                                                 ];
                                                             } else {
@@ -184,7 +184,7 @@ if (isset($dataProvider)) {
                                                                     'id' => $model->productSuppId,
                                                                     'step' => 'view',
                                                                     'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL,
-                                                                    'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                                                                    'productGroupTemplateId' => $templateId,
                                                                     'productGroupId' => $model->product->parentId
                                                                 ];
                                                             }
@@ -236,7 +236,10 @@ if (isset($dataProvider)) {
                                                 'panel' => [
                                                     'type' => GridView::TYPE_PRIMARY,
                                                     'heading' => !isset($gridTitle) ? "<span style='color:white;font-weight:bold'>Product Editor</span>" : $gridTitle,
-                                                    'footer' => isset($createNew) ? "<a class='btn btn-success pull-left' href='add-option?id=" . $productGroupId . "&template=" . $templateId . "'>+ Create / Edit options</a><input type='button' class='btn btn-info pull-right' value='Multiple Delete' id='MyButton$gridId' >" : '',
+                                                    'footer' => isset($createNew) ? ""
+                                                            . "<a class='btn btn-success pull-left' href='add-option?id=" . $productGroupId . "&template=" . $templateId . "'>+ Create / Edit options</a>"
+                                                            . "<a class='btn btn-primary pull-left' style='margin-left:5px;' href='create-my-product?productGroupId=" . $productGroupId . "'>+ Create my product</a>"
+                                                            . "<input type='button' class='btn btn-info pull-right' value='Multiple Delete' id='MyButton$gridId' >" : '',
                                                 ],
 //        'showFooter' => true,
                                             ]);

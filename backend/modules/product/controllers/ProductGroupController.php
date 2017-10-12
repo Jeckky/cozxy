@@ -706,10 +706,11 @@ class ProductGroupController extends ProductMasterController {
                     }
                 }
                 //throw new \yii\base\Exception($_POST["productGroupTemplateId"]);
-                return $this->redirect(['create',
+                return $this->redirect(['view',
                             'step' => 4,
                             'productGroupTemplateId' => $_POST["productGroupTemplateId"],
                             'productGroupId' => $model->parentId,
+                            'tab' => 1
                 ]);
             }
         }
@@ -770,7 +771,13 @@ class ProductGroupController extends ProductMasterController {
             }
         }
 
-        return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => $tab]);
+        return $this->redirect(['view',
+                    'step' => 4,
+                    'productGroupTemplateId' => $productGroupTemplateId,
+                    'userId' => Yii::$app->user->id,
+                    'productGroupId' => $productGroupId,
+                    'tab' => $tab
+        ]);
     }
 
     public function actionDeleteProduct() {
@@ -949,7 +956,8 @@ class ProductGroupController extends ProductMasterController {
             return $this->redirect(["view",
                         "step" => $model->step,
                         "productGroupId" => $_GET["productGroupId"],
-                        'productGroupTemplateId' => $model->productGroupTemplateId
+                        'productGroupTemplateId' => $model->productGroupTemplateId,
+                        'tab' => 2
             ]);
         }
     }
@@ -1018,20 +1026,32 @@ class ProductGroupController extends ProductMasterController {
     }
 
     public function actionDeleteProductSupp() {
-//        throw new \yii\base\Exception(print_r($_POST, TRUE));
+
         $model = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $_GET["id"])->one();
         $productGroupId = $model->product->parentId;
         $productGroupTemplateId = $model->product->productGroupTemplateId;
         $step = $model->product->step;
+        //throw new \yii\base\Exception($model->productId);
         $userId = $model->userId;
         ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductSuppliers::deleteAll("productSuppId = " . $_GET["id"]);
 
         if (isset($_GET["step"])) {
-            return $this->redirect(['create', 'step' => 4, 'productGroupTemplateId' => $productGroupTemplateId, 'productGroupId' => $productGroupId, 'tab' => 2]);
+            return $this->redirect(['create',
+                        'step' => 4,
+                        'productGroupTemplateId' => $productGroupTemplateId,
+                        'productGroupId' => $productGroupId,
+                        'tab' => 2
+            ]);
         } else {
-            return $this->redirect(["view", 'step' => $step, "productGroupId" => $productGroupId, 'productGroupTemplateId' => $productGroupTemplateId, 'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId, 'tab' => 2]);
+            return $this->redirect(["view",
+                        'step' => 4,
+                        "productGroupId" => $productGroupId,
+                        'productGroupTemplateId' => $productGroupTemplateId,
+                        'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId,
+                        'tab' => 2
+            ]);
         }
     }
 
