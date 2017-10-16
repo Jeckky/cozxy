@@ -49,22 +49,29 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         Virtual PP
                     </a>
                 <?php } ?>
-                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/role'))) { ?>
-                    <a href="<?= Yii::$app->homeUrl . "management/role" ?>" class="btn btn-lg btn-danger">
-                        <i class="fa fa-lock"></i>
-                        Role
-                    </a>
-                <?php } ?>
+
                 <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/product/product-group'))) { ?>
                     <a href="<?= Yii::$app->homeUrl . "product/product-group" ?>" class="btn btn-lg btn-info">
                         <i class="fa fa-list"></i>
                         Product
                     </a>
                 <?php } ?>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/role'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "management/role" ?>" class="btn btn-lg btn-danger">
+                        <i class="fa fa-lock"></i>
+                        Role Rbac
+                    </a>
+                <?php } ?>
                 <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('/management/user'))) { ?>
                     <a href="<?= Yii::$app->homeUrl . "management/user" ?>" class="btn btn-lg btn-default">
                         <i class="fa fa-user"></i>
-                        User Role
+                        User Role Dev
+                    </a>
+                <?php } ?>
+                <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('management/menu'))) { ?>
+                    <a href="<?= Yii::$app->homeUrl . "management/menu" ?>" class="btn btn-lg btn-default">
+                        <i class="fa fa-user"></i>
+                        Menu Dev
                     </a>
                 <?php } ?>
                 <?php if ((\hscstudio\mimin\components\Mimin::checkRoute('project'))) { ?>
