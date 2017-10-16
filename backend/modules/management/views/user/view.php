@@ -220,33 +220,33 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                                         ?>> <span class="lbl">Frontend and Backend</span>
                                                     </label>
                                                 </div>
-                                                <div class="checkbox">
+                                                <!--<div class="checkbox">
                                                     <label>
                                                         <input type="radio" name="Access[jq-validation-radios]" class="px" value="4" <?php
-                                                        if ($model->type == 4) {
-                                                            echo "checked";
-                                                        }
-                                                        ?>> <span class="lbl">Suppliers</span>
+                                                /* if ($model->type == 4) {
+                                                  echo "checked";
+                                                  } */
+                                                ?>> <span class="lbl">Suppliers</span>
                                                     </label>
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="radio" name="Access[jq-validation-radios]" class="px" value="5" <?php
-                                                        if ($model->type == 5) {
-                                                            echo "checked";
-                                                        }
-                                                        ?>> <span class="lbl">Content</span>
+                                                /* if ($model->type == 5) {
+                                                  echo "checked";
+                                                  } */
+                                                ?>> <span class="lbl">Content</span>
                                                     </label>
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="radio" name="Access[jq-validation-radios]" class="px" value="6" <?php
-                                                        if ($model->type == 6) {
-                                                            echo "checked";
-                                                        }
-                                                        ?>> <span class="lbl">บัญชี</span>
+                                                /* if ($model->type == 6) {
+                                                  echo "checked";
+                                                  } */
+                                                ?>> <span class="lbl">บัญชี</span>
                                                     </label>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                         <?php
