@@ -226,10 +226,14 @@ $(".productOption").on("change", function(){
         dataType:"json"
     })
     .done(function( data ) {
+
         //window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
         //window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
-        window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
-
+        if(data.token == "no"){
+            alert("No Product");
+        }else{
+            window.location = "' . Yii::$app->homeUrl . 'product/sample-product-option/"+data.token;
+        }
     });
 });
 $("#zoom-img").elevateZoom({

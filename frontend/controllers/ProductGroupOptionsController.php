@@ -89,7 +89,7 @@ class ProductGroupOptionsController extends MasterController {
         if ($productMaster->productId != '') {
             $token = $productMaster->encodeParams(['productId' => $productMaster->productId, "selectedOptions" => $productGroupValuesSp1]);
         } else {
-            $token = $productMaster->encodeParams(['productId' => Null, "selectedOptions" => $productGroupValuesSp1]);
+            $token = 'no';
         }
 
         //echo '<pre>';
