@@ -77,7 +77,7 @@ class BackendMasterController extends MasterController {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
             $this->view->params['listDataProviderMenu']['menuBackend'] = $backendMenus;
             //echo '<pre>';
-            // print_r($backendMenus);
+            //print_r($backendMenus);
             /*
              * Notifications Suppliers
              */
