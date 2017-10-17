@@ -680,14 +680,18 @@ function saveIsbn(productSuppId, poItemId) {
         },
     });
 }
+/*
+ * sprint 1 =======> sak
+ *
+ */
 function enableEdit(id) {
     $("#optionValue" + id).removeAttr('disabled');
     $("#edit" + id).hide();
     $("#save" + id).show();
 }
 function saveEdit(id) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
-    var url = $baseUrl + 'product/product-group/edit-option';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
+    //var url = $baseUrl + 'product/product-group/edit-option';
     var newVal = $("#optionValue" + id).val();
     $.ajax({
         url: url,
@@ -713,8 +717,8 @@ function changeProductGroupTitle() {
     $("#saveChangeProductGroup").show();
 }
 function savceChangeProductGroupTitle(id) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
-    var url = $baseUrl + 'product/product-group/edit-title';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
+    //var url = $baseUrl + 'product/product-group/edit-title';
     var newVal = $("#productTitle").val();
     if (confirm('Are you sure to change this title to "' + newVal + '"')) {
         $.ajax({
@@ -741,8 +745,8 @@ function savceChangeProductGroupTitle(id) {
 
 }
 function orderingImage(id, total, action) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image';
-    var url = $baseUrl + 'product/product-group/edit-sort-image';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image';
+    //var url = $baseUrl + 'product/product-group/edit-sort-image';
     $.ajax({
         url: url,
         data: {id: id, total: total, action: action},
@@ -758,8 +762,8 @@ function orderingImage(id, total, action) {
     });
 }
 function orderingImageMaster(id, total, action) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image-master';
-    var url = $baseUrl + 'product/product-group/edit-sort-image-master';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image-master';
+    //var url = $baseUrl + 'product/product-group/edit-sort-image-master';
     $.ajax({
         url: url,
         data: {id: id, total: total, action: action},
@@ -775,8 +779,8 @@ function orderingImageMaster(id, total, action) {
     });
 }
 function changeImageStatus(id) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/image-active';
-    var url = $baseUrl + 'product/product-group/image-active';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/image-active';
+    //var url = $baseUrl + 'product/product-group/image-active';
     $.ajax({
         url: url,
         data: {id: id},
@@ -790,8 +794,8 @@ function changeImageStatus(id) {
     });
 }
 function changeImageMasterStatus(id) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/image-master-active';
-    var url = $baseUrl + 'product/product-group/image-master-active';
+    var url = 'http://localhost/cozxy/backend/web/product/product-group/image-master-active';
+    //var url = $baseUrl + 'product/product-group/image-master-active';
     $.ajax({
         url: url,
         data: {id: id},
@@ -804,3 +808,7 @@ function changeImageMasterStatus(id) {
         },
     });
 }
+/*
+ * End sprint 1 =======> sak
+ *
+ */
