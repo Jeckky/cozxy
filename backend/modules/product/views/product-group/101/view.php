@@ -29,7 +29,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="col-md-6" style="vertical-align: bottom;">
                     <div class="btn-group pull-right" >
                         <?php
-                        if (Yii::$app->user->identity->type == 4) {
+                        //if (Yii::$app->user->identity->type == 4) {
+                        if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3) {
                             echo Html::a("<i class='fa fa-plus'></i> Create My Product Group", ['create?step=1'], ['class' => 'btn btn-success',
                                 'style' => 'height:35px;color:#FFF;']);
                         }
@@ -151,15 +152,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?php
                     else:
                         $countDraft = \common\models\costfit\ProductSuppliers::find()
-                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
-                                ->count();
+                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
+                        ->count();
                         $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
-                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
-                                ->count();
+                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
+                        ->count();
                         ?>
                         <?php if ($countDraft > 0): ?>
                             <h3 style="color: tomato">Send Approve My Product ?</h3>
