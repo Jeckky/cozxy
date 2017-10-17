@@ -39,7 +39,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 //'initialState' => 'collapsed',
                 ],
                 'columns' => [
-                    'name',
+                    [
+                        'attribute' => 'name',
+                        'format' => 'raw',
+                        'value' => function($data, $index) {
+                            //$test = explode(',', $data->assignment);
+                            if ($data->link == "#") {
+                                return '<span class="text-danger">' . $data->name . '</span>';
+                            } else {
+                                return $data->name;
+                            }
+                            //$getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
+                            //$getUserGroup = common\models\costfit\UserGroups::checkUserGroup($data->user_group_Id);
+                            //return $getUserGroup['name'];
+                        },
+                    ],
+                    //'name',
                     'link',
                     [
                         'attribute' => 'เลือกกลุ่มที่เข้าใช้งาน',

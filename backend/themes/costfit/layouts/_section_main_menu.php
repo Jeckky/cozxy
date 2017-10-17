@@ -56,14 +56,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         if (!isset($value['items'])) {
                             ?>
                             <li>
-                                <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>">
+                                <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>" >
                                     <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value["label"]; ?> </span></a>
                             </li>
                             <?php
                         } else {
                             ?>
                             <li class="mm-dropdown">
-                                <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
+                                <a href="#" ><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
                                 <?php
                                 foreach ($value["items"] as $key => $value1) {
                                     ?>
@@ -107,14 +107,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 ?>
                 <!--
                 <li>
-                    <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                  ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                    <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                        ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
                 </li>
 
                 <li class="mm-dropdown">
                     <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                     <ul>
                         <li>
-                            <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                                   ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                            <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                                         ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                         </li>
                     </ul>
                 </li>-->
@@ -276,9 +276,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <?php endif; ?>
 
             <?php if (Yii::$app->user->identity->type & \common\models\costfit\User::USER_BOOTH > 0 || true): ?>
-                <li class="mm-dropdown-supplier">
-                    <a href="<?php echo $baseUrl; ?>/booth/order"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Booth</span></a>
-                </li>
+                <!-- <li class="mm-dropdown-supplier">
+                     <a href="<?//php echo $baseUrl; ?>/booth/order"><i class="menu-icon fa fa-gift"></i><span class="mm-text">Booth</span></a>
+                 </li>-->
             <?php endif; ?>
         </ul> <!-- / .navigation -->
     </div> <!-- / #main-menu-inner -->

@@ -26,9 +26,6 @@ class ProductGroupOptionsController extends MasterController {
         $i = 1;
         $pgov = NULL;
 
-
-
-
         foreach ($p as $title => $productGroupOptionValueId) {
             $pgov = ProductGroupOptionValue::find()->where("productGroupOptionValueId = $productGroupOptionValueId")->one();
             //$productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
@@ -89,7 +86,12 @@ class ProductGroupOptionsController extends MasterController {
         //echo '<pre>';
         //print_r($productGroupValuesSp1);
         //exit();
-        $token = $productMaster->encodeParams(['productId' => $productMaster->productId, "selectedOptions" => $productGroupValuesSp1]);
+        if ($productMaster->productId != '') {
+            $token = $productMaster->encodeParams(['productId' => $productMaster->productId, "selectedOptions" => $productGroupValuesSp1]);
+        } else {
+            $token = 'no';
+        }
+
         //echo '<pre>';
         //print_r(\common\models\ModelMaster::decodeParams($token));
         //exit();
