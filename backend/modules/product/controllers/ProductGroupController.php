@@ -1414,28 +1414,29 @@ class ProductGroupController extends ProductMasterController {
 
     public function checkDupplicate($data, $productGroupId, $templateId) {
         $allAtrributes = count($data);
-        $i = 0;
+
         $productGroup = ProductGroupOptionValue::find()
                 ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId)
                 ->groupBy('productId')
                 ->all(); //เพื่อหา ProductId แต่ละตัวออกมาที่มีtemplateIdเดียวกัน
         if (isset($productGroup) && count($productGroup) > 0) {
             foreach ($productGroup as $product):
+                $i = 0;
                 foreach ($data as $productGroupTemplateOptionId => $value):
                     $productId = ProductGroupOptionValue::find()
                             ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId . " and productId=" . $product->productId . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and value='" . $value . "'")
                             ->one();
                     if (isset($productId)) {
                         $i++;
+                        if ($i == $allAtrributes) {
+                            return 1;
+                        }
                     }
+
                 endforeach;
             endforeach;
         }
-        if ($i >= $allAtrributes) {
-            return 1; //ซ้ำ
-        } else {
-            return 0;
-        }
+        return 0;
     }
 
 }
