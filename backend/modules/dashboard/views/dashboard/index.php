@@ -728,15 +728,11 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     </div>
 
     <?php
-} else if (Yii::$app->user->identity->type == 2) {
+//} else if (Yii::$app->user->identity->type == 2) {
     ?>
-    <div class="col-md-12" style="font-size: 36px;">
-        &nbsp;Welcome to Supplier
-    </div>
+
     <?php
-} else if (Yii::$app->user->identity->type == 3) {
+//} else if (Yii::$app->user->identity->type == 3) {
     ?>
-    <div class="col-md-12" style="font-size: 36px;">
-        &nbsp;Welcome to ACCOUNT
-    </div>
+
 <?php } ?>
