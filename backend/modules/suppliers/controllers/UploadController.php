@@ -120,7 +120,7 @@ class UploadController extends SuppliersMasterController {
     }
 
     public function actionUpload() {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }

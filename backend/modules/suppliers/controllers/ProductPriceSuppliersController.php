@@ -43,7 +43,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }
@@ -82,7 +82,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionView($id) {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }
@@ -97,7 +97,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionCreate() {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }
@@ -151,7 +151,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionUpdate($id) {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }
@@ -191,7 +191,7 @@ class ProductPriceSuppliersController extends SuppliersMasterController {
      * @return mixed
      */
     public function actionDelete($id) {
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }

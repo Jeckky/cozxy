@@ -52,7 +52,7 @@ use yii\widgets\Pjax;
         <span class="panel-title">อัพโหลดรูปภาพเพิ่มเติม</span>
         <div class="panel-heading-controls">
             <?php
-            if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
+            if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3) {
                 ?>
                 <a href="/suppliers/product-suppliers">กลับหน้าหลัก</a>
             <?php } ?>

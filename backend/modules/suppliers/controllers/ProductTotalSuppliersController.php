@@ -40,7 +40,7 @@ class ProductTotalSuppliersController extends SuppliersMasterController {
 
     public function actionCreate() {
         $productSuppId = Yii::$app->request->get('productSuppId');
-        if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5) {
+        if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) {
             header("location: /auth");
             exit(0);
         }

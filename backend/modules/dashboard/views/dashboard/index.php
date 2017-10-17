@@ -4,7 +4,7 @@ $this->title = 'Dashboard';
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/assets');
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<?php if (Yii::$app->user->identity->type != 4 && Yii::$app->user->identity->type != 5 && Yii::$app->user->identity->type != 6) { ?>
+<?php if (Yii::$app->user->identity->type != 2 && Yii::$app->user->identity->type != 3) { ?>
 
     <div class="page-header">
 
@@ -728,13 +728,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     </div>
 
     <?php
-} else if (Yii::$app->user->identity->type == 5) {
+} else if (Yii::$app->user->identity->type == 2) {
     ?>
     <div class="col-md-12" style="font-size: 36px;">
         &nbsp;Welcome to Supplier
     </div>
     <?php
-} else if (Yii::$app->user->identity->type == 6) {
+} else if (Yii::$app->user->identity->type == 3) {
     ?>
     <div class="col-md-12" style="font-size: 36px;">
         &nbsp;Welcome to ACCOUNT

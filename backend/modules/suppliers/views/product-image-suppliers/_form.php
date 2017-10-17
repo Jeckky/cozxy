@@ -73,18 +73,18 @@ use mihaildev\ckeditor\CKEditor;
 
         <?= $form->field($model, 'imageThumbnail2', ['options' => ['class' => 'row form-group']])->fileInput() ?>
 
-<?= (isset($model->imageThumbnail2) && !empty($model->imageThumbnail2)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->imageThumbnail2) : ''; ?>
+        <?= (isset($model->imageThumbnail2) && !empty($model->imageThumbnail2)) ? Html::hiddenInput((new ReflectionClass($model))->getShortName() . '[imageOld]', $model->imageThumbnail2) : ''; ?>
 
         <div class="form-group">
             <?php
-            if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5) {
+            if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3) {
                 ?>
                 <div class="col-sm-9 col-sm-offset-3">
-                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
-<?php } ?>
+            <?php } ?>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>
