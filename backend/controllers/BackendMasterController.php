@@ -70,7 +70,7 @@ class BackendMasterController extends MasterController {
             //$menuRbac = menuBackend::getMenuRbac();
             $backendMenus = menuBackend::getMenuSystem();
             echo '<pre>';
-            print_r($menuSystem);
+            print_r($backendMenus);
             //throw new \yii\base\Exception(print_r($backendMenus, true));
             $firstname = Yii::$app->user->identity->firstname;
             $type = Yii::$app->user->identity->type;
