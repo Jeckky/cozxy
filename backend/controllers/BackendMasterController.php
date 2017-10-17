@@ -69,15 +69,15 @@ class BackendMasterController extends MasterController {
             //$backendMenus = $backendMenuArray;
             //$menuRbac = menuBackend::getMenuRbac();
             $backendMenus = menuBackend::getMenuSystem();
-            //echo '<pre>';
-            //print_r($menuSystem);
+            echo '<pre>';
+            print_r($menuSystem);
             //throw new \yii\base\Exception(print_r($backendMenus, true));
             $firstname = Yii::$app->user->identity->firstname;
             $type = Yii::$app->user->identity->type;
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
             $this->view->params['listDataProviderMenu']['menuBackend'] = $backendMenus;
             //echo '<pre>';
-            //print_r($backendMenus);
+            print_r($backendMenus);
             /*
              * Notifications Suppliers
              */
