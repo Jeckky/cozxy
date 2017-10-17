@@ -55,29 +55,29 @@ class ProductGroupController extends ProductMasterController {
         $title = Yii::$app->request->get('title');
 //        $isOwner = Yii::$app->request->post('isOwner');
 //User Type 4 = Supplier , 5= Content
-        if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
-
+        //if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
+        if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3 || Yii::$app->user->id == 43) {
             if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
 
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                     $query = \common\models\costfit\Product::find()
-                            ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                            ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+                    ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                    ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                            ->orderBy("product.createDateTime DESC");
+                    ->orderBy("product.createDateTime DESC");
                 }
             } else {
 
                 $query = \common\models\costfit\Product::find()
-                        ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
-                        ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                        ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
-                        ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                        ->where("product.parentId is null ")
+                ->select("product.title,product.createDateTime,product.productId as productTempId,product.status,ps.userId ,product.productGroupTemplateId,product.step,ps.productSuppId,ps.userId as productSuppUserId")
+                ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                ->where("product.parentId is null ")
 //                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN (product.status = 99 || product.status = 0) THEN 1 AND product.userId = " . Yii::$app->user->id . " ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 AND ps.userId = " . Yii::$app->user->id . " ELSE 0 END) end)")
-                        ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
-                        ->groupBy("product.productId")
-                        ->orderBy("product.createDateTime DESC");
+                ->andWhere("1 =  (case when ps.productSuppId IS NULL  then  1 AND product.userId = " . Yii::$app->user->id . " else  1 AND ps.userId = " . Yii::$app->user->id . " end)")
+                ->groupBy("product.productId")
+                ->orderBy("product.createDateTime DESC");
             }
         } else {
             $user_group_Id = Yii::$app->user->identity->user_group_Id;
@@ -95,25 +95,25 @@ class ProductGroupController extends ProductMasterController {
                       ->groupBy("ps.userId , pc.parentId")
                       ->orderBy("product.createDateTime DESC"); */
                     $query = \common\models\costfit\Product::find()
-                            ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
-                            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
-                            ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
+                    ->join("LEFT JOIN", "product pc", "pc.parentId = product.productId")
+                    ->join("LEFT JOIN", "product_suppliers ps", "ps.productId = pc.productId ")
+                    ->where("product.parentId is null  AND 1 =  (case when ps.productSuppId IS NULL  then (CASE WHEN product.status = 99 THEN 1 ELSE 0 END) else (CASE WHEN ps.status = 99 THEN 1 ELSE 0 END) end)")
 //                ->where("product.parentId is null  ")
-                            ->groupBy("ps.userId , pc.parentId")
-                            ->orderBy("product.createDateTime DESC");
+                    ->groupBy("ps.userId , pc.parentId")
+                    ->orderBy("product.createDateTime DESC");
                 } else {
                     if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
                         $query = \common\models\costfit\Product::find()
-                                ->join("LEFT JOIN", "user u", "u.userId = product.userId")
-                                ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
+                        ->join("LEFT JOIN", "user u", "u.userId = product.userId")
+                        ->where("product.parentId is null AND u.type in (2, 3, 4, 5) AND product.status = 1")
 //                    ->andWhere("(SELECT COUNT(*) FROM product pc WHERE parentId = product.productId) > 0")
-                                ->orderBy("product.createDateTime DESC");
+                        ->orderBy("product.createDateTime DESC");
                     }
                 }
             } else {
                 $query = \common\models\costfit\Product::find()
-                                ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
-                                ->orderBy("createDateTime DESC")->all();
+                ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
+                ->orderBy("createDateTime DESC")->all();
             }
         }
 
@@ -142,7 +142,7 @@ class ProductGroupController extends ProductMasterController {
 
 
         return $this->render('101/index', [
-                    'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
+            'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
         ]);
     }
 
@@ -166,24 +166,24 @@ class ProductGroupController extends ProductMasterController {
         }
         $dataProvider = new ActiveDataProvider([
             'query' => \common\models\costfit\Product::find()->orderBy("createDateTime DESC")
-                    ->where("parentId = " . $_GET["productGroupId"]),
+            ->where("parentId = " . $_GET["productGroupId"]),
         ]);
 
         $dataProvider2 = new ActiveDataProvider([
             'query' => \common\models\costfit\ProductSuppliers::find()
-                    ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                    ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                    ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId)
-                    ->orderBy("createDateTime DESC"),
+            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+            ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId)
+            ->orderBy("createDateTime DESC"),
         ]);
         return $this->render('101/view', [
-                    'model' => $model,
-                    'dataProvider' => $dataProvider,
-                    'dataProvider2' => $dataProvider2,
-                    'userId' => $userId,
-                    'isMaster' => $isMaster,
-                    'productGroupId' => $_GET["productGroupId"],
-                    'templateId' => $_GET["productGroupTemplateId"]
+            'model' => $model,
+            'dataProvider' => $dataProvider,
+            'dataProvider2' => $dataProvider2,
+            'userId' => $userId,
+            'isMaster' => $isMaster,
+            'productGroupId' => $_GET["productGroupId"],
+            'templateId' => $_GET["productGroupTemplateId"]
         ]);
     }
 
@@ -214,10 +214,10 @@ class ProductGroupController extends ProductMasterController {
             }
         }
         return $this->render('create', [
-                    'model' => $model,
-                    'ms' => $ms,
-                    'title' => isset($title) ? $title : false,
-                    'description' => isset($description) ? $description : false
+            'model' => $model,
+            'ms' => $ms,
+            'title' => isset($title) ? $title : false,
+            'description' => isset($description) ? $description : false
         ]);
     }
 
@@ -241,9 +241,9 @@ class ProductGroupController extends ProductMasterController {
             }
         }
         return $this->render('update', [
-                    'model' => $model,
-                    'description' => $model->description,
-                    'ms' => $ms,
+            'model' => $model,
+            'description' => $model->description,
+            'ms' => $ms,
         ]);
     }
 
@@ -294,10 +294,10 @@ class ProductGroupController extends ProductMasterController {
                     if ($model->step) {
                         if ($model->step != 1) {
                             return $this->redirect(['create',
-                                        'step' => $model->step,
-                                        'productGroupTemplateId' => $model->productGroupTemplateId,
-                                        //'productGroupId' => $_GET["productGroupId"]
-                                        'productGroupId' => $model->productId
+                                'step' => $model->step,
+                                'productGroupTemplateId' => $model->productGroupTemplateId,
+                                //'productGroupId' => $_GET["productGroupId"]
+                                'productGroupId' => $model->productId
                             ]);
                         }
                     }
@@ -316,9 +316,9 @@ class ProductGroupController extends ProductMasterController {
                             $productGroupId = $model->productId;
                         }
                         return $this->redirect(['create',
-                                    'step' => 2,
-                                    'productGroupTemplateId' => $model->productGroupTemplateId,
-                                    'productGroupId' => $productGroupId
+                            'step' => 2,
+                            'productGroupTemplateId' => $model->productGroupTemplateId,
+                            'productGroupId' => $productGroupId
                         ]);
                     }
                 }
@@ -376,21 +376,21 @@ class ProductGroupController extends ProductMasterController {
                 if (isset($_POST["next"])) {
 
                     return $this->redirect(['create',
-                                'step' => 5,
-                                'productGroupTemplateId' => $_GET["productGroupTemplateId"],
-                                'productGroupId' => $_GET["productGroupId"]]);
+                        'step' => 5,
+                        'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                        'productGroupId' => $_GET["productGroupId"]]);
                 }
                 $dataProvider = new ActiveDataProvider([
                     'query' => \common\models\costfit\Product::find()->orderBy("productId ASC")
-                            ->where("parentId = " . $_GET["productGroupId"]),
+                    ->where("parentId = " . $_GET["productGroupId"]),
                 ]);
 
                 $dataProvider2 = new ActiveDataProvider([
                     'query' => \common\models\costfit\ProductSuppliers::find()
-                            ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                            ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                            ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
-                            ->orderBy("productId ASC"),
+                    ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                    ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                    ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . \Yii::$app->user->id)
+                    ->orderBy("productId ASC"),
                 ]);
                 break;
             case 5:// For Access direct link without get step parameter
@@ -427,18 +427,18 @@ class ProductGroupController extends ProductMasterController {
         }
 
         return $this->render('101/step', [
-                    'model' => $model,
-                    'step' => $step,
-                    'ms' => $ms,
-                    'title' => isset($title) ? $title : false,
-                    'description' => isset($description) ? $description : false,
-                    'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL,
-                    'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
-                    'dataProvider2' => isset($dataProvider2) ? $dataProvider2 : NULL,
-                    'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
-                    'countProduct' => isset($countProduct) ? $countProduct : NULL,
-                    'productGroupId' => isset($_GET["productGroupId"]) ? $_GET["productGroupId"] : NULL,
-                    'productGroupTemplateId' => isset($_GET["productGroupTemplateId"]) ? $_GET["productGroupTemplateId"] : NULL,
+            'model' => $model,
+            'step' => $step,
+            'ms' => $ms,
+            'title' => isset($title) ? $title : false,
+            'description' => isset($description) ? $description : false,
+            'productGroupTemplateOptions' => isset($productGroupTemplateOptions) ? $productGroupTemplateOptions : NULL,
+            'dataProvider' => isset($dataProvider) ? $dataProvider : NULL,
+            'dataProvider2' => isset($dataProvider2) ? $dataProvider2 : NULL,
+            'gridColumns' => isset($gridColumns) ? $gridColumns : NULL,
+            'countProduct' => isset($countProduct) ? $countProduct : NULL,
+            'productGroupId' => isset($_GET["productGroupId"]) ? $_GET["productGroupId"] : NULL,
+            'productGroupTemplateId' => isset($_GET["productGroupTemplateId"]) ? $_GET["productGroupTemplateId"] : NULL,
         ]);
     }
 
@@ -626,10 +626,10 @@ class ProductGroupController extends ProductMasterController {
 
 
         return $this->renderAjax('101/_product_grid_form', [
-                    'model' => $model,
-                    'id' => $_POST["productId"],
-                    'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL,
-                    'type' => isset($_POST['type']) ? $_POST['type'] : NULL
+            'model' => $model,
+            'id' => $_POST["productId"],
+            'gridId' => isset($_POST['gridId']) ? $_POST['gridId'] : NULL,
+            'type' => isset($_POST['type']) ? $_POST['type'] : NULL
         ]);
     }
 
@@ -707,20 +707,20 @@ class ProductGroupController extends ProductMasterController {
                 }
                 //throw new \yii\base\Exception($_POST["productGroupTemplateId"]);
                 return $this->redirect(['view',
-                            'step' => 4,
-                            'productGroupTemplateId' => $_POST["productGroupTemplateId"],
-                            'productGroupId' => $model->parentId,
-                            'tab' => 1
+                    'step' => 4,
+                    'productGroupTemplateId' => $_POST["productGroupTemplateId"],
+                    'productGroupId' => $model->parentId,
+                    'tab' => 1
                 ]);
             }
         }
         //throw new \yii\base\Exception($model->productGroupTemplateId);
         return $this->render("101/_product_form", [
-                    'model' => $model,
-                    'prodPriceSupp' => $prodPriceSupp,
-                    'prodSupp' => $prodSupp,
-                    'productGroupId' => $model->parentId,
-                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+            'model' => $model,
+            'prodPriceSupp' => $prodPriceSupp,
+            'prodSupp' => $prodSupp,
+            'productGroupId' => $model->parentId,
+            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
         ]);
 //        $model = new Proyecto;
 //
@@ -772,11 +772,11 @@ class ProductGroupController extends ProductMasterController {
         }
 
         return $this->redirect(['view',
-                    'step' => 4,
-                    'productGroupTemplateId' => $productGroupTemplateId,
-                    'userId' => Yii::$app->user->id,
-                    'productGroupId' => $productGroupId,
-                    'tab' => $tab
+            'step' => 4,
+            'productGroupTemplateId' => $productGroupTemplateId,
+            'userId' => Yii::$app->user->id,
+            'productGroupId' => $productGroupId,
+            'tab' => $tab
         ]);
     }
 
@@ -808,11 +808,11 @@ class ProductGroupController extends ProductMasterController {
 
 
         return $this->redirect(['index',
-                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
-                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
-                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
-                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
-                    'status' => isset($_GET["status"]) ? $_GET["status"] : '',
+            'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+            'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+            'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+            'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+            'status' => isset($_GET["status"]) ? $_GET["status"] : '',
         ]);
     }
 
@@ -822,15 +822,15 @@ class ProductGroupController extends ProductMasterController {
         if (\common\models\costfit\ProductImage::deleteAll("productImageId = " . $_GET["id"]) > 0) {
             if (isset($_GET["action"]) && $_GET["action"] == "update") {
                 return $this->redirect(['update-product',
-                            'id' => $model->productId,
-                            'step' => 4,
-                            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
-                            'productGroupId' => $_GET["productGroupId"]]);
+                    'id' => $model->productId,
+                    'step' => 4,
+                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                    'productGroupId' => $_GET["productGroupId"]]);
             } else {
                 return $this->redirect(['create',
-                            'step' => $_GET["step"],
-                            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
-                            'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
+                    'step' => $_GET["step"],
+                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                    'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId]);
             }
         }
     }
@@ -843,10 +843,10 @@ class ProductGroupController extends ProductMasterController {
                 return $this->redirect(['update-product', 'id' => $model->productId, 'step' => 4, 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => $_GET["productGroupId"]]);
             } else if (isset($_GET["action"]) && $_GET["action"] == "delete") {
                 return $this->redirect(['update-product-supp',
-                            'id' => $_GET['productSuppId'],
-                            'step' => $_GET["step"],
-                            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
-                            'productGroupId' => $_GET["productGroupId"],
+                    'id' => $_GET['productSuppId'],
+                    'step' => $_GET["step"],
+                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+                    'productGroupId' => $_GET["productGroupId"],
                 ]);
             } else {
                 return $this->redirect(['create', 'step' => $_GET["step"], 'productGroupTemplateId' => $_GET["productGroupTemplateId"], 'productGroupId' => isset($product->parentId) ? $product->parentId : $product->productId, 'tab' => 2]);
@@ -946,18 +946,18 @@ class ProductGroupController extends ProductMasterController {
         }
         if (isset($_GET["step"]) && $_GET["step"] == 4) {
             return $this->redirect(["create",
-                        "step" => 4,
-                        'productGroupTemplateId' => $model->productGroupTemplateId,
-                        'productGroupId' => $_GET["productGroupId"],
-                        'tab' => 2
+                "step" => 4,
+                'productGroupTemplateId' => $model->productGroupTemplateId,
+                'productGroupId' => $_GET["productGroupId"],
+                'tab' => 2
             ]);
         } else {
             //throw new \yii\base\Exception($_GET["productGroupId"]);
             return $this->redirect(["view",
-                        "step" => $model->step,
-                        "productGroupId" => $_GET["productGroupId"],
-                        'productGroupTemplateId' => $model->productGroupTemplateId,
-                        'tab' => 2
+                "step" => $model->step,
+                "productGroupId" => $_GET["productGroupId"],
+                'productGroupTemplateId' => $model->productGroupTemplateId,
+                'tab' => 2
             ]);
         }
     }
@@ -1019,7 +1019,7 @@ class ProductGroupController extends ProductMasterController {
     public function actionUpdateAllCategoryProduct() {
         Yii::$app->db->createCommand()->truncateTable('category_to_product')->execute();
         $models = \common\models\costfit\Product::find()
-                        ->where("status = 1")->all();
+        ->where("status = 1")->all();
         foreach ($models as $model) {
             \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
         }
@@ -1039,18 +1039,18 @@ class ProductGroupController extends ProductMasterController {
 
         if (isset($_GET["step"])) {
             return $this->redirect(['create',
-                        'step' => 4,
-                        'productGroupTemplateId' => $productGroupTemplateId,
-                        'productGroupId' => $productGroupId,
-                        'tab' => 2
+                'step' => 4,
+                'productGroupTemplateId' => $productGroupTemplateId,
+                'productGroupId' => $productGroupId,
+                'tab' => 2
             ]);
         } else {
             return $this->redirect(["view",
-                        'step' => 4,
-                        "productGroupId" => $productGroupId,
-                        'productGroupTemplateId' => $productGroupTemplateId,
-                        'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId,
-                        'tab' => 2
+                'step' => 4,
+                "productGroupId" => $productGroupId,
+                'productGroupTemplateId' => $productGroupTemplateId,
+                'userId' => isset($_GET["userId"]) ? $_GET["userId"] : $userId,
+                'tab' => 2
             ]);
         }
     }
@@ -1078,19 +1078,19 @@ class ProductGroupController extends ProductMasterController {
 
                 if (isset($_GET["step"]) && $_GET["step"] == "view") {
                     return $this->redirect(['view',
-                                'productGroupId' => $model->product->parentId,
-                                'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL,
-                                'productGroupTemplateId' => $model->product->productGroupTemplateId,
-                                'productGroupId' => $model->product->parentId,
-                                'tab' => 2,
-                                'step' => 4
+                        'productGroupId' => $model->product->parentId,
+                        'userId' => isset($_GET["userId"]) ? $_GET["userId"] : NULL,
+                        'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                        'productGroupId' => $model->product->parentId,
+                        'tab' => 2,
+                        'step' => 4
                     ]);
                 } else {
                     return $this->redirect(['create',
-                                'step' => 4,
-                                'productGroupTemplateId' => $model->product->productGroupTemplateId,
-                                'productGroupId' => $model->product->parentId,
-                                'tab' => 2
+                        'step' => 4,
+                        'productGroupTemplateId' => $model->product->productGroupTemplateId,
+                        'productGroupId' => $model->product->parentId,
+                        'tab' => 2
                     ]);
                 }
             }
@@ -1098,8 +1098,8 @@ class ProductGroupController extends ProductMasterController {
 
 //        throw new \yii\base\Exception(print_r($_POST, TRUE));
         return $this->render("101/supplier/_product_supp_form", ['model' => $model,
-                    'prodPriceSupp' => $prodPriceSupp,
-                    'productGroupTemplateId' => $_GET["productGroupTemplateId"],
+            'prodPriceSupp' => $prodPriceSupp,
+            'productGroupTemplateId' => $_GET["productGroupTemplateId"],
         ]);
     }
 
@@ -1122,11 +1122,11 @@ class ProductGroupController extends ProductMasterController {
             endforeach;
         }
         return $this->redirect(['index',
-                    'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
-                    'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
-                    'title' => isset($_GET["title"]) ? $_GET["title"] : '',
-                    'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
-                    'status' => isset($_GET["status"]) ? $_GET["status"] : ''
+            'brandId' => isset($_GET["brandId"]) ? $_GET["brandId"] : '',
+            'categoryId' => isset($_GET["categoryId"]) ? $_GET["categoryId"] : '',
+            'title' => isset($_GET["title"]) ? $_GET["title"] : '',
+            'supplier' => isset($_GET["supplier"]) ? $_GET["supplier"] : '',
+            'status' => isset($_GET["status"]) ? $_GET["status"] : ''
         ]);
         /* if (isset($_GET['selection']) && count($_GET['selection']) > 0) {
           foreach ($_GET['selection'] as $productId):
@@ -1156,18 +1156,18 @@ class ProductGroupController extends ProductMasterController {
             $productGroupId = $_GET['id'];
             $templateId = $_GET['template'];
             $productOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $templateId)
-                    ->orderBy("createDateTime")
-                    ->all();
+            ->orderBy("createDateTime")
+            ->all();
             if (isset($productOptions) && count($productOptions) > 0) {
                 foreach ($productOptions as $option):
                     $options[$option->productGroupTemplateOptionId] = $option->title; //option
                 endforeach;
             }
             return $this->render('101/_add_product_options', [
-                        'templateId' => $_GET['template'],
-                        'productGroupId' => $_GET['id'],
-                        'options' => $options,
-                        'error' => isset($_GET['error']) ? $_GET['error'] : ''
+                'templateId' => $_GET['template'],
+                'productGroupId' => $_GET['id'],
+                'options' => $options,
+                'error' => isset($_GET['error']) ? $_GET['error'] : ''
             ]);
         } else {
 //throw new \yii\base\ErrorException('เกิดข้อผิดพลาด!!! กรุณาตรวจสอบความถูกต้องของ Product Master');
@@ -1183,15 +1183,15 @@ class ProductGroupController extends ProductMasterController {
         $productGroupOptionValue = ProductGroupOptionValue::find()->where("productGroupOptionValueId=" . $optionValueId)->one();
         if (isset($productGroupOptionValue)) {
             $checkDup = ProductGroupOptionValue::find()
-                    ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $newVal . "'")
-                    ->all();
+            ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $newVal . "'")
+            ->all();
             if (isset($checkDup) && count($checkDup) > 0) {
                 $res['status'] = false;
                 $res['error'] = 'Option ซ้ำ';
             } else {
                 $allOld = ProductGroupOptionValue::find()
-                        ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $productGroupOptionValue->value . "'")
-                        ->all();
+                ->where("productGroupTemplateOptionId=" . $productGroupOptionValue->productGroupTemplateOptionId . " and productGroupId=" . $productGroupOptionValue->productGroupId . " and value='" . $productGroupOptionValue->value . "'")
+                ->all();
                 if (isset($allOld) && count($allOld) > 0) {
                     foreach ($allOld as $value):
                         $value->value = $newVal;
@@ -1223,9 +1223,9 @@ class ProductGroupController extends ProductMasterController {
             }
             if ($empty || $dupplicate) {
                 return $this->redirect(['add-option',
-                            'id' => $_POST['productGroupId'],
-                            'template' => $_POST['templateId'],
-                            'error' => isset($error) ? $error : ''
+                    'id' => $_POST['productGroupId'],
+                    'template' => $_POST['templateId'],
+                    'error' => isset($error) ? $error : ''
                 ]);
             }
             $parent = \common\models\costfit\Product::find()->where("productId=" . $_POST['productGroupId'])->one();
@@ -1256,17 +1256,17 @@ class ProductGroupController extends ProductMasterController {
                 $productGroup->updateDateTime = new \yii\db\Expression('NOW()');
                 $productGroup->status = 1;
                 $productGroupOption = ProductGroupOptionValue::find()
-                        ->where("productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and productGroupId=" . $_POST['productGroupId'])
-                        ->one();
+                ->where("productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and productGroupId=" . $_POST['productGroupId'])
+                ->one();
                 $productGroup->productGroupOptionId = $productGroupOption->productGroupOptionId;
                 $productGroup->productId = $id;
                 $productGroup->save(false);
             endforeach;
             return $this->redirect(['view',
-                        'productGroupId' => $_POST['productGroupId'],
-                        'productGroupTemplateId' => $_POST['templateId'],
-                        'step' => '4',
-                        'userId' => Yii::$app->user->id
+                'productGroupId' => $_POST['productGroupId'],
+                'productGroupTemplateId' => $_POST['templateId'],
+                'step' => '4',
+                'userId' => Yii::$app->user->id
             ]);
         }else {
             throw new \ErrorException('เกิดข้อผิดพลาด!!!');
@@ -1416,16 +1416,16 @@ class ProductGroupController extends ProductMasterController {
         $allAtrributes = count($data);
 
         $productGroup = ProductGroupOptionValue::find()
-                ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId)
-                ->groupBy('productId')
-                ->all(); //เพื่อหา ProductId แต่ละตัวออกมาที่มีtemplateIdเดียวกัน
+        ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId)
+        ->groupBy('productId')
+        ->all(); //เพื่อหา ProductId แต่ละตัวออกมาที่มีtemplateIdเดียวกัน
         if (isset($productGroup) && count($productGroup) > 0) {
             foreach ($productGroup as $product):
                 $i = 0;
                 foreach ($data as $productGroupTemplateOptionId => $value):
                     $productId = ProductGroupOptionValue::find()
-                            ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId . " and productId=" . $product->productId . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and value='" . $value . "'")
-                            ->one();
+                    ->where("productGroupId=" . $productGroupId . " and productGroupTemplateId=" . $templateId . " and productId=" . $product->productId . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and value='" . $value . "'")
+                    ->one();
                     if (isset($productId)) {
                         $i++;
                         if ($i == $allAtrributes) {
