@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
+use common\helpers\GetBrowser;
 
+//echo GetBrowser::UserAgent();
 $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
 $id = uniqid();
@@ -17,7 +19,7 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-xs-12">
                     <div class="zoom-box">
-                        <img id="zoom-img" src="<?php echo $model['image'] ?>" class="fullwidth" alt="" data-zoom-image="<?php echo $model['image'] ?>">
+                        <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
                     </div>
                 </div>
                 <div class="col-xs-12">
