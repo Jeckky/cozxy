@@ -753,7 +753,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 <div class="bg-black menubar hidden-lg hidden-md">
     <div class="container">
         <div class="row">
-            <a href="#" class="menu-category mobcategories">&nbsp; CATEGORIES 123&nbsp;</a><a href="#" class="menu-category mobcategories pull-right">&nbsp; <i class="fa fa-navicon size20"></i> &nbsp;</a>
+            <a href="#" class="menu-category mobcategories">&nbsp; CATEGORIES &nbsp;</a><a href="#" class="menu-category mobcategories pull-right">&nbsp; <i class="fa fa-navicon size20"></i> &nbsp;</a>
         </div>
     </div>
 </div>
