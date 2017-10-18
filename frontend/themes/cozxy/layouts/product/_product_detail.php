@@ -18,7 +18,7 @@ $val = rand(1, 10);
         <div class="col-md-8 product-gallery">
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="zoom-box">
+                    <div class="zoom-box-x">
                         <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
                     </div>
                 </div>
@@ -226,14 +226,33 @@ $(".productOption").on("change", function(){
         window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
     });
 });
-$("#zoom-img").elevateZoom({
-        zoomType: "inner",
-        cursor: "zoom-in",
-        zoomWindowFadeIn: 384,
-        zoomWindowFadeOut: 728
-    });
 
 ');
+?>
+
+<?php
+// 18/10/2017 เช็ค zoom รูปให้ใช้บน Computer
+if (GetBrowser::UserAgent() == 'computer') {
+    $this->registerJs('
+        $("#zoom-img").elevateZoom({
+                zoomType: "inner",
+                cursor: "zoom-in",
+                zoomWindowFadeIn: 384,
+                zoomWindowFadeOut: 728
+            });
+    ');
+} else {
+    $this->registerJs('
+        $("#zoom-img").elevateZoom({
+               // zoomType: "inner",
+               // cursor: "zoom-in",
+              //  zoomWindowFadeIn: false,
+               // zoomWindowFadeOut: false
+            });
+
+
+    ');
+}
 ?>
 <?php
 if (isset($model['productId']) && $model['productId'] != '') {//กัน error ถ้าไม่มี productId
