@@ -91,7 +91,8 @@ class Margin extends \common\models\costfit\master\MarginMaster {
 
     public static function getProductSuppMargin($productSuppId) {
         $res = NULL;
-        $model = ProductSuppliers::find()->where("approve = 'approve' AND productSuppId = $productSuppId")->one();
+        //  $model = ProductSuppliers::find()->where("approve = 'approve' AND productSuppId = $productSuppId")->one();
+        $model = ProductSuppliers::find()->where("productSuppId = $productSuppId")->one();
         if (isset($model)) {
             $systemMatgin = self::getSystemMargin(TRUE);
             $brandMargin = self::getBrandMargin($model->brandId, TRUE);
