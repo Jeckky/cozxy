@@ -245,10 +245,12 @@ if (GetBrowser::UserAgent() == 'computer') {
     $this->registerJs('
         $("#zoom-img").elevateZoom({
                 zoomType: "inner",
-                //cursor: "zoom-in",
-                //zoomWindowFadeIn: 384,
-                //zoomWindowFadeOut: 728
+                cursor: "zoom-in",
+                zoomWindowFadeIn: 0,
+                zoomWindowFadeOut: 0
             });
+
+
     ');
 }
 ?>
