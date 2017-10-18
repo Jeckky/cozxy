@@ -27,3 +27,7 @@ and open the template in the editor.
     /* background: #fff url(../imgs/select-arrow.png) right center no-repeat; */
 }
 
+.box-product{
+    padding-right: 5px;
+    padding-left: 5px;
+}

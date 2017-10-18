@@ -4,7 +4,7 @@ use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
 use yii\helpers\Url;
 ?>
-<div class="col-md-4 col-sm-6 col-xs-6">
+<div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">

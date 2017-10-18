@@ -28,6 +28,7 @@ class CozxyAsset extends AssetBundle {
         'css/chat.css',
         'css/cozxy.css',
         'fonts/fonts.css',
+        'css/cozxy-reform.css'
     ];
     public $js = [
         'js/js.v2/jquery.js',

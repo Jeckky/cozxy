@@ -55,8 +55,10 @@ class ProductGroupController extends ProductMasterController {
         $title = Yii::$app->request->get('title');
 //        $isOwner = Yii::$app->request->post('isOwner');
 //User Type 4 = Supplier , 5= Content
-        //if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
-        if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3 || Yii::$app->user->id == 43) {
+//if (Yii::$app->user->identity->type == 4 || Yii::$app->user->identity->type == 5 || Yii::$app->user->id == 43) {
+//if (Yii::$app->user->identity->type == 2 || Yii::$app->user->identity->type == 3 || Yii::$app->user->id == 43) {
+        if (Yii::$app->user->id != 36 || Yii::$app->user->id == 43) {
+
             if (isset($_GET["supplier"]) && $_GET["supplier"] != '') {
 
                 if (isset($categoryId) || isset($brandId) || isset($status) || isset($title)) {
@@ -84,6 +86,10 @@ class ProductGroupController extends ProductMasterController {
             $userRe = str_replace('[', '', str_replace(']', '', $user_group_Id));
             $userEx = explode(',', $userRe);
             $ress = array_search(26, $userEx);
+            $rss = \common\helpers\menuBackend::getMenuRbac();
+            //echo '<pre>';
+            //print_r($rss[0]);
+            //exit();
             if ($ress !== FALSE) {
                 if (!isset($_GET["supplier"]) || $_GET["supplier"] == '') {
                     /* $query = \common\models\costfit\Product::find()
@@ -111,6 +117,7 @@ class ProductGroupController extends ProductMasterController {
                     }
                 }
             } else {
+
                 $query = \common\models\costfit\Product::find()
                 ->where("parentId is null AND userId = " . Yii::$app->user->identity->userId)
                 ->orderBy("createDateTime DESC")->all();
@@ -589,7 +596,7 @@ class ProductGroupController extends ProductMasterController {
          * กรณีพิเศษ
          */
         \common\helpers\Upload::UploadSuppliers($model);
-        //
+//
     }
 
     public function actionUpdateGridEdit() {
@@ -705,7 +712,7 @@ class ProductGroupController extends ProductMasterController {
                         throw new \yii\base\Exception(print_r($prodSupp->errors, true));
                     }
                 }
-                //throw new \yii\base\Exception($_POST["productGroupTemplateId"]);
+//throw new \yii\base\Exception($_POST["productGroupTemplateId"]);
                 return $this->redirect(['view',
                     'step' => 4,
                     'productGroupTemplateId' => $_POST["productGroupTemplateId"],
@@ -714,7 +721,7 @@ class ProductGroupController extends ProductMasterController {
                 ]);
             }
         }
-        //throw new \yii\base\Exception($model->productGroupTemplateId);
+//throw new \yii\base\Exception($model->productGroupTemplateId);
         return $this->render("101/_product_form", [
             'model' => $model,
             'prodPriceSupp' => $prodPriceSupp,
@@ -952,7 +959,7 @@ class ProductGroupController extends ProductMasterController {
                 'tab' => 2
             ]);
         } else {
-            //throw new \yii\base\Exception($_GET["productGroupId"]);
+//throw new \yii\base\Exception($_GET["productGroupId"]);
             return $this->redirect(["view",
                 "step" => $model->step,
                 "productGroupId" => $_GET["productGroupId"],
@@ -1031,7 +1038,7 @@ class ProductGroupController extends ProductMasterController {
         $productGroupId = $model->product->parentId;
         $productGroupTemplateId = $model->product->productGroupTemplateId;
         $step = $model->product->step;
-        //throw new \yii\base\Exception($model->productId);
+//throw new \yii\base\Exception($model->productId);
         $userId = $model->userId;
         ProductGroupOptionValue::deleteAll("productSuppId = " . $_GET["id"]);
         \common\models\costfit\ProductImageSuppliers::deleteAll("productSuppId = " . $_GET["id"]);

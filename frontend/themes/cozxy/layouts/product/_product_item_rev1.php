@@ -13,12 +13,9 @@ if (Yii::$app->controller->id == 'product') {
     $width = "width: 260px";
     $height = "height: 260px";
 }
-
-//echo '<pre>';
-//print_r($model->product);
 ?>
-<?php $col = isset($colSize) ? $colSize : '4'; ?>
-<div class="col-md-4 col-sm-6 col-xs-6">
+<?php $col = isset($colSize) ? $colSize : '4'; ?> 
+<div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">

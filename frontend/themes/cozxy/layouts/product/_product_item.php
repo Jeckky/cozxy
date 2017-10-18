@@ -13,7 +13,7 @@ if (Yii::$app->controller->id == 'product') {
 }
 ?>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
-<div class="col-md-<?= $col ?> col-sm-6 col-xs-12">
+<div class="col-md-<?= $col ?> col-sm-6 col-xs-12 box-product">
     <div class="product-box">
         <div class="product-img text-center">
             <a href="<?= $model['url'] ?>" class="fc-black"><img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true" style="<?//= $width ?>; <?//= $height ?>;"></a>

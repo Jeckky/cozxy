@@ -2,7 +2,7 @@
 
 use common\helpers\Base64Decode;
 ?>
-<div class="col-md-4 col-sm-6 col-xs-6">
+<div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box" style="padding-right: 0px; padding-left: 0px;">
         <div class="product-img text-center">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">

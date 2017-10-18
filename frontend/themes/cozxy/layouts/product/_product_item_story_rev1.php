@@ -1,4 +1,4 @@
-<div class="col-md-4 col-sm-6 col-xs-12">
+<div class="col-md-4 col-sm-6 col-xs-12 box-product">
     <div class="product-box">
         <div class="product-img text-center">
             <a href="<?= $model['url'] ?>">
