@@ -19,7 +19,7 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-xs-12">
                     <div class="zoom-box">
-                        <img <?php if (GetBrowser::UserAgent() == "computer") { ?>id="zoom-img"<?php } else { ?>id="img-big"<?php } ?> src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
+                        <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
                     </div>
                 </div>
                 <div class="col-xs-12">
