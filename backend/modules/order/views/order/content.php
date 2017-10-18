@@ -52,7 +52,7 @@ foreach ($poId as $id):
         <div style="width: 50%;height: 50px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;">
-            ที่จัดส่งสินค้า :<b>Cozxy Dot C Co., Ltd</b><br>
+            ที่จัดส่งสินค้า :<b>Cozxy Dot Com Co., Ltd</b><br>
             กำหนดส่ง : <b>.......................</b><br>
         </div>
         <div style="width: 45%; height: 50px;border:solid 0.5px #000000;-webkit-border-radius:10px;
