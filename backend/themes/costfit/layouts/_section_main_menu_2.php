@@ -46,75 +46,75 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 //$this->view->params['listDataProviderMenu']['menuBackend']
                 //$this->params['listDataProviderMenu']['menuBackend']
                 if (isset($this->params['listDataProviderMenu']['menuBackend'])) {
+
                     //echo '<pre>';
                     //print_r($this->params['listDataProviderMenu']['menuBackend']);
                     $menuBackend = $this->params['listDataProviderMenu']['menuBackend'];
-
-                    foreach ($menuBackend as $key => $value1) {
-                        foreach ($value1 as $key => $value) {
-                            if (!isset($value['items'])) {
-                                ?>
-                                <li>
-                                    <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>" >
-                                        <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value["label"]; ?> </span></a>
-                                </li>
+                    //echo '<pre>';
+                    //print_r($menuBackend);
+                    foreach ($menuBackend as $key => $value) {
+                        if (!isset($value['items'])) {
+                            ?>
+                            <li>
+                                <a href="<?php echo $baseUrl; ?>/<?php echo $value["url"][0]; ?>" >
+                                    <i class="menu-icon fa fa-dashboard"></i><span class="mm-text"><?php echo $value["label"]; ?> x</span></a>
+                            </li>
+                            <?php
+                        } else {
+                            ?>
+                            <li class="mm-dropdown">
+                                <a href="#" ><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
                                 <?php
-                            } else {
-                                ?>
-                                <li class="mm-dropdown">
-                                    <a href="#" ><i class="menu-icon fa fa-th"></i><span class="mm-text"><?php echo $value["label"]; ?></span></a>
-                                    <?php
-                                    foreach ($value["items"] as $key => $value1) {
-                                        ?>
-                                        <ul>
-                                            <?php
-                                            if (!isset($value1['items'])) {
-                                                ?>
-                                                <li>
-                                                    <a tabindex="-1" href="<?php echo isset($value1['url']) ? $baseUrl . "/" . $value1['url'][0] : "#"; ?>">
-                                                        <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['label']; ?></span></a>
-                                                </li>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <li class="mm-dropdown">
-                                                    <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text"><?php echo isset($value1['label']) ? $value1['label'] : "value1 blank"; ?></span></a>
-                                                    <?php
-                                                    foreach ($value1["items"] as $key => $value2) {
-                                                        ?>
-                                                        <ul>
-                                                            <li>
-                                                                <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['url'][0]; ?>"><span class="mm-text"><?php echo $value2['label']; ?></span></a>
-                                                            </li>
-                                                        </ul>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </li>
-                                                <?php
-                                            }
-                                            ?>
-                                        </ul>
-                                        <?php
-                                    }
+                                foreach ($value["items"] as $key => $value1) {
                                     ?>
-                                </li>
-                                <?php
-                            }
+                                    <ul>
+                                        <?php
+                                        if (!isset($value1['items'])) {
+                                            ?>
+                                            <li>
+                                                <a tabindex="-1" href="<?php echo isset($value1['url']) ? $baseUrl . "/" . $value1['url'][0] : "#"; ?>">
+                                                    <i class="fa fa-square"></i> <span class="mm-text"><?php echo $value1['label']; ?></span></a>
+                                            </li>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <li class="mm-dropdown">
+                                                <a tabindex="-1" href="#"><i class="fa fa-square"></i> <span class="mm-text"><?php echo isset($value1['label']) ? $value1['label'] : "value1 blank"; ?></span></a>
+                                                <?php
+                                                foreach ($value1["items"] as $key => $value2) {
+                                                    ?>
+                                                    <ul>
+                                                        <li>
+                                                            <a tabindex="-1" href="<?php echo $baseUrl; ?>/<?php echo $value2['url'][0]; ?>"><span class="mm-text"><?php echo $value2['label']; ?></span></a>
+                                                        </li>
+                                                    </ul>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </li>
+                            <?php
                         }
                     }
                 }
                 ?>
                 <!--
                 <li>
-                    <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                                         ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
+                    <a href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                   ?>/dashboard"><i class="menu-icon fa fa-dashboard"></i><span class="mm-text">Dashboard</span></a>
                 </li>
 
                 <li class="mm-dropdown">
                     <a href="#"><i class="menu-icon fa fa-th"></i><span class="mm-text">จัดการข้อมูล User</span><span class="label label-warning">Updated</span></a>
                     <ul>
                         <li>
-                            <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                                                                          ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
+                            <a tabindex="-1" href="<?php //echo $baseUrl;                                                                                                                                                                                                                                                                                                                                                                    ?>/user/user"><i class="fa fa-square"></i> <span class="mm-text">สมาชิก</span></a>
                         </li>
                     </ul>
                 </li>-->

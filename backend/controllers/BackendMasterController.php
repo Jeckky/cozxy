@@ -65,12 +65,41 @@ class BackendMasterController extends MasterController {
               }
               } */
 
+
             //$backendMenus = Mimin::filterMenu($backendMenuArray);
             //$backendMenus = $backendMenuArray;
             //$menuRbac = menuBackend::getMenuRbac();
+
             $backendMenus = menuBackend::getMenuSystem();
-            //echo '<pre>';
+            /* foreach ($backendMenus as $key => $value) {
+              //echo $value['label'] . '<br>';
+              foreach ($value as $key => $item) {
+              //echo '<pre>';
+              //print_r($item);
+              //foreach ($item['label'] as $items) {
+              //echo $key . '::' . $items . '<br>';
+              //}
+              }
+              //echo '<pre>';
+              //print_r($value);
+              } */
+            /* foreach ($backendMenus as $key => $value) {
+              echo '<pre>';
+              print_r($value);
+              echo '<ul class="navigation">';
+              echo '<li>';
+              if (isset($value['label']) && count($value['label']) > 0) {
+              echo '<a href=""> ' . $value['label'] . ' </a>';
+              } else {
+              echo 'test';
+              }
+              echo '</li>';
+              echo '</ul>';
+              } */
+            // exit();
+            ///echo '<pre>';
             //print_r($backendMenus);
+            // exit();
             //throw new \yii\base\Exception(print_r($backendMenus, true));
             $firstname = Yii::$app->user->identity->firstname;
             $type = Yii::$app->user->identity->type;

@@ -49,8 +49,47 @@ class menuBackend {
             $dataProvider = \common\models\costfit\Menu::find()->where("parent_id = 0 and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
             foreach ($dataProvider as $k => $menu) {
                 //echo $menu->assignment;
+                $backendMenuArray[$r][$k]['label'] = $menu->name;
+                $backendMenuArray[$r][$k]['url'] = [$menu->link];
+                $childs = \common\models\costfit\Menu::find()->where("parent_id = $menu->menuId  and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
+                //in_array($value->item_name, $test
+                if (isset($childs) && count($childs) > 0) {
+                    foreach ($childs as $j => $child) {
+                        $childs2 = \common\models\costfit\Menu::find()->where("parent_id = $child->menuId and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
+                        // $test = explode(',', $model->assignment);
+                        if (isset($childs2) && count($childs2) > 0) {
+                            foreach ($childs2 as $l => $child2) {
+
+                                $backendMenuArray[$r][$k]["items"][$j]["label"] = $child->name;
+                                $backendMenuArray[$r][$k]["items"][$j]["items"][$l] = ['label' => $child2->name, 'url' => [$child2->link]];
+                            }
+                        } else {
+                            $backendMenuArray[$r][$k]["items"][$j]['label'] = $child->name;
+                            $backendMenuArray[$r][$k]["items"][$j]['url'] = [$child->link];
+                        }
+                    }
+                } else {
+                    $backendMenuArray[$r][$k]['label'] = $menu->name;
+                    $backendMenuArray[$r][$k]['url'] = [$menu->link];
+                }
+            }
+        }
+
+        return $backendMenuArray;
+    }
+
+    public static function getMenuSystem1() {
+        $backendMenuArrayRbac = [];
+        $backendMenuArray = [];
+        $getMenuRbac = menuBackend::getMenuRbac();
+        foreach ($getMenuRbac as $r => $rbac) {
+            $backendMenuArrayRbac[$r] = $rbac['parent'];
+            //echo $backendMenuArrayRbac[$r];
+            $dataProvider = \common\models\costfit\Menu::find()->where("parent_id = 0 and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
+            foreach ($dataProvider as $k => $menu) {
+                //echo $menu->assignment;
                 $backendMenuArray[$k]['label'] = $menu->name;
-                $childs = \common\models\costfit\Menu::find()->where("parent_id = $menu->menuId and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
+                $childs = \common\models\costfit\Menu::find()->where("parent_id = $menu->menuId  and assignment is not null  and assignment like '%$backendMenuArrayRbac[$r]%'")->all();
                 //in_array($value->item_name, $test
                 if (isset($childs) && count($childs) > 0) {
                     foreach ($childs as $j => $child) {
@@ -70,9 +109,8 @@ class menuBackend {
                     $backendMenuArray[$k]['url'] = [$menu->link];
                 }
             }
-
-            return $backendMenuArray;
         }
+        return $backendMenuArray;
     }
 
 }
