@@ -246,8 +246,8 @@ if (GetBrowser::UserAgent() == 'computer') {
         $("#zoom-img").elevateZoom({
                 zoomType: "inner",
                 cursor: "zoom-in",
-                zoomWindowFadeIn: 0,
-                zoomWindowFadeOut: 0
+                zoomWindowFadeIn: false,
+                zoomWindowFadeOut: false
             });
 
 
