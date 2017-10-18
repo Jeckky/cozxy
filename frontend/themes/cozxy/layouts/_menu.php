@@ -706,10 +706,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         ->all();
                         foreach ($cate as $key => $value) {
                             ?>
-                            <div class="menu-item sub-<?= $value['categoryId'] ?>">
-                                <a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);"><?= $value['title'] ?></a>
-                                <a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a>
-                            </div>
+                            <div class="menu-item sub-<?= $value['categoryId'] ?>"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);"><?= $value['title'] ?></a><a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a></div>
                         <?php } ?>
                     </div>
                 </div>
@@ -756,7 +753,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 <div class="bg-black menubar hidden-lg hidden-md">
     <div class="container">
         <div class="row">
-            <a href="#" class="menu-category mobcategories">&nbsp; CATEGORIES &nbsp;</a><a href="#" class="menu-category mobcategories pull-right">&nbsp; <i class="fa fa-navicon size20"></i> &nbsp;</a>
+            <a href="#" class="menu-category mobcategories">&nbsp; CATEGORIES 123&nbsp;</a><a href="#" class="menu-category mobcategories pull-right">&nbsp; <i class="fa fa-navicon size20"></i> &nbsp;</a>
         </div>
     </div>
 </div>
