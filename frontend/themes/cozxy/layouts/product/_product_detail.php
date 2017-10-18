@@ -244,13 +244,13 @@ if (GetBrowser::UserAgent() == 'computer') {
 } else {
     $this->registerJs('
         $("#zoom-img").elevateZoom({
-                zoomType: "inner",
-                cursor: "zoom-in",
-                zoomWindowFadeIn: false,
-                zoomWindowFadeOut: false
+               // zoomType: "inner",
+               // cursor: "zoom-in",
+              //  zoomWindowFadeIn: false,
+               // zoomWindowFadeOut: false
             });
 
-           alert("test zoom");
+
     ');
 }
 ?>
