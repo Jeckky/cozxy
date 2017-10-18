@@ -250,7 +250,7 @@ if (GetBrowser::UserAgent() == 'computer') {
                 zoomWindowFadeOut: false
             });
 
-
+           alert("test zoom");
     ');
 }
 ?>
