@@ -78,7 +78,7 @@ class menuBackend {
         return $backendMenuArray;
     }
 
-    public static function getMenuSystem1() {
+    public static function getMenuSystem1Bk() {
         $backendMenuArrayRbac = [];
         $backendMenuArray = [];
         $getMenuRbac = menuBackend::getMenuRbac();

@@ -38,7 +38,7 @@ class SearchController extends MasterController {
 
             $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         }
-
+        //echo 'categoryId :' . $categoryId;
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $catPrice = DisplaySearch::findAllPrice($categoryId);
 //        $productCanSell = new ArrayDataProvider(
