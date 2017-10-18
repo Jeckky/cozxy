@@ -60,6 +60,7 @@ function pic2Zoom(src, zoom) {
     console.log(temp);
     console.log(large);
     ez.swaptheimage(temp, large);
+
     $('.product-detail .zoom-box a').attr('href', temp);
 }
 
