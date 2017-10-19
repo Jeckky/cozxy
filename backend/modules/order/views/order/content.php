@@ -58,7 +58,7 @@ foreach ($poId as $id):
         <div style="width: 45%; height: 50px;border:solid 0.5px #000000;-webkit-border-radius:10px;
              -moz-border-radius:10px;
              border-radius:10px;padding-left: 10px;margin-left: 360px;margin-top: -50px;">
-            สถานที่วางบิล ::<b>Cozxy Dot C Co., Ltd</b><br>
+            สถานที่วางบิล ::<b>Cozxy Dot Com Co., Ltd</b><br>
         </div>
     </div>
     <div style="width: 100%;font-size: 10px; margin-top: 2px;margin-bottom: 3px;">
@@ -145,12 +145,12 @@ foreach ($poId as $id):
                 พร้อมทั้งให้แนบใบสั่งซื้อทุกครั้งที่มีการวางบิล และถ้าหากมีรายการเปลี่ยนแปลงนอกเหนือจากนี้<br> กรุณาติดต่อแผนกจัดซื้อ"
             </td>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;"><b>&nbsp;&nbsp;รวม / Sub Total</b></td>
-            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($allTotal - $vat, 2) ?></td>
+            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($vat, 2) ?></td>
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม / Vat (%)</b></td>
 
-            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($vat, 2) ?></td>
+            <td style="text-align: right;font-size: 8pt;border-top:#000000 thin solid;border-right:#000000 thin solid;"colspan="3"><?= number_format($allTotal - $vat, 2) ?></td>
         </tr>
         <tr>
             <td colspan="2" style="background-color: #cccccc;font-size: 7pt;height: 25px;border-top:#000000 thin solid;border-right:#000000 thin solid;border-bottom:#000000 thin solid;"><b>&nbsp;&nbsp;ราคารวมทั้งสิ้น / (Total)</b></td>
@@ -164,7 +164,7 @@ foreach ($poId as $id):
         <table class="table_noborder" cellpadding="0" cellspacing="0" style="margin-left: -20px;margin-top: 50px;font-size: 10px;">
             <tr>
                 <td style="width: 50%;"><center><img src="<?= $baseUrl . '/' . Signature::directorSignature() ?>" style="width: 120px;height: 35px;"></center></td>
-            <td><center><img src="<?= $baseUrl . '/' . Signature::approveSignature(Yii::$app->user->id) ?>" style="width: 120px;height: 35px;"></center></td>
+            <td><center><img src="<?= $baseUrl . '/' . Signature::financialSignature() ?>" style="width: 120px;height: 35px;"></center></td>
             </tr>
             <tr>
                 <td><center><br>( กรรมการผู้จัดการอนุมัติ )</center></td>
