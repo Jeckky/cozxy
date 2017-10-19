@@ -1255,9 +1255,9 @@ class ProductGroupController extends ProductMasterController {
             $id = Yii::$app->db->getLastInsertID();
             foreach ($_POST['newProduct'] as $productGroupTemplateOptionId => $value):
                 $productGroupOption = ProductGroupOptionValue::find()
-                        ->where("productGroupTemplateOptionId=" . $productGroupTemplateOptionId . " and productGroupId=" . $_POST['productGroupId'])
+                        ->where("productGroupId=" . $_POST['productGroupId'])
                         ->one();
-                if (isset($productGroupOption)) {
+                if (isset($productGroupOption) && $value != '' && $value != null) {
                     $productGroup = new ProductGroupOptionValue();
                     $productGroup->productGroupTemplateOptionId = $productGroupTemplateOptionId;
                     $productGroup->value = $value;
@@ -1271,11 +1271,12 @@ class ProductGroupController extends ProductMasterController {
                     $productGroup->save(false);
                 }
             endforeach;
-            return $this->redirect(['view',
+            return $this->redirect(['update-product',
                         'productGroupId' => $_POST['productGroupId'],
                         'productGroupTemplateId' => $_POST['templateId'],
                         'step' => '4',
-                        'userId' => Yii::$app->user->id
+                        'userId' => Yii::$app->user->id,
+                        'id' => $id
             ]);
         } else {
             throw new \ErrorException('เกิดข้อผิดพลาด!!!');
