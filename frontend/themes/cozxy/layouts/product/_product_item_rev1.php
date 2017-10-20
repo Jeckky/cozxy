@@ -5,6 +5,7 @@ use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ProductShelf;
 use yii\helpers\Url;
 use common\helpers\Base64Decode;
+use common\helpers\CozxyCalculatesCart;
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
@@ -14,9 +15,26 @@ if (Yii::$app->controller->id == 'product') {
     $height = "height: 260px";
 }
 ?>
-<?php $col = isset($colSize) ? $colSize : '4'; ?> 
+<style type="text/css">
+
+</style>
+<?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
+
     <div class="product-box">
+        <div class="product-sticker">
+            <div class="rcorners4">
+                <span>SAVE</span>
+                <span>
+                    <?php
+                    $marketPrice = isset($model->product) ? $model->product->price : 0;
+                    $supplierPrice = isset($model->price) ? $model->price : 0;
+                    echo CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                    ?>
+                </span>
+            </div>
+            <div class="triangle"></div>
+        </div>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
                 <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" style="max-height: 230px;">
@@ -86,9 +104,9 @@ if (Yii::$app->controller->id == 'product') {
                 if (isset($hotDeal)) {
                     ?>
 
-                    <p class="price" style="height: 50px;">
-                        <span class="size16 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: red; height: 25px;padding: 5px;color: white;"><?= number_format($model->price, 2) . 'THB' ?> </span><br><br>
-                        <span class="size12 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) . 'THB' : '' ?> </span>
+                    <p class="price">
+                        <span class="size16" style="color: red; "><?= number_format($model->price, 2) . 'THB' ?> </span><br>
+                        <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) . 'THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>

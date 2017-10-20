@@ -1269,7 +1269,6 @@ function sortStoriesCompare(type, status, productPostId, productId) {
         $('input:hidden:eq(0)', '.sort-stories-currency').val($currencyType);
     }
     var CurrencyId = $('input:hidden:eq(0)', '.sort-stories-currency').val();
-
     //console.log($currencyType);
     //console.log($status);
     //console.log($postId);
@@ -1558,8 +1557,6 @@ $(function () {
         $(this).find('.dropdown-menu.multi-level').css('display', 'block');
     })
 });
-
-
 function subscribe() {
     var subscribe = $('#subscribe_email').val();
     //alert(subscribe);
@@ -1579,3 +1576,46 @@ function subscribe() {
     });
 }
 
+//********************************touchmove touchstart touchend************************************//
+/*
+ var collected = [];
+ $('body').bind('touchmove touchstart touchend', function (event) {
+ //event.preventDefault();
+ alert(event.type);
+ if (event.type == 'touchstart') {
+ collected = [];
+ event.preventDefault();
+ } else if (event.type == 'touchmove') {
+ // id of the element under my finger??
+ // insert in collected the id of the element
+ } else if (event.type == 'touchend') {
+ // some code
+ }
+ });
+ var lastY, timer;
+ $(document).bind('touchstart', function (e) {
+ lastY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+ console.log(lastY);
+ alert(lastY);
+ });
+ $(document).bind('touchmove mousemove', function (e) {
+ var currentY = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+ //console.log(“CurY: “+currentY+” / LasY: “+lastY);
+ if (Math.abs(currentY - lastY) < 15) {
+ return;
+ }
+ if (currentY > lastY) {
+ console.log('down');
+ alert('down');
+ } else {
+ //console.log('up');
+ alert('up');
+ }
+ });
+ var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+ var eventType = isMobile ? "touchstart" : "click";
+
+ jQuery.event.special.touchclick = {
+ bindType: eventType,
+ delegateType: eventType
+ };*/
