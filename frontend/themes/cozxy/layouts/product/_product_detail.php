@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
 use common\helpers\GetBrowser;
+use common\helpers\CozxyCalculatesCart;
 
 //echo GetBrowser::UserAgent();
 $this->title = $model['title'];
@@ -17,6 +18,19 @@ $val = rand(1, 10);
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
+                <div class="product-sticker-product-detail">
+                    <div class="rcorners-product-detail">
+                        <span>HOT DETAIL</span>
+                        <span>
+                            <?php
+                            $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                            $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                            echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                            ?>
+                        </span>
+                    </div>
+
+                </div>
                 <div class="col-xs-12">
                     <div class="zoom-box-x">
                         <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >

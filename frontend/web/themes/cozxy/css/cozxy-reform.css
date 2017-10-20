@@ -66,3 +66,21 @@ and open the template in the editor.
 .discount{
     font-weight: bold;
 }
+
+.product-sticker-product-detail {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    z-index: 10;
+    width: 50px;
+}
+.rcorners-product-detail {
+    /*border-radius: 15px 50px 30px 5px;*/
+    background: rgba(255, 0, 0, 0.81) ;
+    /*padding: 20px;*/
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    color: #ffffff;
+    opacity: 0.9;
+}

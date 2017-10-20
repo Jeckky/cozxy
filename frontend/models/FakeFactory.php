@@ -432,7 +432,9 @@ class FakeFactory extends Model {
             'specificationDescriptionCozxy' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductCozxy['specification'],
             'descriptionCozxy' => isset($marketPrice->description) ? $marketPrice->description : $GetProductCozxy['description'],
             'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
-            'marketPrice' => isset($market) ? number_format($market, 2) : ''
+            'marketPrice' => isset($market) ? number_format($market, 2) : '',
+            'DiscountmarketPrice' => isset($market) ? $market : 0,
+            'Discountprice' => isset($GetProductSuppliers['price']) ? $GetProductSuppliers['price'] : 0,
         ];
 
         return $products;
