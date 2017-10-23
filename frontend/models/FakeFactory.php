@@ -343,7 +343,7 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productViews($productIdParams, $cartOrderId) {
+    public static function productViews($productIdParams, $cartOrderId, $selectedOptions) {
         $products = [];
         //$imagAll = [];
         //$GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
@@ -409,8 +409,8 @@ class FakeFactory extends Model {
             'brandName' => isset($GetProductSuppliers->product->brand) ? $GetProductSuppliers->product->brand->title : 'No Brand',
             'categoryId' => $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
-            //'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($marketPrice->title) ? $marketPrice->title : $GetProductSuppliers['title'],
+            //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
+            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $marketPrice->title,
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',

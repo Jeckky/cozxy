@@ -236,13 +236,13 @@ $val = rand(1, 10);
                             }
                             //if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
                             if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;">ADD TO CART</a>';
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;cursor:default;">ADD TO CART</a>';
                             } else {
                                 echo ' ';
                             }
                             //}
                             ?>
-                            <div class="size12">&nbsp;</div>
+                            <div class="size12" >&nbsp;</div>
                         </div>
                     </div>
                 </div>
