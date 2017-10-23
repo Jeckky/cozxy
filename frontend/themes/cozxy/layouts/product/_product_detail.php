@@ -101,10 +101,28 @@ $val = rand(1, 10);
                         <?php
                         if ($model['price'] > 0) {
                             ?>
-                            <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
-                            <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
+                            <div class="col-sm-8 padding-product-detail">
+                                <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
+                            </div>
+                            <div class="col-sm-4 padding-product-detail">
+                                <div class="rcorners-product-detail-right">
+                                    <span>
+                                        <?php
+                                        $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                                        $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                                        echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                                        ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 padding-product-detail">
+                                <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
+                            </div>
+
                         <?php } ?>
-                        <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
+                        <div class="col-sm-12 padding-product-detail">
+                            <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
+                        </div>
                         <?php
                         if (isset($model['shortDescription'])) {
                             echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
