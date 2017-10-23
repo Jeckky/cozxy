@@ -93,7 +93,7 @@ class SiteController extends MasterController {
 //        ]]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
-        $promotions = Product::productPromotion(12);
+        $promotions = Product::productPromotion(12, $cat = FALSE, $brandId = false);
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
 
