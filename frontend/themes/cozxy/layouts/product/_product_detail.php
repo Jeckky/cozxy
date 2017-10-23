@@ -97,7 +97,13 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-md-12 col-xs-12 product-select bg-white">
                     <div class="product-form">
-                        <h3 class="size20 size16-xs"><?php echo strtoupper($model['title']) ?></h3>
+                        <p class="size24 size20-xs b">
+                            <a class="fc-black" href="<?php echo Yii::$app->homeUrl . 'search/brand/' . \common\models\ModelMaster::encodeParams(['brandId' => $model['brandId']]); ?>">
+                                <?php echo strtoupper($model['brandName']) ?>
+                            </a>
+                        </p>
+                        <p class="size20 size16-xs "><?php echo strtoupper($model['title']) ?></p>
+
                         <?php
                         if ($model['price'] > 0) {
                             ?>
