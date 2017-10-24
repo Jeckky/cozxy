@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
 use common\helpers\GetBrowser;
+use common\helpers\CozxyCalculatesCart;
 
 //echo GetBrowser::UserAgent();
 $this->title = $model['title'];
@@ -17,6 +18,19 @@ $val = rand(1, 10);
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
+                <div class="product-sticker-product-detail">
+                    <div class="rcorners-product-detail">
+                        <span>HOT DETAIL</span>
+                        <span>
+                            <?php
+                            $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                            $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                            echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                            ?>
+                        </span>
+                    </div>
+
+                </div>
                 <div class="col-xs-12">
                     <div class="zoom-box-x">
                         <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
@@ -83,14 +97,38 @@ $val = rand(1, 10);
             <div class="row">
                 <div class="col-md-12 col-xs-12 product-select bg-white">
                     <div class="product-form">
-                        <h3 class="size20 size16-xs"><?php echo strtoupper($model['title']) ?></h3>
+                        <p class="size24 size20-xs b">
+                            <a class="fc-black" href="<?php echo Yii::$app->homeUrl . 'search/brand/' . \common\models\ModelMaster::encodeParams(['brandId' => $model['brandId']]); ?>">
+                                <?php echo strtoupper($model['brandName']) ?>
+                            </a>
+                        </p>
+                        <p class="size20 size16-xs "><?php echo strtoupper($model['title']) ?></p>
+
                         <?php
                         if ($model['price'] > 0) {
                             ?>
-                            <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
-                            <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
+                            <div class="col-sm-8 padding-product-detail">
+                                <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
+                            </div>
+                            <div class="col-sm-4 padding-product-detail">
+                                <div class="rcorners-product-detail-right">
+                                    <span>
+                                        <?php
+                                        $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                                        $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                                        echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                                        ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 padding-product-detail">
+                                <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
+                            </div>
+
                         <?php } ?>
-                        <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
+                        <div class="col-sm-12 padding-product-detail">
+                            <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
+                        </div>
                         <?php
                         if (isset($model['shortDescription'])) {
                             echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
@@ -198,13 +236,13 @@ $val = rand(1, 10);
                             }
                             //if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
                             if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;">ADD TO CART</a>';
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;cursor:default;">ADD TO CART</a>';
                             } else {
                                 echo ' ';
                             }
                             //}
                             ?>
-                            <div class="size12">&nbsp;</div>
+                            <div class="size12" >&nbsp;</div>
                         </div>
                     </div>
                 </div>

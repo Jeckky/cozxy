@@ -31,3 +31,77 @@ and open the template in the editor.
     padding-right: 5px;
     padding-left: 5px;
 }
+.product-sticker {
+    position: absolute;
+    top: 30px;
+    right: -1px;
+    z-index: 10;
+    width: 50px;
+}
+.rcorners4 {
+    /*border-radius: 15px 50px 30px 5px;*/
+    background: rgba(255, 0, 0, 0.81) ;
+    /*padding: 20px;*/
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.triangle {
+    top: -2px;
+    width: 0;
+    height: 0;
+    border-left: 25px solid rgba(255, 0, 0, 0.81);
+    border-right: 25px solid rgba(255, 0, 0, 0.81);
+    border-bottom: 25px solid transparent;
+    opacity: 0.9;
+}
+
+.percen-discount{
+    font-size: 10px;
+}
+
+.discount{
+    font-weight: bold;
+}
+
+.product-sticker-product-detail {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    z-index: 10;
+    width: 50px;
+}
+.rcorners-product-detail {
+    /*border-radius: 15px 50px 30px 5px;*/
+    background: rgba(255, 0, 0, 0.81) ;
+    /*padding: 20px;*/
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+
+.rcorners-product-detail-right {
+    /*border-radius: 15px 50px 30px 5px;*/
+    background: #ffffff ;
+    /*padding: 20px;*/
+    text-align: center;
+    padding: 1px;
+    width: 60px;
+    height: auto;
+    color: rgba(255, 0, 0, 0.81);
+    font-size: 10px;
+    border: 2px solid rgba(255, 0, 0, 0.81) ;
+    margin-top: 7px;
+
+}
+
+.padding-product-detail{
+    padding-right: 0px;
+    padding-left:0px;
+}

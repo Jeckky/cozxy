@@ -165,6 +165,44 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                             <h2>No item found</h2>
                         </div>
                     <?php endif; ?>
+                    <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+                        <div class="filter-product-cozxy col-sm-12">
+                            <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                            <div class="row">
+                                <?php
+//                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
+                                ?>
+                                <?php
+                                echo \yii\widgets\ListView::widget([
+                                    'dataProvider' => $promotions,
+                                    'options' => [
+                                        'tag' => false,
+                                    ],
+                                    'itemView' => function ($model, $key, $index, $widget) {
+                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                                    },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                    //'layout'=>"{summary}{pager}{items}"
+//                            'layout' => "{items}",
+                                    'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
+                                    'itemOptions' => [
+                                        'tag' => false,
+                                        'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
+                                            'firstPageLabel' => 'first',
+                                            'lastPageLabel' => 'last',
+                                            'prevPageLabel' => 'previous',
+                                            'nextPageLabel' => 'next',
+                                            'maxButtonCount' => 3,
+                                        ] : [],
+                                    ],
+                                ]);
+//                        yii\widgets\Pjax::end();
+                                ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+
                     <div class="filter-product-cozxy col-sm-12">
 
                         <?php if ($productCanSell->getTotalCount() > 0): ?>
@@ -307,7 +345,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                    ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                   ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                 ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

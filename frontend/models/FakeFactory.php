@@ -343,7 +343,7 @@ class FakeFactory extends Model {
         return $products;
     }
 
-    public static function productViews($productIdParams, $cartOrderId) {
+    public static function productViews($productIdParams, $cartOrderId, $selectedOptions) {
         $products = [];
         //$imagAll = [];
         //$GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
@@ -399,17 +399,18 @@ class FakeFactory extends Model {
          * wishList
          */
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
-
+        //echo $GetProductSuppliers->product->brand->title;
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => $GetProductSuppliers['productSuppId'],
             'productId' => $GetProductSuppliers['productId'],
             //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
             'brandId' => $GetProductSuppliers['brandId'],
+            'brandName' => isset($GetProductSuppliers->product->brand) ? $GetProductSuppliers->product->brand->title : 'No Brand',
             'categoryId' => $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
-            //'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($marketPrice->title) ? $marketPrice->title : $GetProductSuppliers['title'],
+            //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
+            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $marketPrice->title,
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
@@ -432,7 +433,9 @@ class FakeFactory extends Model {
             'specificationDescriptionCozxy' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductCozxy['specification'],
             'descriptionCozxy' => isset($marketPrice->description) ? $marketPrice->description : $GetProductCozxy['description'],
             'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
-            'marketPrice' => isset($market) ? number_format($market, 2) : ''
+            'marketPrice' => isset($market) ? number_format($market, 2) : '',
+            'DiscountmarketPrice' => isset($market) ? $market : 0,
+            'Discountprice' => isset($GetProductSuppliers['price']) ? $GetProductSuppliers['price'] : 0,
         ];
 
         return $products;

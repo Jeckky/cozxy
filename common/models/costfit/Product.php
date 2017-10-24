@@ -695,7 +695,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productPromotion($n = NULL, $cat = FALSE) {
+    public static function productPromotion($n = NULL, $cat = false, $brandId = false) {
         $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->one();
         if (isset($promotionConfig)) {
             $productPromotionIds = $promotionConfig->value;
@@ -710,6 +710,14 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ->where('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
         ->andWhere(['in', 'pps.productSuppId', explode(',', $productPromotionIds)])
         ->orderBy(new Expression('rand()') . " , pps.price");
+        if (isset($cat) && !empty($cat)) {
+            $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
+            $products->andWhere(['ctp.categoryId' => $cat]);
+        }
+        if (isset($brandId) && !empty($brandId)) {
+            $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
+            $products->andWhere(['b.brandId' => $brandId]);
+        }
 
         return new ActiveDataProvider([
             'query' => $products,

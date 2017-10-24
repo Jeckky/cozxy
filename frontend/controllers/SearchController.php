@@ -69,7 +69,8 @@ class SearchController extends MasterController {
             $category = FALSE;
             $site = 'brand';
         }
-        return $this->render('index', compact('site', 'productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));
+        $promotions = Product::productPromotion(12, $categoryId);
+        return $this->render('index', compact('promotions', 'site', 'productStory', 'productCanSell', 'category', 'categoryId', 'productSupplierId', 'productNotSell', 'productFilterBrand', 'title', 'catPrice'));
     }
 
     public function actionCozxyProduct() {
@@ -138,8 +139,8 @@ class SearchController extends MasterController {
 //        ]);
 
         $productNotSell = Product::productForNotSale(null, null, $brandId);
-
-        return $this->render('brand', compact('productCanSell', 'brandName', 'productNotSell'));
+        $promotions = Product::productPromotion(12, '', $brandId);
+        return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell'));
     }
 
     public function actionFilterPrice() {
