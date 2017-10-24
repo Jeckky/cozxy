@@ -6,7 +6,7 @@
 <div class="col-xs-12 total-price bg-white">
     <div class="row">
         <div class="price-detail">Current point:
-            <div class="pull-right"><?= $userPoint != '0' ? number_format($userPoint->currentPoint, 2) : '0.00' ?></div>
+            <div class="pull-right"><?= $userPoint != '0' ? number_format($userPoint->currentPoint) : '0.00' ?></div>
         </div>
         <div class="price-detail">Order subtotal:
             <div class="pull-right"><?= number_format($order->summary, 2) ?> </div>
@@ -16,20 +16,20 @@
                 <?php
                 if ($order->summary >= $systemCoin) {
                     ?>
-                    <div class="pull-right"><?= number_format($order->summary - $systemCoin, 2) ?></div>
+                    <div class="pull-right"><?= number_format($order->summary - $systemCoin) ?></div>
                 <?php } else { ?>
-                    <div class="pull-right"><?= number_format($order->summary, 2) ?></div>
+                    <div class="pull-right"><?= number_format($order->summary) ?></div>
                 <?php } ?>
             </div>
             <div class="price-detail">Use system coin:
-                <div class="pull-right"><?= number_format($systemCoin, 2) ?></div>
+                <div class="pull-right"><?= number_format($systemCoin) ?></div>
             </div>
 
             <div class="price-detail">Your coin balance:
                 <?php
                 $balance = ($userPoint->currentPoint - $order->summary) + $systemCoin;
                 ?>
-                <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance, 2) ?></div>
+                <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance) ?></div>
                 <?php
                 if ($balance < 0) {
                     ?>
@@ -40,7 +40,7 @@
                 <?php
                 $systemBalance = $userPoint->currentCozxySystemPoint - $systemCoin;
                 ?>
-                <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($systemBalance, 2) ?></div>
+                <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($systemBalance) ?></div>
             </div>
         <?php } else {//ไม่ใช้ system coin
             ?>
@@ -49,7 +49,7 @@
                 $balance = $userPoint->currentPoint - $order->summary;
                 if ($order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {
                     ?>
-                    <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance, 2) ?></div>
+                    <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance) ?></div>
                     <?php
                 }
                 if ($balance < 0 && $order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {

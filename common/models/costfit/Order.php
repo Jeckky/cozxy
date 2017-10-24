@@ -109,7 +109,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             'quantity',
             'isbn',
             'title', 'QIquantity'
-        /* use end */
+                /* use end */
         ]);
     }
 
@@ -178,11 +178,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'qty' => intval($item->quantity),
                     //'price' => $item->price,
                     'price' => ProductSuppliers::productPriceSupplier($item->productSuppId),
-                    'priceText' => number_format($item->price, 2),
+                    'priceText' => number_format($item->price),
                     'priceOnePiece' => $item->priceOnePiece,
-                    'priceOnePieceText' => number_format($item->priceOnePiece, 2),
+                    'priceOnePieceText' => number_format($item->priceOnePiece),
 //                    'priceMarket' => ProductSuppliers::productPriceSupplier($item->productSuppId),
-                    'priceMarket' => isset($item->product->price) ? number_format($item->product->price, 2) : '',
+                    'priceMarket' => isset($item->product->price) ? number_format($item->product->price) : '',
                     'sendDate' => $item->sendDate,
                     'firstTimeSendDate' => $item->firstTimeSendDate,
                     'sendDateNoDate' => isset($item->shippingType) ? $item->shippingType->date : NULL,
@@ -190,7 +190,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     'shipDate' => $item->sendDate,
                     'discountValue' => $item->discountValue,
                     'shippingDiscountValue' => isset($item->shippingDiscountValue) ? $item->shippingDiscountValue : 0,
-                    'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue, 2) : number_format(0, 2),
+                    'shippingDiscountValueText' => isset($item->shippingDiscountValue) ? number_format($item->shippingDiscountValue) : number_format(0, 2),
                     'total' => $item->total,
                     //'image' => isset($item->product->productImages[0]) ? \Yii::$app->homeUrl . $item->product->productImages[0]->image : $svg195x195,
                     'image' => $productImageSuppliersT1,
@@ -783,7 +783,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     public function search($params) {
 
         $query = \common\models\costfit\Order::find()
-        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
         //  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
@@ -799,7 +799,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         }
 
         $query->andFilterWhere(['like', 'createDateTime', $this->createDateTime])
-        ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
+                ->andFilterWhere(['like', 'orderNo', $this->orderNo]);
 
         return $dataProvider;
     }

@@ -26,28 +26,28 @@ class FakeFactory extends Model {
             $whereArray["pps.status"] = "1";
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('*')
-            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-            ->where($whereArray)
-            ->andWhere([">", "ps.result", 0])
-            ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
+                            ->select('*')
+                            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                            ->where($whereArray)
+                            ->andWhere([">", "ps.result", 0])
+                            ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
-            ->select('*')
-            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-            . ' product_price_suppliers.price > 0')
+                            ->select('*')
+                            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+                            ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
+                                    . ' product_price_suppliers.price > 0')
 //                ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit(isset($n) ? $n : 99999)->all();
-            ->orderBy("product_price_suppliers.productSuppId , product_price_suppliers.price ASC  ")->limit(isset($n) ? $n : 99999)->all();
+                            ->orderBy("product_price_suppliers.productSuppId , product_price_suppliers.price ASC  ")->limit(isset($n) ? $n : 99999)->all();
         }
 
         foreach ($pCanSale as $value) {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-            $price = number_format($value->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price) : ''; //number_format($value->product->price, 2);
+            $price = number_format($value->price);
 
             if (Yii::$app->controller->id == 'site') {
                 $title = isset($value->title) ? substr($value->title, 0, 35) : '';
@@ -88,30 +88,30 @@ class FakeFactory extends Model {
 // $whereArray2["ps.result"] = "0";
 //$whereArray2["pps.status"] = "1";
             $product = \common\models\costfit\CategoryToProduct::find()
-            ->select('*')
-            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-            ->where($whereArray2)
-            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
-            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
-            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
-            ->orderBy(new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
+                            ->select('*')
+                            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                            ->where($whereArray2)
+                            ->andWhere("IF(`ps`.`result` = 0,1,(IF(`ps`.`result` IS NULL,(IF(`product`.productId IS NULL,0,1)),0)))")
+                            ->andWhere('IF(`pps`.`status` = 1,1,(IF(`pps`.`status` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) ')
+                            ->andWhere('IF(`ps`.`approve`="approve",1,(IF(`ps`.`approve` IS NULL,(IF(`product`.productId IS NULL,0,1)),0))) = 1')
+                            ->orderBy(new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
         } else {
             $product = \common\models\costfit\ProductSuppliers::find()
-            ->select('*')
-            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-            ->where(' product_suppliers.approve="approve" and product_suppliers.result = 0 AND product_price_suppliers.status =1 AND '
-            . ' product_price_suppliers.price = 0')
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(isset($n) ? $n : 99999)->all();
+                            ->select('*')
+                            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+                            ->where(' product_suppliers.approve="approve" and product_suppliers.result = 0 AND product_price_suppliers.status =1 AND '
+                                    . ' product_price_suppliers.price = 0')
+                            ->orderBy(new \yii\db\Expression('rand()'))
+                            ->limit(isset($n) ? $n : 99999)->all();
 
             $product = Product::find()
-            ->leftJoin('category_to_product ctp', ['product.productId' => 'ctp.categoryId'])
-            ->where('ctp.productId is null')
+                    ->leftJoin('category_to_product ctp', ['product.productId' => 'ctp.categoryId'])
+                    ->where('ctp.productId is null')
 //                ->orderBy(new Expression('rand()'))
-            ->orderBy('productId')
-            ->limit(isset($n) ? $n : 0);
+                    ->orderBy('productId')
+                    ->limit(isset($n) ? $n : 0);
             $dataProvider = new ActiveDataProvider([
                 'query' => $product,
                 'pagination' => [
@@ -130,8 +130,8 @@ class FakeFactory extends Model {
                 $title = isset($value->title) ? $value->title : '';
             }
 
-            $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-            $price = number_format($value->price, 2);
+            $price_s = isset($value->product) ? number_format($value->product->price) : ''; //number_format($value->product->price, 2);
+            $price = number_format($value->price);
             $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
             $products[$value->productSuppId] = [
                 'productSuppId' => $value->productSuppId,
@@ -153,15 +153,15 @@ class FakeFactory extends Model {
         $whereArray = [];
 
         $pCanSale = \common\models\costfit\OrderItem::find()
-        ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
-        ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
-        ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
-        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
-        ->orderBy([
-            'sum(`order_item`.quantity) ' => SORT_DESC,
-            ' `order_item`.productId' => SORT_DESC
-        ])
-        ->limit($n)->all();
+                        ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
+                        ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
+                        ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
+                        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
+                        ->orderBy([
+                            'sum(`order_item`.quantity) ' => SORT_DESC,
+                            ' `order_item`.productId' => SORT_DESC
+                        ])
+                        ->limit($n)->all();
 
         foreach ($pCanSale as $value) {
             if ($value->attributes['orderItemId'] > 0) {
@@ -173,8 +173,8 @@ class FakeFactory extends Model {
                     $title = isset($value->title) ? $value->title : '';
                 }
 
-                $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-                $price = number_format($value->price, 2);
+                $price_s = isset($value->product) ? number_format($value->product->price) : ''; //number_format($value->product->price, 2);
+                $price = number_format($value->price);
                 $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
                 $products[$value->productSuppId] = [
                     'productSuppId' => $value->productSuppId,
@@ -219,10 +219,10 @@ class FakeFactory extends Model {
         $products = [];
         if ($n == 99) {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1")
-            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
+                            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 ")
-            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+                            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {
             $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId)->all();
@@ -230,8 +230,8 @@ class FakeFactory extends Model {
 // $productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $items['productSuppId'])->one();
 //$productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : 0;
-                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : 0;
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price) : 0;
+                $price = isset($productPrice->price) ? number_format($productPrice->price) : 0;
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
@@ -282,8 +282,8 @@ class FakeFactory extends Model {
 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
                 $productImages = \common\models\costfit\ProductImage::find()->where('productId = ' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId = ' . $items->productSuppId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($productPrice->price, 2);
-                $price = number_format($productPrice->price, 2);
+                $price_s = number_format($productPrice->price);
+                $price = number_format($productPrice->price);
                 $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
                 $rating_member = \common\helpers\Reviews::RatingInMember($value->productId, $value->productPostId);
                 if ($rating_score == 0 && $rating_member == 0) {
@@ -358,19 +358,19 @@ class FakeFactory extends Model {
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
             if ($resultProductSuppliers >= $quantityOrderItems) { //ถ้าจำนวนสินค้าใน เทเบิล product suppliers มีมากกว่าในเทเบิล orderItems ให้แสดงและค้นหาสินค้าที่มีในสต๊อก
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
-                ->select('`product_suppliers`.*, `product_price_suppliers`.price')
-                ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
-                ->orderBy('product_price_suppliers.price')
-                ->one();
+                        ->select('`product_suppliers`.*, `product_price_suppliers`.price')
+                        ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
+                        ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
+                        ->orderBy('product_price_suppliers.price')
+                        ->one();
                 $txtAlert = 'Ok'; // แสดงปุ่ม Add to cart , add to wishList หรือ SHELVES
             } else {
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
-                ->select('`product_suppliers`.*, `product_price_suppliers`.price')
-                ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("productId=" . $productIdParams . ' and product_price_suppliers.status = 1')
-                ->orderBy('product_price_suppliers.price')
-                ->one();
+                        ->select('`product_suppliers`.*, `product_price_suppliers`.price')
+                        ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
+                        ->where("productId=" . $productIdParams . ' and product_price_suppliers.status = 1')
+                        ->orderBy('product_price_suppliers.price')
+                        ->one();
                 $txtAlert = 'No';
             }
         } else {
@@ -416,7 +416,7 @@ class FakeFactory extends Model {
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
             'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
             'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
-            'price' => isset($GetProductSuppliers['price']) ? number_format($GetProductSuppliers['price'], 2) : '',
+            'price' => isset($GetProductSuppliers['price']) ? number_format($GetProductSuppliers['price']) : '',
             'category' => isset($GetCategory->title) ? $GetCategory->title : '',
             //'image' => $productImagesOneTopz,
             //'images' => $imagAll,
@@ -433,7 +433,7 @@ class FakeFactory extends Model {
             'specificationDescriptionCozxy' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductCozxy['specification'],
             'descriptionCozxy' => isset($marketPrice->description) ? $marketPrice->description : $GetProductCozxy['description'],
             'txtAlert' => $txtAlert, //ตรวจสอบว่ามีจำนวนในสต๊อกหรือเปล่า
-            'marketPrice' => isset($market) ? number_format($market, 2) : '',
+            'marketPrice' => isset($market) ? number_format($market) : '',
             'DiscountmarketPrice' => isset($market) ? $market : 0,
             'Discountprice' => isset($GetProductSuppliers['price']) ? $GetProductSuppliers['price'] : 0,
         ];
@@ -445,13 +445,13 @@ class FakeFactory extends Model {
         $products = [];
 //$brand = \common\models\costfit\Brand::find()->all();
         $brand = \common\models\costfit\Product::find()
-        ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId, `brand`.title as title, `brand`.description as description ')
-        ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
-        ->where('brand.brandId is not null')
-        ->andWhere('product.parentId is not null')
-        ->andWhere(['product.approve' => 'approve'])
-        ->groupBy(['product.brandId'])
-        ->limit($n)->all();
+                        ->select(' `brand`.image as imagebrand, `brand`.brandId as brandId, `brand`.title as title, `brand`.description as description ')
+                        ->join(" LEFT JOIN", "brand", "brand.brandId  = product.brandId")
+                        ->where('brand.brandId is not null')
+                        ->andWhere('product.parentId is not null')
+                        ->andWhere(['product.approve' => 'approve'])
+                        ->groupBy(['product.brandId'])
+                        ->limit($n)->all();
 
         foreach ($brand as $items) {
             if (isset($items->imagebrand)) {
@@ -477,7 +477,7 @@ class FakeFactory extends Model {
 
     public static function productOtherProducts() {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status = 1')
-        ->orderBy('productPostId desc')->all();
+                        ->orderBy('productPostId desc')->all();
         $products = [];
         foreach ($productPost as $items) {
             if (isset($items->image) && !empty($items->image)) {
@@ -529,28 +529,28 @@ class FakeFactory extends Model {
             $whereArray["category_to_product.categoryId"] = $cat;
 
             $pCanSale = \common\models\costfit\CategoryToProduct::find()
-            ->select('*')
-            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
-            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
-            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-            ->where($whereArray)
-            ->andWhere(["in", "ps.productSuppId", $promotionIds])
-            ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
+                            ->select('*')
+                            ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                            ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                            ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                            ->where($whereArray)
+                            ->andWhere(["in", "ps.productSuppId", $promotionIds])
+                            ->orderBy("pps.price ASC , " . new \yii\db\Expression('rand()'))->limit(isset($n) ? $n : 99999)->all();
         } else {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
-            ->select('*, product_suppliers.productSuppId as productSuppId')
-            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-            ->where(" product_suppliers.productSuppId in ($promotionIds) ")
+                            ->select('*, product_suppliers.productSuppId as productSuppId')
+                            ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
+                            ->where(" product_suppliers.productSuppId in ($promotionIds) ")
 //            ->orderBy(new \yii\db\Expression('rand()') . " , product_price_suppliers.price ASC  ")->limit($n)->all();
-            ->orderBy("product_price_suppliers.price ASC  ")->limit($n)->all();
+                            ->orderBy("product_price_suppliers.price ASC  ")->limit($n)->all();
         }
 
         foreach ($pCanSale as $value) {
 
             if (isset($value->productSuppId)) {
                 $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-                $price_s = isset($value->product) ? number_format($value->product->price, 2) : ''; //number_format($value->product->price, 2);
-                $price = number_format($value->price, 2);
+                $price_s = isset($value->product) ? number_format($value->product->price) : ''; //number_format($value->product->price, 2);
+                $price = number_format($value->price);
 
                 if (Yii::$app->controller->id == 'site') {
                     $title = isset($value->title) ? substr($value->title, 0, 35) : '';
@@ -587,10 +587,10 @@ class FakeFactory extends Model {
         $products = [];
         if ($n == 99) {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 and isPublic = 1")
-            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
+                            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->all();
         } else {
             $productPost = \common\models\costfit\ProductPost::find()->where(" userId != 0 and productId is not null and status =1 and isPublic = 1")
-            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
+                            ->groupBy(['productId'])->orderBy(new \yii\db\Expression('rand()'))->limit($n)->all();
         }
         foreach ($productPost as $value) {
             if (isset($categoryId)) {
@@ -599,7 +599,7 @@ class FakeFactory extends Model {
                 $productPostList = \common\models\costfit\ProductSuppliers::find()->where('productId = ' . $value->productId . ' ')->all();
             }
             if (isset($productPrice->price)) {
-                $price = number_format($productPrice->price, 2);
+                $price = number_format($productPrice->price);
             } else {
                 $price = '';
             }
@@ -658,14 +658,14 @@ class FakeFactory extends Model {
         if (isset($cartOrderId['orderId'])) {
             $orderId = $cartOrderId['orderId'];
             $GetQty = \common\models\costfit\Order::find()
-            ->select(' count(order_item.quantity) as quantity')
-            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
-            ->where('order_item.productId = ' . $productId . ' and `order`.orderId = ' . $orderId . ' and order.status < 5')->count('order_item.quantity');
+                            ->select(' count(order_item.quantity) as quantity')
+                            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
+                            ->where('order_item.productId = ' . $productId . ' and `order`.orderId = ' . $orderId . ' and order.status < 5')->count('order_item.quantity');
         } else {
             $GetQty = \common\models\costfit\Order::find()
-            ->select(' count(order_item.quantity) as quantity')
-            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
-            ->where('order_item.productId = ' . $productId . ' and order.status < 5')->count('order_item.quantity');
+                            ->select(' count(order_item.quantity) as quantity')
+                            ->join("LEFT JOIN", "order_item", "order_item.orderId = `order`.orderId")
+                            ->where('order_item.productId = ' . $productId . ' and order.status < 5')->count('order_item.quantity');
         }
 
         if (isset($GetQty)) {

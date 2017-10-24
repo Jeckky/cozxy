@@ -13,16 +13,16 @@ use common\models\costfit\UserPoint;
 <div class="col-xs-12 total-price bg-white checkout-total">
     <div class="row">
         <div class="price-detail">SUBTOTAL
-            <div class="pull-right"><?= number_format($this->params['cart']['total'], 2) ?> THB</div>
+            <div class="pull-right"><?= number_format($this->params['cart']['total']) ?> THB</div>
         </div>
         <div class="price-detail">SHIPPING
-            <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate'], 2) ?></div>
+            <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate']) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
             <div class="pull-right">– THB</div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
-            <div class="pull-right"><?= number_format($this->params ['cart']['summary'], 2) ?> THB </div>
+            <div class="pull-right"><?= number_format($this->params ['cart']['summary']) ?> THB </div>
         </div>
     </div>
     <?php
@@ -99,7 +99,7 @@ use common\models\costfit\UserPoint;
                     <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
                     <input type="hidden" id="systemCoin" value="0" name="systemCoin">
                     <input type="submit"  value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth">
-                    <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId    ?>)">-->
+                    <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId      ?>)">-->
                     <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
                     <?php ActiveForm::end(); ?>
                     <br>
@@ -125,7 +125,7 @@ use common\models\costfit\UserPoint;
                             Your cozxy system coin balacne :
                         </td>
                         <td style="text-align: right;">
-                            <b><?= isset($userPoint) ? number_format($userPoint->currentCozxySystemPoint, 2) : '0' ?></b>
+                            <b><?= isset($userPoint) ? number_format($userPoint->currentCozxySystemPoint) : '0' ?></b>
                         </td>
                         <td>Cozxy coints</td>
                     </tr>
@@ -134,13 +134,13 @@ use common\models\costfit\UserPoint;
                             Order sub Subtotal :
                         </td>
                         <td style="text-align: right;">
-                            <b><?= number_format($this->params ['cart']['summary'], 2) ?></b>
+                            <b><?= number_format($this->params ['cart']['summary']) ?></b>
                         </td>
                         <td>Cozxy coints</td>
                     </tr>
                     <tr>
                         <td style="text-align: left;" colspan="3">
-                            <input type="radio" name="choosePay"  id="allCoin" checked="checked"> Pay all <b><?= isset($userPoint) ? number_format($userPoint->currentCozxySystemPoint, 2) : '0' ?></b> Cozxy coints
+                            <input type="radio" name="choosePay"  id="allCoin" checked="checked"> Pay all <b><?= isset($userPoint) ? number_format($userPoint->currentCozxySystemPoint) : '0' ?></b> Cozxy coints
                             <input type="hidden" id="allCoinHidden" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
 
                         </td>
