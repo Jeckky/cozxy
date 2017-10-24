@@ -42,7 +42,7 @@ foreach ($hotDetail as $key => $value) {
                                 echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
                                 ?>
                             </span>
-                        </div> 
+                        </div>
                     </div>
                 <?php } ?>
                 <div class="col-xs-12">
@@ -136,7 +136,7 @@ foreach ($hotDetail as $key => $value) {
                                 </div>
                             </div>
                             <div class="col-sm-12 padding-product-detail">
-                                <p><span class="size12 onsale"><?= $model['marketPrice'] ?> THB </span></p>
+                                <p><span class="size18 onsale"><?= $model['marketPrice'] ?> THB </span></p>
                             </div>
 
                         <?php } ?>
