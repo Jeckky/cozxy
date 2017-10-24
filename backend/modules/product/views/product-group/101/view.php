@@ -47,7 +47,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <th style="width: 10%">Product Group</th>
                             <td>
                                 <span id="masterTitle"><?= $model->title; ?>&nbsp;&nbsp;&nbsp;</span>
-                                <input type="text" id="productTitle" value="<?= $model->title; ?>" style="height: 40px;display: none;">
+                                <input type="text" id="productTitle" value="<?= $model->title; ?>" style="height: 40px;width:90%;display: none;">
                                 <a class="btn btn-warning pull-right" id="editProductGroup" href="javascript:changeProductGroupTitle()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
                                 <a class="btn btn-success pull-right" id="saveChangeProductGroup" href="javascript:savceChangeProductGroupTitle(<?= $productGroupId ?>)" style="display: none;"><i class="fa fa-check" aria-hidden="true"></i> Save</a>
                             </td>
@@ -152,15 +152,15 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         <?php
                     else:
                         $countDraft = \common\models\costfit\ProductSuppliers::find()
-                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
-                        ->count();
+                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 0")
+                                ->count();
                         $countWaitApprove = \common\models\costfit\ProductSuppliers::find()
-                        ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
-                        ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
-                        ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
-                        ->count();
+                                ->join("RIGHT JOIN", "product p", "p.productId = product_suppliers.productId")
+                                ->join("RIGHT JOIN", "product pg", "pg.productId = p.parentId")
+                                ->where("pg.productId = " . $_GET["productGroupId"] . " AND product_suppliers.userId = " . $userId . " AND product_suppliers.status = 99")
+                                ->count();
                         ?>
                         <?php if ($countDraft > 0): ?>
                             <h3 style="color: tomato">Send Approve My Product ?</h3>
