@@ -110,7 +110,7 @@ if (Yii::$app->controller->id == 'product') {
                     ?>
                     <p class="price">
                         <span class="size16"><?= number_format($model->price) . ' THB' ?> </span><br>
-                        <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }
