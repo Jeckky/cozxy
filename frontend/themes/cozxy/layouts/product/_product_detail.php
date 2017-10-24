@@ -11,6 +11,19 @@ $this->title = $model['title'];
 $this->params['breadcrumbs'][] = $this->title;
 $id = uniqid();
 $val = rand(1, 10);
+$productPromotion = ($productPromotion);
+$productId = $model['productId'];
+//print_r($productPromotion);
+//print_r($productId);
+$cars = array("Volvo", "BMW", "Toyota");
+//print_r($cars);
+$hotDetail = explode(",", $productPromotion);
+$text = '';
+foreach ($hotDetail as $key => $value) {
+    if ($value == $model['productSuppId']) {
+        $text = 'ok';
+    }
+}
 ?>
 
 <!-- Product Detail Old -->
@@ -18,19 +31,20 @@ $val = rand(1, 10);
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
-                <div class="product-sticker-product-detail">
-                    <div class="rcorners-product-detail">
-                        <span>HOT DETAIL</span>
-                        <span>
-                            <?php
-                            $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
-                            $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
-                            echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
-                            ?>
-                        </span>
+                <?php if ($text == 'ok') { ?>
+                    <div class="product-sticker-product-detail">
+                        <div class="rcorners-product-detail">
+                            <span>HOT DETAIL</span>
+                            <span>
+                                <?php
+                                $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                                $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                                echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                                ?>
+                            </span>
+                        </div> 
                     </div>
-
-                </div>
+                <?php } ?>
                 <div class="col-xs-12">
                     <div class="zoom-box-x">
                         <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >

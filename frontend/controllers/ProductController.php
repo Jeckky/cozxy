@@ -74,7 +74,13 @@ class ProductController extends MasterController {
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);
-        return $this->render('index', compact('productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
+        $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->one();
+        if (isset($promotionConfig)) {
+            $productPromotion = $promotionConfig->value;
+        } else {
+            $productPromotion = NULL;
+        }
+        return $this->render('index', compact('productPromotion', 'productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 
     public function actionImagesItemBig() {

@@ -15,12 +15,15 @@ if (Yii::$app->controller->id == 'product') {
     $height = "height: 260px";
 }
 ?>
+<<<<<<< HEAD
 <style type="text/css">
 
 </style>
+=======
+
+>>>>>>> 94dc82341759f9067c9e33fa8577e6ecb829ae16
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
-
     <div class="product-box">
         <div class="product-sticker">
             <div class="rcorners4">
@@ -103,6 +106,7 @@ if (Yii::$app->controller->id == 'product') {
             if ($model->price > 0) {
                 if (isset($hotDeal)) {
                     ?>
+<<<<<<< HEAD
                     <p class="price" style="height: 50px;">
                         <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: red; height: 25px;padding: 5px;color: white;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
                         <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
@@ -113,6 +117,18 @@ if (Yii::$app->controller->id == 'product') {
                     <p class="price" style="height: 50px;">
                         <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="height: 25px;padding: 5px;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
                         <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+=======
+
+                    <p class="price">
+                        <span class="size16" style="color: red; "><?= number_format($model->price, 2) . 'THB' ?> </span><br>
+                        <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) . 'THB' : '' ?> </span>
+                    </p>
+                <?php } else {
+                    ?>
+                    <p class="price">
+                        <span class="size16"><?= number_format($model->price) . ' THB' ?> </span><br>
+                        <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+>>>>>>> 94dc82341759f9067c9e33fa8577e6ecb829ae16
                     </p>
                     <?php
                 }
