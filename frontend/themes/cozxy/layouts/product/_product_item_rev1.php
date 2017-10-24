@@ -14,7 +14,7 @@ if (Yii::$app->controller->id == 'product') {
     $height = "height: 260px";
 }
 ?>
-<?php $col = isset($colSize) ? $colSize : '4'; ?> 
+<?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
         <div class="product-img text-center">
@@ -87,14 +87,14 @@ if (Yii::$app->controller->id == 'product') {
                     ?>
 
                     <p class="price" style="height: 50px;">
-                        <span class="size16 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: red; height: 25px;padding: 5px;color: white;"><?= number_format($model->price, 2) . 'THB' ?> </span><br><br>
-                        <span class="size12 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) . 'THB' : '' ?> </span>
+                        <span class="size16 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: red; height: 25px;padding: 5px;color: white;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
+                        <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price">
-                        <span class="size16"><?= number_format($model->price, 2) . 'THB' ?> </span><br>
-                        <span class="size10 onsale"><?= isset($model->product) ? number_format($model->product->price, 1) . 'THB' : '' ?> </span>
+                        <span class="size16"><?= number_format($model->price) . ' THB' ?> </span><br>
+                        <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }
