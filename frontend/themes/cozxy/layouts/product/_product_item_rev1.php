@@ -18,7 +18,6 @@ if (Yii::$app->controller->id == 'product') {
 
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
-
     <div class="product-box">
         <div class="product-sticker">
             <div class="rcorners4">
