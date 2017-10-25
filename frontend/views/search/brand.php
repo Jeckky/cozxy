@@ -157,16 +157,18 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_price', [
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
-                            'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
+                            //'layout' => "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n",
+                            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                            'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
                             'itemOptions' => [
                                 'tag' => false,
-                                'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
+                                'pager' => [
                                     'firstPageLabel' => 'first',
                                     'lastPageLabel' => 'last',
                                     'prevPageLabel' => 'previous',
                                     'nextPageLabel' => 'next',
                                     'maxButtonCount' => 3,
-                                ] : [],
+                                ],
                             ],
                         ]);
 //                        yii\widgets\Pjax::end();
