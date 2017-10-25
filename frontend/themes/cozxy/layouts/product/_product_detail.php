@@ -24,6 +24,9 @@ foreach ($hotDetail as $key => $value) {
         $text = 'ok';
     }
 }
+$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+$DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 ?>
 
 <!-- Product Detail Old -->
@@ -31,20 +34,26 @@ foreach ($hotDetail as $key => $value) {
     <div class="row">
         <div class="col-md-8 product-gallery">
             <div class="row">
-                <?php if ($text == 'ok') { ?>
-                    <div class="product-sticker-product-detail">
-                        <div class="rcorners-product-detail">
-                            <span>HOT DETAIL</span>
-                            <span>
-                                <?php
-                                $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
-                                $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
-                                echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
-                                ?>
-                            </span>
+                <?php
+                if ($text == 'ok') {
+                    if ($DiscountProduct != 'Lessthan10') {
+                        ?>
+                        <div class="product-sticker-product-detail">
+                            <div class="rcorners-product-detail">
+                                <span>HOT DETAIL</span>
+                                <span>
+                                    <?php
+                                    //$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                                    //$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                                    echo 'SAVE' . $DiscountProduct;
+                                    ?>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                <?php } ?>
+                        <?php
+                    }
+                }
+                ?>
                 <div class="col-xs-12">
                     <div class="zoom-box-x">
                         <img  id="zoom-img"  src="<?php echo $model['image'] ?>" class="fullwidth" alt=""  data-zoom-image="<?php echo $model['image']; ?>" >
@@ -125,15 +134,21 @@ foreach ($hotDetail as $key => $value) {
                                 <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
                             </div>
                             <div class="col-sm-4 padding-product-detail">
-                                <div class="rcorners-product-detail-right">
-                                    <span>
-                                        <?php
-                                        $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
-                                        $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
-                                        echo 'SAVE' . CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
-                                        ?>
-                                    </span>
-                                </div>
+                                <?php
+                                if ($DiscountProduct != 'Lessthan10') {
+                                    ?>
+                                    <div class="rcorners-product-detail-right">
+                                        <span>
+                                            <?php
+                                            //$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
+                                            //$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
+                                            echo 'SAVE' . $DiscountProduct; //CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice)
+                                            ?>
+                                        </span>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                             <div class="col-sm-12 padding-product-detail">
                                 <p><span class="size18 onsale"><?= $model['marketPrice'] ?> THB </span></p>
@@ -191,8 +206,6 @@ foreach ($hotDetail as $key => $value) {
                         }
                         ?>
                         <?php
-                        //echo $model['price'];
-                        //echo $model['result'];
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>
                             <div class="row">

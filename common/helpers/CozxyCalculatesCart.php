@@ -156,7 +156,11 @@ class CozxyCalculatesCart {
         //((1000-800)/1000)x100 หาเปอร์เซ็นของที่ลดไป
         $master = ($marketPrice - $supplierPrice) / $marketPrice;
         $percen = $master * 100;
-        return '<span class="discount">' . round($percen, 0, PHP_ROUND_HALF_UP) . '</span>' . '<span class="percen-discount"> %</span>';
+        if (round($percen, 0, PHP_ROUND_HALF_UP) > 10) {
+            return '<span class="discount">' . round($percen, 0, PHP_ROUND_HALF_UP) . '</span>' . '<span class="percen-discount"> %</span>';
+        } else {
+            return 'Lessthan10';
+        }
     }
 
 }
