@@ -233,8 +233,8 @@ class SearchController extends MasterController {
             $category = FALSE;
             $site = 'brand';
         }
-
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
+        $promotions = Product::productPromotion(12, $categoryId);
+        return $this->renderAjax("_product_list", ['promotions' => $promotions, 'productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
             'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
     }
 
