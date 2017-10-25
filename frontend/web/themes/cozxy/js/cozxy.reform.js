@@ -1058,7 +1058,7 @@ function filterPriceCozxy() {
     $brandName = brandName;
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
-//    alert($min + " " + $max);
+    //alert($min + " " + $max);
     $categoryId = $('input:hidden:eq(2)', '#amount-min').val();
     $('.btn-black-s').html('APPLY ...');
     $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
@@ -1083,7 +1083,31 @@ function filterPriceCozxy() {
         }
     });
 }
+function filterPriceByBrand() {
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    $brandId = $('#brandId').val();
+    $('.btn-black-s').html('APPLY ...');
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    var path = $baseUrl + "search/filter-price-brand?brandId=" + $brandId;
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: {mins: $min, maxs: $max, brandId: $brandId},
+        success: function (data, status) {
+            if (data == '') {
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    $('.brand-price-filter').html(data);
+                } else {
+                    alert('error');
+                }
+            }
 
+        }
+    });
+}
 function filterPriceCozxyClear() {
     location.reload();
 }
@@ -1170,7 +1194,46 @@ function sortCozxy($categoryId, status) {
         }
     });
 }
+function sortCozxyFixBrand(brandId, status) {
+    var brandName = [];
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
+    $brandName = brandName;
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    if (status == "price")
+    {
+        $sort = $('#Sortprice').val();
+    } else if (status == "new")
+    {
+        $sort = $('#Sortnew').val();
+    }
+    $('.btn-black-s').html('APPLY ...');
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    var path = $baseUrl + "search/sort-cozxy-fix-brand?brandId=" + brandId;
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: {'status': status, brandId: brandId, mins: $min, maxs: $max, 'sort': $sort},
+        success: function (data, status) {
 
+            if (data == '') {
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+                    //$('#Sortprice').val('SORT_ASC');
+                    //$('#Sortbrand').val('SORT_ASC');
+
+                    $('.brand-price-filter').html(data);
+                } else {
+                    $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+}
 function SortOrder1(selectObject) {
     var value = selectObject.value;
     if (OrderHistory != '') {

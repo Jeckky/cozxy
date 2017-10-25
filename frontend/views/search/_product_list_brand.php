@@ -17,19 +17,6 @@ if (isset($sortstatus)) {
 }
 
 if (isset($sortstatus)) {
-    if ($sortstatus == 'brand') {
-        $sortBrandIcon = ($sort == 'SORT_DESC') ? 'Sort by brand&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-        $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
-    } else {
-        $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-        $sortBrand = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
-    }
-} else {
-    $sortBrandIcon = 'Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
-    $sortBrand = 'SORT_ASC';
-}
-
-if (isset($sortstatus)) {
     if ($sortstatus == 'new') {
         $sortNewIcon = ($sort == 'SORT_DESC') ? 'Sort by new product&nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i>' : 'Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i>';
         $sortNew = ($sort == 'SORT_DESC') ? 'SORT_ASC' : 'SORT_DESC';
@@ -42,14 +29,12 @@ if (isset($sortstatus)) {
     $sortNew = 'SORT_ASC';
 }
 ?>
-<h3 class="b"><?= strtoupper('category') ?> RECOMMENDED:: <?= strtoupper($category) ?>
+<h3 class="b">RECOMMENDED:: <?= strtoupper($brandName) ?>
     <small>
-        <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;"><?= $sortPriceIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;"><?= $sortNewIcon ?></a>
-
+        <a href="javascript:sortCozxyFixBrand('<?php echo $brandId; ?>','price')" style="color: #000;"><?= $sortPriceIcon ?></a>
+        <span style="color: #fc0;">|</span>
+        <a href="javascript:sortCozxyFixBrand('<?php echo $brandId; ?>','new')" style="color: #000;"><?= $sortNewIcon ?></a>
         <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
-        <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
         <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
 
     </small>
@@ -57,7 +42,7 @@ if (isset($sortstatus)) {
 
 <div class="row">
     <div class="wf-container">
-        <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("brandId", $brandId); ?>
 
         <?php
         yii\widgets\Pjax::begin([
@@ -104,10 +89,10 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
 </div>
 
 
-<h3 class="b"><?= strtoupper('category') ?> PRODUCT :: <?= strtoupper($category) ?> </h3>
+<h3 class="b">PRODUCT :: <?= strtoupper($brandName) ?> </h3>
 <div class="row">
     <div class="wf-container">
-        <?= yii\helpers\Html::hiddenInput("categoryId", $categoryId); ?>
+        <?= yii\helpers\Html::hiddenInput("brandId", $brandId); ?>
 
         <?php
         yii\widgets\Pjax::begin([

@@ -55,7 +55,7 @@ class SearchController extends MasterController {
         $productSupplierId = '';
 
         $productFilterBrand = new ArrayDataProvider(
-        [
+                [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
 
@@ -99,12 +99,12 @@ class SearchController extends MasterController {
 
 
         $productFilterBrand = new ArrayDataProvider(
-        [
+                [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
         $site = 'brand';
         $catPrice = DisplaySearch::findAllPrice($categoryId);
-        return $this->render('index', compact('site', 'catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
+        return $this->render('index_search', compact('site', 'catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
     }
 
     public function actionBrand($hash = FALSE) {
@@ -129,7 +129,7 @@ class SearchController extends MasterController {
 //            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
 //            , 'pagination' => ['defaultPageSize' => 12]
 //        ]);
-
+        $brandPrice = DisplaySearch::findAllBrandPrice($brandId);
         $productCanSell = Product::productForSale(null, null, $brandId);
 
 //        $productNotSell = new ArrayDataProvider(
@@ -140,7 +140,7 @@ class SearchController extends MasterController {
 
         $productNotSell = Product::productForNotSale(null, null, $brandId);
         $promotions = Product::productPromotion(12, '', $brandId);
-        return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell'));
+        return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell', 'brandId', 'brandPrice'));
     }
 
     public function actionFilterPrice() {
@@ -160,9 +160,41 @@ class SearchController extends MasterController {
         ]);
         //
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale,
-            'productFilterPriceCansale' => $productFilterPriceCansale
-            , 'category' => $category, 'categoryId' => $categoryId]);
+        return $this->renderAjax("_product_list", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'category' => $category,
+                    'categoryId' => $categoryId
+        ]);
+    }
+
+    public function actionFilterPriceBrand() {
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $brandId = Yii::$app->request->post('brandId');
+        $brandName = "";
+
+        //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId = false, $brandId, $mins, $maxs, 'Notsale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAll($categoryId = false, $brandId, $mins, $maxs, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        //
+        // throw new \yii\base\Exception($mins . ',' . $maxs);
+        $brand = \common\models\costfit\Brand::find()->where("brandId=" . $brandId)->one();
+        if (isset($brandId)) {
+            $brandName = $brand->title;
+        }
+        return $this->renderAjax("_product_list_brand", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'brandName' => $brandName,
+                    'brandId' => $brandId
+        ]);
     }
 
     public function actionFilterBrand() {
@@ -201,7 +233,7 @@ class SearchController extends MasterController {
         }
 
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
-            'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
+                    'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
     }
 
     public function actionSortCozxy() {
@@ -235,6 +267,44 @@ class SearchController extends MasterController {
         }
 
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
+    }
+
+    public function actionSortCozxyFixBrand() {
+        $FilterPrice = [];
+        $brandName = '';
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $brandId = Yii::$app->request->get('brandId');
+        $status = Yii::$app->request->post('status');
+//        $sortBrand = Yii::$app->request->post('sortBrand');
+//        $sortPrice = Yii::$app->request->post('sortPrice');
+//        $sortNew = Yii::$app->request->post('sortNew');
+        $sort = Yii::$app->request->post('sort');
+
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productSortAlls($categoryId = false, $brandId, $mins, $maxs, $status, $sort, 'Notsale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productSortAlls($categoryId = false, $brandId, $mins, $maxs, $status, $sort, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+        $sortstatus = ($status == "price") ? "price" : (($status == "brand") ? "brand" : "new");
+
+        $brand = \common\models\costfit\Brand::find()->where("brandId=" . $brandId)->one();
+        if (isset($brandId)) {
+            $brandName = $brand->title;
+        }
+        return $this->renderAjax("_product_list_brand", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'brandName' => $brandName,
+                    'brandId' => $brandId,
+                    'sort' => $sort,
+                    'sortstatus' => $sortstatus
+        ]);
     }
 
     public function actionShowMoreProducts() {

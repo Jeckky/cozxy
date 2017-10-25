@@ -13,24 +13,15 @@ use yii\widgets\ActiveForm;
         <div class="row">
 
 
-            <?php foreach ($qr9 as $code): ?>
+            <?php foreach ($qrCode as $code): ?>
                 <div class="col-md-3 text-center" style="margin-top: 30px;">
-                    <?= Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $code, ['style' => 'width:3cm;']); ?><br>
-                    <?= $code ?>
+                    <?= Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $code, ['style' => 'width:7cm;']); ?><br>
                 </div>
 
                 <?php
             endforeach;
             ?>
-            <?php foreach ($qr10 as $code): ?>
-                <div class="col-md-3 text-center" style="margin-top: 30px;">
-                    <?= Html::img("https://chart.googleapis.com/chart?chs=450x450&cht=qr&chl=" . $code, ['style' => 'width:3cm;']); ?><br>
-                    <?= $code ?>
-                </div>
 
-                <?php
-            endforeach;
-            ?>
         </div>
     </div>
 </div>
