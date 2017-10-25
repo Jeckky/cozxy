@@ -119,7 +119,8 @@ class Notifications {
 
     public static function DashboarMovementorderLastWeek() {
         $orderLastWeek = \common\models\costfit\Order::find()
-        ->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->sum('summary');
+        //->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->sum('summary');
+        ->where('`order`.status >= 5 and `order`.`createDateTime` between date_sub(now(),INTERVAL 1 WEEK) and now()')->sum('summary');
         return $orderLastWeek;
     }
 
