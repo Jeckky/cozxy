@@ -102,12 +102,42 @@ $(function() {
 
 $this->title = 'Brand ' . $brandName;
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJs('
+$(function() {
+	var waterfall = new Waterfall({
+		containerSelector: \'.wf-container\',
+		boxSelector: \'.wf-box\',
+		minBoxWidth: 256
+	});
+	$( "#slider-range" ).slider({
+		range: true,
+		min: ' . $brandPrice['minPrice'] . ',
+		max: ' . $brandPrice['maxPrice'] . ',
+		values: [ ' . $brandPrice['minPrice'] . ', ' . $brandPrice['maxPrice'] . ' ],
+		slide: function( event, ui ) {
+			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
+            $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
+            $("input:hidden:eq(1)","#amount-min").val(ui.values[ 1 ]);
+
+		},
+        stop: function (event, ui) {
+        }
+	});
+	$( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
+});
+');
+\frontend\assets\SearchAsset::register($this);
 ?>
 
+<?=
+$this->render('@app/themes/cozxy/layouts/search/_search_filter_price', [
+    'brandId' => $brandId
+]);
+?>
 <div class="product-list">
     <div class="container">
         <div class="row">
-            <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="col-md-9 col-sm-9 col-xs-12 brand-price-filter">
                 <?php if ($productCanSell->getTotalCount() > 0): ?>
                     <h3 class="b" style="word-wrap: break-word;white-space: normal;">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
@@ -124,8 +154,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 'itemView' => function ($model, $key, $widget, $brandName) {
 
-                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
-                                },
+                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                        },
                                 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
@@ -162,8 +192,8 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                                    }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                            }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
                                     'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                     'layout' => "{summary}\n{items}\n<div class ='  col-lg-offset-3'>{pager}</div>\n",

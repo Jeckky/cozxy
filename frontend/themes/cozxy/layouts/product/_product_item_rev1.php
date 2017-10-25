@@ -112,13 +112,13 @@ if (Yii::$app->controller->id == 'product') {
                     <p class="price" style="height: 50px;">
                         <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="height: 25px;padding: 5px;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
                         <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
-
-                        <?php
-                    }
-                } else {
-                    echo '';
+                    </p>
+                    <?php
                 }
-                ?>
+            } else {
+                echo '';
+            }
+            ?>
 
         </div>
     </div>

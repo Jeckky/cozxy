@@ -31,7 +31,7 @@ class LockersController extends LockersMasterController {
                 'only' => ['index', 'create', 'update', 'view', 'open-locker'],
                 'rules' => [
 // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],

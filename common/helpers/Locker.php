@@ -18,26 +18,24 @@ use yii\data\ActiveDataProvider;
  *
  * @author it
  */
-class Locker
-{
+class Locker {
 
 //put your code here
 
 
-    public static function Open($locker, $num)
-    {
+    public static function Open($locker, $num) {
 //        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
         $params = array(
-            $locker->generalprofile_lockercode,// generalprofile_lockercode
-            $locker->generalprofile_lockername,//'Cozxy-01', // generalprofile_lockercode
-            $locker->serialnumber,//'iLockerHQ17', // serialnumber
+            $locker->generalprofile_lockercode, // generalprofile_lockercode
+            $locker->generalprofile_lockername, //'Cozxy-01', // generalprofile_lockercode
+            $locker->serialnumber, //'iLockerHQ17', // serialnumber
             $num, // number lockers
-            $locker->masterkey,//$masterKey->value, // masterkey
-            $locker->username_unlock,//'nimita', // username unlock
+            $locker->masterkey, //$masterKey->value, // masterkey
+            $locker->username_unlock, //'nimita', // username unlock
             $locker->ip); // locker url
         $result = self::call_webapi("open_locker", $params, $locker->token);
-        switch($result['header']) {
+        switch ($result['header']) {
             case 200 :
                 return $result['body'];
             default:
@@ -47,8 +45,7 @@ class Locker
         }
     }
 
-    public static function call_webapi($api, $params, $token)
-    {
+    public static function call_webapi($api, $params, $token) {
         // Check authen
 //        $auth = $this->customauth->auth_login();
 //        if ($auth != null) {
@@ -63,8 +60,7 @@ class Locker
         return $result;
     }
 
-    public static function get_result_from_api($url, $token, $data)
-    {
+    public static function get_result_from_api($url, $token, $data) {
         $curl = curl_init();
 //        throw new \yii\base\Exception(json_encode($data));
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -87,15 +83,14 @@ class Locker
         return $result;
     }
 
-    public static function get_result_from_http_code($http_code, $http_response, $data)
-    {
+    public static function get_result_from_http_code($http_code, $http_response, $data) {
         $resp_decode = json_decode($http_response);
         $resp = array();
-        if(isset($resp_decode) && count($resp_decode) > 0) {
-            foreach($resp_decode as $key => $value) {
+        if (isset($resp_decode) && count($resp_decode) > 0) {
+            foreach ($resp_decode as $key => $value) {
                 $resp[$key] = $value;
             }
-            switch($http_code) {
+            switch ($http_code) {
                 case 200:
                     return array("header" => $http_code, "body" => $resp);
                 default:
@@ -106,19 +101,18 @@ class Locker
         }
     }
 
-    public static function Open2($locker, $num)
-    {
+    public static function Open2($locker, $num) {
 //        throw new \yii\base\Exception($locker->ip);
         $masterKey = \common\models\costfit\Configuration::find()->where("title = 'lockerMasterKey'")->one();
         $params = array('iLockerHQ17', // generalprofile lockercode
-                        'Cozxy Locker Demo', // generalprofile lockername
-                        'Cozxy-01', // serialnumber
-                        $num, // number lockers
-                        $masterKey->value, // masterkey
-                        'nimita', // username unlock
-                        $locker->ip); // locker url
+            'Cozxy Locker Demo', // generalprofile lockername
+            'Cozxy-01', // serialnumber
+            $num, // number lockers
+            $masterKey->value, // masterkey
+            'nimita', // username unlock
+            $locker->ip); // locker url
         $result = self::call_webapi2("open_locker", $params);
-        switch($result['header']) {
+        switch ($result['header']) {
             case 200 :
                 return $result['body'];
             default:
@@ -128,8 +122,7 @@ class Locker
         }
     }
 
-    public static function call_webapi2($api, $params)
-    {
+    public static function call_webapi2($api, $params) {
         // Check authen
 //        $auth = $this->customauth->auth_login();
 //        if ($auth != null) {
@@ -142,6 +135,11 @@ class Locker
 //            $result = array("header" => 401, "error" => 'Unauthorized');
 //        }
         return $result;
+    }
+
+    public static function GetPickingPoint($pickingId) {
+        $listPoint = \common\models\costfit\PickingPoint::find()->where("pickingId = '" . $pickingId . "'")->one();
+        return isset($listPoint) ? $listPoint : NULL;
     }
 
 }
