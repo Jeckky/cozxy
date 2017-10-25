@@ -191,6 +191,8 @@ foreach ($hotDetail as $key => $value) {
                         }
                         ?>
                         <?php
+                        //echo $model['price'];
+                        //echo $model['result'];
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>
                             <div class="row">
