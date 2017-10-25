@@ -24,6 +24,7 @@ foreach ($hotDetail as $key => $value) {
         $text = 'ok';
     }
 }
+
 $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
 $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
