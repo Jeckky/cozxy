@@ -27,11 +27,21 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         <?php if ($DiscountProduct != 'Lessthan10') { ?>
             <div class="product-sticker">
                 <div class="rcorners4">
-                    <p>SAVE</p>
                     <p>
                         <?php
-                        echo $DiscountProduct;
-                        ?>
+                        if (Yii::$app->controller->id == 'search') {
+                            echo 'SALE';
+                        } else {
+                            echo 'SAVE';
+                        }
+                        ?></p>
+                    <p><?php
+                        if (Yii::$app->controller->id == 'search') {
+                            echo '-' . $DiscountProduct;
+                        } else {
+                            echo $DiscountProduct;
+                        }
+                        ?> 
                     </p>
                 </div>
                 <div class="triangle"></div>

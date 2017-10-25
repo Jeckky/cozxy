@@ -159,7 +159,7 @@ class CozxyCalculatesCart {
             $master = ($marketPrice - $supplierPrice) / $marketPrice;
             $percen = $master * 100;
             if (round($percen, 0, PHP_ROUND_HALF_UP) >= 10) {
-                return '<span class="discount">' . round($percen, 0, PHP_ROUND_HALF_UP) . '</span>' . '<span class="percen-discount"> %</span>';
+                return '<span class="discount"> ' . round($percen, 0, PHP_ROUND_HALF_UP) . '</span>' . '<span class="percen-discount"> %</span>';
             } else {
                 return 'Lessthan10';
             }

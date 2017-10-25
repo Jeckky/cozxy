@@ -55,7 +55,7 @@ class SearchController extends MasterController {
         $productSupplierId = '';
 
         $productFilterBrand = new ArrayDataProvider(
-                [
+        [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
 
@@ -99,7 +99,7 @@ class SearchController extends MasterController {
 
 
         $productFilterBrand = new ArrayDataProvider(
-                [
+        [
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
         $site = 'brand';
@@ -139,7 +139,9 @@ class SearchController extends MasterController {
 //        ]);
 
         $productNotSell = Product::productForNotSale(null, null, $brandId);
+
         $promotions = Product::productPromotion(12, '', $brandId);
+
         return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell', 'brandId', 'brandPrice'));
     }
 
@@ -161,10 +163,10 @@ class SearchController extends MasterController {
         //
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
         return $this->renderAjax("_product_list", [
-                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
-                    'productFilterPriceCansale' => $productFilterPriceCansale,
-                    'category' => $category,
-                    'categoryId' => $categoryId
+            'productFilterPriceNotsale' => $productFilterPriceNotsale,
+            'productFilterPriceCansale' => $productFilterPriceCansale,
+            'category' => $category,
+            'categoryId' => $categoryId
         ]);
     }
 
@@ -190,10 +192,10 @@ class SearchController extends MasterController {
             $brandName = $brand->title;
         }
         return $this->renderAjax("_product_list_brand", [
-                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
-                    'productFilterPriceCansale' => $productFilterPriceCansale,
-                    'brandName' => $brandName,
-                    'brandId' => $brandId
+            'productFilterPriceNotsale' => $productFilterPriceNotsale,
+            'productFilterPriceCansale' => $productFilterPriceCansale,
+            'brandName' => $brandName,
+            'brandId' => $brandId
         ]);
     }
 
@@ -233,7 +235,7 @@ class SearchController extends MasterController {
         }
 
         return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
-                    'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
+            'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
     }
 
     public function actionSortCozxy() {
@@ -298,12 +300,12 @@ class SearchController extends MasterController {
             $brandName = $brand->title;
         }
         return $this->renderAjax("_product_list_brand", [
-                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
-                    'productFilterPriceCansale' => $productFilterPriceCansale,
-                    'brandName' => $brandName,
-                    'brandId' => $brandId,
-                    'sort' => $sort,
-                    'sortstatus' => $sortstatus
+            'productFilterPriceNotsale' => $productFilterPriceNotsale,
+            'productFilterPriceCansale' => $productFilterPriceCansale,
+            'brandName' => $brandName,
+            'brandId' => $brandId,
+            'sort' => $sort,
+            'sortstatus' => $sortstatus
         ]);
     }
 

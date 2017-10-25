@@ -146,6 +146,7 @@ if ($site == 'category') {
         $search = 'SEARCH : ' . $_GET["search"];
     }
 }
+//echo 'controller :' . Yii::$app->controller->id;
 ?>
 
 <?=
@@ -165,6 +166,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                             <h2>No item found</h2>
                         </div>
                     <?php endif; ?>
+
                     <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
                         <div class="filter-product-cozxy col-sm-12">
                             <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
@@ -345,7 +347,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                    ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                   ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                 ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                       ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                      ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                      ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                     ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                    ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

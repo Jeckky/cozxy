@@ -80,14 +80,16 @@ and open the template in the editor.
     /*border-radius: 15px 50px 30px 5px;*/
     background: rgba(255, 0, 0, 0.81) ;
     /*padding: 20px;*/
-    text-align: center;
+    text-align: left;
     width: 100px;
     height: 50px;
     color: #ffffff;
     opacity: 0.9;
 }
 
-
+.rcorners-product-detail p{
+    margin: 0 0 0 0px;
+}
 .rcorners-product-detail-right {
     /*border-radius: 15px 50px 30px 5px;*/
     background: #ffffff ;

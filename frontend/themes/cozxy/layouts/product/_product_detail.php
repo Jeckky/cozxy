@@ -41,14 +41,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         ?>
                         <div class="product-sticker-product-detail">
                             <div class="rcorners-product-detail">
-                                <span>HOT DETAIL</span>
-                                <span>
+                                <p>&nbsp;&nbsp;&nbsp;HOT DEAL</p>
+                                <p>
                                     <?php
                                     //$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
                                     //$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
-                                    echo 'SAVE' . $DiscountProduct;
+                                    echo '&nbsp;&nbsp;&nbsp;SAVE' . $DiscountProduct;
                                     ?>
-                                </span>
+                                </p>
                             </div>
                         </div>
                         <?php
