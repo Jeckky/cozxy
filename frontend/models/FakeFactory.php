@@ -379,6 +379,7 @@ class FakeFactory extends Model {
         }
 
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
+
         if (isset($marketPrice)) {
             $market = $marketPrice->price;
         } else {
@@ -400,17 +401,18 @@ class FakeFactory extends Model {
          */
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
         //echo $GetProductSuppliers->product->brand->title;
+        //echo $marketPrice->brand->title;
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => $GetProductSuppliers['productSuppId'],
             'productId' => $GetProductSuppliers['productId'],
             //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
             'brandId' => $GetProductSuppliers['brandId'],
-            'brandName' => isset($GetProductSuppliers->product->brand) ? $GetProductSuppliers->product->brand->title : 'No Brand',
+            'brandName' => isset($marketPrice->brand->title) ? $marketPrice->brand->title : $GetProductSuppliers->product->brand->title,
             'categoryId' => $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $GetProductSuppliers['title'],
+            'title' => isset($selectedOptions) ? $marketPrice->attributes['title'] : $marketPrice->attributes['title'],
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
