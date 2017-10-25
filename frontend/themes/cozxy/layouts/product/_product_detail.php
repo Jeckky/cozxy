@@ -265,10 +265,12 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 }
                             }
                             //if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
-                            if ($model['result'] > 0) {
+                            //echo $model['result'];
+                            //if ($model['result'] > 0) {
+                            if ($model['price'] > 0 && $model['result'] > 0) {
                                 echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;cursor:default;">ADD TO CART</a>';
                             } else {
-                                echo ' ';
+                                
                             }
                             //}
                             ?>
