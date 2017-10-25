@@ -410,7 +410,7 @@ class FakeFactory extends Model {
             'categoryId' => $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $marketPrice->title,
+            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $GetProductSuppliers['title'],
             'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
             'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
             'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
