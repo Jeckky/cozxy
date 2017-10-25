@@ -66,7 +66,9 @@ and open the template in the editor.
 .discount{
     font-weight: bold;
 }
-
+.rcorners4 p {
+    margin: 0 0 0 0px;
+}
 .product-sticker-product-detail {
     position: absolute;
     top: 20px;
