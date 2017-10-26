@@ -202,6 +202,7 @@ class SearchController extends MasterController {
     }
 
     public function actionFilterBrand() {
+        //echo ;;l
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
@@ -231,11 +232,15 @@ class SearchController extends MasterController {
         if ($categoryId != 'undefined') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
             $site = 'category';
+            $promotions = Product::productPromotion(12, $categoryId, $brand);
         } else {
             $category = FALSE;
             $site = 'brand';
+            $promotions = Product::productPromotion(12, '', $brand);
         }
-        $promotions = Product::productPromotion(12, $categoryId);
+        //echo 'brand:' . $brand;
+        //print_r($brand);
+
         return $this->renderAjax("_product_list", ['promotions' => $promotions, 'productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
             'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
     }
@@ -266,7 +271,7 @@ class SearchController extends MasterController {
 
         if ($categoryId != '') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
-            $promotions = Product::productPromotion(12, $categoryId);
+            $promotions = Product::productPromotion(12, $categoryId, $brand);
         } else {
             $category = '';
             $promotions = Product::productPromotion(12, '', $brand);
