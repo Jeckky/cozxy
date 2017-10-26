@@ -4,8 +4,7 @@ namespace common\models;
 
 use Yii;
 
-class ModelMaster extends \yii\db\ActiveRecord
-{
+class ModelMaster extends \yii\db\ActiveRecord {
 
     const DATE_THAI_TYPE_FULL = 1;
     const DATE_THAI_TYPE_SHORT = 2;
@@ -16,7 +15,6 @@ class ModelMaster extends \yii\db\ActiveRecord
     const TAB_TYPE_STREET_VIEW = 5;
     const USER_ASSET_TYPE_OWNER = 1;
     const USER_ASSET_TYPE_AGENCY = 2;
-
     const STATUS_ACTIVE = 0x1;
     const STATUS_INACTIVE = 0x2;
 
@@ -50,15 +48,13 @@ class ModelMaster extends \yii\db\ActiveRecord
         'ธ.ค.',
     ];
 
-    public function writeToFile($fileName, $text, $mode = 'w+')
-    {
+    public function writeToFile($fileName, $text, $mode = 'w+') {
         $handle = fopen($fileName, $mode);
         fwrite($handle, $text);
         fclose($handle);
     }
 
-    public function thaiDate($date, $type = self::DATE_THAI_TYPE_FULL)
-    {
+    public function thaiDate($date, $type = self::DATE_THAI_TYPE_FULL) {
         $d = explode('-', $date);
         $year = $d[0] + 543;
         $month = ($type == self::DATE_THAI_TYPE_FULL) ? $this->monthFull[(int) $d[1]] : $this->monthShort[(int) $d[1]];
@@ -67,13 +63,11 @@ class ModelMaster extends \yii\db\ActiveRecord
         return $date . ' ' . $month . ' ' . $year;
     }
 
-    public function getMonthText($month, $type = 1)
-    {
+    public function getMonthText($month, $type = 1) {
         return ($type == 1) ? $this->monthFull[$month] : $this->monthShort[$month];
     }
 
-    public static function getTabTypeArray()
-    {
+    public static function getTabTypeArray() {
         return [
             self::TAB_TYPE_PHOTO => 'Photo',
             self::TAB_TYPE_DETAIL => 'Detail',
@@ -83,28 +77,24 @@ class ModelMaster extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getTabTypeText($type)
-    {
+    public function getTabTypeText($type) {
         $tabTypeArray = self::getTabTypeArray();
         return $tabTypeArray[$type];
     }
 
-    public function getUserAssetTypeArray()
-    {
+    public function getUserAssetTypeArray() {
         return [
             self::USER_ASSET_TYPE_OWNER => 'เจ้าของทรัพย์สิน',
             self::USER_ASSET_TYPE_AGENCY => 'นายหน้า',
         ];
     }
 
-    public function userAssetTypeText($type)
-    {
+    public function userAssetTypeText($type) {
         $userAssetTypeArray = $this->userAssetTypeArray;
         return $userAssetTypeArray[$type];
     }
 
-    public function createTitle()
-    {
+    public function createTitle() {
         if (strpos($this->title, "/") === FALSE) {
             $title = explode(' ', $this->title);
         } else {
@@ -113,8 +103,7 @@ class ModelMaster extends \yii\db\ActiveRecord
         return implode('-', $title);
     }
 
-    public static function createTitleArray($title)
-    {
+    public static function createTitleArray($title) {
         if (strpos($title, "/") === FALSE) {
             $title = explode(' ', $title);
         } else {
@@ -123,8 +112,7 @@ class ModelMaster extends \yii\db\ActiveRecord
         return implode('-', $title);
     }
 
-    public static function encodeParams($params)
-    {
+    public static function encodeParams($params) {
 //        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
 
         $text = json_encode($params);
@@ -134,8 +122,7 @@ class ModelMaster extends \yii\db\ActiveRecord
         return rawurlencode($enc);
     }
 
-    public static function decodeParams($hash)
-    {
+    public static function decodeParams($hash) {
 //	    return json_decode(Yii::$app->getSecurity()->decryptByPassword(base64_decode(base64_decode(urldecode($hash))), Yii::$app->params['secureKey']), true);
         $hash = str_replace(array('-', '_'), array('+', '/'), $hash);
         $enc = base64_decode($hash);
@@ -144,8 +131,7 @@ class ModelMaster extends \yii\db\ActiveRecord
         return json_decode(trim($enc), true);
     }
 
-    public static function encodeParamsBrand($params)
-    {
+    public static function encodeParamsBrand($params) {
 //        return urlencode(base64_encode(base64_encode(Yii::$app->getSecurity()->encryptByPassword(json_encode($params), Yii::$app->params['secureKey']))));
 
         $text = json_encode($params);
