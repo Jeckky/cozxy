@@ -192,11 +192,12 @@ class SearchController extends MasterController {
         if (isset($brandId)) {
             $brandName = $brand->title;
         }
+        $promotions = Product::productPromotion(12, '', $brandId);
         return $this->renderAjax("_product_list_brand", [
             'productFilterPriceNotsale' => $productFilterPriceNotsale,
             'productFilterPriceCansale' => $productFilterPriceCansale,
             'brandName' => $brandName,
-            'brandId' => $brandId
+            'brandId' => $brandId, 'promotions' => $promotions
         ]);
     }
 
@@ -265,11 +266,17 @@ class SearchController extends MasterController {
 
         if ($categoryId != '') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
+            $promotions = Product::productPromotion(12, $categoryId);
         } else {
             $category = '';
+            $promotions = Product::productPromotion(12, '', $brand);
         }
-
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
+        //echo 'categoryId:' . $categoryId;
+        //echo '<br>brand:' . $brand;
+        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale,
+            'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category,
+            'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus, 'promotions' => $promotions
+        ]);
     }
 
     public function actionSortCozxyFixBrand() {
@@ -300,13 +307,15 @@ class SearchController extends MasterController {
         if (isset($brandId)) {
             $brandName = $brand->title;
         }
+        $promotions = Product::productPromotion(12, '', $brandId);
         return $this->renderAjax("_product_list_brand", [
             'productFilterPriceNotsale' => $productFilterPriceNotsale,
             'productFilterPriceCansale' => $productFilterPriceCansale,
             'brandName' => $brandName,
             'brandId' => $brandId,
             'sort' => $sort,
-            'sortstatus' => $sortstatus
+            'sortstatus' => $sortstatus,
+            'promotions' => $promotions
         ]);
     }
 
