@@ -715,10 +715,12 @@ class Product extends \common\models\costfit\master\ProductMaster {
             $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
             $products->andWhere(['ctp.categoryId' => $cat]);
         }
-        //if (isset($brandId) && !empty($brandId)) {
-        if (isset($brandId)) {
-            $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
-            $products->andWhere(['b.brandId' => $brandId]);
+        if (Yii::$app->controller->id == 'search') {
+            if (isset($brandId) && !empty($brandId)) {
+                //if (isset($brandId)) {
+                $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
+                $products->andWhere(['b.brandId' => $brandId]);
+            }
         }
 
         return new ActiveDataProvider([
