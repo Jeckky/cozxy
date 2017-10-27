@@ -271,10 +271,10 @@ class SearchController extends MasterController {
 
         if ($categoryId != '') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
-            $promotions = Product::productPromotion(12, $categoryId, $brand);
+            $promotions = Product::productPromotion(12, $categoryId, $brand, $mins, $maxs, $status, $sort);
         } else {
             $category = '';
-            $promotions = Product::productPromotion(12, '', $brand);
+            $promotions = Product::productPromotion(12, '', $brand, $mins, $maxs, $status, $sort);
         }
         //echo 'categoryId:' . $categoryId;
         //echo '<br>brand:' . $brand;

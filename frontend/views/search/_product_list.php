@@ -48,7 +48,19 @@ if (isset($sortstatus)) {
     <div class="wf-container">
         <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
             <div class="filter-product-cozxy col-sm-12">
-                <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                <h3 class="b text-center-sm text-center-xs">
+                    HOT DEALS
+                    <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+                        <small>
+                            <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
+                            <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
+                            <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
+                        </small>
+                    <?php endif; ?>
+                </h3>
                 <div class="row">
                     <?php
 //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
@@ -87,16 +99,18 @@ if (isset($sortstatus)) {
     </div>
 </div>
 <h3 class="b"><?= strtoupper('category') ?> RECOMMENDED:: <?= strtoupper($category) ?>
-    <small>
-        <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;"><?= $sortPriceIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
-        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;"><?= $sortNewIcon ?></a>
+    <?php if (isset($promotions) && $promotions->getCount() == 0): ?>
+        <small>
+            <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;"><?= $sortPriceIcon ?></a>
+            <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;"><?= $sortBrandIcon ?></a>
+            <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;"><?= $sortNewIcon ?></a>
 
-        <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
-        <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
-        <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
+            <input type="hidden" name="Sortprice" id="Sortprice" value="<?= $sortPrice ?>">
+            <input type="hidden" name="Sortbrand" id="Sortbrand" value="<?= $sortBrand ?>">
+            <input type="hidden" name="Sortnew" id="Sortnew" value="<?= $sortNew ?>">
 
-    </small>
+        </small>
+    <?php endif; ?>
 </h3>
 
 <div class="row">

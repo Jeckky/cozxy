@@ -408,7 +408,7 @@ class FakeFactory extends Model {
             //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
             'brandId' => isset($marketPrice->brand->brandId) ? $marketPrice->brand->brandId : $GetProductSuppliers['brandId'],
-            'brandName' => isset($marketPrice->brand->title) ? $marketPrice->brand->title : $GetProductSuppliers->product->brand->title,
+            'brandName' => isset($marketPrice->brand) ? $marketPrice->brand->title : 'No Brand',
             'categoryId' => isset($marketPrice->product->categoryId) ? $marketPrice->product->categoryId : $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
