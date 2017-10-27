@@ -158,15 +158,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         <?php } ?>
                         <div class="col-sm-12 padding-product-detail">
                             <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
-                        </div>
-                        <?php
-                        if (isset($model['shortDescription'])) {
-                            echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
-                        } else {
-                            echo '';
-                        }
-                        ?>
-
+                            <?php
+                            if (isset($model['shortDescription'])) {
+                                echo '<hr>' . $model['shortDescriptionCozxy'] . '<hr>';
+                            } else {
+                                echo '';
+                            }
+                            ?>
+                        </div> 
                         <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
                         if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
