@@ -165,46 +165,54 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 echo '';
                             }
                             ?>
-                        </div> 
-                        <?php
+                        </div>
+                        <div class="col-sm-12 padding-product-detail">
+                            <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
-                        if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-                            //echo '<pre>';
-                            //print_r($productGroupOptionValues);
-                            foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
-                                $selected = "";
-                                if (isset($selectedOptions) && count($selectedOptions) > 0) {
-
-                                    foreach ($selectedOptions as $selectedOption):
+                            if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+                                //echo 'x 1 ';
+                                //echo '<pre>';
+                                //print_r($productGroupOptionValues);
+                                foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
+                                    $selected = "";
+                                    if (isset($selectedOptions) && count($selectedOptions) > 0) {
+                                        //print_r($selectedOptions);
+                                        foreach ($selectedOptions as $selectedOption):
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));
-                                        //echo '<pre>';
-                                        //print_r($selectedOption);
-                                        if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
-                                            $selected = $selectedOption["id"];
-                                            break;
-                                        }
-                                    endforeach;
-                                } else {
-                                    $selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
-                                }
-                                ?>
-                                <form id="optionForm">
-                                    <div class="row login-box">
-                                        <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
-                                        <div class="col-sm-12 text-right quantity-sel size18">
-                                            <?php if (count($productGroupOptionValue) > 1): ?>
-                                                <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                            <?php else: ?>
-                                                <?= array_values($productGroupOptionValue)[0]; ?>
-                                            <?php endif; ?>
+                                            //echo '<pre>';
+                                            //print_r($selectedOption);
+                                            if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
+                                                $selected = $selectedOption["id"];
+                                                break;
+                                            }
+                                        endforeach;
+                                    } else {
+                                        //echo 'x 2 ';
+                                        //print_r($productGroupOptionValueSelect->attributes['productGroupOptionValueId']);
+                                        //$selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
+                                        $selected = isset($productGroupOptionValueSelect->attributes) ? $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] : 'xx';
+                                        //echo '<br> xx:' . $selected;
+                                    }
+                                    ?>
+                                    <form id="optionForm">
+                                        <div class="row login-box">
+                                            <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
+                                            <div class="col-sm-12 text-right quantity-sel size18">
+                                                <?php if (count($productGroupOptionValue) > 1): ?>
+                                                    <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                                <?php else: ?>
+                                                    <?= array_values($productGroupOptionValue)[0]; ?>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                </form>
-                                <?php
-                            endforeach;
-                        }
-                        ?>
+                                        <hr>
+                                    </form>
+                                    <?php
+                                endforeach;
+                            }
+                            ?>
+                        </div>
+
                         <?php
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>

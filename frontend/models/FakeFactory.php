@@ -402,9 +402,11 @@ class FakeFactory extends Model {
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
         //echo $GetProductSuppliers->product->brand->title;
         //echo $marketPrice->brand->title;
+        //echo 'parentId :' . $marketPrice->parentId;
+
         $products['ProductSuppliersDetail'] = [
-            'productSuppId' => isset($marketPrice->product->productSuppId) ? $marketPrice->product->productSuppId : $GetProductSuppliers['productSuppId'],
-            'productId' => isset($marketPrice->product->productId) ? $marketPrice->product->productId : $GetProductSuppliers['productId'],
+            'productSuppId' => isset($marketPrice->productSuppId) ? $marketPrice->productSuppId : $GetProductSuppliers['productSuppId'],
+            'productId' => isset($marketPrice->productId) ? $marketPrice->productId : $GetProductSuppliers['productId'],
             //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
             'brandId' => isset($marketPrice->brand->brandId) ? $marketPrice->brand->brandId : $GetProductSuppliers['brandId'],
@@ -412,10 +414,10 @@ class FakeFactory extends Model {
             'categoryId' => isset($marketPrice->product->categoryId) ? $marketPrice->product->categoryId : $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($selectedOptions) ? $marketPrice->attributes['title'] : $marketPrice->attributes['title'],
-            'shortDescription' => isset($marketPrice->product->shortDescription) ? $marketPrice->product->shortDescription : $GetProductSuppliers['shortDescription'],
-            'description' => isset($marketPrice->product->description) ? $marketPrice->product->description : $GetProductSuppliers['description'],
-            'specification' => isset($marketPrice->product->specification) ? $marketPrice->product->specification : $GetProductSuppliers['specification'],
+            'title' => isset($selectedOptions) ? $marketPrice->title : $marketPrice->title,
+            'shortDescription' => isset($marketPrice->shortDescription) ? $marketPrice->shortDescription : $GetProductSuppliers['shortDescription'],
+            'description' => isset($marketPrice->description) ? $marketPrice->description : $GetProductSuppliers['description'],
+            'specification' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductSuppliers['specification'],
             'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
             'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
             'price' => isset($GetProductSuppliers['price']) ? number_format($GetProductSuppliers['price']) : '',
@@ -438,6 +440,8 @@ class FakeFactory extends Model {
             'marketPrice' => isset($market) ? number_format($market) : '',
             'DiscountmarketPrice' => isset($market) ? $market : 0,
             'Discountprice' => isset($GetProductSuppliers['price']) ? $GetProductSuppliers['price'] : 0,
+            'productGroupTemplateId' => isset($marketPrice->productGroupTemplateId) ? $marketPrice->productGroupTemplateId : '',
+            'parentId' => isset($marketPrice->parentId) ? $marketPrice->parentId : '',
         ];
 
         return $products;

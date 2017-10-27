@@ -35,9 +35,9 @@ class ProductController extends MasterController {
         $productViews = FakeFactory::productViews($productIdParams, $cartOrderId, $selectedOptions); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
-
-
-
+        //echo '<pre>';
+        //print_r($productViews);
+        //exit();
         $productId = $productIdParams; //\common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
@@ -70,7 +70,7 @@ class ProductController extends MasterController {
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
-        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productSupplierId);
+        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId']);
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);
