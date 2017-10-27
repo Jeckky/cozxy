@@ -205,7 +205,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                             <div class="col-sm-12 text-right quantity-sel size18">
                                                 <?php if (count($productGroupOptionValue) > 1): ?>
                                                     <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                                <?php else: ?>y
+                                                <?php else: ?>
                                                     <?= array_values($productGroupOptionValue)[0]; ?>
                                                 <?php endif; ?>
                                             </div>
