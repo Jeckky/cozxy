@@ -176,6 +176,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
                                     $selected = "";
                                     if (isset($selectedOptions) && count($selectedOptions) > 0) {
+                                        //echo 'x 1';
                                         //print_r($selectedOptions);
                                         foreach ($selectedOptions as $selectedOption):
 //                                    throw new \yii\base\Exception(print_r($selectedOption, true));

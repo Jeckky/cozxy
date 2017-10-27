@@ -69,14 +69,19 @@ class ProductGroupOptionsController extends MasterController {
           ->groupBy("pgov.productSuppId")
           //->having("count(pgov.productSuppId) =" . count($productGroupValues))
           ->one(); */
-
+        $orderBy = '`product_group_option_value`.';
+        $item = 'value';
+        $value = ' IS NOT NULL';
         $productMaster = ProductGroupOptionValue::find()
         ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
         ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
-        ->where("pg.productId = $pgov->productGroupId ") //AND pg.productIdc = " . $pgov->product->parentId)
-        //->andWhere("product_group_option_value.productSuppId IS NOT NULL")
+        ->where("pg.productId = $pgov->productGroupId AND pg.productId = " . $pgov->product->parentId) //AND pg.productIdc = " . $pgov->product->parentId)
         ->andWhere($andWhereStr)
+        ->andWhere("product_group_option_value.value IS NOT NULL")
         ->groupBy("value")
+        //->orderBy("product_group_option_value.value IS NOT NULL")
+        ->orderBy(['`product_group_option_value`.value' => SORT_DESC])
+        //->orderBy($orderBy . $item . $value)
         ->one();
 
 
@@ -94,6 +99,7 @@ class ProductGroupOptionsController extends MasterController {
 
         //echo '<pre>';
         //print_r(\common\models\ModelMaster::decodeParams($token));
+        //echo $token;
         //exit();
         $res['token'] = $token;
 

@@ -402,8 +402,8 @@ class FakeFactory extends Model {
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
         //echo $GetProductSuppliers->product->brand->title;
         //echo $marketPrice->brand->title;
-        //echo 'parentId :' . $marketPrice->parentId;
-
+        //echo 'productId :' . $marketPrice->productId . '<hr>';
+        //echo $GetProductSuppliers['title'] . '<br>';
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => isset($marketPrice->productSuppId) ? $marketPrice->productSuppId : $GetProductSuppliers['productSuppId'],
             'productId' => isset($marketPrice->productId) ? $marketPrice->productId : $GetProductSuppliers['productId'],
