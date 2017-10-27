@@ -20,7 +20,7 @@ class ProductController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
 
         // echo '<pre>';
-        //print_r($params);
+        // print_r($params);
         //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId
         //echo 'ccc;' . $productIdParams;
@@ -29,11 +29,6 @@ class ProductController extends MasterController {
             $selectedOptions = $params['selectedOptions'];
         } else {
             $selectedOptions = NULL;
-        }
-        if (isset($params['pGOVId'])) {
-            $pGOVId = $params['pGOVId'];
-        } else {
-            $pGOVId = NULL;
         }
 
         //print_r($selectedOptions);
@@ -78,7 +73,7 @@ class ProductController extends MasterController {
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
         //print_r($productGroupOptionValues);
-        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId'], $pGOVId);
+        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId']);
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);
