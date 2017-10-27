@@ -389,9 +389,9 @@ class FakeFactory extends Model {
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : 0, 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
-        if (isset($GetProductSuppliers['categoryId'])) {
-            $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
-        }
+        /* if (isset($GetProductSuppliers['categoryId'])) {
+          $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
+          } */
         /*
          * ราคาสินค้า
          */
@@ -404,6 +404,7 @@ class FakeFactory extends Model {
         //echo $marketPrice->brand->title;
         //echo 'productId :' . $marketPrice->productId . '<hr>';
         //echo $GetProductSuppliers['title'] . '<br>';
+        //echo $marketPrice->category->title;
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => isset($marketPrice->productSuppId) ? $marketPrice->productSuppId : $GetProductSuppliers['productSuppId'],
             'productId' => isset($marketPrice->productId) ? $marketPrice->productId : $GetProductSuppliers['productId'],
@@ -411,7 +412,7 @@ class FakeFactory extends Model {
             'productGroupId' => '',
             'brandId' => isset($marketPrice->brand->brandId) ? $marketPrice->brand->brandId : $GetProductSuppliers['brandId'],
             'brandName' => isset($marketPrice->brand) ? $marketPrice->brand->title : 'No Brand',
-            'categoryId' => isset($marketPrice->product->categoryId) ? $marketPrice->product->categoryId : $GetProductSuppliers['categoryId'],
+            'categoryId' => isset($marketPrice->categoryId) ? $marketPrice->categoryId : $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
             'title' => isset($selectedOptions) ? $marketPrice->title : $marketPrice->title,
@@ -421,7 +422,7 @@ class FakeFactory extends Model {
             'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
             'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
             'price' => isset($GetProductSuppliers['price']) ? number_format($GetProductSuppliers['price']) : '',
-            'category' => isset($GetCategory->title) ? $GetCategory->title : '',
+            'category' => isset($marketPrice->category) ? $marketPrice->category->title : 'No Category', //isset($GetCategory->title) ? $GetCategory->title : '',
             //'image' => $productImagesOneTopz,
             //'images' => $imagAll,
             'image' => $productImagesMulti['productImagesOneTopz'],
