@@ -46,13 +46,13 @@ class ProductGroupOptionsController extends MasterController {
         $j = 1;
         foreach ($productGroupValues as $k => $op) {
             // $andWhereStr.= "( productGroupTemplateOptionId = " . $op["productGroupTemplateOptionId"] . " AND value='" . $op["value"] . "')";
-            $andWhereStr.= "( productGroupTemplateOptionId = " . $op["pGTOId"] . " AND value='" . $op["value"] . "')";
+            //$andWhereStr.= "( productGroupTemplateOptionId = " . $op["pGTOId"] . " AND value='" . $op["value"] . "')";
             if ($j < count($productGroupValues)) {
-                $andWhereStr.=" OR ";
+                //$andWhereStr.=" OR ";
             }
             $j++;
         }
-
+        $andWhereStr.= "( productGroupTemplateOptionId = " . $op["pGTOId"] . " AND value='" . $op["value"] . "')";
         $andWhereStr .= ")";
         /* $prodSupp = \common\models\costfit\ProductSuppliers::find()
           ->join("LEFT JOIN", "product_group_option_value pgov", "pgov.productSuppId = product_suppliers.productSuppId")
