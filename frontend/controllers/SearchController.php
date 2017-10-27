@@ -162,7 +162,7 @@ class SearchController extends MasterController {
         ]);
         //
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
-        $promotions = Product::productPromotion(12, $categoryId);
+        $promotions = Product::productPromotion(12, $categoryId, $brand, $mins, $maxs);
         return $this->renderAjax("_product_list", [
             'productFilterPriceNotsale' => $productFilterPriceNotsale,
             'productFilterPriceCansale' => $productFilterPriceCansale,
