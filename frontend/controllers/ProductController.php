@@ -21,7 +21,7 @@ class ProductController extends MasterController {
 
         // echo '<pre>';
         //print_r($params);
-        // exit();
+        //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId
         //echo 'ccc;' . $productIdParams;
         //$productSupplierId = $params['productSupplierId'];
@@ -49,7 +49,7 @@ class ProductController extends MasterController {
         } else {
             $ProductPageViews->token = NULL;
         }
-        $ProductPageViews->productSuppId = $productSupplierId;
+        $ProductPageViews->productSuppId = isset($productSupplierId) ? $productSupplierId : $productIdParams;
         $ProductPageViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
         $ProductPageViews->updateDateTime = new \yii\db\Expression('NOW()');
         $ProductPageViews->createDateTime = new \yii\db\Expression('NOW()');
