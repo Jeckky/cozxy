@@ -303,7 +303,11 @@ $(".productOption").on("change", function(){
         dataType:"json"
     })
     .done(function( data ) {
-        window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        if(data.token == "no"){
+            alert("No products");
+        }else{
+            window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        }
     });
 });
 
