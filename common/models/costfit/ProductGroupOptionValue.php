@@ -94,12 +94,17 @@ class ProductGroupOptionValue extends \common\models\costfit\master\ProductGroup
         return $res;
     }
 
-    public static function findProductGroupOptionValueSelectSp1($productId, $parentId) {
+    public static function findProductGroupOptionValueSelectSp1($productId, $parentId, $pGOVId = FALSE) {
         if ($parentId != '') {
             /* $productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')
               ->groupBy('productId')->one(); */
-            $productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productGroupId = ' . $parentId . '')
-            ->groupBy('productId')->one();
+            if ($pGOVId != '') {
+                $productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productGroupId = ' . $parentId . ' and productGroupOptionValueId  =' . $pGOVId)
+                ->groupBy('productId')->one();
+            } else {
+                $productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productGroupId = ' . $parentId)
+                ->groupBy('productId')->one();
+            }
         } else {
             $productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId)->groupBy('productId')->one();
         }

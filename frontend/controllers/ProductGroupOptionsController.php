@@ -25,7 +25,7 @@ class ProductGroupOptionsController extends MasterController {
         $productGroupValues = [];
         $i = 1;
         $pgov = NULL;
-
+        //print_r($p);
         foreach ($p as $title => $productGroupOptionValueId) {
             $pgov = ProductGroupOptionValue::find()
             ->where("productGroupOptionValueId = $productGroupOptionValueId")
@@ -72,7 +72,7 @@ class ProductGroupOptionsController extends MasterController {
           ->groupBy("pgov.productSuppId")
           //->having("count(pgov.productSuppId) =" . count($productGroupValues))
           ->one(); */
-
+        //print_r($productGroupValuesSp1);
         $productMaster = ProductGroupOptionValue::find()
         ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
         ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
@@ -93,13 +93,13 @@ class ProductGroupOptionsController extends MasterController {
         //print_r($productGroupValuesSp1);
         //exit();
         if ($productMaster->productId != '') {
-            $token = $productMaster->encodeParams(['productId' => $productMaster->productId, "selectedOptions" => $productGroupValuesSp1]);
+            $token = $productMaster->encodeParams(['productId' => $productMaster->productId, 'pGOVId' => $productMaster->productGroupOptionValueId, "selectedOptions" => $productGroupValuesSp1]);
         } else {
             $token = 'no';
         }
         //$token = 'no';
         //echo '<pre>';
-        //print_r(\common\models\ModelMaster::decodeParams($token));
+        //print_r($productMaster->decodeParams($token));
         //echo $token;
         //exit();
         $res['token'] = $token;

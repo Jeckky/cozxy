@@ -30,6 +30,11 @@ class ProductController extends MasterController {
         } else {
             $selectedOptions = NULL;
         }
+        if (isset($params['pGOVId'])) {
+            $pGOVId = $params['pGOVId'];
+        } else {
+            $pGOVId = NULL;
+        }
 
         //print_r($selectedOptions);
         $cartOrderId = \common\models\costfit\Order::findCartArray();
@@ -73,7 +78,7 @@ class ProductController extends MasterController {
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
         //print_r($productGroupOptionValues);
-        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId']);
+        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId'], $pGOVId);
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);
