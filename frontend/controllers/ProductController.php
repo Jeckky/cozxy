@@ -70,6 +70,7 @@ class ProductController extends MasterController {
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
+        //print_r($productGroupOptionValues);
         $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId']);
 
         //echo '<pre>';

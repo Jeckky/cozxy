@@ -174,6 +174,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 //echo '<pre>';
                                 //print_r($productGroupOptionValues);
                                 foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
+                                    //print_r($productGroupOptionValue[$productGroupTemplateOptionId]);
                                     $selected = "";
                                     if (isset($selectedOptions) && count($selectedOptions) > 0) {
                                         //echo 'x 1';
@@ -189,9 +190,11 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                         endforeach;
                                     } else {
                                         //echo 'x 2 ';
+                                        //echo $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] . '<br>';
                                         //print_r($productGroupOptionValueSelect->attributes['productGroupOptionValueId']);
                                         //$selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
                                         $selected = isset($productGroupOptionValueSelect->attributes) ? $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] : 'xx';
+                                        //print_r($selected);
                                         //echo '<br> xx:' . $selected;
                                         // echo '<br> xx:' . $productGroupOptionValue[1];
                                     }
@@ -202,7 +205,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                             <div class="col-sm-12 text-right quantity-sel size18">
                                                 <?php if (count($productGroupOptionValue) > 1): ?>
                                                     <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                                <?php else: ?>
+                                                <?php else: ?>y
                                                     <?= array_values($productGroupOptionValue)[0]; ?>
                                                 <?php endif; ?>
                                             </div>
