@@ -728,7 +728,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
                 $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
                 $products->andWhere(['b.brandId' => $brandId]);
             }
-            if ($status == "brand") {
+            if ($status == "brand" and ! isset($brandId)) {
                 $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
             }
         }

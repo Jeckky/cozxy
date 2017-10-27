@@ -179,7 +179,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                         //echo 'x 1';
                                         //print_r($selectedOptions);
                                         foreach ($selectedOptions as $selectedOption):
-//                                    throw new \yii\base\Exception(print_r($selectedOption, true));
+//                                          throw new \yii\base\Exception(print_r($selectedOption, true));
                                             //echo '<pre>';
                                             //print_r($selectedOption);
                                             if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
@@ -193,6 +193,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                         //$selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
                                         $selected = isset($productGroupOptionValueSelect->attributes) ? $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] : 'xx';
                                         //echo '<br> xx:' . $selected;
+                                        // echo '<br> xx:' . $productGroupOptionValue[1];
                                     }
                                     ?>
                                     <form id="optionForm">

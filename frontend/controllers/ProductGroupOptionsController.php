@@ -27,7 +27,10 @@ class ProductGroupOptionsController extends MasterController {
         $pgov = NULL;
 
         foreach ($p as $title => $productGroupOptionValueId) {
-            $pgov = ProductGroupOptionValue::find()->where("productGroupOptionValueId = $productGroupOptionValueId")->one();
+            $pgov = ProductGroupOptionValue::find()
+            ->where("productGroupOptionValueId = $productGroupOptionValueId")
+            //->andWhere('value is not null')
+            ->one();
             //$productGroupValues[$i]["productGroupTemplateOptionId"] = $pgov->productGroupTemplateOptionId;
             $productGroupValues[$i]["value"] = $pgov->value;
             $productGroupValues[$i]["pGTOId"] = $pgov->productGroupTemplateOptionId;
@@ -69,9 +72,7 @@ class ProductGroupOptionsController extends MasterController {
           ->groupBy("pgov.productSuppId")
           //->having("count(pgov.productSuppId) =" . count($productGroupValues))
           ->one(); */
-        $orderBy = '`product_group_option_value`.';
-        $item = 'value';
-        $value = ' IS NOT NULL';
+
         $productMaster = ProductGroupOptionValue::find()
         ->join("LEFT JOIN", "product p", "p.productId = product_group_option_value.productId")
         ->join("LEFT JOIN", "product pg", "pg.productId = p.parentId")
