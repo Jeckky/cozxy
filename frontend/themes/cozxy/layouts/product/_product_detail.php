@@ -227,7 +227,8 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                             <hr>
                         <?php } ?>
                         <div class="size36">&nbsp;</div>
-                        <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
+                        <div class="col-sm-12 padding-product-detail text-center ">
+                            <!--<div class="text-center abs" style="bottom: 0; left: 0; right: 0;">-->
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
                             <input type="hidden" id="fastId" value="">
                             <input type="hidden" id="productId" value="<?php echo $model['productId']; ?>">
