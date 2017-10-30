@@ -24,7 +24,7 @@ use frontend\models\DisplayMyStory;
  *
  * @author it
  */
-class TestProductController {
+class TestProductController extends MasterController {
 
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
