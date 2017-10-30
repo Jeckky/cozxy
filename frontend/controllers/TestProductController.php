@@ -94,7 +94,7 @@ class TestProductController extends MasterController {
         } else {
             $productPromotion = NULL;
         }
-        return $this->render('index', compact('productPromotion', 'productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
+        return $this->render('product/index', compact('productPromotion', 'productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 
     public function actionImagesItemBig() {
