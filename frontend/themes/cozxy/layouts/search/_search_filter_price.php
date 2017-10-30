@@ -31,7 +31,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                                     <input type="hidden" name="max" id="max">
                                 </div>
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR ALL</u></a> &nbsp;
-                                <a href="javascript:filterPriceByBrand()" class="b btn-black-s size16">APPLY</a>
+                                <a href="javascript:filterPriceByBrand(<?= $brandId ?>)" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
                     </div>

@@ -1083,10 +1083,9 @@ function filterPriceCozxy() {
         }
     });
 }
-function filterPriceByBrand() {
+function filterPriceByBrand($brandId) {
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
-    $brandId = $('#brandId').val();
     $('.btn-black-s').html('APPLY ...');
     $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     var path = $baseUrl + "search/filter-price-brand?brandId=" + $brandId;
