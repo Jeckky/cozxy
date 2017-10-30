@@ -695,28 +695,42 @@ class Product extends \common\models\costfit\master\ProductMaster {
         ]);
     }
 
-    public static function productPromotion($n = NULL, $cat = false, $brandId = false) {
+    public static function productPromotion($n = NULL, $cat = false, $brandId = false, $mins = FALSE, $maxs = FALSE, $status = FALSE, $sort = FALSE) {
+        //echo $brandId;
         $promotionConfig = \common\models\costfit\Configuration::find()->where("title = 'promotionIds'")->one();
         if (isset($promotionConfig)) {
             $productPromotionIds = $promotionConfig->value;
         } else {
             return NULL;
         }
-
+        $sortStr = ($status == "price") ? "pps.price " : (($status == "brand") ? "b.title " : "product_suppliers.updateDateTime ");
+        if ($sort == 'SORT_ASC') {
+            $sortStr .= 'asc';
+        } else {
+            $sortStr .= 'desc';
+        }
         $products = ProductSuppliers::find()
         ->select('*, product_suppliers.productSuppId as productSuppId, pps.price as price')
         ->join(" LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
         ->leftJoin('product p', 'product_suppliers.productId=p.productId')
         ->where('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
         ->andWhere(['in', 'pps.productSuppId', explode(',', $productPromotionIds)])
-        ->orderBy(new Expression('rand()') . " , pps.price");
+        ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " product_suppliers.result >= 0")
+        ->orderBy($sortStr);
+        //->orderBy(new Expression('rand()') . " , pps.price");
         if (isset($cat) && !empty($cat)) {
             $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
             $products->andWhere(['ctp.categoryId' => $cat]);
         }
-        if (isset($brandId) && !empty($brandId)) {
-            $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
-            $products->andWhere(['b.brandId' => $brandId]);
+        if (Yii::$app->controller->id == 'search') {
+            if (isset($brandId) && !empty($brandId)) {
+                //if (isset($brandId)) {
+                $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
+                $products->andWhere(['b.brandId' => $brandId]);
+            }
+            if ($status == "brand" and ! isset($brandId)) {
+                $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
+            }
         }
 
         return new ActiveDataProvider([

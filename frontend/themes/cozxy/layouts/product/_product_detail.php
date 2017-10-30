@@ -24,6 +24,7 @@ foreach ($hotDetail as $key => $value) {
         $text = 'ok';
     }
 }
+
 $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
 $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
@@ -40,14 +41,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         ?>
                         <div class="product-sticker-product-detail">
                             <div class="rcorners-product-detail">
-                                <span>HOT DETAIL</span>
-                                <span>
+                                <p>&nbsp;&nbsp;&nbsp;HOT DEAL</p>
+                                <p>
                                     <?php
                                     //$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
                                     //$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
-                                    echo 'SAVE' . $DiscountProduct;
+                                    echo '&nbsp;&nbsp;&nbsp;SAVE' . $DiscountProduct;
                                     ?>
-                                </span>
+                                </p>
                             </div>
                         </div>
                         <?php
@@ -157,54 +158,66 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         <?php } ?>
                         <div class="col-sm-12 padding-product-detail">
                             <a class="size12 fc-g666" href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($model['category']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $model['categoryId']]) ?>">Category: <?php echo isset($model['category']) ? $model['category'] : '-'; ?></a>
+                            <?php
+                            if (isset($model['shortDescription'])) {
+                                echo '<hr>' . $model['shortDescriptionCozxy'] . '<hr>';
+                            } else {
+                                echo '';
+                            }
+                            ?>
                         </div>
-                        <?php
-                        if (isset($model['shortDescription'])) {
-                            echo '<hr><p>' . $model['shortDescriptionCozxy'] . '<p><hr>';
-                        } else {
-                            echo '';
-                        }
-                        ?>
-
-                        <?php
+                        <div class="col-sm-12 padding-product-detail">
+                            <?php
 //                        throw new \yii\base\Exception(print_r($selectedOptions, true));
-                        if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
-                            //echo '<pre>';
-                            //print_r($productGroupOptionValues);
-                            foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
-                                $selected = "";
-                                if (isset($selectedOptions) && count($selectedOptions) > 0) {
-
-                                    foreach ($selectedOptions as $selectedOption):
-//                                    throw new \yii\base\Exception(print_r($selectedOption, true));
-                                        //echo '<pre>';
-                                        //print_r($selectedOption);
-                                        if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
-                                            $selected = $selectedOption["id"];
-                                            break;
-                                        }
-                                    endforeach;
-                                } else {
-                                    $selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
-                                }
-                                ?>
-                                <form id="optionForm">
-                                    <div class="row login-box">
-                                        <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
-                                        <div class="col-sm-12 text-right quantity-sel size18">
-                                            <?php if (count($productGroupOptionValue) > 1): ?>
-                                                <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
-                                            <?php else: ?>
-                                                <?= array_values($productGroupOptionValue)[0]; ?>
-                                            <?php endif; ?>
+                            if (isset($productGroupOptionValues) && count($productGroupOptionValues) > 0) {
+                                //echo 'x 1 ';
+                                //echo '<pre>';
+                                //print_r($productGroupOptionValues);
+                                foreach ($productGroupOptionValues as $productGroupTemplateOptionId => $productGroupOptionValue):
+                                    //print_r($productGroupOptionValue[$productGroupTemplateOptionId]);
+                                    $selected = "";
+                                    if (isset($selectedOptions) && count($selectedOptions) > 0) {
+                                        //echo 'x 1';
+                                        //print_r($selectedOptions);
+                                        foreach ($selectedOptions as $selectedOption):
+//                                          throw new \yii\base\Exception(print_r($selectedOption, true));
+                                            //echo '<pre>';
+                                            //print_r($selectedOption);
+                                            if ($selectedOption["pGTOId"] == $productGroupTemplateOptionId) {
+                                                $selected = $selectedOption["id"];
+                                                break;
+                                            }
+                                        endforeach;
+                                    } else {
+                                        //echo 'x 2 ';
+                                        //echo $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] . '<br>';
+                                        //print_r($productGroupOptionValueSelect->attributes['productGroupOptionValueId']);
+                                        //$selected = isset($productGroupOptionValueSelect->productGroupOptionValueId) ? $productGroupOptionValueSelect->productGroupOptionValueId : '';
+                                        $selected = isset($productGroupOptionValueSelect->attributes) ? $productGroupOptionValueSelect->attributes['productGroupOptionValueId'] : 'xx';
+                                        //print_r($selected);
+                                        //echo '<br> xx:' . $selected;
+                                        // echo '<br> xx:' . $productGroupOptionValue[1];
+                                    }
+                                    ?>
+                                    <form id="optionForm">
+                                        <div class="row login-box">
+                                            <div class="col-sm-12 size18 b"><?= common\models\costfit\ProductGroupTemplateOption::getTitle($productGroupTemplateOptionId) ?></div>
+                                            <div class="col-sm-12 text-right quantity-sel size18">
+                                                <?php if (count($productGroupOptionValue) > 1): ?>
+                                                    <?= Html::dropDownList($productGroupTemplateOptionId, $selected, $productGroupOptionValue, ['class' => 'fullwidth productOption']) ?>
+                                                <?php else: ?>
+                                                    <?= array_values($productGroupOptionValue)[0]; ?>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                </form>
-                                <?php
-                            endforeach;
-                        }
-                        ?>
+                                        <hr>
+                                    </form>
+                                    <?php
+                                endforeach;
+                            }
+                            ?>
+                        </div>
+
                         <?php
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>
@@ -219,7 +232,8 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                             <hr>
                         <?php } ?>
                         <div class="size36">&nbsp;</div>
-                        <div class="text-center abs" style="bottom: 0; left: 0; right: 0;">
+                        <div class="col-sm-12 padding-product-detail text-center ">
+                            <!--<div class="text-center abs" style="bottom: 0; left: 0; right: 0;">-->
                             <input type="hidden" id="maxQnty" value="<?php echo $model['result']; ?>">
                             <input type="hidden" id="fastId" value="">
                             <input type="hidden" id="productId" value="<?php echo $model['productId']; ?>">
@@ -264,10 +278,12 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 }
                             }
                             //if ($model['txtAlert'] == 'Ok') {//เช็คมีสินค้าในสต๊อก
-                            if ($model['result'] > 0) {
-                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;cursor:default;">ADD TO CART</a>';
+                            //echo $model['result'];
+                            //if ($model['result'] > 0) {
+                            if ($model['price'] > 0 && $model['result'] > 0) {
+                                echo '<a id="addItemToCartUnity" data-loading-text="<i id=\'cart-plus-' . $model['productSuppId'] . '\' class=\'fa fa-cart-plus fa-spin\'></i> Processing cart" class="b btn-yellow"  style="margin:14px auto 2px;padding: 5px 10px;cursor:pointer;">ADD TO CART</a>';
                             } else {
-                                echo ' ';
+
                             }
                             //}
                             ?>
@@ -290,7 +306,11 @@ $(".productOption").on("change", function(){
         dataType:"json"
     })
     .done(function( data ) {
-        window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        if(data.token == "no"){
+            alert("No products");
+        }else{
+            window.location = "' . Yii::$app->homeUrl . 'product/"+data.token;
+        }
     });
 });
 

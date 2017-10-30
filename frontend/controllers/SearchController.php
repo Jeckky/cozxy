@@ -112,7 +112,7 @@ class SearchController extends MasterController {
 
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-
+        //print_r($params);
         $brandId = $params['brandId'];
         if (isset($brandId) && !empty($brandId)) {
             $brand = \common\models\costfit\Brand::find()->where('brandId=' . $brandId)->one();
@@ -140,7 +140,9 @@ class SearchController extends MasterController {
 //        ]);
 
         $productNotSell = Product::productForNotSale(null, null, $brandId);
+
         $promotions = Product::productPromotion(12, '', $brandId);
+
         return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell', 'brandId', 'brandPrice'));
     }
 
@@ -161,11 +163,12 @@ class SearchController extends MasterController {
         ]);
         //
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
+        $promotions = Product::productPromotion(12, $categoryId, $brand, $mins, $maxs);
         return $this->renderAjax("_product_list", [
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
                     'category' => $category,
-                    'categoryId' => $categoryId
+                    'categoryId' => $categoryId, 'promotions' => $promotions
         ]);
     }
 
@@ -190,11 +193,12 @@ class SearchController extends MasterController {
         if (isset($brandId)) {
             $brandName = $brand->title;
         }
+        $promotions = Product::productPromotion(12, '', $brandId);
         return $this->renderAjax("_product_list_brand", [
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
                     'brandName' => $brandName,
-                    'brandId' => $brandId
+                    'brandId' => $brandId, 'promotions' => $promotions
         ]);
     }
 
@@ -221,6 +225,7 @@ class SearchController extends MasterController {
     }
 
     public function actionFilterBrand() {
+        //echo ;;l
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
@@ -250,17 +255,24 @@ class SearchController extends MasterController {
         if ($categoryId != 'undefined') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
             $site = 'category';
+            $promotions = Product::productPromotion(12, $categoryId, $brand);
         } else {
             $category = FALSE;
             $site = 'brand';
+            $promotions = Product::productPromotion(12, '', $brand);
         }
+        //echo 'brand:' . $brand;
+        //print_r($brand);
+
 
         return $this->renderAjax("_product_list", [
+                    'promotions' => $promotions,
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
                     'category' => $category,
                     'categoryId' => $categoryId,
-                    'brandId' => $brand, 'site' => $site]);
+                    'brandId' => $brand,
+                    'site' => $site]);
     }
 
     public function actionSortCozxy() {
@@ -289,11 +301,17 @@ class SearchController extends MasterController {
 
         if ($categoryId != '') {
             $category = \common\models\costfit\Category::findOne($categoryId)->title;
+            $promotions = Product::productPromotion(12, $categoryId, $brand, $mins, $maxs, $status, $sort);
         } else {
             $category = '';
+            $promotions = Product::productPromotion(12, '', $brand, $mins, $maxs, $status, $sort);
         }
-
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category, 'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus]);
+        //echo 'categoryId:' . $categoryId;
+        //echo '<br>brand:' . $brand;
+        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category,
+                    'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus, 'promotions' => $promotions
+        ]);
     }
 
     public function actionSortCozxyFixBrand() {
@@ -324,13 +342,15 @@ class SearchController extends MasterController {
         if (isset($brandId)) {
             $brandName = $brand->title;
         }
+        $promotions = Product::productPromotion(12, '', $brandId);
         return $this->renderAjax("_product_list_brand", [
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
                     'brandName' => $brandName,
                     'brandId' => $brandId,
                     'sort' => $sort,
-                    'sortstatus' => $sortstatus
+                    'sortstatus' => $sortstatus,
+                    'promotions' => $promotions
         ]);
     }
 

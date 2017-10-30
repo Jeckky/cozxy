@@ -146,6 +146,7 @@ if ($site == 'category') {
         $search = 'SEARCH : ' . $_GET["search"];
     }
 }
+//echo 'controller :' . Yii::$app->controller->id;
 ?>
 
 <?=
@@ -165,9 +166,22 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                             <h2>No item found</h2>
                         </div>
                     <?php endif; ?>
+
                     <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
                         <div class="filter-product-cozxy col-sm-12">
-                            <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                            <h3 class="b text-center-sm text-center-xs">
+                                HOT DEALS
+                                <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+                                    <small>
+                                        <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
+                                    </small>
+                                <?php endif; ?>
+                            </h3>
                             <div class="row">
                                 <?php
 //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
@@ -184,16 +198,18 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                                     //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
-                                    'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
+                                    //'layout' => "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n",
+                                    'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                                    'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
                                     'itemOptions' => [
                                         'tag' => false,
-                                        'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
+                                        'pager' => [
                                             'firstPageLabel' => 'first',
                                             'lastPageLabel' => 'last',
                                             'prevPageLabel' => 'previous',
                                             'nextPageLabel' => 'next',
                                             'maxButtonCount' => 3,
-                                        ] : [],
+                                        ],
                                     ],
                                 ]);
 //                        yii\widgets\Pjax::end();
@@ -215,14 +231,16 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                 }
                                 ?>
                                 <? //= strtoupper('category') ?><!-- :: --><? //= strtoupper($title) ?> <!--(RECOMMENDED)-->
-                                <small>
-                                    <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
-                                </small>
+                                <?php if (isset($promotions) && $promotions->getCount() == 0): ?>
+                                    <small>
+                                        <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
+                                    </small>
+                                <?php endif; ?>
                             </h3>
 
                             <div class="row">
@@ -345,7 +363,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                    ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                   ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                 ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                              ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                             ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                             ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                            ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                           ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

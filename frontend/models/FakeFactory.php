@@ -379,6 +379,7 @@ class FakeFactory extends Model {
         }
 
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
+
         if (isset($marketPrice)) {
             $market = $marketPrice->price;
         } else {
@@ -388,9 +389,9 @@ class FakeFactory extends Model {
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : 0, 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
-        if (isset($GetProductSuppliers['categoryId'])) {
-            $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
-        }
+        /* if (isset($GetProductSuppliers['categoryId'])) {
+          $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
+          } */
         /*
          * ราคาสินค้า
          */
@@ -400,24 +401,28 @@ class FakeFactory extends Model {
          */
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
         //echo $GetProductSuppliers->product->brand->title;
+        //echo $marketPrice->brand->title;
+        //echo 'productId :' . $marketPrice->productId . '<hr>';
+        //echo $GetProductSuppliers['title'] . '<br>';
+        //echo $marketPrice->category->title;
         $products['ProductSuppliersDetail'] = [
-            'productSuppId' => $GetProductSuppliers['productSuppId'],
-            'productId' => $GetProductSuppliers['productId'],
+            'productSuppId' => isset($marketPrice->productSuppId) ? $marketPrice->productSuppId : $GetProductSuppliers['productSuppId'],
+            'productId' => isset($marketPrice->productId) ? $marketPrice->productId : $GetProductSuppliers['productId'],
             //'supplierId' => $GetProductSuppliers['userId'],
             'productGroupId' => '',
-            'brandId' => $GetProductSuppliers['brandId'],
-            'brandName' => isset($GetProductSuppliers->product->brand) ? $GetProductSuppliers->product->brand->title : 'No Brand',
-            'categoryId' => $GetProductSuppliers['categoryId'],
+            'brandId' => isset($marketPrice->brand->brandId) ? $marketPrice->brand->brandId : $GetProductSuppliers['brandId'],
+            'brandName' => isset($marketPrice->brand) ? $marketPrice->brand->title : 'No Brand',
+            'categoryId' => isset($marketPrice->categoryId) ? $marketPrice->categoryId : $GetProductSuppliers['categoryId'],
             //'receiveType' => $GetProductSuppliers['receiveType'],
             //   'title' => isset($GetProductSuppliers['title']) ? $GetProductSuppliers['title'] : '',
-            'title' => isset($selectedOptions) ? $GetProductSuppliers['title'] : $marketPrice->title,
-            'shortDescription' => isset($GetProductSuppliers['shortDescription']) ? $GetProductSuppliers['shortDescription'] : '',
-            'description' => isset($GetProductSuppliers['description']) ? $GetProductSuppliers['description'] : '',
-            'specification' => isset($GetProductSuppliers['specification']) ? $GetProductSuppliers['specification'] : '',
+            'title' => isset($selectedOptions) ? $marketPrice->title : $marketPrice->title,
+            'shortDescription' => isset($marketPrice->shortDescription) ? $marketPrice->shortDescription : $GetProductSuppliers['shortDescription'],
+            'description' => isset($marketPrice->description) ? $marketPrice->description : $GetProductSuppliers['description'],
+            'specification' => isset($marketPrice->specification) ? $marketPrice->specification : $GetProductSuppliers['specification'],
             'quantity' => isset($GetProductSuppliers['quantity']) ? $GetProductSuppliers['quantity'] : '',
             'result' => isset($GetProductSuppliers['result']) ? $GetProductSuppliers['result'] : '',
             'price' => isset($GetProductSuppliers['price']) ? number_format($GetProductSuppliers['price']) : '',
-            'category' => isset($GetCategory->title) ? $GetCategory->title : '',
+            'category' => isset($marketPrice->category) ? $marketPrice->category->title : 'No Category', //isset($GetCategory->title) ? $GetCategory->title : '',
             //'image' => $productImagesOneTopz,
             //'images' => $imagAll,
             'image' => $productImagesMulti['productImagesOneTopz'],
@@ -436,6 +441,8 @@ class FakeFactory extends Model {
             'marketPrice' => isset($market) ? number_format($market) : '',
             'DiscountmarketPrice' => isset($market) ? $market : 0,
             'Discountprice' => isset($GetProductSuppliers['price']) ? $GetProductSuppliers['price'] : 0,
+            'productGroupTemplateId' => isset($marketPrice->productGroupTemplateId) ? $marketPrice->productGroupTemplateId : '',
+            'parentId' => isset($marketPrice->parentId) ? $marketPrice->parentId : '',
         ];
 
         return $products;

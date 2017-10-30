@@ -138,6 +138,44 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_price', [
     <div class="container">
         <div class="row">
             <div class="col-md-9 col-sm-9 col-xs-12 brand-price-filter">
+                <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+
+                    <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                    <div class="row">
+                        <?php
+//                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
+                        ?>
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $promotions,
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) {
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                            },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout'=>"{summary}{pager}{items}"
+//                            'layout' => "{items}",
+                            //'layout' => "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n",
+                            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                            'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
+                            'itemOptions' => [
+                                'tag' => false,
+                                'pager' => [
+                                    'firstPageLabel' => 'first',
+                                    'lastPageLabel' => 'last',
+                                    'prevPageLabel' => 'previous',
+                                    'nextPageLabel' => 'next',
+                                    'maxButtonCount' => 3,
+                                ],
+                            ],
+                        ]);
+//                        yii\widgets\Pjax::end();
+                        ?>
+                    </div>
+
+                <?php endif; ?>
                 <?php if ($productCanSell->getTotalCount() > 0): ?>
                     <h3 class="b" style="word-wrap: break-word;white-space: normal;">RECOMMENDED <?= ':: ' . strtoupper($brandName) ?></h3>
                     <div class="row">
@@ -154,8 +192,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_price', [
                                 ],
                                 'itemView' => function ($model, $key, $widget, $brandName) {
 
-                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
-                        },
+                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                },
                                 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
                                 'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
@@ -192,8 +230,8 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                            }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                                    }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
                                     'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                     'layout' => "{summary}\n{items}\n<div class ='  col-lg-offset-3'>{pager}</div>\n",

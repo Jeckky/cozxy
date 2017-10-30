@@ -20,8 +20,8 @@ class ProductController extends MasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
 
         // echo '<pre>';
-        //print_r($params);
-        // exit();
+        // print_r($params);
+        //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId
         //echo 'ccc;' . $productIdParams;
         //$productSupplierId = $params['productSupplierId'];
@@ -30,14 +30,16 @@ class ProductController extends MasterController {
         } else {
             $selectedOptions = NULL;
         }
+
+        //print_r($selectedOptions);
         $cartOrderId = \common\models\costfit\Order::findCartArray();
         //throw new \yii\base\Exception(print_r($cart['orderId'], true));
         $productViews = FakeFactory::productViews($productIdParams, $cartOrderId, $selectedOptions); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
-
-
-
+        //echo '<pre>';
+        //print_r($productViews);
+        //exit();
         $productId = $productIdParams; //\common\models\costfit\ProductSuppliers::productParentId($productSupplierId)->productId;
         /*
          * Product Views - Frontend
@@ -49,7 +51,7 @@ class ProductController extends MasterController {
         } else {
             $ProductPageViews->token = NULL;
         }
-        $ProductPageViews->productSuppId = $productSupplierId;
+        $ProductPageViews->productSuppId = isset($productSupplierId) ? $productSupplierId : $productIdParams;
         $ProductPageViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : '0';
         $ProductPageViews->updateDateTime = new \yii\db\Expression('NOW()');
         $ProductPageViews->createDateTime = new \yii\db\Expression('NOW()');
@@ -70,7 +72,8 @@ class ProductController extends MasterController {
         $StoryRecentStories = new ArrayDataProvider(['allModels' => DisplayMyStory::productRecentStories($productIdParams, $productSupplierId, $productPostId), 'pagination' => ['defaultPageSize' => 5]]);
         $productGroupOptionValues = ProductGroupOptionValue::findProductOptionsArrayByProductIdSp1($productId);
         //$productGroupOptionValueSelect = ProductGroupOptionValue::find()->where('productId = ' . $productId . ' and productSuppId = ' . $productSupplierId . '')->groupBy('productId')->one();
-        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productSupplierId);
+        //print_r($productGroupOptionValues);
+        $productGroupOptionValueSelect = ProductGroupOptionValue::findProductGroupOptionValueSelectSp1($productId, $productViews['parentId']);
 
         //echo '<pre>';
         //print_r($productGroupOptionValueSelect->attributes);
