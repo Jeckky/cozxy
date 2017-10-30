@@ -272,7 +272,8 @@ class SearchController extends MasterController {
                     'category' => $category,
                     'categoryId' => $categoryId,
                     'brandId' => $brand,
-                    'site' => $site]);
+                    'site' => $site
+        ]);
     }
 
     public function actionSortCozxy() {
