@@ -364,6 +364,7 @@ class TestFakeFactory extends Model {
             print_r($getOrderAndItems);
             $quantityOrderItems = $getOrderAndItems; //หาจำนวนสินค้าในเทเบิล OrderItems
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
+            echo '<br>resultProductSuppliers :' . $resultProductSuppliers;
             if ($resultProductSuppliers >= $quantityOrderItems) { //ถ้าจำนวนสินค้าใน เทเบิล product suppliers มีมากกว่าในเทเบิล orderItems ให้แสดงและค้นหาสินค้าที่มีในสต๊อก
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
@@ -385,7 +386,7 @@ class TestFakeFactory extends Model {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
             $txtAlert = 'No';
         }
-
+        echo '<br>'.$txtAlert
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
 
         if (isset($marketPrice)) {
