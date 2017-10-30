@@ -77,7 +77,7 @@ class SearchController extends MasterController {
         //$category = Yii::$app->request->post('search');
         //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
         //return $this->render('index', compact('productCanSell', 'category'));
-        $category = Yii::$app->request->get('search');
+        $search_hd = Yii::$app->request->get('search');
 
         $categoryId = NULL;
 
@@ -86,7 +86,7 @@ class SearchController extends MasterController {
           'allModels' => DisplaySearch::productSearch($category, 12, FALSE),
           'pagination' => ['defaultPageSize' => 12],
           ]); */
-        $productCanSell = DisplaySearch::productSearch($category, 12, FALSE);
+        $productCanSell = DisplaySearch::productSearch($search_hd, 12, FALSE);
 
 
         /* $productNotSell = new ArrayDataProvider(
@@ -95,7 +95,7 @@ class SearchController extends MasterController {
           'pagination' => ['defaultPageSize' => 12],
           ]); */
 
-        $productNotSell = DisplaySearch::productSearchNotSale($category, 12, FALSE);
+        $productNotSell = DisplaySearch::productSearchNotSale($search_hd, 12, FALSE);
 
 
         $productFilterBrand = new ArrayDataProvider(
@@ -103,8 +103,9 @@ class SearchController extends MasterController {
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
         $site = 'brand';
-        $catPrice = DisplaySearch::findAllPrice($categoryId);
-        return $this->render('index_search', compact('site', 'catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand'));
+
+        $catPrice = DisplaySearch::findAllPriceSearch($search_hd);
+        return $this->render('index_search', compact('site', 'catPrice', 'productCanSell', 'category', 'categoryId', 'productNotSell', 'productFilterBrand', 'search_hd'));
     }
 
     public function actionBrand($hash = FALSE) {
@@ -197,6 +198,28 @@ class SearchController extends MasterController {
         ]);
     }
 
+    public function actionFilterPriceAll() {
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $search = Yii::$app->request->post('search');
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAllSearch($search, $mins, $maxs, $sort = false, $type = false, 'Notsale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAllSearch($search, $mins, $maxs, $sort = false, $type = false, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        //
+        // throw new \yii\base\Exception($mins . ',' . $maxs);
+
+        return $this->renderAjax("_product_list_all_search", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'search' => $search,
+        ]);
+    }
+
     public function actionFilterBrand() {
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
@@ -232,8 +255,12 @@ class SearchController extends MasterController {
             $site = 'brand';
         }
 
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale, 'productFilterPriceCansale' => $productFilterPriceCansale,
-                    'category' => $category, 'categoryId' => $categoryId, 'brandId' => $brand, 'site' => $site]);
+        return $this->renderAjax("_product_list", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'category' => $category,
+                    'categoryId' => $categoryId,
+                    'brandId' => $brand, 'site' => $site]);
     }
 
     public function actionSortCozxy() {
@@ -304,6 +331,34 @@ class SearchController extends MasterController {
                     'brandId' => $brandId,
                     'sort' => $sort,
                     'sortstatus' => $sortstatus
+        ]);
+    }
+
+    public function actionSortCozxySearch() {
+        $FilterPrice = [];
+        $brandName = '';
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $search = Yii::$app->request->post('search');
+        $sort = Yii::$app->request->post('sort');
+        $type = Yii::$app->request->post('type');
+        $productFilterPriceNotsale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAllSearch($search, $mins, $maxs, $sort, $type, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+        $productFilterPriceCansale = new ArrayDataProvider([
+            'allModels' => DisplaySearch::productFilterAllSearch($search, $mins, $maxs, $sort, $type, 'Cansale'),
+            'pagination' => ['defaultPageSize' => 12]
+        ]);
+
+        $sortstatus = ($type == "price") ? "price" : (($type == "brand") ? "brand" : "new");
+
+        return $this->renderAjax("_product_list_all_search", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'search' => $search,
+                    'sortstatus' => $sortstatus,
+                    'sort' => $sort
         ]);
     }
 

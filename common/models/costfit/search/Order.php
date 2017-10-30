@@ -17,9 +17,9 @@ class Order extends OrderModel {
      */
     public function rules() {
         return [
-                [['orderId', 'userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
-                [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime', 'password'], 'safe'],
-                [['summary'], 'number'],
+            [['orderId', 'userId', 'billingCountryId', 'billingProvinceId', 'billingAmphurId', 'shippingCountryId', 'shippingProvinceId', 'shippingAmphurId', 'paymentType', 'status'], 'integer'],
+            [['token', 'orderNo', 'invoiceNo', 'sendDate', 'billingCompany', 'billingTax', 'billingAddress', 'billingZipcode', 'billingTel', 'shippingCompany', 'shippingTax', 'shippingAddress', 'shippingZipcode', 'shippingTel', 'createDateTime', 'updateDateTime', 'password'], 'safe'],
+            [['summary'], 'number'],
         ];
     }
 
@@ -121,7 +121,8 @@ class Order extends OrderModel {
 //            'shippingProvinceId' => $this->shippingProvinceId,
 //            'shippingAmphurId' => $this->shippingAmphurId,
 //            'paymentType' => $this->paymentType,
-            'status' => $this::ORDER_STATUS_E_PAYMENT_SUCCESS,
+            //      'status' => $this::ORDER_STATUS_E_PAYMENT_SUCCESS,
+            'status' => OrderModel::ORDER_STATUS_E_PAYMENT_SUCCESS,
 //            'createDateTime' => $this->createDateTime,
 //            'updateDateTime' => $this->updateDateTime,
         ]);

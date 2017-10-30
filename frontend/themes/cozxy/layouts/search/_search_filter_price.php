@@ -29,7 +29,6 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                                 <div id="amount-min">
                                     <input type="hidden" name="min" id="min">
                                     <input type="hidden" name="max" id="max">
-                                    <input type="hidden" name='brandId' id="brandId" value="<?php echo $brandId; ?>">
                                 </div>
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR ALL</u></a> &nbsp;
                                 <a href="javascript:filterPriceByBrand()" class="b btn-black-s size16">APPLY</a>

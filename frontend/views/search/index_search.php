@@ -95,7 +95,6 @@ $(function() {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
             $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
             $("input:hidden:eq(1)","#amount-min").val(ui.values[ 1 ]);
-            $("input:hidden:eq(2)","#amount-min").val(' . $categoryId . ');
 
 		},
         stop: function (event, ui) {
@@ -144,13 +143,16 @@ if ($site == 'category') {
     }
     if (isset($_GET["search"]) && !empty($_GET['search'])) {
         $search = 'SEARCH : ' . $_GET["search"];
+        $this->title = $_GET["search"];
     }
 }
 ?>
 
 <?=
-$this->render('@app/themes/cozxy/layouts/search/_search_filter', [
-    'categoryId' => $categoryId, 'productFilterBrand' => $productFilterBrand
+$this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
+    'categoryId' => $categoryId,
+    'productFilterBrand' => $productFilterBrand,
+    'search' => $search_hd
 ]);
 ?>
 <div class="product-list">
@@ -179,8 +181,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
-                                    },
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                            },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                                     //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
@@ -193,7 +195,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                             'prevPageLabel' => 'previous',
                                             'nextPageLabel' => 'next',
                                             'maxButtonCount' => 3,
-                                        ] : [],
+                                                ] : [],
                                     ],
                                 ]);
 //                        yii\widgets\Pjax::end();
@@ -211,16 +213,16 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                 if (isset($search)) {
                                     echo $search . '(RECOMMENDED)';
                                 } else {
-                                    echo strtoupper('category') . '::' . strtoupper($title) . '(RECOMMENDED)';
+                                    echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(RECOMMENDED)';
                                 }
                                 ?>
                                 <? //= strtoupper('category') ?><!-- :: --><? //= strtoupper($title) ?> <!--(RECOMMENDED)-->
                                 <small>
-                                    <a href="javascript:sortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <a href="javascript:sortCozxySearch('<?= $search_hd; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
                                 </small>
                             </h3>
@@ -245,8 +247,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
-                                        },
+                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                         'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
@@ -281,7 +283,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                 if (isset($search)) {
                                     echo $search . '(PRODUCTS)';
                                 } else {
-                                    echo strtoupper('category') . '::' . strtoupper($title) . '(PRODUCTS)';
+                                    echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(PRODUCTS)';
                                 }
                                 ?>
 
@@ -307,8 +309,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                                        },
+                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                                },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                         'layout' => "{summary}\n{items}\n<div class =' col-sm-offset-3'>{pager}</div>\n",
@@ -345,7 +347,7 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter', [
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                    ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                   ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                 ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                 ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                               ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                              ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

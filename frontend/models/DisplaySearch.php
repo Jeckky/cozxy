@@ -881,6 +881,30 @@ class DisplaySearch extends Model {
         return $pCanSale;
     }
 
+    public static function findAllPriceSearch($search_hd) {
+        $whereArray = [];
+        $whereArray["ps.approve"] = "approve";
+        $whereArray["pps.status"] = "1";
+        $pCanSale = \common\models\costfit\CategoryToProduct::find()
+                ->select('MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice')
+                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                ->where($whereArray)
+                ->andWhere([">", "ps.result", 0])
+                ->andWhere([">", "pps.price", 0])
+                ->andFilterWhere(['OR',
+                    ['LIKE', 'ps.title', trim($search_hd)],
+                    ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
+                    ['LIKE', 'ps.isbn', trim($search_hd)],
+                        //                ['LIKE', 'product_suppliers.title', $search_hd],
+                        //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                ])
+                ->one();
+
+        return $pCanSale;
+    }
+
     public static function findAllBrandPrice($brandId) {
         $whereArray = [];
         $whereArray["b.brandId"] = $brandId;
@@ -953,6 +977,78 @@ class DisplaySearch extends Model {
 
         //throw new \yii\base\Exception($sortPrice);
 
+        foreach ($pCanSale as $value) {
+
+            $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
+
+            $price_s = isset($value->product) ? number_format($value->product->price) : ''; // number_format($value->product->price, 2);
+            $price = number_format($value->price);
+
+            if (Yii::$app->controller->id == 'site') {
+                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
+            } else {
+                $title = isset($value->title) ? substr($value->title, 0, 35) : '';
+            }
+
+            $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
+
+            $products[$value->productSuppId] = [
+                'productId' => $value->productId,
+                'productSuppId' => $value->productSuppId,
+                'image' => $productImagesThumbnail1,
+                'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
+                'brand' => isset($value->brand) ? $value->brand->title : $value->brandName,
+                'title' => $title,
+                'price_s' => isset($price_s) ? $price_s : '',
+                'price' => isset($price) ? $price : '',
+                'maxQnty' => isset($value->result) ? $value->result : '',
+                'fastId' => FALSE,
+                'productId' => isset($value->productId) ? $value->productId : '',
+                'supplierId' => isset($value->userId) ? $value->userId : '',
+                'receiveType' => isset($value->receiveType) ? $value->receiveType : '',
+                'wishList' => $wishList
+            ];
+        }
+
+        return $products;
+    }
+
+    public static function productFilterAllSearch($search = FALSE, $mins = FALSE, $maxs = FALSE, $sort = false, $type = false, $status = FALSE) {
+        $products = [];
+        $whereArray2 = [];
+        $whereArray2["ps.approve"] = "approve";
+        $whereArray2["pps.status"] = "1";
+        $sortStr = ($type == "price") ? "pps.price " : (($type == "brand") ? "brandName " : "ps.updateDateTime ");
+        if (isset($sort) && $sort != false && $sort == 'SORT_ASC') {
+            $sortStr .= 'asc';
+        } else {
+            $sortStr .= 'desc';
+        }
+        //echo '<pre>';
+        //print_r($whereArray2);
+        $pCanSale = \common\models\costfit\CategoryToProduct::find()
+                ->select('ps.*, pps.*, `brand`.title as brandName ')
+                ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
+                ->join("LEFT JOIN", "product_suppliers ps", "ps.productId=product.productId")
+                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                ->join("LEFT JOIN", "brand", "brand.brandId = ps.brandId")
+                ->where($whereArray2)
+                ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " 1=1")
+                ->andWhere(($status == 'Notsale') ? 'ps.result = 0' : 'ps.result > 0')
+                ->andFilterWhere(['OR',
+                    //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                    //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                    ['LIKE', 'ps.title', trim($search)],
+                    ['LIKE', 'strip_tags(product_suppliers.description)', trim($search)],
+                    ['LIKE', 'ps.isbn', trim($search)],
+                        //                ['LIKE', 'product_suppliers.title', $search_hd],
+                        //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                ])
+                ->groupBy('ps.productSuppId')
+                ->orderBy($sortStr)
+                ->all();
+
+        //throw new \yii\base\Exception(count($pCanSale));
         foreach ($pCanSale as $value) {
 
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');

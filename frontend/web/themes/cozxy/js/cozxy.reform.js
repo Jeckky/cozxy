@@ -1108,6 +1108,33 @@ function filterPriceByBrand() {
         }
     });
 }
+function filterPriceAll() {
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    $search = $('#search').val();
+    $('.btn-black-s').html('APPLY ...');
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    var path = $baseUrl + "search/filter-price-all";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {mins: $min, maxs: $max, search: $search},
+        success: function (data, status) {
+            if (data == '') {
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
+
+                    $('.brand-price-filter').html(data);
+                } else {
+                    alert('error');
+                }
+            }
+
+        }
+    });
+}
 function filterPriceCozxyClear() {
     location.reload();
 }
@@ -1225,6 +1252,49 @@ function sortCozxyFixBrand(brandId, status) {
                     //$('#Sortprice').val('SORT_ASC');
                     //$('#Sortbrand').val('SORT_ASC');
 
+                    $('.brand-price-filter').html(data);
+                } else {
+                    $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+                }
+            }
+
+        }
+    });
+}
+function sortCozxySearch(search, status) {//status are price, brand, new
+    var brandName = [];
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
+    $brandName = brandName;
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    if (status == "price")
+    {
+        $sort = $('#Sortprice').val();
+    } else if (status == "brand")
+    {
+        $sort = $('#Sortbrand').val();
+    } else
+        (status == "new")
+    {
+        $sort = $('#Sortnew').val();
+    }
+
+
+    $('.btn-black-s').html('APPLY ...');
+    $('.brand-price-filter').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    var path = $baseUrl + "search/sort-cozxy-search";
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: {type: status, search: search, mins: $min, maxs: $max, 'sort': $sort},
+        success: function (data, status) {
+
+            if (data == '') {
+                $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+            } else {
+                if (status == "success") {
                     $('.brand-price-filter').html(data);
                 } else {
                     $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
