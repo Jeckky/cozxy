@@ -689,25 +689,33 @@ function enableEdit(id) {
     $("#edit" + id).hide();
     $("#save" + id).show();
 }
-function saveEdit(id) {
-    //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
+function saveEdit(id, value) {
+    // var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
     var url = $baseUrl + 'product/product-group/edit-option';
     var newVal = $("#optionValue" + id).val();
-    $.ajax({
-        url: url,
-        data: {id: id, newVal: newVal},
-        dataType: 'JSON',
-        type: 'post',
-        success: function (data) {
-            if (!data.status) {
-                alert(data.error);
-            }
-            $("#optionValue" + id).attr('disabled', 'disabled');
-            $("#edit" + id).show();
-            $("#save" + id).hide();
+    if (newVal != '') {
+        $.ajax({
+            url: url,
+            data: {id: id, newVal: newVal},
+            dataType: 'JSON',
+            type: 'post',
+            success: function (data) {
+                if (!data.status) {
+                    alert(data.error);
+                }
+                $("#optionValue" + id).attr('disabled', 'disabled');
+                $("#edit" + id).show();
+                $("#save" + id).hide();
 
-        },
-    });
+            },
+        });
+    } else {
+        alert("Option can not empty");
+        $("#optionValue" + id).val(value);
+        $("#optionValue" + id).attr('disabled', 'disabled');
+        $("#edit" + id).show();
+        $("#save" + id).hide();
+    }
 }
 function changeProductGroupTitle() {
 
@@ -715,6 +723,9 @@ function changeProductGroupTitle() {
     $("#editProductGroup").hide();
     $("#productTitle").show();
     $("#saveChangeProductGroup").show();
+}
+function disableInput(templateOptionId) {
+    $("#newProduct" + templateOptionId).attr('disabled', 'disabled');
 }
 function savceChangeProductGroupTitle(id) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
