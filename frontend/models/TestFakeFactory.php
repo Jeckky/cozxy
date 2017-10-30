@@ -386,7 +386,7 @@ class TestFakeFactory extends Model {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
             $txtAlert = 'No';
         }
-        echo '<br>'.$txtAlert
+        echo '<br>' . $txtAlert;
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
 
         if (isset($marketPrice)) {
