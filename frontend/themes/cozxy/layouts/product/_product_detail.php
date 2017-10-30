@@ -222,7 +222,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         if ($model['price'] > 0 && $model['result'] > 0) {
                             ?>
                             <div class="row">
-                                <div class="col-sm-6 size18 b">QUANTITY</div>
+                                <div id="<?= $model['result'] ?>" class="col-sm-6 size18 b">QUANTITY</div>
                                 <div class="col-sm-6 text-right quantity-sel size18">
                                     <a href="javascript:qSets('<?= $id ?>',-1,'<?= $model["productSuppId"] ?>','<?= isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : '' ?>','<?= $model["sendDate"] ?>','<?= isset($this->params['cart']['orderItemId']) ? $this->params['cart']['orderItemId'] : '' ?>');" class="q-minus"><i class="fa fa-minus-circle" aria-hidden="true" style="color: #000"></i></a>
                                     <input type="text" id="quantity" name="quantity" class="quantity quantity-<?= $id ?>" value="1">
@@ -272,7 +272,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                                 if ($model['result'] <= 0) {
                                     ?>
                                     <div href="" class="b btn-g999 btn-black" style="margin:14px auto 2px;padding: 5px 10px; background-color: #000; cursor: default;">
-                                        <div>NOT AVAILABLE</div>
+                                        <div id="<?= $model['result'] ?>">NOT AVAILABLE</div>
                                     </div>
                                     <?php
                                 }

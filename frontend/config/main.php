@@ -59,6 +59,7 @@ return [
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
                 'products/<hash>' => 'products/index',
                 'product/<hash>' => 'product/index',
+                'test-product/<hash>' => 'test-product/index',
                 /* test sample product option */
                 'product/sample-product-option/<hash>' => 'product/sample-product-option',
                 /* end test sample product option */
