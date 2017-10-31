@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 namespace frontend\models;
 
 use common\models\costfit\Product;
@@ -11,9 +17,11 @@ use common\models\costfit\ProductSuppliers;
 use yii\db\Expression;
 
 /**
- * ContactForm is the model behind the contact form.
+ * Description of TestFakeFactory
+ *
+ * @author it
  */
-class FakeFactory extends Model {
+class TestFakeFactory extends Model {
 
     public static function productForSale($n = NULL, $cat = FALSE) {
         $products = [];
@@ -353,15 +361,15 @@ class FakeFactory extends Model {
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productIdParams . ' and result >0')->one();
         if (isset($GetProductSuppliers)) {
             //echo '<pre>';
-            //print_r($getOrderAndItems);
+            print_r($getOrderAndItems);
             $quantityOrderItems = $getOrderAndItems; //หาจำนวนสินค้าในเทเบิล OrderItems
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
+            echo '<br>resultProductSuppliers :' . $resultProductSuppliers;
             if ($resultProductSuppliers >= $quantityOrderItems) { //ถ้าจำนวนสินค้าใน เทเบิล product suppliers มีมากกว่าในเทเบิล orderItems ให้แสดงและค้นหาสินค้าที่มีในสต๊อก
                 $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
                 ->select('`product_suppliers`.*, `product_price_suppliers`.price')
                 ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                //->where("productId=" . $productIdParams . ' and result  >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
-                ->where("productId=" . $productIdParams . ' and result  > 0  and product_price_suppliers.status = 1')
+                ->where("productId=" . $productIdParams . ' and result >=' . $quantityOrderItems . ' and product_price_suppliers.status = 1')
                 ->orderBy('product_price_suppliers.price')
                 ->one();
                 $txtAlert = 'Ok'; // แสดงปุ่ม Add to cart , add to wishList หรือ SHELVES
@@ -378,7 +386,7 @@ class FakeFactory extends Model {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
             $txtAlert = 'No';
         }
-
+        echo '<br>' . $txtAlert;
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
 
         if (isset($marketPrice)) {

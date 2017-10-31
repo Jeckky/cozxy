@@ -16,7 +16,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
-use frontend\models\FakeFactory;
+use frontend\models\TestFakeFactory;
 use frontend\models\DisplayMyStory;
 
 /**
@@ -45,7 +45,7 @@ class TestProductController extends MasterController {
         //print_r($selectedOptions);
         $cartOrderId = \common\models\costfit\Order::findCartArray();
         //throw new \yii\base\Exception(print_r($cart['orderId'], true));
-        $productViews = FakeFactory::productViews($productIdParams, $cartOrderId, $selectedOptions); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
+        $productViews = TestFakeFactory::productViews($productIdParams, $cartOrderId, $selectedOptions); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
         echo '<pre>';
@@ -70,10 +70,10 @@ class TestProductController extends MasterController {
         /*
          * End Product Views
          */
-        // $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
-        //-- Old 16/08/2017--- $productViews = FakeFactory::productViews($productSupplierId);
+        // $productViews = new ArrayDataProvider(['allModels' => TestFakeFactory::productViews($productSupplierId)]);
+        //-- Old 16/08/2017--- $productViews = TestFakeFactory::productViews($productSupplierId);
 
-        $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
+        $productHotNewProduct = new ArrayDataProvider(['allModels' => TestFakeFactory::productHotNewAndProduct(4, FALSE)]);
 
         //$StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productIdParams, $productSupplierId, FALSE, FALSE)]);
@@ -94,7 +94,7 @@ class TestProductController extends MasterController {
         } else {
             $productPromotion = NULL;
         }
-        return $this->render('index', compact('productPromotion', 'productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
+        //return $this->render('@app/views/product/index', compact('productPromotion', 'productGroupOptionValueSelect', 'productId', 'productSupplierId', 'productHotNewProduct', 'productViews', 'StoryProductPost', 'StoryRecentStories', 'productGroupOptionValues', 'selectedOptions'));
     }
 
     public function actionImagesItemBig() {
@@ -143,7 +143,7 @@ class TestProductController extends MasterController {
         }
         $cartOrderId = \common\models\costfit\Order::findCartArray();
         //throw new \yii\base\Exception(print_r($cart['orderId'], true));
-        $productViews = FakeFactory::productViews($productIdParams, $cartOrderId); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
+        $productViews = TestFakeFactory::productViews($productIdParams, $cartOrderId); //เทเบิล Product Suppliers หา Product ที่มีจำนวนสินค้นในสต๊อกและราคาถูกสุดออกมาแสดง
         $productSupplierId = $productViews['ProductSuppliersDetail']['productSuppId'];
         $productViews = $productViews['ProductSuppliersDetail'];
 
@@ -166,10 +166,10 @@ class TestProductController extends MasterController {
         /*
          * End Product Views
          */
-        // $productViews = new ArrayDataProvider(['allModels' => FakeFactory::productViews($productSupplierId)]);
-        //-- Old 16/08/2017--- $productViews = FakeFactory::productViews($productSupplierId);
+        // $productViews = new ArrayDataProvider(['allModels' => TestFakeFactory::productViews($productSupplierId)]);
+        //-- Old 16/08/2017--- $productViews = TestFakeFactory::productViews($productSupplierId);
 
-        $productHotNewProduct = new ArrayDataProvider(['allModels' => FakeFactory::productHotNewAndProduct(4, FALSE)]);
+        $productHotNewProduct = new ArrayDataProvider(['allModels' => TestFakeFactory::productHotNewAndProduct(4, FALSE)]);
 
         //$StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productId, $productSupplierId, FALSE, FALSE)]);
         $StoryProductPost = new ArrayDataProvider(['allModels' => DisplayMyStory::myStoryTop($productIdParams, $productSupplierId, FALSE, FALSE)]);
