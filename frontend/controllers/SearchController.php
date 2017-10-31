@@ -230,11 +230,11 @@ class SearchController extends MasterController {
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
         $categoryId = Yii::$app->request->get('categoryId');
-        if (isset($_GET['brandName']) && !empty($_GET['brandName'])) {
+        $search = Yii::$app->request->post('search');
+        if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
             $brand = Yii::$app->request->get('brandName');
+            $brand = substr($brand, 0, -1);
             $brandTxt = explode(",", $brand);
-            //echo count($brandTxt);
-            //print_r(explode(",", $brand));
             $brand = array_map('trim', explode(",", $brand));
         }
         if ($categoryId != 'undefined') {
@@ -261,18 +261,16 @@ class SearchController extends MasterController {
             $site = 'brand';
             $promotions = Product::productPromotion(12, '', $brand);
         }
-        //echo 'brand:' . $brand;
-        //print_r($brand);
-
-
-        return $this->renderAjax("_product_list", [
+        // throw new \yii\base\Exception($categoryId);
+        return $this->renderAjax("_product_list_choose_brand", [
                     'promotions' => $promotions,
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
                     'category' => $category,
                     'categoryId' => $categoryId,
                     'brandId' => $brand,
-                    'site' => $site
+                    'site' => $site,
+                    'search' => $search
         ]);
     }
 
@@ -309,9 +307,14 @@ class SearchController extends MasterController {
         }
         //echo 'categoryId:' . $categoryId;
         //echo '<br>brand:' . $brand;
-        return $this->renderAjax("_product_list", ['productFilterPriceNotsale' => $productFilterPriceNotsale,
-                    'productFilterPriceCansale' => $productFilterPriceCansale, 'category' => $category,
-                    'categoryId' => $categoryId, 'sort' => $sort, 'sortstatus' => $sortstatus, 'promotions' => $promotions
+        return $this->renderAjax("_product_list", [
+                    'productFilterPriceNotsale' => $productFilterPriceNotsale,
+                    'productFilterPriceCansale' => $productFilterPriceCansale,
+                    'category' => $category,
+                    'categoryId' => $categoryId,
+                    'sort' => $sort,
+                    'sortstatus' => $sortstatus,
+                    'promotions' => $promotions
         ]);
     }
 
