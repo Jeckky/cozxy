@@ -8,12 +8,16 @@ use common\helpers\CozxyCalculatesCart;
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
     $height = "height: 195px";
+
+    $marketPrice = isset($model->product) ? $model->product->price : 0;
+    $supplierPrice = isset($model->price) ? $model->price : 0;
 } else {
     $width = "width: 260px";
     $height = "height: 260px";
+    $marketPrice = $model['Discountprice_s'];
+    $supplierPrice = $model['Discountprice'];
 }
-$marketPrice = $model['Discountprice_s'];
-$supplierPrice = $model['Discountprice'];
+
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //echo 'DiscountProduc :' . $DiscountProduct;
 ?>
