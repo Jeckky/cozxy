@@ -66,7 +66,7 @@ class UserController extends ManagementMasterController {
                 $query->andWhere(['lastname' => $lastname]);
             }
             if (isset($email) && !empty($email)) {
-                $query->andWhere(['emailx' => $email]);
+                $query->andWhere(['email' => $email]);
             }
             //echo 'User1:';
         } else {
