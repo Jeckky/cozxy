@@ -88,7 +88,7 @@
     }
 </style>
 <?php
-if (isset($model->user)) {
+if (isset($model->user->avatar) && !empty($model->user->avatar)) {
     $i = '1';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
 } else {
