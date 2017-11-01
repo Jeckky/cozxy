@@ -12,11 +12,9 @@ use yii\filters\VerbFilter;
 /**
  * ProductGroupTemplateOptionController implements the CRUD actions for ProductGroupTemplateOption model.
  */
-class ProductGroupTemplateOptionController extends ProductMasterController
-{
+class ProductGroupTemplateOptionController extends ProductMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +29,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * Lists all ProductGroupTemplateOption models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new ProductGroupTemplateOptionSearch();
         if (isset($_GET["productGroupTemplateId"])) {
             $searchModel->productGroupTemplateId = $_GET["productGroupTemplateId"];
@@ -40,13 +37,17 @@ class ProductGroupTemplateOptionController extends ProductMasterController
         if (isset($_GET["productGroupTemplateId"])) {
             $searchModel->productGroupTemplateId = $_GET["productGroupTemplateId"];
         }
-
-
+        $showED = 0;
+        $isUse = \common\models\costfit\Product::find()->where("productGroupTemplateId=" . $_GET["productGroupTemplateId"])->one();
+        if (isset($isUse)) {
+            $showED = 1;
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'showED' => $showED
         ]);
     }
 
@@ -55,10 +56,9 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -67,8 +67,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new ProductGroupTemplateOption();
         if (isset($_GET["productGroupTemplateId"])) {
             $model->productGroupTemplateId = $_GET["productGroupTemplateId"];
@@ -81,7 +80,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -91,8 +90,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["ProductGroupTemplateOption"])) {
             $model->attributes = $_POST["ProductGroupTemplateOption"];
@@ -105,7 +103,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -115,8 +113,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index?productGroupTemplateId=' . $model->productGroupTemplateId]);
@@ -129,8 +126,7 @@ class ProductGroupTemplateOptionController extends ProductMasterController
      * @return ProductGroupTemplateOption the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ProductGroupTemplateOption::findOne($id)) !== null) {
             return $model;
         } else {
