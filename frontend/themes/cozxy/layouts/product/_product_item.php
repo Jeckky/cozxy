@@ -3,19 +3,55 @@
 use yii\bootstrap\ActiveForm;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ProductShelf;
+use common\helpers\CozxyCalculatesCart;
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
     $height = "height: 195px";
+
+    $marketPrice = isset($model->product) ? $model->product->price : 0;
+    $supplierPrice = isset($model->price) ? $model->price : 0;
 } else {
     $width = "width: 260px";
     $height = "height: 260px";
+    $marketPrice = $model['Discountprice_s'];
+    $supplierPrice = $model['Discountprice'];
 }
+
+$DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
+//echo 'DiscountProduc :' . $DiscountProduct;
 ?>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-<?= $col ?> col-sm-6 col-xs-12 box-product">
     <div class="product-box">
-
+        <?php if ($DiscountProduct != 'Lessthan10') { ?>
+            <div class="product-sticker">
+                <div class="rcorners4">
+                    <p>
+                        <?php
+                        //echo Yii::$app->controller->id;
+                        if (Yii::$app->controller->id == 'search') {
+                            echo 'SALE';
+                        } else if (Yii::$app->controller->id == 'site') {
+                            echo 'SALE';
+                        } else {
+                            echo 'SAVE';
+                        }
+                        ?></p>
+                    <p><?php
+                        if (Yii::$app->controller->id == 'search') {
+                            echo '-' . $DiscountProduct;
+                        } else if (Yii::$app->controller->id == 'site') {
+                            echo '-' . $DiscountProduct;
+                        } else {
+                            echo $DiscountProduct;
+                        }
+                        ?>
+                    </p>
+                </div>
+                <div class="triangle"></div>
+            </div>
+        <?php } ?>
         <div class="product-img text-center">
             <a href="<?= $model['url'] ?>" class="fc-black"><img alt="262x262" class="media-object fullwidth img-responsive" data-src="holder.js/262x262" src="<?= $model['image'] ?>" data-holder-rendered="true" style="<?//= $width ?>; <?//= $height ?>;"></a>
             <div class="v-hover">
