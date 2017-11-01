@@ -88,9 +88,11 @@
     }
 </style>
 <?php
-if (isset($model->user->avatar)) {
+if (isset($model->user)) {
+    //echo '1';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
 } else {
+    //echo '2';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jp';
     //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
