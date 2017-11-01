@@ -82,7 +82,7 @@ if (isset($dataProvider)) {
                                             ->all();
                                     $optionStr = "";
                                     foreach ($options as $option) {
-                                        $optionStr .= $option->productGroupOption->name . $option->productGroupTemplateOptionId . "-" . $option->value . "<br>";
+                                        $optionStr .= $option->productGroupOption->name . "-" . $option->value . "<br>";
                                     }
                                     return $optionStr;
                                 }
