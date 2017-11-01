@@ -93,7 +93,7 @@ if (isset($model->user->avatar) && !empty($model->user->avatar)) {
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
 } else {
     $i = '2';
-    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jp';
+    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
     //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
 ?>
