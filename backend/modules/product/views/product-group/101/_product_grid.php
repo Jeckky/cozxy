@@ -77,7 +77,9 @@ if (isset($dataProvider)) {
                                         'format' => 'html',
                                         'options' => ['style' => 'width:10%;text-align:left'],
                                         'value' => function($model) {
-                                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")->all();
+                                    $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")
+                                            ->orderBy("productGroupTemplateOptionId")
+                                            ->all();
                                     $optionStr = "";
                                     foreach ($options as $option) {
                                         $optionStr .= $option->productGroupOption->name . $option->productGroupTemplateOptionId . "-" . $option->value . "<br>";
