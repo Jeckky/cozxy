@@ -107,12 +107,16 @@ if (isset($model->user->avatar) && !empty($model->user->avatar)) {
             </a>
         </div>
         <div class="info">
-            <div class="title" style="height:50px;">
+
+            <p class="brand">
+                <span class="size14"><?= isset($model->product->brand) ? strtoupper($model->product->brand->title) : 'NO BRAND' ?></span>
+            </p>
+            <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="fc-black size14 b"><?= isset($model->product->title) ? substr($model->product->title, 0, 35) : '' ?></a>
-            </div>
-            <div class="desc" style="height:50px;">
+            </p>
+            <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>"> <?= isset($model->title) ? substr($model->title, 0, 35) : '' ?></a>
-            </div>
+            </p>
             <div class="desc">
                 <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model->countView() ?></span>&nbsp;
                 <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model->averageStar() ?></span>
