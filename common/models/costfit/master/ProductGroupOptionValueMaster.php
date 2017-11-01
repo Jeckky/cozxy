@@ -68,8 +68,8 @@ class ProductGroupOptionValueMaster extends \common\models\ModelMaster {
      * @return \yii\db\ActiveQuery
      */
     public function getProductGroupOption() {
-        // return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupOptionId' => 'productGroupOptionId']);
-        return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
+        return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupOptionId' => 'productGroupOptionId']);
+        //return $this->hasOne(ProductGroupOptionMaster::className(), ['productGroupTemplateOptionId' => 'productGroupTemplateOptionId']);
     }
 
     /**

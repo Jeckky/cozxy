@@ -1257,9 +1257,10 @@ class ProductGroupController extends ProductMasterController {
 
             foreach ($_POST['newProduct'] as $productGroupTemplateOptionId => $value):
                 $productGroupOption = ProductGroupOptionValue::find()
-                        ->where("productGroupId=" . $_POST['productGroupId'])
+                        ->where("productGroupId=" . $_POST['productGroupId'] . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId)
                         ->one();
                 if (isset($productGroupOption) && $value != '' && $value != null) {
+
                     $productGroup = new ProductGroupOptionValue();
                     $productGroup->productGroupTemplateOptionId = $productGroupTemplateOptionId;
                     $productGroup->value = $value;
