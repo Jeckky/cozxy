@@ -6,7 +6,7 @@ use common\helpers\Base64Decode;
     <div class="product-box" style="padding-right: 0px; padding-left: 0px;">
         <div class="product-img text-center">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
-                <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" style="max-height: 230px;">
+                <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" >
             </a>
         </div>
         <div class="product-txt">
