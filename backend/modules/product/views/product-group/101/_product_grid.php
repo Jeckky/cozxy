@@ -80,7 +80,7 @@ if (isset($dataProvider)) {
                                     $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productId =" . $model->productId . " AND productSuppId is NULL")->all();
                                     $optionStr = "";
                                     foreach ($options as $option) {
-                                        $optionStr .= $option->productGroupOption->name . "-" . $option->value . "<br>";
+                                        $optionStr .= $option->productGroupOption->name . $option->productGroupTemplateOptionId . "-" . $option->value . "<br>";
                                     }
                                     return $optionStr;
                                 }

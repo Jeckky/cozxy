@@ -1140,6 +1140,7 @@ function filterPriceCozxyClear() {
 
 function filterBrandCozxy($categoryId) {
     var brandName = [];
+    var search = $("#search").val();
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
@@ -1157,7 +1158,7 @@ function filterBrandCozxy($categoryId) {
     $.ajax({
         url: path,
         type: "POST",
-        data: {brand: $brandName, mins: $min, maxs: $max},
+        data: {brand: $brandName, mins: $min, maxs: $max, search: search},
         success: function (data, status) {
 
             if (data == '') {
