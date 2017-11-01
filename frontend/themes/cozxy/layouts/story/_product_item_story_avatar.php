@@ -89,10 +89,10 @@
 </style>
 <?php
 if (isset($model->user)) {
-    //echo '1';
+    $i = '1';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
 } else {
-    //echo '2';
+    $i = '2';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jp';
     //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
@@ -101,7 +101,7 @@ if (isset($model->user)) {
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="card hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
-        <div class="avatar">
+        <div class="avatar" id="<?= $i ?>">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
                 <img src="<?= $avatar ?>" alt=""/>
             </a>
