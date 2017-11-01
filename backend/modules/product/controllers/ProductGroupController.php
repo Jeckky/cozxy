@@ -1253,11 +1253,14 @@ class ProductGroupController extends ProductMasterController {
             $product->updateDateTime = new \yii\db\Expression('NOW()');
             $product->save(false);
             $id = Yii::$app->db->getLastInsertID();
+            $this->saveProductImage($parent->productId, $id);
+
             foreach ($_POST['newProduct'] as $productGroupTemplateOptionId => $value):
                 $productGroupOption = ProductGroupOptionValue::find()
-                        ->where("productGroupId=" . $_POST['productGroupId'])
+                        ->where("productGroupId=" . $_POST['productGroupId'] . " and productGroupTemplateOptionId=" . $productGroupTemplateOptionId)
                         ->one();
                 if (isset($productGroupOption) && $value != '' && $value != null) {
+
                     $productGroup = new ProductGroupOptionValue();
                     $productGroup->productGroupTemplateOptionId = $productGroupTemplateOptionId;
                     $productGroup->value = $value;
@@ -1447,6 +1450,24 @@ class ProductGroupController extends ProductMasterController {
             endforeach;
         }
         return 0;
+    }
+
+    public function saveProductImage($masterId, $newId) {
+        $productImages = \common\models\costfit\ProductImage::find()->where("productId=" . $masterId)->all();
+        if (isset($productImages)) {
+            foreach ($productImages as $productImage):
+                $productNewImage = new \common\models\costfit\ProductImage();
+                $productNewImage->productId = $newId;
+                $productNewImage->title = $productImage->title;
+                $productNewImage->image = $productImage->image;
+                $productNewImage->imageThumbnail1 = $productImage->imageThumbnail1;
+                $productNewImage->imageThumbnail2 = $productImage->imageThumbnail2;
+                $productNewImage->ordering = $productImage->ordering;
+                $productNewImage->createDateTime = new \yii\db\Expression('NOW()');
+                $productNewImage->updateDateTime = new \yii\db\Expression('NOW()');
+                $productNewImage->save(false);
+            endforeach;
+        }
     }
 
 }
