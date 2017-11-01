@@ -120,14 +120,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             if ($model->price > 0) {
                 if (isset($hotDeal)) {
                     ?>
-                    <p class="price" style="height: 50px;">
-                        <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: red; height: 25px;padding: 5px;color: white;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
+                    <p class="price" >
+                        <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span><br>
                         <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
-                    <p class="price" style="height: 50px;">
-                        <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="height: 25px;padding: 5px;"><?= number_format($model->price) . ' THB' ?> </span><br><br>
+                    <p class="price" >
+                        <span class="size18" ><?= number_format($model->price) . ' THB' ?> </span><br>
                         <span class="size16 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
