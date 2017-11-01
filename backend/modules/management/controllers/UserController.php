@@ -12,14 +12,15 @@ use common\helpers\Upload;
 use hscstudio\mimin\models\AuthAssignment;
 use hscstudio\mimin\models\AuthItem;
 
+//use common\models\costfit\AuthAssignment;
+//use common\models\costfit\AuthItem;
+
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends ManagementMasterController
-{
+class UserController extends ManagementMasterController {
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
@@ -46,19 +47,59 @@ class UserController extends ManagementMasterController
      * Lists all User models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        if (isset($_POST["type"]) && $_POST["type"] != 0) {
-            $query = User::find()->where("type = " . $_POST["type"])->orderBy("type ASC");
+    public function actionIndex() {
+        $query = User::find()->orderBy("type ASC");
+        if (isset($_POST["User"])) {
+
+            $type = $_POST["User"]['type'];
+            $firstname = $_POST["User"]['firstname'];
+            $lastname = $_POST["User"]['lastname'];
+            $email = $_POST["User"]['email'];
+            //$query = User::find();
+            if (isset($type) && $type != 0) {
+                $query->andWhere(['type' => $type]);
+            }
+            if (isset($firstname) && !empty($firstname)) {
+                $query->andWhere(['firstname' => $firstname]);
+            }
+            if (isset($lastname) && !empty($lastname)) {
+                $query->andWhere(['lastname' => $lastname]);
+            }
+            if (isset($email) && !empty($email)) {
+                $query->andWhere(['emailx' => $email]);
+            }
+            //echo 'User1:';
         } else {
+            //echo 'User2:';
             $query = User::find()->orderBy("type ASC");
         }
+
+        if (isset($_POST["AuthAssignment"]['item_name']) && $_POST["AuthAssignment"]['item_name'] != 'ALL Group') {
+            //$model->attributes = $_POST["AuthAssignment"];
+            //$AuthAssignment = $_POST["AuthAssignment"]['item_name'];
+            //$query->andWhere(['item_name' => $AuthAssignment]);
+            //echo $_POST["AuthAssignment"]['item_name'];
+            $query->leftJoin('auth_assignment a', 'a.user_id=user.userId');
+            $query->andWhere(['a.item_name' => $_POST["AuthAssignment"]['item_name']]);
+        }
+
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        $model = User::find()->where('userId=' . Yii::$app->user->identity->userId)->orderBy("type ASC")->one();
+        //$authAssignments = AuthAssignment::find()->where(['user_id' => $model->userId,])->column();
+        $authAssignments = AuthAssignment::find()->all();
+        $authItems = \yii\helpers\ArrayHelper::map(AuthItem::find()->where(['type' => 1,])->asArray()->all(), 'name', 'name');
+
+        $authAssignment = new AuthAssignment([
+        //'user_id' => $model->userId,
+        ]);
+
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider, 'model' => $model, 'authAssignment' => $authAssignment,
+            'authItems' => $authItems,
         ]);
     }
 
@@ -67,8 +108,7 @@ class UserController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
 
         $modelUser = $this->findModel($id);
 
@@ -123,8 +163,7 @@ class UserController extends ManagementMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         $model = new User(['scenario' => 'user_backend']);
 
@@ -190,8 +229,7 @@ class UserController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         if (isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
@@ -222,8 +260,7 @@ class UserController extends ManagementMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -235,8 +272,7 @@ class UserController extends ManagementMasterController
      * @param
      * @return
      */
-    public function actionGroup($id)
-    {
+    public function actionGroup($id) {
         $model = $this->findModel($id);
 //        if (isset($_POST["ViewLevels"])) {
 //            $model->attributes = $_POST["ViewLevels"];
@@ -302,8 +338,7 @@ class UserController extends ManagementMasterController
      * @param
      * @return
      */
-    public function actionAccess($id)
-    {
+    public function actionAccess($id) {
         $model = $this->findModel($id);
         if (isset($_POST["Access"])) {
             $model->attributes = $_POST["Access"];
@@ -324,8 +359,7 @@ class UserController extends ManagementMasterController
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
@@ -333,8 +367,7 @@ class UserController extends ManagementMasterController
         }
     }
 
-    public function actionMargin()
-    {
+    public function actionMargin() {
         $title = "Supplier margin setting";
         if (isset($_GET['supplierId'])) {
             $model = \common\models\costfit\Margin::getSupplierMargin($_GET['supplierId']);

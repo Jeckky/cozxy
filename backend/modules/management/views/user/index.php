@@ -12,9 +12,13 @@ $this->title = 'ตั้งค่า การใช้งานของ User'
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['pageHeader'] = Html::encode($this->title);
 ?>
+<style type="text/css">
+    .row {
+        margin-left: 11px;
+        margin-right: 11px;
+    }
+</style>
 <div class="user-index">
-
-
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -37,17 +41,44 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="panel-body">
                     <?php
                     $form = ActiveForm::begin([
-                        'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
+                        'options' => ['class' => 'form-horizontalx', 'enctype' => 'multipart/form-data'],
                     ]);
                     ?>
-                    <div class = "input-append col-lg-4">
-                    <!--<input type = "text" class = "search-query" placeholder = "Search"> -->
-                        <?= Html::dropDownList("type", isset($_POST["type"]) ? $_POST["type"] : NULL, ['0' => 'All', '1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Backend', '4' => 'Suppliers', '5' => 'Content'], ['class' => 'form-control'])
-                        ?>
 
+                    <div class ="col-sm-4">
+                        <?= $form->field($model, 'firstname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200, 'value' => isset($_POST["User"]['firstname']) ? $_POST["User"]['firstname'] : ''])->label('ชื่อ') ?>
                     </div>
-                    <div class="col-lg-8">
-                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                    <div class ="col-sm-4">
+                        <?= $form->field($model, 'lastname', ['options' => ['class' => 'row form-group ']])->textInput(['maxlength' => 200, 'value' => isset($_POST["User"]['lastname']) ? $_POST["User"]['lastname'] : ''])->label('นามสกุล') ?>
+                    </div>
+                    <div class ="col-sm-4">
+                        <?= $form->field($model, 'email', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200, 'value' => isset($_POST["User"]['email']) ? $_POST["User"]['email'] : ''])->label('email') ?>
+                    </div>
+                    <div class ="col-sm-4">
+                        <?=
+                        Html::dropDownList("User[type]", isset($_POST["User"]['type']) ? $_POST["User"]['type'] : NULL, ['0' => 'All Type', '1' => 'Frontend', '2' => 'Backend', '3' => 'Frontend and Backend'], ['class' => 'row form-control'], ['options' =>
+                            [
+                            //$_POST["User"]['type'] => ['selected' => true]
+                            ]
+                        ])
+                        ?>
+                    </div>
+                    <div class =" col-sm-4">
+                        <?php
+                        echo $form->field($authAssignment, 'item_name')->widget(\kartik\widgets\Select2::classname(), [
+                            'data' => ['ALL Group' => 'All Group', 'Group List' => $authItems],
+                            'options' => [
+                            //'placeholder' => 'Select role group ...',
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'multiple' => FALSE,
+                            ],
+                        ])->label(FALSE);
+                        ?>
+                    </div>
+                    <div class ="col-sm-12"><br>
+                        &nbsp;&nbsp;&nbsp;<button type="submit" class="btn"><i class="fa fa-search"></i> ค้นหา</button>
                     </div>
                     <?php ActiveForm::end(); ?>
 
@@ -68,9 +99,11 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['class' => 'yii\grid\SerialColumn'],
                     'userId',
                     'username',
+                    //
                     //'password_hash:ntext',
                     'firstname',
-                    //'password',
+                    //
+                    'password',
                     'lastname',
                     // 'email:email',
                     // 'token:ntext',
@@ -95,7 +128,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             foreach ($model->roles as $role) {
                                 $roles[] = $role->item_name;
                             }
-                            return Html::a(implode(', ', $roles), ['view', 'id' => $model->userId, 'tab' => 3, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
+                            return Html:: a(implode(', ', $roles), [ 'view', 'id' => $model->userId, 'tab' => 3, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
                         },
                     ],
                     // 'auth_key:ntext',
@@ -107,7 +140,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     ['attribute' => 'Magin',
                         'format' => 'raw',
                         'value' => function($model) {
-                            $margin = \common\models\costfit\Margin::getSupplierMargin($model->userId, TRUE);
+                            $margin = \common\models\costfit\Margin:: getSupplierMargin($model->userId, TRUE);
                             if (isset($margin)) {
                                 return $margin . " %";
                             } else {
@@ -152,14 +185,14 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => '{view} {address} {margin}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', ['view', 'id' => $model->userId, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1], [
+                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', [ 'view', 'id' => $model->userId, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1], [
                                     'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
                             'address' => function ($url, $model) {
                                 if ($model->type == 4) {
                                     return "<br>" . Html::a('<i class="fa fa-home"></i> ที่อยู่ suppliers', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
-                                        'title' => Yii::t('app', 'สถานที่'), 'class' => 'text-center']);
+                                        'title' => Yii ::t('app', 'สถานที่'), 'class' => 'text-center']);
                                 }
                             },
                             'margin' => function ($url, $model) {
