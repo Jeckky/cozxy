@@ -15,7 +15,7 @@ $id = uniqid();
         <div class="col-sm-6">
             <p class="size20"><?= $item['title'] ?></p>
             <p>
-                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"], 2) . " ฿" ?> THB</span> &nbsp;
+                <span class="size18"><span class="multi-<?= $id ?>"></span> <?= number_format($item["priceOnePiece"]) . " ฿" ?> THB</span> &nbsp;
             </p>
         </div>
         <div class="col-sm-4 fc-g666">
