@@ -113,6 +113,7 @@ and open the template in the editor.
 
 div.line_h {
     line-height: 0px;
+    margin-top: 40px;
 }
 
 .box_width_4 {
