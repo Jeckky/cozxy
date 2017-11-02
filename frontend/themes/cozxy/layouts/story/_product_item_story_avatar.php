@@ -88,28 +88,35 @@
     }
 </style>
 <?php
-if (isset($model->user->avatar)) {
+if (isset($model->user->avatar) && !empty($model->user->avatar)) {
+    $i = '1';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
 } else {
-    $avatar = \Yii::$app->homeUrl . 'images/user.png';
+    $i = '2';
+    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
+    //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
 ?>
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model->productPostId ?>"  style=" padding: 5px; ">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="card hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
-        <div class="avatar">
+        <div class="avatar" id="<?= $i ?>">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
                 <img src="<?= $avatar ?>" alt=""/>
             </a>
         </div>
         <div class="info">
-            <div class="title" style="height:50px;">
+
+            <p class="brand">
+                <span class="size14"><?= isset($model->product->brand) ? strtoupper($model->product->brand->title) : 'NO BRAND' ?></span>
+            </p>
+            <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="fc-black size14 b"><?= isset($model->product->title) ? substr($model->product->title, 0, 35) : '' ?></a>
-            </div>
-            <div class="desc" style="height:50px;">
+            </p>
+            <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>"> <?= isset($model->title) ? substr($model->title, 0, 35) : '' ?></a>
-            </div>
+            </p>
             <div class="desc">
                 <i class="fa fa-eye" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10)"><?= $model->countView() ?></span>&nbsp;
                 <i class="fa fa-star" style="color:#989898;"></i>&nbsp;<span style="color:rgb(254, 230, 10); "><?= $model->averageStar() ?></span>

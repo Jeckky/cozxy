@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= \Yii::$app->homeUrl . $model->productImageThumbnail() ?>" style="max-height: 230px;">
+                <img class="media-object fullwidth img-responsive" src="<?= \Yii::$app->homeUrl . $model->productImageThumbnail() ?>">
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>">

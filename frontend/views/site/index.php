@@ -131,10 +131,28 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="new-product">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 ">
                 <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
-                    <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                    <!--<h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>-->
                     <div class="row">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-xs-2 padding-product-detail" align="left">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-2 text-center padding-product-detail">HOT DEALS</div>
+                            <div class="col-xs-8 padding-product-detail" align="right">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="background:#000; height: 1px;">
+                                &nbsp;
+                            </div>
+                        </div>
                         <?php
 //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
                         ?>
@@ -166,17 +184,35 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-promotions"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
-                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-promotions/" class="subs-btn size14-xs">See All</a>
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;"><!--subs-btn-->
+                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-promotions/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($productCanSell)): ?>
-                    <hr style="border-color:rgb(254, 230, 10)">
-                    <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>
-                    <div class="row">
+                    <!--<hr style="border-color:rgb(254, 230, 10)">
+                    <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>-->
+                    <div class="row bg-site">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-xs-2 padding-product-detail" align="left">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-2 text-center padding-product-detail">RECOMMENDED</div>
+                            <div class="col-xs-8 padding-product-detail" align="right">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="background:#000; height: 1px;">
+                                &nbsp;
+                            </div>
+                        </div>
                         <!--RECOMMENDED-->
                         <?php
 //                        yii\widgets\Pjax::begin(['id' => 'sale', 'timeout' => false, 'enablePushState' => false])
@@ -209,24 +245,46 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
-                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/" class="subs-btn size14-xs">See All</a>
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
+                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($productNotSell)): ?>
-                    <hr style="border-color:rgb(254, 230, 10)">
-
-                    <h3 class="b text-center-sm text-center-xs">EXPLORE</h3>
+                    <!-- <hr style="border-color:rgb(254, 230, 10)">
+                     <h3 class="b text-center-sm text-center-xs">EXPLORE</h3>
 
                     <blockquote style="font-size: 14px;">
                         <p>Find details, prices, and stories on other products coming to our website soon.</p>
-                        <!--<footer>Someone famous in <cite title="Source Title">Source</cite></footer>-->
-                    </blockquote>
+                     </blockquote>-->
 
                     <div class="row">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-xs-2 padding-product-detail" align="left">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-2 text-center padding-product-detail">EXPLORE</div>
+                            <div class="col-xs-8 padding-product-detail" align="right">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="background:#000; height: 1px;">
+                                &nbsp;
+                            </div>
+                            <div class="col-xs-12 padding-product-detail explore-explain">
+                                <p>
+                                    Find details, prices, and stories on other products coming to our website soon.
+                                </p>
+                            </div>
+                        </div>
+
                         <!--PRODUCTS-->
                         <?php
 //                        yii\widgets\Pjax::begin(['id' => 'notsale', 'timeout' => false, 'enablePushState' => false])
@@ -259,18 +317,35 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-not-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
-                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-not-sale/" class="subs-btn size14-xs">See All</a>
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
+                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-not-sale/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if (isset($productStory)): ?>
-                    <hr style="border-color:rgb(254, 230, 10)">
-
-                    <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>
-                    <div class="row">
+                    <!--<hr style="border-color:rgb(254, 230, 10)">
+                    <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>-->
+                    <div class="row bg-site">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-xs-2 padding-product-detail" align="left">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-2 text-center padding-product-detail">PRODUCT STORIES</div>
+                            <div class="col-xs-8 padding-product-detail" align="right">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                            <div class="col-xs-12" style="background:#000; height: 1px;">
+                                &nbsp;
+                            </div>
+                        </div>
                         <!--Products' Stories-->
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -291,8 +366,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
 
-                    <div class="col-sm-12 text-center" style="margin-top: 15px;margin-bottom: 20px;">
-                        <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="subs-btn size14-xs">See All</a>
+                    <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
+                        <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="btn-default btn size14-xs">SEE MORE</a>
                     </div>
                     <br><br>
 
