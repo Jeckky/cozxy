@@ -367,7 +367,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     </div>
 
                     <div class="col-sm-12 text-center" style="margin-top: 15px;margin-bottom: 20px;">
-                        <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="btn-default btn size14-xs">See All</a>
+                        <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="btn-default btn size14-xs">SEE MORE</a>
                     </div>
                     <br><br>
 
