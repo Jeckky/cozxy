@@ -405,7 +405,7 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                                     ],
                                 ]);
                                 ?>
-                            </div> 
+                            </div>
                         </div>
 
                     </div>
