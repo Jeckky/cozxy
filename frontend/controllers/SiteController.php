@@ -25,7 +25,7 @@ use common\helpers\Email;
 use common\helpers\CozxyUnity;
 
 /**
- * Site controller
+ * Site controller 
  */
 class SiteController extends MasterController {
 
