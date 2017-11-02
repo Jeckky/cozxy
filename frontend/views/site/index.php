@@ -386,7 +386,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 col-sm-6 col-xs-6">
+                        <div class="col-md-12 col-sm-6 col-xs-12">
                             <div class="product-other">
                                 <?php
                                 echo \yii\widgets\ListView::widget([
