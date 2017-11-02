@@ -136,14 +136,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <!--<h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>-->
                     <div class="row">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail text-head-site">HOT DEALS</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">HOT DEALS</div>
+                            <div class="col-md-2 col-sm-2 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -196,14 +196,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>-->
                     <div class="row bg-site">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-3 text-center padding-product-detail text-head-site">RECOMMENDED</div>
-                            <div class="col-xs-7 padding-product-detail" align="right">
+                            <div class="col-md-3 col-sm-3 col-xs-5 text-center padding-product-detail text-head-site">RECOMMENDED</div>
+                            <div class="col-md-7 col-sm-7 col-xs-5 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -262,14 +262,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 
                     <div class="row">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail text-head-site">EXPLORE</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">EXPLORE</div>
+                            <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -329,14 +329,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>-->
                     <div class="row bg-site">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-3 text-center padding-product-detail text-head-site">PRODUCT STORIES</div>
-                            <div class="col-xs-7 padding-product-detail" align="right">
+                            <div class="col-md-3 col-sm-3 col-xs-8 text-center padding-product-detail text-head-site">PRODUCT STORIES</div>
+                            <div class="col-md-7 col-sm-7 col-xs-2 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
