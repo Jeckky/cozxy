@@ -278,8 +278,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             <div class="col-xs-12" style="background:#000; height: 1px;">
                                 &nbsp;
                             </div>
-                            <div class="col-xs-12 padding-product-detail explore-explain">
-                                <p>
+                            <div class="col-xs-12 padding-product-detail explore-explain" >
+                                <p style="word-wrap: break-word;">
                                     Find details, prices, and stories on other products coming to our website soon.
                                 </p>
                             </div>
