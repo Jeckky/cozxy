@@ -184,7 +184,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-promotions"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;"><!--subs-btn-->
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;"><!--subs-btn-->
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-promotions/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
@@ -194,7 +194,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <?php if (isset($productCanSell)): ?>
                     <!--<hr style="border-color:rgb(254, 230, 10)">
                     <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>-->
-                    <div class="row">
+                    <div class="row bg-site">
                         <div class="special box_width_4 line_h">
                             <div class="col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
@@ -245,7 +245,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
@@ -317,7 +317,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                     <?php if (Yii::$app->controller->action->id != "see-all-not-sale"): ?>
-                        <div class="col-sm-12 text-center" style="margin-top: 15px;">
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
                             <a href="<?= Yii::$app->homeUrl ?>site/see-all-not-sale/" class="btn-default btn size14-xs">SEE MORE</a>
                         </div>
                         <br><br>
@@ -327,7 +327,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <?php if (isset($productStory)): ?>
                     <!--<hr style="border-color:rgb(254, 230, 10)">
                     <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>-->
-                    <div class="row">
+                    <div class="row bg-site">
                         <div class="special box_width_4 line_h">
                             <div class="col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
@@ -366,7 +366,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
 
-                    <div class="col-sm-12 text-center" style="margin-top: 15px;margin-bottom: 20px;">
+                    <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;">
                         <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="btn-default btn size14-xs">SEE MORE</a>
                     </div>
                     <br><br>
