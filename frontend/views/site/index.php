@@ -387,24 +387,25 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-6 col-xs-6">
-                            <?php
-                            echo \yii\widgets\ListView::widget([
-                                'dataProvider' => $otherProducts,
-                                'options' => [
-                                    'tag' => false,
-                                ],
-                                'itemView' => function ($model, $key, $index, $widget) {
-                                    return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
-                                }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                            <div class="product-other">
+                                <?php
+                                echo \yii\widgets\ListView::widget([
+                                    'dataProvider' => $otherProducts,
+                                    'options' => [
+                                        'tag' => false,
+                                    ],
+                                    'itemView' => function ($model, $key, $index, $widget) {
+                                        return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
+                                    }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
-                                //'layout'=>"{summary}{pager}{items}"
-                                'layout' => "{items}",
-                                'itemOptions' => [
-                                    'tag' => false,
-                                ],
-                            ]);
-                            ?>
-
+                                    //'layout'=>"{summary}{pager}{items}"
+                                    'layout' => "{items}",
+                                    'itemOptions' => [
+                                        'tag' => false, 'class' => 'good-reads-border'
+                                    ],
+                                ]);
+                                ?>
+                            </div> 
                         </div>
 
                     </div>
