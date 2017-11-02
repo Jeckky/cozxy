@@ -143,7 +143,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">HOT DEALS</div>
-                            <div class="col-md-2 col-sm-2 col-xs-6 padding-product-detail" align="right">
+                            <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
