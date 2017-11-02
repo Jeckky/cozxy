@@ -115,7 +115,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             if ($model['price'] > 0) {
                 ?><p class="price" style="height: 50px;">
                     <span class="size18 col-lg-9 col-md-9 col-sm-10 col-xs-12" style="background-color: <?= isset($promotion) ? 'red' : '' ?>;height: 25px;padding: 5px;"><?= $model['price'] ?> THB</span><br><br>
-                    <span class="size16 onsale"><?= $model['price_s'] ?> THB</span>
+                    <span class="size14 onsale"><?= $model['price_s'] ?> THB</span>
                 </p>
                 <?php
             } else {

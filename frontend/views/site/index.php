@@ -377,7 +377,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 
             <div class="col-md-3">
                 <?php if (isset($otherProducts)): ?>
-                    <div class="row">
+                    <div class="row ">
                         <div class="special box_width_4 line_h">
                             <div class="col-xs-12 padding-product-detail" align="left" style="margin-left: -10px;">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
@@ -386,23 +386,27 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 </div>
                             </div>
                         </div>
-                        <?php
-                        echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $otherProducts,
-                            'options' => [
-                                'tag' => false,
-                            ],
-                            'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
-                            }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                        <div class="col-md-12 col-sm-6 col-xs-6">
+                            <?php
+                            echo \yii\widgets\ListView::widget([
+                                'dataProvider' => $otherProducts,
+                                'options' => [
+                                    'tag' => false,
+                                ],
+                                'itemView' => function ($model, $key, $index, $widget) {
+                                    return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
+                                }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
-                            //'layout'=>"{summary}{pager}{items}"
-                            'layout' => "{items}",
-                            'itemOptions' => [
-                                'tag' => false,
-                            ],
-                        ]);
-                        ?>
+                                //'layout'=>"{summary}{pager}{items}"
+                                'layout' => "{items}",
+                                'itemOptions' => [
+                                    'tag' => false,
+                                ],
+                            ]);
+                            ?>
+
+                        </div>
+
                     </div>
                 <?php endif; ?>
             </div>
