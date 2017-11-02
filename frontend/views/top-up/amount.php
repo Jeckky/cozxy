@@ -22,7 +22,7 @@ $form = ActiveForm::begin([
             <input type="hidden" name="fromCheckout" value="yes">
         <?php } ?>
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
-            <p class="size20 size18-xs">Choose your top-up balance.</p>
+            <p class="size20 size18-xs">CHOOSE YOUR TOP-up BALANCE.</p>
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <table style="width: 100%">
@@ -37,7 +37,7 @@ $form = ActiveForm::begin([
                 </tr>
                 <?php
                 if (isset($needMore) && $needMore != 0) {//ถ้ามาจากการ check out มีจำนวนที่ต้องเติมเพิ่ม
-                    echo '<h4 style="color: #006666;">TOP UP ' . number_format($needMore, 2) . ' COZXYCOINS Gross ' . number_format($needMore, 2) . ' THB</h4>';
+                    echo '<h4 style="color: #006666;">TOP UP ' . number_format($needMore) . ' COZXYCOINS Gross ' . number_format($needMore) . ' THB</h4>';
                     ?>
                     <tr style="height: 50px;">
                         <td style="text-align: right;width:50%;">
@@ -46,7 +46,7 @@ $form = ActiveForm::begin([
                         <td style="text-align: left;width:50%;">
                             <span style="margin-left: 20px;">
                                 <input type="hidden" id="currentAmount" name="currentAmount" value="<?= $needMore ?>">
-                                <span><?= number_format($needMore, 2) ?>&nbsp;&nbsp;THB.</span>
+                                <span><?= number_format($needMore) ?>&nbsp;&nbsp;THB.</span>
                             </span>
                         </td>
                     </tr>
