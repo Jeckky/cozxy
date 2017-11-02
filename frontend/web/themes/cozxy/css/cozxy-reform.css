@@ -122,7 +122,13 @@ div.line_h {
     padding-right: 5px;
 }
 
-.explore-explain{ 
+.text-head-site{
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+}
+
+.explore-explain{
     border-bottom: 1px solid #7d7b7b;
 }
 
