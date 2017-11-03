@@ -250,8 +250,8 @@ class OrderController extends BoothMasterController {
         $taxNo = "00001";
         if (isset($orderItemPacking)) {
             $taxNo = $orderItemPacking->taxNo;
+            $taxNo += 1;
         }
-        $taxNo += 1;
         $taxNo = str_pad($taxNo, 5, "0", STR_PAD_LEFT);
         return $taxNo;
     }

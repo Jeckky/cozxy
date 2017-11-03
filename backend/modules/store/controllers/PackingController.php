@@ -26,7 +26,7 @@ class PackingController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -281,10 +281,10 @@ class PackingController extends StoreMasterController {
         $d = date('d');
         $year = substr($fullYear, 2, 2);
         $m = date('m');
-        $tax = $this->genTaxNo();
+        $tax = $this->genTaxNo($m, $fullYear);
         $date = $year . $m;
         $fullDate = $d . "/" . $m . "/" . $year;
-        $this->saveTaxNo($bag, $tax);
+        $this->saveTaxNo($bag, $tax, $m, $fullYear);
         return $this->renderPartial('bag_label', [
                     'bagNo' => $bag,
                     'orderId' => $order->orderId,
@@ -367,27 +367,30 @@ class PackingController extends StoreMasterController {
         return $prefix . date("Ymd") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    static function saveTaxNo($bagNo, $taxNo) {
+    static function saveTaxNo($bagNo, $taxNo, $m, $year) {
         $orderItemPacking = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
         if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
             foreach ($orderItemPacking as $item):
                 if ($item->taxNo == '' || $item->taxNo == null) {//ถ้ามีแล้วไม่ต้องGEN ใหม่
                     $item->taxNo = $taxNo;
+                    $item->month = $m;
+                    $item->year = $year;
                     $item->save(false);
                 }
             endforeach;
         }
     }
 
-    static function genTaxNo() {
-        $orderItemPacking = OrderItemPacking::find()->where("1")
+    static function genTaxNo($month, $year) {
+        $orderItemPacking = OrderItemPacking::find()->where("month='" . $month . "' and year='" . $year . "'")
                 ->orderBy("taxNo DESC")
                 ->one();
         $taxNo = "00001";
         if (isset($orderItemPacking)) {
             $taxNo = $orderItemPacking->taxNo;
+            $taxNo += 1;
         }
-        $taxNo += 1;
+
         $taxNo = str_pad($taxNo, 5, "0", STR_PAD_LEFT);
         return $taxNo;
     }
