@@ -37,4 +37,13 @@ class Countries extends \common\models\dbworld\master\CountriesMaster {
         return array_merge(parent::attributeLabels(), []);
     }
 
+    public static function CountryName($countryId) {
+        $text = '';
+        $country = Countries::find()->where("countryId='" . $countryId["countryId"] . "'")->one();
+        if (isset($country)) {
+            $text = $country->localName . " / " . $country->countryName;
+        }
+        return $text;
+    }
+
 }

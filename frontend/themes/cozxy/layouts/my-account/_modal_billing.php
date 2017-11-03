@@ -1,4 +1,5 @@
 <?php
+
 use kartik\select2\Select2;
 ?>
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -41,23 +42,27 @@ use kartik\select2\Select2;
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Province</label>
-                                    <?= Select2::widget([
+                                    <?=
+                                    Select2::widget([
                                         'name' => 'province',
                                         'value' => '',
                                         'data' => ['Bangkok', 'Bangkok2', 'Bangkok3'],
                                         'options' => ['placeholder' => 'Select Province']
-                                    ]) ?>
+                                    ])
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">City</label>
-                                    <?= Select2::widget([
+                                    <?=
+                                    Select2::widget([
                                         'name' => 'city',
                                         'value' => '',
                                         'data' => ['Bang Khen', 'Bang Khen2', 'Bang Khen3'],
                                         'options' => ['placeholder' => 'Select City']
-                                    ]) ?>
+                                    ])
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-md-4">

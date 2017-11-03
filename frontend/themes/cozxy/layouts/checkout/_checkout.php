@@ -16,10 +16,10 @@ $pickingId = rand(0, 9999);
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-shipping-address',
-            'action' => Yii::$app->homeUrl . 'checkout/summary',
-            'options' => ['class' => 'space-bottom'],
-            'enableClientValidation' => false,
+                    'id' => 'default-shipping-address',
+                    'action' => Yii::$app->homeUrl . 'checkout/summary',
+                    'options' => ['class' => 'space-bottom'],
+                    'enableClientValidation' => false,
         ]);
         ?>
         <!-- Cart -->
@@ -58,14 +58,18 @@ $pickingId = rand(0, 9999);
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
                         </div>
+
                         <div class="row fc-g999">
                             <div class="col-md-4 col-xs-12">
 
                                 <?php
+                                $a = "ssssss";
                                 echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                                     //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                     //'data' => \common\models\costfit\PickingPoint::availableProvince(),
-                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', 'localName'),
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', function($stateId) {
+                                                return \common\models\costfit\PickingPoint::provinceName($stateId);
+                                            }),
                                     'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select Province',
@@ -79,11 +83,12 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <?php
+                                ///throw new \yii\base\Exception(1111);
                                 echo Html::hiddenInput('input-type-11', $pickingPointLockersCool->amphurId, ['id' => 'input-type-11']);
                                 echo Html::hiddenInput('input-type-22', $pickingPointLockersCool->amphurId, ['id' => 'input-type-22']);
                                 echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
                                 echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
-                                    'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName] : [],
+                                    'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
                                     'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -262,7 +267,7 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                                    ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
                                         $index = $index++;
 
                                         return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
@@ -390,8 +395,8 @@ $pickingId = rand(0, 9999);
 
                 <?php
                 $form = ActiveForm::begin([
-                    'id' => 'default-add-new-billing-address',
-                    'options' => ['class' => 'login-box'],
+                            'id' => 'default-add-new-billing-address',
+                            'options' => ['class' => 'login-box'],
                 ]);
                 ?>
                 <!-- Details -->
@@ -466,7 +471,9 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($NewBilling, 'countryId')->widget(kartik\select2\Select2::classname(), [
                                     //'options' => ['id' => 'address-countryid'],
-                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', function($countryId) {
+                                                return common\models\dbworld\Countries::CountryName($countryId);
+                                            }),
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
                                         'loadingText' => 'Loading country ...',

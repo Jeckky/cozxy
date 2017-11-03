@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="size12 size10-xs">&nbsp;</div>
             <?php
             $form = ActiveForm::begin([
-                'id' => 'default-shipping-address',
-                'options' => ['class' => 'space-bottom'],
+                        'id' => 'default-shipping-address',
+                        'options' => ['class' => 'space-bottom'],
             ]);
             ?>
             <div class="form-billing-my-account">
@@ -108,7 +108,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
                         echo $form->field($model, 'countryId')->widget(kartik\select2\Select2::classname(), [
                             //'options' => ['id' => 'address-countryid'],
-                            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', 'localName'),
+                            'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\Countries::find()->asArray()->all(), 'countryId', function($countryId) {
+                                        return common\models\dbworld\Countries::CountryName($countryId);
+                                    }),
                             'pluginOptions' => [
                                 'placeholder' => 'Select...',
                                 'loadingText' => 'Loading country ...',
