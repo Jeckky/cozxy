@@ -244,7 +244,10 @@ class OrderController extends BoothMasterController {
     }
 
     static function genTaxNo() {
-        $orderItemPacking = OrderItemPacking::find()->where("1")
+        $fullYear = date('Y');
+        $year = substr($fullYear, 2, 2);
+        $month = date('m');
+        $orderItemPacking = OrderItemPacking::find()->where("month='" . $month . "' and year='" . $year . "'")
                 ->orderBy("taxNo DESC")
                 ->one();
         $taxNo = "00001";
@@ -252,6 +255,7 @@ class OrderController extends BoothMasterController {
             $taxNo = $orderItemPacking->taxNo;
             $taxNo += 1;
         }
+
         $taxNo = str_pad($taxNo, 5, "0", STR_PAD_LEFT);
         return $taxNo;
     }
