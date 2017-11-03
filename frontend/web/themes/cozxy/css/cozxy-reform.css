@@ -117,12 +117,18 @@ div.line_h {
 }
 
 .box_width_4 {
-    /*width: 100%;*/
+    width: 100%;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.explore-explain{ 
+.text-head-site{
+    font-weight: 500;
+    font-style: normal;
+    font-size: 24px;
+}
+
+.explore-explain{
     border-bottom: 1px solid #7d7b7b;
 }
 
@@ -134,4 +140,17 @@ div.line_h {
 .bg-site{
     background-color: #e0e0e0;
     margin-top: 15px;
+}
+
+.good-reads-border{
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+.product-other p{
+    padding: 5px;
+}
+.product-other hr{
+    padding: 5px;
+    width: 90%;
 }

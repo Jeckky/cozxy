@@ -485,7 +485,7 @@ class FakeFactory extends Model {
 
     public static function productOtherProducts() {
         $productPost = \common\models\costfit\ProductPost::find()->where('userId = 0 and productId is null and status = 1')
-        ->orderBy('productPostId desc')->all();
+        ->orderBy('productPostId desc')->limit(3)->all();
         $products = [];
         foreach ($productPost as $items) {
             if (isset($items->image) && !empty($items->image)) {

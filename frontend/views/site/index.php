@@ -136,14 +136,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <!--<h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>-->
                     <div class="row">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail">HOT DEALS</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">HOT DEALS</div>
+                            <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -196,14 +196,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <h3 class="b text-center-sm text-center-xs">RECOMMENDED</h3>-->
                     <div class="row bg-site">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail">RECOMMENDED</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-3 col-sm-3 col-xs-5 text-center padding-product-detail text-head-site">RECOMMENDED</div>
+                            <div class="col-md-7 col-sm-7 col-xs-5 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -262,14 +262,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 
                     <div class="row">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail">EXPLORE</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">EXPLORE</div>
+                            <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -278,8 +278,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             <div class="col-xs-12" style="background:#000; height: 1px;">
                                 &nbsp;
                             </div>
-                            <div class="col-xs-12 padding-product-detail explore-explain">
-                                <p>
+                            <div class="col-xs-12 padding-product-detail explore-explain" >
+                                <p style="word-wrap: break-word;">
                                     Find details, prices, and stories on other products coming to our website soon.
                                 </p>
                             </div>
@@ -329,14 +329,14 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <h3 class="b text-center-sm text-center-xs">PRODUCT STORIES</h3>-->
                     <div class="row bg-site">
                         <div class="special box_width_4 line_h">
-                            <div class="col-xs-2 padding-product-detail" align="left">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-xs-2 text-center padding-product-detail">PRODUCT STORIES</div>
-                            <div class="col-xs-8 padding-product-detail" align="right">
+                            <div class="col-md-3 col-sm-3 col-xs-8 text-center padding-product-detail text-head-site">PRODUCT STORIES</div>
+                            <div class="col-md-7 col-sm-7 col-xs-2 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
                                     &nbsp;
@@ -377,26 +377,36 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 
             <div class="col-md-3">
                 <?php if (isset($otherProducts)): ?>
-                    <h3 class="b text-center-sm text-center-xs">GOOD READS</h3>
-                    <div class="row">
-
-                        <?php
-                        echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $otherProducts,
-                            'options' => [
-                                'tag' => false,
-                            ],
-                            'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model]);
-                            }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                    <div class="row ">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-xs-12 padding-product-detail" align="left" style="margin-left: -10px;">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 5px;">
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-6 col-xs-12">
+                            <div class="product-other">
+                                <?php
+                                echo \yii\widgets\ListView::widget([
+                                    'dataProvider' => $otherProducts,
+                                    'options' => [
+                                        'tag' => false,
+                                    ],
+                                    'itemView' => function ($model, $key, $index, $widget) {
+                                        return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
+                                    }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
-                            //'layout'=>"{summary}{pager}{items}"
-                            'layout' => "{items}",
-                            'itemOptions' => [
-                                'tag' => false,
-                            ],
-                        ]);
-                        ?>
+                                    //'layout'=>"{summary}{pager}{items}"
+                                    'layout' => "{items}",
+                                    'itemOptions' => [
+                                        'tag' => false, 'class' => 'good-reads-border'
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                        </div>
 
                     </div>
                 <?php endif; ?>
