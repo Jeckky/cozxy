@@ -194,8 +194,6 @@ class OrderController extends BoothMasterController {
         if (isset($_GET["orderId"]) && !empty($_GET["orderId"])) {
             $order = Order::find()->where("orderId=" . $_GET["orderId"])->one();
             if (isset($order)) {
-                $bagNo = $this->genBagNo();
-                $taxNo = $this->genTaxNo();
                 $fullYear = date('Y');
                 $d = date('d');
                 $year = substr($fullYear, 2, 2);
@@ -203,11 +201,13 @@ class OrderController extends BoothMasterController {
                 $date = $year . $m;
                 $fullDate = $d . "/" . $m . "/" . $year;
                 $extraDiscont = 0;
+                $bagNo = $this->genBagNo();
+                $taxNo = $this->genTaxNo($m, $fullYear);
                 if ($order->discount != null) {
                     $extraDiscont = $order->discount;
                 }
                 $flag = false;
-                $flag = $this->savePacking($order, $bagNo, $taxNo);
+                $flag = $this->savePacking($order, $bagNo, $taxNo, $m, $fullYear);
                 if ($flag == false) {
                     $bagNoOld = $this->bagNo($order->orderId);
                     if ($bagNoOld != '') {
@@ -243,10 +243,7 @@ class OrderController extends BoothMasterController {
         return $prefix . date("Ymd") . "-" . str_pad($max_code, 7, "0", STR_PAD_LEFT);
     }
 
-    static function genTaxNo() {
-        $fullYear = date('Y');
-        $year = substr($fullYear, 2, 2);
-        $month = date('m');
+    static function genTaxNo($month, $year) {
         $orderItemPacking = OrderItemPacking::find()->where("month='" . $month . "' and year='" . $year . "'")
                 ->orderBy("taxNo DESC")
                 ->one();
@@ -260,7 +257,7 @@ class OrderController extends BoothMasterController {
         return $taxNo;
     }
 
-    static function savePacking($order, $bagNo, $taxNo) {
+    static function savePacking($order, $bagNo, $taxNo, $month, $year) {
         $orderItems = OrderItem::find()->where("orderId=$order->orderId and status=16")->all();
         $flag = true;
         $i = 0;
@@ -273,6 +270,8 @@ class OrderController extends BoothMasterController {
                     $orderItemPacking->pickingItemsId = NULL;
                     $orderItemPacking->bagNo = $bagNo;
                     $orderItemPacking->taxNo = $taxNo;
+                    $orderItemPacking->month = $month;
+                    $orderItemPacking->year = $year;
                     $orderItemPacking->quantity = $item->quantity;
                     $orderItemPacking->status = 8; //รับแล้ว
                     $orderItemPacking->userId = Yii::$app->user->id;

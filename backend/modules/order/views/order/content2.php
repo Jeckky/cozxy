@@ -153,8 +153,8 @@ if (isset($poId)) {
     ผู้มีอำนาจลงนาม
     <table class="table_noborder" cellpadding="0" cellspacing="0" style="margin-left: -20px;margin-top: 50px;font-size: 10px;">
         <tr>
-            <td style="width: 50%;"><center><img src="<?= $baseUrl . '/' . Signature::directorSignature() ?>" style="width: 120px;height: 35px;"></center></td>
-        <td><center><img src="<?= $baseUrl . '/' . Signature::approveSignature(Yii::$app->user->id) ?>" style="width: 120px;height: 35px;"></center></td>
+            <td style="width: 50%;"><center><img src="<?php echo $baseUrl . '/' . Signature::directorSignature() ?>" style="width: 120px;height: 35px;"></center></td>
+        <td><center><img src="<?php echo $baseUrl . '/' . Signature::approveSignature(Yii::$app->user->id) ?>" style="width: 120px;height: 35px;"></center></td>
         </tr>
         <tr>
             <td><center><br>( กรรมการผู้จัดการอนุมัติ )</center></td>
