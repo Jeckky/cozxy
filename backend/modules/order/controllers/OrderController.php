@@ -28,7 +28,7 @@ class OrderController extends OrderMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
 // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -280,7 +280,7 @@ class OrderController extends OrderMasterController {
             if (isset($orderIds) && !empty($orderIds)) {
                 $poId = $this->savePo($orderIds, $supplierId);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
-                $this->sendEmail($poId);
+                //$this->sendEmail($poId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
                 $header = $this->renderPartial('header', ['poId' => $poId]);
                 $content = $this->renderPartial('content', [

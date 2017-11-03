@@ -179,7 +179,7 @@ $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
                                 if ($model->status == TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS) {
                                     if ($model->type != 2) {//มาจากระบบไม่ต้องprint
                                         $topUpId = common\models\ModelMaster::encodeParams($model->topUpId);
-                                        return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', [Yii::$app->homeUrl . 'top-up/billpay?epay=' . $topUpId], [
+                                        return Html::a('<span class = "btn-black btn-xs" style="padding: 2px 5px; "><i class="fa fa-print" aria-hidden="true"></i> Print</span>', ['top-up/billpay?epay=' . $topUpId], [
                                                     'target' => '_blank']
                                         );
                                     }
