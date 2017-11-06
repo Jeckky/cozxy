@@ -119,7 +119,7 @@ if (isset($model['image']) && !empty($model['image'])) {
             </div>
             <div class="desc"></div>
         </div>
-        <div class="bottom">
+        <div class="bottom text-center">
             <div class="col-md-12" style="padding: 5px;">
                 <a class="b btn-black btn-xs" href="<?= $model['urlEditStory'] ?>" style="padding: 3px 6px;">Edit Stories</a>
                 <a id="removeItemStory-<?= $model['productPostId'] ?>" class="b btn-black btn-xs " href="javascript:StoriesRemove(<?= $model['productPostId'] ?>)" style=" padding: 3px 6px;">Remove Stories</a>
