@@ -2,7 +2,7 @@
 
 </style>
 <div class="card item-to-stories-<?= $model['productPostId'] ?>  "  style=" padding: 0px;" id="itemStory-<?= $model['productPostId'] ?>">
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 " style=" border-top: 1px #d8d8d8 solid;">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box-product " style=" border-top: 1px #d8d8d8 solid;">
         <div class=" hovercard product-img">
             <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid;">
 
