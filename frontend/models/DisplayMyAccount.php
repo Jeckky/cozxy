@@ -117,9 +117,9 @@ class DisplayMyAccount extends Model {
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
 
             if (Yii::$app->controller->id == 'my-account') {
-                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 35) : '';
+                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 30) : '';
             } else {
-                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 35) : '';
+                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 30) : '';
             }
             $products[$value['productSuppId']] = [
                 'wishlistId' => $items->wishlistId,
