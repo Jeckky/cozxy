@@ -87,6 +87,20 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
+    .avatar {
+        position: relative;
+        top: -40px;
+        margin-bottom: -40px;
+    }
+    .avatar img {
+        width: 80px;
+        height: 80px;
+        max-width: 80px;
+        max-height: 80px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+    }
 </style>
 
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?> card"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
