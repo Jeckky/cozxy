@@ -95,27 +95,31 @@ class DisplayMyAccount extends Model {
         }
 
         foreach ($dataWishlist as $items) {
-            //$dataProductSuppliers = ProductSuppliers::find()->where('productSuppId=' . $items->productId)->all();
+            $dataProductMaster = \common\models\costfit\Product::find()->where('productId=' . $items->productId)->one();
             $value = ProductSuppliers::find()
                     ->select('`product_price_suppliers`.*,`product_suppliers`.*')
                     ->join('LEFT JOIN', 'product_price_suppliers', 'product_suppliers.productSuppId=product_price_suppliers.productSuppId')
                     ->where('product_suppliers.productId=' . $items->productId . ' and product_suppliers.result>0 and product_price_suppliers.price!=0')
+                    ->andWhere('product_suppliers.status=1')
                     ->orderBy('product_price_suppliers.price DESC')
                     ->one();
+            //echo '<pre>';
+            //print_r($dataProductMaster);
+            //print_r($value);
             if (isset($value)) {
                 $maxQnty = $value['result'];
             } else {
                 $value = \common\models\costfit\Product::find()->where("productId=" . $items->productId)->one();
                 $maxQnty = 0;
             }
-            $price_s = isset($value['price']) ? number_format($value['price'], 2) : '';
+            $price_s = isset($dataProductMaster['price']) ? number_format($dataProductMaster['price'], 2) : '';
             $price = isset($value['price']) ? number_format($value['price'], 2) : '';
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
 
             if (Yii::$app->controller->id == 'my-account') {
-                $title = isset($value['title']) ? substr($value['title'], 0, 35) : '';
+                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 35) : '';
             } else {
-                $title = isset($value['title']) ? $value['title'] : '';
+                $title = isset($dataProductMaster['title']) ? $dataProductMaster['title'] : '';
             }
             $products[$value['productSuppId']] = [
                 'wishlistId' => $items->wishlistId,
