@@ -2,14 +2,22 @@
 
 </style>
 <?php
+if (isset($model->user->avatar) && !empty($model->user->avatar)) {
+    $i = '1';
+    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
+} else {
+    $i = '2';
+    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
+    //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
+}
 ?>
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model->productPostId ?>"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
-    <div class="  hovercard product-img">
+    <div class="hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid;">
-        <div class="avatar" id="">
+        <div class="avatar" id="<?= $i ?>">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
-                <img src="<?= $model->user->avatar ?>" alt=""/>
+                <img src="<?= $avatar ?>" alt=""/>
             </a>
         </div>
         <div class="info">
