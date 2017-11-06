@@ -124,6 +124,7 @@ class DisplayMyAccount extends Model {
                 'brand' => isset($value['brand']) ? $value->brand->title : '',
                 'url' => Yii::$app->homeUrl . 'product/' . ProductSuppliers::encodeParams(['productId' => $value['productId'], 'productSupplierId' => $value['productSuppId']]),
                 'brand' => isset($value['brand']) ? $value->brand->title : '',
+                'brandId' => isset($value['brandId']) ? $value->brand->brandId : '',
                 'title' => $title,
                 'price_s' => $price_s,
                 'price' => $price,

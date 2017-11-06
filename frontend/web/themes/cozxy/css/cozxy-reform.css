@@ -284,3 +284,14 @@ div.line_h {
 }
 
 .bg-my-shelf{background-color:#f5f5f5;}
+
+.my-shelves-text p{
+    margin: 0 0 0 0 ;
+}
+
+.btn-black-s-my-shelves{
+    text-align: center;
+    padding: 8px;
+    width: 50%;
+
+}

@@ -424,12 +424,13 @@ class MyAccountController extends MasterController {
 				<div class="product-img text-center">
 					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
 				</div>
-				<div class="product-txt">
+				<div class="product-txt my-shelves-text">
+                                        <p class="size14 "  style=""><a href="' . Yii::$app->homeUrl . 'search/brand/' . \common\models\ModelMaster::encodeParams(['brandId' => $item['brandId']]) . '" class="fc-g999">' . $item['brand'] . '</a></p>
 					<p class="size16"  style=""><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
                 if ($item['price_s'] > 0) {
-                    $text .= '<p>
+                    $text .= '<br><p>
 						<span class="size18">' . $item['price_s'] . '</span> &nbsp;
-						<span class="size14 onsale">' . $item['price_s'] . '</span>
+						<br><span class="size14 onsale">' . $item['price_s'] . '</span>
 					</p>';
                 } else {
                     $text .= '<p>
@@ -437,16 +438,17 @@ class MyAccountController extends MasterController {
 						<span class="size14">&nbsp;</span>
 					</p>';
                 }
-                $text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
+                //$text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
+
                 if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
                     if ($item['receiveType'] != '') {
                         $receiveType = $item['receiveType'];
                     } else {
                         $receiveType = 1;
                     }
-                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
-                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
                 $text .= '</div></div></div>';
             endforeach;

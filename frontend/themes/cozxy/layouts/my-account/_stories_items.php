@@ -1,7 +1,3 @@
-<style type="text/css">
-
-</style>
-
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?> card"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class=" hovercard product-img">
@@ -12,6 +8,9 @@
                 <img src="<?= $model['avatar']; ?>" alt=""/>
             </a>
         </div><br>
+        <p class="name">
+
+        </p>
         <div class="info text-center">
             <div class="title">
                 <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['head'] ?></a>
