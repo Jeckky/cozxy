@@ -108,7 +108,7 @@ if (isset($model['image']) && !empty($model['image'])) {
                 <img src="<?= $avatar ?>" alt=""/>
             </a>
         </div>
-        <div class="info">
+        <div class="info text-center">
             <div class="title" style="height:40px;">
                 <a href="<?= $model['url']; ?>" class="fc-black size14 b"><?= $model['head'] ?></a>
             </div>
