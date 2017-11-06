@@ -119,7 +119,7 @@ class DisplayMyAccount extends Model {
             if (Yii::$app->controller->id == 'my-account') {
                 $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 35) : '';
             } else {
-                $title = isset($dataProductMaster['title']) ? $dataProductMaster['title'] : '';
+                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 35) : '';
             }
             $products[$value['productSuppId']] = [
                 'wishlistId' => $items->wishlistId,
