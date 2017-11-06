@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "upload".
 *
-    * @property string $uploadId
+    * @property integer $uploadId
     * @property string $name
     * @property integer $status
     * @property string $createDateTime

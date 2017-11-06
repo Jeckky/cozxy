@@ -10,14 +10,14 @@ use Yii;
     * @property string $productPostId
     * @property string $productSuppId
     * @property string $productId
-    * @property string $productSelfId
+    * @property integer $productSelfId
     * @property string $brandId
     * @property string $userId
     * @property string $title
     * @property string $shortDescription
     * @property string $description
     * @property string $shopName
-    * @property string $price
+    * @property integer $price
     * @property string $country
     * @property string $currency
     * @property string $image

@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "subscribe".
 *
-    * @property string $subscribeId
+    * @property integer $subscribeId
     * @property string $email
     * @property integer $status
     * @property string $createDateTime

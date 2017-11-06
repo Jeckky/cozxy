@@ -10,7 +10,7 @@ use Yii;
     * @property string $productShelfId
     * @property string $title
     * @property integer $type
-    * @property string $userId
+    * @property integer $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

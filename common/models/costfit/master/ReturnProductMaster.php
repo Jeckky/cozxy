@@ -8,17 +8,17 @@ use Yii;
 * This is the model class for table "return_product".
 *
     * @property string $returnProductId
-    * @property string $ticketId
+    * @property integer $ticketId
     * @property integer $orderId
     * @property integer $orderItemId
     * @property integer $productSuppId
     * @property integer $quantity
-    * @property string $rQuantity
+    * @property integer $rQuantity
     * @property integer $price
-    * @property string $totalPrice
-    * @property string $discount
-    * @property string $totalDiscount
-    * @property string $credit
+    * @property integer $totalPrice
+    * @property integer $discount
+    * @property integer $totalDiscount
+    * @property integer $credit
     * @property integer $receiver
     * @property string $remark
     * @property string $cozxyRemark

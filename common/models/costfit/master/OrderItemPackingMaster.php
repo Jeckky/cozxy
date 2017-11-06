@@ -7,19 +7,21 @@ use Yii;
 /**
 * This is the model class for table "order_item_packing".
 *
-    * @property string $orderItemPackingId
-    * @property string $orderItemId
-    * @property string $pickingItemsId
+    * @property integer $orderItemPackingId
+    * @property integer $orderItemId
+    * @property integer $pickingItemsId
     * @property string $bagNo
     * @property string $taxNo
-    * @property string $quantity
+    * @property string $month
+    * @property string $year
+    * @property integer $quantity
     * @property integer $status
     * @property integer $type
     * @property string $shipDate
     * @property string $remark
     * @property integer $userId
-    * @property string $packer
-    * @property string $shipper
+    * @property integer $packer
+    * @property integer $shipper
     * @property string $createDateTime
     * @property string $updateDateTime
     * @property string $lastvisitDate
@@ -45,6 +47,7 @@ return [
             [['shipDate', 'createDateTime', 'updateDateTime', 'lastvisitDate'], 'safe'],
             [['bagNo'], 'string', 'max' => 255],
             [['taxNo'], 'string', 'max' => 200],
+            [['month', 'year'], 'string', 'max' => 5],
             [['remark'], 'string', 'max' => 150],
         ];
 }
@@ -60,6 +63,8 @@ return [
     'pickingItemsId' => Yii::t('order_item_packing', 'Picking Items ID'),
     'bagNo' => Yii::t('order_item_packing', 'Bag No'),
     'taxNo' => Yii::t('order_item_packing', 'Tax No'),
+    'month' => Yii::t('order_item_packing', 'Month'),
+    'year' => Yii::t('order_item_packing', 'Year'),
     'quantity' => Yii::t('order_item_packing', 'Quantity'),
     'status' => Yii::t('order_item_packing', 'Status'),
     'type' => Yii::t('order_item_packing', 'Type'),

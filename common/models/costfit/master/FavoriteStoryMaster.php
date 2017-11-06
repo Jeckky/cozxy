@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "favorite_story".
 *
     * @property string $favoriteStoryId
-    * @property string $productPostId
-    * @property string $productId
-    * @property string $userId
+    * @property integer $productPostId
+    * @property integer $productId
+    * @property integer $userId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

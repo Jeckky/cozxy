@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "points_reward_rank".
 *
-    * @property string $rankId
+    * @property integer $rankId
     * @property string $num1
     * @property string $num2
     * @property string $cash

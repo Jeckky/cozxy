@@ -9,15 +9,15 @@ use Yii;
 *
     * @property string $storeProductArrangeId
     * @property string $storeProductId
-    * @property string $poItemId
+    * @property integer $poItemId
     * @property string $productId
     * @property string $productSuppId
     * @property string $slotId
     * @property string $quantity
-    * @property string $orderId
-    * @property string $parentId
-    * @property string $result
-    * @property string $pickerId
+    * @property integer $orderId
+    * @property integer $parentId
+    * @property integer $result
+    * @property integer $pickerId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

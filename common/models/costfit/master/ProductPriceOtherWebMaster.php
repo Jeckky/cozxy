@@ -8,8 +8,8 @@ use Yii;
 * This is the model class for table "product_price_other_web".
 *
     * @property string $productPriceOtherWebId
-    * @property string $productId
-    * @property string $webId
+    * @property integer $productId
+    * @property integer $webId
     * @property string $url
     * @property string $parameter
     * @property integer $status

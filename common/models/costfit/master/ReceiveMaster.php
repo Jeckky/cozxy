@@ -7,15 +7,15 @@ use Yii;
 /**
 * This is the model class for table "receive".
 *
-    * @property string $receiveId
-    * @property string $orderId
-    * @property string $userId
-    * @property string $pickingId
+    * @property integer $receiveId
+    * @property integer $orderId
+    * @property integer $userId
+    * @property integer $pickingId
     * @property string $password
     * @property string $otp
     * @property string $refNo
     * @property integer $isUse
-    * @property string $error
+    * @property integer $error
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime

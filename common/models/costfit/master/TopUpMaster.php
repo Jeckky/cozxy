@@ -8,9 +8,9 @@ use Yii;
 * This is the model class for table "top_up".
 *
     * @property string $topUpId
-    * @property string $userId
-    * @property string $money
-    * @property string $point
+    * @property integer $userId
+    * @property integer $money
+    * @property integer $point
     * @property integer $paymentMethod
     * @property string $image
     * @property string $topUpNo

@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "picking_point".
 *
-    * @property string $pickingId
+    * @property integer $pickingId
     * @property string $title
     * @property string $code
     * @property string $description
