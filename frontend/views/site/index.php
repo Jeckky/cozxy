@@ -73,7 +73,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 }
                 ?>
 
-            </div>
+            </div> 
 
             <!-- Left and right controls -->
             <a class="align-middle fc-black mca" href="#myCarousel" data-slide="prev" style="left:0">
