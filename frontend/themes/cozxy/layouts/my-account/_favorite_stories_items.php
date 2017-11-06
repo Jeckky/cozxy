@@ -27,7 +27,6 @@
             <a class="b btn-black btn-xs " href="<?= $model['urlProduct'] ?>" style=" padding: 3px 6px;">View Product</a>
             <a class="b btn-black btn-xs " href="javascript:deleteItemFromFav(<?= $model['productPostId'] ?>);" style=" padding: 3px 6px;" id="reFav">Remove</a>
 
-        </div>
-        <br>
+        </div> 
     </div>
 </div>
