@@ -352,7 +352,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -417,9 +417,9 @@ class MyAccountController extends MasterController {
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId, 8);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
-                $quantity = 1;
+                $quantity = 1; //ol-lg-3 col-md-3 col-sm-6 col-xs-12
                 $text .= '
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . '">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . ' box-product">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
@@ -634,8 +634,8 @@ class MyAccountController extends MasterController {
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-            'wishlists' => $wishlists,
-            'title' => $productShelf->title
+                    'wishlists' => $wishlists,
+                    'title' => $productShelf->title
         ]);
     }
 
@@ -643,8 +643,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-            'favoriteStory' => $favoriteStory,
-            'title' => 'Favorite stories'
+                    'favoriteStory' => $favoriteStory,
+                    'title' => 'Favorite stories'
         ]);
     }
 

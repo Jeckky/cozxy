@@ -10,7 +10,6 @@ $col10 = "col-lg-10 col-md-10 col-sm-9 col-xs-9";
 $col2 = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
 ?>
 <?php
-/* col-lg-3 col-md-3 col-sm-6 col-xs-12 */
 
 function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId, $maxQnty, $fastId, $productId, $supplierId, $receiveType, $shelfId) {
     $quantity = 1;
@@ -20,7 +19,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         $receiveType = 1;
     }
     echo '
-		<div class="col-md-4 col-sm-6 col-xs-6  item-to-wishlist-' . $id . '">
+		<div class="col-md-4 col-sm-6 col-xs-6 box-product  item-to-wishlist-' . $id . ' box-product">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
