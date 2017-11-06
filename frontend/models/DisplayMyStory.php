@@ -502,7 +502,7 @@ class DisplayMyStory extends Model {
                         'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                         'star' => number_format($results_rating, 2),
                         'productPostId' => $value->productPostId,
-                        'avatar' => \common\models\costfit\User::getAvatar(Yii::$app->user->id),
+                        'avatar' => \common\models\costfit\User::getAvatar($value->userId),
                     ];
                 endforeach;
             endforeach;
