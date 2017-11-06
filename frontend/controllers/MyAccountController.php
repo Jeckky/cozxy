@@ -425,7 +425,7 @@ class MyAccountController extends MasterController {
 					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
 				</div>
 				<div class="product-txt">
-					<p class="size16"  style="height:50px;"><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
+					<p class="size16"  style=""><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
                 if ($item['price_s'] > 0) {
                     $text .= '<p>
 						<span class="size18">' . $item['price_s'] . '</span> &nbsp;
