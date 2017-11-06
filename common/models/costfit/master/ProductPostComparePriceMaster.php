@@ -11,7 +11,7 @@ use Yii;
     * @property string $productPostId
     * @property string $productId
     * @property string $userId
-    * @property string $productSelfId
+    * @property integer $productSelfId
     * @property string $shopName
     * @property string $price
     * @property string $country

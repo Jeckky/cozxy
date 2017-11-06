@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "configuration".
 *
-    * @property string $configurationId
+    * @property integer $configurationId
     * @property string $title
     * @property string $description
     * @property string $value

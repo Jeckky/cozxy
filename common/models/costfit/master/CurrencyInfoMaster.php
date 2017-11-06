@@ -7,7 +7,7 @@ use Yii;
 /**
 * This is the model class for table "currency_info".
 *
-    * @property string $currencyId
+    * @property integer $currencyId
     * @property string $ctry_name
     * @property string $ccy_name
     * @property string $ccy_name_th

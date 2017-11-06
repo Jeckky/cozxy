@@ -9,7 +9,7 @@ use Yii;
 *
     * @property string $storeLocationId
     * @property string $storeId
-    * @property string $provinceId
+    * @property integer $provinceId
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
