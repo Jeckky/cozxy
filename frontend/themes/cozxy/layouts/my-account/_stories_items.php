@@ -97,10 +97,10 @@ if (isset($model['image']) && !empty($model['image'])) {
     //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
 ?>
-<div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?>"  style=" padding: 5px; ">
+<div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?> card"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
-    <div class="card hovercard product-img">
-        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid; border-top: 1px #d8d8d8 solid;">
+    <div class=" hovercard product-img">
+        <img id="viewPost" data-src="holder.js/64x64" src="<?= $model['image'] ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid;">
 
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
