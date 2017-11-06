@@ -88,16 +88,7 @@
         box-sizing: border-box;
     }
 </style>
-<?php
-if (isset($model['image']) && !empty($model['image'])) {
-    $i = '1';
-    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model['image'];
-} else {
-    $i = '2';
-    $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
-    //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
-}
-?>
+
 <div class="col-md-3 col-sm-6 item-to-stories-<?= $model['productPostId'] ?> card"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class=" hovercard product-img">
@@ -105,7 +96,7 @@ if (isset($model['image']) && !empty($model['image'])) {
 
         <div class="avatar">
             <a href="<?= $model['url']; ?>">
-                <img src="<?= $avatar ?>" alt=""/>
+                <img src="<?= $model['avatar']; ?>" alt=""/>
             </a>
         </div>
         <div class="info text-center">

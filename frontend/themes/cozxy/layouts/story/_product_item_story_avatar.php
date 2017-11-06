@@ -91,11 +91,6 @@
 if (isset($model->user->avatar) && !empty($model->user->avatar)) {
     $i = '1';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
-    if (file_exists(Yii::$app->basePath . "/web/" . $avatar)) {
-        $avatar = \Yii::$app->homeUrl . 'images/user/avatar/' . $model->user->avatar;
-    } else {
-        $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
-    }
 } else {
     $i = '2';
     $avatar = \Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg';
