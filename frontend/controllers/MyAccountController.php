@@ -429,8 +429,8 @@ class MyAccountController extends MasterController {
 					<p class="size16"  style=""><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
                 if ($item['price_s'] > 0) {
                     $text .= '<br><p>
-						<span class="size18">' . $item['price_s'] . '</span> &nbsp;
-						<br><span class="size14 onsale">' . $item['price_s'] . '</span>
+						<span class="size18">' . $item['price_s'] . ' THB</span> &nbsp;
+						<br><span class="size14 onsale">' . $item['price_s'] . ' THB</span>
 					</p>';
                 } else {
                     $text .= '<p>
