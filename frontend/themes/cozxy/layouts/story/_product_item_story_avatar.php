@@ -7,7 +7,7 @@
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="  hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid;">
-        <div class="avatar" id="<?= $i ?>">
+        <div class="avatar" id="">
             <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
                 <img src="<?= $model->user->avatar ?>" alt=""/>
             </a>
