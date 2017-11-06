@@ -419,7 +419,7 @@ class MyAccountController extends MasterController {
             foreach ($wishlists as $item):
                 $quantity = 1; //ol-lg-3 col-md-3 col-sm-6 col-xs-12
                 $text .= '
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . ' box-product ">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . ' box-product card">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
