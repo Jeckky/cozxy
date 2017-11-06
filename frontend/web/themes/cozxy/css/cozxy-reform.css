@@ -222,10 +222,10 @@ div.line_h {
 }
 
 .card.hovercard .avatar img {
-    width: 80px;
+    /*width: 80px;
     height: 80px;
     max-width: 80px;
-    max-height: 80px;
+    max-height: 80px;*/
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
