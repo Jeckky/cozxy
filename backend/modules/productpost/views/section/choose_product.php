@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="panel-body">
-        <?= $this->render('_search') ?>
+        <?= $this->render('_search', ['sectionId' => $section->sectionId]) ?>
         <div class="col-lg-12 col-md-12 text-right" id="showSuccess" style="color: #0000ff;font-size: 16pt;"></div>
         <div class="col-lg-12 col-md-12 text-right" id="showNotSuccess" style="color: #ff3333;font-size: 16pt;"></div>
         <?php

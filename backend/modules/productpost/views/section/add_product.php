@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'Title',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return Product::findProductName($model->productId);
+                        return Product::findProductName($model->productSuppId);
                     }
                 ],
                 ['attribute' => 'Image',

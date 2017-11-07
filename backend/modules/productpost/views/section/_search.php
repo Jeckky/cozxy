@@ -72,6 +72,7 @@ use yii\helpers\Html;
     </div>
     <div class="panel-footer text-right">
         <button class="btn btn-info" type="submit">Search</button>
+        <a href="<?= Yii::$app->homeUrl ?>productpost/section/choose-product?sectionId=<?= $sectionId ?>" class="btn btn-danger"> <i class="glyphicon glyphicon-refresh"></i> Reset</a>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

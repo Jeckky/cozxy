@@ -137,13 +137,13 @@ class SectionController extends ProductPostMasterController {
                 ->join('LEFT JOIN', 'product_suppliers', 'product.productId=product_suppliers.productId')
                 ->where('product.approve="approve" and product.status=1 and product_suppliers.approve="approve" and product_suppliers.status=1 and product_suppliers.result>0');
         if (isset($_GET['title']) && $_GET['title'] != '') {
-            $queryVariableProducts->andWhere("product.title like %'" . $_GET['title'] . "'%");
+            $queryVariableProducts->andWhere("product.title like '%" . $_GET['title'] . "%'");
         }
-        if (isset($_GET['CategoryId']) && $_GET['CategoryId'] != '') {
-            $queryVariableProducts->andWhere("product.categoryId=" . $_GET['CategoryId']);
+        if (isset($_GET['categoryId']) && $_GET['categoryId'] != '') {
+            $queryVariableProducts->andWhere("product.categoryId=" . $_GET['categoryId']);
         }
-        if (isset($_GET['BrandId']) && $_GET['BrandId'] != '') {
-            $queryVariableProducts->andWhere("product.brandId=" . $_GET['BrandId']);
+        if (isset($_GET['brandId']) && $_GET['brandId'] != '') {
+            $queryVariableProducts->andWhere("product.brandId=" . $_GET['brandId']);
         }
         $varibleProduct = new ActiveDataProvider([
             'query' => $queryVariableProducts
