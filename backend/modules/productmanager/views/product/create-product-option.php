@@ -90,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tr>
                                         <th>#</th>
                                         <?php foreach($productGroupTemplate->productGroupTemplateOptions as $option): ?>
+                                            <?php if(!isset($productWithOptions[0][$option->productGroupTemplateOptionId])) continue;?>
                                             <th><?= $option->title ?></th>
                                         <?php endforeach; ?>
                                         <th>Actions</th>
