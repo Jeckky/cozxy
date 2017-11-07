@@ -112,14 +112,14 @@ class DisplayMyAccount extends Model {
                 $value = \common\models\costfit\Product::find()->where("productId=" . $items->productId)->one();
                 $maxQnty = 0;
             }
-            $price_s = isset($dataProductMaster['price']) ? number_format($dataProductMaster['price'], 2) : '';
-            $price = isset($value['price']) ? number_format($value['price'], 2) : '';
+            $price_s = isset($dataProductMaster->price) ? number_format($dataProductMaster->price, 2) : '-';
+            $price = isset($value['price']) ? number_format($value['price'], 2) : '-';
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
 
             if (Yii::$app->controller->id == 'my-account') {
-                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 30) : '';
+                $title = isset($dataProductMaster->title) ? substr($dataProductMaster->title, 0, 30) : 'NO TITLE';
             } else {
-                $title = isset($dataProductMaster['title']) ? substr($dataProductMaster['title'], 0, 30) : '';
+                $title = isset($dataProductMaster->title) ? substr($dataProductMaster->title, 0, 30) : 'NO TITLE';
             }
             $products[$value['productSuppId']] = [
                 'wishlistId' => $items->wishlistId,
@@ -127,8 +127,8 @@ class DisplayMyAccount extends Model {
                 'image' => $productImagesThumbnail1,
                 'brand' => isset($value['brand']) ? $value->brand->title : '',
                 'url' => Yii::$app->homeUrl . 'product/' . ProductSuppliers::encodeParams(['productId' => $value['productId'], 'productSupplierId' => $value['productSuppId']]),
-                'brand' => isset($value['brand']) ? $value->brand->title : '',
-                'brandId' => isset($value['brandId']) ? $value->brand->brandId : '',
+                'brand' => isset($dataProductMaster->brand) ? $dataProductMaster->brand->title : 'NO BRAND',
+                'brandId' => isset($dataProductMaster->brand) ? $dataProductMaster->brand->brandId : '',
                 'title' => $title,
                 'price_s' => $price_s,
                 'price' => $price,
