@@ -304,7 +304,10 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
 
     public static function findBagNo($orderItemId) {
         $oldBag = [];
-        $orderItemId = OrderItemPacking::find()->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        $orderItemId = OrderItemPacking::find()
+                ->where("orderItemId in ($orderItemId) and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)
+                ->groupBy("bagNo")
+                ->all();
         if (isset($orderItemId) && count($orderItemId) > 0) {
             $i = 0;
             foreach ($orderItemId as $item):

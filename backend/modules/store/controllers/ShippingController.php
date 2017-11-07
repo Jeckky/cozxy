@@ -189,7 +189,9 @@ class ShippingController extends StoreMasterController {
         }
         $orderInCars = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId!=0")->all();
         $pickingPoint = $this->findPickingPoint($orderInCars);
-        $shipToHome = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId=0")->all();
+        $shipToHome = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId=0")
+                ->groupBy("bagNo")
+                ->all();
         // throw new \yii\base\Exception(print_r($orderInCars, true));
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
@@ -495,6 +497,39 @@ class ShippingController extends StoreMasterController {
                         'orderNo' => $orderNo,
                         'ms' => $ms
             ]);
+        }
+    }
+
+    public function actionCustomerReceived() {
+        $bagNo = $_GET["bagNo"];
+        $orderId = $_GET["orderId"];
+        $orderItemPacking = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
+            foreach ($orderItemPacking as $item):
+                $orderItem = OrderItem::find()->where("orderItemId=" . $item->orderItemId)->one();
+                $orderItem->status = OrderItem::ORDERITEM_STATUS_RECEIVED;
+                $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                $orderItem->save(false);
+                $item->status = OrderItemPacking::PACKING_STATUS_CUSTOMERS_RECEIVE;
+                $item->updateDateTime = new \yii\db\Expression('NOW()');
+                $item->save();
+            endforeach;
+        }
+        $this->checkFinish($orderId);
+        return $this->redirect('index');
+    }
+
+    static public function checkFinish($orderId) {
+        $allItem = OrderItem::find()->where("orderId=" . $orderId)->all();
+        $orderItem = OrderItem::find()->where("orderId=" . $orderId . " and status=" . OrderItem::ORDERITEM_STATUS_RECEIVED)->all();
+        if (count($orderItem) == count($allItem)) {
+            $order = Order::find()->where("orderId=" . $orderId)->one();
+            $order->status = Order::ORDER_STATUS_RECEIVED;
+            $order->updateDateTime = new \yii\db\Expression('NOW()');
+            $order->save(false);
+            return true;
+        } else {
+            return false;
         }
     }
 

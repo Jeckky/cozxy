@@ -107,7 +107,12 @@ if (isset($orderInCar) && !empty($orderInCar) && isset($pickingPoints) && !empty
 
         </div>
     </div>
-<?php } ?>
+    <?php
+}
+if (isset($shipToHome) && count($shipToHome) > 0) {
+    echo $this->render('list_home', ['shipToHome' => $shipToHome]);
+}
+?>
 <div class="panel panel-default">
     <div class="panel-heading" style="background-color: #ffcc00;vertical-align: middle;">
         <span class="panel-title"><h4> Order รอส่ง(แพ๊คแล้ว) </h4></span>
