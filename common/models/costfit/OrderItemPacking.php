@@ -276,8 +276,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     public static function findOrderAtPoint($pickingPointId) {
-        $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
-
+        $items = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId!=0")->all();
         $orderId = [];
         if (isset($items) && !empty($items)) {
             $i = 0;

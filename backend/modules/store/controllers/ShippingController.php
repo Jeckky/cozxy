@@ -32,7 +32,7 @@ class ShippingController extends StoreMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -126,9 +126,14 @@ class ShippingController extends StoreMasterController {
                     if ($queryList->status == Order::ORDER_STATUS_PACKED) {//เชคถว่า สถานะเป็นแพ็คแล้วหรือยัง
                         $queryItem = OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status=' . OrderItem::ORDERITEM_STATUS_CLOSED_BAG)->all(); //status 13 ปิดถุงแล้ว พร้อมส่ง
                         if (isset($queryItem) && count($queryItem) > 0) {
+
                             $orderItem = OrderItem::find()->where("orderId=" . $queryList->orderId . ' and status=' . OrderItem::ORDERITEM_STATUS_CLOSED_BAG)
                                     ->orderBy("updateDateTime")
                                     ->one();
+                            if ($queryList->pickingId == 0) {
+                                //$this->saveShipToHome($queryList->orderId, $orderItem->pickingId);
+                                return $this->redirect(['ship-to-home', 'orderId' => $queryList->orderId]);
+                            }
                             $pickingPoint = $orderItem->pickingId;
                             $this->savePickingPoin($queryList->orderId, $orderItem->pickingId);
                             $listPoint = \common\helpers\Lockers::GetPickingPoint($pickingPoint);
@@ -182,13 +187,15 @@ class ShippingController extends StoreMasterController {
             }
             //$this->redirect(Yii::$app->homeUrl . 'store/shipping/');
         }
-        $orderInCars = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING)->all();
+        $orderInCars = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId!=0")->all();
         $pickingPoint = $this->findPickingPoint($orderInCars);
+        $shipToHome = OrderItemPacking::find()->where("shipper=" . Yii::$app->user->identity->userId . " and status=" . OrderItemPacking::ORDER_STATUS_SENDING_PACKING_SHIPPING . " and pickingItemsId=0")->all();
         // throw new \yii\base\Exception(print_r($orderInCars, true));
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
                     'orderInCar' => $orderInCars,
                     'pickingPoints' => $pickingPoint,
+                    'shipToHome' => $shipToHome,
                     'ms' => $ms
         ]);
 
@@ -236,6 +243,69 @@ class ShippingController extends StoreMasterController {
         }
     }
 
+    public function actionShipToHome() {
+        if (isset($_GET["orderId"])) {
+            $orderItemIds = '';
+            $order = Order::find()->where("orderId=" . $_GET["orderId"])->one();
+            $orderItem = OrderItem::find()->where("orderId=" . $_GET["orderId"])->all();
+            if (isset($orderItem) && count($orderItem) > 0) {
+                foreach ($orderItem as $id):
+                    $orderItemIds.=$id->orderItemId . ",";
+                endforeach;
+                $orderItemIds = substr($orderItemIds, 0, -1);
+            }
+        }
+        if (isset($_GET["bagNo"]) && $_GET["bagNo"] != '') {
+            $orderId = $_GET["orderId"];
+            $orderItems = OrderItem::find()->where("orderId=" . $_GET["orderId"])->all();
+            $orderItemPacking = OrderItemPacking::find()->where("bagNo='" . $_GET["bagNo"] . "'")->all();
+            if (isset($orderItemPacking) && count($orderItemPacking) > 0) {
+                foreach ($orderItemPacking as $item):
+                    $orderItem = OrderItem::find()->where("orderItemId=" . $item->orderItemId . " and orderId=" . $_GET["orderId"])->one();
+                    if (isset($orderItem)) {
+                        $orderItem->status = OrderItem::ORDER_STATUS_SENDING_SHIPPING;
+                        $orderItem->updateDateTime = new \yii\db\Expression('NOW()');
+                        $orderItem->save(false); //update ทุกออเดอร์ไอเทมที่อยู่ในถุงนั้น
+                        $item->status = OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING;
+                        $item->pickingItemsId = 0;
+                        $item->updateDateTime = new \yii\db\Expression('NOW()');
+                        $item->shipper = Yii::$app->user->id;
+                        $item->save(false);
+                        $countShipping = count(OrderItem::find()->where("orderId=" . $orderId . " and status=" . OrderItem::ORDERITEM_STATUS_CLOSED_BAG)->all());
+                        if ($countShipping == 0) {
+                            $order = Order::find()->where("orderId=" . $_GET["orderId"])->one();
+                            $order->status = Order::ORDER_STATUS_SENDING_SHIPPING;
+                            $order->updateDateTime = new \yii\db\Expression('NOW()');
+                            $order->save(false);
+                            return $this->redirect('index');
+                        }
+                    }
+                endforeach;
+                if ($orderItemIds != '') {
+                    $shipedBag = OrderItemPacking::find()->where("orderItemId in ($orderItemIds) and status=" . OrderItemPacking::PACKING_SENDING_PACKING_SHIPPING)
+                            ->groupBy("bagNo")
+                            ->all();
+                } else {
+                    $shipedBag = null;
+                }
+                return $this->render('ship_to_home', [
+                            'order' => $order,
+                            'shipedBag' => $shipedBag
+                ]);
+            }
+        } else {
+            $order = Order::find()->where("orderId=" . $_GET["orderId"])->one();
+            return $this->render('ship_to_home', [
+                        'order' => $order
+            ]);
+        }
+        /* if (isset($orderItems) && count($orderItems) > 0) {
+          foreach ($orderItems as $orderItem):
+          $ord
+          endforeach;
+          } */
+    }
+
     public function actionRemoveFromLocker() {
         $bagNo = $_GET["bagNo"];
         $orderItemPacking = OrderItemPacking::find()->where("bagNo='" . $_GET["bagNo"] . "'")->all();
@@ -279,6 +349,18 @@ class ShippingController extends StoreMasterController {
         if (isset($order)) {
             if ($order->pickingId == '' || $order->pickingId == null) {
                 $order->pickingId = $pickingId;
+                $order->save(false);
+            }
+        }
+    }
+
+    public function saveShipToHome($orderId, $pickingId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            if ($order->pickingId == '' || $order->pickingId == null) {
+                $order->pickingId = $pickingId;
+                $order->status = Order::ORDER_STATUS_SENDING_SHIPPING;
+                $order->updateDateTime = new \yii\db\Expression('NOW()');
                 $order->save(false);
             }
         }

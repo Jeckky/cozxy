@@ -819,7 +819,56 @@ function changeImageMasterStatus(id) {
         },
     });
 }
+
 /*
  * End sprint 1 =======> sak
  *
  */
+/*sprint3 sak*/
+function confirmDel(sectionId) {
+    if (confirm("Are you sure to delete this section?")) {
+        //window.location.href = $baseUrl + 'productpost/section/delete?id=' + sectionId;
+        window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete?id=' + sectionId;
+    }
+}
+function confirmDelItem(sectionItemId) {
+    if (confirm("Are you sure to delete this item?")) {
+        //window.location.href = $baseUrl + 'productpost/section/delete?id=' + sectionId;
+        window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete-item?id=' + sectionItemId;
+    }
+}
+function selectProduct(sectionId, productId, productSuppId) {
+    var url = 'http://localhost/cozxy/backend/web/productpost/section/add-product-to-section';
+    //var url = $baseUrl + /productpost/section/add-prodoct-to-section';
+    $.ajax({
+        url: url,
+        data: {sectionId: sectionId, productId: productId, productSuppId: productSuppId},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (!data.status) {
+                ("#showNotSuccess").show();
+                $("#showNotSuccess").html("เกิดข้อผิดพลาดกรุณาติดต่อผู้ดูแลระบบ");
+                $("#showSuccess").hide();
+            } else {
+                $("#showNotSuccess").hide();
+                $("#showSuccess").html(data.text);
+
+            }
+        },
+    });
+}
+function showSectionItem(sectionItemId) {
+    var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section-item';
+    //var url = $baseUrl + /productpost/section/add-prodoct-to-section';
+    $.ajax({
+        url: url,
+        data: {sectionItemId: sectionItemId},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+
+        },
+    });
+}
+/*End sprint3 sak */

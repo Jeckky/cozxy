@@ -74,11 +74,20 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
     static public function findPickingPoitItem($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
-            $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
-            if (isset($pickingPoint)) {
-                return $pickingPoint->title;
+            if ($order->pickingId != 0) {
+                $pickingPoint = PickingPoint::find()->where("pickingId=" . $order->pickingId)->one();
+                if (isset($pickingPoint)) {
+                    return $pickingPoint->title;
+                } else {
+                    return 'ไม่พบจุดส่งสินค้า';
+                }
             } else {
-                return 'ไม่พบจุดส่งสินค้า';
+                $amphur = \common\models\dbworld\Cities::find()->where("cityId=" . $order->shippingAmphurId)->one();
+                $district = \common\models\dbworld\District::find()->where("districtId=" . $order->shippingDistrictId)->one();
+                $province = \common\models\dbworld\States::find()->where("stateId=" . $order->shippingProvinceId)->one();
+                $zipCode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $order->shippingZipcode)->one();
+                $picking = $order->shippingAddress . " " . $district->districtName . " " . $amphur->cityName . " " . $province->stateName . " " . $zipCode->zipcode;
+                return $picking;
             }
         } else {
             return 'ไม่พบรายการ Order';

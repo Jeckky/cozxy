@@ -36,10 +36,10 @@
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
 //                                            'initialize' => true,
-'depends' => ['order-shippingprovinceid'],
-'url' => Url::to(['child-amphur-address']),
-'loadingText' => 'Loading amphur ...',
-'params' => ['input-type-11', 'input-type-22', 'input-type-33']
+                    'depends' => ['order-shippingprovinceid'],
+                    'url' => Url::to(['child-amphur-address']),
+                    'loadingText' => 'Loading amphur ...',
+                    'params' => ['input-type-11', 'input-type-22', 'input-type-33']
                 ]
             ])->label(FALSE);
             ?>
@@ -53,10 +53,10 @@
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
 //                                            'initialize' => true,
-'depends' => ['order-shippingamphurid'],
-'url' => Url::to(['child-district-address']),
-'loadingText' => 'Loading district ...',
-'params' => ['input-type-13', 'input-type-33', 'input-type-34']
+                    'depends' => ['order-shippingamphurid'],
+                    'url' => Url::to(['child-district-address']),
+                    'loadingText' => 'Loading district ...',
+                    'params' => ['input-type-13', 'input-type-33', 'input-type-34']
                 ]
             ])->label(FALSE);
             ?>
@@ -83,7 +83,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <?php // throw new \yii\base\Exception($model->scenario); ?>
+            <?php // throw new \yii\base\Exception($model->scenario);  ?>
             <?= $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
         </div>
         <div class="col-md-6">

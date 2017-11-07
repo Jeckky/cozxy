@@ -162,7 +162,9 @@ $pickingId = rand(0, 9999);
                                 <?php
                                 echo $form->field($order, 'shippingProvinceId')->widget(kartik\select2\Select2::classname(), [
                                     //'options' => ['id' => 'address-countryid'],
-                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId='THA' AND stateId in (1,2,3,58,4,59)")->orderBy('localName')->asArray()->all(), 'stateId', 'localName'),
+                                    'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->where("countryId='THA' AND stateId in (1,2,3,58,4,59)")->orderBy('localName')->asArray()->all(), 'stateId', function($stateId) {
+                                                return \common\models\costfit\PickingPoint::provinceName($stateId);
+                                            }),
                                     'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select province',

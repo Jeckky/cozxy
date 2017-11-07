@@ -30,6 +30,7 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
     const ORDERITEM_STATUS_CLOSED_BAG = 13;
     const ORDER_STATUS_SENDING_SHIPPING = 14;
     const ORDERITEM_STATUS_IN_LOCKER = 15;
+    const ORDERITEM_STATUS_RECEIVED = 16;
     //
     //Param For Report
     const FUTURE_DAY_TO_SHOW = 7;

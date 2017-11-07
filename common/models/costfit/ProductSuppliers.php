@@ -225,12 +225,12 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function productOrder($productSuppId) {
         $model = Order::find()
-        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-        ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
-        ->all();
+                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+                ->where('`order`.status = ' . Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId . ' and `product_suppliers`.productSuppId=' . $productSuppId)
+                ->all();
         if (isset($model) && count($model) > 0) {
             return $model;
         } else {
@@ -315,24 +315,34 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
 
     public static function newProductSupp() {
         return self::find()
-        ->leftJoin('product p', 'product_suppliers.productId=p.productId')
-        ->leftJoin('brand b', 'b.brandId=product_suppliers.brandId')
-        ->where('p.parentId is not null')
-        ->andWhere(['product_suppliers.approve' => 'new', 'product_suppliers.status' => 0])
-        ->andWhere(['p.approve' => 'approve'])
-        ->andWhere('p.brandId is not null')
-        ->andWhere('product_suppliers.brandId is not null')
-        ->andWhere('b.brandId is not null');
+                        ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+                        ->leftJoin('brand b', 'b.brandId=product_suppliers.brandId')
+                        ->where('p.parentId is not null')
+                        ->andWhere(['product_suppliers.approve' => 'new', 'product_suppliers.status' => 0])
+                        ->andWhere(['p.approve' => 'approve'])
+                        ->andWhere('p.brandId is not null')
+                        ->andWhere('product_suppliers.brandId is not null')
+                        ->andWhere('b.brandId is not null');
     }
 
-    public static function findCheapest($productId)
-    {
+    public static function findCheapest($productId) {
         return self::find()
-            ->leftJoin('product_price_suppliers pps', 'product_suppliers.productSuppId')
-            ->where(['product_suppliers.productId'=>$productId])
-            ->andWhere(['pps.status'=>1])
-            ->orderBy(['pps.price'=>SORT_ASC])
-            ->one();
+                        ->leftJoin('product_price_suppliers pps', 'product_suppliers.productSuppId')
+                        ->where(['product_suppliers.productId' => $productId])
+                        ->andWhere(['pps.status' => 1])
+                        ->orderBy(['pps.price' => SORT_ASC])
+                        ->one();
+    }
+
+    public static function productImage($productSuppId) {
+        $productImage = ProductImageSuppliers::find()->where("status=1 and productSuppId=" . $productSuppId)
+                ->orderBy("productImageId ASC")
+                ->one();
+        if (isset($productImage)) {
+            return $productImage->image;
+        } else {
+            return '';
+        }
     }
 
 }

@@ -291,7 +291,8 @@ class CheckoutController extends MasterController {
                 $order->shippingZipcode = $orderAddress['shippingZipcode'];
                 $order->shippingTel = $orderAddress['shippingTel'];
                 $order->email = $orderAddress['email'];
-                $order->pickingId = new Expression('NULL');
+                //$order->pickingId = new Expression('NULL');
+                $order->pickingId = 0;
             }
             $order->save(false);
         }
@@ -321,11 +322,11 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $systemCoin,
-            'cartCalculates' => $cartCalculates
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $systemCoin,
+                    'cartCalculates' => $cartCalculates
         ]);
     }
 
@@ -349,10 +350,10 @@ class CheckoutController extends MasterController {
 
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
-            'order' => $order,
-            'userPoint' => $userPoint,
-            'addressIdsummary' => $addressIdsummary,
-            'systemCoin' => $order->cozxyCoin
+                    'order' => $order,
+                    'userPoint' => $userPoint,
+                    'addressIdsummary' => $addressIdsummary,
+                    'systemCoin' => $order->cozxyCoin
         ]);
     }
 
