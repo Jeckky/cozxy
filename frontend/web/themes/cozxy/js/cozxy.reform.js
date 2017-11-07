@@ -790,7 +790,7 @@ function checkoutNewBilling() {
     setTimeout(function () {
         $this.button('reset');
     }, 8000);
-    var push_co_country = $('#co-country').val();
+    var push_co_country = 'personal';//$('#co-country').val();
     var push_firstname = $('#address-firstname').val();
     var push_lastname = $('#address-lastname').val();
     var push_address = $('#address-address').val();

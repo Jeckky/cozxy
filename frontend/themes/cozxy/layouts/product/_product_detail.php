@@ -29,7 +29,18 @@ $marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPric
 $supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 ?>
-
+<style type="text/css">
+    .discount{
+        font-size: 20px;
+        font-weight: bold;
+        top: 0px;
+    }
+    .percen-discount{
+        position: relative;
+        font-size: 10px;
+        top: 1px;
+    }
+</style>
 <!-- Product Detail Old -->
 <div class="product-detail">
     <div class="row">
@@ -41,8 +52,8 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         ?>
                         <div class="product-sticker-product-detail">
                             <div class="rcorners-product-detail">
-                                <p>&nbsp;&nbsp;&nbsp;HOT DEAL</p>
-                                <p>
+                                <p class="product-page-hot-deal">&nbsp;&nbsp;&nbsp;HOT DEAL</p>
+                                <p class="product-page-save">
                                     <?php
                                     //$marketPrice = isset($model['DiscountmarketPrice']) ? $model['DiscountmarketPrice'] : 0;
                                     //$supplierPrice = isset($model['Discountprice']) ? $model['Discountprice'] : 0;
@@ -131,10 +142,10 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         <?php
                         if ($model['price'] > 0) {
                             ?>
-                            <div class="col-sm-8 padding-product-detail">
+                            <div class="col-sm-7 padding-product-detail">
                                 <p class="size24 size20-xs b"><?php echo $model['price']; ?> THB</p>
                             </div>
-                            <div class="col-sm-4 padding-product-detail">
+                            <div class="col-sm-5 padding-product-detail">
                                 <?php
                                 if ($DiscountProduct != 'Lessthan10') {
                                     ?>

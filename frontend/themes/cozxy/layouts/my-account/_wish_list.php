@@ -19,7 +19,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         $receiveType = 1;
     }
     echo '
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $id . '">
+		<div class="col-md-4 col-sm-6 col-xs-6 box-product  item-to-wishlist-' . $id . ' box-product">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $url . '"><img src="' . $img . '" alt="' . $txt_d . '" class="fullwidth"></a>
@@ -39,9 +39,9 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     }
     '<p class="size14 fc-g999">' . $txt . '</p>';
     if ($maxQnty > 0 && $price > 0) {
-        echo '<p><a href="javascript:addItemToCartUnitys(\'' . $productSuppId . '\',\'' . $quantity . '\',\'' . $maxQnty . '\',\'' . $fastId . '\',\'' . $productId . '\',\'' . $supplierId . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+        echo '<p><a href="javascript:addItemToCartUnitys(\'' . $productSuppId . '\',\'' . $quantity . '\',\'' . $maxQnty . '\',\'' . $fastId . '\',\'' . $productId . '\',\'' . $supplierId . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $id . '" data-loading-text="ADD TO CART" class="btn-yellow btn-black-s-my-shelves">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '"  class="fc-g999 btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     } else {
-        echo '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+        echo '<p><a class="btn-black-s btn-black-s-my-shelves">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $id . ',' . $shelfId . ');" id="deletetemToWishlists-' . $id . '" class="fc-g999 btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
     }
     echo '
                 </div>
@@ -50,9 +50,8 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
     ';
 }
 ?>
-<div class="row">
-
-    <div class="col-md-12">
+<div class="row-my-account">
+    <div class="col-md-12 padding-product-detail">
         <div class="alert alert-warning" style="display: <?= isset($_GET['p']) ? '' : 'none' ?>">
 
             <?php
@@ -61,7 +60,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             }
             ?>
         </div>
-        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ Create my shelf</a>
+        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ <?= strtoupper('Ceate my shelf') ?></a>
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
@@ -83,17 +82,29 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         $i = 0;
         $a = "<i class='fa fa-heart' aria-hidden='true' style='color:#FFFF00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
         ?>
-
-        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: none;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+        <!-- click for hidden -->
+        <!--<a href="javascript:showWishlistGroup(<?//= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: none;" id="hideGroup-<?//= $defalutWishlist->productShelfId ?>">
+            <div class="<?//= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+        <?//= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
             </div>
-        </a>
-        <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+        </a>-->
+        <!-- click for show -->
+        <!--<a href="javascript:showWishlistGroup(<?//= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;" id="showGroup-<?//= $defalutWishlist->productShelfId ?>">
+            <div class="<?//= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+        <?//= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
             </div>
-        </a>
+        </a>-->
+        <div class="<?= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: none;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
+                <?= $a . '' . strtoupper($defalutWishlist->title) ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
+                <?= $a . '' . strtoupper($defalutWishlist->title) ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            </a>
+            <a href="" data-toggle="modal" data-target="#WishlistModal" class="pull-right">
+                <u>What's this? </u>
+            </a>
+        </div>
 
         <div id="wishListShelf-<?= $defalutWishlist->productShelfId ?>" style="display: none;">
             <?php
@@ -119,17 +130,24 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 
     if (isset($favoriteStories)) {
         $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-        ?>
-        <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
-        <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
-            <div class="<?= $fullCol ?> bg-gray" style="padding:18px 18px 10px;margin-bottom: 10px;">
-                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
+        ?><!-- click for hidden -->
+        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="">
+            <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none; padding:18px 18px 10px;margin-bottom: 10px;" id="hidefav" class="bg-my-shelf">
+        <?//= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </a>
+        </div>-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav" class="bg-my-shelf"><!-- click for hidden -->
+                <?= $a . '' . strtoupper($favoriteStories->title) ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </a><!-- click for show -->
+            <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav">
+                <?= $a . '' . strtoupper($favoriteStories->title) ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+            </a>
+            <a href="" data-toggle="modal" data-target="#FavoriteModal" class="pull-right">
+                <u>What's this? </u>
+            </a>
+        </div>
+
         <?php
         if ($allFavorite != FALSE) {
             ?>
@@ -168,7 +186,9 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         } else {
             ?>
             <div class="<?= $fullCol ?>"id="showFavoriteItem" style="display:none;">
-                <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
+                <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;">
+                        <!--<a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span>-->
+                </h4>
             </div>
             <?php
         }
@@ -185,14 +205,17 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
                 $a = "<i class='fa fa-gratipay' aria-hidden='true' style='color:#FF6699;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
             }
             ?>
+            <div class="<?= $col10 ?> bg-my-shelf" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>, 1);" id="showGroup-<?= $shelf->productShelfId ?>">
+                <?= $a . '' . $shelf->title ?>
+            </div>
+            <div class="<?= $col10 ?> bg-my-shelf" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>, 0);" id="hideGroup-<?= $shelf->productShelfId ?>">
+                <?= $a . '' . $shelf->title ?>
+            </div>
 
-            <div class="<?= $col10 ?> bg-gray" style="cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>, 1);" id="showGroup-<?= $shelf->productShelfId ?>">
-                <?= $a . '' . $shelf->title ?>
-            </div>
-            <div class="<?= $col10 ?> bg-gray" style="display: none;cursor: pointer;padding:18px 18px 10px;margin-bottom: 10px;" onclick="javascript:showWishlistGroup(<?= $shelf->productShelfId ?>, 0);" id="hideGroup-<?= $shelf->productShelfId ?>">
-                <?= $a . '' . $shelf->title ?>
-            </div>
-            <div class="<?= $col2 ?> bg-gray text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
+            <div class="<?= $col2 ?> bg-my-shelf text-right" style="padding:18px 18px 10px;margin-bottom: 10px; color:#FF6699;">
+                <a href="" data-toggle="modal" data-target="#ShelfModal" class="pull-left">
+                    <u>What's this? </u>
+                </a>
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:editShelf(<?= $shelf->productShelfId ?>, 1)" id="showEditShelf<?= $shelf->productShelfId ?>"></i>
                 <i class="fa fa-edit" aria-hidden="true" style="font-size:20pt;cursor:pointer;display: none;" onclick="javascript:editShelf(<?= $shelf->productShelfId ?>, 0)" id="hideEditShelf<?= $shelf->productShelfId ?>"></i>&nbsp;&nbsp;&nbsp;
                 <i class="fa fa-trash" aria-hidden="true" style="font-size:20pt;cursor:pointer;" onclick="javascript:deleteShelf(<?= $shelf->productShelfId ?>)"></i>

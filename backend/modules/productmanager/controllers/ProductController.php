@@ -190,17 +190,19 @@ class ProductController extends ProductManagerMasterController
                 }
                 //product options
                 foreach($productGroupOptions as $productGroupOption) {
-                    $productGroupOptionValue = new ProductGroupOptionValue();
-                    $productGroupOptionValue->productGroupOptionId = $productGroupOption->productGroupOptionId;
-                    $productGroupOptionValue->productGroupTemplateOptionId = $productGroupOption->productGroupTemplateOptionId;
-                    $productGroupOptionValue->productGroupId = $id;
-                    $productGroupOptionValue->productId = $pid;
-                    $productGroupOptionValue->productGroupTemplateId = $product->productGroupTemplateId;
-                    $productGroupOptionValue->value = $value[$productGroupOption->productGroupTemplateOptionId];
-                    $productGroupOptionValue->status = 1;
-                    $productGroupOptionValue->createDateTime = new Expression('NOW()');
-                    $productGroupOptionValue->updateDateTime = new Expression('NOW()');
-                    $productGroupOptionValue->save(false);
+                    if(isset($value[$productGroupOption->productGroupTemplateOptionId])) {
+                        $productGroupOptionValue = new ProductGroupOptionValue();
+                        $productGroupOptionValue->productGroupOptionId = $productGroupOption->productGroupOptionId;
+                        $productGroupOptionValue->productGroupTemplateOptionId = $productGroupOption->productGroupTemplateOptionId;
+                        $productGroupOptionValue->productGroupId = $id;
+                        $productGroupOptionValue->productId = $pid;
+                        $productGroupOptionValue->productGroupTemplateId = $product->productGroupTemplateId;
+                        $productGroupOptionValue->value = $value[$productGroupOption->productGroupTemplateOptionId];
+                        $productGroupOptionValue->status = 1;
+                        $productGroupOptionValue->createDateTime = new Expression('NOW()');
+                        $productGroupOptionValue->updateDateTime = new Expression('NOW()');
+                        $productGroupOptionValue->save(false);
+                    }
                 }
             }
             return $this->redirect(['view', 'id' => $id]);

@@ -352,7 +352,7 @@ class MyAccountController extends MasterController {
         }
 
         return $this->renderAjax("@app/themes/cozxy/layouts/story/items/_panel_recent_stories_sort", ['status' => $isStatus,
-            'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
+                    'icon' => $icon, 'sort' => $sort, 'StoryRecentStories' => $StoryRecentStories, 'productId' => $productId, 'productSupplierId' => $productSupplierId]);
     }
 
     public function actionDetailTracking($hash) {
@@ -417,19 +417,20 @@ class MyAccountController extends MasterController {
         $wishlists = DisplayMyAccount::myAccountWishList($shelfId, 8);
         if (isset($wishlists) && count($wishlists) > 0) {
             foreach ($wishlists as $item):
-                $quantity = 1;
+                $quantity = 1; //ol-lg-3 col-md-3 col-sm-6 col-xs-12
                 $text .= '
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . '">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 item-to-wishlist-' . $item['wishlistId'] . ' box-product ">
 			<div class="product-box">
 				<div class="product-img text-center">
 					<a href="' . $item['url'] . '"><img src="' . $item['image'] . '" alt="' . $item['title'] . '" class="fullwidth"></a>
 				</div>
-				<div class="product-txt">
-					<p class="size16"  style="height:50px;"><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
+				<div class="product-txt my-shelves-text">
+                                        <p class="size14 "  style=""><a href="' . Yii::$app->homeUrl . 'search/brand/' . \common\models\ModelMaster::encodeParams(['brandId' => $item['brandId']]) . '" class="fc-g999">' . $item['brand'] . '</a></p>
+					<p class="size16"  style=""><a href="' . $item['url'] . '" class="fc-black">' . $item['title'] . '</a></p>';
                 if ($item['price_s'] > 0) {
-                    $text .= '<p>
-						<span class="size18">' . $item['price_s'] . '</span> &nbsp;
-						<span class="size14 onsale">' . $item['price_s'] . '</span>
+                    $text .= '<br><p>
+						<span class="size18">' . $item['price'] . ' THB</span> &nbsp;
+						<br><span class="size14 onsale">' . $item['price_s'] . ' THB</span>
 					</p>';
                 } else {
                     $text .= '<p>
@@ -437,16 +438,17 @@ class MyAccountController extends MasterController {
 						<span class="size14">&nbsp;</span>
 					</p>';
                 }
-                $text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
+                //$text .= '<p class="size14 fc-g999">' . $item['brand'] . '</p>'; //sak
+
                 if ($item['maxQnty'] > 0 && $item['price_s'] > 0) {
                     if ($item['receiveType'] != '') {
                         $receiveType = $item['receiveType'];
                     } else {
                         $receiveType = 1;
                     }
-                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow btn-black-s-my-shelves">ADD TO CART</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
-                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a> &nbsp; <a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a class="btn-yellow btn-black-s-my-shelves">NOT AVAILABLE</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
                 $text .= '</div></div></div>';
             endforeach;
@@ -459,11 +461,11 @@ class MyAccountController extends MasterController {
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
             if ($group->type == 1) {
-                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#WishlistModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty </h4></div>'; // <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#WishlistModal"><u>What' . "'s " . 'this? </u></a></span>
             } else if ($group->type == 2) {
                 $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your shelf is empty</h4></div>';
             } else if ($group->type == 3) {
-                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#FavoriteModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty </h4></div>'; // <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#FavoriteModal"><u>What' . "'s " . 'this? </u></a></span>
             }
 
             $res['status'] = true;
@@ -634,8 +636,8 @@ class MyAccountController extends MasterController {
         $productShelf = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_wish_list_all', [
-            'wishlists' => $wishlists,
-            'title' => $productShelf->title
+                    'wishlists' => $wishlists,
+                    'title' => $productShelf->title
         ]);
     }
 
@@ -643,8 +645,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(0)]);
 
         return $this->render('@app/themes/cozxy/layouts/my-account/_favorite_stories_all', [
-            'favoriteStory' => $favoriteStory,
-            'title' => 'Favorite stories'
+                    'favoriteStory' => $favoriteStory,
+                    'title' => 'Favorite stories'
         ]);
     }
 

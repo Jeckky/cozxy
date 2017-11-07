@@ -31,18 +31,23 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         <?php
                         //echo Yii::$app->controller->id;
                         if (Yii::$app->controller->id == 'search') {
-                            echo 'SALE';
+                            //echo 'SALE';
+                            echo $DiscountProduct;
+                            echo '<div class="off-style">OFF</div>';
                         } else if (Yii::$app->controller->id == 'site') {
-                            echo 'SALE';
+                            //echo 'SALE';
+                            echo $DiscountProduct;
+                            echo '<div class="off-style">OFF</div>';
                         } else {
                             echo 'SAVE';
                         }
                         ?></p>
                     <p><?php
                         if (Yii::$app->controller->id == 'search') {
-                            echo '-' . $DiscountProduct;
+                            //echo '-' . $DiscountProduct;
                         } else if (Yii::$app->controller->id == 'site') {
-                            echo '-' . $DiscountProduct;
+                            //echo '-' . $DiscountProduct;
+                            //echo 'OFF';
                         } else {
                             echo $DiscountProduct;
                         }

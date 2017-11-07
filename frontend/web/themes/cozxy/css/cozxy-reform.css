@@ -57,17 +57,30 @@ and open the template in the editor.
     border-right: 25px solid rgba(255, 0, 0, 0.81);
     border-bottom: 25px solid transparent;
     opacity: 0.9;
+    margin-top: 0px;
+
 }
 
 .percen-discount{
+    position: relative;
     font-size: 10px;
+    top: -8px;
 }
 
 .discount{
+    position: relative;
+    font-size: 30px;
     font-weight: bold;
+    top: -8px;
 }
 .rcorners4 p {
-    margin: 0 0 0 0px;
+    margin: 0 0 0 0 0;
+}
+.rcorners4 .off-style{
+    width: 100%;
+    margin-top: -26px;
+    text-align: left;
+    margin-left: 5px;
 }
 .product-sticker-product-detail {
     position: absolute;
@@ -96,15 +109,16 @@ and open the template in the editor.
     /*padding: 20px;*/
     text-align: center;
     font-weight: bold;
-    padding: 1px;
-    width: 70px;
+    padding: 0px;
+    width: 100px;
     height: auto;
     color: rgba(255, 0, 0, 0.81);
-    font-size: 14px;
+    font-size: 20px;
     border: 2px solid rgba(255, 0, 0, 0.81) ;
     margin-top: 5px;
 
 }
+
 
 .padding-product-detail{
     padding-right: 0px;
@@ -154,3 +168,133 @@ div.line_h {
     padding: 5px;
     width: 90%;
 }
+
+.rcorners-product-detail .product-page-save{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.product-page-hot-deal{
+    position: relative;
+    top: 5px;
+}
+.rcorners-product-detail .product-page-hot-deal{
+    font-size: 13px;margin-left: 5px;
+}
+
+.card {
+    padding-top: 20px;
+    margin: 10px 0 20px 0;
+    background-color: #ffffff;
+    border: 1px solid #d8d8d8;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-left: 4px;
+}
+
+
+.card.hovercard {
+    position: relative;
+    /*width: 300px;*/
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+}
+
+.card.hovercard img {
+    /*width: 300px;
+    height: 200px;*/
+}
+
+.card.hovercard .avatar {
+    position: relative;
+    top: -40px;
+    margin-bottom: -40px;
+}
+
+.card.hovercard .avatar img {
+    /*width: 80px;
+    height: 80px;
+    max-width: 80px;
+    max-height: 80px;*/
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.card.hovercard .info {
+    padding: 4px 8px 10px;
+}
+
+.card.hovercard .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+}
+
+.card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+.card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.avatar {
+    position: relative;
+    top: -40px;
+    margin-bottom: -40px;
+    text-align: center;
+}
+.avatar img {
+    width: 80px;
+    height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.bg-my-shelf{background-color:#f5f5f5;}
+
+.my-shelves-text p{
+    margin: 0 0 0 0 ;
+}
+
+.btn-black-s ,.btn-black-s-my-shelves{
+    text-align: center;
+    padding: 5px !important;
+    width: 50% ;
+
+}
+

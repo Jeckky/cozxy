@@ -23,7 +23,7 @@ class DisplayMyStory extends Model {
 
         if (isset(Yii::$app->user->id)) {
             $productPost = \common\models\costfit\ProductPost::find()->where('userId=' . Yii::$app->user->id . " and productId=" . $productId . ' and product_post.status =1')
-            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+                            ->groupBy(['productId'])->orderBy('productPostId desc')->one();
 
             if (count($productPost) > 0) {
                 $productPostList = \common\models\costfit\Product::find()->where('productId =' . $productPost->productId)->one();
@@ -86,10 +86,10 @@ class DisplayMyStory extends Model {
         if (isset($var1) && !empty($var1)) {
 
             $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . ' and productPostId !=' . $var1 . ' and product_post.status =1')->orderBy('productPostId desc') //แสดงแค่ 5 รายการ
-            ->all();
+                    ->all();
         } else {
             $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId . ' and product_post.status =1')->orderBy('productPostId desc') //แสดงแค่ 5 รายการ
-            ->all();
+                    ->all();
         }
 
         $i = 0;
@@ -152,7 +152,7 @@ class DisplayMyStory extends Model {
 
     public static function productViewsRecentStories($productPostId) {
         $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')
-        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
 
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
@@ -246,14 +246,14 @@ class DisplayMyStory extends Model {
         }
         if ($postId != '') {
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-            ->groupBy('productPostId')
-            ->orderBy('avg(score) DESC')
-            ->all();
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
         }
         if (!isset($productPostRating) || count($productPostRating) == 0) {
             $byCreate = ProductPost::find()->where("productId in($allProductId)")
-            ->orderBy('createDateTime DESC')
-            ->all();
+                    ->orderBy('createDateTime DESC')
+                    ->all();
             if (isset($byCreate) && count($byCreate) > 0) {
                 $productPostRating = $byCreate;
             } else {
@@ -292,9 +292,9 @@ class DisplayMyStory extends Model {
         }
         if ($postId != '') {
             $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-            ->groupBy('productPostId')
-            ->orderBy('avg(score) DESC')
-            ->all();
+                    ->groupBy('productPostId')
+                    ->orderBy('avg(score) DESC')
+                    ->all();
             if (isset($productPostRating) && count($productPostRating) > 0) {
                 foreach ($productPostRating as $rating):
                     $have .= $rating->productPostId . ",";
@@ -304,8 +304,8 @@ class DisplayMyStory extends Model {
         }
         if ($have != '') {
             $byCreate = ProductPost::find()->where("productPostId in($postId) and productPostId not in($have) and productId in($allProductId)")
-            ->orderBy('createDateTime DESC')
-            ->all();
+                    ->orderBy('createDateTime DESC')
+                    ->all();
         }
         if (isset($byCreate) && count($byCreate) > 0) {
             $productPostRating = $byCreate;
@@ -330,11 +330,11 @@ class DisplayMyStory extends Model {
         }
         if (isset($currency)) {
             $productPost = \common\models\costfit\ProductPostComparePrice::find()
-            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name ,`currency_info`.images ')
-            ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
-            ->where("product_post_compare_price.productPostId=" . $productPostId . " and product_post_compare_price.currency=" . $currency)
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name ,`currency_info`.images ')
+                    ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+                    ->where("product_post_compare_price.productPostId=" . $productPostId . " and product_post_compare_price.currency=" . $currency)
+                    ->orderBy($sortStr)
+                    ->all();
             foreach ($productPost as $value) {
                 if (isset($value->images)) {
                     $urlImages = \Yii::$app->urlManager->baseUrl . '/images/flags/flags/compare-price/16x10/' . $value->images;
@@ -357,11 +357,11 @@ class DisplayMyStory extends Model {
             }
         } else {
             $productPost = \common\models\costfit\ProductPostComparePrice::find()
-            ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name,`currency_info`.images ')
-            ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
-            ->where("product_post_compare_price.productPostId=" . $productPostId)
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('`product_post_compare_price`.* ,`currency_info`.currency_code,`currency_info`.ccy_name,`currency_info`.images ')
+                    ->join("LEFT JOIN", "currency_info", "currency_info.currencyId = product_post_compare_price.currency")
+                    ->where("product_post_compare_price.productPostId=" . $productPostId)
+                    ->orderBy($sortStr)
+                    ->all();
             foreach ($productPost as $value) {
                 if ($value->currency != '') {
                     $currency = number_format(\common\models\costfit\Currency::ToThb($value->currency, $value->price), 2);
@@ -452,13 +452,13 @@ class DisplayMyStory extends Model {
         $products = [];
         if ($limit == 0) {
             $allFavorite = \common\models\costfit\FavoriteStory::find()->where('userId =' . Yii::$app->user->id . " and status=1")
-            ->orderBy('updateDateTime DESC')
-            ->all();
+                    ->orderBy('updateDateTime DESC')
+                    ->all();
         } else {
             $allFavorite = \common\models\costfit\FavoriteStory::find()->where('userId =' . Yii::$app->user->id . " and status=1")
-            ->limit($limit)
-            ->orderBy('updateDateTime DESC')
-            ->all();
+                    ->limit($limit)
+                    ->orderBy('updateDateTime DESC')
+                    ->all();
         }
         $postId = '';
         if (isset($allFavorite) && count($allFavorite) > 0) {
@@ -502,6 +502,7 @@ class DisplayMyStory extends Model {
                         'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                         'star' => number_format($results_rating, 2),
                         'productPostId' => $value->productPostId,
+                        'avatar' => \common\models\costfit\User::getAvatar($value->userId),
                     ];
                 endforeach;
             endforeach;
@@ -511,7 +512,7 @@ class DisplayMyStory extends Model {
 
     public static function productEditRecentStories($productPostId) {
         $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
-        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
+                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
 
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
@@ -563,38 +564,38 @@ class DisplayMyStory extends Model {
 
         if ($status == 'price') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->where($whereArray)
-            ->andWhere('product_post.status =1')
-            ->orderBy($sortStr)
-            ->all();
+                    ->where($whereArray)
+                    ->andWhere('product_post.status =1')
+                    ->orderBy($sortStr)
+                    ->all();
         } elseif ($status == 'new') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->where($whereArray)
-            ->andWhere('product_post.status =1')
-            ->orderBy($sortStr)
-            ->all();
+                    ->where($whereArray)
+                    ->andWhere('product_post.status =1')
+                    ->orderBy($sortStr)
+                    ->all();
         } elseif ($status == 'view') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->select('count(product_post_view.productPostViewId) as viewNew  ,product_post.*')
-            ->join("LEFT JOIN", "product_post_view", "product_post_view.productPostId = product_post.productPostId")
-            ->where('product_post.userId =' . Yii::$app->user->id)
-            ->where($whereArray)
-            ->andWhere('product_post.status =1')
-            ->groupBy('product_post.productPostId')
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('count(product_post_view.productPostViewId) as viewNew  ,product_post.*')
+                    ->join("LEFT JOIN", "product_post_view", "product_post_view.productPostId = product_post.productPostId")
+                    ->where('product_post.userId =' . Yii::$app->user->id)
+                    ->where($whereArray)
+                    ->andWhere('product_post.status =1')
+                    ->groupBy('product_post.productPostId')
+                    ->orderBy($sortStr)
+                    ->all();
         } elseif ($status == 'stars') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->select('sum(product_post_rating.score) as scoreNew  ,product_post.*')
-            ->join("LEFT JOIN", "product_post_rating", "product_post_rating.productPostId = product_post.productPostId")
-            ->where($whereArray)
-            ->groupBy('product_post.productPostId')
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('sum(product_post_rating.score) as scoreNew  ,product_post.*')
+                    ->join("LEFT JOIN", "product_post_rating", "product_post_rating.productPostId = product_post.productPostId")
+                    ->where($whereArray)
+                    ->groupBy('product_post.productPostId')
+                    ->orderBy($sortStr)
+                    ->all();
         } else {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->where($whereArray)
-            ->all();
+                    ->where($whereArray)
+                    ->all();
         }
         $i = 0;
         foreach ($productPost as $value) {
@@ -655,20 +656,20 @@ class DisplayMyStory extends Model {
         $whereArray["product_post.status"] = 1;
         if ($status == 'view') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->select('count(product_post_view.productPostViewId) as viewNew  ,product_post.*')
-            ->join("LEFT JOIN", "product_post_view", "product_post_view.productPostId = product_post.productPostId")
-            ->where($whereArray)
-            ->groupBy('product_post.productPostId')
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('count(product_post_view.productPostViewId) as viewNew  ,product_post.*')
+                    ->join("LEFT JOIN", "product_post_view", "product_post_view.productPostId = product_post.productPostId")
+                    ->where($whereArray)
+                    ->groupBy('product_post.productPostId')
+                    ->orderBy($sortStr)
+                    ->all();
         } elseif ($status == 'stars') {
             $productPost = \common\models\costfit\ProductPost::find()
-            ->select('sum(product_post_rating.score) as scoreNew  ,product_post.*')
-            ->join("LEFT JOIN", "product_post_rating", "product_post_rating.productPostId = product_post.productPostId")
-            ->where($whereArray)
-            ->groupBy('product_post.productPostId')
-            ->orderBy($sortStr)
-            ->all();
+                    ->select('sum(product_post_rating.score) as scoreNew  ,product_post.*')
+                    ->join("LEFT JOIN", "product_post_rating", "product_post_rating.productPostId = product_post.productPostId")
+                    ->where($whereArray)
+                    ->groupBy('product_post.productPostId')
+                    ->orderBy($sortStr)
+                    ->all();
         }
         /*
           $productPost = \common\models\costfit\ProductPost::find()->where("productId=" . $productId)->orderBy('productPostId desc') //แสดงแค่ 5 รายการ
