@@ -118,17 +118,24 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
 
     if (isset($favoriteStories)) {
         $a = "<i class='fa fa-star' aria-hidden='true' style='color:#FFCC00;font-size:20pt;'></i>&nbsp; &nbsp; &nbsp;";
-        ?>
-        <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav"><!-- click for hidden -->
-            <div class="<?= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+        ?><!-- click for hidden -->
+        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="">
+            <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none; padding:18px 18px 10px;margin-bottom: 10px;" id="hidefav" class="bg-my-shelf">
+        <?//= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+            </a>
+        </div>-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav" class="bg-my-shelf"><!-- click for hidden -->
                 <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
-        <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav"><!-- click for show -->
-            <div class="<?= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
+            </a><!-- click for show -->
+            <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav">
                 <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
-            </div>
-        </a>
+            </a>
+            <a href="" data-toggle="modal" data-target="#FavoriteModal" class="pull-right">
+                <u>What's this? </u>
+            </a>
+        </div>
+
         <?php
         if ($allFavorite != FALSE) {
             ?>
@@ -167,7 +174,9 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         } else {
             ?>
             <div class="<?= $fullCol ?>"id="showFavoriteItem" style="display:none;">
-                <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;"><a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span></h4>
+                <h4>No story in fav item <span style="margin-left:20px;font-size:12pt;">
+                        <!--<a href="" data-toggle="modal" data-target="#FavoriteModal"><u>What's this? </u></a></span>-->
+                </h4>
             </div>
             <?php
         }
