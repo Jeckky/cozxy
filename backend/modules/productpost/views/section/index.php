@@ -93,13 +93,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function ($model) {
                         $check = $model->status == 1 ? 'checked' : '';
-                        $checkBox = '<input type="checkbox" id="checkStatus' . $model->sectionId . '"' . $check . '>';
+                        $onclick = "onclick='javascript:showSection(" . $model->sectionId . ")'";
+                        $checkBox = '<input type="checkbox" id="checkStatus' . $model->sectionId . '"' . $check . ' ' . $onclick . '>';
                         return $checkBox;
                     }
                 ],
                 ['attribute' => 'Create Date',
                     'value' => function ($model) {
                         return $this->context->dateThai($model->createDateTime, 2, false); //2=ตัวย่อ false=ไม่แสดงเวลา
+                    }
+                ],
+                ['attribute' => 'Sort',
+                    'format' => 'raw',
+                    'value' => function ($model) use($total) {
+                        $minus = ' <a href="javascript:orderingSection(' . $model->sectionId . ',' . $total . ',0)" class="btn btn-warning" style="font-size: 14pt;">-</a>&nbsp;&nbsp;&nbsp;';
+                        $sort = '<span id="orderingSection' . $model->sectionId . '" style="font-size: 14pt;">' . $model->sort . '</span>&nbsp;&nbsp;&nbsp;';
+                        $plus = '<a href="javascript:orderingSection(' . $model->sectionId . ',' . $total . ',1)" class="btn btn-success"style="font-size: 14pt;">+</a>';
+                        return $minus . " " . $sort . " " . $plus;
                     }
                 ],
                 ['attribute' => 'Actions',

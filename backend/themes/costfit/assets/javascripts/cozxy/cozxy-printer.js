@@ -858,9 +858,22 @@ function selectProduct(sectionId, productId, productSuppId) {
         },
     });
 }
+function showSection(sectionId) {
+    var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section';
+    //var url = $baseUrl + /productpost/section/show-section';
+    $.ajax({
+        url: url,
+        data: {sectionId: sectionId},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+
+        },
+    });
+}
 function showSectionItem(sectionItemId) {
     var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section-item';
-    //var url = $baseUrl + /productpost/section/add-prodoct-to-section';
+    //var url = $baseUrl + /productpost/section/show-section-item';
     $.ajax({
         url: url,
         data: {sectionItemId: sectionItemId},
@@ -868,6 +881,23 @@ function showSectionItem(sectionItemId) {
         type: 'post',
         success: function (data) {
 
+        },
+    });
+}
+function orderingSection(id, total, action) {
+    var url = 'http://localhost/cozxy/backend/web/productpost/section/sort-section';
+    //var url = $baseUrl + 'productpost/section/sort-section';
+    $.ajax({
+        url: url,
+        data: {id: id, total: total, action: action},
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (data.status) {
+                $("#orderingSection" + id).text(data.sort);
+            } else {
+                return false;
+            }
         },
     });
 }

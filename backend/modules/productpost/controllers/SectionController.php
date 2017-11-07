@@ -37,12 +37,14 @@ class SectionController extends ProductPostMasterController {
      */
     public function actionIndex() {
         $dataProvider = new ActiveDataProvider([
-            'query' => Section::find(),
+            'query' => Section::find()->orderBy("sort"),
         ]);
         $model = new Section();
+        $total = count(Section::find()->where(1)->all());
         return $this->render('index', [
                     'dataProvider' => $dataProvider,
-                    'model' => $model
+                    'model' => $model,
+                    'total' => $total
         ]);
     }
 
@@ -134,6 +136,15 @@ class SectionController extends ProductPostMasterController {
         $queryVariableProducts = Product::find()
                 ->join('LEFT JOIN', 'product_suppliers', 'product.productId=product_suppliers.productId')
                 ->where('product.approve="approve" and product.status=1 and product_suppliers.approve="approve" and product_suppliers.status=1 and product_suppliers.result>0');
+        if (isset($_GET['title']) && $_GET['title'] != '') {
+            $queryVariableProducts->andWhere("product.title like %'" . $_GET['title'] . "'%");
+        }
+        if (isset($_GET['CategoryId']) && $_GET['CategoryId'] != '') {
+            $queryVariableProducts->andWhere("product.categoryId=" . $_GET['CategoryId']);
+        }
+        if (isset($_GET['BrandId']) && $_GET['BrandId'] != '') {
+            $queryVariableProducts->andWhere("product.brandId=" . $_GET['BrandId']);
+        }
         $varibleProduct = new ActiveDataProvider([
             'query' => $queryVariableProducts
         ]);
@@ -187,6 +198,18 @@ class SectionController extends ProductPostMasterController {
         $sectionItem->save();
     }
 
+    public function actionShowSection() {
+        $sectionId = $_POST["sectionId"];
+        $section = section::find()->where("sectionId=" . $sectionId)->one();
+        if ($section->status == 1) {
+            $section->status = 0;
+        } else {
+            $section->status = 1;
+        }
+        $section->updateDateTime = new \yii\db\Expression("NOW()");
+        $section->save();
+    }
+
     /**
      * Deletes an existing Section model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -219,6 +242,35 @@ class SectionController extends ProductPostMasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionSortSection() {
+        $sectionId = $_POST["id"];
+        $type = $_POST["action"];
+        $total = $_POST["total"];
+        $res = [];
+        $section = Section::find()->where("sectionId=" . $sectionId)->one();
+        if ($type == 1) {
+            $sort = $section->sort + 1;
+            if ($sort > $total) {
+                $sort = $total;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        } else {
+            $sort = $section->sort - 1;
+            if ($sort <= 0) {
+                $sort = 1;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        }
+        $section->sort = $sort;
+        $section->save(false);
+        $res["sort"] = $sort;
+        return json_encode($res);
     }
 
 }

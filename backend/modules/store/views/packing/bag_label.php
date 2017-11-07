@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                              ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                               ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                              ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                               ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -128,7 +128,7 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                 echo '<td style="border-right: #000 solid thin;"><center>' . number_format(ProductSuppliers::productPrice($item->productSuppId), 2) . '</center></td>';
                 echo '<td colspan="2" style="text-align:right">' . number_format($orderItem->quantity * ProductSuppliers::productPrice($item->productSuppId), 2) . '</td>';
                 echo '</tr>';
-                $total += ProductSuppliers::productPrice($item->productSuppId);
+                $total += ($orderItem->quantity * ProductSuppliers::productPrice($item->productSuppId));
                 $i++;
             } else {
                 echo '<tr><td colspan="4"><center>ไม่มีรายการสินค้า</center></td></tr>';
@@ -191,10 +191,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                 ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                  ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                 ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                  ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">
