@@ -268,10 +268,10 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
                                                     ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
-                                        $index = $index++;
+                                                $index = $index++;
 
-                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                    }),
+                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                            }),
                                     'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
@@ -401,32 +401,31 @@ $pickingId = rand(0, 9999);
                 ?>
                 <!-- Details -->
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="size24">&nbsp;</div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"><?php echo strtoupper('Billing type *'); ?></label>
+                    <div class="size24">&nbsp;</div> 
+                    <!--<div class="form-group">-->
+                        <!--<label for="exampleInputEmail1"><?//php echo strtoupper('Billing type *'); ?></label>
                         <div class="select-style">
                             <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
                                 <option value="personal">Individual</option>
-                                <!--<option value="company">Legal Entity (Company)</option>-->
-                            </select>
+                    <!--<option value="company">Legal Entity (Company)</option>
+                        </select>
+                    </div>-->
+                    <!--<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Company (option)</label>
+                                <?//php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                            </div>
                         </div>
-                        <!--<div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Company (option)</label>
-                                    <?//php echo $form->field($NewBilling, 'company')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tax </label>
+                                <?//php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Tax </label>
-                                    <?//php echo $form->field($NewBilling, 'tax')->textInput(['disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
-                                </div>
-                            </div>
-                        </div>-->
-                        <br><br>
-                    </div>
+                        </div>
+                    </div>-->
+                    <!--<br><br>-->
+                    <!--</div>-->
 
                     <div class="row">
                         <div class="col-md-6">

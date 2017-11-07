@@ -39,31 +39,31 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
             <div class="form-billing-my-account">
-                <div class="form-group form-billing-my-account-top">
-                    <label for=""><?php echo strtoupper('Billing type *') ?></label>
-                    <div class="select-style">
-                        <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
-                            <option value="personal">Individual </option>
-                            <!--<option value="company">Legal Entity (Company)</option>-->
-                        </select>
+                <!--<div class="form-group form-billing-my-account-top">-->
+                    <!--<label for=""><?//php echo strtoupper('Billing type *') ?></label>-->
+                <!--<div class="select-style">
+                    <select name="co-organization" id="co-country" class="valid col-md-12" onchange="organization(this)">
+                        <option value="personal">Individual </option>
+                <!--<option value="company">Legal Entity (Company)</option>-->
+                <!--</select>
+            </div>
+                <!--
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Company (option)</label>
+                        <?//php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
+                        </div>
                     </div>
-                    <!--
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Company (option)</label>
-                            <?//php echo $form->field($model, 'company')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'COMPANY'])->label(FALSE); ?>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tax </label>
+                        <?//php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="">Tax </label>
-                            <?//php echo $form->field($model, 'tax')->textInput([ 'disabled' => 'true', 'class' => 'fullwidth', 'placeholder' => 'TAX'])->label(FALSE); ?>
-                            </div>
-                        </div>
-                    </div>-->
-                    <br><br>
-                </div>
+                    </div>
+                </div>-->
+                <!--<br><br>-->
+                <!--</div>-->
 
                 <div class="row">
                     <div class="col-md-6">
@@ -226,7 +226,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="form-billing-my-account">
                 <div class="form-group form-billing-my-account-top">
-                    <?php echo $form->field($model, 'isDefault')->inline(true)->radioList([1 => 'YES', 0 => 'NO'], [ 'class' => 'radioNewCozxy', ['itemOptions' => ['class' => 'radioNewCozxy']]])->label(false); ?>
+                    <?php echo $form->field($model, 'isDefault')->inline(true)->radioList([1 => 'YES', 0 => 'NO'], ['class' => 'radioNewCozxy', ['itemOptions' => ['class' => 'radioNewCozxy']]])->label(false); ?>
                 </div>
             </div>
 
