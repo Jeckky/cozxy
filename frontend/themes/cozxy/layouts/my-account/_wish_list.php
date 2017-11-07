@@ -60,7 +60,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             }
             ?>
         </div>
-        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ Create my shelf</a>
+        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ <?= strtoupper('Ceate my shelf') ?></a>
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
@@ -96,10 +96,10 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         </a>-->
         <div class="<?= $fullCol ?> bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
             <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,0);" style="cursor: pointer;color: #000;display: none;" id="hideGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for hidden -->
-                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+                <?= $a . '' . strtoupper($defalutWishlist->title) ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
             </a>
             <a href="javascript:showWishlistGroup(<?= $defalutWishlist->productShelfId ?>,1);" style="cursor: pointer;color: #000;" id="showGroup-<?= $defalutWishlist->productShelfId ?>"><!-- click for show -->
-                <?= $a . '' . $defalutWishlist->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+                <?= $a . '' . strtoupper($defalutWishlist->title) ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
             </a>
             <a href="" data-toggle="modal" data-target="#WishlistModal" class="pull-right">
                 <u>What's this? </u>
@@ -138,10 +138,10 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
         </div>-->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-my-shelf" style="padding:18px 18px 10px;margin-bottom: 10px;">
             <a href="javascript:showFavorite(0);" style="cursor: pointer;color: #000;display:none;" id="hidefav" class="bg-my-shelf"><!-- click for hidden -->
-                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
+                <?= $a . '' . strtoupper($favoriteStories->title) ?><i class="fa fa-chevron-up pull-right" aria-hidden="true"></i>
             </a><!-- click for show -->
             <a href="javascript:showFavorite(1);" style="cursor: pointer;color: #000;" id="showfav">
-                <?= $a . '' . $favoriteStories->title ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
+                <?= $a . '' . strtoupper($favoriteStories->title) ?><i class="fa fa-chevron-down pull-right" aria-hidden="true"></i>
             </a>
             <a href="" data-toggle="modal" data-target="#FavoriteModal" class="pull-right">
                 <u>What's this? </u>
