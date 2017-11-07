@@ -461,11 +461,11 @@ class MyAccountController extends MasterController {
         } else {
             $group = ProductShelf::find()->where("productShelfId=" . $shelfId)->one();
             if ($group->type == 1) {
-                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#WishlistModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty </h4></div>'; // <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#WishlistModal"><u>What' . "'s " . 'this? </u></a></span>
             } else if ($group->type == 2) {
                 $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your shelf is empty</h4></div>';
             } else if ($group->type == 3) {
-                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#FavoriteModal"><u>What' . "'s " . 'this? </u></a></span></h4></div>';
+                $res['text'] = $text . '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h4>Your wishlist shelf is empty </h4></div>'; // <span style="margin-left:20px;font-size:12pt;"><a href=""data-toggle="modal" data-target="#FavoriteModal"><u>What' . "'s " . 'this? </u></a></span>
             }
 
             $res['status'] = true;
