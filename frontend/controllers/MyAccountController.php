@@ -448,7 +448,7 @@ class MyAccountController extends MasterController {
                     }
                     $text .= '<p><a href="javascript:addItemToCartUnitys(\'' . $item['productSuppId'] . '\',\'' . $quantity . '\',\'' . $item['maxQnty'] . '\',\'' . $item['fastId'] . '\',\'' . $item['productId'] . '\',\'' . $item['productSuppId'] . '\',\'' . $receiveType . '\')" id="addItemsToCartMulti-' . $item['wishlistId'] . '" data-loading-text="ADD TO CART" class="btn-yellow">ADD TO CART</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '"  class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 } else {
-                    $text .= '<p><a class="btn-black-s">NOT AVAILABLE</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
+                    $text .= '<p><a class="btn-yellow btn-black-s-my-shelves">NOT AVAILABLE</a><a href="javascript:deleteItemToWishlist(' . $item['wishlistId'] . ',' . $shelfId . ');" id="deletetemToWishlists-' . $item['wishlistId'] . '" class="fc-g999 btn-black-s btn-black-s-my-shelves" data-loading-text="<a><i class=\'fa fa-circle-o-notch fa-spin\' aria-hidden=\'true\'></i></a>">REMOVE</a></p>';
                 }
                 $text .= '</div></div></div>';
             endforeach;

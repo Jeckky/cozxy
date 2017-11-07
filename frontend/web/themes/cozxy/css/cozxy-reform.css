@@ -291,9 +291,10 @@ div.line_h {
     margin: 0 0 0 0 ;
 }
 
-.btn-black-s-my-shelves{
+.btn-black-s .btn-black-s-my-shelves{
     text-align: center;
-    padding: 8px;
+    padding: 2px;
     width: 50%;
 
 }
+
