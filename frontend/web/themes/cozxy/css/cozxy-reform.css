@@ -57,7 +57,7 @@ and open the template in the editor.
     border-right: 25px solid rgba(255, 0, 0, 0.81);
     border-bottom: 25px solid transparent;
     opacity: 0.9;
-    margin-top: -1px;
+    margin-top: 0px;
 
 }
 
