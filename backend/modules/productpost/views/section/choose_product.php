@@ -65,8 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => '% OFF',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        $DiscountProduct = CozxyCalculatesCart::DiscountProduct($model->marketPrice, $model->price);
-                        return $DiscountProduct;
+                        if (isset($model->marketPrice)) {
+                            $DiscountProduct = CozxyCalculatesCart::DiscountProduct($model->marketPrice, $model->price);
+                            return $DiscountProduct;
+                        }
                     }
                 ],
                 ['attribute' => 'Select',
