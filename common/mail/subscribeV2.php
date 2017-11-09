@@ -165,10 +165,10 @@
                 </div>
                 <div class="subscribe-layout-right">
                     <div class="subscribe-layout-right-zone-1">
-                        <img src="locker.png" width="501" height="470">
+                        <img src="<?= $urlImg ?>locker.png" width="501" height="470">
                     </div>
                     <div class="subscribe-layout-right-zone-2">
-                        <img src="3-step.png" width="490" height="145">
+                        <img src="<?= $urlImg ?>3-step.png" width="490" height="145">
                     </div>
                 </div>
                 <div class="subscribe-layout-footer">
