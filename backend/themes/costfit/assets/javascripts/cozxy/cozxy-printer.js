@@ -827,19 +827,19 @@ function changeImageMasterStatus(id) {
 /*sprint3 sak*/
 function confirmDel(sectionId) {
     if (confirm("Are you sure to delete this section?")) {
-        //window.location.href = $baseUrl + 'productpost/section/delete?id=' + sectionId;
-        window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete?id=' + sectionId;
+        window.location.href = $baseUrl + 'productpost/section/delete?id=' + sectionId;
+        //window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete?id=' + sectionId;
     }
 }
 function confirmDelItem(sectionItemId) {
     if (confirm("Are you sure to delete this item?")) {
-        //window.location.href = $baseUrl + 'productpost/section/delete?id=' + sectionId;
-        window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete-item?id=' + sectionItemId;
+        window.location.href = $baseUrl + 'productpost/section/delete-item?id=' + sectionItemId;
+        //window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete-item?id=' + sectionItemId;
     }
 }
 function selectProduct(sectionId, productId, productSuppId) {
-    var url = 'http://localhost/cozxy/backend/web/productpost/section/add-product-to-section';
-    //var url = $baseUrl + /productpost/section/add-prodoct-to-section';
+    //var url = 'http://localhost/cozxy/backend/web/productpost/section/add-product-to-section';
+    var url = $baseUrl + '/productpost/section/add-prodoct-to-section';
     $.ajax({
         url: url,
         data: {sectionId: sectionId, productId: productId, productSuppId: productSuppId},
@@ -859,8 +859,8 @@ function selectProduct(sectionId, productId, productSuppId) {
     });
 }
 function showSection(sectionId) {
-    var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section';
-    //var url = $baseUrl + /productpost/section/show-section';
+    //var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section';
+    var url = $baseUrl + '/productpost/section/show-section';
     $.ajax({
         url: url,
         data: {sectionId: sectionId},
@@ -872,8 +872,8 @@ function showSection(sectionId) {
     });
 }
 function showSectionItem(sectionItemId) {
-    var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section-item';
-    //var url = $baseUrl + /productpost/section/show-section-item';
+    //var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section-item';
+    var url = $baseUrl + '/productpost/section/show-section-item';
     $.ajax({
         url: url,
         data: {sectionItemId: sectionItemId},
@@ -885,8 +885,8 @@ function showSectionItem(sectionItemId) {
     });
 }
 function orderingSection(id, total, action) {
-    var url = 'http://localhost/cozxy/backend/web/productpost/section/sort-section';
-    //var url = $baseUrl + 'productpost/section/sort-section';
+    //var url = 'http://localhost/cozxy/backend/web/productpost/section/sort-section';
+    var url = $baseUrl + 'productpost/section/sort-section';
     $.ajax({
         url: url,
         data: {id: id, total: total, action: action},

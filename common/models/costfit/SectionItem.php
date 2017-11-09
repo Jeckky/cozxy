@@ -27,7 +27,18 @@ class SectionItem extends \common\models\costfit\master\SectionItemMaster {
      * @inheritdoc
      */
     public function attributeLabels() {
-        return array_merge(parent::attributeLabels(), []);
+        return array_merge(parent::attributeLabels(), [
+        ]);
+    }
+
+    public function attributes() {
+        return array_merge(parent::attributes(), [
+            'title', 'price', 'marketPrice', 'percent'
+        ]);
+    }
+
+    public function getMarketPrices() {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
     public static function checkItemInSection($sectionId, $productId, $productSuppId) {

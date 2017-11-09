@@ -67,6 +67,21 @@ use yii\helpers\Html;
                 ]);
                 ?>
             </div>
+            <div class="col-md-3">
+                <br>
+                <?php
+                if (isset($sort) && $sort == 'ASC') {
+                    ?>
+                    <input type="hidden" name="sort" value="DESC">
+                    <button style="border: 0 #ffffff none;background-color: #ffffff;" type="submit"><b>Discent percent</b>&nbsp;&nbsp;&nbsp; <i class="glyphicon glyphicon-chevron-up"></i></button>
+                    <?php
+                }
+                if (isset($sort) && $sort == 'DESC') {
+                    ?>
+                    <input type="hidden" name="sort" value="ASC">
+                    <button style="border: 0 #ffffff none;background-color: #ffffff;" type="submit"><b>Discent percent</b>&nbsp;&nbsp;&nbsp; <i class="glyphicon glyphicon-chevron-down"></i></button>
+                <?php } ?>
+            </div>
         </div>
 
     </div>
