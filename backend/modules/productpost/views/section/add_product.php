@@ -56,16 +56,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'Market Price',
                     'format' => 'raw',
                     'value' => function ($model) {
-
-                        return $model->marketPrices->price;
+                        if (isset($model->marketPrices->price)) {
+                            return $model->marketPrices->price;
+                        }
                     }
                 ],
                 ['attribute' => '% OFF',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        $price = ProductSuppliers::productPrice($model->productSuppId);
-                        $DiscountProduct = CozxyCalculatesCart::DiscountProduct($model->marketPrices->price, $price);
-                        return $DiscountProduct;
+                        if (isset($model->marketPrices->price)) {
+                            $price = ProductSuppliers::productPrice($model->productSuppId);
+                            $DiscountProduct = CozxyCalculatesCart::DiscountProduct($model->marketPrices->price, $price);
+                            return $DiscountProduct;
+                        }
                     }
                 ],
                 ['attribute' => 'Show',
