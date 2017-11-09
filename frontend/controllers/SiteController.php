@@ -23,6 +23,7 @@ use common\models\costfit\Content;
 use common\models\costfit\ContentGroup;
 use common\helpers\Email;
 use common\helpers\CozxyUnity;
+use common\models\costfit\Section;
 
 /**
  * Site controller
@@ -93,11 +94,11 @@ class SiteController extends MasterController {
 //        ]]);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
 //        $promotions = new ArrayDataProvider(['allModels' => FakeFactory::productPromotion(6, FALSE)]);
-        $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false);
+        $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
-
-        return $this->render('index', compact('productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        $sections = Section::showSections();
+        return $this->render('index', compact('sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
@@ -184,8 +185,8 @@ class SiteController extends MasterController {
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
-                'msg' => $msg
+                        'model' => $model,
+                        'msg' => $msg
             ]);
         }
     }
@@ -200,7 +201,7 @@ class SiteController extends MasterController {
         $model = new ContactForm();
         $msg = 'You form has been sent to cozxy.com. We will contact to you shortly. Thank you.';
         return $this->redirect(['contact',
-            'msg' => $msg,
+                    'msg' => $msg,
         ]);
     }
 
@@ -216,8 +217,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('about', [
-            'content' => $content
-        ]
+                    'content' => $content
+                        ]
         );
     }
 
@@ -289,7 +290,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('@app/themes/cozxy/layouts/_register', [
-            'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
+                    'model' => $model, 'content' => $content, 'birthdate' => $birthdate, 'dd' => $dd, 'mm' => $mm, 'yyyy' => $yyyy, 'ddError' => $ddError, 'mmError' => $mmError, 'yyyyError' => $yyyyError
         ]);
     }
 
@@ -316,13 +317,13 @@ class SiteController extends MasterController {
                 }
             } else {
                 return $this->render('verification', [
-                    'model' => $user, 'data' => $data
+                            'model' => $user, 'data' => $data
                 ]);
             }
         } else {
 
             return $this->render('verification', [
-                'model' => $user, 'data' => $data
+                        'model' => $user, 'data' => $data
             ]);
         }
     }
@@ -345,7 +346,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -370,7 +371,7 @@ class SiteController extends MasterController {
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -380,7 +381,7 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('faqs', [
-            'content' => $content
+                    'content' => $content
         ]);
     }
 
@@ -394,8 +395,8 @@ class SiteController extends MasterController {
             $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->all();
         }
         return $this->render('terms-and-conditions', [
-            'content' => $content
-        ]
+                    'content' => $content
+                        ]
         );
     }
 
@@ -450,6 +451,13 @@ class SiteController extends MasterController {
         $promotions = Product::productPromotion();
 
         return $this->render('index', compact('otherProducts', 'promotions'));
+    }
+
+    public function actionSeeAllSectionItem() {
+        $sectionId = $_GET["sectionId"];
+        $sections = Section::find()->where("sectionId=" . $sectionId)->all();
+        $size = 'all';
+        return $this->render('index', compact('sections', 'size'));
     }
 
     public function actionSeeAllSale() {

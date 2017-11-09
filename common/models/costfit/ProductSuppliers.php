@@ -335,11 +335,15 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productImage($productSuppId) {
-        $productImage = ProductImageSuppliers::find()->where("status=1 and productSuppId=" . $productSuppId)
-                ->orderBy("productImageId ASC")
-                ->one();
-        if (isset($productImage)) {
-            return $productImage->image;
+        if (isset($productSuppId) && $productSuppId != '') {
+            $productImage = ProductImageSuppliers::find()->where("status=1 and productSuppId=" . $productSuppId)
+                    ->orderBy("productImageId ASC")
+                    ->one();
+            if (isset($productImage)) {
+                return $productImage->image;
+            } else {
+                return '';
+            }
         } else {
             return '';
         }

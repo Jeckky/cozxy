@@ -8,6 +8,9 @@ use common\models\costfit\ProductGroupTemplateOptionSearch;
 use backend\modules\product\controllers\ProductMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\costfit\ProductGroupTemplate;
+use common\models\costfit\ProductGroup;
+use common\models\costfit\ProductGroupOption;
 
 /**
  * ProductGroupTemplateOptionController implements the CRUD actions for ProductGroupTemplateOption model.
@@ -73,15 +76,70 @@ class ProductGroupTemplateOptionController extends ProductMasterController {
             $model->productGroupTemplateId = $_GET["productGroupTemplateId"];
         }
         if (isset($_POST["ProductGroupTemplateOption"])) {
+            $dupp = $this->checkDupplicateTitle($_POST["ProductGroupTemplateOption"]["title"], $_POST["ProductGroupTemplateOption"]["productGroupTemplateId"]);
+            if ($dupp == 1) {
+                $error = 'ชื่อ Options ซ้ำ(Title)';
+                $id = $_POST["ProductGroupTemplateOption"]["productGroupTemplateId"];
+                //throw new \yii\base\Exception($_POST["ProductGroupTemplateOption"]["productGroupTemplateId"]);
+                return $this->redirect(['create',
+                            'productGroupTemplateId' => $id,
+                            'error' => $error
+                ]);
+            }
             $model->attributes = $_POST["ProductGroupTemplateOption"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
+
             if ($model->save()) {
+                $newProductGroupTemplateOptionId = \Yii::$app->db->getLastInsertID();
+                $this->saveToProductGroupOption($model->productGroupTemplateId, $newProductGroupTemplateOptionId);
                 return $this->redirect(['index?productGroupTemplateId=' . $model->productGroupTemplateId]);
             }
         }
         return $this->render('create', [
                     'model' => $model,
+                    'productGroupTemplateId' => isset($_GET["productGroupTemplateId"]) ? $_GET["productGroupTemplateId"] : '',
+                    'error' => isset($_GET["error"]) ? $_GET["error"] : false
         ]);
+    }
+
+    public function checkDupplicateTitle($title, $productGroupTemplateId) {
+        $productGroupTemplateOption = ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $productGroupTemplateId . " and title='" . $title . "'")->one();
+        if (isset($productGroupTemplateOption)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function saveToProductGroupOption($productGroupTemplateId, $newProductGroupTemplateOptionId) {
+        $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $productGroupTemplateId)->all();
+        $productGroupTemplateOption = '';
+        if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
+            foreach ($productGroupTemplateOptions as $productGroupTemplateOptionId):
+                $productGroupTemplateOption.=$productGroupTemplateOptionId->productGroupTemplateOptionId . ",";
+            endforeach;
+            $productGroupTemplateOption = substr($productGroupTemplateOption, 0, -1);
+            $productGroupIds = ProductGroupOption::find()->where("productGroupTemplateOptionId in ($productGroupTemplateOption)")
+                    ->groupBy("productGroupId")
+                    ->all();
+            $newName = ProductGroupTemplateOption::find()->where("productGroupTemplateOptionId=" . $newProductGroupTemplateOptionId)->one();
+            if (isset($productGroupIds) && count($productGroupIds) > 0) {
+                foreach ($productGroupIds as $productGroup):
+                    $newIds = ProductGroupOption::find()->where("productGroupId=" . $productGroup->productGroupId . " and productGroupTemplateOptionId=" . $newProductGroupTemplateOptionId)->all();
+
+                    if (!isset($newIds) || count($newIds) == 0) {
+                        $productGroupOption = new ProductGroupOption();
+                        $productGroupOption->productGroupId = $productGroup->productGroupId;
+                        $productGroupOption->productGroupTemplateOptionId = $newProductGroupTemplateOptionId;
+                        $productGroupOption->name = $newName->title;
+                        $productGroupOption->status = 1;
+                        $productGroupOption->createDateTime = new \yii\db\Expression('NOW()');
+                        $productGroupOption->updateDateTime = new \yii\db\Expression('NOW()');
+                        $productGroupOption->save(false);
+                    }
+                endforeach;
+            }
+        }
     }
 
     /**

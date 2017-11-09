@@ -133,18 +133,40 @@ class SectionController extends ProductPostMasterController {
     }
 
     public function actionChooseProduct() {
-        $queryVariableProducts = Product::find()
-                ->join('LEFT JOIN', 'product_suppliers', 'product.productId=product_suppliers.productId')
-                ->where('product.approve="approve" and product.status=1 and product_suppliers.approve="approve" and product_suppliers.status=1 and product_suppliers.result>0');
+        /* $queryVariableProducts = ProductSuppliers::find()
+          //->join('LEFT JOIN', 'section_item si', 'si.sectionId=' . $_GET["sectionId"])
+          ->join('LEFT JOIN', 'section_item si', 'si.productSuppId=product_suppliers.productSuppId')
+          ->join('RIGHT JOIN', 'product p', 'product_suppliers.productId=p.productId')
+          ->join(" LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+          //->join('LEFT JOIN', 'section_item si', 'si.sectionId=' . $_GET["sectionId"])
+          ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and product_suppliers.approve="approve" and product_suppliers.status=1 and product_suppliers.result>0 AND pps.status =1 AND  pps.price > 0')
+          ->andWhere("si.sectionId=" . $_GET['sectionId'])
+          ->orderBy("si.sectionId DESC"); */
+        // ->orderBy("si.sectionId DESC");
+        //->andWhere('product.status=1 and product_suppliers.status=1  and product_suppliers.result>0 AND pps.status =1 AND  pps.price > 0');
+        if (isset($_GET['sort'])) {
+            $sort = "percent " . $_GET['sort'];
+        } else {
+            $sort = "percent DESC";
+        }
+        $queryVariableProducts = SectionItem::find()
+                ->select('*, ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/p.price)) as percent')
+                ->join("RIGHT JOIN", "product_suppliers ps", "ps.productSuppId = section_item.productSuppId")
+                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+                ->join('LEFT JOIN', 'product p', 'ps.productId=p.productId')
+                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null)')
+                ->orderBy("section_item.status DESC," . $sort);
         if (isset($_GET['title']) && $_GET['title'] != '') {
-            $queryVariableProducts->andWhere("product.title like '%" . $_GET['title'] . "%'");
+            $queryVariableProducts->andWhere("p.title like '%" . $_GET['title'] . "%'");
         }
         if (isset($_GET['categoryId']) && $_GET['categoryId'] != '') {
-            $queryVariableProducts->andWhere("product.categoryId=" . $_GET['categoryId']);
+            $queryVariableProducts->andWhere("p.categoryId=" . $_GET['categoryId']);
         }
         if (isset($_GET['brandId']) && $_GET['brandId'] != '') {
-            $queryVariableProducts->andWhere("product.brandId=" . $_GET['brandId']);
+            $queryVariableProducts->andWhere("p.brandId=" . $_GET['brandId']);
         }
+
+        //$queryVariableProducts->groupBy("section_item.sectionId");
         $varibleProduct = new ActiveDataProvider([
             'query' => $queryVariableProducts
         ]);
@@ -152,6 +174,7 @@ class SectionController extends ProductPostMasterController {
         return $this->render('choose_product', [
                     'varibleProduct' => $varibleProduct,
                     'section' => $section,
+                    'sort' => isset($_GET['sort']) ? $_GET['sort'] : 'ASC'
         ]);
     }
 
@@ -226,7 +249,7 @@ class SectionController extends ProductPostMasterController {
         $sectionItem = SectionItem::find()->where("sectionItemId=" . $id)->one();
         $sectionId = $sectionItem->sectionId;
         $sectionItem->delete();
-        return $this->redirect(['add-product?id=' . $sectionId]);
+        return $this->redirect(['add-product?id = ' . $sectionId]);
     }
 
     /**
@@ -240,7 +263,17 @@ class SectionController extends ProductPostMasterController {
         if (($model = Section::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('The requested page does not exist.
+
+
+
+
+
+
+
+
+
+        ');
         }
     }
 

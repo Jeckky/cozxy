@@ -8,6 +8,7 @@ use mihaildev\ckeditor\CKEditor;
 use common\models\costfit\Product;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\SectionItem;
+use common\helpers\CozxyCalculatesCart;
 
 $this->title = "Select products";
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="panel-body">
-        <?= $this->render('_search', ['sectionId' => $section->sectionId]) ?>
+        <?= $this->render('_search', ['sectionId' => $section->sectionId, 'sort' => $sort]) ?>
         <div class="col-lg-12 col-md-12 text-right" id="showSuccess" style="color: #0000ff;font-size: 16pt;"></div>
         <div class="col-lg-12 col-md-12 text-right" id="showNotSuccess" style="color: #ff3333;font-size: 16pt;"></div>
         <?php
@@ -44,9 +45,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'Image',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        $img = "<img src='" . Yii::$app->homeUrl . ProductSuppliers::productImage($model->productSuppId) . "' stye='heigth:100px;width:100px;'>";
+                        $img = "<img src='" . Yii::$app->homeUrl . ProductSuppliers::productImage($model->productSuppId) . "' style='height:100px;width:100px;'>";
 
                         return $img;
+                    }
+                ],
+                ['attribute' => 'Price',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return $model->price;
+                    }
+                ],
+                ['attribute' => 'Market Price',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return $model->marketPrice;
+                    }
+                ],
+                ['attribute' => '% OFF',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $DiscountProduct = CozxyCalculatesCart::DiscountProduct($model->marketPrice, $model->price);
+                        return $DiscountProduct;
                     }
                 ],
                 ['attribute' => 'Select',

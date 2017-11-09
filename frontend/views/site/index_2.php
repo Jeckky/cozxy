@@ -1,8 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 
-use common\models\costfit\Section;
-
 \frontend\assets\HomePageAsset::register($this);
 $this->registerCss('
 .mca {
@@ -134,76 +132,64 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-md-9 ">
-                <?php if (isset($sections) && count($sections) > 0): ?>
+                <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
                     <!--<h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>-->
-                    <?php
-                    $n = isset($size) ? null : 6;
-                    foreach ($sections as $section):
-                        $sectionItem = Section::productSection($n, $cat = FALSE, $brandId = false, $section->sectionId);
-                        if (isset($sectionItem) && $sectionItem != null) {
-                            ?>
-                            <div class="row">
-                                <div class="special box_width_4 line_h">
-                                    <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
-                                        <div style="padding-bottom: 5px;"><div class="related"></div></div>
-                                        <div style="background: #000; height: 4px;">
-                                            &nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site"><?= $section->title ?></div>
-                                    <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
-                                        <div style="padding-bottom: 5px;"><div class="related"></div></div>
-                                        <div style="background: #000; height: 4px;">
-                                            &nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12" style="background:#000; height: 1px;">
-                                        &nbsp;
-                                    </div>
+                    <div class="row">
+                        <div class="special box_width_4 line_h">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
                                 </div>
-                                <?php
-                                echo \yii\widgets\ListView::widget([
-                                    'dataProvider' => $sectionItem,
-                                    'options' => [
-                                        'tag' => false,
-                                    ],
-                                    'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
-                            },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                                    //'layout'=>"{summary}{pager}{items}"
-//                            'layout' => "{items}",
-                                    'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
-                                    'itemOptions' => [
-                                        'tag' => false,
-                                        'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
-                                            'firstPageLabel' => 'first',
-                                            'lastPageLabel' => 'last',
-                                            'prevPageLabel' => 'previous',
-                                            'nextPageLabel' => 'next',
-                                            'maxButtonCount' => 3,
-                                                ] : [],
-                                    ],
-                                ]);
-//                        yii\widgets\Pjax::end();
-                                ?>
                             </div>
-                            <?php
-                            $count = Section::countProductSection($a = null, $cat = FALSE, $brandId = false, $section->sectionId);
-                            if (Yii::$app->controller->action->id != "see-all-section-item" && $count > 6):
-                                ?>
-                                <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;"><!--subs-btn-->
-                                    <a href="<?= Yii::$app->homeUrl ?>site/see-all-section-item?sectionId=<?= $section->sectionId ?>" class="btn-default btn size14-xs">SEE MORE</a>
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">HOT DEALS</div>
+                            <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
+                                <div style="padding-bottom: 5px;"><div class="related"></div></div>
+                                <div style="background: #000; height: 4px;">
+                                    &nbsp;
                                 </div>
-                                <br><br>
-                                <?php
-                            endif;
-                        }
+                            </div>
+                            <div class="col-xs-12" style="background:#000; height: 1px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <?php
+//                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
                         ?>
                         <?php
-                    endforeach;
-                endif;
-                ?>
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $promotions,
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                    },
+//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout'=>"{summary}{pager}{items}"
+//                            'layout' => "{items}",
+                            'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                                'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
+                                    'firstPageLabel' => 'first',
+                                    'lastPageLabel' => 'last',
+                                    'prevPageLabel' => 'previous',
+                                    'nextPageLabel' => 'next',
+                                    'maxButtonCount' => 3,
+                                        ] : [],
+                            ],
+                        ]);
+//                        yii\widgets\Pjax::end();
+                        ?>
+                    </div>
+                    <?php if (Yii::$app->controller->action->id != "see-all-promotions"): ?>
+                        <div class="col-sm-12 text-center" style="margin-top: 15px; margin-bottom: 15px;"><!--subs-btn-->
+                            <a href="<?= Yii::$app->homeUrl ?>site/see-all-promotions/" class="btn-default btn size14-xs">SEE MORE</a>
+                        </div>
+                        <br><br>
+                    <?php endif; ?>
+                <?php endif; ?>
 
                 <?php if (isset($productCanSell)): ?>
                     <!--<hr style="border-color:rgb(254, 230, 10)">
