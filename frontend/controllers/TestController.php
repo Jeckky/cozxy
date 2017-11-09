@@ -57,4 +57,8 @@ class TestController extends MasterController {
         return $this->render('index');
     }
 
+    public function actionSubscribe() {
+        return $this->render('subscribe');
+    }
+
 }
