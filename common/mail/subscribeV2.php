@@ -28,11 +28,14 @@
                 float: left;
                 width: 39%;
                 padding: 30px;
+                color: #000;
+
             }
             .subscribe-layout-right{
                 float: left;
                 width: 50%;
                 padding: 10px;
+                color: #000;
             }
             .subscribe-layout-left-zone-1{
                 text-align: left;
@@ -106,6 +109,7 @@
                 margin-top: 10px;
             }
             .subscribe-foorter{
+                color: #000; 
                 float:left;
                 width: 945px;
                 height:200px;
