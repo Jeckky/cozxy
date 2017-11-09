@@ -17,7 +17,8 @@
             </tr>
             <tr>
                 <td colspan="5" width="539" height="413" background="<?php echo $urlImg; ?>subscribe_02.png">
-                    <div style="float: left; width: 500px ; height: 413px; text-align: left; vertical-align: top; color: #000; font-weight: 500; margin-left: 25px;">HI (<?php
+                    <div style="float: left; width: 500px ; height: 413px; text-align: left; vertical-align: top; color: #000; font-weight: 500; margin-left: 25px;">
+                        HI (<?php
                         echo $toMail;
                         ?>).</div>
                 </td>
