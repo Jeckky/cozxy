@@ -19,6 +19,10 @@ use common\models\costfit\SectionItem;
  */
 class Section extends \common\models\costfit\master\SectionMaster {
 
+    const SECTION_TYPE_WEB = 1;
+    const SECTION_TYPE_MOBILE = 2;
+    const SECTION_TYPE_BOTH = 3;
+
     /**
      * @inheritdoc
      */

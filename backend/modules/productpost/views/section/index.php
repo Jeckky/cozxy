@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
+use common\models\costfit\Section;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -40,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div id="create-section" style="display: none;">
             <?php
             $form = ActiveForm::begin([
+                        'options' => ['enctype' => 'multipart/form-data'],
                         'action' => ['section/create']
             ]);
             ?>
@@ -54,17 +56,46 @@ $this->params['breadcrumbs'][] = $this->title;
                         'editorOptions' => [
                             // 'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
                             'inline' => false, //по умолчанию false
-                            //
-                //'filebrowserUploadUrl' => Yii::$app->getUrlManager()->createUrl('/site/test'),
                             'contentsLangDirection' => 'th',
                             'height' => 200,
-                            //'filebrowserBrowseUrl' => 'browse-images',
-                            //'filebrowserUploadUrl' => 'upload-images',
-                            //'extraPlugins' => ['imageuploader', 'image2'],
                             'contentsCss' => ["body {font-size: 13px; font-family: Vazir}"],
                         ],
                     ]);
                     ?>
+                </div>
+                <div class="col-lg-12 col-md-12 text-center">
+                    <div class="col-lg-12 col-md-12 text-center">
+                        <hr>
+                        <h4><b>Type</b></h4>
+                        <br>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <input type="radio" name="Section[type]" value="1" required="true">&nbsp;&nbsp;&nbsp;<label>Web</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <input type="radio" name="Section[type]" value="2" required="true">&nbsp;&nbsp;&nbsp;<label>Mobile</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 text-center">
+                        <input type="radio" name="Section[type]" value="3" required="true">&nbsp;&nbsp;&nbsp;<label>Web & Mobile</label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 text-center">
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 text-center">
+                    <div class="col-lg-12 col-md-12 text-center">
+
+                        <h4><b>Upload Image</b></h4>
+                        <br>
+                    </div>
+                    <div class="col-lg-12 col-md-12 text-center" >
+                        <div id="ImgPreview"></div>
+                        <?= $form->field($model, 'image')->fileInput()->label('') ?>
+                    </div>
+                    <div class="col-lg-12 col-md-12 text-center">
+                        <br>
+                        <hr>
+                    </div>
                 </div>
                 <div class="col-lg-12 col-md-12" style="margin-bottom: 10px;">
                     <b>Show</b>&nbsp;&nbsp;&nbsp;
@@ -87,6 +118,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => function ($model) {
                         return $model->description;
+                    }
+                ],
+                ['attribute' => 'Image',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+
+                        return $model->image != null ? '<img src="' . Yii::$app->homeUrl . $model->image . '" style="width:100px;height:100px;">' : null;
+                    }
+                ],
+                ['attribute' => 'Type',
+                    'value' => function ($model) {
+                        if ($model->type == Section::SECTION_TYPE_WEB) {
+                            return "Web";
+                        } else if ($model->type == Section::SECTION_TYPE_MOBILE) {
+                            return "Mobile";
+                        } else if ($model->type == Section::SECTION_TYPE_BOTH) {
+                            return "Web & Mobile";
+                        } else {
+                            return null;
+                        }
                     }
                 ],
                 ['attribute' => 'Show',
