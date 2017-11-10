@@ -18,25 +18,26 @@ use mihaildev\ckeditor\CKEditor;
 
     <?php
     $form = ActiveForm::begin([
-        'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-        'fieldConfig' => [
-            'template' => '{label}<div class="col-sm-9">{input}</div>',
-            'labelOptions' => [
-                'class' => 'col-sm-3 control-label'
-            ]
-        ]
+                'options' => ['class' => 'panel panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                'fieldConfig' => [
+                    'template' => '{label}<div class="col-sm-9">{input}</div>',
+                    'labelOptions' => [
+                        'class' => 'col-sm-3 control-label'
+                    ]
+                ]
     ]);
     ?>
 
     <div class="panel-heading">
         <span class="panel-title"><?= $title ?></span>
+        <span class="panel-title pull-right" style="color:red;"><?= isset($error) ? $error : '' ?></span>
     </div>
 
     <div class="panel-body">
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select ProductGroupTemplate --']) ?>
-
+        <?= $form->field($model, 'productGroupTemplateId', ['options' => ['class' => 'row form-group']])->dropDownList(ArrayHelper::map(ProductGroupTemplate::find()->all(), 'productGroupTemplateId', 'title'), ['prompt' => '-- Select ProductGroupTemplate --', 'disabled' => true]) ?>
+        <input type="hidden" name="ProductGroupTemplateOption[productGroupTemplateId]" value="<?= $productGroupTemplateId ?>">
         <?= $form->field($model, 'title', ['options' => ['class' => 'row form-group']])->textInput(['maxlength' => 200]) ?>
 
         <?php
@@ -57,10 +58,10 @@ use mihaildev\ckeditor\CKEditor;
         ?>
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-<?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

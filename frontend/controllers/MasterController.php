@@ -713,6 +713,7 @@ class MasterController extends MasterCommonController {
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
                     $param3 = $params[2]; // get the value of input-type-3
+                    $param4 = $params[3]; // get the value of input-type-3
                     $type = $depdrop_params[2];
                     //echo $cat_id;
                     // echo $type;
@@ -727,13 +728,13 @@ class MasterController extends MasterCommonController {
                     foreach ($list as $i => $account) {
                         $out[] = ['id' => $account['pickingId'], 'name' => $account['title']];
                         $param1 = ($param1 != '') ? $param1 : $account['pickingId'];
-//                        if ($i == 0) {
-//                            $selected = $param1; //$account['stateId'];
-//                        } else {
-//                            $selected = $param1;
-//                        }
+                        if ($i == 0) {
+                            $selected = $param3; //$account['stateId'];
+                        } else {
+                            $selected = $param3;
+                        }
                     }
-
+                    //echo $selected;
                     // Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
 
@@ -790,7 +791,6 @@ class MasterController extends MasterCommonController {
 //                        }
                         if ($i == 0) {
                             if ($param3 != 'add') {
-
                                 $selected = $param1; //$account['stateId'];
                             } else {
                                 $selected = 'Select ...';
@@ -806,7 +806,8 @@ class MasterController extends MasterCommonController {
                             }
                         }
                     }
-
+                    //echo $selected . '<br>';
+                    //exit();
                     // Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
 

@@ -769,14 +769,15 @@ function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
             data = $form.data("yiiActiveForm");
-    //console.log(data.attributes);
+    //console.log(data);
     $.each(data.attributes, function () {
         this.status = 3;
-        //console.log(this);
+        console.log(this);
     });
     //$form.yiiActiveForm("validate");
     $('#default-add-new-billing-address').yiiActiveForm("validate");
     console.log($('#default-add-new-billing-address').find('.has-error').length);
+    //console.log($('#default-add-new-billing-address').name);
     //alert($form.yiiActiveForm("validate"));
     if ($form.find('.has-error').length) {
         // error

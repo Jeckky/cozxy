@@ -84,11 +84,18 @@ $pickingId = rand(0, 9999);
                             <div class="col-md-4 col-xs-12">
                                 <?php
                                 ///throw new \yii\base\Exception(1111);
-                                echo Html::hiddenInput('input-type-11', $pickingPointLockersCool->amphurId, ['id' => 'input-type-11']);
-                                echo Html::hiddenInput('input-type-22', $pickingPointLockersCool->amphurId, ['id' => 'input-type-22']);
-                                echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
+                                echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
+                                echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                                if (isset($pickingPoint->amphurId)) {
+                                    //echo 'edit';
+                                    echo Html::hiddenInput('input-type-33', 'edit', ['id' => 'input-type-33']);
+                                } else {
+                                    //echo 'add';
+                                    echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
+                                }
+
                                 echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
-                                    'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
+                                    //'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
                                     'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                                     'type' => DepDrop::TYPE_DEFAULT,
                                     'select2Options' => ['pluginOptions' => ['allowClear' => true]],
@@ -97,19 +104,25 @@ $pickingId = rand(0, 9999);
                                         'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
                                         'loadingText' => 'Loading amphur ...',
                                         'params' => ['input-type-11', 'input-type-22', 'input-type-33'],
-                                        'initialize' => false,
+                                        'initialize' => TRUE,
                                     ]
                                 ])->label(FALSE);
                                 ?>
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <?php
-                                echo Html::hiddenInput('input-type-13', $pickingPointLockersCool->provinceId, ['id' => 'input-type-13']);
-                                echo Html::hiddenInput('input-type-23', $pickingPointLockersCool->amphurId, ['id' => 'input-type-23']);
+                                //echo 'p : ' . $pickingPoint->provinceId;
+                                //echo 'a : ' . $pickingPoint->amphurId;
+                                //echo 'pp ' . $pickingPoint->pickingId;
+                                //echo Html::hiddenInput('input-type-13', $pickingPointLockersCool->provinceId, ['id' => 'input-type-13']);
+                                //echo Html::hiddenInput('input-type-23', $pickingPointLockersCool->amphurId, ['id' => 'input-type-23']);
+                                echo Html::hiddenInput('input-type-13', $pickingPoint->provinceId, ['id' => 'input-type-13']);
+                                echo Html::hiddenInput('input-type-23', $pickingPoint->amphurId, ['id' => 'input-type-23']);
+                                echo Html::hiddenInput('picking-point-33', $pickingPoint->pickingId, ['id' => 'picking-point-33']);
                                 echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
                                 echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-//                                        'model' => $pickingId,
-                                    'data' => [$pickingPoint->pickingId => $pickingPoint->title],
+//                                  'model' => $pickingId,
+                                    //'data' => [$pickingPoint->pickingId => $pickingPoint->title],
                                     'attribute' => 'pickingId',
                                     'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
                                     'type' => DepDrop::TYPE_DEFAULT,
@@ -118,8 +131,8 @@ $pickingId = rand(0, 9999);
                                         'depends' => ['amphurId'],
                                         'url' => Url::to(['child-picking-point']),
                                         'loadingText' => 'Loading picking point ...',
-                                        'params' => ['input-type-13', 'input-type-23', 'lockers-cool-input-type-33'],
-                                    //                                        'initialize' => false,
+                                        'params' => ['input-type-13', 'input-type-23', 'picking-point-33', 'lockers-cool-input-type-33'],
+                                        'initialize' => TRUE,
                                     ]
                                 ])->label(FALSE);
                                 ?>
@@ -403,7 +416,7 @@ $pickingId = rand(0, 9999);
                 ?>
                 <!-- Details -->
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="size24">&nbsp;</div> 
+                    <div class="size24">&nbsp;</div>
                     <!--<div class="form-group">-->
                         <!--<label for="exampleInputEmail1"><?//php echo strtoupper('Billing type *'); ?></label>
                         <div class="select-style">
