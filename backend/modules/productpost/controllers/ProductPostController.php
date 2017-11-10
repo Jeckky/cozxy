@@ -128,7 +128,9 @@ class ProductPostController extends ProductPostMasterController {
                 $model->image = $modelImage->image;
             }
             if ($model->save(FALSE)) {
-
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    //Do Some Thing
+                }
                 return $this->redirect(['index']);
             }
         }
