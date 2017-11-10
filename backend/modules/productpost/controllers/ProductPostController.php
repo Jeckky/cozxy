@@ -71,7 +71,7 @@ class ProductPostController extends ProductPostMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductPost[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
+                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '', '');
                 $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
             } else {
                 echo 'No';
@@ -110,7 +110,7 @@ class ProductPostController extends ProductPostMasterController {
 
             if (isset($imageObj) && !empty($imageObj)) {
                 //if ($imageObj->name != '') {
-                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
+                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '', '');
                 $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
                 //}
             } else {
