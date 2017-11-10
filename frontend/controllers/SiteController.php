@@ -507,7 +507,7 @@ class SiteController extends MasterController {
         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . 'images/subscribe/images/';
         $emailSend = \common\helpers\Email::mailSubscribe($toMail, $url);
 
-        echo 'Thanks for signing up for Cozxy emails!';
+        echo '<input type="email" name="subscribe_email" id="subscribe_email" class="subs-input" placeholder="Thanks for signing up for Cozxy emails!">';
     }
 
     public function actionSubscribeEmail() {
