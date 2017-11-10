@@ -35,7 +35,7 @@ class ProductPostController extends ProductPostMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -46,7 +46,7 @@ class ProductPostController extends ProductPostMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -82,7 +82,7 @@ class ProductPostController extends ProductPostMasterController {
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -111,7 +111,7 @@ class ProductPostController extends ProductPostMasterController {
             if (isset($imageObj) && !empty($imageObj)) {
                 //if ($imageObj->name != '') {
                 $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
-                $model->image = '/' . 'images/' . $folderName . $newFileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
                 //}
             } else {
                 //echo 'No';
@@ -123,7 +123,7 @@ class ProductPostController extends ProductPostMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
