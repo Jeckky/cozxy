@@ -150,7 +150,9 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                             &nbsp;
                                         </div>
                                     </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site"><?= $section->title ?></div>
+                                    <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site ">
+                                        <div class="cozxy-text-home-head"><?= $section->title ?></div>
+                                    </div>
                                     <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                         <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                         <div style="background: #000; height: 4px;">
@@ -216,7 +218,9 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-5 text-center padding-product-detail text-head-site">RECOMMENDED</div>
+                            <div class="col-md-3 col-sm-3 col-xs-5 text-center padding-product-detail text-head-site">
+                                <div class="cozxy-text-home-head">RECOMMENDED</div>
+                            </div>
                             <div class="col-md-7 col-sm-7 col-xs-5 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
@@ -282,7 +286,9 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">EXPLORE</div>
+                            <div class="col-md-2 col-sm-2 col-xs-4 text-center padding-product-detail text-head-site">
+                                <div class="cozxy-text-home-head">EXPLORE</div>
+                            </div>
                             <div class="col-md-8 col-sm-8 col-xs-6 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
@@ -349,7 +355,9 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                     &nbsp;
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-8 text-center padding-product-detail text-head-site">PRODUCT STORIES</div>
+                            <div class="col-md-3 col-sm-3 col-xs-8 text-center padding-product-detail text-head-site">
+                                <div class="cozxy-text-home-head">PRODUCT STORIES</div>
+                            </div>
                             <div class="col-md-7 col-sm-7 col-xs-2 padding-product-detail" align="right">
                                 <div style="padding-bottom: 5px;"><div class="related"></div></div>
                                 <div style="background: #000; height: 4px;">
