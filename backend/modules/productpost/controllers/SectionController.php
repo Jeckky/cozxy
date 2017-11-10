@@ -66,8 +66,8 @@ class SectionController extends ProductPostMasterController {
      */
     public function actionCreate() {
         $model = new Section();
-// throw new \yii\base\Exception(print_r($_POST["Section"], true));
         if (isset($_POST["Section"])) {
+            //throw new \yii\base\Exception(print_r($_POST["Section"], true));
             $model->title = $_POST["Section"]["title"];
             $model->description = $_POST["Section"]["description"];
             if (isset($_POST["Section"]["status"])) {
@@ -86,6 +86,25 @@ class SectionController extends ProductPostMasterController {
             } else {
                 $model->status = 0;
             }
+
+            $imageObj = \yii\web\UploadedFile::getInstanceByName('Section[image]');
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "section";
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $uploadFile = 'images/' . $folderName . "/" . $fileName;
+                $model->image = $uploadFile;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+                $imageObj->saveAs($urlFile);
+            }
+
+
+            $model->type = $_POST["Section"]["type"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->save();
@@ -109,6 +128,21 @@ class SectionController extends ProductPostMasterController {
                 $model->status = 1;
             } else {
                 $model->status = 0;
+            }
+            $imageObj = \yii\web\UploadedFile::getInstanceByName('Section[image]');
+            if (isset($imageObj) && !empty($imageObj)) {
+                $folderName = "section";
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $uploadFile = 'images/' . $folderName . "/" . $fileName;
+                $model->image = $uploadFile;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
+                $imageObj->saveAs($urlFile);
             }
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');

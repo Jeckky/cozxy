@@ -11,10 +11,14 @@ use mihaildev\ckeditor\CKEditor;
 
 <div class="section-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin([
+                'options' => ['enctype' => 'multipart/form-data'],
+    ]);
+    ?>
 
     <div class="col-lg-12 col-md-12">
-        <?= $form->field($model, 'title')->textInput(['maxlength' => 200, 'require' => true]) ?>
+<?= $form->field($model, 'title')->textInput(['maxlength' => 200, 'require' => true]) ?>
     </div>
 
     <div class="col-lg-12 col-md-12">
@@ -35,15 +39,19 @@ use mihaildev\ckeditor\CKEditor;
         ]);
         ?>
     </div>
+    <div class="col-lg-12 col-md-12 text-center" >
+        <div id="ImgPreview"></div>
+<?= $form->field($model, 'image')->fileInput()->label('') ?>
+    </div>
     <div class="col-lg-12 col-md-12" style="margin-bottom: 10px;">
         <b>Show</b>&nbsp;&nbsp;&nbsp;
         <input type="checkbox" name="Section[status]" <?= $model->status == 1 ? 'checked' : '' ?>>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
 </div>
