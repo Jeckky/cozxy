@@ -110,9 +110,19 @@ class ProductPostController extends ProductPostMasterController {
 
             if (isset($imageObj) && !empty($imageObj)) {
                 //if ($imageObj->name != '') {
-                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath);
-                $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+                //$newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
+                //$model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
                 //}
+
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
             } else {
                 //echo 'No';
                 $model->image = $modelImage->image;
