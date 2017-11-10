@@ -168,8 +168,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
-                            },
+                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                                    },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                                     //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
@@ -238,8 +238,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
-                    },
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                            },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
 //                            'layout' => "{items}",
@@ -310,8 +310,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                    },
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                            },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}p{pager}{items}"
                             'layout' => (Yii::$app->controller->action->id == "see-all-not-sale") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
@@ -368,8 +368,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_story', ['model' => $model]);
-                    }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
+                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_story', ['model' => $model]);
+                            }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
                             'layout' => "{items}",
@@ -409,8 +409,8 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
-                            }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
+                                        return $this->render('@app/themes/cozxy/layouts/content/_content_items', ['model' => $model, 'index' => $index]);
+                                    }, 'emptyText' => '<div class="col-xs-12"><div class="product-other fullwidth" style="height:260px; font-variant: small-caps; text-align: center;vertical-align: middle;
 line-height:35px;"><br><br><br>No results found.</div></div>',
                                     //'layout'=>"{summary}{pager}{items}"
                                     'layout' => "{items}",
