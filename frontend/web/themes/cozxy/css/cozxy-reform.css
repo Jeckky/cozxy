@@ -145,7 +145,12 @@ div.line_h {
 .btn-good-reads{
     width: 200px;
     border: 1px #666 solid;
+    background-color: #ffffff;
+    padding: 5px;
+    margin-left: 30px;
 }
+
+
 
 .explore-explain{
     border-bottom: 1px solid #7d7b7b;

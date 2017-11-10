@@ -2,7 +2,7 @@
 <?php
 if ($index == 0) {
     echo '<div class="text-center">
-    <p><div class="btn-default btn size14-xs text text-head-site btn-good-reads">GOOD READS</div></p>
+    <p><div class=" size14-xs text text-head-site btn-good-reads">GOOD READS</div></p>
 </div>';
 }
 ?>

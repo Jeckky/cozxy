@@ -762,7 +762,7 @@ $this->registerJs('
             }
 
             if((!amphurId) || (amphurId.length = 0)) {
-                //$(".field-amphurId p").html("<span class=\"text-danger\">Please select amphur.</span>");
+                $(".field-amphurId p").html("<span class=\"text-danger\">Please select amphur.</span>");
                 error++;
                 $("html, body").animate({ scrollTop: 200 }, 600);
             } else {
@@ -770,7 +770,7 @@ $this->registerJs('
             }
 
             if((!stateId) || (stateId.length = 0)) {
-                //$(".field-stateId p").html("<span class=\"text-danger\">Please select province.</span>");
+                $(".field-stateId p").html("<span class=\"text-danger\">Please select province.</span>");
                 error++;
                 $("html, body").animate({ scrollTop: 200 }, 600);
             } else {
