@@ -2,7 +2,7 @@
 <?php
 if ($index == 0) {
     echo '<div class="text-center">
-    <p><div class="btn-default btn size14-xs text text-head-site">GOOD READS</div></p>
+    <p><div class=" size14-xs text text-head-site btn-good-reads">GOOD READS</div></p>
 </div>';
 }
 ?>
@@ -13,9 +13,10 @@ if ($index == 0) {
         <img src="<?php echo $model['image']; ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%;">
     </a>
     <p class="name">
-        <a href="<?php echo $model['url']; ?>" class="size18 b fc-black" target="_bank"><?= $model['title'] ?></a>
+        <a href="<?php echo $model['url']; ?>" class="size18  fc-black" target="_bank"><?= $model['title'] ?></a>
     <hr>
-    </p>
+    <p class="step-up">Step up your style</p>
+</p>
 </div>
 <?php
 if ($index == 1) {

@@ -769,14 +769,15 @@ function checkoutNewBilling() {
 
     var $form = $("#default-add-new-billing-address"),
             data = $form.data("yiiActiveForm");
-    //console.log(data.attributes);
+    //console.log(data);
     $.each(data.attributes, function () {
         this.status = 3;
-        //console.log(this);
+        console.log(this);
     });
     //$form.yiiActiveForm("validate");
     $('#default-add-new-billing-address').yiiActiveForm("validate");
     console.log($('#default-add-new-billing-address').find('.has-error').length);
+    //console.log($('#default-add-new-billing-address').name);
     //alert($form.yiiActiveForm("validate"));
     if ($form.find('.has-error').length) {
         // error
@@ -1708,6 +1709,59 @@ function subscribe() {
         }
     });
 }
+
+
+$('#stateId').change(function () {
+    var stateId = $('#stateId').val();
+    var amphurId = $('#amphurId').val();
+    var LcpickingId = $('#LcpickingId').val();
+    if (stateId == 1) {
+        $("#shipToCozxyBox .field-stateId p").html("");
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (amphurId == 1) {
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (LcpickingId == 1) {
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+});
+$('#amphurId').change(function () {
+    var stateId = $('#stateId').val();
+    var amphurId = $('#amphurId').val();
+    var LcpickingId = $('#LcpickingId').val();
+    if (stateId == 1) {
+        $("#shipToCozxyBox .field-stateId p").html("");
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (amphurId == 1) {
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (LcpickingId == 1) {
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+});
+$('#LcpickingId').change(function () {
+    var stateId = $('#stateId').val();
+    var amphurId = $('#amphurId').val();
+    var LcpickingId = $('#LcpickingId').val();
+    if (stateId == 1) {
+        $("#shipToCozxyBox .field-stateId p").html("");
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (amphurId == 1) {
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (LcpickingId == 1) {
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+});
 
 //********************************touchmove touchstart touchend************************************//
 /*

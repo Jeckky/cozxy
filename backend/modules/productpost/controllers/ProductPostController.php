@@ -35,7 +35,7 @@ class ProductPostController extends ProductPostMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -46,7 +46,7 @@ class ProductPostController extends ProductPostMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -71,18 +71,29 @@ class ProductPostController extends ProductPostMasterController {
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $imageObj = \yii\web\UploadedFile::getInstanceByName("ProductPost[image]");
             if (isset($imageObj) && !empty($imageObj)) {
-                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
-                $model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+                //$newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
+                //$model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
             } else {
                 echo 'No';
             }
             if ($model->save(FALSE)) {
-
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    //Do Some Thing
+                }
                 return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -110,20 +121,32 @@ class ProductPostController extends ProductPostMasterController {
 
             if (isset($imageObj) && !empty($imageObj)) {
                 //if ($imageObj->name != '') {
-                $newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
-                $model->image = '/' . 'images/' . $folderName . $newFileName;
+                //$newFileName = \common\helpers\Upload::UploadBasic('ProductPost[image]', $folderName, $uploadPath, '262', '262');
+                //$model->image = '/' . 'images/' . $folderName . "/" . $newFileName;
                 //}
+
+                $file = $imageObj->name;
+                $filenameArray = explode('.', $file);
+                $urlFolder = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . "/";
+                $fileName = \Yii::$app->security->generateRandomString(10) . '.' . $filenameArray[1];
+                $urlFile = $urlFolder . $fileName;
+                $model->image = '/' . 'images/' . $folderName . "/" . $fileName;
+                if (!file_exists($urlFolder)) {
+                    mkdir($urlFolder, 0777);
+                }
             } else {
                 //echo 'No';
                 $model->image = $modelImage->image;
             }
             if ($model->save(FALSE)) {
-
+                if (isset($imageObj) && $imageObj->saveAs($urlFile)) {
+                    //Do Some Thing
+                }
                 return $this->redirect(['index']);
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 

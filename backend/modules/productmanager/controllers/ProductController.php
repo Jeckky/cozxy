@@ -49,16 +49,22 @@ class ProductController extends ProductManagerMasterController
     public function actionIndex()
     {
         $searchModel = new ProductSearch();
+        $searchModel->status = 1;
 
         //remember params
         $params = Yii::$app->request->queryParams;
         if(count($params) <= 1) {
             $params = Yii::$app->session['productParentParams'];
-            if(isset($params['page']))
+            if(isset($params['page'])) {
                 $_GET['page'] = $params['page'];
+                if(isset($params['sort']) && !empty($params['sort'])) {
+                    $_GET['sort'] = $params['sort'];
+                }
+            }
         } else {
             Yii::$app->session['productParentParams'] = $params;
         }
+
 
         $dataProvider = $searchModel->search($params);
 
@@ -293,7 +299,13 @@ class ProductController extends ProductManagerMasterController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+//        $this->findModel($id)->delete();
+        //update to delete status
+        $product = $this->findModel($id);
+        $product->status = 2;
+        $product->approve = 'delete';
+        $product->save(false);
+
 
         return $this->redirect(['index']);
     }

@@ -750,12 +750,31 @@ $this->registerJs('
         if(shipTo ==1) {
             //ship to CozxyBox
             pickingId = $.trim($("#LcpickingId").val());
+            amphurId = $.trim($("#amphurId").val());
+            stateId = $.trim($("#stateId").val());
 
             if((!pickingId) || (pickingId.length = 0)) {
                 $(".field-LcpickingId p").html("<span class=\"text-danger\">Please select picking location.</span>");
                 error++;
+                $("html, body").animate({ scrollTop: 200 }, 600);
             } else {
                 $(".field-LcpickingId p").html("");
+            }
+
+            if((!amphurId) || (amphurId.length = 0)) {
+                $(".field-amphurId p").html("<span class=\"text-danger\">Please select amphur.</span>");
+                error++;
+                $("html, body").animate({ scrollTop: 200 }, 600);
+            } else {
+                $(".field-amphurId p").html("");
+            }
+
+            if((!stateId) || (stateId.length = 0)) {
+                $(".field-stateId p").html("<span class=\"text-danger\">Please select province.</span>");
+                error++;
+                $("html, body").animate({ scrollTop: 200 }, 600);
+            } else {
+                $(".field-stateId p").html("");
             }
 
         } else {

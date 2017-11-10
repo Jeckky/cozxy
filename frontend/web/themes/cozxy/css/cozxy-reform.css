@@ -79,9 +79,11 @@ and open the template in the editor.
 .rcorners4 .off-style{
     width: 100%;
     margin-top: -26px;
-    text-align: left;
+    text-align: center;
     margin-left: 5px;
 }
+
+
 .product-sticker-product-detail {
     position: absolute;
     top: 20px;
@@ -142,6 +144,17 @@ div.line_h {
     font-size: 24px;
 }
 
+.btn-good-reads{
+    width: 200px;
+    border: 1px #666 solid;
+    background-color: #ffffff;
+    padding: 5px;
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+
+
 .explore-explain{
     border-bottom: 1px solid #7d7b7b;
 }
@@ -165,8 +178,10 @@ div.line_h {
     padding: 5px;
 }
 .product-other hr{
-    padding: 5px;
-    width: 90%;
+    padding: 0px;
+    width: 98%;
+    margin-top: -10px;
+    border: 1px solid #c5c3c3;
 }
 
 .rcorners-product-detail .product-page-save{
@@ -303,3 +318,13 @@ div.line_h {
 
 }
 
+.cozxy-text-home-head{
+    font-weight: bold;
+    margin-top: -5px;
+}
+
+.step-up{
+    margin-top: -20px;
+    font-size: 14px;
+    margin-bottom: 50px;
+}
