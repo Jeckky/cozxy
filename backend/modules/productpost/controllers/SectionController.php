@@ -72,6 +72,12 @@ class SectionController extends ProductPostMasterController {
             $model->description = $_POST["Section"]["description"];
             if (isset($_POST["Section"]["status"])) {
                 $countShow = count(Section::find()->where("status=1")->all());
+                $maxSort = Section::find()->where("1")->orderBy("sort DESC")->one();
+                if (isset($maxSort)) {
+                    $model->sort = $maxSort->sort + 1;
+                } else {
+                    $model->sort = 1;
+                }
                 if ($countShow >= 3) {
                     $model->status = 0;
                 } else {
