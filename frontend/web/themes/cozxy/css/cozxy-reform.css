@@ -142,6 +142,11 @@ div.line_h {
     font-size: 24px;
 }
 
+.btn-good-reads{
+    width: 200px;
+    border: 1px #666 solid;
+}
+
 .explore-explain{
     border-bottom: 1px solid #7d7b7b;
 }
@@ -165,8 +170,10 @@ div.line_h {
     padding: 5px;
 }
 .product-other hr{
-    padding: 5px;
+    padding: 0px;
     width: 90%;
+    margin-top: -10px;
+    border: 1px solid #262626;
 }
 
 .rcorners-product-detail .product-page-save{
