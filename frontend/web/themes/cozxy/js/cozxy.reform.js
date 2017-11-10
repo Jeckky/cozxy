@@ -1710,6 +1710,25 @@ function subscribe() {
     });
 }
 
+
+$('#stateId').change(function () {
+    var stateId = $('#stateId').val();
+    var amphurId = $('#amphurId').val();
+    var LcpickingId = $('#LcpickingId').val();
+    if (stateId == 1) {
+        $("#shipToCozxyBox .field-stateId p").html("");
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (amphurId == 1) {
+        $("#shipToCozxyBox .field-amphurId p").html("");
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+    if (LcpickingId == 1) {
+        $("#shipToCozxyBox .field-LcpickingId p").html("");
+    }
+});
+
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];
