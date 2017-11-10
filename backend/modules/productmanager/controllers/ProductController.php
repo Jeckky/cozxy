@@ -49,6 +49,7 @@ class ProductController extends ProductManagerMasterController
     public function actionIndex()
     {
         $searchModel = new ProductSearch();
+        $searchModel->status = 1;
 
         //remember params
         $params = Yii::$app->request->queryParams;
