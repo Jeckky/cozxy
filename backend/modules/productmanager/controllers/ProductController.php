@@ -293,7 +293,13 @@ class ProductController extends ProductManagerMasterController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+//        $this->findModel($id)->delete();
+        //update to delete status
+        $product = $this->findModel($id);
+        $product->status = 2;
+        $product->approve = 'delete';
+        $product->save(false);
+
 
         return $this->redirect(['index']);
     }
