@@ -79,9 +79,11 @@ and open the template in the editor.
 .rcorners4 .off-style{
     width: 100%;
     margin-top: -26px;
-    text-align: left;
+    text-align: center;
     margin-left: 5px;
 }
+
+
 .product-sticker-product-detail {
     position: absolute;
     top: 20px;
@@ -319,4 +321,9 @@ div.line_h {
 .cozxy-text-home-head{
     font-weight: bold;
     margin-top: -5px;
+}
+
+.step-up{
+    margin-top: -20px;
+    font-size: 14px;
 }
