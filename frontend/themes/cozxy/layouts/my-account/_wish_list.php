@@ -60,7 +60,7 @@ function product($id, $img, $txt, $txt_d, $price, $price_s, $url, $productSuppId
             }
             ?>
         </div>
-        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ <?= strtoupper('Ceate my shelf') ?></a>
+        <a style="cursor: pointer;" id="showCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">+ <?= strtoupper('Create my shelf') ?></a>
         <a style="cursor: pointer;display: none;" id="hideCreateWishList" class="btn-yellow btn-lg <?= $fullCol ?>">- Create my shelf</a>
         <div id='newWishList' style='display: none;padding: 15px;margin-top: 70px;'>
 
