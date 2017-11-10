@@ -497,7 +497,7 @@ class SiteController extends MasterController {
         $subscribe = Subscribe::find()->where(['email' => $email])->one();
 
         if (isset($subscribe)) {
-            return 'You are already subscribed!';
+            return '<input type="email" name="subscribe_email" id="subscribe_email" class="subs-input" placeholder="You are already subscribed!">';
         }
 
         $subscribe = new \common\models\costfit\Subscribe();
