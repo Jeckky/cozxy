@@ -304,7 +304,7 @@ class TopUpController extends MasterController {
         $tel = str_replace("-", "", $customerTel);
         $topUpCut = str_replace("/", "", $topUp->topUpNo);
 
-        $amount1 = str_replace(",", "", number_format($amount, 2));
+        $amount1 = str_replace(",", "", number_format($amount));
         $amount2 = str_replace(".", "", $amount1);
         $barCode = "|" . $taxId . "01%0D" . $topUpCut . "%0D" . $tel . "%0D" . $amount2;
         $data = "|" . $taxId . "01 " . $topUpCut . " " . $tel . " " . $amount2;

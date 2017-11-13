@@ -112,8 +112,8 @@ class DisplayMyAccount extends Model {
                 $value = \common\models\costfit\Product::find()->where("productId=" . $items->productId)->one();
                 $maxQnty = 0;
             }
-            $price_s = isset($dataProductMaster->price) ? number_format($dataProductMaster->price, 2) : '-';
-            $price = isset($value['price']) ? number_format($value['price'], 2) : '-';
+            $price_s = isset($dataProductMaster->price) ? number_format($dataProductMaster->price) : '-';
+            $price = isset($value['price']) ? number_format($value['price']) : '-';
             $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value['productId'], $value['productSuppId'], 'Svg260x260');
 
             if (Yii::$app->controller->id == 'my-account') {
