@@ -839,7 +839,7 @@ function confirmDelItem(sectionItemId) {
 }
 function selectProduct(sectionId, productId, productSuppId) {
     //var url = 'http://localhost/cozxy/backend/web/productpost/section/add-product-to-section';
-    var url = $baseUrl + 'productpost/section/add-prodoct-to-section';
+    var url = $baseUrl + 'productpost/section/add-product-to-section';
     $.ajax({
         url: url,
         data: {sectionId: sectionId, productId: productId, productSuppId: productSuppId},
