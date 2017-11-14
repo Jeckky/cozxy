@@ -341,10 +341,16 @@ class User extends \common\models\costfit\master\UserMaster {
             } else {
                 $state = '';
             }
-            if ($tel == true) {
-                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            $zipcode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $text->zipcode)->one();
+            if (isset($zipcode) && !empty($zipcode)) {
+                $zipcodes = $zipcode->zipcode;
             } else {
-                $address = $text->address . " " . $district . " " . $city . " " . $state;
+                $zipcodes = '';
+            }
+            if ($tel == true) {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            } else {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes;
             }
             return $address;
         } else {
