@@ -1762,7 +1762,16 @@ $('#LcpickingId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 });
-
+$('#checkBillingTax').click(function () {
+    if ($('#checkBillingTax').val() == 0) {
+        $('#checkBillingTax').val(1);
+        $("#inputBillingTax").show();
+    } else {
+        $("#inputBillingTax").hide();
+        $('#checkBillingTax').val(0)
+        $("#billingTaxText").html("");
+    }
+});
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];

@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                               ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                               ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -88,7 +88,7 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
                     $customer = Address::CompanyByOderId($orderId);
                     ?>
                     <b>ได้รับเงินจาก</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= Order::findReciever($orderId) ?><br>
-                    <b>รหัสลูกค้า</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $customer->tax != null ? $customer->tax : '' ?><br>
+                    <b>เลขประจำตัวผู้เสียภาษี</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= isset($billingTax) ? $billingTax : '' ?><br>
                     <b>ที่อยู่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= User::userAddressText($customer->addressId, false) ?><br><br>
                     <b>โทรศัทท์</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $customer->tel ?>
                     <b>&nbsp;&nbsp;&nbsp;โทรสาร&nbsp;&nbsp;&nbsp;<?= $customer->fax ?></b>
@@ -191,10 +191,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                  ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                   ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                  ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                   ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">

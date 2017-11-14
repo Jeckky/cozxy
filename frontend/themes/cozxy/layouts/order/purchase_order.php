@@ -97,6 +97,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                         echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
                                         echo '<br> Tel ';
                                         echo $address['tel'] . '<br>';
+                                        echo 'Tax ID :';
+                                        echo $order->billingTax . '<br>';
                                     } else {
                                         echo isset($order->attributes['billingCompany']) ? '' . $order->attributes['billingCompany'] . '<br>' : '&nbsp;' . $order->user->firstname . " " . $order->user->lastname . '<br>';
                                         echo isset($order->attributes['billingAddress']) ? ',' . $order->attributes['billingAddress'] : '';
@@ -117,6 +119,8 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                                         echo isset($zipCode) ? ',' . $zipCode->zipcode : '';
                                         echo '<br> Tel ';
                                         echo $order->attributes['billingTel'] . '<br>';
+                                        echo 'Tax ID :';
+                                        echo $order->billingTax . '<br>';
                                     }
                                     ?>
                                 </td>
@@ -150,7 +154,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr><?//php echo number_format($order->totalExVat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);               ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);                  ?>
                             </td>
                         </tr>
 
@@ -162,7 +166,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr> <?//php echo number_format($order->vat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                   ?>
                             </td>
                         </tr>
                         <tr>
@@ -179,7 +183,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                 ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                    ?>
                             </td>
                         </tr>
                     </tbody>

@@ -268,6 +268,7 @@ class PackingController extends StoreMasterController {
         }
         $extraDiscont = 0;
         $orderNo = '';
+        $billingTax = '';
         $orderItem = OrderItemPacking::find()->where("bagNo='" . $bag . "'")->one();
         $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
         $orderDiscount = Order::find()->where("orderId=" . $order->orderId)->one();
@@ -276,6 +277,7 @@ class PackingController extends StoreMasterController {
                 $extraDiscont = $orderDiscount->discount;
             }
             $orderNo = $orderDiscount->orderNo;
+            $billingTax = $orderDiscount->billinhgTax;
         }
         $fullYear = date('Y');
         $d = date('d');
@@ -292,7 +294,8 @@ class PackingController extends StoreMasterController {
                     'date' => $date,
                     'fullDate' => $fullDate,
                     'extraDiscount' => $extraDiscont,
-                    'orderNo' => $orderNo
+                    'orderNo' => $orderNo,
+                    'billingTax' => $billingTax
         ]);
     }
 

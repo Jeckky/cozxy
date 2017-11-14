@@ -283,10 +283,10 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
                                                     ->asArray()->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
-                                                $index = $index++;
+                                        $index = $index++;
 
-                                                return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
-                                            }),
+                                        return 'Billing Address :' . $model['firstname'] . ' ' . $model['lastname'];
+                                    }),
                                     'hideSearch' => true,
                                     'pluginOptions' => [
                                         'placeholder' => 'Select...',
@@ -330,7 +330,7 @@ $pickingId = rand(0, 9999);
                                         $countriesLocalName = '';
                                     }
                                     if (isset($defaultAddress->zipcode)) {
-                                        $zipcode = $defaultAddress->zipcode;
+                                        $zipcode = $defaultAddress->zipcodes->zipcode;
                                     } else {
                                         $zipcode = '';
                                     }
@@ -347,7 +347,21 @@ $pickingId = rand(0, 9999);
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Tel:</div>
                             <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
-                                <?= isset($defaultAddress) ? $defaultAddress->tel : '&nbsp;' ?>
+                                <?= isset($defaultAddress) && ($defaultAddress->tel != '' || $defaultAddress->tel != null) ? $defaultAddress->tel : '<input type="text" name="tel" id="tel"><span class="text-danger" id="enterTel"> Please enter your mobile phone.</span>' ?>
+                                <?php if (isset($defaultAddress) && ($defaultAddress->tel == '' || $defaultAddress->tel == null)) { ?>
+                                    <input type="hidden" id="checkTel" value="<?= $defaultAddress->tel ?>">
+                                <?php } else {
+                                    ?>
+                                    <input type="hidden" id="checkTel" value="<?= $defaultAddress->tel ?>">
+                                <?php }
+                                ?>
+                            </div>
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-xs-3 col-md-2 col-sm-3">&nbsp;</div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
+                                <input type="checkbox" id="checkBillingTax" value="0" name="checkTax">&nbsp;&nbsp;&nbsp;To get the full tax invoice for tax reductions, please fill in your tax code (national ID)<br>
+                                <input type="text" name="billingTax" id="inputBillingTax" class="form-control" style="display:none;" required="true">
+                                <div id="billingTaxText"></div>
                             </div>
                             <div class="size12">&nbsp;</div>
                         </div>
@@ -359,7 +373,7 @@ $pickingId = rand(0, 9999);
                         &nbsp;
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
 
-                        <input type="submit" value="CONTINUE TO PAYMENT METHOD" class="b btn-yellow" id="checkoutBtn">
+                        <a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
@@ -848,6 +862,22 @@ $this->registerJs('
         }
 
         addressId = $.trim($("#addressId").val());
+        checkBilling=$("#checkBillingTax").val();
+        tax=$.trim($("#inputBillingTax").val());
+        if(checkBilling==1 && tax==""){
+                $("#billingTaxText").html("<span class=\"text-danger\">Please select billing address.</span>");
+                error++;
+        }else{
+                $("#billingTaxText").html("");
+        }
+        checkTel = $.trim($("#checkTel").val());
+        tel = $.trim($("#tel").val());
+            if(checkTel==0 && tel=="") {
+                $("#enterTel").html("<span class=\"text-danger\">* Please enter your mobile phone.</span>");
+                error++;
+            } else {
+                $("#enterTel").html("");
+            }
 
         if((!addressId) || (addressId.length = 0)) {
             $(".field-addressId p").html("<span class=\"text-danger\">Please select billing address.</span>");
@@ -855,7 +885,6 @@ $this->registerJs('
         } else {
             $(".field-addressId p").html("");
         }
-
         if(error == 0) {
             $("#default-shipping-address").submit();
         }
