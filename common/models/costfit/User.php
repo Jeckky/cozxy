@@ -331,13 +331,13 @@ class User extends \common\models\costfit\master\UserMaster {
             }
             $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
             if (isset($aumphur) && !empty($aumphur)) {
-                $city = $aumphur->cityName;
+                $city = $aumphur->localName;
             } else {
                 $city = '';
             }
             $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
             if (isset($province) && !empty($province)) {
-                $state = $province->stateName;
+                $state = $province->localName;
             } else {
                 $state = '';
             }
