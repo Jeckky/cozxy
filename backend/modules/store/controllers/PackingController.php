@@ -277,7 +277,7 @@ class PackingController extends StoreMasterController {
                 $extraDiscont = $orderDiscount->discount;
             }
             $orderNo = $orderDiscount->orderNo;
-            $billingTax = $orderDiscount->billinhgTax;
+            $billingTax = $orderDiscount->billingTax != '' && $orderDiscount->billingTax != null ? $orderDiscount->billingTax : '';
         }
         $fullYear = date('Y');
         $d = date('d');
