@@ -413,7 +413,7 @@ class CheckoutController extends MasterController {
                         }
                         $toMail = $toMails;
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
-                        $type = $member->firstname . ' ' . $member->lastname;
+                        $userName = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'Your order has been received: ' . $order->invoiceNo;
                         $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
                         $adress = [];
@@ -449,8 +449,12 @@ class CheckoutController extends MasterController {
                         $orderList = \common\models\costfit\Order::find()->where('orderId = ' . $orderId)->one();
                         $receiveType = [];
                         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $type, $adress, $orderList, $receiveType, $cartCalculates);
+                        $fulfillment = "fulfillment@cozxy.com";
+                        $subjectFulFillment = "Order to cozxy :" . $order->invoiceNo;
+                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates);
 
+                        $urlFulfillment = "http://backend101.cozxy.com/order/order/purchase-order";
+                        $fulfillmentMail = Email::mailOrderFullfillment($fulfillment, $subjectFulFillment, $urlFulfillment, $userName, $adress, $orderList, $receiveType, $cartCalculates);
                         return $this->render('_thank', compact('res'));
                     }
                 }
