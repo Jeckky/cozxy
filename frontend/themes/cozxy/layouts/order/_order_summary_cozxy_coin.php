@@ -6,10 +6,10 @@
 <div class="col-xs-12 total-price bg-white">
     <div class="row">
         <div class="price-detail">Current point:
-            <div class="pull-right"><?= $userPoint != '0' ? number_format($userPoint->currentPoint) : '0.00' ?></div>
+            <div class="pull-right"><?= $userPoint != '0' ? number_format($userPoint->currentPoint) : '0' ?></div>
         </div>
         <div class="price-detail">Order subtotal:
-            <div class="pull-right"><?= number_format($order->summary, 2) ?> </div>
+            <div class="pull-right"><?= number_format($order->summary) ?> </div>
         </div>
         <?php if (isset($systemCoin) && $systemCoin > 0) { ?>
             <div class="price-detail">Use your coin:

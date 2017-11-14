@@ -839,7 +839,7 @@ function confirmDelItem(sectionItemId) {
 }
 function selectProduct(sectionId, productId, productSuppId) {
     //var url = 'http://localhost/cozxy/backend/web/productpost/section/add-product-to-section';
-    var url = $baseUrl + '/productpost/section/add-prodoct-to-section';
+    var url = $baseUrl + 'productpost/section/add-product-to-section';
     $.ajax({
         url: url,
         data: {sectionId: sectionId, productId: productId, productSuppId: productSuppId},
@@ -860,7 +860,7 @@ function selectProduct(sectionId, productId, productSuppId) {
 }
 function showSection(sectionId) {
     //var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section';
-    var url = $baseUrl + '/productpost/section/show-section';
+    var url = $baseUrl + 'productpost/section/show-section';
     $.ajax({
         url: url,
         data: {sectionId: sectionId},
@@ -873,7 +873,7 @@ function showSection(sectionId) {
 }
 function showSectionItem(sectionItemId) {
     //var url = 'http://localhost/cozxy/backend/web/productpost/section/show-section-item';
-    var url = $baseUrl + '/productpost/section/show-section-item';
+    var url = $baseUrl + 'productpost/section/show-section-item';
     $.ajax({
         url: url,
         data: {sectionItemId: sectionItemId},

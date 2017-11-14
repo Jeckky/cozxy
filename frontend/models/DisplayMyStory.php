@@ -101,8 +101,8 @@ class DisplayMyStory extends Model {
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $productSupplierId, 'Svg64x64');
                 if (isset($productSupplierId)) {
                     $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
-                    $price_s = number_format($productPrice->price, 2);
-                    $price = number_format($productPrice->price, 2);
+                    $price_s = number_format($productPrice->price);
+                    $price = number_format($productPrice->price);
                 } else {
                     $price_s = '';
                     $price = '';
@@ -402,8 +402,8 @@ class DisplayMyStory extends Model {
             foreach ($productPostList as $items) {
                 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
-                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price) : '';
+                $price = isset($productPrice->price) ? number_format($productPrice->price) : '';
 
                 /* if (isset($productImages->imageThumbnail2) && !empty($productImages->imageThumbnail2)) {
                   if (file_exists(Yii::$app->basePath . "/web/" . $productImages->imageThumbnail2)) {
@@ -476,8 +476,8 @@ class DisplayMyStory extends Model {
                 foreach ($productPostList as $items):
                     //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                     $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
-                    $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
-                    $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+                    $price_s = isset($productPrice->price) ? number_format($productPrice->price) : '';
+                    $price = isset($productPrice->price) ? number_format($productPrice->price) : '';
                     $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
 
                     $rating_score = \common\helpers\Reviews::RatingInProduct($value->productId, $value->productPostId);
@@ -603,8 +603,8 @@ class DisplayMyStory extends Model {
             foreach ($productPostList as $items) {
                 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $items['productSuppId'])->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $items['productSuppId'] . ' and status=1')->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
-                $price = isset($productPrice->price) ? number_format($productPrice->price, 2) : '';
+                $price_s = isset($productPrice->price) ? number_format($productPrice->price) : '';
+                $price = isset($productPrice->price) ? number_format($productPrice->price) : '';
 
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($items['productId'], $items['productSuppId'], 'Svg260x260');
                 //$star = DisplayMyStory::calculatePostRating($value->productPostId);
@@ -683,8 +683,8 @@ class DisplayMyStory extends Model {
                 //$productImages = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId=' . $productSupplierId)->one();
                 $productImages = \common\models\costfit\ProductImage::find()->where('productId=' . $value->productId)->one();
                 $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
-                $price_s = number_format($productPrice->price, 2);
-                $price = number_format($productPrice->price, 2);
+                $price_s = number_format($productPrice->price);
+                $price = number_format($productPrice->price);
                 /* $rating_score = \common\helpers\Reviews::RatingInProduct($value->productSuppId, $value->productPostId);
                   $rating_member = \common\helpers\Reviews::RatingInMember($value->productSuppId, $value->productPostId);
                   if ($rating_score == 0 && $rating_member == 0) {
