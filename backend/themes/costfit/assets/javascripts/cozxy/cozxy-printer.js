@@ -833,8 +833,8 @@ function confirmDel(sectionId) {
 }
 function confirmDelItem(sectionItemId) {
     if (confirm("Are you sure to delete this item?")) {
-        window.location.href = $baseUrl + 'productpost/section/delete-item?id=' + sectionItemId;
-        //window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete-item?id=' + sectionItemId;
+        //window.location.href = $baseUrl + 'productpost/section/delete-item?id=' + sectionItemId;
+        window.location.href = 'http://localhost/cozxy/backend/web/productpost/section/delete-item?id=' + sectionItemId;
     }
 }
 function selectProduct(sectionId, productId, productSuppId) {

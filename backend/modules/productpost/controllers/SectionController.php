@@ -289,7 +289,7 @@ class SectionController extends ProductPostMasterController {
         $sectionItem = SectionItem::find()->where("sectionItemId=" . $id)->one();
         $sectionId = $sectionItem->sectionId;
         $sectionItem->delete();
-        return $this->redirect(['add-product?id = ' . $sectionId]);
+        return $this->redirect(['add-product', 'id' => $sectionId]);
     }
 
     /**
