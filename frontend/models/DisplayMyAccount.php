@@ -157,7 +157,9 @@ class DisplayMyAccount extends Model {
     public static function myAccountOrderHistory($status, $type) {
         $products = [];
         $dataOrder = Order::find()
-                        ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "")->all();
+                ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER)
+                ->orderBy("createDateTime DESC")
+                ->all();
         foreach ($dataOrder as $value) {
             if ($value->orderNo == NULL) {
                 $orderNo = '-';

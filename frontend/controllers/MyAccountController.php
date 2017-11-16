@@ -219,6 +219,19 @@ class MyAccountController extends MasterController {
         }
     }
 
+    function CreateUserPoint($userId) {
+        $point = new \common\models\costfit\UserPoint();
+        $point->userId = Yii::$app->user->identity->userId;
+        $point->status = 1;
+        $point->currentPoint = 0;
+        $point->createDateTime = new \yii\db\Expression('NOW()');
+        $point->updateDateTime = new \yii\db\Expression('NOW()');
+        $point->save(false);
+        $userPoint = \common\models\costfit\UserPoint::find()->where("userId=" . $userId . " and status=1")->one();
+
+        return $userPoint;
+    }
+
     public function actionOrderSort() {
 
         $status = Yii::$app->request->post('status');
