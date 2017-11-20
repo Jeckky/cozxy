@@ -177,11 +177,11 @@ return [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-                    'clientId' => '1660657237592929',
-                    'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
-                /* // New Test App ID Facebook Pew
-                  'clientId' => '1519070068147360',
-                  'clientSecret' => '0258b1076e7c72677aeec6cb575c04a0', */
+                    /* 'clientId' => '1660657237592929',
+                      'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f', */
+                    // New Test App ID Facebook Pew
+                    'clientId' => '1519070068147360',
+                    'clientSecret' => '0258b1076e7c72677aeec6cb575c04a0',
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
