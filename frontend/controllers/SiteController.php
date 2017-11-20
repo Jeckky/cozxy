@@ -689,9 +689,15 @@ class SiteController extends MasterController {
                 //Yii::$app->getUser()->login($new_profile);
                 //Yii::$app->user->switchIdentity($new_profile); // log in
                 // UserIdentity is your extended class of CUserIdentity
-                $identity = new UserIdentity($new_user->email, $new_user->password_hash);
-                $identity->authenticate();
-                Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
+                //$identity = new UserIdentity($new_user->email, $new_user->password_hash);
+                //$identity->authenticate();
+                //Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
+
+                if (Yii::$app->user->login($new_profile, 0)) {
+                    var_dump(Yii::$app->user->identity);
+                } else {
+                    echo 'didnt login';
+                }
             } else {
                 //echo 'not save user';
             }
