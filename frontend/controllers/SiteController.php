@@ -81,7 +81,7 @@ class SiteController extends MasterController {
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'oAuthSuccess'],
-                'successUrl' => 'profile'
+            //'successUrl' => 'profile'
             ], //...
         ];
     }
@@ -590,6 +590,7 @@ class SiteController extends MasterController {
                 //$new_profile->save(FALSE);
                 print_r($new_user);
                 //Yii::$app->getUser()->login($new_user);
+                \Yii::$app->getUser()->login($new_user);
             } else {
                 //echo 'not save user';
             }
