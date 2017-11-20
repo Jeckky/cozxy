@@ -1,7 +1,7 @@
 <?php
 
 $params = array_merge(
-require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -177,8 +177,11 @@ return [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-                    'clientId' => '1660657237592929',
-                    'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
+                    /* 'clientId' => '1660657237592929',
+                      'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f', */
+                    // New Test App ID Facebook Pew
+                    'clientId' => '1519070068147360',
+                    'clientSecret' => '0258b1076e7c72677aeec6cb575c04a0',
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',

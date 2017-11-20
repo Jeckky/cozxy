@@ -31,8 +31,47 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                             </label>
                         </div>
                     </div>
-                    <!--<a href="#" class="btn-facebook text-center fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i> &nbsp; LOGIN</a>-->
+                    <!--
+                    <a href="#" class="btn-facebook text-center fullwidth"><i class="fa fa-facebook" aria-hidden="true"></i> &nbsp; LOGIN</a>
+                    <div class="size14">&nbsp;</div>
+                    <a href="#" class="btn-google text-center fullwidth"><i class="fa fa-google-plus" aria-hidden="true"></i> &nbsp; LOGIN</a>
+                    -->
+                    <?php
+                    if (isset($_GET['test'])) {
+                        $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => false,
+                        ]);
+                        //echo '<pre>';
+                        //print_r($authAuthChoice->getClients());
+                        //echo $authAuthChoice->clientCollection;
+                        ?>
+                        <?php foreach ($authAuthChoice->getClients() as $client): ?>
+                            <?php
+                            switch ($client->getName()) {
+                                case 'facebook':
+                                    //$class = 'primary';
+                                    $class = 'facebook';
+                                    break;
+                                case 'twitter':
+                                    $class = 'info';
+                                    break;
+                                case 'google':
+                                    //$class = 'danger';
+                                    $class = 'google';
+                                    break;
+                                case 'live':
+                                    $class = 'warning';
+                                    break;
+                            }
 
+                            echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
+                            ?>
+                        <?php endforeach; ?>
+                        <?php
+                        yii\authclient\widgets\AuthChoice::end();
+                    }
+                    ?>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

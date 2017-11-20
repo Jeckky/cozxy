@@ -234,6 +234,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         <!--RECOMMENDED-->
                         <?php
 //                        yii\widgets\Pjax::begin(['id' => 'sale', 'timeout' => false, 'enablePushState' => false])
+                        //echo strtolower('CLINIQUE SWEET POTS SUGAR SCRUB & LIP BALM');
                         ?>
                         <?php
                         echo \yii\widgets\ListView::widget([
