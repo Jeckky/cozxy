@@ -677,7 +677,7 @@ class SiteController extends MasterController {
                     //echo 'none user from username';
                     $username = $uname[0];
                 }
-                $email = $userAttributes['email'];
+                $email = $email;
             } else {
                 $username = '';
                 $email = '';
