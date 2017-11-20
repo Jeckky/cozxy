@@ -523,8 +523,8 @@ class SiteController extends MasterController {
     public function oAuthSuccess($client) {
         // get user data from client
         $userAttributes = $client->getUserAttributes();
-        //var_dump($userAttributes);
-        //exit();
+        var_dump($userAttributes);
+        exit();
         if (empty($userAttributes['email'])) {
             Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
             return $this->redirect('/site/login');
