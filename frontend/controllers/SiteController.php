@@ -132,6 +132,8 @@ class SiteController extends MasterController {
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
+            //echo '<pre>';
+            //print_r($model->attributes);
             //echo $_POST['LoginForm']['rememberMe'];
             //exit();
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -698,8 +700,12 @@ class SiteController extends MasterController {
                 //$identity = User::findOne(['username' => $email]);
                 // logs in the user
                 //Yii::$app->user->login($identity);
+                $user = [];
+                $user['email'] = $new_user->email;
+                $user['password'] = $new_user->password_hash;
                 echo '<pre>';
                 print_r($userAttributes);
+                Yii::$app->getUser()->login($new_profile, 0);
                 exit();
                 //return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
