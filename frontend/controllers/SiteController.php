@@ -620,21 +620,28 @@ class SiteController extends MasterController {
         //authclient=instagram
         echo '<pre>';
         print_r($userAttributes);
-        echo $value = $userAttributes['emails'][0]['value'];
-        echo '<be>' . $id = $userAttributes['id'];
-        echo '<br>' . $displayName = $userAttributes['displayName'];
+
         //echo isset($client->id) ? $client->id : '';
-        exit();
+
         if ($client->id == 'google') {
-
-        } else {
-
+            $email = $userAttributes['emails'][0]['value'];
+            $token = $userAttributes['id'];
+            $displayName = $userAttributes['displayName'];
+            $name = explode(" ", $displayName); // แยกชื่อ นามสกุล
+            $firstname = $name[0];
+            $lastname = $name[1];
+        } elseif ($client->id == 'facebook') {
+            $email = $userAttributes['email'];
+            $token = $userAttributes['id'];
+            $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+            $firstname = $name[0];
+            $lastname = $name[1];
         }
         /* if (!empty($userAttributes['email'])) {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
           return $this->redirect('/site/login');
           } */
-        $user = \common\models\User::findOne(['username' => $userAttributes['email']]);
+        $user = \common\models\User::findOne(['username' => $email]);
         //echo '<pre>';
         //print_r($user);
         if ($user) {//ถ้ามี user ในระบบแล้ว
@@ -645,11 +652,10 @@ class SiteController extends MasterController {
             }
             $profile = \common\models\costfit\User::find()->where(['username' => $user->attributes['email']])->one();
             if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
-                $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
-
+                //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
                 $pf = new \common\models\costfit\User();
-                $pf->firstname = $name[0];
-                $pf->lastname = $name[1];
+                $pf->firstname = $firstname;
+                $pf->lastname = $lastname;
                 $pf->save();
             }
 
@@ -660,32 +666,32 @@ class SiteController extends MasterController {
         } else {//ถ้าไม่มี user ในระบบ
             //echo 'none user';
             //$generate = Yii::$app->security->generateRandomString(10);
-            if (isset($userAttributes['email']) && !empty($userAttributes['email'])) {
-                $uname = explode("@", $userAttributes['email']); // แยกอีเมลล์ด้วย @
-                $getuser = \common\models\costfit\User::findOne(['username' => $uname[0]]);
-                if ($getuser) {//มี username จาก username ที่ได้จาก email
-                    //echo 'exit user from username';
-                    $rand = rand(10, 99);
-                    $username = $uname[0] . $rand;
-                } else {
-                    //echo 'none user from username';
-                    $username = $uname[0];
-                }
-                $email = $userAttributes['email'];
-            } else {
-                $username = '';
-                $email = '';
-            }
+            /* if (isset($userAttributes['email']) && !empty($userAttributes['email'])) {
+              $uname = explode("@", $userAttributes['email']); // แยกอีเมลล์ด้วย @
+              $getuser = \common\models\costfit\User::findOne(['username' => $uname[0]]);
+              if ($getuser) {//มี username จาก username ที่ได้จาก email
+              //echo 'exit user from username';
+              $rand = rand(10, 99);
+              $username = $uname[0] . $rand;
+              } else {
+              //echo 'none user from username';
+              $username = $uname[0];
+              }
+              $email = $userAttributes['email'];
+              } else {
+              $username = '';
+              $email = '';
+              } */
 
-            $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+            //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             //echo $username;
             $new_user = new \common\models\costfit\User();
             $new_user->username = $email;
-            $new_user->firstname = $name[0];
-            $new_user->lastname = $name[1];
+            $new_user->firstname = $firstname;
+            $new_user->lastname = $lastname;
             $new_user->auth_key = Yii::$app->security->generateRandomString();
             $new_user->auth_type = isset($client->id) ? $client->id : '';
-            $new_user->token = $userAttributes['id'];
+            $new_user->token = $token;
             $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
             $new_user->email = $email;
             $new_user->status = 1; //;
