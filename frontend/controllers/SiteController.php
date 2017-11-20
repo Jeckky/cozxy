@@ -666,22 +666,22 @@ class SiteController extends MasterController {
         } else {//ถ้าไม่มี user ในระบบ
             //echo 'none user';
             //$generate = Yii::$app->security->generateRandomString(10);
-            /* if (isset($userAttributes['email']) && !empty($userAttributes['email'])) {
-              $uname = explode("@", $userAttributes['email']); // แยกอีเมลล์ด้วย @
-              $getuser = \common\models\costfit\User::findOne(['username' => $uname[0]]);
-              if ($getuser) {//มี username จาก username ที่ได้จาก email
-              //echo 'exit user from username';
-              $rand = rand(10, 99);
-              $username = $uname[0] . $rand;
-              } else {
-              //echo 'none user from username';
-              $username = $uname[0];
-              }
-              $email = $userAttributes['email'];
-              } else {
-              $username = '';
-              $email = '';
-              } */
+            if (isset($email) && !empty($email)) {
+                $uname = explode("@", $email); // แยกอีเมลล์ด้วย @
+                $getuser = \common\models\costfit\User::findOne(['username' => $uname[0]]);
+                if ($getuser) {//มี username จาก username ที่ได้จาก email
+                    //echo 'exit user from username';
+                    $rand = rand(10, 99);
+                    $username = $uname[0] . $rand;
+                } else {
+                    //echo 'none user from username';
+                    $username = $uname[0];
+                }
+                $email = $userAttributes['email'];
+            } else {
+                $username = '';
+                $email = '';
+            }
 
             //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             //echo $username;
