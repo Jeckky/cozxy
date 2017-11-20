@@ -700,11 +700,14 @@ class SiteController extends MasterController {
                 //$identity = User::findOne(['username' => $email]);
                 // logs in the user
                 //Yii::$app->user->login($identity);
-                $user = [];
-                $user['email'] = $new_user->email;
-                $user['password'] = $new_user->password_hash;
+                $test = new LoginForm();
+                $test->login2($new_user->email);
+                $userLogin = [];
+                $userLogin['email'] = $new_user->email;
+                $userLogin['password'] = $new_user->password_hash;
                 echo '<pre>';
                 print_r($user);
+
                 //exit();
                 \Yii::$app->user->login($user, 3600 * 24 * 30);
 
