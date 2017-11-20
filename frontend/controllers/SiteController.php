@@ -538,12 +538,12 @@ class SiteController extends MasterController {
         echo '<pre>';
         print_r($user);
         //var_dump($user);
-        exit();
+        //exit();
         if ($user) {//ถ้ามี user ในระบบแล้ว
             //echo 'user email';
             if ($user->status != User::USER_CONFIRM_EMAIL) {//ถ้าสถานะไม่ active ให้ active ,STATUS_ACTIVE
                 $user->status = User::USER_CONFIRM_EMAIL; //STATUS_ACTIVE
-                $user->save();
+                $user->save(FALSE);
             }
             $profile = User::find()->where(['userId' => $user->userId])->one();
             if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
@@ -552,7 +552,7 @@ class SiteController extends MasterController {
                 $pf = new User();
                 $pf->firstname = $name[0];
                 $pf->lastname = $name[1];
-                $pf->save();
+                $pf->save(FALSE);
             }
 
             Yii::$app->getUser()->login($user);
@@ -577,14 +577,14 @@ class SiteController extends MasterController {
             $new_user->email = $userAttributes['email'];
             $new_user->status = User::USER_CONFIRM_EMAIL;
 
-            if ($new_user->save()) {
+            if ($new_user->save(FALSE)) {
                 //echo 'save user';
                 $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
                 $new_profile = new User();
                 $new_profile->userId = $new_user->userId;
                 $new_profile->firstname = $name[0];
                 $new_profile->lastname = $name[1];
-                $new_profile->save();
+                $new_profile->save(FALSE);
                 Yii::$app->getUser()->login($new_user);
             } else {
                 //echo 'not save user';
