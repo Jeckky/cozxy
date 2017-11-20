@@ -52,8 +52,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //'search/<title>/<hash>' => 'search/index',
-                //Custom Rule
+//'search/<title>/<hash>' => 'search/index',
+//Custom Rule
 //                '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
@@ -186,11 +186,14 @@ return [
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     //'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
-                    'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
-                    // 'scope' => 'https://www.googleapis.com/auth/userinfo.email',
+                    //'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
+                    //'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
+                    // New Test App ID Google Pew
+                    'clientId' => '929695392739-gi499d6l2o7u0virnonlkfgjuscf4pul.apps.googleusercontent.com',
+                    'clientSecret' => '9_FsWMcRocJA0AKqxaYDgz9U',
+                    //'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                    'returnUrl' => 'http://localhost/cozxy/frontend/web/site/auth?authclient=google',
+                    'returnUrl' => 'http://www.cozxy.com/site/auth?authclient=google',
                 ]
             ],
         ],
