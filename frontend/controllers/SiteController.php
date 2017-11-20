@@ -554,11 +554,12 @@ class SiteController extends MasterController {
                 $pf->lastname = $name[1];
                 $pf->save(FALSE);
             }
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
 
             //Yii::$app->getUser()->login($user);
             //return Yii::$app->user->login($user);
-            echo Yii::$app->user->identity->id;
-            die();
+            //echo Yii::$app->user->identity->id;
+            //die();
         } else {//ถ้าไม่มี user ในระบบ
             //echo 'none user';
             //$generate = Yii::$app->security->generateRandomString(10);
