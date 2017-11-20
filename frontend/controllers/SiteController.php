@@ -555,7 +555,9 @@ class SiteController extends MasterController {
                 $pf->save(FALSE);
             }
 
-            Yii::$app->getUser()->login($user);
+            //Yii::$app->getUser()->login($user);
+            return Yii::$app->user->login($user);
+            //echo Yii::$app->user->identity->id;die();
         } else {//ถ้าไม่มี user ในระบบ
             //echo 'none user';
             //$generate = Yii::$app->security->generateRandomString(10);
