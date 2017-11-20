@@ -636,12 +636,12 @@ class SiteController extends MasterController {
             $firstname = $name[0];
             $lastname = $name[1];
         } else {
-            $email = '';
-        }
-        if (!empty($email)) {
-            Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
             return $this->redirect('/site/login');
         }
+        /* if (!empty($email)) {
+          Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
+          return $this->redirect('/site/login');
+          } */
         $user = \common\models\User::findOne(['username' => $email]);
         //echo '<pre>';
         //print_r($user);
