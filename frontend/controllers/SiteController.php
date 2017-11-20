@@ -618,9 +618,9 @@ class SiteController extends MasterController {
         // get user data from client
         $userAttributes = $client->getUserAttributes();
         //authclient=instagram
-        //echo '<pre>';
-        //print_r($userAttributes);
-        //exit();
+        echo '<pre>';
+        print_r($userAttributes);
+        exit();
 
         /* if (!empty($userAttributes['email'])) {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
