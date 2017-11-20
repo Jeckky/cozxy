@@ -693,7 +693,7 @@ class SiteController extends MasterController {
                 //$identity->authenticate();
                 //Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
 
-                if (Yii::$app->user->login($new_profile, 0)) {
+                if (Yii::$app->user->login($new_user->username, 0)) {
                     var_dump(Yii::$app->user->identity);
                 } else {
                     echo 'didnt login';
