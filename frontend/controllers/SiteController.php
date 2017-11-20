@@ -645,7 +645,7 @@ class SiteController extends MasterController {
 
             //$user = \common\models\tangchaichill\User::findOne(['token' => $user->attributes['token']]);
             $user->email = $user->attributes['email'];
-            $user->password = $user->attributes['password'];
+            $user->password_hash = $user->attributes['password_hash'];
 
             \Yii::$app->user->login($user, 3600 * 24 * 30);
 
@@ -692,7 +692,7 @@ class SiteController extends MasterController {
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             //echo $username;
             $new_user = new \common\models\costfit\User();
-            $new_user->username = $username;
+            $new_user->username = $email;
             $new_user->firstname = $name[0];
             $new_user->lastname = $name[1];
             $new_user->auth_key = Yii::$app->security->generateRandomString();
@@ -716,7 +716,7 @@ class SiteController extends MasterController {
                 //$user->email = $new_user->email;
                 //$user->password_hash = $new_user->password_hash;
 
-                \Yii::$app->getUser()->login($new_profile, 3600 * 24 * 30);
+                \Yii::$app->getUser()->login($new_user);
             } else {
                 //echo 'not save user';
             }
