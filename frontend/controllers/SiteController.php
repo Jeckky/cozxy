@@ -581,7 +581,7 @@ class SiteController extends MasterController {
                 //echo 'save user';
                 $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
                 $new_profile = new User();
-                $new_profile->userId = $new_user->userId;
+                //$new_profile->userId = $new_user->userId;
                 $new_profile->firstname = $name[0];
                 $new_profile->lastname = $name[1];
                 $new_profile->save(FALSE);
