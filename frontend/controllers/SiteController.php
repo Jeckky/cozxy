@@ -702,14 +702,6 @@ class SiteController extends MasterController {
                 //Yii::$app->user->login($identity);
                 $test = new LoginForm();
                 $test->login2($new_user);
-                $userLogin = [];
-                $userLogin['email'] = $new_user->email;
-                $userLogin['password'] = $new_user->password_hash;
-                echo '<pre>';
-                print_r($user);
-
-                //exit();
-                \Yii::$app->user->login($user, 3600 * 24 * 30);
 
                 //return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
