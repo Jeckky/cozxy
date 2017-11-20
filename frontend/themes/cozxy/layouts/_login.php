@@ -40,7 +40,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                     if (isset($_GET['test'])) {
                         $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
                                     'baseAuthUrl' => ['site/auth'],
-                                        //'popupMode' => false,
+                                    'popupMode' => false,
                         ]);
                         //echo '<pre>';
                         //print_r($authAuthChoice->getClients());
