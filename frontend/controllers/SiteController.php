@@ -626,7 +626,7 @@ class SiteController extends MasterController {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
           return $this->redirect('/site/login');
           } */
-        $user = \common\models\User::findOne(['token' => $userAttributes['id']]);
+        $user = \common\models\User::findOne(['username' => $userAttributes['email']]);
         //echo '<pre>';
         //print_r($user);
         if ($user) {//ถ้ามี user ในระบบแล้ว
