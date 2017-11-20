@@ -555,8 +555,8 @@ class SiteController extends MasterController {
                 $pf->save(FALSE);
             }
 
-            $user->username = $user->attributes['email'];
-            $user->password_hash = $user->attributes['password_hash'];
+            $user->username = $profile->email;
+            $user->password_hash = $profile->password_hash;
 
             \Yii::$app->user->login($user, 3600 * 24 * 30);
             //Yii::$app->getUser()->login($user);
