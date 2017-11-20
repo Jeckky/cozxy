@@ -528,15 +528,15 @@ class SiteController extends MasterController {
     public function oAuthSuccess($client) {
         // get user data from client
         $userAttributes = $client->getUserAttributes();
-        var_dump($userAttributes);
+        //var_dump($userAttributes);
         //exit();
         if (empty($userAttributes['email'])) {
             Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
             return $this->redirect('/site/login');
         }
         $user = User::findOne(['email' => $userAttributes['email']]);
-        echo '<pre>';
-        print_r($user);
+        //echo '<pre>';
+        //print_r($user);
         //var_dump($user);
         //exit();
         if ($user) {//ถ้ามี user ในระบบแล้ว
@@ -555,8 +555,8 @@ class SiteController extends MasterController {
                 $pf->save(FALSE);
             }
 
-            echo '1)' . $user->email = $user->attributes['email'];
-            echo '<br>2)' . $user->password = $user->attributes['password'];
+            echo '1)' . $user->username = $user->attributes['email'];
+            echo '<br>2)' . $user->password_hash = $user->attributes['password'];
             exit();
             \Yii::$app->user->login($user, 3600 * 24 * 30);
             //Yii::$app->getUser()->login($user);
