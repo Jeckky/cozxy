@@ -190,7 +190,7 @@ return [
                     'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
                     // 'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                    'returnUrl' => 'http://localhost/Cozxy.com-frontend/site/auth?authclient=google',
+                    'returnUrl' => 'http://localhost/cozxy/frontend/web/site/auth?authclient=google',
                 ]
             ],
         ],
