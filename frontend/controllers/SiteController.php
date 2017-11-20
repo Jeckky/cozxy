@@ -595,9 +595,12 @@ class SiteController extends MasterController {
                 //$new_profile->firstname = $name[0];
                 //$new_profile->lastname = $name[1];
                 //$new_profile->save(FALSE);
-                print_r($new_user);
+                //print_r($new_user);
                 //Yii::$app->getUser()->login($new_user);
-                \Yii::$app->getUser()->login();
+                //\Yii::$app->getUser()->login();
+
+
+                \Yii::$app->user->login($new_user, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
             }
