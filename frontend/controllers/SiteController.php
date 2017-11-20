@@ -583,6 +583,7 @@ class SiteController extends MasterController {
             $new_user->username = $userAttributes['email'];
             $new_user->auth_key = Yii::$app->security->generateRandomString();
             $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
+            $new_user->token = $userAttributes['id'];
             $new_user->email = $userAttributes['email'];
             $new_user->status = User::USER_CONFIRM_EMAIL;
             $new_user->firstname = $name[0];
@@ -590,9 +591,9 @@ class SiteController extends MasterController {
             if ($new_user->save(FALSE)) {
                 //echo 'save user';
                 //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
-                //$new_profile = new User();
-                //$new_profile->userId = $new_user->userId;
-                //$new_profile->firstname = $name[0];
+                $new_profile = new User();
+                $new_profile->username = $new_user->email;
+                $new_profile->password_hash = $new_user->password_hash;
                 //$new_profile->lastname = $name[1];
                 //$new_profile->save(FALSE);
                 //print_r($new_user);
@@ -600,7 +601,7 @@ class SiteController extends MasterController {
                 //\Yii::$app->getUser()->login();
 
 
-                \Yii::$app->user->login($new_user, 3600 * 24 * 30);
+                \Yii::$app->user->login($new_profile, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
             }
