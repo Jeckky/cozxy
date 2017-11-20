@@ -619,7 +619,7 @@ class SiteController extends MasterController {
         $userAttributes = $client->getUserAttributes();
         //authclient=instagram
         echo '<pre>';
-        print_r($client->id);
+        echo isset($client->id) ? $client->id : '';
         exit();
 
         /* if (!empty($userAttributes['email'])) {
@@ -676,7 +676,7 @@ class SiteController extends MasterController {
             $new_user->firstname = $name[0];
             $new_user->lastname = $name[1];
             $new_user->auth_key = Yii::$app->security->generateRandomString();
-            $new_user->auth_type = 'Facebook';
+            $new_user->auth_type = isset($client->id) ? $client->id : '';
             $new_user->token = $userAttributes['id'];
             $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
             $new_user->email = $email;
