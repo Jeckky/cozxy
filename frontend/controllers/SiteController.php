@@ -683,8 +683,8 @@ class SiteController extends MasterController {
             if ($new_user->save(FALSE)) {
 
                 $new_profile = new User();
-                $new_profile->email = $user->attributes['email'];
-                $new_profile->password_hash = $user->attributes['password_hash'];
+                $new_profile->email = $new_user->username;
+                $new_profile->password_hash = $new_user->password_hash;
                 \Yii::$app->user->login($new_profile, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
