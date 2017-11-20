@@ -635,7 +635,7 @@ class SiteController extends MasterController {
                 $user->status = 1;
                 $user->save();
             }
-            $profile = \common\models\costfit\User::find()->where(['token' => $user->attributes['token']])->one();
+            $profile = \common\models\costfit\User::find()->where(['username' => $user->attributes['email']])->one();
             if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
                 $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
 
@@ -676,6 +676,7 @@ class SiteController extends MasterController {
             $new_user->firstname = $name[0];
             $new_user->lastname = $name[1];
             $new_user->auth_key = Yii::$app->security->generateRandomString();
+            $new_user->auth_type = 'Facebook';
             $new_user->token = $userAttributes['id'];
             $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
             $new_user->email = $email;
@@ -684,26 +685,8 @@ class SiteController extends MasterController {
 
             if ($new_user->save(FALSE)) {
 
-                $user = new User();
-                $user->email = $new_user->email;
-                $user->password_hash = $new_user->password_hash;
-                //\Yii::$app->user->login($new_profile, 3600 * 24 * 30);
-                //Yii::$app->getUser()->login($new_profile, 0);
-                //Yii::$app->user->switchIdentity($new_profile); // log in
-                // UserIdentity is your extended class of CUserIdentity
-                //$identity = new UserIdentity($new_user->email, $new_user->password_hash);
-                //$identity->authenticate();
-                //Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
-                //$user->email = $user->attributes['email'];
-                //$user->password_hash = $user->attributes['password_hash'];
-                //\Yii::$app->user->login($user, 3600 * 24 * 30);
-                //$identity = User::findOne(['username' => $email]);
-                // logs in the user
-                //Yii::$app->user->login($identity);
                 $test = new LoginForm();
                 $test->login2($new_user);
-
-                //return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
                 //echo 'not save user';
             }
