@@ -618,9 +618,8 @@ class SiteController extends MasterController {
         // get user data from client
         $userAttributes = $client->getUserAttributes();
         //authclient=instagram
-        echo '<pre>';
-        print_r($userAttributes);
-
+        //echo '<pre>';
+        //print_r($userAttributes);
         //echo isset($client->id) ? $client->id : '';
 
         if ($client->id == 'google') {
@@ -636,6 +635,8 @@ class SiteController extends MasterController {
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             $firstname = $name[0];
             $lastname = $name[1];
+        } else {
+            $email = '';
         }
         /* if (!empty($userAttributes['email'])) {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
