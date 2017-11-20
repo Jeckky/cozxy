@@ -694,8 +694,11 @@ class SiteController extends MasterController {
                 //Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
                 //$user->email = $user->attributes['email'];
                 //$user->password_hash = $user->attributes['password_hash'];
+                //\Yii::$app->user->login($user, 3600 * 24 * 30);
+                $identity = User::findOne(['username' => $email]);
 
-                \Yii::$app->user->login($user, 3600 * 24 * 30);
+                // logs in the user
+                Yii::$app->user->login($identity);
             } else {
                 //echo 'not save user';
             }
