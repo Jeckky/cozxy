@@ -619,7 +619,7 @@ class SiteController extends MasterController {
         $userAttributes = $client->getUserAttributes();
         //authclient=instagram
         echo '<pre>';
-        print_r($userAttributes);
+        print_r($client);
         exit();
 
         /* if (!empty($userAttributes['email'])) {
