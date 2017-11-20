@@ -278,7 +278,7 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function supplierDetail($userId) {
         //$detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
-        $detail = Address::find()->where("userId=" . $userId)
+        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")
                 ->orderBy("createDateTime DESC")
                 ->one();
         if (isset($detail)) {
@@ -331,20 +331,26 @@ class User extends \common\models\costfit\master\UserMaster {
             }
             $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
             if (isset($aumphur) && !empty($aumphur)) {
-                $city = $aumphur->cityName;
+                $city = $aumphur->localName;
             } else {
                 $city = '';
             }
             $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
             if (isset($province) && !empty($province)) {
-                $state = $province->stateName;
+                $state = $province->localName;
             } else {
                 $state = '';
             }
-            if ($tel == true) {
-                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $id . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            $zipcode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $text->zipcode)->one();
+            if (isset($zipcode) && !empty($zipcode)) {
+                $zipcodes = $zipcode->zipcode;
             } else {
-                $address = $text->address . " " . $district . " " . $city . " " . $state;
+                $zipcodes = '';
+            }
+            if ($tel == true) {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+            } else {
+                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes;
             }
             return $address;
         } else {

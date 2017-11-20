@@ -44,12 +44,12 @@
             </div>
         <?php } else {//ไม่ใช้ system coin
             ?>
-            <div class="price-detail">Balance:
+            <div class="price-detail">
                 <?php
                 $balance = $userPoint->currentPoint - $order->summary;
-                if ($order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {
+                if ($order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED && $balance >= 0) {
                     ?>
-                    <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance) ?></div>
+                    Balance: <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance) ?></div>
                     <?php
                 }
                 if ($balance < 0 && $order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED) {

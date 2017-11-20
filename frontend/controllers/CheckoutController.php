@@ -127,18 +127,18 @@ class CheckoutController extends MasterController {
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
+        $checkTax = Yii::$app->request->post('checkTax');
+        $tax = Yii::$app->request->post('billingTax');
         $addressId = Yii::$app->request->post('addressId');
-
-        //save address
         $orderAddress = Yii::$app->request->post('Order');
         $orderId = Yii::$app->request->post('orderId');
-
+        $tel = Yii::$app->request->post('tel');
         if (isset($addressId)) {
             $addressId = Yii::$app->request->post('addressId');
         } else {
             $addressId = Yii::$app->request->post('addressIdsummary');
         }
-        $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress);
+        $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress, $tax, $tel);
         //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
@@ -273,14 +273,13 @@ class CheckoutController extends MasterController {
         }
     }
 
-    static function resetDefault($orderId, $addressId = null, $pickingId, $shipTo = 1, $orderAddress = null) {
+    static function resetDefault($orderId, $addressId = null, $pickingId, $shipTo = 1, $orderAddress = null, $tax, $tel) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
             $order->cozxyCoin = 0;
             //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
-
             if ($shipTo == 2) {
                 $order->shippingFirstname = $orderAddress['shippingFirstname'];
                 $order->shippingLastname = $orderAddress['shippingLastname'];
@@ -293,6 +292,26 @@ class CheckoutController extends MasterController {
                 $order->email = $orderAddress['email'];
                 //$order->pickingId = new Expression('NULL');
                 $order->pickingId = 0;
+            }
+            if ($tax != '') {
+                $order->billingTax = $tax;
+            }
+            if ($tel != '') {
+                $order->billingTel = $tel;
+                $updateTel = \common\models\costfit\Address::find()->where("addressId=" . $addressId)->one();
+                if (isset($updateTel)) {
+                    if ($updateTel->tel == '' || $updateTel->tel == null) {
+                        $updateTel->tel = $tel;
+                        $updateTel->save(false);
+                        $user = \common\models\costfit\User::find()->where("userId=" . $order->userId)->one();
+                        if (isset($user)) {
+                            if ($user->tel == '' || $user->tel == null) {
+                                $user->tel = $tel;
+                                $user->save(false);
+                            }
+                        }
+                    }
+                }
             }
             $order->save(false);
         }

@@ -132,6 +132,8 @@ use kartik\select2\Select2;
                                         <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->shippingTel ?></div>
                                         <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Email:</div>
                                         <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->email ?></div>
+                                        <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">TaxID:</div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->billingTax ?></div>
                                         <div class="size6">&nbsp;</div>
                                     <?php endif; ?>
                                 </div>
@@ -159,6 +161,10 @@ use kartik\select2\Select2;
                                         <?php echo $myAddressInSummary['myAddresss']['zipcode'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['country'] ?>&nbsp;
                                     </div>
+                                    <div class="size6">&nbsp;</div>
+                                    <div class="col-xs-3 col-md-3 col-sm-3">TaxID:</div>
+                                    <div class="col-xs-9 col-md-9 col-sm-9"><?= $order->billingTax ?></div>
+                                    <div class="size6">&nbsp;</div>
                                     <div class="size12">&nbsp;</div>
 
                                 </div>

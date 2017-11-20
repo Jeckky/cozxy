@@ -24,7 +24,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-<?= $col ?> col-sm-6 col-xs-12 box-product">
     <div class="product-box">
-        <?php if ($DiscountProduct != 'Lessthan10') { ?>
+        <?php if ($DiscountProduct != 'Lessthan10' && $supplierPrice != 0) { ?>
             <div class="product-sticker">
                 <div class="rcorners4">
                     <p>
