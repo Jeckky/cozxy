@@ -683,21 +683,15 @@ class SiteController extends MasterController {
             if ($new_user->save(FALSE)) {
 
                 $new_profile = new User();
-                echo $new_profile->email = $new_user->email;
-                echo '<br>' . $new_profile->password_hash = $new_user->password_hash;
+                $new_profile->email = $new_user->email;
+                $new_profile->password_hash = $new_user->password_hash;
                 //\Yii::$app->user->login($new_profile, 3600 * 24 * 30);
-                //Yii::$app->getUser()->login($new_profile);
+                Yii::$app->getUser()->login($new_profile, 0);
                 //Yii::$app->user->switchIdentity($new_profile); // log in
                 // UserIdentity is your extended class of CUserIdentity
                 //$identity = new UserIdentity($new_user->email, $new_user->password_hash);
                 //$identity->authenticate();
                 //Yii::app()->user->login($identity, $duration = 0); // Do not remember Auto login user
-
-                if (Yii::$app->user->login($new_user->username, 0)) {
-                    var_dump(Yii::$app->user->identity);
-                } else {
-                    echo 'didnt login';
-                }
             } else {
                 //echo 'not save user';
             }
