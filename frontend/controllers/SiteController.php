@@ -643,32 +643,10 @@ class SiteController extends MasterController {
                 $pf->save();
             }
 
-            //$user = \common\models\tangchaichill\User::findOne(['token' => $user->attributes['token']]);
             $user->email = $user->attributes['email'];
             $user->password_hash = $user->attributes['password_hash'];
 
             \Yii::$app->user->login($user, 3600 * 24 * 30);
-
-            // Save session attribute user from FB
-            //$session = Yii::$app->session;
-            //$session['attributes'] = $userAttributes;
-            //echo '<pre>';
-            //print_r($user);
-            //$user['token'] = Yii::$app->session->token;
-            //$user['firstname'] = Yii::$app->session->firstname;
-            //echo '<pre>';
-            //print_r($session['attributes']);
-            //exit();
-            // redirect to form signup, variabel global set to successUrl
-            //Yii::$app->getUser()->login($user, 0);
-            // $session = new Session;
-            // $session = Yii::$app->session;
-            // $session->open();
-            // $session['userId'] = $user->attributes['userId'];
-            // $session['firstname'] = $user->attributes['firstname'];
-            // $session['token'] = $user->attributes['token'];
-            //  $session['username'] = $user->attributes['username'];
-            //$this->action->successUrl = \yii\helpers\Url::to(['signup']);
         } else {//ถ้าไม่มี user ในระบบ
             //echo 'none user';
             //$generate = Yii::$app->security->generateRandomString(10);
@@ -703,20 +681,11 @@ class SiteController extends MasterController {
             $new_user->createDateTime = new \yii\db\Expression('NOW()');
 
             if ($new_user->save(FALSE)) {
-                //echo 'save user';
-                //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
-                $new_profile = new User();
-                //$new_profile->userId = $new_user->userId;
-                $new_profile->email = $new_user->email;
-                $new_profile->password_hash = $new_user->password_hash;
-                // $new_profile->save();
-                // Yii::$app->getUser()->login($new_user);
-                // \Yii::$app->user->login($new_user, 3600 * 24 * 30);
-                //$this->action->successUrl = "url-with-data";
-                //$user->email = $new_user->email;
-                //$user->password_hash = $new_user->password_hash;
 
-                \Yii::$app->getUser()->login($new_user);
+                $new_profile = new User();
+                $new_profile->email = $user->attributes['email'];
+                $new_profile->password_hash = $user->attributes['password_hash'];
+                \Yii::$app->user->login($new_profile, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
             }
