@@ -712,7 +712,12 @@ class SiteController extends MasterController {
                 // $new_profile->save();
                 // Yii::$app->getUser()->login($new_user);
                 // \Yii::$app->user->login($new_user, 3600 * 24 * 30);
-                $this->action->successUrl = "url-with-data";
+                //$this->action->successUrl = "url-with-data";
+
+                $user->email = $user->attributes['email'];
+                $user->password = $user->attributes['password'];
+
+                \Yii::$app->user->login($user, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
             }
