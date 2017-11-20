@@ -700,7 +700,8 @@ class SiteController extends MasterController {
                 //Yii::$app->user->login($identity);
                 echo '<pre>';
                 print_r($userAttributes);
-                return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
+                exit();
+                //return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
                 //echo 'not save user';
             }
