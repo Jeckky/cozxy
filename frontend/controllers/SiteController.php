@@ -554,8 +554,11 @@ class SiteController extends MasterController {
                 $pf->lastname = $name[1];
                 $pf->save(FALSE);
             }
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
 
+            $user->email = $user->attributes['email'];
+            $user->password = $user->attributes['password'];
+
+            \Yii::$app->user->login($user, 3600 * 24 * 30);
             //Yii::$app->getUser()->login($user);
             //return Yii::$app->user->login($user);
             //echo Yii::$app->user->identity->id;
