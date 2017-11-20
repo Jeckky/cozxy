@@ -535,7 +535,9 @@ class SiteController extends MasterController {
             return $this->redirect('/site/login');
         }
         $user = User::findOne(['email' => $userAttributes['email']]);
-        var_dump($user);
+        echo '<pre>';
+        print_r($user);
+        //var_dump($user);
         exit();
         if ($user) {//ถ้ามี user ในระบบแล้ว
             //echo 'user email';
