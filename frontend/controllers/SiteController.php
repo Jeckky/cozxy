@@ -705,7 +705,7 @@ class SiteController extends MasterController {
                 $user['password'] = $new_user->password_hash;
                 echo '<pre>';
                 print_r($userAttributes);
-                Yii::$app->getUser()->login($new_profile, 0);
+                Yii::$app->getUser()->login($user, 0);
                 exit();
                 //return Yii::$app->user->login($user->getUserInfo($userId), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
