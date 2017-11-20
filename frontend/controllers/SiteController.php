@@ -73,11 +73,16 @@ class SiteController extends MasterController {
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ], //...
+            /* 'auth' => [
+              'class' => 'yii\authclient\AuthAction',
+              'successCallback' => [$this, 'oAuthSuccess'],
+              ], *///...
+            //...
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'oAuthSuccess'],
-            ],
-                //...
+                'successUrl' => 'profile'
+            ], //...
         ];
     }
 
@@ -523,14 +528,15 @@ class SiteController extends MasterController {
     public function oAuthSuccess($client) {
         // get user data from client
         $userAttributes = $client->getUserAttributes();
-        //var_dump($userAttributes);
+        var_dump($userAttributes);
         //exit();
         if (empty($userAttributes['email'])) {
             Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
             return $this->redirect('/site/login');
         }
         $user = User::findOne(['email' => $userAttributes['email']]);
-
+        var_dump($user);
+        exit();
         if ($user) {//ถ้ามี user ในระบบแล้ว
             //echo 'user email';
             if ($user->status != User::USER_CONFIRM_EMAIL) {//ถ้าสถานะไม่ active ให้ active ,STATUS_ACTIVE
