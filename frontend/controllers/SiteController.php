@@ -537,7 +537,7 @@ class SiteController extends MasterController {
                 $user->status = User::USER_CONFIRM_EMAIL; //STATUS_ACTIVE
                 $user->save();
             }
-            $profile = User::find()->where(['user_id' => $user->id])->one();
+            $profile = User::find()->where(['userId' => $user->userId])->one();
             if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
                 $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
 
@@ -572,8 +572,8 @@ class SiteController extends MasterController {
             if ($new_user->save()) {
                 //echo 'save user';
                 $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
-                $new_profile = new Profile();
-                $new_profile->user_id = $new_user->id;
+                $new_profile = new User();
+                $new_profile->userId = $new_user->userId;
                 $new_profile->firstname = $name[0];
                 $new_profile->lastname = $name[1];
                 $new_profile->save();
