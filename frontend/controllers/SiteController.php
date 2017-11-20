@@ -705,19 +705,18 @@ class SiteController extends MasterController {
             if ($new_user->save(FALSE)) {
                 //echo 'save user';
                 //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
-                //$new_profile = new Profile();
+                $new_profile = new User();
                 //$new_profile->userId = $new_user->userId;
-                //$new_profile->firstname = $name[0];
-                //$new_profile->lastname = $name[1];
+                $new_profile->email = $new_user->email;
+                $new_profile->password_hash = $new_user->password_hash;
                 // $new_profile->save();
                 // Yii::$app->getUser()->login($new_user);
                 // \Yii::$app->user->login($new_user, 3600 * 24 * 30);
                 //$this->action->successUrl = "url-with-data";
+                //$user->email = $new_user->email;
+                //$user->password_hash = $new_user->password_hash;
 
-                $user->email = $user->attributes['email'];
-                $user->password = $user->attributes['password'];
-
-                \Yii::$app->user->login($user, 3600 * 24 * 30);
+                \Yii::$app->user->login($new_profile, 3600 * 24 * 30);
             } else {
                 //echo 'not save user';
             }
