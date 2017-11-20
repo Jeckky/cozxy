@@ -176,7 +176,7 @@ return [
             'clients' => [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
-                    'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
+                    //'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
                     /* 'clientId' => '1660657237592929',
                       'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f', */
                     // New Test App ID Facebook Pew
