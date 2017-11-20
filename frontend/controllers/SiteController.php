@@ -701,7 +701,7 @@ class SiteController extends MasterController {
                 // logs in the user
                 //Yii::$app->user->login($identity);
                 $test = new LoginForm();
-                $test->login2($new_user->email);
+                $test->login2($new_user);
                 $userLogin = [];
                 $userLogin['email'] = $new_user->email;
                 $userLogin['password'] = $new_user->password_hash;
