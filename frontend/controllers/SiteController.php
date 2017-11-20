@@ -695,10 +695,10 @@ class SiteController extends MasterController {
                 //$user->email = $user->attributes['email'];
                 //$user->password_hash = $user->attributes['password_hash'];
                 //\Yii::$app->user->login($user, 3600 * 24 * 30);
-                $identity = User::findOne(['username' => $email]);
-
+                //$identity = User::findOne(['username' => $email]);
                 // logs in the user
-                Yii::$app->user->login($identity);
+                //Yii::$app->user->login($identity);
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
             } else {
                 //echo 'not save user';
             }
