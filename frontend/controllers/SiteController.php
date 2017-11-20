@@ -620,9 +620,16 @@ class SiteController extends MasterController {
         //authclient=instagram
         echo '<pre>';
         print_r($userAttributes);
+        echo $value = $userAttributes['emails'][0]['value'];
+        echo '<be>' . $id = $userAttributes['id'];
+        echo '<br>' . $displayName = $userAttributes['displayName'];
         //echo isset($client->id) ? $client->id : '';
         exit();
+        if ($client->id == 'google') {
 
+        } else {
+
+        }
         /* if (!empty($userAttributes['email'])) {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
           return $this->redirect('/site/login');
