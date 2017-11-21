@@ -24,6 +24,7 @@ use common\models\costfit\ContentGroup;
 use common\helpers\Email;
 use common\helpers\CozxyUnity;
 use common\models\costfit\Section;
+use common\models\costfit\User;
 
 /**
  * Site controller
@@ -71,7 +72,17 @@ class SiteController extends MasterController {
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ], //...
+            /* 'auth' => [
+              'class' => 'yii\authclient\AuthAction',
+              'successCallback' => [$this, 'oAuthSuccess'],
+              ], *///...
+            //...
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'oAuthSuccess'],
+                'successUrl' => 'http://www.cozxy.com/my-account?act=account-detail'
+            ], //...
         ];
     }
 
@@ -121,6 +132,8 @@ class SiteController extends MasterController {
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
+            //echo '<pre>';
+            //print_r($model->attributes);
             //echo $_POST['LoginForm']['rememberMe'];
             //exit();
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -512,6 +525,194 @@ class SiteController extends MasterController {
 
     public function actionSubscribeEmail() {
         return $this->render('subscribe');
+    }
+
+    /*
+      public function oAuthSuccess($client) {
+      // get user data from client
+      $userAttributes = $client->getUserAttributes();
+      //var_dump($userAttributes);
+      //exit();
+      if (empty($userAttributes['email'])) {
+      Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
+      return $this->redirect('/site/login');
+      }
+      $user = User::findOne(['email' => $userAttributes['email']]);
+      //echo '<pre>';
+      //print_r($user);
+      //var_dump($user);
+      //exit();
+      if ($user) {//ถ้ามี user ในระบบแล้ว
+      //echo 'user email';
+      if ($user->status != User::USER_CONFIRM_EMAIL) {//ถ้าสถานะไม่ active ให้ active ,STATUS_ACTIVE
+      $user->status = User::USER_CONFIRM_EMAIL; //STATUS_ACTIVE
+      $user->save(FALSE);
+      }
+      $profile = User::find()->where(['userId' => $user->userId])->one();
+      if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
+      $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+
+      $pf = new User();
+      $pf->firstname = $name[0];
+      $pf->lastname = $name[1];
+      $pf->save(FALSE);
+      }
+
+      $user->username = $profile->email;
+      $user->password_hash = $profile->password_hash;
+
+      \Yii::$app->user->login($user, 3600 * 24 * 30);
+      //Yii::$app->getUser()->login($user);
+      //return Yii::$app->user->login($user);
+      //echo Yii::$app->user->identity->id;
+      //die();
+      } else {//ถ้าไม่มี user ในระบบ
+      //echo 'none user';
+      //$generate = Yii::$app->security->generateRandomString(10);
+      $uname = explode("@", $userAttributes['email']); // แยกอีเมลล์ด้วย @
+      $getuser = User::findOne(['username' => $uname[0]]);
+      if ($getuser) {//มี username จาก username ที่ได้จาก email
+      //echo 'exit user from username';
+      $rand = rand(10, 99);
+      $username = $uname[0] . $rand;
+      } else {
+      //echo 'none user from username';
+      $username = $uname[0];
+      }
+      //echo $username;
+      $new_user = new User();
+      $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+      //$new_user->username = $username;
+      $new_user->username = $userAttributes['email'];
+      $new_user->auth_key = Yii::$app->security->generateRandomString();
+      $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
+      $new_user->token = $userAttributes['id'];
+      $new_user->email = $userAttributes['email'];
+      $new_user->status = User::USER_CONFIRM_EMAIL;
+      $new_user->firstname = $name[0];
+      $new_user->lastname = $name[1];
+      if ($new_user->save(FALSE)) {
+      //echo 'save user';
+      //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+      $new_profile = new User();
+      $new_profile->username = $new_user->email;
+      $new_profile->password_hash = $new_user->password_hash;
+      //$new_profile->lastname = $name[1];
+      //$new_profile->save(FALSE);
+      //print_r($new_user);
+      //Yii::$app->getUser()->login($new_user);
+      //\Yii::$app->getUser()->login();
+
+
+      \Yii::$app->user->login($new_profile, 3600 * 24 * 30);
+      } else {
+      //echo 'not save user';
+      }
+      }
+      //exit();
+      // do some thing with user data. for example with $userAttributes['email']
+      }
+     */
+
+    public function oAuthSuccess($client) {
+        // get user data from client
+        $userAttributes = $client->getUserAttributes();
+        //authclient=instagram
+        //echo '<pre>';
+        //print_r($userAttributes);
+        //echo isset($client->id) ? $client->id : '';
+
+        if ($client->id == 'google') {
+            $email = $userAttributes['emails'][0]['value'];
+            $token = $userAttributes['id'];
+            $displayName = $userAttributes['displayName'];
+            $name = explode(" ", $displayName); // แยกชื่อ นามสกุล
+            $firstname = $name[0];
+            $lastname = $name[1];
+        } elseif ($client->id == 'facebook') {
+            $email = $userAttributes['email'];
+            $token = $userAttributes['id'];
+            $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+            $firstname = $name[0];
+            $lastname = $name[1];
+        } else {
+            return $this->redirect('/site/login');
+        }
+        /* if (!empty($email)) {
+          Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
+          return $this->redirect('/site/login');
+          } */
+        $user = \common\models\User::findOne(['username' => $email]);
+        //echo '<pre>';
+        //print_r($user);
+        if ($user) {//ถ้ามี user ในระบบแล้ว
+            //echo 'user email';
+            if ($user->status != 1) {//ถ้าสถานะไม่ active ให้ active
+                $user->status = 1;
+                $user->save();
+            }
+            $profile = \common\models\costfit\User::find()->where(['username' => $user->attributes['email']])->one();
+            if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
+                //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+                $pf = new \common\models\costfit\User();
+                $pf->firstname = $firstname;
+                $pf->lastname = $lastname;
+                $pf->save();
+            }
+
+            $user->email = $user->attributes['email'];
+            $user->password_hash = $user->attributes['password_hash'];
+
+            \Yii::$app->user->login($user, 3600 * 24 * 30);
+        } else {//ถ้าไม่มี user ในระบบ
+            //echo 'none user';
+            //$generate = Yii::$app->security->generateRandomString(10);
+            if (isset($email) && !empty($email)) {
+                $uname = explode("@", $email); // แยกอีเมลล์ด้วย @
+                $getuser = \common\models\costfit\User::findOne(['username' => $uname[0]]);
+                if ($getuser) {//มี username จาก username ที่ได้จาก email
+                    //echo 'exit user from username';
+                    $rand = rand(10, 99);
+                    $username = $uname[0] . $rand;
+                } else {
+                    //echo 'none user from username';
+                    $username = $uname[0];
+                }
+                $email = $email;
+            } else {
+                $username = '';
+                $email = '';
+            }
+
+            //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
+            //echo $username;
+            $new_user = new \common\models\costfit\User();
+            $new_user->username = $email;
+            $new_user->firstname = $firstname;
+            $new_user->lastname = $lastname;
+            $new_user->auth_key = Yii::$app->security->generateRandomString();
+            $new_user->auth_type = isset($client->id) ? $client->id : '';
+            $new_user->token = $token;
+            $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
+            $new_user->email = $email;
+            $new_user->status = 1; //;
+            $new_user->createDateTime = new \yii\db\Expression('NOW()');
+
+            if ($new_user->save(FALSE)) {
+
+                $test = new LoginForm();
+                $test->login2($new_user);
+            } else {
+                //echo 'not save user';
+            }
+        }
+        //exit();
+        // do some thing with user data. for example with $userAttributes['email']
+    }
+
+    public function actionUrlWithData() {
+        //Yii::$app->user->switchIdentity($user);
+        return $this->render('auth');
     }
 
 }

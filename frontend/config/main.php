@@ -52,8 +52,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //'search/<title>/<hash>' => 'search/index',
-                //Custom Rule
+//'search/<title>/<hash>' => 'search/index',
+//Custom Rule
 //                '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
@@ -178,17 +178,23 @@ return [
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
-                    'clientId' => '1660657237592929',
-                    'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f',
+                    /* 'clientId' => '1660657237592929',
+                      'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f', */
+                    // New Test App ID Facebook Pew
+                    'clientId' => '362825020809663',
+                    'clientSecret' => '7c0053e0dfff8b317b171d3eb20d7ee0',
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     //'class' => 'yii\authclient\clients\GoogleOAuth',
-                    'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
-                    'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
-                    // 'scope' => 'https://www.googleapis.com/auth/userinfo.email',
+                    //'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
+                    //'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
+                    // New Test App ID Google Pew
+                    'clientId' => '929695392739-gi499d6l2o7u0virnonlkfgjuscf4pul.apps.googleusercontent.com',
+                    'clientSecret' => '9_FsWMcRocJA0AKqxaYDgz9U',
+                    //'scope' => 'https://www.googleapis.com/auth/userinfo.email',
                     'scope' => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                    'returnUrl' => 'http://localhost/Cozxy.com-frontend/site/auth?authclient=google',
+                    'returnUrl' => 'http://www.cozxy.com/site/auth?authclient=google',
                 ]
             ],
         ],

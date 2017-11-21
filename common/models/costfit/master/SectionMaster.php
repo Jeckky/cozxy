@@ -10,6 +10,7 @@ use Yii;
     * @property string $sectionId
     * @property string $title
     * @property string $description
+    * @property integer $sort
     * @property integer $status
     * @property string $createDateTime
     * @property string $updateDateTime
@@ -30,9 +31,10 @@ return 'section';
 public function rules()
 {
 return [
-            [['status'], 'integer'],
+            [['description'], 'string'],
+            [['sort', 'status'], 'integer'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['title', 'description'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
         ];
 }
 
@@ -45,6 +47,7 @@ return [
     'sectionId' => Yii::t('section', 'Section ID'),
     'title' => Yii::t('section', 'Title'),
     'description' => Yii::t('section', 'Description'),
+    'sort' => Yii::t('section', 'Sort'),
     'status' => Yii::t('section', 'Status'),
     'createDateTime' => Yii::t('section', 'Create Date Time'),
     'updateDateTime' => Yii::t('section', 'Update Date Time'),

@@ -413,7 +413,19 @@ label {
     background-color: #2c4a8a;
     color: #fff;
 }
-
+.btn-google {
+    display: inline-block;
+    padding: 12px 32px;
+    border: 1px solid #c30;
+    background-color: #db4437;
+    color: #fff;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+.btn-google:hover {
+    background-color: #c30;
+    color: #fff;
+}
 /* Form Input */
 .login-box input[type="text"], .login-box input[type="password"], .login-box textarea {
     border: 1px solid #999;

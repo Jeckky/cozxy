@@ -252,7 +252,8 @@ label {
     background-color: #eee;
     color: #666;
 }
-.btn-facebook {
+
+.btn-google {
     display: inline-block;
     padding: 12px 32px;
     border: 1px solid #2c4a8a;
@@ -261,7 +262,7 @@ label {
     -webkit-transition: all .5s;
     transition: all .5s;
 }
-.btn-facebook:hover {
+.btn-google:hover {
     background-color: #2c4a8a;
     color: #fff;
 }
