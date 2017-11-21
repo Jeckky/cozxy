@@ -5,9 +5,6 @@ use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use kartik\depdrop\DepDrop;
-
-//echo '<pre>';
-//print_r($model->attributes);
 ?>
 
 <div class="container login-box">
@@ -18,12 +15,7 @@ use kartik\depdrop\DepDrop;
         </div>
         <div class="col-xs-12 bg-white">
             <div class="size12 size10-xs">&nbsp;</div>
-            <?php
-            $form = ActiveForm::begin([
-                        'id' => 'default-shipping-address',
-                        'options' => ['class' => 'space-bottom'],
-            ]);
-            ?>
+            <?php $form = ActiveForm::begin(['id' => 'register-form']); ?>
             <div class="row">
                 <div class="col-md-6">
                     <p>First Name</p>
@@ -48,46 +40,7 @@ use kartik\depdrop\DepDrop;
 
                 <div class="col-md-6">
                     <p>Birthday</p>
-                    <div class="form-group col-md-4   field-signupform-dd required <?= isset($ddError) ? $ddError : '' ?>" style="padding-left: 0px;">
-                        <?php
-// without model
-                        echo Select2::widget([
-                            'name' => 'User[dd]',
-                            'value' => $historyBirthDate['day'], // value to initialize
-                            'data' => $birthdate['dates']
-                        ]);
-                        ?>
-                        <p class="help-block help-block-error"><?= isset($dd) ? $dd : '' ?></p>
-                    </div>
 
-                    <div class="form-group col-md-4  field-signupform-dd required <?= isset($mmError) ? $mmError : '' ?>">
-                        <?php
-// without model
-                        echo Select2::widget([
-                            'name' => 'User[mm]',
-                            'value' => $historyBirthDate['month'], // value to initialize
-                            'data' => $birthdate['month']
-                        ]);
-                        ?>
-                        <p class="help-block help-block-error"><?= isset($mm) ? $mm : '' ?></p>
-                    </div>
-
-                    <div class="form-group col-md-4 field-signupform-dd required <?= isset($yyyyError) ? $yyyyError : '' ?>">
-                        <?php
-// without model
-                        echo Select2::widget([
-                            'name' => 'User[yyyy]',
-                            'value' => $historyBirthDate['year'], // value to initialize
-                            'data' => $birthdate['years']
-                        ]);
-                        ?>
-                        <p class="help-block help-block-error"><?= isset($yyyy) ? $yyyy : '' ?></p>
-                    </div>
-                    <!--
-                    <input type="number" name="User[dd]" min="1" max="31" placeholder="31" style="width: 26%" value="<?//php echo (int) $historyBirthDate['day']; ?>">
-                    <input type="number" name="User[mm]" min="1" max="12" placeholder="12" style="width: 26%" value="<?//php echo (int) $historyBirthDate['month']; ?>">
-                    <input type="number" name="User[yyyy]" min="1800" max="2020" placeholder="1999" style="width: 40%" value="<?//php echo $historyBirthDate['year']; ?>">
-                    -->
                 </div>
                 <div class="col-md-6">
                     <p>Gender</p>
