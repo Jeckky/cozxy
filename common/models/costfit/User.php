@@ -31,7 +31,8 @@ class User extends \common\models\costfit\master\UserMaster {
     public $currentPassword;
     public $newPassword;
     public $rePassword;
-    public $lastname;
+
+    //public $lastname;
 
     const USER_REGISTER = 0;
     const USER_CONFIRM_EMAIL = 1;
