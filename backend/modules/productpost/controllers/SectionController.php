@@ -194,7 +194,7 @@ class SectionController extends ProductPostMasterController {
                 ->join("RIGHT JOIN", "product_suppliers ps", "ps.productSuppId = section_item.productSuppId")
                 ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
                 ->join('LEFT JOIN', 'product p', 'ps.productId=p.productId')
-                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null)')
+                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null) or section_item.sectionId is null')
                 ->orderBy("section_item.status DESC," . $sort);
         if (isset($_GET['title']) && $_GET['title'] != '') {
             $queryVariableProducts->andWhere("p.title like '%" . $_GET['title'] . "%'");
