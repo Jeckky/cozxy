@@ -29,6 +29,8 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     const STATUS_DELETE = 3;
     const COZXY_POST_REVIRES = 'review_post';
     const COZXY_WRITE_YOUR_STORY = 'write_your_story';
+    const VIEW_SCORE = 2;
+    const STAR_SCORE = 5;
 
     public function rules() {
         return array_merge(parent::rules(), [

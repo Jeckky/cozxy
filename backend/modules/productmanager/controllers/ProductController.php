@@ -67,6 +67,7 @@ class ProductController extends ProductManagerMasterController
 
 
         $dataProvider = $searchModel->search($params);
+        $dataProvider->sort = ['defaultOrder'=>['createDateTime'=>SORT_DESC]];
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
@@ -481,5 +482,15 @@ class ProductController extends ProductManagerMasterController
 
 //        throw new \yii\base\Exception(print_r($result, TRUE));
         return $result;
+    }
+
+    public function actionMultipleDelete()
+    {
+        $res = ['success'=>false, 'error'=>NULL];
+        $productIds = explode(',', $_POST['productIds']);
+
+        Product::updateAll(['status'=>2], ['in', 'productId', $productIds]);
+
+        echo Json::encode($res);
     }
 }

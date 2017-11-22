@@ -47,7 +47,7 @@
             <div class="price-detail">
                 <?php
                 $balance = $userPoint->currentPoint - $order->summary;
-                if ($order->status < \common\models\costfit\Order::ORDER_STATUS_RECEIVED && $balance >= 0) {
+                if ($order->status < \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS && $balance >= 0) {
                     ?>
                     Balance: <div class="pull-right" style="color: <?= $balance >= 0 ? '#00cc33' : '#ff0000' ?>"><?= number_format($balance) ?></div>
                     <?php

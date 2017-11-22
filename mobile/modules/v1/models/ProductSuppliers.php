@@ -264,25 +264,24 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productSupplierGroupStory($productId) {
-        $categoryId = Product::find()->where("productId=" . $productId)->one();
-        if (isset($categoryId)) {
-            // $products = Product::find()->where("parentId=" . $productId)->all();
-            $products = Product::find()->where("categoryId=" . $categoryId->categoryId)->all();
-            $productIds = '';
-            if (isset($products) && count($products) > 0) {
-                foreach ($products as $id):
-                    $productIds .= $id->productId . ",";
 
-                endforeach;
-                $productIds .= $productId . ",";
-            } else {
-                $productIds .= $productId . ",";
-            }
-            if ($productIds != '') {
-                $productIds = substr($productIds, 0, -1);
-            }
-            return $productIds;
+        $products = Product::find()->where("parentId=" . $productId)->all();
+        $productIds = '';
+        if (isset($products) && count($products) > 0) {
+            foreach ($products as $id):
+                $productIds .= $id->productId . ",";
+
+            endforeach;
+            $productIds .= $productId . ",";
+        } else {
+            $productIds .= $productId . ",";
         }
+        if ($productIds != '') {
+            $productIds = substr($productIds, 0, -1);
+        }
+
+        //throw new \yii\base\Exception($productIds);
+        return $productIds;
     }
 
     public static function productParentId($productSuppId) {

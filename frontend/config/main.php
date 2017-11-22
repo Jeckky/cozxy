@@ -96,6 +96,7 @@ return [
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
                 'story/see-more/<hash>' => 'story/see-more/',
                 'story/<hash>' => 'story/index',
+                'story/generate-total-score/<hash>' => 'story/generate-total-score',
                 'search/brand/<hash>' => 'search/brand/',
                 'search/<title>/<hash>' => 'search/index',
                 'content/<hash>' => 'content/index',

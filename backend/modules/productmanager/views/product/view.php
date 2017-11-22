@@ -32,6 +32,7 @@ $productId = $model->productId;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -43,6 +44,7 @@ $productId = $model->productId;
             'code',
             'title',
             'status',
+            'approve',
             'shortDescription:html',
             'description:html',
             'specification:html',
@@ -101,6 +103,13 @@ $productId = $model->productId;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
+                                'header'=>'Image',
+                                'value'=>function($model) {
+                                    return Yii::$app->homeUrl.$model->images->imageThumbnail1;
+                                },
+                                'format'=>'image'
+                            ],
+                            [
                                 'attribute' => 'title',
                                 'value' => function ($model) {
                                     return mb_substr($model->title, 0, 40);
@@ -145,6 +154,13 @@ $productId = $model->productId;
                         //                        'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
+                            [
+                                'header'=>'Image',
+                                'value'=>function($model) {
+                                    return Yii::$app->homeUrl.$model->product->images->imageThumbnail1;
+                                },
+                                'format'=>'image'
+                            ],
                             [
                                 'attribute' => 'title',
                                 'value' => function ($model) {

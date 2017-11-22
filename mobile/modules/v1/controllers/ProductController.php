@@ -303,8 +303,9 @@ class ProductController extends \common\controllers\MasterController
         return Json::encode($res);
     }
 
-    public function actionView($id)
+    public function actionView()
     {
+        $id = $_POST['id'];
         $res = [];
         $product = Product::findProductById($id);
 

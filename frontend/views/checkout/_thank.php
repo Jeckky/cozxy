@@ -15,6 +15,18 @@
 
                 Your Cozxy.com OrderNo <a href="<?= Yii::$app->homeUrl . "my-account/detail-tracking/" . common\models\ModelMaster::encodeParams(['orderId' => $res['orderId']]) . '/' . $res['orderNo'] ?>"><?= isset($res['orderNo']) ? $res['orderNo'] : "-" ?></a>
                 and invoiceNo : <a href="<?= Yii::$app->homeUrl . "my-account/detail-tracking/" . common\models\ModelMaster::encodeParams(['orderId' => $res['orderId']]) . '/' . $res['orderNo'] ?>"><?= isset($res['invoiceNo']) ? $res['invoiceNo'] : "-" ?></a><br>
+                <?php
+                if (isset($trackingOrder) && !empty($trackingOrder)) {
+                    ?>
+                    <h4>
+                        <strong><i class="fa fa-truck" aria-hidden="true"></i> TRACKING ORDER</strong>
+                    </h4>
+                    <div class="col-lg-12 col-md-12 cart-body">
+                        <?= $this->render('@app/themes/cozxy/layouts/my-account/_tracking', ['trackingOrder' => $trackingOrder]) ?>
+                        <hr>
+                    </div>
+                <?php } ?>
+                <hr>
                 Thank you for shopping with us. Please check your order at View order list. We'll send a confirmation with your code to open your locker once your items are in! <br>
                 If there are any changes, we will notify you via email and SMS.
             <?php else: ?>
@@ -24,8 +36,9 @@
             <?php endif; ?>
             <div class="row" style="margin-top: 1cm;">
                 <div class="col-lg-6 col-md-6 col-sm-6 ">
-                    <a href="<?= Yii::$app->homeUrl ?>" class="b btn-yellow">Go shopping</a>&nbsp;&nbsp;&nbsp;
-                    <a href="<?= Yii::$app->homeUrl . "my-account?act=order-history" ?>" class="b btn-black">View order list</a>
+                    <a href="<?= Yii::$app->homeUrl ?>" class="b btn-yellow" ">Go shopping</a>&nbsp;&nbsp;&nbsp;
+                    <a href="<?= Yii::$app->homeUrl . "my-account?act=order-history" ?>" class="b btn-black" style="background-color: #000;color: #FFF;">View order list</a>&nbsp;&nbsp;&nbsp;
+                    <a href="<?= Yii::$app->homeUrl . "my-account/detail-tracking/" . \common\models\ModelMaster::encodeParams(['orderId' => $res['orderId']]) . "/" . $res['orderNo'] ?>" class="b btn-black">Order tracking</a>
                 </div>
             </div>
         </div>

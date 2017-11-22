@@ -53,6 +53,13 @@ if (count($trackingOrder->allModels) > 0) {
                             <td><div class="size10">&nbsp;</div><p class="fc-g999">SHIPPING</p></td>
                             <td>&nbsp;</td>
                             <td><div class="size10">&nbsp;</div><p class="fc-g999">COMPLETE</p></td>
+        <!--                            <td><div class="size10">&nbsp;</div><p>PREPARING</p></td>
+                            <td>&nbsp;</td>
+                            <td><div class="size10">&nbsp;</div><p class="fc-g999">READY TO SHIP</p></td>
+                            <td>&nbsp;</td>
+                            <td><div class="size10">&nbsp;</div><p class="fc-g999">SHIPPED</p></td>
+                            <td>&nbsp;</td>
+                            <td><div class="size10">&nbsp;</div><p class="fc-g999">RECEIVED</p></td>-->
                         </tr>
                     </table>
                 </div>

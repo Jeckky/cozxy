@@ -19,11 +19,9 @@ use yii\data\ActiveDataProvider;
  * @author it , Taninut.Bm
  * Create Date : 27/03/2017
  */
-class Token
-{
+class Token {
 
-    public static function getToken()
-    {
+    public static function getToken() {
         $cookies = Yii::$app->request->cookies;
         if ($cookies->has('orderToken')) {
             return $cookies->getValue('orderToken');
@@ -39,8 +37,7 @@ class Token
         }
     }
 
-    public static function getTokenToAnothor()
-    {
+    public static function getTokenToAnothor() {
         $cookies = Yii::$app->request->cookies;
         if ($cookies->has('orderToken')) {
             return $cookies->getValue('orderToken');
@@ -57,8 +54,7 @@ class Token
         }
     }
 
-    public static function generateNewToken()
-    {
+    public static function generateNewToken() {
 //        $cookies = Yii::$app->request->cookies;
 //        if (!$cookies->has('orderToken')) {
         $cookiesNew = Yii::$app->response->cookies;
@@ -80,11 +76,29 @@ class Token
 //        }
     }
 
-    public static function randomNumber($digit=6)
-    {
+    public static function getViewToken() {
+        $cookies = Yii::$app->request->cookies;
+        if ($cookies->has('viewToken')) {
+            return $cookies->getValue('viewToken');
+        } else {
+            self::generateNewViewToken();
+            $cookies = Yii::$app->request->cookies;
+            return $cookies->getValue('viewToken');
+        }
+    }
+
+    public static function generateNewViewToken() {
+        $cookiesNew = Yii::$app->response->cookies;
+        $cookie = new \yii\web\Cookie();
+        $cookie->name = "viewToken";
+        $cookie->value = Yii::$app->security->generateRandomString();
+        Yii::$app->response->cookies->add($cookie);
+    }
+
+    public static function randomNumber($digit = 6) {
         $r = '';
-        for($i=1;$i<=$digit;$i++) {
-            $r .= mt_rand(0,9);
+        for ($i = 1; $i <= $digit; $i++) {
+            $r .= mt_rand(0, 9);
         }
 
         return $r;
