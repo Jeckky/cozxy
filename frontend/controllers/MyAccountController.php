@@ -19,6 +19,7 @@ use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\imagine\Image;
+use common\helpers\CozxyUnity;
 
 class MyAccountController extends MasterController {
 
@@ -53,13 +54,19 @@ class MyAccountController extends MasterController {
     }
 
     public function actionEditPersonalDetail() {
+
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        $birthdate = [];
+        $birthdate['dates'] = CozxyUnity::getDates(1);
+        $birthdate['month'] = CozxyUnity::getMonthEn(01);
+        $birthdate['years'] = CozxyUnity::getYears(1999);
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-//        $model->scenario = 'editinfo'; // calling scenario of update
+        $model->scenario = 'editinfo';
 
         if (isset($_POST["User"])) {
+            //$model->scenario = 'editMyaccount';
             $editPersonalDetail = \frontend\models\DisplayMyAccount::myAccountEditPersonalDetail($_POST["User"]);
             if ($editPersonalDetail == TRUE) {
                 return $this->redirect(['/my-account', 'act' => 'account-detail']);
@@ -81,7 +88,7 @@ class MyAccountController extends MasterController {
                 $historyBirthDate['year'] = FALSE;
             }
 
-            return $this->render('@app/themes/cozxy/layouts/my-account/_form_personal_detail', compact('model', 'historyBirthDate'));
+            return $this->render('@app/themes/cozxy/layouts/my-account/_form_personal_detail', compact('model', 'historyBirthDate', 'birthdate'));
         }
     }
 
@@ -118,9 +125,11 @@ class MyAccountController extends MasterController {
             return $this->goHome();
         }
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-        $model->scenario = 'profile'; // calling scenario of update
+        //$model->scenario = 'profile'; // calling scenario of update
+        $model->scenario = 'profile';
+        //echo '<pre>';
+        //print_r($model->scenario);
         if (isset($_POST["User"])) {
-
             $editChangePassword = \frontend\models\DisplayMyAccount::myAccountChangePassword($_POST["User"]);
             if ($editChangePassword == TRUE) {
                 return $this->redirect(['/my-account', 'act' => 'account-detail']);

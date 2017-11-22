@@ -868,7 +868,7 @@ function showSection(sectionId) {
         type: 'post',
         success: function (data) {
 
-        },
+        }
     });
 }
 function showSectionItem(sectionItemId) {

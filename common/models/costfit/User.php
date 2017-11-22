@@ -32,6 +32,8 @@ class User extends \common\models\costfit\master\UserMaster {
     public $newPassword;
     public $rePassword;
 
+    //public $lastname;
+
     const USER_REGISTER = 0;
     const USER_CONFIRM_EMAIL = 1;
     const USER_BLOCK = 99;
@@ -89,7 +91,7 @@ class User extends \common\models\costfit\master\UserMaster {
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
 //            ['email', 'exist']
             [
-                ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+                ['firstname', 'lastname', 'email', 'gender', 'tel', 'birthDate'],
                 'required', 'on' => self::COZXY_EDIT_PROFILE],
             // [['currentPassword', 'newPassword', 'rePassword'], 'required'],
             [['currentPassword', 'newPassword', 'rePassword'], 'required', 'on' => self::COZXY_PROFILE],
@@ -104,21 +106,34 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios['editinfo'] = ['firstname', 'lastname', 'email', 'gender', 'tel', 'birthDate']; //Scenario Values Only Accepted
+        $scenarios['profile'] = ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']]; //Scenario Values Only Accepted
+        $scenarios['register'] = ['email', 'password', 'confirmPassword', 'acceptTerm']; //Scenario Values Only Accepted
+        $scenarios['user_backend'] = ['firstname', 'lastname', 'password', 'email', 'type', 'gender']; //Scenario Values Only Accepted
+        $scenarios['verification'] = ['tel']; //Scenario Values Only Accepted
+        $scenarios['ConfirmRegisterBooth'] = ['password', 'email']; //Scenario Values Only Accepted
+        return $scenarios;
+    }
+
+    public function scenarios_test() {
         return [
-            self::COZXY_CONFIRM => ['tel'],
+            self::COZXY_CONFIRM => [' tel'],
             self::COZXY_REGIS => ['email', 'password', 'confirmPassword', 'acceptTerm'],
             self::COZXY_PROFILE => ['currentPassword', 'newPassword', 'rePassword', ['currentPassword', 'newPassword', 'rePassword']],
             self::COZXY_USER_BACKEND => ['firstname', 'lastname', 'password', 'email', 'type', 'gender'],
-            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'gender', 'tel' => [['tel'], 'integer'], 'birthDate', 'acceptTerm'],
+            self::COZXY_EDIT_PROFILE => ['firstname', 'lastname', 'email', 'gender', 'tel', 'birthDate'],
             self::COZXY_CONFIRM_BOOTH => ['password', 'email']
         ];
     }
 
     public function uniqueEmail($attribute, $email) {
         // throw new \yii\base\Exception($email);
-        $user = static::findOne(['email' => Yii::$app->encrypter->encrypt($email)]);
+        $user = static::findOne(['
+
+        email' => Yii::$app->encrypter->encrypt($email)]);
         if (count($user) > 0)
-            $this->addError($attribute, 'This email is already in use".');
+            $this->addError($attribute, ' This email is already in use".');
     }
 
     /**
@@ -151,7 +166,7 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function findAllStatusArray() {
         return [
-            self::USER_REGISTER => "<span class='text-warning'>ยังไม่ยืนยันผ่านอีเมลล์</span>",
+            self::USER_REGISTER => "<span class = 'text-warning'>ยังไม่ยืนยันผ่านอีเมลล์</span>",
             self::USER_CONFIRM_EMAIL => "<span class='text-success'>ยืนยันผ่านแล้ว</span>",
             self::USER_BLOCK => "<span class='text-danger'>ถูกระงับ</span>",
         ];
@@ -159,22 +174,30 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public function getStatusText($status) {
         $res = $this->findAllStatusArray($status);
-        if (isset($res[$status])) {
+        if (isset($res[$status
+                ])) {
             return $res[$status];
         } else {
             return NULL;
         }
     }
 
-    public function findAllGenderArray() {
+    public function
+
+    findAllGenderArray() {
         return [
-            self::USER_STATUS_GENDER_Female => "เพศหญิง",
-            self::USER_STATUS_GENDER_Male => "เพศชาย",
+            self::USER_STATUS_GENDER_Female
+            => "เพศหญิง",
+            self::
+
+            USER_STATUS_GENDER_Male => "เพศชาย",
         ];
     }
 
-    public function getGenderText($status) {
-        $res = $this->findAllGenderArray($status);
+    public function getGenderText($status
+    ) {
+        $res = $this->
+                findAllGenderArray($status);
         if (isset($res[$status])) {
             return $res[$status];
         } else {
@@ -198,7 +221,7 @@ class User extends \common\models\costfit\master\UserMaster {
         }
     }
 
-    // USER TYPE
+// USER TYPE
     public function findAllTypeArray() {
         return [
             //const USER_TYPE_FRONTEND = 1;

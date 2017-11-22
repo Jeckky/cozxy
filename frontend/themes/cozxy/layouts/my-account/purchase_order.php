@@ -22,8 +22,6 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
     <div class="row" style="background-color: #fff;">
 
         <div class="col-lg-9 col-md-8 cart-body">
-            <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order, 'cartCalculates' => $cartCalculates]) ?>
-            <hr>
             <?php
             if (isset($trackingOrder) && !empty($trackingOrder)) {
                 ?>
@@ -32,12 +30,15 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                 </h4>
                 <div class="col-lg-12 col-md-12 cart-body">
                     <?= $this->render('@app/themes/cozxy/layouts/my-account/_tracking', ['trackingOrder' => $trackingOrder]) ?>
-                    <br>
-                    <div class="text-right">
-                        <a href="<?= \Yii::$app->homeUrl ?>my-account?act=order-history" class="b btn-yellow size16" style="margin:24px auto 12px"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO TO MY ACCOUNT</a>
-                    </div>
+                    <hr>
                 </div>
             <?php } ?>
+            <hr>
+            <?= $this->render('@app/themes/cozxy/layouts/order/purchase_order', ['order' => $order, 'cartCalculates' => $cartCalculates]) ?>
+
+            <div class="text-right">
+                <a href="<?= \Yii::$app->homeUrl ?>my-account?act=order-history" class="b btn-yellow size16" style="margin:24px auto 12px"><i class="fa fa-arrow-left" aria-hidden="true"></i> GO TO MY ACCOUNT</a>
+            </div>
         </div>
 
         <div class="col-lg-3 col-md-4">

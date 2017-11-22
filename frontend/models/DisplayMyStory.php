@@ -236,30 +236,33 @@ class DisplayMyStory extends Model {
         //throw new \yii\base\Exception(print_r($productPostRating, true));
         $productPost = ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
         $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
-        $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
+        $productPosts = ProductPost::find()->where("productId in($allProductId)")
+                ->orderBy("totalScore DESC")
+                ->all();
         $postId = '';
-        if (isset($productPosts) & count($productPosts) > 0) {
-            foreach ($productPosts as $post):
-                $postId .= $post->productPostId . ",";
-            endforeach;
-            $postId = substr($postId, 0, -1);
-        }
-        if ($postId != '') {
-            $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
-                    ->groupBy('productPostId')
-                    ->orderBy('avg(score) DESC')
-                    ->all();
-        }
-        if (!isset($productPostRating) || count($productPostRating) == 0) {
-            $byCreate = ProductPost::find()->where("productId in($allProductId)")
-                    ->orderBy('createDateTime DESC')
-                    ->all();
-            if (isset($byCreate) && count($byCreate) > 0) {
-                $productPostRating = $byCreate;
-            } else {
-                $productPostRating = null;
-            }
-        }
+        return $productPosts;
+        /* if (isset($productPosts) & count($productPosts) > 0) {
+          foreach ($productPosts as $post):
+          $postId .= $post->productPostId . ",";
+          endforeach;
+          $postId = substr($postId, 0, -1);
+          }
+          if ($postId != '') {
+          $productPostRating = \common\models\costfit\ProductPostRating::find()->where("productPostId in($postId)")
+          ->groupBy('productPostId')
+          ->orderBy('avg(score) DESC')
+          ->all();
+          }
+          if (!isset($productPostRating) || count($productPostRating) == 0) {
+          $byCreate = ProductPost::find()->where("productId in($allProductId)")
+          ->orderBy('createDateTime DESC')
+          ->all();
+          if (isset($byCreate) && count($byCreate) > 0) {
+          $productPostRating = $byCreate;
+          } else {
+          $productPostRating = null;
+          }
+          } */
 
         /* $popular = ProductPost::find()
           ->join('LEFT JOIN', 'product_post_rating', '`product_post`.`productPostId`=`product_post_rating`.`productPostId`')

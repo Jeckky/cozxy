@@ -47,9 +47,9 @@ use dosamigos\fileupload\FileUpload;
 
         <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
 
-        <!--        --><?php //ActiveForm::begin();                ?>
+        <!--        --><?php //ActiveForm::begin();                  ?>
         <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-        <!--        --><?php //ActiveForm::end();               ?>
+        <!--        --><?php //ActiveForm::end();                 ?>
 
     </div>
     <div class="col-md-10">

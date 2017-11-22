@@ -253,14 +253,19 @@ class DisplayMyAccount extends Model {
     }
 
     public static function myAccountEditPersonalDetail($data = array()) {
+        //echo '<pre>';
+        //print_r($data);
+        //exit();
         $birthDate = $data['yyyy'] . '-' . $data['mm'] . '-' . $data['dd'] . ' 00:00:00';
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-        $model->attributes = $data;
+        //$model->attributes = $data;
         $model->firstname = $data['firstname'];
         $model->lastname = $data['lastname'];
         $model->gender = $data['gender'];
         $model->tel = $data['tel'];
         $model->birthDate = $birthDate;
+        //echo $data['lastname'];
+        //exit();
         if ($model->save(FALSE)) {
             return TRUE;
         } else {
@@ -270,9 +275,13 @@ class DisplayMyAccount extends Model {
 
     public static function myAccountChangePassword($data = array()) {
         $model = \common\models\costfit\User::find()->where("userId ='" . Yii::$app->user->id . "'")->one();
-        $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
-        if ($model->save(FALSE)) {
-            return TRUE;
+        if (isset($data['newPassword']) && !empty($data['newPassword'])) {
+            $model->password_hash = Yii::$app->security->generatePasswordHash($data['newPassword']);
+            if ($model->save(FALSE)) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         } else {
             return FALSE;
         }

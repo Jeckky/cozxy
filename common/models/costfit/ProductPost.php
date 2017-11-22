@@ -29,6 +29,8 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     const STATUS_DELETE = 3;
     const COZXY_POST_REVIRES = 'review_post';
     const COZXY_WRITE_YOUR_STORY = 'write_your_story';
+    const VIEW_SCORE = 2;
+    const STAR_SCORE = 5;
 
     public function rules() {
         return array_merge(parent::rules(), [
@@ -64,7 +66,7 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
         return [
             self::STATUS_PRIVATE => "ส่วนตัว",
             self::STATUS_PUBLIC => "สาธารณะ",
-        //            self::STATUS_DELETE => "ลบ",
+                //            self::STATUS_DELETE => "ลบ",
         ];
     }
 
@@ -114,12 +116,12 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
 
     public static function productStory($n = null, $categoryId = null) {
         $productStories = self::find()
-        ->leftJoin('product p', 'p.productId=product_post.productId')
-        ->where(" product_post.userId != 0")
-        ->andWhere('product_post.productId is not null')
-        ->andWhere('product_post.status =1')
-        ->andWhere('p.productId is not null')
-        ->andWhere('product_post.isPublic=1');
+                ->leftJoin('product p', 'p.productId=product_post.productId')
+                ->where(" product_post.userId != 0")
+                ->andWhere('product_post.productId is not null')
+                ->andWhere('product_post.status =1')
+                ->andWhere('p.productId is not null')
+                ->andWhere('product_post.isPublic=1');
 
         if (isset($categoryId)) {
             $productStories->andWhere(['p.categoryId' => $categoryId]);
