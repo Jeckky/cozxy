@@ -470,11 +470,12 @@ class CheckoutController extends MasterController {
                         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
                         $fulfillment = "fulfillment@cozxy.com";
                         $subjectFulFillment = "Order to cozxy :" . $order->invoiceNo;
-                        $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates);
+                        //$orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates);
 
                         $urlFulfillment = "http://backend101.cozxy.com/order/order/purchase-order";
-                        $fulfillmentMail = Email::mailOrderFullfillment($fulfillment, $subjectFulFillment, $urlFulfillment, $userName, $adress, $orderList, $receiveType, $cartCalculates);
-                        return $this->render('_thank', compact('res'));
+                        //$fulfillmentMail = Email::mailOrderFullfillment($fulfillment, $subjectFulFillment, $urlFulfillment, $userName, $adress, $orderList, $receiveType, $cartCalculates);
+                        $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking($order->orderId)]);
+                        return $this->render('_thank', compact('res', 'trackingOrder'));
                     }
                 }
             } else {

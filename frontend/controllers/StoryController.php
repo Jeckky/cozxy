@@ -25,7 +25,6 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -35,17 +34,19 @@ class StoryController extends MasterController {
          */
         $canCountView = 0;
         if (isset($productPostId)) {
-            $canCountView = $this->countView($productPostId);
+            $token = \common\helpers\Token::getViewToken();
+            $canCountView = $this->countView($productPostId, $token);
             if ($canCountView == 1) {
                 $productViews = new \common\models\costfit\ProductPostView(); //รอเชค user Id และเวลา
                 $productViews->productPostId = $productPostId;
                 $productViews->userId = isset(Yii::$app->user->identity->userId) ? Yii::$app->user->identity->userId : NULL;
-                $cookies = Yii::$app->request->cookies;
-                if (isset($cookies['orderToken'])) {
-                    $productViews->token = $cookies['orderToken']->value;
-                } else {
-                    $productViews->token = NULL;
-                }
+                /* $cookies = Yii::$app->request->cookies;
+                  if (isset($cookies['viewToken'])) {
+                  $productViews->token = $cookies['viewToken']->value;
+                  } else {
+                  $productViews->token = NULL;
+                  } */
+                $productViews->token = $token;
                 $productViews->updateDateTime = new \yii\db\Expression('NOW()');
                 $productViews->createDateTime = new \yii\db\Expression('NOW()');
                 $productViews->save(FALSE);
@@ -706,10 +707,16 @@ class StoryController extends MasterController {
         }
     }
 
-    public function countView($productPostId) {
-        $productPostView = \common\models\costfit\ProductPostView::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id)
-                ->orderBy("productPostId DESC")
-                ->one(); // เอาอันล่าสุด
+    public function countView($productPostId, $token) {
+        if (Yii::$app->user->id) {
+            $productPostView = \common\models\costfit\ProductPostView::find()->where("productPostId=" . $productPostId . " and userId=" . Yii::$app->user->id . " and token='" . $token . "'")
+                    ->orderBy("productPostId DESC")
+                    ->one(); // เอาอันล่าสุด
+        } else {
+            $productPostView = \common\models\costfit\ProductPostView::find()->where("productPostId=" . $productPostId . " and token='" . $token . "'")
+                    ->orderBy("productPostId DESC")
+                    ->one();
+        }
         if (isset($productPostView)) {
             $time = $productPostView->createDateTime;
             $now = date('Y-m-d H:i:s');
