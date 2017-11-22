@@ -32,6 +32,7 @@ $productId = $model->productId;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([
