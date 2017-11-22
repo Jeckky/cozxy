@@ -151,9 +151,9 @@ class DisplayMyStory extends Model {
     }
 
     public static function productViewsRecentStories($productPostId) {
-        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId . ' and product_post.status =1')
-                        ->groupBy(['productId'])->orderBy('productPostId desc')->one();
-
+        $productPost = \common\models\costfit\ProductPost::find()->where('productPostId=' . $productPostId)
+                        ->groupBy(['productId'])
+                        ->orderBy('productPostId desc')->one();
         $star = DisplayMyStory::calculatePostRating($productPost->productPostId);
         $values = explode(",", $star);
         if (isset($productPost)) {
@@ -234,9 +234,10 @@ class DisplayMyStory extends Model {
           ->average('score'); */
 
         //throw new \yii\base\Exception(print_r($productPostRating, true));
-        $productPost = ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
         $productPosts = ProductPost::find()->where("productId in($allProductId)")
+                ->limit(6)
                 ->orderBy("totalScore DESC")
                 ->all();
         $postId = '';
@@ -281,7 +282,7 @@ class DisplayMyStory extends Model {
           /* ->where("productPostId=" . $productPostId)
           ->average('score'); */
 
-        $productPost = ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
+        $productPost = ProductPost::find()->where("productPostId=" . $productPostId)->one();
         $allProductId = ProductSuppliers::productSupplierGroupStory($productPost->productId);
         $productPosts = ProductPost::find()->where("productId in($allProductId)")->all();
         $postId = '';
