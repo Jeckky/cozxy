@@ -67,6 +67,7 @@ class ProductController extends ProductManagerMasterController
 
 
         $dataProvider = $searchModel->search($params);
+        $dataProvider->sort = ['defaultOrder'=>['createDateTime'=>SORT_DESC]];
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();

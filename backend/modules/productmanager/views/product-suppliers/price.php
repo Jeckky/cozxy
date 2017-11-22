@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
 
             <div class="form-group field-productpricesuppliers-price required">
-                <label class="col-sm-3 control-label" for="marketPrice">Markdt Price</label>
+                <label class="col-sm-3 control-label" for="marketPrice">Market Price</label>
                 <div class="col-sm-9"><input type="text" id="marketPrice" class="form-control" name="marketPrice" value="<?=$model->product->price?>" disabled="" aria-required="true"></div>
             </div>
             <?= $form->field($model->productPriceSuppliers, 'price')->textInput(['disabled'=>true, 'name'=>'currentPrice'])->label('Curretn Price') ?>
