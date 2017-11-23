@@ -63,7 +63,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                     case 'google':
                                         //$class = 'danger';
                                         $class = 'google';
-                                        $text = '<p>G +</p>';
+                                        $text = '<span>G +</span>';
                                         break;
                                     case 'live':
                                         $class = 'warning';

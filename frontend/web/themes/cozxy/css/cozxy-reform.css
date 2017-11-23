@@ -364,3 +364,11 @@ div.line_h {
     margin-left: -8px;
     margin-top: 0px
 }
+.circle span {
+    font-size: 26px;
+    /*vertical-align: middle;
+    display: table-cell;*/
+    text-align: center;
+    margin-left: -11px;
+    margin-top: 0px
+}
