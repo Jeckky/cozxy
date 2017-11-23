@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php Pjax::begin(); ?>    <?= GridView::widget([
+        'id'=>'products-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -28,6 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
             //            'productId',
             //            'userId',
             //            'parentId',
+            [
+//                'header'=>Html::checkbox('deleteAll', false, ['class'=>'deleteAll']),
+                'header'=>Html::button('Delete', ['class'=>'btn btn-danger', 'disabled'=>true, 'id'=>'deleteMultipleProducts']),
+                'value'=>function($model) {
+                    return Html::checkbox('delete['.$model->productId.']', false, ['class'=>'delProduct', 'id'=>'del-'.$model->productId, 'data-id'=>$model->productId, 'value'=>$model->productId]);
+                },
+                'format'=>'raw',
+            ],
             [
                 'attribute' => 'title',
                 'value' => function ($model) {
@@ -80,3 +89,42 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
+
+<?php $this->registerJs("
+    $('.deleteAll').click(function(){
+        if($(this).is(':checked')) {
+            $('.delProduct').prop('checked', true);
+        } else {
+            $('.delProduct').attr('checked', false);
+        }
+    });
+    
+    $('.delProduct').click(function(){
+        var numChecked = $('.delProduct:checked').length;
+        if(numChecked > 0) {
+            $('#deleteMultipleProducts').prop('disabled', false);
+        } else {
+            $('#deleteMultipleProducts').prop('disabled', true);
+        }
+    });
+    
+    $('#deleteMultipleProducts').click(function(){
+        var delProduct = [];
+        $('.delProduct:checked').each(function(i, e) {
+            delProduct.push($(this).val());
+        });
+        
+        if(confirm('Delete Selected Products')){
+            $.ajax({
+                url : '".Yii::$app->homeUrl."productmanager/product/multiple-delete',
+                method:'POST',
+                dataType:'json',
+                data : {productIds:delProduct.join()},
+                success : function(data) {
+                    //do some thing
+                    $.pjax({container:'#products-grid'});
+                }
+            });   
+        }
+    });
+");?>
