@@ -163,7 +163,7 @@ use leandrogehlen\treegrid\TreeGrid;
                         <div class="panel-heading">
                             <div class="widget-profile-header">
                                 <a href="<?php echo Yii::$app->homeUrl; ?>suppliers/product" class="btn" style="color: #000;">
-                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Product Suppliers </a><br>
+                                    <i class="fa fa-tasks list-group-icon text-danger"></i> Product Show All </a><br>
                             </div>
                         </div> <!-- / .panel-heading -->
                         <div class="panel-body text-left">
