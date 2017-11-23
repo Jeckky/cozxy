@@ -10,8 +10,11 @@ class ProductController extends SuppliersMasterController {
     public function actionIndex() {
         $userSuppliers = Suppliers::GetUserSuppliers();
         $productCountents = Suppliers::GetUserContents();
+        //echo '<pre>';
+        //print_r($productCountents);
+        //exit();
         return $this->render('index', [
-            'userSuppliers' => $userSuppliers, 'productCountents' => $productCountents
+                    'userSuppliers' => $userSuppliers, 'productCountents' => $productCountents
         ]);
     }
 

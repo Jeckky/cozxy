@@ -114,7 +114,6 @@ class CheckoutController extends MasterController {
         if (!isset($NewBilling->isDefault)) {
             $NewBilling->isDefault = 0;
         }
-
         return $this->render('index', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 

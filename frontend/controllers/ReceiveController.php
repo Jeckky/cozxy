@@ -84,24 +84,18 @@ class ReceiveController extends MasterController {
                     } else {
                         $user = User::find()->where("userId='" . $order->userId . "'")->one();
                         if (isset($user) && !empty($user)) {
-                            $address = Address::find()->where("userId='" . $user->userId . "' and isDefault=1")->one();
+                            $address = Address::find()->where("addressId='" . $order->address)->one();
                             if (isset($address) && !empty($address)) {
-                                $tel = $address->tel;
+                                $res["status"] = 200; //success
+                                $res["tel"] = $address->tel;
+                                $res["email"] = $user->email; //ที่ใช่ LOG IN
+                                $res["name"] = $address->firstname . ' ' . $address->lastname;
+                                $res["orderNo"] = $order->orderNo;
+                                $res["orderId"] = $order->orderId;
+                                $res['server'] = $_SERVER;
+                                //print_r(Json::encode($res));
+                                return Json::encode($res);
                             }
-//                    return $this->render('detail', [
-//                                'user' => $user,
-//                                'tel' => $tel,
-//                                'orderId' => $order->orderId
-//                    ]);
-                            $res["status"] = 200; //success
-                            $res["tel"] = $user->tel;
-                            $res["email"] = $user->email;
-                            $res["name"] = $user->firstname . ' ' . $user->lastname;
-                            $res["orderNo"] = $order->orderNo;
-                            $res["orderId"] = $order->orderId;
-                            $res['server'] = $_SERVER;
-                            //print_r(Json::encode($res));
-                            return Json::encode($res);
                         } else {
                             //$ms = 'ไม่เจอรายการสินค้า'; //301
                             $res["status"] = 301;

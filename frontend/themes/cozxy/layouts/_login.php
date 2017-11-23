@@ -36,15 +36,18 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                     <div class="size14">&nbsp;</div>
                     <a href="#" class="btn-google text-center fullwidth"><i class="fa fa-google-plus" aria-hidden="true"></i> &nbsp; LOGIN</a>
                     -->
-                    <?php
-                    if (isset($_GET['test'])) {
+                    <div class="block">
+                        <div style="border-bottom: 8px #000 solid; margin-bottom: 30px;"></div>
+                        <div class="text-left">
+                            OR LOGIN WITH
+                            <div class="size14 hr-margin">&nbsp;</div>
+                        </div>
+                        <?php
+                        //if (isset($_GET['test'])) {
                         $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
                                     'baseAuthUrl' => ['site/auth'],
                                     'popupMode' => false,
                         ]);
-                        //echo '<pre>';
-                        //print_r($authAuthChoice->getClients());
-                        //echo $authAuthChoice->clientCollection;
                         ?>
                         <?php foreach ($authAuthChoice->getClients() as $client): ?>
                             <?php
@@ -52,6 +55,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                 case 'facebook':
                                     //$class = 'primary';
                                     $class = 'facebook';
+                                    $text = '<p>F</p>';
                                     break;
                                 case 'twitter':
                                     $class = 'info';
@@ -59,19 +63,22 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                 case 'google':
                                     //$class = 'danger';
                                     $class = 'google';
+                                    $text = '<span>G +</span>';
                                     break;
                                 case 'live':
                                     $class = 'warning';
                                     break;
                             }
 
-                            echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
+                            //echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
+                            echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' circle circle-' . $class . ' btn-block '])
                             ?>
                         <?php endforeach; ?>
                         <?php
                         yii\authclient\widgets\AuthChoice::end();
-                    }
-                    ?>
+                        //}
+                        ?>
+                    </div>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
@@ -93,7 +100,6 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                         <?php
                     }
                     ?>
-
                     <div class="size6">&nbsp;</div>
                     <div class="text-center"><a href="<?= Url::to(['/site/why-register']) ?>"><u class="fc-black">Why register?</u></a></div>
                 </div>

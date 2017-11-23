@@ -328,3 +328,48 @@ div.line_h {
     font-size: 14px;
     margin-bottom: 50px;
 }
+
+.block {
+    text-align: right;
+    vertical-align: middle;
+}
+.circle-test {
+    height: 60px;
+    width:60px;
+    overflow:hidden;
+    border-radius:50%;
+    zoom: .7;
+}
+.circle-facebook {
+    height: 63px;
+    width:60px;
+    overflow:hidden;
+    border-radius:50%;
+    zoom: .7;
+    margin-top: 5px;
+
+}
+.circle-google{
+    height: 62px;
+    width:60px;
+    overflow:hidden;
+    border-radius:50%;
+    zoom: .7;
+
+}
+.circle p {
+    font-size: 26px;
+    /*vertical-align: middle;
+    display: table-cell;*/
+    text-align: center;
+    margin-left: -8px;
+    margin-top: 0px
+}
+.circle span {
+    font-size: 26px;
+    /*vertical-align: middle;
+    display: table-cell;*/
+    text-align: center;
+    margin-left: -11px;
+    margin-top: 0px
+}
