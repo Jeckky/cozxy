@@ -100,7 +100,6 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                         <?php
                     }
                     ?>
-
                     <div class="size6">&nbsp;</div>
                     <div class="text-center"><a href="<?= Url::to(['/site/why-register']) ?>"><u class="fc-black">Why register?</u></a></div>
                 </div>
