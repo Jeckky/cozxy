@@ -924,7 +924,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     static public function findReciever($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order)) {
-            $user = User::find()->where("userId=" . $order->userId)->one();
+            $user = Address::find()->where("addressId=" . $order->addressId)->one();
             if (isset($user)) {
                 return $user->firstname . " " . $user->lastname;
             } else {

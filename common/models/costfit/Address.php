@@ -183,11 +183,11 @@ class Address extends \common\models\costfit\master\AddressMaster {
 
     public static function CompanyByOderId($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        $address = Address::find()->where("userId=" . $order->userId . " and status=1 and isDefault=1")->one();
+        $address = Address::find()->where("addressId=" . $order->addressId)->one();
         if (isset($address) && !empty($address)) {
             return $address;
         } else {
-            $address2 = Address::find()->where("userId=" . $order->userId . " and status=1")
+            $address2 = Address::find()->where("userId=" . $order->userId . " and status=1  and isDefault=1")
                     ->orderBy("createDateTime DESC")
                     ->one();
             if (isset($address2)) {
