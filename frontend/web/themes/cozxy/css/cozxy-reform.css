@@ -346,6 +346,7 @@ div.line_h {
     overflow:hidden;
     border-radius:50%;
     zoom: .7;
+    margin-top: 5px;
 
 }
 .circle-google{
