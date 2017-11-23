@@ -260,11 +260,17 @@ class Suppliers {
 
     public static function GetProductPrice($productId) {
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
-                ->select('`product_price_suppliers`.price')
-                ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
-                ->where("product_suppliers.productId=" . $productId . ' and product_suppliers.result  > 0  and product_price_suppliers.status = 1')
+                ->where("product_suppliers.productId=" . $productId . ' and product_suppliers.result  > 0  ')
                 ->one();
-        return $GetProductSuppliers;
+        if (isset($GetProductSuppliers['productSuppId'])) {
+            $GetPriceSuppliers = \common\models\costfit\ProductPriceSuppliers::find()
+                    ->where("productSuppId=" . $GetProductSuppliers['productSuppId'] . ' and product_price_suppliers.status = 1')
+                    ->one();
+            return number_format($GetPriceSuppliers['price'], 2);
+        } else {
+            return '-';
+        }
+        //return $GetProductSuppliers;
     }
 
     /*

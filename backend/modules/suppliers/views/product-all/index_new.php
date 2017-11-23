@@ -37,18 +37,8 @@ use leandrogehlen\treegrid\TreeGrid;
                     if ($data->parentId == NULL) {
                         return '<span class="text-danger">' . number_format($data->price, 2) . ' (market price)</span>';
                     } else {
-                        //$price = common\helpers\Suppliers::GetProductPrice($data->productId);
-                        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
-                                ->where("product_suppliers.productId=" . $data->productId . ' and product_suppliers.result  > 0  ')
-                                ->one();
-                        if (isset($GetProductSuppliers['productSuppId'])) {
-                            $GetPriceSuppliers = common\models\costfit\ProductPriceSuppliers::find()
-                                    ->where("productSuppId=" . $GetProductSuppliers['productSuppId'] . ' and product_price_suppliers.status = 1')
-                                    ->one();
-                            return number_format($GetPriceSuppliers['price'], 2);
-                        } else {
-                            return '-';
-                        }
+                        $price = common\helpers\Suppliers::GetProductPrice($data->productId);
+                        return $price;
                     }
                 },
             ],
