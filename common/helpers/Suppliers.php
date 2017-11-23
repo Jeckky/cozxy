@@ -213,16 +213,32 @@ class Suppliers {
      */
 
     public static function GetUserSuppliers() {
-        $user = \common\models\costfit\User::find()->where('type =' . \common\models\costfit\User::USER_TYPE_SUPPLIERS)->all();
+        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner'")->all();
+        foreach ($userGroup as $value) {
+            $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+        }
         return $user;
     }
 
     public static function GetUserContents() {
-        $user = \common\models\costfit\User::find()->where('type =' . \common\models\costfit\User::USER_TYPE_CONTENT)->all();
+        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Content'")->all();
+        foreach ($userGroup as $key => $value) {
+            $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+        }
         return $user;
     }
 
     public static function GetCountProduct($userId) {
+        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId)->count();
+        return $count;
+    }
+
+    public static function GetCountProductMaster($userId) {
+        $count = \common\models\costfit\Product::find()->where('userId=' . $userId)->count();
+        return $count;
+    }
+
+    public static function GetCountMyProduct($userId) {
         $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId)->count();
         return $count;
     }
@@ -235,6 +251,20 @@ class Suppliers {
     public static function GetCountProductWait($userId) {
         $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId . ' and approve in ("' . \common\models\costfit\ProductSuppliers::SUPPLIERS_NEW . '","' . \common\models\costfit\ProductSuppliers::SUPPLIERS_OLD . '") ')->count();
         return $count;
+    }
+
+    public static function GetUser($user_id) {
+        $user = \common\models\costfit\User::find()->where('userId =' . $user_id)->one();
+        return $user;
+    }
+
+    public static function GetProductPrice($productId) {
+        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
+                ->select('`product_price_suppliers`.price')
+                ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId=product_suppliers.productSuppId")
+                ->where("product_suppliers.productId=" . $productId . ' and product_suppliers.result  > 0  and product_price_suppliers.status = 1')
+                ->one();
+        return $GetProductSuppliers;
     }
 
     /*

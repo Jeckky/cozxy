@@ -4,23 +4,42 @@ namespace backend\modules\suppliers\controllers;
 
 use Yii;
 use common\models\costfit\ProductSuppliers;
+use common\models\costfit\Product;
 use yii\data\ActiveDataProvider;
+use common\helpers\Suppliers;
 
 class ProductAllController extends SuppliersMasterController {
 
     public function actionIndex() {
 
         $userId = Yii::$app->request->get('userId');
+
+        $user = \common\helpers\Suppliers::GetUser($userId);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Product::find()->where('userId=' . $userId)->orderBy('product.productId desc'), 'pagination' => [
+                'pageSize' => 10000,
+            ],
+        ]);
+
+        return $this->render('index_new', [
+                    'dataProvider' => $dataProvider, 'user' => $user
+        ]);
+    }
+
+    public function actionIndex1() {
+
+        $userId = Yii::$app->request->get('userId');
         $dataProvider = new ActiveDataProvider([
             'query' => ProductSuppliers::find()
-            ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
+                    ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
             where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
             AS `priceSuppliers`')
-            ->where('userId=' . $userId)->orderBy('product_suppliers.productSuppId desc'),
+                    ->where('userId=' . $userId)->orderBy('product_suppliers.productSuppId desc'),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -32,7 +51,7 @@ class ProductAllController extends SuppliersMasterController {
         ]);
 
         return $this->render('view', [
-            'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
+                    'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
         ]);
     }
 
