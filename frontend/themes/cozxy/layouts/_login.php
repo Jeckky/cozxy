@@ -71,7 +71,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                 }
 
                                 //echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
-                                echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' btn-block circle'])
+                                echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' circle circle-' . $class . ' btn-block '])
                                 ?>
                             <?php endforeach; ?>
                             <?php

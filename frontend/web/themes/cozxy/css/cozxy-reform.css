@@ -333,12 +333,28 @@ div.line_h {
     text-align: right;
     vertical-align: middle;
 }
-.circle {
+.circle-test {
     height: 60px;
     width:60px;
     overflow:hidden;
     border-radius:50%;
     zoom: .7;
+}
+.circle-facebook {
+    height: 63px;
+    width:60px;
+    overflow:hidden;
+    border-radius:50%;
+    zoom: .7;
+
+}
+.circle-google{
+    height: 62px;
+    width:60px;
+    overflow:hidden;
+    border-radius:50%;
+    zoom: .7;
+
 }
 .circle p {
     font-size: 26px;
