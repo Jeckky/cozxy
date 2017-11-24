@@ -621,7 +621,27 @@ class SiteController extends MasterController {
         //echo '<pre>';
         //print_r($userAttributes);
         //echo isset($client->id) ? $client->id : '';
-
+        /*
+          {
+          "id": "1844331838928253",
+          "name": "Taninut Bm",
+          "first_name": "Taninut",
+          "last_name": "Bm",
+          "gender": "female",
+          "link": "https://www.facebook.com/app_scoped_user_id/1844331838928253/",
+          "picture": {
+          "data": {
+          "height": 50,
+          "width": 50,
+          "url": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/22448643_1802834776411293_796660684039622722_n.jpg?oh=4f8ba5e029d5a7ad6a1f7b863f79490a&oe=5A9449B9"
+          }
+          },
+          "about": "Short Life",
+          "birthday": "07/17/1983",
+          "locale": "th_TH",
+          "timezone": 7
+          }
+         */
         if ($client->id == 'google') {
             $email = $userAttributes['emails'][0]['value'];
             $token = $userAttributes['id'];
@@ -635,6 +655,15 @@ class SiteController extends MasterController {
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             $firstname = $name[0];
             $lastname = $name[1];
+            /* $gender = $userAttributes['gender'];
+              $picture = $userAttributes['picture']['data']['url'];
+              $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
+              if (isset($birthday)) {
+              list($day, $month, $year) = explode("/", '07/17/1983');
+              $birthday = $year . '-' . $month . '-' . $day;
+              } else {
+              $birthday = NULL;
+              } */
         } else {
             return $this->redirect('/site/login');
         }
