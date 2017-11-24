@@ -1,4 +1,7 @@
 <?php
+
+use common\models\costfit\Order;
+
 if (count($trackingOrder->allModels) > 0) {
     foreach ($trackingOrder->allModels as $key => $value) {
         ?>
@@ -17,49 +20,65 @@ if (count($trackingOrder->allModels) > 0) {
                 <div class="col-lg-12 col-md-12">
                     <table style="width: 100%" class="text-center">
                         <tr>
-                            <td>
+                            <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= 5) {
+                                if ($value['status'] >= Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
                                     ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-box.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/1-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-box.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/1-g-box.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
-                            <td>
+                            <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= 14) {
+                                if ($value['status'] >= Order::ORDER_STATUS_SENDING_SHIPPING) {
                                     ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-truck.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/2-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-truck.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/2-g.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
-                            <td>
+                            <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= 15) {
+                                if ($value['status'] >= Order::ORDER_STATUS_SEND) {
                                     ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-y-check.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/3-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
-                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/i-g-check.png" alt="" class="img-responsive img-circle">
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/3-g.png" alt="" class="img-responsive img-circle">
+                                <?php } ?>
+                            </td>
+                            <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
+                            <td style="width: 24%;">
+                                <?php
+                                if ($value['status'] >= Order::ORDER_STATUS_RECEIVED) {
+                                    ?>
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/4-y.png" alt="" class="img-responsive img-circle">
+                                <?php } else { ?>
+                                    <img src="<?= \Yii::$app->homeUrl ?>imgs/4-g.png" alt="" class="img-responsive img-circle">
                                 <?php } ?>
                             </td>
                         </tr>
                         <tr>
-                            <td><div class="size10">&nbsp;</div><p>ON PROCESS</p></td>
+        <!--                            <td><div class="size10">&nbsp;</div><p>ON PROCESS</p></td>
                             <td>&nbsp;</td>
                             <td><div class="size10">&nbsp;</div><p class="fc-g999">SHIPPING</p></td>
                             <td>&nbsp;</td>
-                            <td><div class="size10">&nbsp;</div><p class="fc-g999">COMPLETE</p></td>
-        <!--                            <td><div class="size10">&nbsp;</div><p>PREPARING</p></td>
+                            <td><div class="size10">&nbsp;</div><p class="fc-g999">COMPLETE</p></td>-->
+                            <td><div class="size10">&nbsp;</div><p>PREPARING</p></td>
                             <td>&nbsp;</td>
-                            <td><div class="size10">&nbsp;</div><p class="fc-g999">READY TO SHIP</p></td>
+                            <td><div class="size10">&nbsp;</div>
+                                <p class="<?= $value['status'] >= Order::ORDER_STATUS_SENDING_SHIPPING ? '' : 'fc-g999' ?>">READY TO SHIP</p>
+                            </td>
                             <td>&nbsp;</td>
-                            <td><div class="size10">&nbsp;</div><p class="fc-g999">SHIPPED</p></td>
+                            <td><div class="size10">&nbsp;</div>
+                                <p class="<?= $value['status'] >= Order::ORDER_STATUS_SEND ? '' : 'fc-g999' ?>">SHIPPED</p>
+                            </td>
                             <td>&nbsp;</td>
-                            <td><div class="size10">&nbsp;</div><p class="fc-g999">RECEIVED</p></td>-->
+                            <td><div class="size10">&nbsp;</div>
+                                <p class="<?= $value['status'] >= Order::ORDER_STATUS_RECEIVED ? '' : 'fc-g999' ?>">RECEIVED</p>
+                            </td>
                         </tr>
                     </table>
                 </div>
