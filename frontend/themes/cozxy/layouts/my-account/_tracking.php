@@ -32,7 +32,7 @@ if (count($trackingOrder->allModels) > 0) {
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
                             <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= Order::ORDER_STATUS_PACKED) {
+                                if ($value['status'] >= Order::ORDER_STATUS_PACKED && $value['status'] != 17 && $value['status'] != 18) {
                                     ?>
                                     <img src="<?= \Yii::$app->homeUrl ?>imgs/2-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
@@ -42,7 +42,7 @@ if (count($trackingOrder->allModels) > 0) {
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
                             <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= Order::ORDER_STATUS_SEND) {
+                                if ($value['status'] >= Order::ORDER_STATUS_SEND && $value['status'] != 17 && $value['status'] != 18) {
                                     ?>
                                     <img src="<?= \Yii::$app->homeUrl ?>imgs/3-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
@@ -52,7 +52,7 @@ if (count($trackingOrder->allModels) > 0) {
                             <td><i class="fa fa-arrow-right size24" aria-hidden="true"></i></td>
                             <td style="width: 24%;">
                                 <?php
-                                if ($value['status'] >= Order::ORDER_STATUS_RECEIVED) {
+                                if ($value['status'] >= Order::ORDER_STATUS_RECEIVED && $value['status'] != 17 && $value['status'] != 18) {
                                     ?>
                                     <img src="<?= \Yii::$app->homeUrl ?>imgs/4-y.png" alt="" class="img-responsive img-circle">
                                 <?php } else { ?>
