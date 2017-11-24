@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <label class="col-sm-3 control-label" for="marketPrice">Market Price</label>
                 <div class="col-sm-9"><input type="text" id="marketPrice" class="form-control" name="marketPrice" value="<?=$model->product->price?>" disabled="" aria-required="true"></div>
             </div>
-            <?= $form->field($model->productPriceSuppliers, 'price')->textInput(['disabled'=>true, 'name'=>'currentPrice'])->label('Curretn Price') ?>
+            <?= $form->field($model->productPriceSuppliers, 'price')->textInput(['disabled'=>true, 'name'=>'currentPrice'])->label('Current Price') ?>
             <?= $form->field($productPriceSuppliers, 'price')->textInput(['value'=>0, 'id'=>'productPrice'])->label('New Price') ?>
             <div class="col-md-9 col-md-offset-3">
                 <?=Html::submitButton('Change Price', ['class'=>'btn btn-primary btn-block btn-lg'])?>

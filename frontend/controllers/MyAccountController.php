@@ -220,9 +220,9 @@ class MyAccountController extends MasterController {
             } else {
                 $userPoint = $this->CreateUserPoint($order->userId);
             }
-
+            $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($params['orderId']);
             //$orderItem = PickingPoint::GetOrderItemrGroupLockersMaster($orderId);
-            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint'));
+            return $this->render('@app/themes/cozxy/layouts/my-account/purchase_order', compact('order', 'userPoint', 'cartCalculates'));
         } else {
             return $this->redirect(['my-account']);
         }

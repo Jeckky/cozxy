@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]); ?>
 
-            <?= $form->field($model, 'result')->textInput(['disabled'=>true, 'id'=>'currentStock'])->label('Curretn Stock') ?>
+            <?= $form->field($model, 'result')->textInput(['disabled'=>true, 'id'=>'currentStock'])->label('Current Stock') ?>
             <?= $form->field($model, 'addStock')->textInput(['value'=>0, 'id'=>'productStock', 'type'=>'number'])->label('Add Stock') ?>
             <div class="col-md-9 col-md-offset-3">
                 <?=Html::submitButton('Add Stock', ['class'=>'btn btn-primary btn-block btn-lg'])?>
