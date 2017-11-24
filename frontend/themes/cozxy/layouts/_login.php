@@ -43,40 +43,40 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                             <div class="size14 hr-margin">&nbsp;</div>
                         </div>
                         <?php
-                        if (isset($_GET['test'])) {
-                            $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
-                                        'baseAuthUrl' => ['site/auth'],
-                                        'popupMode' => false,
-                            ]);
-                            ?>
-                            <?php foreach ($authAuthChoice->getClients() as $client): ?>
-                                <?php
-                                switch ($client->getName()) {
-                                    case 'facebook':
-                                        //$class = 'primary';
-                                        $class = 'facebook';
-                                        $text = '<p>F</p>';
-                                        break;
-                                    case 'twitter':
-                                        $class = 'info';
-                                        break;
-                                    case 'google':
-                                        //$class = 'danger';
-                                        $class = 'google';
-                                        $text = '<p>G +</p>';
-                                        break;
-                                    case 'live':
-                                        $class = 'warning';
-                                        break;
-                                }
-
-                                //echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
-                                echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' btn-block circle'])
-                                ?>
-                            <?php endforeach; ?>
+                        //if (isset($_GET['test'])) {
+                        $authAuthChoice = yii\authclient\widgets\AuthChoice::begin([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => false,
+                        ]);
+                        ?>
+                        <?php foreach ($authAuthChoice->getClients() as $client): ?>
                             <?php
-                            yii\authclient\widgets\AuthChoice::end();
-                        }
+                            switch ($client->getName()) {
+                                case 'facebook':
+                                    //$class = 'primary';
+                                    $class = 'facebook';
+                                    $text = '<p>F</p>';
+                                    break;
+                                case 'twitter':
+                                    $class = 'info';
+                                    break;
+                                case 'google':
+                                    //$class = 'danger';
+                                    $class = 'google';
+                                    $text = '<span>G +</span>';
+                                    break;
+                                case 'live':
+                                    $class = 'warning';
+                                    break;
+                            }
+
+                            //echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
+                            echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' circle circle-' . $class . ' btn-block '])
+                            ?>
+                        <?php endforeach; ?>
+                        <?php
+                        yii\authclient\widgets\AuthChoice::end();
+                        //}
                         ?>
                     </div>
                     <?php ActiveForm::end(); ?>
