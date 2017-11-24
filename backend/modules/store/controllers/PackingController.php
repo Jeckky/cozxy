@@ -96,7 +96,6 @@ class PackingController extends StoreMasterController {
                     if (isset($items) && !empty($items)) {
                         $packingItems = OrderItemPacking::find()->where("orderItemId=" . $items->orderItemId . " and status=99 and packer=" . Yii::$app->user->identity->userId)->one(); //ได้ตัวที่อยู่ในถุงแต่ยังไม่ปิดถุง
                         if (isset($packingItems)) {
-
                             $save = $this->checkSum($items->orderItemId, $items->quantity);
                             if ($save == true) {
                                 $sameType = $this->checkSameType($items->receiveType);
