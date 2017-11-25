@@ -107,12 +107,12 @@ class ProductSuppliersController extends SuppliersMasterController {
 //        ->select('`product_suppliers`.* ,  (SELECT product_price_suppliers.price  FROM product_price_suppliers
 //            where product_price_suppliers.productSuppId = product_suppliers.productSuppId and product_price_suppliers.status = 1  limit 1)
 //            AS `priceSuppliers`')
-        ->select('`product_suppliers`.* ,pps.price as priceSuppliers')
-        ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
-        ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
-        ->where("pps.status = 1 AND product_suppliers.userId =" . Yii::$app->user->identity->userId . " AND p.productId IS NOT NULL AND p.parentId IS NULL ")
+                ->select('`product_suppliers`.* ,pps.price as priceSuppliers')
+                ->join("LEFT JOIN", "product p", "p.productId = product_suppliers.productId")
+                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+                ->where("pps.status = 1 AND product_suppliers.userId =" . Yii::$app->user->identity->userId . " AND p.productId IS NOT NULL AND p.parentId IS NULL ")
 //        ->where('categoryId = ' . $CategoryId . ' and userId=' . Yii::$app->user->identity->userId . $groupId)
-        ->orderBy('product_suppliers.productSuppId desc');
+                ->orderBy('product_suppliers.productSuppId desc');
 
         if (isset($CategoryId) && !empty($CategoryId)) {
             $query->andWhere("product_suppliers.categoryId =  $CategoryId");
@@ -131,10 +131,10 @@ class ProductSuppliersController extends SuppliersMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'brandId' => isset($BrandId) ? $BrandId : '',
-            'categoryId' => isset($CategoryId) ? $CategoryId : '',
-            'productGroupId' => $productGroupId
+                    'dataProvider' => $dataProvider,
+                    'brandId' => isset($BrandId) ? $BrandId : '',
+                    'categoryId' => isset($CategoryId) ? $CategoryId : '',
+                    'productGroupId' => $productGroupId
         ]);
     }
 
@@ -154,7 +154,7 @@ class ProductSuppliersController extends SuppliersMasterController {
         ]);
 
         return $this->render('view', [
-            'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
+                    'model' => $this->findModel($id), 'dataProviderImages' => $dataProviderImages
         ]);
     }
 
@@ -273,7 +273,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             }
         } else {
             return $this->render('create', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
     }
@@ -314,25 +314,25 @@ class ProductSuppliersController extends SuppliersMasterController {
             if ($model->save()) {
                 \common\models\costfit\CategoryToProduct::saveCategoryToProduct($model->categoryId, $model->productId);
                 $product = \common\models\costfit\Product::updateAll(
-                [
-                    'isbn' => $_POST['ProductSuppliers']['isbn'],
-                    'title' => $_POST['ProductSuppliers']['title'],
-                    'shortDescription' => $_POST['ProductSuppliers']['shortDescription'],
-                    'description' => $_POST['ProductSuppliers']['description'],
-                    'specification' => $_POST['ProductSuppliers']['specification'],
-                    'width' => $_POST['ProductSuppliers']['width'],
-                    'height' => $_POST['ProductSuppliers']['height'],
-                    'depth' => $_POST['ProductSuppliers']['depth'],
-                    'weight' => $_POST['ProductSuppliers']['weight'],
-                    'tags' => $_POST['ProductSuppliers']['tags'],
-                    'suppCode' => $_POST['ProductSuppliers']['suppCode'],
-                //'merchantCode' => $_POST['ProductSuppliers']['merchantCode'],
-                ], ['productId' => $model1->productId, 'productSuppId' => $id]);
+                                [
+                            'isbn' => $_POST['ProductSuppliers']['isbn'],
+                            'title' => $_POST['ProductSuppliers']['title'],
+                            'shortDescription' => $_POST['ProductSuppliers']['shortDescription'],
+                            'description' => $_POST['ProductSuppliers']['description'],
+                            'specification' => $_POST['ProductSuppliers']['specification'],
+                            'width' => $_POST['ProductSuppliers']['width'],
+                            'height' => $_POST['ProductSuppliers']['height'],
+                            'depth' => $_POST['ProductSuppliers']['depth'],
+                            'weight' => $_POST['ProductSuppliers']['weight'],
+                            'tags' => $_POST['ProductSuppliers']['tags'],
+                            'suppCode' => $_POST['ProductSuppliers']['suppCode'],
+                                //'merchantCode' => $_POST['ProductSuppliers']['merchantCode'],
+                                ], ['productId' => $model1->productId, 'productSuppId' => $id]);
                 return $this->redirect(['index?BrandId=' . $BrandId . '&CategoryId=' . $CategoryId . $productGroupId]);
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -382,7 +382,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             //$model = \common\models\costfit\ProductImageSuppliers::find()->where('productSuppId = ' . $id)->one();
             $dataProvider = new ActiveDataProvider([
                 'query' => \common\models\costfit\ProductImageSuppliers:: find()
-                ->where('productSuppId = ' . $productSuppId . ' order by ordering asc'),
+                        ->where('productSuppId = ' . $productSuppId . ' order by ordering asc'),
             ]);
             $productTitle = \common\models\costfit\ProductSuppliers::find()->where('productSuppId = ' . $productSuppId)->one();
 
@@ -416,7 +416,7 @@ class ProductSuppliersController extends SuppliersMasterController {
 
 
         return $this->render('/image-form/_form', [
-            'dataProvider' => $dataProvider, 'productTitle' => $productTitle
+                    'dataProvider' => $dataProvider, 'productTitle' => $productTitle
         ]);
     }
 
@@ -494,7 +494,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             return $this->redirect(Yii::$app->homeUrl . 'suppliers/product-price-suppliers/create?productSuppId = ' . $model->productSuppId);
         } else {
             return $this->render('/duplicate/update', [
-                'model' => $modelx,
+                        'model' => $modelx,
             ]);
         }
         ///return $this->render('/duplicate/index', [
@@ -505,12 +505,12 @@ class ProductSuppliersController extends SuppliersMasterController {
 
         $ms = '';
         $model = \common\models\costfit\Order::find()
-        ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
-        ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
-        ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
-        ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
-        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
-        ->all();
+                ->select(['`order`.*', '`product_suppliers`.*', '`order_item`.*'])
+                ->join('LEFT JOIN', 'order_item', 'order.orderId = order_item.orderId')
+                ->join('LEFT JOIN', 'product_suppliers', 'order_item.productSuppId = product_suppliers.productSuppId')
+                ->where('`order`.status = ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . '  '
+                        . 'and `product_suppliers`.userId =' . Yii::$app->user->identity->userId)
+                ->all();
         $productSuppIds = [];
         $old = [];
         if (isset($model) && count($model) > 0) {
@@ -530,7 +530,7 @@ class ProductSuppliersController extends SuppliersMasterController {
             $productSuppIds = $old;
         }
         return $this->render('/order-list/index', [
-            'productSuppIds' => $productSuppIds
+                    'productSuppIds' => $productSuppIds
         ]);
     }
 

@@ -44,8 +44,8 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(8)]);
         $statusText = '';
         $user = User::find()->where(['userId' => Yii::$app->user->id])->one();
-
-
+        //echo '<pre>';
+        //print_r($cozxyCoin);
         return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory', 'user'));
     }
 
