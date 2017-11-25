@@ -273,6 +273,11 @@ class Suppliers {
         //return $GetProductSuppliers;
     }
 
+    public static function GetMyProductResulte($productId) {
+        $result = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
+        return $result['result'];
+    }
+
     /*
      * Frontend : products/frfrmkfmrfrfmrmfrmfrkf
      * Create date : 14/02/2017

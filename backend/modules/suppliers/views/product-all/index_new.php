@@ -24,9 +24,18 @@ use leandrogehlen\treegrid\TreeGrid;
                 'format' => 'raw',
                 'value' => function($data, $index, $num) {
                     if ($data->parentId == NULL) {
-                        return '<span class="text-danger"><strong>' . $data->title . '&nbsp;(' . $data->productId . ')</strong></span>';
+
+                        if (Yii::$app->user->id == 39) {
+                            return '<span class="text-danger"><strong>' . $data->title . '&nbsp;(' . $data->productId . ')</strong></span>';
+                        } else {
+                            return '<span class="text-danger"><strong>' . $data->title;
+                        }
                     } else {
-                        return '- ' . $data->title . '&nbsp;(' . $data->productId . ')';
+                        if (Yii::$app->user->id == 39) {
+                            return '- ' . $data->title . '&nbsp;(' . $data->productId . ')';
+                        } else {
+                            return '- ' . $data->title;
+                        }
                     }
                 },
             ],
@@ -38,6 +47,19 @@ use leandrogehlen\treegrid\TreeGrid;
                         return '<span class="text-danger">' . number_format($data->price, 2) . ' (market price)</span>';
                     } else {
                         $price = common\helpers\Suppliers::GetProductPrice($data->productId);
+                        return $price;
+                    }
+                },
+            ],
+            [
+                'attribute' => 'result',
+                'format' => 'raw',
+                'value' => function($data, $index, $num) {
+                    if ($data->parentId == NULL) {
+                        ///return '<span class="text-danger">' . $data->result . ' (master)</span>';
+                        return '-';
+                    } else {
+                        $price = common\helpers\Suppliers::GetMyProductResulte($data->productId);
                         return $price;
                     }
                 },
