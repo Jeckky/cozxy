@@ -19,23 +19,26 @@ $productId = $model->productId;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php if($model->parentId !== NULL): ?>
+        <?php if ($model->parentId !== NULL): ?>
             <?= Html::a('Go Back', ['view', 'id' => $model->parentId], ['class' => 'btn']) ?>
         <?php else: ?>
             <?= Html::a('Go Back', ['index', 'id' => $model->parentId], ['class' => 'btn']) ?>
         <?php endif; ?>
         <?= Html::a('Update', ['update', 'id' => $model->productId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->productId], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->productId], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'brandId',
@@ -48,39 +51,44 @@ $productId = $model->productId;
             'shortDescription:html',
             'description:html',
             'specification:html',
-            //            'createDateTime',
-            //            'updateDateTime',
-            //            'approve',
-            //            'approveCreateBy',
-            //            'receiveType',
-            //            'productGroupTemplateId',
-            //            'productId',
-            //            'userId',
-            //            'parentId',
-            //            'suppCode',
-            //            'merchantCode',
-            //            'optionName',
-            //            'width',
-            //            'height',
-            //            'depth',
-            //            'weight',
-            //            'price',
-            //            'unit',
-            //            'smallUnit',
-            //            'tags',
-            //            'productSuppId',
-            //            'approvecreateDateTime',
-            //            'step',
+        //            'createDateTime',
+        //            'updateDateTime',
+        //            'approve',
+        //            'approveCreateBy',
+        //            'receiveType',
+        //            'productGroupTemplateId',
+        //            'productId',
+        //            'userId',
+        //            'parentId',
+        //            'suppCode',
+        //            'merchantCode',
+        //            'optionName',
+        //            'width',
+        //            'height',
+        //            'depth',
+        //            'weight',
+        //            'price',
+        //            'unit',
+        //            'smallUnit',
+        //            'tags',
+        //            'productSuppId',
+        //            'approvecreateDateTime',
+        //            'step',
         ],
-    ]) ?>
+    ])
+    ?>
 
     <hr>
 
-    <?php if($model->parentId === NULL): ?>
-        <?php if(!$model->hasProductSuppliers()): ?>
-            <p>
-                <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
-            </p>
+    <?php if ($model->parentId === NULL): ?>
+        <?php if (!$model->hasProductSuppliers()): ?>
+            <?php
+            if ($checkAuth == 'Partner') {
+                ?>
+                <p>
+                    <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
+                </p>
+            <?php } ?>
         <?php endif; ?>
         <div>
 
@@ -88,26 +96,31 @@ $productId = $model->productId;
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#products" aria-controls="home" role="tab" data-toggle="tab">Products</a></li>
-                <li role="presentation">
-                    <a href="#productSuppliers" aria-controls="profile" role="tab" data-toggle="tab">ProductSuppliers</a>
-                </li>
+                <?php
+                if ($checkAuth == 'Partner') {
+                    ?>
+                    <li role="presentation">
+                        <a href="#productSuppliers" aria-controls="profile" role="tab" data-toggle="tab">ProductSuppliers</a>
+                    </li>
+                <?php } ?>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="products">
                     <?php Pjax::begin(); ?>
-                    <?= GridView::widget([
+                    <?=
+                    GridView::widget([
                         'dataProvider' => $dataProvider,
                         //                        'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
-                                'header'=>'Image',
-                                'value'=>function($model) {
-                                    return Yii::$app->homeUrl.$model->images->imageThumbnail1;
+                                'header' => 'Image',
+                                'value' => function($model) {
+                                    return Yii::$app->homeUrl . $model->images->imageThumbnail1;
                                 },
-                                'format'=>'image'
+                                'format' => 'image'
                             ],
                             [
                                 'attribute' => 'title',
@@ -134,7 +147,6 @@ $productId = $model->productId;
                                 },
                             ],
                             // 'step',
-
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{view} {update} {image} {delete}',
@@ -145,21 +157,23 @@ $productId = $model->productId;
                                 ]
                             ],
                         ],
-                    ]); ?>
+                    ]);
+                    ?>
                     <?php Pjax::end(); ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="productSuppliers">
-                    <?= GridView::widget([
+                    <?=
+                    GridView::widget([
                         'dataProvider' => $productSupplierDataProvider,
                         //                        'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
                             [
-                                'header'=>'Image',
-                                'value'=>function($model) {
-                                    return Yii::$app->homeUrl.$model->product->images->imageThumbnail1;
+                                'header' => 'Image',
+                                'value' => function($model) {
+                                    return Yii::$app->homeUrl . $model->product->images->imageThumbnail1;
                                 },
-                                'format'=>'image'
+                                'format' => 'image'
                             ],
                             [
                                 'attribute' => 'title',
@@ -178,7 +192,7 @@ $productId = $model->productId;
                             'result',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{stock} {price} {delete}',
+                                'template' => ($checkAuth == 'Partner') ? '{stock} {price} {delete}' : '',
                                 'buttons' => [
                                     'stock' => function ($url, $model, $index) {
                                         return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);
@@ -189,7 +203,8 @@ $productId = $model->productId;
                                 ]
                             ],
                         ],
-                    ]); ?>
+                    ]);
+                    ?>
                 </div>
             </div>
 
@@ -197,7 +212,7 @@ $productId = $model->productId;
 
     <?php endif; ?>
 
-    <?php if($model->parentId !== NULL): ?>
+    <?php if ($model->parentId !== NULL): ?>
         <?= $this->render('_image_grid', ['productId' => $model->productId]) ?>
     <?php endif; ?>
 </div>

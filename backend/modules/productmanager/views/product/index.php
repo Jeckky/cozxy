@@ -18,32 +18,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php
+        if ($checkAuth == 'Content') {
+            ?>
+            <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php
+        }
+        ?>
     </p>
-    <?php Pjax::begin(); ?>    <?= GridView::widget([
-        'id'=>'products-grid',
+    <?php Pjax::begin(); ?>    <?=
+    GridView::widget([
+        'id' => 'products-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             //            'productId',
             //            'userId',
             //            'parentId',
             [
 //                'header'=>Html::checkbox('deleteAll', false, ['class'=>'deleteAll']),
-                'header'=>Html::button('X', ['class'=>'btn btn-danger', 'disabled'=>true, 'id'=>'deleteMultipleProducts']),
-                'value'=>function($model) {
-                    return Html::checkbox('delete['.$model->productId.']', false, ['class'=>'delProduct', 'id'=>'del-'.$model->productId, 'data-id'=>$model->productId, 'value'=>$model->productId]);
+                'header' => Html::button('X', ['class' => 'btn btn-danger', 'disabled' => true, 'id' => 'deleteMultipleProducts']),
+                'value' => function($model) {
+                    return Html::checkbox('delete[' . $model->productId . ']', false, ['class' => 'delProduct', 'id' => 'del-' . $model->productId, 'data-id' => $model->productId, 'value' => $model->productId]);
                 },
-                'format'=>'raw',
+                'format' => 'raw',
             ],
             [
                 'attribute' => 'title',
                 'value' => function ($model) {
                     return mb_substr($model->title, 0, 40);
                 },
-                'format'=>'raw'
+                'format' => 'raw'
             ],
             [
                 'attribute' => 'brandId',
@@ -82,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        ]
+                    ]
                 ])
             ],
             'isbn:ntext',
@@ -105,8 +111,8 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'approve',
 //            'createDateTime',
             [
-                'attribute'=>'createDateTime',
-                'value'=>function($model) {
+                'attribute' => 'createDateTime',
+                'value' => function($model) {
                     return substr($model->createDateTime, 0, 10);
                 }
             ],
@@ -117,10 +123,10 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'receiveType',
             // 'productGroupTemplateId',
             // 'step',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
     <?php Pjax::end(); ?>
 </div>
 
@@ -132,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $('.delProduct').attr('checked', false);
         }
     });
-    
+
     $('.delProduct').click(function(){
         var numChecked = $('.delProduct:checked').length;
         if(numChecked > 0) {
@@ -141,16 +147,16 @@ $this->params['breadcrumbs'][] = $this->title;
             $('#deleteMultipleProducts').prop('disabled', true);
         }
     });
-    
+
     $('#deleteMultipleProducts').click(function(){
         var delProduct = [];
         $('.delProduct:checked').each(function(i, e) {
             delProduct.push($(this).val());
         });
-        
+
         if(confirm('Delete Selected Products')){
             $.ajax({
-                url : '".Yii::$app->homeUrl."productmanager/product/multiple-delete',
+                url : '" . Yii::$app->homeUrl . "productmanager/product/multiple-delete',
                 method:'POST',
                 dataType:'json',
                 data : {productIds:delProduct.join()},
@@ -158,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     //do some thing
                     $.pjax({container:'#products-grid'});
                 }
-            });   
+            });
         }
     });
-");?>
+"); ?>
