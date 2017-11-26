@@ -73,7 +73,7 @@ class ProductController extends ProductManagerMasterController {
 
         $getAuth = \common\helpers\menuBackend::getUser();
         //echo '<pre>';
-        //print_r($getAuth);
+        print_r($getAuth);
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,

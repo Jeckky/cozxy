@@ -83,7 +83,7 @@ $productId = $model->productId;
     <?php if ($model->parentId === NULL): ?>
         <?php if (!$model->hasProductSuppliers()): ?>
             <?php
-            if ($checkAuth == 'Partner') {
+            if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
                 ?>
                 <p>
                     <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
@@ -97,7 +97,7 @@ $productId = $model->productId;
                 <li role="presentation" class="active">
                     <a href="#products" aria-controls="home" role="tab" data-toggle="tab">Products</a></li>
                 <?php
-                if ($checkAuth == 'Partner') {
+                if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
                     ?>
                     <li role="presentation">
                         <a href="#productSuppliers" aria-controls="profile" role="tab" data-toggle="tab">ProductSuppliers</a>
@@ -192,7 +192,7 @@ $productId = $model->productId;
                             'result',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => ($checkAuth == 'Partner') ? '{stock} {price} {delete}' : '',
+                                'template' => ($checkAuth == 'Partner') ? '{stock} {price} {delete}' : ($checkAuth == "Partner-Content" ? '{stock} {price} {delete}' : ''),
                                 'buttons' => [
                                     'stock' => function ($url, $model, $index) {
                                         return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);

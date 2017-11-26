@@ -19,14 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php
-        if ($checkAuth == 'Content') {
+        if ($checkAuth == 'Content' || $checkAuth == 'Partner-Content') {
             ?>
             <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
             <?php
         }
         ?>
     </p>
-    <?php Pjax::begin(); ?>    <?=
+    <?php Pjax::begin(); ?>
+    <?=
     GridView::widget([
         'id' => 'products-grid',
         'dataProvider' => $dataProvider,
@@ -127,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-    <?php Pjax::end(); ?>
+<?php Pjax::end(); ?>
 </div>
 
 <?php $this->registerJs("
