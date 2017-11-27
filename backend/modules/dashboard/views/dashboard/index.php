@@ -688,7 +688,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
                             <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
-                            <?php
+                                <?php
                             }
                         }
                         ?>
@@ -697,7 +697,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <span class="label label-success pull-right">จำนวน <?php echo $valueV->countVisit; ?>&nbsp;ครั้ง</span>
                             </div>
                             <a href="#" class="follower-name"><?php echo isset($valueV->firstname) ? $valueV->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
-    <?php echo isset($valueV->lastname) ? $valueV->lastname : 'ยังไม่ระบุ'; ?></a><br>
+                                <?php echo isset($valueV->lastname) ? $valueV->lastname : 'ยังไม่ระบุ'; ?></a><br>
                             <a href="#" class="follower-username"><?php echo $valueV->email; ?></a>
                         </div>
                     </div>
@@ -751,4 +751,4 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 //} else if (Yii::$app->user->identity->type == 3) {
 ?>
 
-<?php //} ?>
+<?php //}  ?>
