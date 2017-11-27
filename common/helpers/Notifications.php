@@ -27,29 +27,29 @@ class Notifications {
      */
     public static function NotificationsApprove($productSuppId) {
         $Noti = \common\models\costfit\Notifications::find()
-        ->where('id=' . $productSuppId . ' and type =' . \common\models\costfit\Notifications::NOTI_APPROVE)
-        ->orderBy('notiId desc')->one();
+                        ->where('id=' . $productSuppId . ' and type =' . \common\models\costfit\Notifications::NOTI_APPROVE)
+                        ->orderBy('notiId desc')->one();
         return isset($Noti) ? $Noti : NULL;
     }
 
     public static function NotificationsLoginSuppliers() {
 
         $NotiLogin = \common\models\costfit\Notifications::find()
-        ->select('notifications.notiId ,notifications.id ,notifications.userId  ,notifications.title,notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
-        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
-        ->where(' notifications.userId=' . Yii::$app->user->identity->userId .
-        ' and notifications.type =' . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
-        ->orderBy('notifications.notiId desc')->all();
+                        ->select('notifications.notiId ,notifications.id ,notifications.userId  ,notifications.title,notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
+                        ->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
+                        ->where(' notifications.userId=' . Yii::$app->user->identity->userId .
+                                ' and notifications.type =' . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
+                        ->orderBy('notifications.notiId desc')->all();
         return isset($NotiLogin) ? $NotiLogin : NULL;
     }
 
     public static function NotificationsLoginSuppliersCount() {
         $NotiLogin = \common\models\costfit\Notifications::find()
-        ->select(' notifications.notiId ,notifications.id ,notifications.userId ,notifications.title, notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
-        ->join(' LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
-        ->where(' notifications.userId=' . Yii::$app->user->identity->userId . ' and notifications.type ='
-        . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
-        ->orderBy('notifications.notiId desc')->count();
+                        ->select(' notifications.notiId ,notifications.id ,notifications.userId ,notifications.title, notifications.type , notifications.status , notifications.createBy , notifications.createDateTime , notifications.updateDateTime ')
+                        ->join(' LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = notifications.id')
+                        ->where(' notifications.userId=' . Yii::$app->user->identity->userId . ' and notifications.type ='
+                                . \common\models\costfit\Notifications::NOTI_APPROVE . ' and product_suppliers.approve != "' . \common\models\costfit\ProductSuppliers::SUPPLIERS_APPROVE . '" ')
+                        ->orderBy('notifications.notiId desc')->count();
         return isset($NotiLogin) ? $NotiLogin : 0;
     }
 
@@ -76,11 +76,11 @@ class Notifications {
           status 17 : ลูกค
          * */
         $newOrder = \common\models\costfit\Order::find()
-        ->select('`order`.`orderId`, `order`.`userId` ,`oi`.firstname , `oi`.lastname ,
+                        ->select('`order`.`orderId`, `order`.`userId` ,`oi`.firstname , `oi`.lastname ,
                 `order`.`orderNo`, `order`.`userId`, `order`.`totalExVat`, `order`.`total`, `order`.`summary`,
                 `order`.`status`, `order`.`paymentDateTime`, `order`.`createDateTime` ')
-        ->join('LEFT JOIN', 'user oi', 'oi.userId = order.userId')
-        ->where('order.status in (2,3,4,5)  and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->all();
+                        ->join('LEFT JOIN', 'user oi', 'oi.userId = order.userId')
+                        ->where('order.status in (2,3,4,5)  and date(order.createDateTime)>=date_add(curdate(),interval  0 day) ')->all();
         return $newOrder;
     }
 
@@ -105,28 +105,28 @@ class Notifications {
     }
 
     public static function DashboarMovementuserVisit() {
-        $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email')
-        ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
-        ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 20')->all();
+        $userVisit = \common\models\costfit\UserVisit::find()->select('count(user_visit.visitId) as countVisit ,user_visit.userId ,`oi`.firstname , `oi`.lastname, `oi`.email, `oi`.avatar')
+                        ->join('LEFT JOIN', 'user oi', 'oi.userId = user_visit.userId')
+                        ->where(' date(user_visit.lastvisitDate)>=date_add(curdate(),interval  0 day)  group by user_visit.userId  order by  COUNT(user_visit.visitId) desc limit 20')->all();
         return $userVisit;
     }
 
     public static function DashboarMovementorderLastDay() {
         $orderLastDay = \common\models\costfit\Order::find()
-        ->where('`order`.status >= 5 and  date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->sum('summary');
+                        ->where('`order`.status >= 5 and  date(order.createDateTime) >= date_add(curdate(),interval  0 day) ')->sum('summary');
         return $orderLastDay;
     }
 
     public static function DashboarMovementorderLastWeek() {
         $orderLastWeek = \common\models\costfit\Order::find()
-        //->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->sum('summary');
-        ->where('`order`.status >= 5 and `order`.`createDateTime` between date_sub(now(),INTERVAL 1 WEEK) and now()')->sum('summary');
+                        //->where('`order`.status >= 5 and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->sum('summary');
+                        ->where('`order`.status >= 5 and `order`.`createDateTime` between date_sub(now(),INTERVAL 1 WEEK) and now()')->sum('summary');
         return $orderLastWeek;
     }
 
     public static function DashboarMovementorderLastMONTH() {
         $orderLastMONTH = \common\models\costfit\Order::find()
-        ->where(' `order`.status >= 5  and (month(`createDateTime`) = month(now())+1 OR month(`createDateTime`) = month(now())) AND Year(`createDateTime`) = Year(now()) Order By `createDateTime`  ')->sum('summary');
+                        ->where(' `order`.status >= 5  and (month(`createDateTime`) = month(now())+1 OR month(`createDateTime`) = month(now())) AND Year(`createDateTime`) = Year(now()) Order By `createDateTime`  ')->sum('summary');
         return $orderLastMONTH;
     }
 

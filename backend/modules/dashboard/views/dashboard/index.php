@@ -688,7 +688,8 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
                             <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
                                 <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
-                            <?php }
+                            <?php
+                            }
                         }
                         ?>
                         <div class="body">
