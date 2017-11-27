@@ -213,11 +213,23 @@ class Suppliers {
      */
 
     public static function GetUserSuppliers() {
-        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner'")->all();
-        foreach ($userGroup as $value) {
-            $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+
+        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' and user_id=" . Yii::$app->user->identity->userId)->all();
+
+        if (count($userGroup) > 0) {
+            foreach ($userGroup as $value) {
+                $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+            }
+        } else {
+            $user[] = 'No';
         }
+
         return $user;
+        /*
+          Array
+          (
+          [0] => No
+          ) */
     }
 
     public static function GetUserContents() {
