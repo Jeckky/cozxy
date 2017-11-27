@@ -29,7 +29,7 @@ class PoController extends SuppliersMasterController {
     public function actionIndex() {
         $tokenUserId = Yii::$app->user->identity->userId;
         //$Po = Po::PoSuppliers($tokenUserId);
-        $Po = Po::find()->where(" supplierId=" . $tokenUserId)->orderBy('updateDateTime')->all();
+        $Po = Po::find()->where("supplierIdx=" . $tokenUserId)->orderBy('updateDateTime')->all();
         /*
           $poSuppliers = [];
           foreach ($Po as $value) {
