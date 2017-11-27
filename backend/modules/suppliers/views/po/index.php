@@ -27,7 +27,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>storeProductGroupId</th>
+                        <th>poId</th>
                         <th>poNo</th>
                         <th>summary</th>
                         <th>วันที่สร้าง ใบ​สั่ง​ซื้อ / Purchase Order</th>
@@ -40,12 +40,12 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $num++; ?></th>
-                            <td><?php echo $value['storeProductGroupId']; ?></td>
+                            <td><?php echo $value['poId']; ?></td>
                             <td><?php echo $value['poNo']; ?></td>
                             <td><?php echo $value['summary']; ?></td>
-                            <td><?php echo $this->context->dateThai($value['createDateTime'], 1, TRUE); ?></td>
+                            <td><?php echo $value['createDateTime']; ?></td>
                             <td>
-                                <a class="btn btn-warning" href="<?php echo Yii::$app->homeUrl; ?>order/order/reprint-po?storeProductGroupId=<?php echo $value['storeProductGroupId']; ?>"><i class="fa fa-eye" aria-hidden="true"></i> ดูใบ​สั่ง​ซื้อ / Purchase Order</a>
+                                <a class="btn btn-warning" href="<?php echo Yii::$app->homeUrl; ?>order/order/reprint-po?storeProductGroupId=<?php echo $value['poId']; ?>"><i class="fa fa-eye" aria-hidden="true"></i> ดูใบ​สั่ง​ซื้อ / Purchase Order</a>
                             </td>
                         </tr>
                         <?php

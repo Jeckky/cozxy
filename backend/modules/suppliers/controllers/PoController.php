@@ -9,7 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\costfit\Order;
-use common\helpers\Po;
+//use common\helpers\Po;
+use common\models\costfit\Po;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -27,7 +28,8 @@ class PoController extends SuppliersMasterController {
      */
     public function actionIndex() {
         $tokenUserId = Yii::$app->user->identity->userId;
-        $Po = Po::PoSuppliers($tokenUserId);
+        //$Po = Po::PoSuppliers($tokenUserId);
+        $Po = Po::find()->where(" supplierId=" . $tokenUserId)->orderBy('updateDateTime')->all();
         /*
           $poSuppliers = [];
           foreach ($Po as $value) {
@@ -37,7 +39,7 @@ class PoController extends SuppliersMasterController {
           }
          */
         return $this->render('index', [
-            'Po' => $Po,
+                    'Po' => $Po,
         ]);
     }
 
