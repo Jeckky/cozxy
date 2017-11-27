@@ -505,7 +505,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <script>
         init.push(function () {
             $('#dashboard-support-tickets .panel-body > div').slimScroll({
-                height: 300,
+                height: 100,
                 alwaysVisible: true,
                 color: '#888',
                 allowPageScroll: true
