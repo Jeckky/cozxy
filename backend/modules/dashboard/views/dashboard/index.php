@@ -680,7 +680,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                         <?php
                         if (isset($valueV->avatar) && !empty($valueV->avatar)) {
                             ?>
-                            <img src="images/user/avatar/<?= $valueV->avatar ?>" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                            <img src="images/user/avatar/<?= $valueV->avatar ?>" alt="" style="width:26px;height:26px;" class="rounded">
                             <?php
                         } else {
                             if (Yii::$app->user->identity->gender == 0) {
