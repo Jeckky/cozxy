@@ -633,8 +633,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <?php
                                 //echo 'avatar :: ' . '/images/user/avatar/' . $valueU->avatar;
                                 if (isset($valueU->avatar) && !empty($valueU->avatar)) {
+                                    if (isset($valueU->avatar)) {
+                                        if (strstr($valueU->avatar, 'https')) {
+                                            $avatar = $valueU->avatar;
+                                        } else {
+                                            $avatar = "images/user/avatar/" . $valueU->avatar;
+                                        }
+                                    } else {
+                                        $avatar = 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+                                    }
                                     ?>
-                                    <img src="images/user/avatar/<?= $valueU->avatar ?>" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                    <img src="<?= $avatar ?>" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
                                     <?php
                                 } else {
 
@@ -679,8 +688,18 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <div class="follower">
                         <?php
                         if (isset($valueV->avatar) && !empty($valueV->avatar)) {
+                            if (isset($valueV->avatar)) {
+                                if (strstr($valueV->avatar, 'https')) {
+                                    $avatar = $valueV->avatar;
+                                } else {
+
+                                    $avatar = "images/user/avatar/" . $valueV->avatar;
+                                }
+                            } else {
+                                $avatar = 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+                            }
                             ?>
-                            <img src="images/user/avatar/<?= $valueV->avatar ?>" alt="" style="width:26px;height:26px;" class="follower-avatar">
+                            <img src="<?= $avatar ?>" alt="" style="width:26px;height:26px;" class="follower-avatar">
                             <?php
                         } else {
                             if (Yii::$app->user->identity->gender == 0) {
