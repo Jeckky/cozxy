@@ -670,7 +670,7 @@ class SiteController extends MasterController {
             } else {
                 $genders = NULL;
             }
-            $picture = $userAttributes['picture']['data']['url'];
+            $picture = isset($userAttributes['picture']) ? $userAttributes['picture']['data']['url'] : '';
             if (isset($userAttributes['birthday'])) {
                 $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
                 list($day, $month, $year) = explode("/", $birthday);
