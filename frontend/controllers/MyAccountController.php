@@ -47,10 +47,10 @@ class MyAccountController extends MasterController {
         //$avatar = (isset($user->avatar)) ? $user->avatar : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
         if (isset($user->avatar)) {
             if (strstr($user->avatar, 'https')) {
-                echo 'true';
+                //echo 'true';
                 $avatar = $user->avatar;
             } else {
-                echo 'false';
+                //echo 'false';
                 $avatar = Yii::$app->homeUrl . "images/user/avatar/" . $user->avatar;
             }
         } else {
