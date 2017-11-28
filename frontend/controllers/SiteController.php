@@ -651,6 +651,7 @@ class SiteController extends MasterController {
             $lastname = $name[1];
             $genders = NULL;
             $birthday = NULL;
+            $picture = NULL;
         } elseif ($client->id == 'facebook') {
             $email = $userAttributes['email'];
             $token = $userAttributes['id'];
@@ -670,8 +671,8 @@ class SiteController extends MasterController {
                 $genders = NULL;
             }
             $picture = $userAttributes['picture']['data']['url'];
-            $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
-            if (isset($birthday)) {
+            if (isset($userAttributes['birthday'])) {
+                $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
                 list($day, $month, $year) = explode("/", '07/17/1983');
                 $birthday = $year . '-' . $month . '-' . $day;
             } else {
@@ -739,6 +740,7 @@ class SiteController extends MasterController {
             $new_user->email = $email;
             $new_user->status = 1; //;
             $new_user->gender = $genders;
+            $new_user->avatar = $picture;
             $new_user->birthDate = $birthday;
             $new_user->createDateTime = new \yii\db\Expression('NOW()');
 
