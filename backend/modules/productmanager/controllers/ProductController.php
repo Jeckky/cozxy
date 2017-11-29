@@ -21,17 +21,17 @@ use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
+use common\helpers\menuBackend;
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends ProductManagerMasterController
-{
+class ProductController extends ProductManagerMasterController {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -46,18 +46,17 @@ class ProductController extends ProductManagerMasterController
      * Lists all Product models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new ProductSearch();
         $searchModel->status = 1;
 
         //remember params
         $params = Yii::$app->request->queryParams;
-        if(count($params) <= 1) {
+        if (count($params) <= 1) {
             $params = Yii::$app->session['productParentParams'];
-            if(isset($params['page'])) {
+            if (isset($params['page'])) {
                 $_GET['page'] = $params['page'];
-                if(isset($params['sort']) && !empty($params['sort'])) {
+                if (isset($params['sort']) && !empty($params['sort'])) {
                     $_GET['sort'] = $params['sort'];
                 }
             }
@@ -67,16 +66,20 @@ class ProductController extends ProductManagerMasterController
 
 
         $dataProvider = $searchModel->search($params);
-        $dataProvider->sort = ['defaultOrder'=>['createDateTime'=>SORT_DESC]];
+        $dataProvider->sort = ['defaultOrder' => ['createDateTime' => SORT_DESC]];
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
 
+        $getAuth = \common\helpers\menuBackend::getUser();
+        //echo '<pre>';
+        //print_r($getAuth);
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'brandFilter' => $brandFilter,
-            'categoryFilter' => $categoryFilter,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'brandFilter' => $brandFilter,
+                    'categoryFilter' => $categoryFilter,
+                    'checkAuth' => $getAuth
         ]);
     }
 
@@ -85,19 +88,19 @@ class ProductController extends ProductManagerMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $searchModel = new ProductSearch();
         $searchModel->parentId = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id);
-
+        $getAuth = \common\helpers\menuBackend::getUser();
         return $this->render('view', [
-            'model' => $this->findModel($id),
-            'searchModel'=>$searchModel,
-            'dataProvider'=>$dataProvider,
-            'productSupplierDataProvider'=>$productSupplierDataProvider,
+                    'model' => $this->findModel($id),
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'productSupplierDataProvider' => $productSupplierDataProvider,
+                    'checkAuth' => $getAuth
         ]);
     }
 
@@ -106,8 +109,7 @@ class ProductController extends ProductManagerMasterController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() //step 1
-    {
+    public function actionCreate() { //step 1
         $model = new Product(['createDateTime' => new Expression('NOW()')]);
         $model->scenario = 'createProductGroup';
 
@@ -115,13 +117,13 @@ class ProductController extends ProductManagerMasterController
         $categoryFilter = self::categoryFilter();
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
 
-        if($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $productId = Yii::$app->db->lastInsertID;
 
             $productGroupTemplate = ProductGroupTemplate::find()->where(['productGroupTemplateId' => $model->productGroupTemplateId])->one();
 
-            foreach($productGroupTemplate->productGroupTemplateOptions as $productGroupTemplateOption) {
+            foreach ($productGroupTemplate->productGroupTemplateOptions as $productGroupTemplateOption) {
                 $productGroupOption = new ProductGroupOption();
                 $productGroupOption->productGroupId = $productId;
                 $productGroupOption->productGroupTemplateOptionId = $productGroupTemplateOption->productGroupTemplateOptionId;
@@ -136,35 +138,33 @@ class ProductController extends ProductManagerMasterController
             return $this->redirect(['create-product-images', 'id' => $model->productId]);
         } else {
             return $this->render('create', [
-                'model' => $model,
-                'brandFilter' => $brandFilter,
-                'categoryFilter' => $categoryFilter,
-                'productGroupTemplateFilter' => $productGroupTemplateFilter
+                        'model' => $model,
+                        'brandFilter' => $brandFilter,
+                        'categoryFilter' => $categoryFilter,
+                        'productGroupTemplateFilter' => $productGroupTemplateFilter
             ]);
         }
     }
 
-    public function actionCreateProductImages($id) //step 2
-    {
+    public function actionCreateProductImages($id) { //step 2
         //upload images
         $model = Product::findOne($id);
-        return $this->render('create-product-image', ['productId' => $id, 'model'=>$model]);
+        return $this->render('create-product-image', ['productId' => $id, 'model' => $model]);
     }
 
-    public function actionCreateProductOption($id)
-    {
+    public function actionCreateProductOption($id) {
         $product = Product::findOne($id);
         $productGroupTemplate = ProductGroupTemplate::find()->where(['productGroupTemplateId' => $product->productGroupTemplateId])->one();
         $productWithOptions = [];
         $data = [];
 
-        if(isset($_POST['previewOptions'])) {
+        if (isset($_POST['previewOptions'])) {
             $data = $_POST['ProductGroupOptionValue'];
             $productWithOptions = $this->array_cartesian($data);
 
             $data2 = [];
-            foreach($data as $key => $value) {
-                foreach($value as $k => $v) {
+            foreach ($data as $key => $value) {
+                foreach ($value as $k => $v) {
                     $data2[$key][$v] = $v;
                 }
             }
@@ -172,11 +172,11 @@ class ProductController extends ProductManagerMasterController
             $data = $data2;
         }
 
-        if(isset($_POST['productOptions'])) {
+        if (isset($_POST['productOptions'])) {
             $data = $_POST['ProductGroupOptionValue'];
-            $productGroupOptions = ProductGroupOption::find()->where(['productGroupId'=>$id])->all();
+            $productGroupOptions = ProductGroupOption::find()->where(['productGroupId' => $id])->all();
 
-            foreach($data as $value) {
+            foreach ($data as $value) {
                 //new product
                 $p = new Product();
                 $p->attributes = $product->attributes;
@@ -189,15 +189,15 @@ class ProductController extends ProductManagerMasterController
                 $pid = Yii::$app->db->lastInsertID;
 
                 //new product images
-                foreach($product->productImages as $productImage) {
+                foreach ($product->productImages as $productImage) {
                     $img = new ProductImage();
                     $img->attributes = $productImage->attributes;
                     $img->productId = $pid;
                     $img->save();
                 }
                 //product options
-                foreach($productGroupOptions as $productGroupOption) {
-                    if(isset($value[$productGroupOption->productGroupTemplateOptionId])) {
+                foreach ($productGroupOptions as $productGroupOption) {
+                    if (isset($value[$productGroupOption->productGroupTemplateOptionId])) {
                         $productGroupOptionValue = new ProductGroupOptionValue();
                         $productGroupOptionValue->productGroupOptionId = $productGroupOption->productGroupOptionId;
                         $productGroupOptionValue->productGroupTemplateOptionId = $productGroupOption->productGroupTemplateOptionId;
@@ -218,13 +218,12 @@ class ProductController extends ProductManagerMasterController
         return $this->render('create-product-option', compact('productGroupTemplate', 'product', 'productWithOptions', 'data'));
     }
 
-    public function actionCreateProductSuppliers($id)
-    {
+    public function actionCreateProductSuppliers($id) {
         $product = Product::findOne($id);
 
-        if(isset($_POST['createProductSuppliers'])) {
-            foreach($_POST['ProductSuppliers'] as $productId=>$ps) {
-                $child = Product::find()->where(['productId'=>$productId])->one();
+        if (isset($_POST['createProductSuppliers'])) {
+            foreach ($_POST['ProductSuppliers'] as $productId => $ps) {
+                $child = Product::find()->where(['productId' => $productId])->one();
                 $productSuppliers = new ProductSuppliers();
                 $productSuppliers->attributes = $child->attributes;
                 $productSuppliers->status = 1;
@@ -248,8 +247,8 @@ class ProductController extends ProductManagerMasterController
                 $productPriceSuppliers->save(false);
 
                 //product image suppliers
-                $productImages = ProductImage::find()->where(['productId'=>$productId])->all();
-                foreach($productImages as $productImage) {
+                $productImages = ProductImage::find()->where(['productId' => $productId])->all();
+                foreach ($productImages as $productImage) {
                     $productImageSuppliers = new ProductImageSuppliers();
                     $productImageSuppliers->attributes = $productImage->attributes;
                     $productImageSuppliers->productSuppId = $productSuppId;
@@ -272,22 +271,21 @@ class ProductController extends ProductManagerMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
 
-        if($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);
         } else {
             return $this->render('update', [
-                'model' => $model,
-                'brandFilter' => $brandFilter,
-                'categoryFilter' => $categoryFilter,
-                'productGroupTemplateFilter' => $productGroupTemplateFilter
+                        'model' => $model,
+                        'brandFilter' => $brandFilter,
+                        'categoryFilter' => $categoryFilter,
+                        'productGroupTemplateFilter' => $productGroupTemplateFilter
             ]);
         }
     }
@@ -298,8 +296,7 @@ class ProductController extends ProductManagerMasterController
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
 //        $this->findModel($id)->delete();
         //update to delete status
         $product = $this->findModel($id);
@@ -318,32 +315,27 @@ class ProductController extends ProductManagerMasterController
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if(($model = Product::findOne($id)) !== null) {
+    protected function findModel($id) {
+        if (($model = Product::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    private static function brandFilter()
-    {
+    private static function brandFilter() {
         return ArrayHelper::map(Brand::find()->where(['status' => 1])->orderBy('title')->all(), 'brandId', 'title');
     }
 
-    private static function categoryFilter()
-    {
+    private static function categoryFilter() {
         return Category::categoryFilter();
     }
 
-    private static function productGroupTemplateFilter()
-    {
+    private static function productGroupTemplateFilter() {
         return ArrayHelper::map(ProductGroupTemplate::find()->where('status=1')->orderBy('title')->all(), 'productGroupTemplateId', 'title');
     }
 
-    public static function uploadImage($uploadedFile)
-    {
+    public static function uploadImage($uploadedFile) {
         $mime = \yii\helpers\FileHelper::getMimeType($uploadedFile->tempName);
         $file = time() . "_" . $uploadedFile->name;
 
@@ -354,18 +346,18 @@ class ProductController extends ProductManagerMasterController
 
 
         //ตรวจสอบ
-        if($uploadedFile == null) {
+        if ($uploadedFile == null) {
             $message = "ไม่มีไฟล์ที่ Upload";
-        } else if($uploadedFile->size == 0) {
+        } else if ($uploadedFile->size == 0) {
             $message = "ไฟล์มีขนาด 0";
-        } else if($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
+        } else if ($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
             $message = "รูปภาพควรเป็น JPG หรือ PNG";
-        } else if($uploadedFile->tempName == null) {
+        } else if ($uploadedFile->tempName == null) {
             $message = "มีข้อผิดพลาด";
         } else {
             $message = "";
             $move = $uploadedFile->saveAs($uploadPath);
-            if(!$move) {
+            if (!$move) {
                 $message = "ไม่สามารถนำไฟล์ไปไว้ใน Folder ได้กรุณาตรวจสอบ Permission Read/Write/Modify";
             }
         }
@@ -373,43 +365,39 @@ class ProductController extends ProductManagerMasterController
         echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 
-    public function actionUploadDescriptionImage()
-    {
+    public function actionUploadDescriptionImage() {
         $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
         self::uploadImage($uploadedFile);
     }
 
-    public function actionUploadSpecificationImage()
-    {
+    public function actionUploadSpecificationImage() {
         $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
         self::uploadImage($uploadedFile);
     }
 
-    public function actionUploadProductImage($id)
-    {
+    public function actionUploadProductImage($id) {
         $product = Product::findOne($id);
         $productImage = new ProductImage();
         $productImage->productId = $id;
         $productImage->status = isset($product->parentId) ? 1 : 3;
 
         $maxOrdering = ProductImage::find()->where(['productId' => $id])->orderBy(['ordering' => SORT_DESC])->one();
-        $max = isset($maxOrdering) ? $maxOrdering->ordering+1:1;
+        $max = isset($maxOrdering) ? $maxOrdering->ordering + 1 : 1;
         $ordering = $max;
 
         Upload::UploadProductImage($productImage, $ordering);
     }
 
-    public function actionMoveImageUp($id)
-    {
+    public function actionMoveImageUp($id) {
         $productImage = ProductImage::findOne($id);
         $upper = ProductImage::find()->where(['productId' => $productImage->productId])->andWhere(['<', 'ordering', $productImage->ordering])->orderBy(['ordering' => SORT_DESC])->one();
 
-        if(isset($upper)) {
+        if (isset($upper)) {
             $newOrdering = $upper->ordering;
             $upper->ordering = $productImage->ordering;
             $productImage->ordering = $newOrdering;
 
-            if($productImage->save() && $upper->save()) {
+            if ($productImage->save() && $upper->save()) {
                 return Json::encode(['result' => true]);
             } else {
                 return Json::encode(['result' => false]);
@@ -417,17 +405,16 @@ class ProductController extends ProductManagerMasterController
         }
     }
 
-    public function actionMoveImageDown($id)
-    {
+    public function actionMoveImageDown($id) {
         $productImage = ProductImage::findOne($id);
         $lower = ProductImage::find()->where(['productId' => $productImage])->andWhere(['>', 'ordering', $productImage->ordering])->orderBy(['ordering' => SORT_ASC])->one();
 
-        if(isset($lower)) {
+        if (isset($lower)) {
             $newOrdering = $lower->ordering;
             $lower->ordering = $productImage->ordering;
             $productImage->ordering = $newOrdering;
 
-            if($productImage->save() && $lower->save()) {
+            if ($productImage->save() && $lower->save()) {
                 return Json::encode(['result' => true]);
             } else {
                 return Json::encode(['result' => false]);
@@ -435,8 +422,7 @@ class ProductController extends ProductManagerMasterController
         }
     }
 
-    public function actionDeleteProductImage($id)
-    {
+    public function actionDeleteProductImage($id) {
         $productImage = ProductImage::findOne($id);
         $productImage->delete();
 
@@ -445,16 +431,14 @@ class ProductController extends ProductManagerMasterController
         unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
     }
 
-    public function actionPrepareProducts($id)
-    {
+    public function actionPrepareProducts($id) {
         $data = $_POST['data'];
         $res = [];
 
         return Json::encode($res);
     }
 
-    public function array_cartesian($arrays)
-    {
+    public function array_cartesian($arrays) {
         $result = array();
         $keys = array_keys($arrays);
         $arrays = array_values($arrays);
@@ -462,20 +446,20 @@ class ProductController extends ProductManagerMasterController
         $sizeIn = sizeof($arrays);
 
         $size = $sizeIn > 0 ? 1 : 0;
-        foreach($arrays as $array) {
+        foreach ($arrays as $array) {
             $size = $size * sizeof($array);
         }
-        for($i = 0; $i < $size; $i++) {
+        for ($i = 0; $i < $size; $i++) {
             $result[$i] = array();
-            for($j = 0; $j < $sizeIn; $j++) {
+            for ($j = 0; $j < $sizeIn; $j++) {
 //            array_push($result[$i], current($arrays[$j]));
                 $result[$i][$keys[$j]] = current($arrays[$j]);
             }
 
-            for($j = ($sizeIn - 1); $j >= 0; $j--) {
-                if(next($arrays[$j]))
+            for ($j = ($sizeIn - 1); $j >= 0; $j--) {
+                if (next($arrays[$j]))
                     break;
-                elseif(isset($arrays[$j]))
+                elseif (isset($arrays[$j]))
                     reset($arrays[$j]);
             }
         }
@@ -484,13 +468,13 @@ class ProductController extends ProductManagerMasterController
         return $result;
     }
 
-    public function actionMultipleDelete()
-    {
-        $res = ['success'=>false, 'error'=>NULL];
+    public function actionMultipleDelete() {
+        $res = ['success' => false, 'error' => NULL];
         $productIds = explode(',', $_POST['productIds']);
 
-        Product::updateAll(['status'=>2], ['in', 'productId', $productIds]);
+        Product::updateAll(['status' => 2], ['in', 'productId', $productIds]);
 
         echo Json::encode($res);
     }
+
 }

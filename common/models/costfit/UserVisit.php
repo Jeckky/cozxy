@@ -22,7 +22,7 @@ class UserVisit extends \common\models\costfit\master\UserVisitMaster {
      */
     public function attributes() {
         return array_merge(parent::attributes(), [
-            'countVisit', 'email', 'firstname', 'lastname'
+            'countVisit', 'email', 'firstname', 'lastname', 'avatar'
         ]);
     }
 

@@ -44,9 +44,21 @@ class MyAccountController extends MasterController {
         $favoriteStory = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyStory::favoriteStories(8)]);
         $statusText = '';
         $user = User::find()->where(['userId' => Yii::$app->user->id])->one();
-
-
-        return $this->render('index', compact('statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory', 'user'));
+        //$avatar = (isset($user->avatar)) ? $user->avatar : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+        if (isset($user->avatar)) {
+            if (strstr($user->avatar, 'https')) {
+                //echo 'true';
+                $avatar = $user->avatar;
+            } else {
+                //echo 'false';
+                $avatar = Yii::$app->homeUrl . "images/user/avatar/" . $user->avatar;
+            }
+        } else {
+            $avatar = 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+        }
+        //echo '<pre>';
+        //print_r($cozxyCoin);
+        return $this->render('index', compact('avatar', 'statusText', 'billingAddress', 'personalDetails', 'cozxyCoin', 'orderHistory', 'productPost', 'trackingOrder', 'returnList', 'favoriteStory', 'user'));
     }
 
     public function actionMap() {

@@ -17,7 +17,7 @@ class Suppliers {
      */
     public function rules() {
         return [
-                //
+//
         ];
     }
 
@@ -88,8 +88,8 @@ class Suppliers {
                                     . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' '
                                     . ' and `order_item`.orderId = `order`.orderId limit 1) as conutProduct, '
                                     . '(select count(`order_item`.`productId`)/7 from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-                            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+//->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+//->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
                             ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW() ')->one();
         }
         return $productLastWeek;
@@ -123,8 +123,8 @@ class Suppliers {
                                     . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ''
                                     . ' and `order_item`.orderId = `order`.orderId  limit 1) as conutProduct, '
                                     . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-                            //->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                            //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+//->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+//->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
                             ->where('`order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and order.createDateTime BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW()')->one();
         }
         return $product14LastWeek;
@@ -156,9 +156,9 @@ class Suppliers {
                             . '(select sum(`order_item`.`quantity`) from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' '
                             . 'and `order_item`.orderId = `order`.orderId  limit 1) as conutProduct , '
                             . '(select count(`order_item`.`productId`)/7   from `order_item` WHERE `order`.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' limit 1) as avgNum')
-                    // ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
-                    //->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
-                    //->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
+// ->join('LEFT JOIN', 'order', 'order.orderId = order_item.orderId')
+//->join('LEFT JOIN', 'product_suppliers', 'product_suppliers.productSuppId = order_item.productId')
+//->where('`order`.status >= 5 and MONTH(curdate()) = MONTH(order.createDateTime) and year(order.createDateTime) = year(curdate())   ')
                     ->where('`order`.`status` >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and (NOW() - INTERVAL 1 MONTH) <= (NOW() ) ')
                     ->one();
         }
@@ -213,11 +213,25 @@ class Suppliers {
      */
 
     public static function GetUserSuppliers() {
-        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner'")->all();
-        foreach ($userGroup as $value) {
-            $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+        if (Yii::$app->user->identity->userId == 39) {
+            $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' ")->all();
+        } else {
+            $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' and user_id = " . Yii::$app->user->identity->userId)->all();
         }
+        if (count($userGroup) > 0) {
+            foreach ($userGroup as $value) {
+                $user[] = \common\models\costfit\User::find()->where('userId =' . $value['user_id'])->all();
+            }
+        } else {
+            $user[] = 'No';
+        }
+
         return $user;
+        /*
+          Array
+          (
+          [0] => No
+          ) */
     }
 
     public static function GetUserContents() {
@@ -260,17 +274,22 @@ class Suppliers {
 
     public static function GetProductPrice($productId) {
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()
-                ->where("product_suppliers.productId=" . $productId . ' and product_suppliers.result  > 0  ')
+                ->where("product_suppliers.productId = " . $productId . ' and product_suppliers.result  > 0  ')
                 ->one();
         if (isset($GetProductSuppliers['productSuppId'])) {
             $GetPriceSuppliers = \common\models\costfit\ProductPriceSuppliers::find()
-                    ->where("productSuppId=" . $GetProductSuppliers['productSuppId'] . ' and product_price_suppliers.status = 1')
+                    ->where("productSuppId = " . $GetProductSuppliers['productSuppId'] . ' and product_price_suppliers.status = 1')
                     ->one();
             return number_format($GetPriceSuppliers['price'], 2);
         } else {
             return '-';
         }
         //return $GetProductSuppliers;
+    }
+
+    public static function GetMyProductResulte($productId) {
+        $result = \common\models\costfit\ProductSuppliers::find()->where('productId=' . $productId)->one();
+        return $result['result'];
     }
 
     /*
@@ -280,7 +299,7 @@ class Suppliers {
      */
 
     public static function GetProductSuppliersHelpers($productSuppId) {
-        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
+        $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId = " . $productSuppId)->one();
         if (isset($GetProductSuppliers) && !empty($GetProductSuppliers)) {
             return $GetProductSuppliers;
         } else {

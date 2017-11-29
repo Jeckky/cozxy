@@ -183,6 +183,10 @@ return [
                     // New Test App ID Facebook Pew
                     'clientId' => '362825020809663',
                     'clientSecret' => '7c0053e0dfff8b317b171d3eb20d7ee0',
+                    'attributeNames' => [
+                        'id', 'picture.width(800).height(800)', 'cover', 'name', 'first_name', 'last_name', 'link', 'gender', 'email', 'timezone', 'locale',
+                        'birthday', 'about'
+                    ],
                 ],
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',

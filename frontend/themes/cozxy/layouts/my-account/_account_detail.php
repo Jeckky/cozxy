@@ -15,9 +15,9 @@ use dosamigos\fileupload\FileUpload;
 <div class="row fc-g999">
     <div class="col-md-2 text-center">
         <?php
-        $avatar = (isset($user->avatar)) ? $user->avatar : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+        //$avatar = (isset($user->avatar)) ? $user->avatar : 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
         ?>
-        <?= Html::img(Yii::$app->homeUrl . "images/user/avatar/" . $avatar, ['width' => 120, 'class' => 'img-circle', 'id' => 'avatar']) ?><br />
+        <?= Html::img($avatar, ['width' => 120, 'class' => 'img-circle', 'id' => 'avatar']) ?><br />
         <?=
         FileUpload::widget([
             'model' => $user,
@@ -47,9 +47,9 @@ use dosamigos\fileupload\FileUpload;
 
         <!--        --><?//=Html::button('change', ['class'=>'btn btn-primary btn-xs', 'id'=>'profilePictureBtn'])?>
 
-        <!--        --><?php //ActiveForm::begin();                  ?>
+        <!--        --><?php //ActiveForm::begin();                    ?>
         <!--        --><?//=Html::fileInput('profile', '', ['class'=>'hide', 'id'=>'profilePicture'])?>
-        <!--        --><?php //ActiveForm::end();                 ?>
+        <!--        --><?php //ActiveForm::end();                   ?>
 
     </div>
     <div class="col-md-10">
