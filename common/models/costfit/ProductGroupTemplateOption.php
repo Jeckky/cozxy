@@ -41,4 +41,8 @@ class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGr
         return strtoupper($model->title);
     }
 
+    public static function countOption($productGroupTemplateId) {
+        return $model = count(ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $productGroupTemplateId)->all());
+    }
+
 }
