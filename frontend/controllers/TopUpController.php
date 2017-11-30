@@ -280,8 +280,8 @@ class TopUpController extends MasterController {
         // throw new \yii\base\Exception(Yii::$app->params["ePaymentServerType"]);
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
         //return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
-
-        return $this->render("@app/views/e_payment/e_pay", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        return $this->render("@app/views/e_payment/_k_payment_1", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        //return $this->render("@app/views/e_payment/e_pay", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
     public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
