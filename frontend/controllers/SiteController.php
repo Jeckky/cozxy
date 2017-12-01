@@ -619,7 +619,8 @@ class SiteController extends MasterController {
         $userAttributes = $client->getUserAttributes();
         //authclient=instagram
         //echo '<pre>';
-        //print_r($userAttributes);
+        print_r($userAttributes);
+        exit();
         //echo isset($client->id) ? $client->id : '';
         /*
           {
@@ -653,7 +654,12 @@ class SiteController extends MasterController {
             $birthday = NULL;
             $picture = NULL;
         } elseif ($client->id == 'facebook') {
-            $email = $userAttributes['email'];
+            if (isset($userAttributes['email'])) {
+                $email = $userAttributes['email'];
+            } else {
+                $email = NULL;
+            }
+            ///$email = $userAttributes['email'];
             $token = $userAttributes['id'];
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             $firstname = $name[0];
