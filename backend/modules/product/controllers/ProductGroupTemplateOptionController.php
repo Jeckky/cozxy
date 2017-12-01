@@ -46,7 +46,6 @@ class ProductGroupTemplateOptionController extends ProductMasterController {
             $showED = 1;
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
@@ -175,6 +174,35 @@ class ProductGroupTemplateOptionController extends ProductMasterController {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index?productGroupTemplateId=' . $model->productGroupTemplateId]);
+    }
+
+    public function actionSortTemplateOption() {
+        $productGroupTemplateOptionId = $_POST["id"];
+        $type = $_POST["action"];
+        $total = $_POST["total"];
+        $res = [];
+        $productGroupTemplateOption = ProductGroupTemplateOption::find()->where("ProductGroupTemplateOptionId=" . $productGroupTemplateOptionId)->one();
+        if ($type == 1) {
+            $sort = $productGroupTemplateOption->ordering + 1;
+            if ($sort > $total) {
+                $sort = $total;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        } else {
+            $sort = $productGroupTemplateOption->ordering - 1;
+            if ($sort <= 0) {
+                $sort = 1;
+                $res["status"] = false;
+            } else {
+                $res["status"] = true;
+            }
+        }
+        $productGroupTemplateOption->ordering = $sort;
+        $productGroupTemplateOption->save(false);
+        $res["sort"] = $sort;
+        return json_encode($res);
     }
 
     /**

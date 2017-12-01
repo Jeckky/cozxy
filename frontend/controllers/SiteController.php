@@ -649,21 +649,35 @@ class SiteController extends MasterController {
             $name = explode(" ", $displayName); // แยกชื่อ นามสกุล
             $firstname = $name[0];
             $lastname = $name[1];
+            $genders = NULL;
+            $birthday = NULL;
+            $picture = NULL;
         } elseif ($client->id == 'facebook') {
             $email = $userAttributes['email'];
             $token = $userAttributes['id'];
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             $firstname = $name[0];
             $lastname = $name[1];
-            /* $gender = $userAttributes['gender'];
-              $picture = $userAttributes['picture']['data']['url'];
-              $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
-              if (isset($birthday)) {
-              list($day, $month, $year) = explode("/", '07/17/1983');
-              $birthday = $year . '-' . $month . '-' . $day;
-              } else {
-              $birthday = NULL;
-              } */
+            $gender = $userAttributes['gender'];
+            if (isset($gender)) {
+                if ($gender == 'female') {
+                    $genders = 0;
+                } elseif ($gender == 'male') {
+                    $genders = 1;
+                } else {
+                    $genders = NULL;
+                }
+            } else {
+                $genders = NULL;
+            }
+            $picture = isset($userAttributes['picture']) ? $userAttributes['picture']['data']['url'] : '';
+            if (isset($userAttributes['birthday'])) {
+                $birthday = $userAttributes['birthday']; // 07/17/1983 == 1980-07-28 00:00:00
+                list($day, $month, $year) = explode("/", $birthday);
+                $birthday = $year . '-' . $month . '-' . $day;
+            } else {
+                $birthday = NULL;
+            }
         } else {
             return $this->redirect('/site/login');
         }
@@ -725,6 +739,9 @@ class SiteController extends MasterController {
             $new_user->password_hash = Yii::$app->security->generatePasswordHash($username);
             $new_user->email = $email;
             $new_user->status = 1; //;
+            $new_user->gender = $genders;
+            $new_user->avatar = $picture;
+            $new_user->birthDate = $birthday;
             $new_user->createDateTime = new \yii\db\Expression('NOW()');
 
             if ($new_user->save(FALSE)) {

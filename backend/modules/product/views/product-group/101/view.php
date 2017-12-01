@@ -145,6 +145,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
                     <?php
                 } else {
+                    //throw new \yii\base\Exception($dataProvider2->getTotalCount());
                     ?>
                     <?php if ($dataProvider2->getTotalCount() == 0): ?>
                         <h3 style="color: tomato">Create My Product ?</h3>
@@ -166,7 +167,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             <h3 style="color: tomato">Send Approve My Product ?</h3>
                             <a  href="<?= Yii::$app->homeUrl . "product/product-group/send-approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-success btn-lg">Send Approve</a>
                         <?php endif; ?>
-                        <?php if ($countWaitApprove > 0 && $ress !== FALSE): ?>
+                        <?php
+                        //if ($countWaitApprove > 0 && $ress !== FALSE):
+                        if ($countWaitApprove > 0 && $ress !== FALSE):
+                            ?>
                             <h3 style="color: tomato">Approve Product Supplier ?</h3>
                             <a  href="<?= Yii::$app->homeUrl . "product/product-group/approve-my-product?productGroupId=" . $_GET["productGroupId"] . "&userId=" . $userId; ?>" class="btn btn-warning btn-lg"><i class='glyphicon glyphicon-check'></i> Approve</a>
                         <?php endif; ?>

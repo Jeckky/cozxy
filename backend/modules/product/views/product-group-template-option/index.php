@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\costfit\ProductGroupTemplateOption;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\costfit\ProductGroupTemplateOptionSearch */
@@ -14,7 +15,9 @@ $this->params['pageHeader'] = Html::encode($this->title);
 ?>
 <div class="product-group-template-option-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+// echo $this->render('_search', ['model' => $searchModel]);
+    ?>
 
     <?php Pjax::begin(['id' => 'employee-grid-view']); ?>
     <div class="panel panel-default">
@@ -52,6 +55,18 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'title',
                     'description:ntext',
                     'status',
+                    ['attribute' => 'ordering',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            //throw new \yii\base\Exception(print_r($model, true));
+                            $total = ProductGroupTemplateOption::countOption($model->productGroupTemplateId);
+                            $minut = '<a href="javascript:orderingTemplateOption(' . $model->productGroupTemplateOptionId . ',' . $total . ',0' . ')" class="btn btn-warning" style="font-size: 14pt;">-</a>&nbsp;&nbsp;&nbsp;';
+                            $ordering = '<span id="orderingTemplate' . $model->productGroupTemplateOptionId . '" style="font-size: 14pt;">' . $model->ordering . '</span> &nbsp;&nbsp;&nbsp;';
+
+                            $plus = ' <a href = "javascript:orderingTemplateOption(' . $model->productGroupTemplateOptionId . ',' . $total . ',1' . ')" class = "btn btn-success"style = "font-size: 14pt;">+</a>';
+                            return $minut . $ordering . $plus;
+                        }
+                    ],
                     // 'createDateTime',
                     // 'updateDateTime',
                     ['class' => 'yii\grid\ActionColumn',

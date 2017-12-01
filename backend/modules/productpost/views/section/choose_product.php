@@ -59,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'Market Price',
                     'format' => 'raw',
                     'value' => function ($model) {
+                        //throw new yii\base\Exception(print_r($model, true));
                         return $model->marketPrice;
                     }
                 ],

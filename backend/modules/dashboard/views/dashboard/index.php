@@ -104,34 +104,34 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 //                {day: '2014-03-15', v: 5},
                 //                {day: '2014-03-16', v: 20}
                 ];
-                        Morris.Line({
-                            element: 'hero-graph',
-                            data: uploads_data,
-                            xkey: 'day',
-                            ykeys: ['v'],
-                            labels: ['Value'],
-                            lineColors: ['#fff'],
-                            lineWidth: 2,
-                            pointSize: 4,
-                            gridLineColor: 'rgba(255,255,255,.5)',
-                            resize: true,
-                            gridTextColor: '#fff',
-                            xLabels: "day",
-                            xLabelFormat: function (d) {
-                                return ['Jan',
-                                    'Feb',
-                                    'Mar',
-                                    'Apr',
-                                    'May',
-                                    'Jun',
-                                    'Jul',
-                                    'Aug',
-                                    'Sep',
-                                    'Oct',
-                                    'Nov',
-                                    'Dec'][d.getMonth()] + ' ' + d.getDate();
-                            },
-                        });
+                Morris.Line({
+                    element: 'hero-graph',
+                    data: uploads_data,
+                    xkey: 'day',
+                    ykeys: ['v'],
+                    labels: ['Value'],
+                    lineColors: ['#fff'],
+                    lineWidth: 2,
+                    pointSize: 4,
+                    gridLineColor: 'rgba(255,255,255,.5)',
+                    resize: true,
+                    gridTextColor: '#fff',
+                    xLabels: "day",
+                    xLabelFormat: function (d) {
+                        return ['Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'May',
+                            'Jun',
+                            'Jul',
+                            'Aug',
+                            'Sep',
+                            'Oct',
+                            'Nov',
+                            'Dec'][d.getMonth()] + ' ' + d.getDate();
+                    },
+                });
             });
         </script>
         <!-- / Javascript -->
@@ -505,7 +505,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <script>
         init.push(function () {
             $('#dashboard-support-tickets .panel-body > div').slimScroll({
-                height: 300,
+                height: 100,
                 alwaysVisible: true,
                 color: '#888',
                 allowPageScroll: true
@@ -519,7 +519,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
             <div class="panel-heading">
                 <span class="panel-title"><i class="panel-title-icon fa fa-bullhorn"></i>Latest Buy</span>
                 <div class="panel-heading-controls">
-                    <div class="panel-heading-text"><a href="#">15 new tickets</a></div>
+                    <div class="panel-heading-text"><a href="#"> new tickets</a></div>
                 </div>
             </div> <!-- / .panel-heading -->
             <div class="panel-body tab-content-padding">
@@ -588,7 +588,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <script>
         init.push(function () {
             $('#dashboard-recent .panel-body > div').slimScroll({
-                height: 300,
+                height: 100,
                 alwaysVisible: true,
                 color: '#888',
                 allowPageScroll: true
@@ -628,16 +628,34 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     foreach ($newUser as $valueU) {
                         ?>
                         <tr>
-                            <td><?php echo $num; ?></td>
+                            <td><?php echo $num++; ?></td>
                             <td>
                                 <?php
-                                //echo 'gender :: ' . Yii::$app->user->identity->gender;
-                                if (Yii::$app->user->identity->gender == 0) {
+                                //echo 'avatar :: ' . '/images/user/avatar/' . $valueU->avatar;
+                                if (isset($valueU->avatar) && !empty($valueU->avatar)) {
+                                    if (isset($valueU->avatar)) {
+                                        if (strstr($valueU->avatar, 'https')) {
+                                            $avatar = $valueU->avatar;
+                                        } else {
+                                            $avatar = "images/user/avatar/" . $valueU->avatar;
+                                        }
+                                    } else {
+                                        $avatar = 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+                                    }
                                     ?>
-                                    <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
-                                <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
-                                    <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
-                                <?php } ?>
+                                    <img src="<?= $avatar ?>" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                    <?php
+                                } else {
+
+                                    if (Yii::$app->user->identity->gender == 0) {
+                                        ?>
+                                        <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                    <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                                        <img src="<?php echo $directoryAsset; ?>/demo/avatars/silhouette.jpg" alt="" style="width:26px;height:26px;" class="rounded">&nbsp;&nbsp;
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 <a href="#" title=""><?php echo $valueU->email ?></a>
                             </td>
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
@@ -646,7 +664,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             <td><?php echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web'; ?></td>
                         </tr>
                         <?php
-                        $num = $num++;
+                        //$num = $num++;
                     }
                     ?>
                 </tbody>
@@ -669,13 +687,30 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     ?>
                     <div class="follower">
                         <?php
-                        //echo 'gender :: ' . Yii::$app->user->identity->gender;
-                        if (Yii::$app->user->identity->gender == 0) {
+                        if (isset($valueV->avatar) && !empty($valueV->avatar)) {
+                            if (isset($valueV->avatar)) {
+                                if (strstr($valueV->avatar, 'https')) {
+                                    $avatar = $valueV->avatar;
+                                } else {
+
+                                    $avatar = "images/user/avatar/" . $valueV->avatar;
+                                }
+                            } else {
+                                $avatar = 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+                            }
                             ?>
-                            <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
-                        <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
-                            <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
-                        <?php } ?>
+                            <img src="<?= $avatar ?>" alt="" style="width:26px;height:26px;" class="follower-avatar">
+                            <?php
+                        } else {
+                            if (Yii::$app->user->identity->gender == 0) {
+                                ?>
+                                <img src="<?php echo $directoryAsset ?>/demo/avatars/female.jpg" alt="" class="follower-avatar">
+                            <?php } elseif (Yii::$app->user->identity->gender == 1) { ?>
+                                <img src="<?php echo $directoryAsset ?>/demo/avatars/silhouette.jpg" alt="" class="follower-avatar">
+                                <?php
+                            }
+                        }
+                        ?>
                         <div class="body">
                             <div class="follower-controls">
                                 <span class="label label-success pull-right">จำนวน <?php echo $valueV->countVisit; ?>&nbsp;ครั้ง</span>
@@ -735,4 +770,4 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 //} else if (Yii::$app->user->identity->type == 3) {
 ?>
 
-<?php //} ?>
+<?php //}  ?>

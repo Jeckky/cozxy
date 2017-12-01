@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     echo 'active';
                 }
                 ?>" id="account-detail">
-                     <?= $this->render('_account_detail', compact('billingAddress', 'personalDetails', 'cozxyCoin', 'user')) ?>
+                     <?= $this->render('_account_detail', compact('avatar', 'billingAddress', 'personalDetails', 'cozxyCoin', 'user')) ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade in <?php
                 if ($_GET['act'] == 'order-history') {

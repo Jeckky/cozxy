@@ -11,7 +11,7 @@ class ProductController extends SuppliersMasterController {
         $userSuppliers = Suppliers::GetUserSuppliers();
         $productCountents = Suppliers::GetUserContents();
         //echo '<pre>';
-        //print_r($productCountents);
+        //print_r($userSuppliers);
         //exit();
         return $this->render('index', [
                     'userSuppliers' => $userSuppliers, 'productCountents' => $productCountents

@@ -190,12 +190,15 @@ class SectionController extends ProductPostMasterController {
             $sort = "percent DESC";
         }
         $queryVariableProducts = SectionItem::find()
-                ->select('*, ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/p.price)) as percent')
+                ->select('p.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/p.price)) as percent')
                 ->join("RIGHT JOIN", "product_suppliers ps", "ps.productSuppId = section_item.productSuppId")
                 ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
                 ->join('LEFT JOIN', 'product p', 'ps.productId=p.productId')
-                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null) or section_item.sectionId is null')
-                ->orderBy("section_item.status DESC," . $sort);
+                // ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 or (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null) or section_item.sectionId is not null')
+                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and p.price>0 or section_item.productId is not null')
+                ->groupBy('ps.productSuppId,section_item.productSuppId,p.productSuppId')
+                ->orderBy("section_item.status DESC,section_item.sectionId ASC," . $sort);
+
         if (isset($_GET['title']) && $_GET['title'] != '') {
             $queryVariableProducts->andWhere("p.title like '%" . $_GET['title'] . "%'");
         }
@@ -205,8 +208,6 @@ class SectionController extends ProductPostMasterController {
         if (isset($_GET['brandId']) && $_GET['brandId'] != '') {
             $queryVariableProducts->andWhere("p.brandId=" . $_GET['brandId']);
         }
-
-        //$queryVariableProducts->groupBy("section_item.sectionId");
         $varibleProduct = new ActiveDataProvider([
             'query' => $queryVariableProducts
         ]);
@@ -304,6 +305,16 @@ class SectionController extends ProductPostMasterController {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.
+
+
+
+
+
+
+
+
+
+
 
 
 
