@@ -10,14 +10,12 @@ use common\models\costfit\ProductGroupTemplateOption;
 /**
  * ProductGroupTemplateOptionSearch represents the model behind the search form about `common\models\costfit\ProductGroupTemplateOption`.
  */
-class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
-{
+class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['productGroupTemplateOptionId', 'productGroupTemplateId', 'status'], 'integer'],
             [['title', 'description', 'createDateTime', 'updateDateTime'], 'safe'],
@@ -27,8 +25,7 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,13 +37,13 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = ProductGroupTemplateOption::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        $query->orderBy("ordering ASC");
         $query->andFilterWhere(['productGroupTemplateId' => $this->productGroupTemplateId]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -64,8 +61,8 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-        ->andFilterWhere(['like', 'description', $this->description]);
-
+                ->andFilterWhere(['like', 'description', $this->description]);
+        $query->orderBy("ordering ASC");
         return $dataProvider;
     }
 

@@ -42,9 +42,13 @@ class SectionItem extends \common\models\costfit\master\SectionItemMaster {
     }
 
     public static function checkItemInSection($sectionId, $productId, $productSuppId) {
-        $item = SectionItem::find()->where("sectionId=" . $sectionId . " and productId=" . $productId . " and productSuppId=" . $productSuppId)->one();
-        if (isset($item)) {
-            return 1;
+        if ($productId != '' && $productSuppId != '') {
+            $item = SectionItem::find()->where("sectionId=" . $sectionId . " and productId=" . $productId . " and productSuppId=" . $productSuppId)->one();
+            if (isset($item)) {
+                return 1;
+            } else {
+                return 0;
+            }
         } else {
             return 0;
         }

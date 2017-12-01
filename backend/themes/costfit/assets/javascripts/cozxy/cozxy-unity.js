@@ -690,4 +690,3 @@ function approveReceiveType(productSuppId, value) {
     $('.text-switcher-warning-' + productSuppId).html('');
 }
 
- 
