@@ -620,7 +620,7 @@ class SiteController extends MasterController {
         //authclient=instagram
         //echo '<pre>';
         print_r($userAttributes);
-        exit();
+        //exit();
         //echo isset($client->id) ? $client->id : '';
         /*
           {
