@@ -120,8 +120,8 @@ $(function() {
 });
 ');
 \frontend\assets\SearchAsset::register($this);
-if ($site == 'category') {
-    if (isset($title) && !empty($title)) {
+if($site == 'category') {
+    if(isset($title) && !empty($title)) {
         $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
         $this->params['breadcrumbs'][] = $this->title;
     } else {
@@ -129,11 +129,11 @@ if ($site == 'category') {
         $this->params['breadcrumbs'][] = $this->title;
         $title = '';
     }
-    if (isset($_GET["search"]) && !empty($_GET['search'])) {
+    if(isset($_GET["search"]) && !empty($_GET['search'])) {
         $search = 'SEARCH : ' . $_GET["search"];
     }
 } else {
-    if (isset($title) && !empty($title)) {
+    if(isset($title) && !empty($title)) {
         $this->title = 'Search Brand ' . isset($title) ? strtoupper($title) : '';
         $this->params['breadcrumbs'][] = $this->title;
     } else {
@@ -141,7 +141,7 @@ if ($site == 'category') {
         $this->params['breadcrumbs'][] = $this->title;
         $title = '';
     }
-    if (isset($_GET["search"]) && !empty($_GET['search'])) {
+    if(isset($_GET["search"]) && !empty($_GET['search'])) {
         $search = 'SEARCH : ' . $_GET["search"];
         $this->title = $_GET["search"];
     }
@@ -161,18 +161,18 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
         <div class="row">
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
-                    <?php if ($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
+                    <?php if($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
                         <div class="size16">&nbsp;</div>
                         <div class="alert alert-danger">
                             <h2>No item found</h2>
                         </div>
                     <?php endif; ?>
-                    <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+                    <?php if(isset($promotions) && $promotions->getCount() > 0): ?>
                         <div class="filter-product-cozxy col-sm-12">
                             <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
                             <div class="row">
                                 <?php
-//                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
+                                //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
                                 ?>
                                 <?php
                                 echo \yii\widgets\ListView::widget([
@@ -181,11 +181,11 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                         'tag' => false,
                                     ],
                                     'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
-                            },
-//                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
+                                    },
+                                    //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                                     //'layout'=>"{summary}{pager}{items}"
-//                            'layout' => "{items}",
+                                    //                            'layout' => "{items}",
                                     'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
                                     'itemOptions' => [
                                         'tag' => false,
@@ -195,22 +195,21 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                             'prevPageLabel' => 'previous',
                                             'nextPageLabel' => 'next',
                                             'maxButtonCount' => 3,
-                                                ] : [],
+                                        ] : [],
                                     ],
                                 ]);
-//                        yii\widgets\Pjax::end();
+                                //                        yii\widgets\Pjax::end();
                                 ?>
                             </div>
                         </div>
                     <?php endif; ?>
 
-
                     <div class="filter-product-cozxy col-sm-12">
 
-                        <?php if ($productCanSell->getTotalCount() > 0): ?>
+                        <?php if($productCanSell->getTotalCount() > 0): ?>
                             <h3 class="b" style="word-wrap: break-word;white-space: normal;">
                                 <?php
-                                if (isset($search)) {
+                                if(isset($search)) {
                                     echo $search . '(RECOMMENDED)';
                                 } else {
                                     echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(RECOMMENDED)';
@@ -233,8 +232,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                     <?php
                                     yii\widgets\Pjax::begin([
                                         'id' => 'cansale',
-                                        'enablePushState' => false, // to disable push state
-                                        'enableReplaceState' => false, // to disable replace state
+//                                        'enablePushState' => false, // to disable push state
+//                                        'enableReplaceState' => false, // to disable replace state
                                         'timeout' => 5000,
                                         'clientOptions' => [
                                             'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
@@ -247,8 +246,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
-                                },
+                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                        },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                         'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
@@ -265,8 +264,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                         // Customzing options for pager container tag
                                         'options' => [
                                             'tag' => 'div',
-                                        //'class' => 'pager-wrapper col-sm-12',
-                                        //'id' => 'pager-container',
+                                            //'class' => 'pager-wrapper col-sm-12',
+                                            //'id' => 'pager-container',
                                         ],
                                     ]);
                                     yii\widgets\Pjax::end();
@@ -277,10 +276,10 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                         <?php endif; ?>
                     </div>
                     <div class="filter-product-cozxy-not-sale col-sm-12">
-                        <?php if ($productNotSell->getTotalCount() > 0): ?>
-                            <h3 class="b"  style="word-wrap: break-word;white-space: normal;">
+                        <?php if($productNotSell->getTotalCount() > 0): ?>
+                            <h3 class="b" style="word-wrap: break-word;white-space: normal;">
                                 <?php
-                                if (isset($search)) {
+                                if(isset($search)) {
                                     echo $search . '(PRODUCTS EXPLORE)';
                                 } else {
                                     echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(PRODUCTS EXPLORE)';
@@ -309,8 +308,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                    return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                                },
+                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                                        },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
                                         'layout' => "{summary}\n{items}\n<div class =' col-sm-offset-3'>{pager}</div>\n",
