@@ -80,16 +80,20 @@ $productId = $model->productId;
 
     <hr>
 
-    <?php if ($model->parentId === NULL): ?>
-        <?php if (!$model->hasProductSuppliers()): ?>
-            <?php
-            if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
-                ?>
-                <p>
-                    <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
-                </p>
-            <?php } ?>
-        <?php endif; ?>
+    <?php
+    //echo $model->hasProductSuppliers();
+    if ($model->parentId === NULL):
+        ?>
+        <?php //if (!$model->hasProductSuppliers()): ?>
+        <?php
+        //if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
+        if ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
+            ?>
+            <p>
+                <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
+            </p>
+        <?php } ?>
+        <?php //endif; ?>
         <div>
 
             <!-- Nav tabs -->
@@ -97,7 +101,8 @@ $productId = $model->productId;
                 <li role="presentation" class="active">
                     <a href="#products" aria-controls="home" role="tab" data-toggle="tab">Products</a></li>
                 <?php
-                if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
+                //if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
+                if ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
                     ?>
                     <li role="presentation">
                         <a href="#productSuppliers" aria-controls="profile" role="tab" data-toggle="tab">ProductSuppliers</a>
@@ -192,7 +197,7 @@ $productId = $model->productId;
                             'result',
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => ($checkAuth == 'Partner') ? '{stock} {price} {delete}' : ($checkAuth == "Partner-Content" ? '{stock} {price} {delete}' : ''),
+                                'template' => ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) ? '{stock} {price} {delete}' : '',
                                 'buttons' => [
                                     'stock' => function ($url, $model, $index) {
                                         return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);
