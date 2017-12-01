@@ -37,7 +37,7 @@ use kartik\depdrop\DepDrop;
             <div class="row">
                 <div class="col-md-6">
                     <p>Email</p>
-                    <?php if (isset($model->attributes['email'])) { ?>
+                    <?php if (isset($model->attributes['email']) && !empty($model->attributes['email'])) { ?>
                         <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS', 'disabled' => true])->label(false); ?>
                     <?php } else { ?>
                         <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
