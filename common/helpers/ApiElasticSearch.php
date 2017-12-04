@@ -19,7 +19,6 @@ class ApiElasticSearch {
         // Convert JSON string to Array
         $someArray = json_decode($json, true);
         return $someArray;
-        //echo '<h1>Convert to Array</h1> ';
         //print_r($someArray);        // Dump all data of the Array
         //echo $someArray[0]["name"]; // Access Array data
         // Convert JSON string to Object
