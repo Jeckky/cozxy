@@ -15,9 +15,19 @@ namespace common\helpers;
  */
 class ApiElasticSearch {
 
-    public static function searchProduct($json) {
+    public static function searchProduct($search, $status) {
+        $url = 'http://localhost/cozxy/frontend/web/elastic-search-data';
+        $data = "search=APRIL&status=1&test=1";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $content = curl_exec($ch);
+        curl_close($ch);
         // Convert JSON string to Array
-        $someArray = json_decode($json, true);
+        $someArray = json_decode($content, true);
         return $someArray;
         //print_r($someArray);        // Dump all data of the Array
         //echo $someArray[0]["name"]; // Access Array data
