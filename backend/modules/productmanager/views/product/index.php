@@ -15,11 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
 
     <p>
         <?php
-        if ($checkAuth == 'Content' || $checkAuth == 'Partner-Content') {
+        //if ($checkAuth == 'Content' || $checkAuth == 'Partner-Content') {
+        //echo $this->context->id;
+        //if ((\hscstudio\mimin\components\Mimin::checkRoute($this->context->id . '/create', true))) {
+        if ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create'))) {
             ?>
             <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
             <?php
@@ -128,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-<?php Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>
 
 <?php $this->registerJs("

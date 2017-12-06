@@ -656,7 +656,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                     }
                                 }
                                 ?>
-                                <a href="#" title=""><?php echo $valueU->email ?></a>
+                                <a href="#" title=""><?php
+                                    if (isset($valueU->username) && !empty($valueU->username)) {
+                                        echo $valueU->username;
+                                    } else {
+                                        echo $valueU->token;
+                                    }
+                                    ?></a>
                             </td>
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
                                 <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
