@@ -16,8 +16,22 @@ namespace common\helpers;
 class ApiElasticSearch {
 
     public static function searchProduct($search, $status) {
-        $url = 'http://localhost/cozxy/frontend/web/elastic-search-data';
-        $data = "search=APRIL&status=1&test=1";
+
+        /* Function AddtoCart : paramenter
+         * addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId, supplierId, receiveType)
+         * javascript:addItemToCartUnitys('1228',1,'49','FALSE','1631','19','1')
+         * $url = 'http://192.168.8.11/cozxy/frontend/web/elastic/product-for-sale.json';
+         * $url = 'http://192.168.8.11/cozxy/frontend/web/elastic/product-not-sale.json';
+         */
+
+        if ($status == 'for-sale') {
+            $json = 'product-for-sale.json';
+        } elseif ($status == 'not-sale') {
+            $json = 'product-not-sale.json';
+        }
+        $url = 'http://192.168.8.11/cozxy/frontend/web/elastic/' . $json;
+        echo $url;
+        $data = "search=" . $search . "&status=" . $status . "&test=1";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);

@@ -436,10 +436,10 @@ class SearchController extends MasterController {
                 . '{"user":"Allison McKinnery","brand":"RAY-BAN","Category": "Sunglasses" ,"title":"RAY-BAN RB2140 (RED)","price":"5005","market price":"7150","images":"/images/ProductImageSuppliers/thumbnail1/hUyCZRKRMEv_4ew-f8G9sDu4PnOz-NdZ.jpg"}]';
         echo '<h1>JSON string</h1> <br> ' . $someJSON1;
         echo '<pre>';
-        echo '<h1>Convert to Array</h1> ';
+        echo '<h1>Convert JSON to Array</h1> ';
         $search = Yii::$app->request->get('search');
         $status = 1;
-        $search1 = \common\helpers\ApiElasticSearch::searchProduct($search, $status);
+        $search1 = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
         print_r($search1);
     }
 
