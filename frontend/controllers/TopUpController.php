@@ -210,12 +210,23 @@ class TopUpController extends MasterController {
         $fromCheckout = $params["fromCheckout"];
         $topUpNo = $params["topUpNo"];
         $isMcc = TRUE;
+        $amount = $this->setAmount($amount);
 //        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
 //        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
         if (Yii::$app->params["ePaymentServerType"] == 1) {
             //URL Test
             $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
             //URL Test
+            $devices = \common\helpers\GetBrowser::UserAgent();
+            if ($devices != "mobile") {
+                //Production URL
+                $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
+                ////Production URL
+            } else {
+                //Mobile URL
+                $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
+                ////Mobile URL
+            }
         } else {
             $devices = \common\helpers\GetBrowser::UserAgent();
             if ($devices != "mobile") {
@@ -228,7 +239,6 @@ class TopUpController extends MasterController {
                 ////Mobile URL
             }
         }
-
 
         // Standard Thai Bath
         if (!$isMcc):
@@ -248,7 +258,8 @@ class TopUpController extends MasterController {
                 $merchantId = "402001605782521";
                 $terminalId = "70352180";
                 // For Test
-                $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q"; // Old Payment For AreaWOW
+                //$md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q"; // Old Payment For AreaWOW
+                $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
             } else {
                 //For Cozxy
                 $merchantId = "451005319527001";
@@ -261,7 +272,8 @@ class TopUpController extends MasterController {
 //        throw new \yii\base\Exception(str_replace(".", "", $package->price));
 //        $amount = str_replace(".", "", $package->price);
 //        $amount = str_replace(".", "", 1000);
-        $amount = $amount * 100;
+        // $amount = $amount * 100;
+        $amount .= '00';
         if (Yii::$app->getRequest()->serverName == "localhost") {
             $url = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
@@ -492,7 +504,7 @@ class TopUpController extends MasterController {
     public function topUpNo() {
         $y = date('Y');
         $m = date('m');
-        $y = substr($y, 2, 2);
+        // $y = substr($y, 2, 2);
         $ym = $y . $m;
         // throw new \yii\base\Exception($ym);
         $lastNo = TopUp::find()->where("topUpNo like '$ym%'")->orderBy('topUpNo DESC')->one();
@@ -500,9 +512,20 @@ class TopUpController extends MasterController {
             $topUpNo = $lastNo->topUpNo;
             $topUpNo++;
         } else {
-            $topUpNo = $ym . '00001';
+            $topUpNo = $ym . '000001';
         }
         return $topUpNo;
+    }
+
+    public function setAmount($amount) {
+        $lenght = strlen($amount);
+        $zero = 10 - $lenght;
+        $text = '';
+        for ($i = 0; $i < $zero; $i++):
+            $text.='0';
+        endfor;
+        $text.=$amount;
+        return $text;
     }
 
     public function actionRandomPass() {
