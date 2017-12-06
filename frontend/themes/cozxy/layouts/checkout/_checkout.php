@@ -348,13 +348,9 @@ $pickingId = rand(0, 9999);
                             <div class="col-xs-3 col-md-2 col-sm-3">Tel:</div>
                             <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
                                 <?= isset($defaultAddress) && ($defaultAddress->tel != '' || $defaultAddress->tel != null) ? $defaultAddress->tel : '<input type="text" name="tel" id="tel"><span class="text-danger" id="enterTel"> Please enter your mobile phone.</span>' ?>
-                                <?php if (isset($defaultAddress) && ($defaultAddress->tel == '' || $defaultAddress->tel == null)) { ?>
+                                <?php if (isset($defaultAddress) && ($defaultAddress->tel != '' || $defaultAddress->tel != null)) { ?>
                                     <input type="hidden" id="checkTel" value="<?= $defaultAddress->tel ?>">
-                                <?php } else {
-                                    ?>
-                                    <input type="hidden" id="checkTel" value="<?= $defaultAddress->tel ?>">
-                                <?php }
-                                ?>
+                                <?php } ?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">&nbsp;</div>
