@@ -8,6 +8,8 @@
 
 namespace common\helpers;
 
+use Yii;
+
 /**
  * Description of ApiElasticSearch
  *
@@ -29,8 +31,8 @@ class ApiElasticSearch {
         } elseif ($status == 'not-sale') {
             $json = 'product-not-sale.json';
         }
-        $url = 'http://192.168.8.11/cozxy/frontend/web/elastic/' . $json;
-        echo $url;
+        $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "elastic/" . $json;
+        echo 'url : ' . $url . '<br><br>';
         $data = "search=" . $search . "&status=" . $status . "&test=1";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
