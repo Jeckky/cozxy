@@ -255,11 +255,13 @@ class TopUpController extends MasterController {
 
             if (Yii::$app->params["ePaymentServerType"] == 1) {
                 // For Test
-                $merchantId = "402001605782521";
-                $terminalId = "70352180";
+                // $merchantId = "402001605782521";
+                //$terminalId = "70352180";
                 // For Test
                 //$md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q"; // Old Payment For AreaWOW
                 $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
+                $merchantId = "451005319527001";
+                $terminalId = "74428381";
             } else {
                 //For Cozxy
                 $merchantId = "451005319527001";
@@ -292,8 +294,8 @@ class TopUpController extends MasterController {
         // throw new \yii\base\Exception(Yii::$app->params["ePaymentServerType"]);
         $checksum = md5($merchantId . $terminalId . $amount . $url . $resUrl . $cusIp . $description . $invoiceNo . $fillSpace . $md5Key);
         //return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
-        return $this->render("@app/views/e_payment/_k_payment_1", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
-        //return $this->render("@app/views/e_payment/e_pay", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        //return $this->render("@app/views/e_payment/_k_payment", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
+        return $this->render("@app/views/e_payment/e_pay", compact('sendUrl', 'merchantId', 'terminalId', 'checksum', 'amount', 'invoiceNo', 'description', 'url', 'resUrl', 'cusIp', 'fillSpace'));
     }
 
     public function actionPrintPaymentForm($userId, $amount, $fromCheckout) {
