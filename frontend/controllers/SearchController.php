@@ -440,6 +440,7 @@ class SearchController extends MasterController {
         $search = Yii::$app->request->get('search');
         $status = 1;
         $search1 = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
+        echo '<pre>';
         print_r($search1);
     }
 

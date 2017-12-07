@@ -1772,6 +1772,32 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
+
+
+
+
+
+
+function shipCozxyBox() {
+    var shipProvince = $('#stateId').val();
+    var shipDistrict = $('#amphurId').val();
+    var shipLcpickingId = $('#LcpickingId').val();
+    var lat_value = $('#lat_value').val();
+    var lon_value = $('#lon_value').val();
+
+
+    alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
+}
+
+
+
+
+
+
+
+
+
+
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];
