@@ -10,7 +10,7 @@
                 <div class="col-sm-12" style="top:10px; margin-left: -15px; color: #000;">
                     <h4>MON - SUN 24 hours</h4>
                     <p>
-                        <a href="#" class="btn-default btn size14-xs">SEARCH</a>
+                        <a href="#" class="btn-default btn size14-xs">SELECT</a>
                     </p>
                 </div>
 
