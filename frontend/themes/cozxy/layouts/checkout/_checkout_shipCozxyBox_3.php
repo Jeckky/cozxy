@@ -24,12 +24,6 @@ function strip_tags_content($text) {
         margin:auto;
         /*  margin-top:100px;*/
     }
-    #infowindow-content {
-        display: none;
-    }
-    #map_canvas #infowindow-content {
-        display: inline;
-    }
 </style>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -80,6 +74,7 @@ function strip_tags_content($text) {
                         </div>
 
                         <div class="row fc-g999" style="padding: 40px;">
+
                             <div class="col-md-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-3 control-label">Select Province</label>
@@ -205,12 +200,6 @@ function strip_tags_content($text) {
                             </div>
                             <div class="col-xs-8">
                                 <div id="map_canvas"></div>
-                                <div id="infowindow-content">
-                                    <img id="place-icon" src="" height="16" width="16">
-                                    <span id="place-name"  class="title"></span><br>
-                                    Place ID <span id="place-id"></span><br>
-                                    <span id="place-address"></span>
-                                </div>
                                 <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
@@ -406,7 +395,7 @@ function strip_tags_content($text) {
             mapTypeId: my_mapTypeId // กำหนดรูปแบบแผนที่
         };
         map = new GGM.Map(my_DivObj, myOptions); // สร้างแผนที่และเก็บตัวแปรไว้ในชื่อ map
-        var clickHandler = new ClickEventHandler(map, origin);
+
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
         var icons = {
@@ -488,81 +477,12 @@ foreach ($activeMap as $key => $value) {
             })(marker));
 
         });
-
         // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
         GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
         });
 
     }
-
-    /**
-     * @constructor
-     */
-    var ClickEventHandler = function (map, origin) {
-        this.origin = origin;
-        this.map = map;
-        this.directionsService = new google.maps.DirectionsService;
-        this.directionsDisplay = new google.maps.DirectionsRenderer;
-        this.directionsDisplay.setMap(map);
-        this.placesService = new google.maps.places.PlacesService(map);
-        this.infowindow = new google.maps.InfoWindow;
-        this.infowindowContent = document.getElementById('infowindow-content');
-        this.infowindow.setContent(this.infowindowContent);
-
-        // Listen for clicks on the map.
-        this.map.addListener('click', this.handleClick.bind(this));
-    };
-
-    ClickEventHandler.prototype.handleClick = function (event) {
-        console.log('You clicked on: ' + event.latLng);
-        // If the event has a placeId, use it.
-        if (event.placeId) {
-            console.log('You clicked on place:' + event.placeId);
-
-            // Calling e.stop() on the event prevents the default info window from
-            // showing.
-            // If you call stop here when there is no placeId you will prevent some
-            // other map click event handlers from receiving the event.
-            event.stop();
-            this.calculateAndDisplayRoute(event.placeId);
-            this.getPlaceInformation(event.placeId);
-        }
-    };
-
-    ClickEventHandler.prototype.calculateAndDisplayRoute = function (placeId) {
-        var me = this;
-        this.directionsService.route({
-            origin: this.origin,
-            destination: {placeId: placeId},
-            travelMode: 'WALKING'
-        }, function (response, status) {
-            if (status === 'OK') {
-                me.directionsDisplay.setDirections(response);
-            } else {
-                window.alert('Directions request failed due to ' + status);
-            }
-        });
-    };
-
-    ClickEventHandler.prototype.getPlaceInformation = function (placeId) {
-        var me = this;
-        this.placesService.getDetails({placeId: placeId}, function (place, status) {
-
-            if (status === 'OK') {
-                me.infowindow.close();
-                me.infowindow.setPosition(place.geometry.location);
-                me.infowindowContent.children['place-icon'].src = place.icon;
-                me.infowindowContent.children['place-name'].textContent = place.name;
-                me.infowindowContent.children['place-id'].textContent = place.place_id;
-                me.infowindowContent.children['place-address'].textContent =
-                        place.formatted_address;
-                me.infowindow.open(me.map);
-            }
-        });
-    };
-
-
     $(function () {
         // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
         // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
@@ -573,7 +493,7 @@ foreach ($activeMap as $key => $value) {
         //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
         $("<script/>", {
             "type": "text/javascript",
-            src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initialize"
+            src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initialize"
         }).appendTo("body");
     });
 
