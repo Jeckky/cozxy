@@ -12,7 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $pickingId = rand(0, 9999);
 
 function strip_tags_content($text) {
-
     return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
 }
 ?>
@@ -222,9 +221,10 @@ function strip_tags_content($text) {
                                           <br />
                                            <input type="submit" name="button" id="button" value="บันทึก" />
                                   </form> 
-                            </div>
-                            <h4>Result for "Ladproa 20"</h4>
-                            <div id="map" style="height:450px;"></div>-->
+                                    </div>
+                                    <h4>Result for "Ladproa 20"</h4>
+                                    <div id="map" style="height:450px;"></div>
+                                -->
 
                                 <br>
                                 <p style=" background-color: yellow; color: #000; line-height:50px;" class="size18">
@@ -394,12 +394,12 @@ function strip_tags_content($text) {
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
     function initialize() { // ฟังก์ชันแสดงแผนที่
         GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
-// กำหนดจุดเริ่มต้นของแผนที่
+        // กำหนดจุดเริ่มต้นของแผนที่
         var my_Latlng = new GGM.LatLng(13.761728449950002, 100.6527900695800);
         var my_mapTypeId = GGM.MapTypeId.ROADMAP; // กำหนดรูปแบบแผนที่ที่แสดง
-// กำหนด DOM object ที่จะเอาแผนที่ไปแสดง ที่นี้คือ div id=map_canvas
+        // กำหนด DOM object ที่จะเอาแผนที่ไปแสดง ที่นี้คือ div id=map_canvas
         var my_DivObj = $("#map_canvas")[0];
-// กำหนด Option ของแผนที่
+        // กำหนด Option ของแผนที่
         var myOptions = {
             zoom: 11, // กำหนดขนาดการ zoom
             center: my_Latlng, // กำหนดจุดกึ่งกลาง
@@ -493,7 +493,6 @@ foreach ($activeMap as $key => $value) {
         GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
         });
-
     }
 
     /**
