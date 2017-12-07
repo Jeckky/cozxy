@@ -10,6 +10,11 @@ $this->title = 'YOUR SHIPPING & BILLING ADDRESS';
 $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
+
+function strip_tags_content($text) {
+
+    return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
+}
 ?>
 <style>
     /* css กำหนดความกว้าง ความสูงของแผนที่ */
@@ -195,7 +200,7 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="col-xs-8">
                                 <div id="map_canvas"></div>
-                                 <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
+                                <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
                                             <input name="lat_value" type="text" id="lat_value" value="0" />  <br />
@@ -204,11 +209,20 @@ $pickingId = rand(0, 9999);
                                           Zoom 
                                           <input name="zoom_value" type="text" id="zoom_value" value="0" size="5" /> 
                                           <br />
-                                          <input type="submit" name="button" id="button" value="บันทึก" /> 
-                                          </form> 
-                                </div>
-                                <!--<h4>Result for "Ladproa 20"</h4>-->
-                                <div id="map" style="height:450px;"></div>
+                                           <input type="submit" name="button" id="button" value="บันทึก" />
+                                  </form> 
+                            </div>
+                            <h4>Result for "Ladproa 20"</h4>
+                            <div id="map" style="height:450px;"></div>-->
+
+                                <br>
+                                <p style=" background-color: yellow; color: #000; line-height:50px;" class="size20">
+                                    &nbsp;&nbsp;Search for a new COZXYBOX Pickup Location
+                                </p>
+                                <p>
+                                    COZXYBOX Pickup location offer package pickup as self-service COZXYBOX Lockers and at staffed locations. Please enter address, postal code, landmark, or Amazon Locker name.
+                                </p>
+
                             </div>
                         </div>
                     </div>
@@ -364,6 +378,7 @@ $pickingId = rand(0, 9999);
 </style>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
 <script type="text/javascript">
+
     var map; // กำหนดตัวแปร map ไว้ด้านนอกฟังก์ชัน เพื่อให้สามารถเรียกใช้งาน จากส่วนอื่นได้
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
     function initialize() { // ฟังก์ชันแสดงแผนที่
@@ -379,7 +394,7 @@ $pickingId = rand(0, 9999);
             center: my_Latlng, // กำหนดจุดกึ่งกลาง
             mapTypeId: my_mapTypeId // กำหนดรูปแบบแผนที่
         };
-        map = new GGM.Map(my_DivObj, myOptions);// สร้างแผนที่และเก็บตัวแปรไว้ในชื่อ map
+        map = new GGM.Map(my_DivObj, myOptions); // สร้างแผนที่และเก็บตัวแปรไว้ในชื่อ map
 
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
@@ -402,65 +417,30 @@ $pickingId = rand(0, 9999);
         };
 
         var features = [
-            {
-                position: new google.maps.LatLng(13.817227246026727, 100.50787199179695),
-                type: 'cozxy',
-                location: 'Tesco Lotus Extra Ekamai Ramintra',
-                contentString: 'ถนน ประดิษฐ์มนูธรรม แขวง ลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร ไทย <br />+66 2 935 9800 <br />www.facebook.com'
-            }, {
-                position: new google.maps.LatLng(13.881698194418705, 100.46672509179689),
-                type: 'cozxy',
-                location: 'Bangchak - Vibhavadi',
-                contentString: '21/43-44 ถนนวิภาวดีรังสิต แขวงตลาดบางเขน เขต หลักสี่ <br />กรุงเทพมหานคร 10210 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.850514153309353, 100.5255065917969),
-                type: 'cozxy',
-                location: 'Bangchak - Ekamai ramintra 4',
-                contentString: '569 หมู่ - ถนนประดิษฐ์มนูธรรม แขวงลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร 10230 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.753396636275411, 100.48291739179695),
-                type: 'cozxy',
-                location: 'Bangchak - Ekamai',
-                contentString: '427/1 ซอยสุขุมวิท 63(เอกมัย) ถนนสุขุมวิท 63 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.752173616376334, 100.51218199179687),
-                type: 'cozxy',
-                location: 'Bangchak - Pattanakarn 27',
-                contentString: '1405 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.751845037895192, 100.4663560917968),
-                type: 'cozxy',
-                location: 'Bangchak - Sukhumvit 39',
-                contentString: '1/2 ซ.พร้อมศรี ถนนสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.708053901294937, 100.5019578917969),
-                type: 'cozxy',
-                location: 'Bangchak - Sukhumvit 99 (coming soon)',
-                contentString: '2999/1 ถนน สุขุมวิท แขวง บางจาก เขต พระโขนง <br />กรุงเทพมหานคร 10260 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.75196263019403, 100.51759589179687),
-                type: 'cozxy',
-                location: 'Bangchak - Pattanakarn 34',
-                contentString: '1348 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            }, {
-                position: new google.maps.LatLng(13.822871874561061, 100.51305459179684),
-                type: 'cozxy',
-                location: 'Bangchak - Ekamai ramintra 1',
-                contentString: '28 ซ.โยธินพัฒนา หมู่ - ถนนคู่ขนานทางด่วนรามอินทรา-ลาดพร้าว แขวงคลองจั่น เขตบางกะปิ <br />กรุงเทพมหานคร 10240 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-            },
+<?php
+foreach ($activeMap as $key => $value) {
+    $order = array("\r\n", "\n", "\r");
+    $replace = '';
+    $description = str_replace($order, $replace, $value['description']);
+    ?>{
+                    position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                    type: 'cozxy',
+                    location: "<?= strip_tags($value['title']) ?>",
+                    contentString: "<?= $description ?>"
+                },<?php
+}
+?>
         ];
 
         // Create markers.
-
-
-// เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
+        // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
                 var infowindow = new GGM.InfoWindow({
                     map: map,
                     position: pos,
-                    content: 'คุณอยู่ที่นี่.'
+                    content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
                 });
                 //alert(pos);
                 var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
@@ -475,7 +455,6 @@ $pickingId = rand(0, 9999);
         } else {
             // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
         }
-
 
         features.forEach(function (feature) {
             var marker = new google.maps.Marker({
@@ -498,133 +477,29 @@ $pickingId = rand(0, 9999);
             })(marker));
 
         });
-// กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
+        // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
         GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
         });
 
     }
     $(function () {
-// โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
-// ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
-// v=3.2&sensor=false&language=th&callback=initialize
-//	v เวอร์ชัน่ 3.2
-//	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
-//	language ภาษา th ,en เป็นต้น
-//	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
+        // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
+        // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
+        // v=3.2&sensor=false&language=th&callback=initialize
+        //	v เวอร์ชัน่ 3.2
+        //	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
+        //	language ภาษา th ,en เป็นต้น
+        //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
         $("<script/>", {
             "type": "text/javascript",
             src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initialize"
         }).appendTo("body");
     });
+
+
 </script>
 
-<script>
-    /*
-     var map, info;
-     function initMap() {
-     map = new google.maps.Map(document.getElementById('map'), {
-     zoom: 11,
-     center: new google.maps.LatLng(13.847860, 100.604274),
-     mapTypeId: 'roadmap'
-     });
-
-     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-     var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-     var icons = {
-     parking: {
-     //icon: iconBase + 'parking_lot_maps.png'
-     icon: iconBase + 'parking_lot_maps.png'
-     },
-     library: {
-     //icon: iconBase + 'library_maps.png'
-     icon: iconBase + 'library_maps.png'
-     },
-     info: {
-     //icon: iconBase + 'info-i_maps.png'
-     icon: iconBase + 'info-i_maps.png'
-     },
-     cozxy: {
-     icon: iconBaseCozxy + 'cozxy-map.png'
-     }
-     };
-
-     var features = [
-     {
-     position: new google.maps.LatLng(13.817227246026727, 100.50787199179695),
-     type: 'cozxy',
-     location: 'Tesco Lotus Extra Ekamai Ramintra',
-     contentString: 'ถนน ประดิษฐ์มนูธรรม แขวง ลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร ไทย <br />+66 2 935 9800 <br />www.facebook.com'
-     }, {
-     position: new google.maps.LatLng(13.881698194418705, 100.46672509179689),
-     type: 'cozxy',
-     location: 'Bangchak - Vibhavadi',
-     contentString: '21/43-44 ถนนวิภาวดีรังสิต แขวงตลาดบางเขน เขต หลักสี่ <br />กรุงเทพมหานคร 10210 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.850514153309353, 100.5255065917969),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai ramintra 4',
-     contentString: '569 หมู่ - ถนนประดิษฐ์มนูธรรม แขวงลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร 10230 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.753396636275411, 100.48291739179695),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai',
-     contentString: '427/1 ซอยสุขุมวิท 63(เอกมัย) ถนนสุขุมวิท 63 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.752173616376334, 100.51218199179687),
-     type: 'cozxy',
-     location: 'Bangchak - Pattanakarn 27',
-     contentString: '1405 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.751845037895192, 100.4663560917968),
-     type: 'cozxy',
-     location: 'Bangchak - Sukhumvit 39',
-     contentString: '1/2 ซ.พร้อมศรี ถนนสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.708053901294937, 100.5019578917969),
-     type: 'cozxy',
-     location: 'Bangchak - Sukhumvit 99 (coming soon)',
-     contentString: '2999/1 ถนน สุขุมวิท แขวง บางจาก เขต พระโขนง <br />กรุงเทพมหานคร 10260 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.75196263019403, 100.51759589179687),
-     type: 'cozxy',
-     location: 'Bangchak - Pattanakarn 34',
-     contentString: '1348 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.822871874561061, 100.51305459179684),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai ramintra 1',
-     contentString: '28 ซ.โยธินพัฒนา หมู่ - ถนนคู่ขนานทางด่วนรามอินทรา-ลาดพร้าว แขวงคลองจั่น เขตบางกะปิ <br />กรุงเทพมหานคร 10240 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     },
-     ];
-
-     // Create markers.
-     features.forEach(function (feature) {
-     var marker = new google.maps.Marker({
-     position: feature.position,
-     icon: icons[feature.type].icon,
-     map: map,
-     title: feature.location,
-     content: feature.contentString,
-     });
-
-     info = new google.maps.InfoWindow();
-
-     google.maps.event.addListener(marker, 'click', (function (marker, i) {
-     return function () {
-     //info.setContent(feature.content);
-     info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-     'Place ID: ' + feature.contentString + '</div>');
-     info.open(map, marker);
-     }
-     })(marker));
-
-
-
-     });
-     }
-     */
-</script>
 <!--<script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
 </script>-->
@@ -652,250 +527,6 @@ $this->registerJs('if ($("input[name=shipping]:checked").val() == 1) {
             $("#shipToCozxyBox").show();
         }
     }); ', \yii\web\View::POS_END);
-
-
-/* $this->registerJs('
-  var map;
-  function initMap() {
-  var myLatLng = { lat: 13.8713948, lng: 100.6151315 };
-  map = new google.maps.Map(document.getElementById("map"), {
-  center: myLatLng,
-  zoom: 16
-  });
-
-  var marker = new google.maps.Marker({
-  map: map,
-  position: myLatLng,
-  title: "Hello World!"
-  });
-  }
-
-
-
-  function changeMap(lats, lngs) {
-
-  var myLatLng = {lat: Number(lats), lng: Number(lngs)};// get ค่ามาจาก address แต่เป็น String ต้องเปลียนให้เป็น Number
-  console.log(myLatLng);
-  //document.getElementById("map").innerHTML = "Paragraph changed!";
-  //$(".cart-detail").find("#map").html("xxxxxx");
-  map = new google.maps.Map(document.getElementById("map"), {
-  center: myLatLng,
-  zoom: 11,
-  mapTypeId: "hybrid"
-  });
-
-  var marker = new google.maps.Marker({
-  map: map,
-  position: myLatLng,
-  title: "Hello World!"
-  });
-  }
-  ', \yii\web\View::POS_HEAD);
-
-  $this->registerJs('
-  $("#LcpickingId").change(function (event, id, value) {
-  prev_val = $(this).val();
-
-  $.ajax({
-  type: "POST",
-  url: $baseUrl + "checkout/map-images-google",
-  data: {"pickingIds": prev_val},
-  success: function (data, status)
-  {
-  if (data != "") {
-  if (status == "success") {
-  var JSONObject = JSON.parse(data);
-  $("#map-address-cozxy-box").html(JSONObject.description);
-  // Map Google in latitude and longitude for cozxy
-  changeMap(JSONObject.latitude, JSONObject.longitude);
-
-  } else {
-
-  }
-  }
-  }
-  });
-  });
-
-
-  if($("input[name=shipping]:checked").val() == 1) {
-  $("#shipToAddress").hide();
-  } else {
-  $("#shipToCozxyBox").hide();
-  $("#shipToAddress").show();
-  }
-
-  $("input[name=shipping]").change(function(e){
-  var shipTo = $(this).val();
-  if(shipTo == 2) {
-  $("#shipToCozxyBox").hide();
-  $("#shipToAddress").show();
-  } else {
-  $("#shipToAddress").hide();
-  $("#shipToCozxyBox").show();
-  }
-  });
-
-  $(" #order-shippingtel").keydown(function (e) {
-  // Allow: backspace, delete, tab, escape, enter and .
-  if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-  // Allow: Ctrl+A, Command+A
-  (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-  // Allow: home, end, left, right, down, up
-  (e.keyCode >= 35 && e.keyCode <= 40)) {
-  // let it happen, don\'t do anything
-  return;
-  }
-  // Ensure that it is a number and stop the keypress
-  if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-  e.preventDefault();
-  }
-  });
-
-  function isEmail(email) {
-  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2, 4})+$/;
-  var a = regex.test(email);
-  return a;
-  }
-
-  $("#checkoutBtn").on("click", function(e){
-  e.preventDefault();
-  var error = 0;
-  var pickingId, addressId, shippingFirstname, shippingLastname, shippingAddress, shippingProvince, shippingAmphur, shippingDistrict, shippingZipcode, shippingTel, shippingEmail;
-  var shipTo = $("input[name=shipping]:checked").val();
-
-  if(shipTo == 1) {
-  //ship to CozxyBox
-  pickingId = $.trim($("#LcpickingId").val());
-  amphurId = $.trim($("#amphurId").val());
-  stateId = $.trim($("#stateId").val());
-
-  if((!pickingId) || (pickingId.length = 0)) {
-  $(".field-LcpickingId p").html("<span class=\"text-danger\">Please select picking location.</span>");
-  error++;
-  $("html, body").animate({ scrollTop: 200 }, 600);
-  } else {
-  $(".field-LcpickingId p").html("");
-  }
-
-  if((!amphurId) || (amphurId.length = 0)) {
-  $(".field-amphurId p").html("<span class=\"text-danger\">Please select amphur.</span>");
-  error++;
-  $("html, body").animate({ scrollTop: 200 }, 600);
-  } else {
-  $(".field-amphurId p").html("");
-  }
-
-  if((!stateId) || (stateId.length = 0)) {
-  $(".field-stateId p").html("<span class=\"text-danger\">Please select province.</span>");
-  error++;
-  $("html, body").animate({ scrollTop: 200 }, 600);
-  } else {
-  $(".field-stateId p").html("");
-  }
-
-  } else {
-  //ship to address
-  shippingFirstname = $.trim($("#order-shippingfirstname").val());
-  if((!shippingFirstname) || (shippingFirstname.length = 0)) {
-  $(".field-order-shippingfirstname p").html("<span class=\"text-danger\">Please fill your first name.</span>");
-  error++;
-  } else {
-  $(".field-order-shippingfirstname p").html("");
-  }
-
-  shippingLastname = $.trim($("#order-shippinglastname").val());
-  if((!shippingLastname) || (shippingLastname.length = 0)) {
-  $(".field-order-shippinglastname p").html("<span class=\"text-danger\">Please fill your last name.</span>");
-  error++;
-  } else {
-  $(".field-order-shippinglastname p").html("");
-  }
-
-  shippingAddress = $.trim($("#order-shippingaddress").val());
-  if((!shippingAddress) || (shippingAddress.length = 0)) {
-  $(".field-order-shippingaddress p").html("<span class=\"text-danger\">Please fill your address.</span>");
-  error++;
-  } else {
-  $(".field-order-shippingaddress p").html("");
-  }
-
-  shippingProvince = $.trim($("#order-shippingprovinceid").val());
-  if((!shippingProvince) || (shippingProvince.length = 0)) {
-  $(".field-order-shippingprovinceid p").html("<span class=\"text-danger\">Please select your province.</span>");
-  error++;
-  } else {
-  $(".field-order-shippingprovinceid p").html("");
-  }
-
-  shippingAmphur = $.trim($("#order-shippingamphurid").val());
-  if((!shippingAmphur) || (shippingAmphur.length = 0)) {
-  $(".field-order-shippingamphurid p").html("<span class=\"text-danger\">Please select your amphur</span>");
-  error++;
-  } else {
-  $(".field-order-shippingamphurid p").html("");
-  }
-
-  shippingDistrict = $.trim($("#order-shippingdistrictid").val());
-  if((!shippingDistrict) || (shippingDistrict.length = 0)) {
-  $(".field-order-shippingdistrictid p").html("<span class=\"text-danger\">Please select your district.</span>");
-  error++;
-  } else {
-  $(".field-order-shippingdistrictid p").html("");
-  }
-
-  shippingTel = $.trim($("#order-shippingtel").val());
-  if((!shippingTel) || (shippingTel.length = 0)) {
-  $(".field-order-shippingtel p").html("<span class=\"text-danger\">Please fill your phone number.</span>");
-  error++;
-  } else {
-  $(".field-order-shippingtel p").html("");
-  }
-
-  shippingEmail = $.trim($("#order-email").val());
-  if((!shippingEmail) || (shippingEmail.length = 0)) {
-  $(".field-order-email p").html("<span class=\"text-danger\">Please fill your e-mail.</span>");
-  error++;
-  } else if(!isEmail(shippingEmail)) {
-  $(".field-order-email p").html("<span class=\"text-danger\">Invalid e-mail.</span>");
-  error++;
-  } else {
-  $(".field-order-email p").html("");
-  }
-  }
-
-  addressId = $.trim($("#addressId").val());
-  checkBilling = $("#checkBillingTax").val();
-  tax = $.trim($("#inputBillingTax").val());
-  if(checkBilling == 1 && tax == ""){
-  $("#billingTaxText").html("<span class=\"text-danger\">Please select billing address.</span>");
-  error++;
-  }else{
-  $("#billingTaxText").html("");
-  }
-  checkTel = $.trim($("#checkTel").val());
-  tel = $.trim($("#tel").val());
-  if(checkTel == 0 && tel == "") {
-  $("#enterTel").html("<span class=\"text-danger\">* Please enter your mobile phone.</span>");
-  error++;
-  } else {
-  $("#enterTel").html("");
-  }
-
-  if((!addressId) || (addressId.length = 0)) {
-  $(".field-addressId p").html("<span class=\"text-danger\">Please select billing address.</span>");
-  error++;
-  } else {
-  $(".field-addressId p").html("");
-  }
-  if(error == 0) {
-  $("#default-shipping-address").submit();
-  }
-  });
-
-  ', \yii\web\View::POS_END);
-
-  $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap', ['depends' => ['yii\web\YiiAsset']]); */
 ?>
 <div class="modal fade" id="LockerModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top: 0px;">
     <div class="modal-dialog">

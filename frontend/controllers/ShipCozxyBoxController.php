@@ -43,7 +43,15 @@ class ShipCozxyBoxController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
-
+        $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
+        foreach ($pickingPointActiveMap as $key => $value) {
+            //echo $value[$key]->attributes . '<br>';
+            //echo '<pre>';
+            //print_r($value->attributes);
+            $activeMap[] = $value->attributes;
+        }
+        //echo '<pre>';
+        //print_r();
         $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1');
         $pickingPointActiveShow = new \yii\data\ActiveDataProvider([
             'query' => $pickingPointActive,
@@ -70,7 +78,7 @@ class ShipCozxyBoxController extends MasterController {
             //echo '<pre>';
             //print_r($pickingPointActive);
 
-            return $this->render('/checkout/shipCozxyBox', compact('pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+            return $this->render('/checkout/shipCozxyBox', compact('activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
         }
     }
 
