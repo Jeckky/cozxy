@@ -11,15 +11,6 @@ $this->params['breadcrumbs'][] = $this->title;
 \frontend\assets\CheckoutAsset::register($this);
 $pickingId = rand(0, 9999);
 ?>
-<style>
-    /* css กำหนดความกว้าง ความสูงของแผนที่ */
-    #map_canvas {
-        width:550px;
-        height:400px;
-        margin:auto;
-        /*  margin-top:100px;*/
-    }
-</style>
 <div class="container">
     <div class="size32">&nbsp;</div>
     <div class="row">
@@ -206,7 +197,7 @@ $pickingId = rand(0, 9999);
                                           <br />
                                           <input type="submit" name="button" id="button" value="บันทึก" /> 
                                           </form> 
-                                </div>
+                                </div> 
                                 <!--<h4>Result for "Ladproa 20"</h4>-->
                                 <div id="map" style="height:450px;"></div>
                             </div>
@@ -362,24 +353,79 @@ $pickingId = rand(0, 9999);
         border-top: 0px solid #e5e5e5;
     }
 </style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+
 <script type="text/javascript">
     var map; // กำหนดตัวแปร map ไว้ด้านนอกฟังก์ชัน เพื่อให้สามารถเรียกใช้งาน จากส่วนอื่นได้
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
     function initialize() { // ฟังก์ชันแสดงแผนที่
         GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
-// กำหนดจุดเริ่มต้นของแผนที่
+        // กำหนดจุดเริ่มต้นของแผนที่
         var my_Latlng = new GGM.LatLng(13.761728449950002, 100.6527900695800);
         var my_mapTypeId = GGM.MapTypeId.ROADMAP; // กำหนดรูปแบบแผนที่ที่แสดง
-// กำหนด DOM object ที่จะเอาแผนที่ไปแสดง ที่นี้คือ div id=map_canvas
+        // กำหนด DOM object ที่จะเอาแผนที่ไปแสดง ที่นี้คือ div id=map_canvas
         var my_DivObj = $("#map_canvas")[0];
-// กำหนด Option ของแผนที่
+        // กำหนด Option ของแผนที่
         var myOptions = {
-            zoom: 11, // กำหนดขนาดการ zoom
+            zoom: 13, // กำหนดขนาดการ zoom
             center: my_Latlng, // กำหนดจุดกึ่งกลาง
             mapTypeId: my_mapTypeId // กำหนดรูปแบบแผนที่
         };
         map = new GGM.Map(my_DivObj, myOptions);// สร้างแผนที่และเก็บตัวแปรไว้ในชื่อ map
+
+
+
+        // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
+                var infowindow = new GGM.InfoWindow({
+                    map: map,
+                    position: pos,
+                    content: 'คุณอยู่ที่นี่.'
+                });
+
+                var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+                map.panTo(my_Point);  // ให้แผนที่แสดงไปที่ตัว marker
+                $("#lat_value").val(my_Point.lat());  // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+                $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+                $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                map.setCenter(pos);
+            }, function () {
+                // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+            });
+        } else {
+            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+        }
+
+        // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
+        GGM.event.addListener(map, 'zoom_changed', function () {
+            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+        });
+
+    }
+    $(function () {
+        // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
+        // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
+        // v=3.2&sensor=false&language=th&callback=initialize
+        //  v เวอร์ชัน่ 3.2
+        //  sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
+        //  language ภาษา th ,en เป็นต้น
+        //  callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
+        $("<script/>", {
+            "type": "text/javascript",
+            src: "//maps.google.com/maps/api/js?v=3.2&sensor=false&language=th&callback=initialize"
+        }).appendTo("body");
+    });
+</script>
+
+<script>
+    var map, info;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: new google.maps.LatLng(13.847860, 100.604274),
+            mapTypeId: 'roadmap'
+        });
 
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
@@ -451,32 +497,6 @@ $pickingId = rand(0, 9999);
         ];
 
         // Create markers.
-
-
-// เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-                var infowindow = new GGM.InfoWindow({
-                    map: map,
-                    position: pos,
-                    content: 'คุณอยู่ที่นี่.'
-                });
-                //alert(pos);
-                var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-                map.panTo(my_Point);  // ให้แผนที่แสดงไปที่ตัว marker
-                $("#lat_value").val(my_Point.lat());  // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-                $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-                $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-                map.setCenter(pos);
-            }, function () {
-                // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-            });
-        } else {
-            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
-        }
-
-
         features.forEach(function (feature) {
             var marker = new google.maps.Marker({
                 position: feature.position,
@@ -497,137 +517,15 @@ $pickingId = rand(0, 9999);
                 }
             })(marker));
 
-        });
-// กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
-        GGM.event.addListener(map, 'zoom_changed', function () {
-            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-        });
 
+
+        });
     }
-    $(function () {
-// โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
-// ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
-// v=3.2&sensor=false&language=th&callback=initialize
-//	v เวอร์ชัน่ 3.2
-//	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
-//	language ภาษา th ,en เป็นต้น
-//	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
-        $("<script/>", {
-            "type": "text/javascript",
-            src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initialize"
-        }).appendTo("body");
-    });
+
 </script>
-
-<script>
-    /*
-     var map, info;
-     function initMap() {
-     map = new google.maps.Map(document.getElementById('map'), {
-     zoom: 11,
-     center: new google.maps.LatLng(13.847860, 100.604274),
-     mapTypeId: 'roadmap'
-     });
-
-     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-     var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-     var icons = {
-     parking: {
-     //icon: iconBase + 'parking_lot_maps.png'
-     icon: iconBase + 'parking_lot_maps.png'
-     },
-     library: {
-     //icon: iconBase + 'library_maps.png'
-     icon: iconBase + 'library_maps.png'
-     },
-     info: {
-     //icon: iconBase + 'info-i_maps.png'
-     icon: iconBase + 'info-i_maps.png'
-     },
-     cozxy: {
-     icon: iconBaseCozxy + 'cozxy-map.png'
-     }
-     };
-
-     var features = [
-     {
-     position: new google.maps.LatLng(13.817227246026727, 100.50787199179695),
-     type: 'cozxy',
-     location: 'Tesco Lotus Extra Ekamai Ramintra',
-     contentString: 'ถนน ประดิษฐ์มนูธรรม แขวง ลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร ไทย <br />+66 2 935 9800 <br />www.facebook.com'
-     }, {
-     position: new google.maps.LatLng(13.881698194418705, 100.46672509179689),
-     type: 'cozxy',
-     location: 'Bangchak - Vibhavadi',
-     contentString: '21/43-44 ถนนวิภาวดีรังสิต แขวงตลาดบางเขน เขต หลักสี่ <br />กรุงเทพมหานคร 10210 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.850514153309353, 100.5255065917969),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai ramintra 4',
-     contentString: '569 หมู่ - ถนนประดิษฐ์มนูธรรม แขวงลาดพร้าว เขต ลาดพร้าว <br />กรุงเทพมหานคร 10230 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.753396636275411, 100.48291739179695),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai',
-     contentString: '427/1 ซอยสุขุมวิท 63(เอกมัย) ถนนสุขุมวิท 63 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.752173616376334, 100.51218199179687),
-     type: 'cozxy',
-     location: 'Bangchak - Pattanakarn 27',
-     contentString: '1405 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.751845037895192, 100.4663560917968),
-     type: 'cozxy',
-     location: 'Bangchak - Sukhumvit 39',
-     contentString: '1/2 ซ.พร้อมศรี ถนนสุขุมวิท 39 แขวงคลองตันเหนือ เขตวัฒนา <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.708053901294937, 100.5019578917969),
-     type: 'cozxy',
-     location: 'Bangchak - Sukhumvit 99 (coming soon)',
-     contentString: '2999/1 ถนน สุขุมวิท แขวง บางจาก เขต พระโขนง <br />กรุงเทพมหานคร 10260 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.75196263019403, 100.51759589179687),
-     type: 'cozxy',
-     location: 'Bangchak - Pattanakarn 34',
-     contentString: '1348 ถนนพัฒนาการ แขวง สวนหลวง เขต สวนหลวง <br />กรุงเทพมหานคร 10250 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     }, {
-     position: new google.maps.LatLng(13.822871874561061, 100.51305459179684),
-     type: 'cozxy',
-     location: 'Bangchak - Ekamai ramintra 1',
-     contentString: '28 ซ.โยธินพัฒนา หมู่ - ถนนคู่ขนานทางด่วนรามอินทรา-ลาดพร้าว แขวงคลองจั่น เขตบางกะปิ <br />กรุงเทพมหานคร 10240 ประเทศไทย <br />+66 2 335 4999 <br />www.bangchak.co.th'
-     },
-     ];
-
-     // Create markers.
-     features.forEach(function (feature) {
-     var marker = new google.maps.Marker({
-     position: feature.position,
-     icon: icons[feature.type].icon,
-     map: map,
-     title: feature.location,
-     content: feature.contentString,
-     });
-
-     info = new google.maps.InfoWindow();
-
-     google.maps.event.addListener(marker, 'click', (function (marker, i) {
-     return function () {
-     //info.setContent(feature.content);
-     info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-     'Place ID: ' + feature.contentString + '</div>');
-     info.open(map, marker);
-     }
-     })(marker));
-
-
-
-     });
-     }
-     */
-</script>
-<!--<script async defer
+<script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
-</script>-->
+</script>
 <?php
 $this->registerCss('
 #map {

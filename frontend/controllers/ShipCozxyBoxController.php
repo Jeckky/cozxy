@@ -44,6 +44,13 @@ class ShipCozxyBoxController extends MasterController {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
 
+        $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1');
+        $pickingPointActiveShow = new \yii\data\ActiveDataProvider([
+            'query' => $pickingPointActive,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 100,
+            ]
+        ]);
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
         if (isset($order->pickingId) && !empty($order->pickingId)) {
@@ -53,13 +60,18 @@ class ShipCozxyBoxController extends MasterController {
             }
         } else {
             $pickingPoint = new \common\models\costfit\PickingPoint();
-        }
-        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
+            $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
 
-        if (isset($defaultAddress)) {
-            $order->addressId = $defaultAddress->addressId;
+            if (isset($defaultAddress)) {
+                $order->addressId = $defaultAddress->addressId;
+            }
+            //echo count($pickingPoint) . '<pre>';
+            //print_r($pickingPoint);
+            //echo '<pre>';
+            //print_r($pickingPointActive);
+
+            return $this->render('/checkout/shipCozxyBox', compact('pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
         }
-        return $this->render('/checkout/shipCozxyBox', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
 }
