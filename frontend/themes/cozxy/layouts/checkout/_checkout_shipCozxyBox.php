@@ -402,11 +402,27 @@ function strip_tags_content($text) {
                                         var my_mapTypeId = GGM.MapTypeId.ROADMAP; // กำหนดรูปแบบแผนที่ที่แสดง
                                         // กำหนด DOM object ที่จะเอาแผนที่ไปแสดง ที่นี้คือ div id=map_canvas
                                         var my_DivObj = $("#map_canvas")[0];
+
                                         // กำหนด Option ของแผนที่
                                         var myOptions = {
                                             zoom: 11, // กำหนดขนาดการ zoom
                                             center: my_Latlng, // กำหนดจุดกึ่งกลาง
-                                            mapTypeId: my_mapTypeId // กำหนดรูปแบบแผนที่
+                                            mapTypeId: my_mapTypeId, // กำหนดรูปแบบแผนที่
+                                            mapTypeControl: true,
+                                            mapTypeControlOptions: {
+                                                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                                                position: google.maps.ControlPosition.TOP_CENTER
+                                            },
+                                            zoomControl: true,
+                                            zoomControlOptions: {
+                                                position: google.maps.ControlPosition.LEFT_CENTER
+                                            },
+                                            scaleControl: true,
+                                            streetViewControl: true,
+                                            streetViewControlOptions: {
+                                                position: google.maps.ControlPosition.LEFT_TOP
+                                            },
+                                            fullscreenControl: true
                                         };
                                         map = new GGM.Map(my_DivObj, myOptions); // สร้างแผนที่และเก็บตัวแปรไว้ในชื่อ map
                                         var clickHandler = new ClickEventHandler(map, origin);
