@@ -430,4 +430,27 @@ class SearchController extends MasterController {
         return json_encode($FilterPrice);
     }
 
+    public function actionElasticSearch() {
+        //http://localhost/cozxy/frontend/web/search/elastic-search?search=APRIL+
+        /* $someJSON1 = '[{"user":"Jonathan Suh","brand":"RAY-BAN","Category": "Sunglasses" ,"title":"RAY-BAN RB3447","price":"4900" ,"market price":"7000","images":"/images/ProductImageSuppliers/thumbnail1/Nm2wauawayg1VuGH8k0gO7oVGMfOjSm9.jpg"},'
+          . '{"user":"Allison McKinnery","brand":"RAY-BAN","Category": "Sunglasses" ,"title":"RAY-BAN RB2140 (RED)","price":"5005","market price":"7150","images":"/images/ProductImageSuppliers/thumbnail1/hUyCZRKRMEv_4ew-f8G9sDu4PnOz-NdZ.jpg"}]';
+          echo '<h1>JSON string</h1> <br> ' . $someJSON1;
+          echo '<pre>';
+          echo '<h1>Convert JSON to Array</h1> '; */
+        $search = Yii::$app->request->get('search');
+        $status = 1;
+        $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
+        //echo '<pre>';
+        //print_r($search1);
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'productId',
+            'allModels' => $search,
+                /* 'sort' => [
+                  'attributes' => ['id', 'name', 'email'],
+                  ], */
+        ]);
+
+        return $this->render('index_search_json', compact('dataProvider'));
+    }
+
 }

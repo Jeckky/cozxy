@@ -653,7 +653,12 @@ class SiteController extends MasterController {
             $birthday = NULL;
             $picture = NULL;
         } elseif ($client->id == 'facebook') {
-            $email = $userAttributes['email'];
+            if (isset($userAttributes['email'])) {
+                $email = $userAttributes['email'];
+            } else {
+                $email = NULL;
+            }
+            ///$email = $userAttributes['email'];
             $token = $userAttributes['id'];
             $name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
             $firstname = $name[0];
@@ -685,7 +690,11 @@ class SiteController extends MasterController {
           Yii::$app->session->setFlash('error', 'กรุณากด Allow Access ใน Facebook เพื่อใช้งาน Facebook Login');
           return $this->redirect('/site/login');
           } */
-        $user = \common\models\User::findOne(['username' => $email]);
+        if (isset($email)) {
+            $user = \common\models\User::findOne(['username' => $email]);
+        } else {
+            $user = \common\models\User::findOne(['token' => $token]);
+        }
         //echo '<pre>';
         //print_r($user);
         if ($user) {//ถ้ามี user ในระบบแล้ว
@@ -694,7 +703,12 @@ class SiteController extends MasterController {
                 $user->status = 1;
                 $user->save();
             }
-            $profile = \common\models\costfit\User::find()->where(['username' => $user->attributes['email']])->one();
+            if (isset($user->attributes['email'])) {
+                $profile = \common\models\costfit\User::find()->where(['username' => $user->attributes['email']])->one();
+            } else {
+                $profile = \common\models\costfit\User::find()->where(['token' => $user->attributes['token']])->one();
+            }
+
             if (!$profile) {// ถ้าไม่มี profile ให้สร้างใหม่
                 //$name = explode(" ", $userAttributes['name']); // แยกชื่อ นามสกุล
                 $pf = new \common\models\costfit\User();

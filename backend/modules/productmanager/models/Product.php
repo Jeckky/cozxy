@@ -37,40 +37,38 @@ use common\models\costfit\Product as ProductModel;
  * @property StoreProduct[] $storeProducts
  * @property StoreProductOrderItem[] $storeProductOrderItems
  */
-class Product extends ProductModel
-{
+class Product extends ProductModel {
 
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             [['productGroupTemplateId', 'brandId', 'categoryId', 'title', 'shortDescription', 'description', 'specification'], 'required', 'on' => 'createProductGroup'],
             [['createDateTime'], 'default', 'value' => new Expression('NOW()')],
         ]);
     }
 
-    public function getParent()
-    {
+    public function getParent() {
         return $this->hasOne(Product::className(), ['productId' => 'parentId']);
     }
 
-    public function hasProductSuppliers()
-    {
+    public function hasProductSuppliers() {
         $product = Product::find()->where(['productId' => $this->productId])->one();
         $productSuppliers = null;
-        if($product->parentId === NULL) {
+        if ($product->parentId === NULL) {
             $productSuppliers = ProductSuppliers::find()
-                ->leftJoin('product p', 'p.productId=product_suppliers.productId')
-                ->where(['p.parentId' => $this->productId])
-                ->one();
+                    ->leftJoin('product p', 'p.productId=product_suppliers.productId')
+                    ->where(['p.parentId' => $this->productId])
+                    ->one();
         } else {
             $productSuppliers = ProductSuppliers::find()
-                ->leftJoin('product p', 'p.productId=product_suppliers.productId')
-                ->where(['p.productId' => $this->productId])
-                ->one();
+                    ->leftJoin('product p', 'p.productId=product_suppliers.productId')
+                    ->where(['p.productId' => $this->productId])
+                    ->one();
         }
+
 
         $hasProductSuppliers = (count($productSuppliers) > 0) ? true : false;
 
         return $hasProductSuppliers;
     }
+
 }
