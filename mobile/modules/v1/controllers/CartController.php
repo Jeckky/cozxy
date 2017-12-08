@@ -2,9 +2,15 @@
 
 namespace mobile\modules\v1\controllers;
 
+use mobile\modules\v1\models\Product;
+use common\models\costfit\ProductSupplier;
 use Yii;
 use yii\web\Controller;
-use \yii\helpers\Json;
+use Json;
+use common\models\costfit\Order;
+use common\models\costfit\OrderItem;
+use common\helpers\Token;
+use yii\db\Expression;
 
 /**
  * Default controller for the `mobile` module
@@ -23,7 +29,7 @@ class CartController extends Controller
 
     public function actionFindCartArray()
     {
-        $cart = \common\models\costfit\Order::findCartArray();
+        $cart = Order::findCartArray();
 
         print_r(Json::encode($cart));
     }
@@ -43,25 +49,25 @@ class CartController extends Controller
         $_GET["fastId"] = 1;
         $_GET["supplierId"] = 1;
         $res = [];
-        $order = \common\models\costfit\Order::getOrder();
+        $order = Order::getOrder();
         if (!isset($order)) {
-            $order = new \common\models\costfit\Order();
-            $order->token = \common\helpers\Token::getToken();
-            $order->status = \common\models\costfit\Order::ORDER_STATUS_DRAFT;
-            $order->createDateTime = new \yii\db\Expression("NOW()");
+            $order = new Order();
+            $order->token = Token::getToken();
+            $order->status = Order::ORDER_STATUS_DRAFT;
+            $order->createDateTime = new Expression("NOW()");
             if (!$order->save(FALSE)) {
                 throw new \yii\base\Exception("Can't Save Order");
             }
         }
         //throw new \yii\base\Exception('fastId=' . $id);
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_GET['productSuppId'] . " and sendDate=" . $_GET['fastId'])->one();
+        $orderItem = OrderItem::find()->where("orderId = " . $order->orderId . " AND productSuppId =" . $_GET['productSuppId'] . " and sendDate=" . $_GET['fastId'])->one();
         if (!isset($orderItem)) {
-            $orderItem = new \common\models\costfit\OrderItem();
+            $orderItem = new OrderItem();
             $orderItem->quantity = $_GET["quantity"];
         } else {
             $orderItem->quantity = $orderItem->quantity + $_GET["quantity"];
         }
-        $product = new \common\models\costfit\Product();
+        $product = new Product();
         $orderItem->sendDate = $_GET["fastId"];
         $orderItem->firstTimeSendDate = $_GET["fastId"];
         $orderItem->supplierId = $_GET['supplierId'];
@@ -83,7 +89,7 @@ class CartController extends Controller
             $orderItem->total = ($orderItem->quantity * $orderItem->price) - $orderItem->discountValue;
         }
 
-        $orderItem->createDateTime = new \yii\db\Expression("NOW()");
+        $orderItem->createDateTime = new Expression("NOW()");
         if ($orderItem->save()) {
             if (Yii::$app->db->lastInsertID > 0) {
                 $orderItemId = Yii::$app->db->lastInsertID;
@@ -93,7 +99,7 @@ class CartController extends Controller
             $order->save();
             $res["shoppingCart"] = $this->createShoppingCart($order->orderId);
             $res["orderItemId"] = $orderItemId;
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = Order::findCartArray();
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach ($cartArray["items"] as $item) {
@@ -101,7 +107,7 @@ class CartController extends Controller
                     $pQuan += $item["qty"];
                 }
             }
-            $product = new \common\models\costfit\Product();
+            $product = new Product();
             $maxQuantity = $product->findMaxQuantity($_GET['productSuppId']);
             if ($pQuan >= $maxQuantity) {
                 $res["isMaxQuantity"] = TRUE;
@@ -112,24 +118,24 @@ class CartController extends Controller
 //            throw new \yii\base\Exception(print_r($orderItem->errors, true));
             $res["error"] = "ไม่สามารถเพิ่มสินค้าลงตระกร้าได้";
         }
-        print_r(\yii\helpers\Json::encode($res));
+        print_r(Json::encode($res));
     }
 
-    public function actionDeleteCartItem($id)
+    public function actionRemoveFromCart($id)
     {
         //Receive Get Parameter
         //$_GET[id] = Order Item Id
         //Return Array of error
         $res = [];
-        $orderItem = \common\models\costfit\OrderItem::find()->where("orderItemId = " . $id)->one();
+        $orderItem = OrderItem::find()->where("orderItemId = " . $id)->one();
         $qnty = intval($orderItem->quantity);
         //throw new \yii\base\Exception($qnty);
         $orderId = $orderItem->orderId;
-        if (\common\models\costfit\OrderItem::deleteAll("orderItemId = $id") > 0) {
+        if (OrderItem::deleteAll("orderItemId = $id") > 0) {
             $res["error"] = NULL;
-            $order = \common\models\costfit\Order::find()->where("orderId=" . $orderId)->one();
+            $order = Order::find()->where("orderId=" . $orderId)->one();
             $order->save(); // Save For Cal new total
-            $cartArray = \common\models\costfit\Order::findCartArray();
+            $cartArray = Order::findCartArray();
             $res["cart"] = $cartArray;
             $res["productSuppId"] = $orderItem->productSuppId;
             $res["deleteQnty"] = $qnty;
@@ -137,72 +143,25 @@ class CartController extends Controller
             $res["error"] = "ไม่สามารถลบสินค้าออกจากตระกร้าได้";
         }
 
-        print_r(\yii\helpers\Json::encode($res));
+        print_r(Json::encode($res));
     }
 
     public function createShoppingCart($orderId)
     {
         $text = "";
-        $showOrder = \common\models\costfit\OrderItem::find()->where("orderId=" . $orderId)->all();
+        $showOrder = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($showOrder) && !empty($showOrder)) {
             $header = "<table id='cartTable' style='margin-top: -10px; font-size: 14px;'><tr><th>Items</th><th>Quantity</th><th>Price</th></tr>";
             $footer = "</table>";
             foreach ($showOrder as $item):
-                $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
+                $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class="item" id="item' . $item->orderItemId . '">'
                 . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
                 . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
-                . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type="hidden" id="productSuppId" value="' . $item->productSuppId . '"></tr>';
+                . '<td class="price">' . number_format(ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type="hidden" id="productSuppId" value="' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
-        /* $text = $text . '<tr class="item">'
-          . '<td><div class="delete"><input type="hidden" id="orderItemId" value="' . $item->orderItemId . '"></div><a href="#">' . $productSupp->title . ''
-          . '<td class="qty"><input type="text" id="qty" value="' . $item->quantity . '" readonly="true"></td>'
-          . '<td class="price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td></tr>';
-         */
         return $text;
     }
-
-    public function actionAddWishlist()
-    {
-        //Receive Get Parameter
-        //$_GET[productId] = productId
-        //Return Array of error
-        $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
-        if (!isset($ws)) {
-            $ws = new \common\models\costfit\Wishlist();
-            $ws->productId = $_GET['productId'];
-            $ws->userId = \Yii::$app->user->id;
-            $ws->createDateTime = new \yii\db\Expression("NOW()");
-            if ($ws->save()) {
-                $res["error"] = NULL;
-            } else {
-                $res["error"] = $ws->errors;
-            }
-        } else {
-            $res["error"] = "Exits product in Wishlist";
-        }
-        print_r(\yii\helpers\Json::encode($res));
-    }
-
-    public function actionDeleteWishlist()
-    {
-        //Receive Get Parameter
-        //$_GET[productId] = productId
-        //Return Array of error
-        $res = [];
-        $ws = \common\models\costfit\Wishlist::find()->where("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id)->one();
-        if (isset($ws)) {
-            \common\models\costfit\Wishlist::deleteAll("productId =" . $_GET['productId'] . " AND userId = " . \Yii::$app->user->id);
-            $length = count(\common\models\costfit\Wishlist::find()->where("userId = " . \Yii::$app->user->id)->all());
-            $res["error"] = NULL;
-            $res["length"] = $length;
-        } else {
-            $res["error"] = "ไม่สามารถลบรายการได้";
-        }
-        print_r(\yii\helpers\Json::encode($res));
-    }
-
 }
