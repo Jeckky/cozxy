@@ -899,7 +899,7 @@ class MasterController extends MasterCommonController {
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['latitude'] . ',' . $account['longitude'], 'name' => $account['title']];
+                        $out[] = ['id' => $account['pickingId'] . '-' . $account['latitude'] . ',' . $account['longitude'], 'name' => $account['title']];
                         $param1 = ($param1 != '') ? $param1 : $account['pickingId'];
                         if ($i == 0) {
                             $selected = $param3; //$account['stateId'];
