@@ -864,4 +864,60 @@ class MasterController extends MasterCommonController {
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
     }
 
+    public function actionChildPickingPointMap() {
+        $out = [];
+        preg_match("/dbname=([^;]*)/", Yii::$app->get("db")->dsn, $dbName);
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = ($_POST['depdrop_parents']);
+            $depdrop_params = $_POST['depdrop_params'];
+
+            if ($parents != null) {
+                $cat_id = $parents[0];
+                //throw new \yii\base\Exception(print_r($depdrop_params, true));
+                $type = $depdrop_params[2];
+                $param1 = null;
+                $param2 = null;
+                $param3 = null;
+                if (!empty($_POST['depdrop_params'])) {
+                    $params = $_POST['depdrop_params'];
+                    // echo '<pre>';
+                    //print_r($cat_id);
+                    //print_r($params);
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
+                    $param4 = $params[3]; // get the value of input-type-3
+                    $type = $depdrop_params[2];
+                    //echo $cat_id;
+                    // echo $type;
+                }
+
+                $list = \common\models\costfit\PickingPoint::find()
+                                ->andWhere(['amphurId' => $cat_id, 'status' => '1'])->asArray()->all(); //, 'type' => $type : Locker เย็น , Locker ร้อน , booth
+
+                $selected = null;
+                if ($cat_id != null && count($list) > 0) {
+                    $selected = '';
+                    foreach ($list as $i => $account) {
+                        $out[] = ['id' => $account['latitude'] . ',' . $account['longitude'], 'name' => $account['title']];
+                        $param1 = ($param1 != '') ? $param1 : $account['pickingId'];
+                        if ($i == 0) {
+                            $selected = $param3; //$account['stateId'];
+                        } else {
+                            $selected = $param3;
+                        }
+                    }
+                    //echo $selected;
+                    // Shows how you can preselect a value
+                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
+                    return;
+                }
+            }
+            //echo 'no';
+        }
+
+        echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
+    }
+
 }
