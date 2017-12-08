@@ -9,7 +9,8 @@
         "productSuppId": "1208",
         "maxQnty": "47",
         "receiveType": 1,
-        "supplierId": "19"
+        "supplierId": "19",
+        "isInWishlist": 1
     },
     {
         "title": "TECTECTEC Rangefinder VPRO500",
@@ -21,7 +22,8 @@
         "productSuppId": "1228",
         "maxQnty": "49",
         "receiveType": 1,
-        "supplierId": "19"
+        "supplierId": "19",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban RB2140 (Red)",
@@ -33,7 +35,8 @@
         "productSuppId": "1256",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban RB2140 (Yellow)",
@@ -45,7 +48,8 @@
         "productSuppId": "1257",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban RB2140 ( Bule)",
@@ -57,7 +61,8 @@
         "productSuppId": "1258",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban RB2140 (Tortoise)",
@@ -69,7 +74,8 @@
         "productSuppId": "1259",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban RB2447F ",
@@ -81,7 +87,8 @@
         "productSuppId": "1260",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "PRADA PR 51SS ",
@@ -93,7 +100,8 @@
         "productSuppId": "1291",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "37"
+        "supplierId": "37",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB4243F",
@@ -105,7 +113,8 @@
         "productSuppId": "1389",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban  RB3447 ",
@@ -117,7 +126,8 @@
         "productSuppId": "1390",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB3447 ",
@@ -129,7 +139,8 @@
         "productSuppId": "1391",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB3447 ",
@@ -141,6 +152,7 @@
         "productSuppId": "1392",
         "maxQnty": "1",
         "receiveType": 1,
-        "supplierId": "33"
+        "supplierId": "33",
+        "isInWishlist": 1
     }
 ]
