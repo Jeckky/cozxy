@@ -469,32 +469,8 @@ foreach ($activeMap as $key => $value) {
 }
 ?>
         ];
-        // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-                var infowindow = new GGM.InfoWindow({
-                    map: map,
-                    position: pos,
-                    content: 'คุณอยู่ที่นี่.'
-                });
 
-                var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-                map.panTo(my_Point);  // ให้แผนที่แสดงไปที่ตัว marker
-                $("#lat_value").val(my_Point.lat());  // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-                $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-                $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-                latMe = my_Point.lat();
-                lngMe = my_Point.lng();
-                $("#start").val(latMe + ',' + lngMe);
-                map.setCenter(pos);
-            }, function () {
-                // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-                alert('ไม่ทำงาน');
-            });
-        } else {
-            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
-        }
+
 
         features.forEach(function (feature) {
             var marker = new google.maps.Marker({
@@ -517,6 +493,37 @@ foreach ($activeMap as $key => $value) {
             })(marker));
 
         });
+        // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
+
+                var infowindow = new GGM.InfoWindow({
+                    //map: map,
+                    position: pos,
+                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+                });
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: pos
+                });
+                var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+                map.panTo(my_Point);  // ให้แผนที่แสดงไปที่ตัว marker
+                $("#lat_value").val(my_Point.lat());  // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+                $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+                $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                latMe = my_Point.lat();
+                lngMe = my_Point.lng();
+                $("#start").val(latMe + ',' + lngMe);
+                map.setCenter(pos);
+            }, function () {
+                // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+                alert('ไม่ทำงาน');
+            });
+        } else {
+            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+        }
+
         // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
         GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
@@ -528,7 +535,7 @@ foreach ($activeMap as $key => $value) {
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
         directionsService.route({
-            origin: document.getElementById('start').value,
+            origin: $('#start').val(), //document.getElementById('start').value,
             //destination: document.getElementById('LcpickingId').value,
             destination: $('#LcpickingId').val(),
             travelMode: 'DRIVING'
