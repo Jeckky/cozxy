@@ -32,7 +32,7 @@ class ApiElasticSearch {
             $json = 'product-not-sale.json';
         }
         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "elastic/" . $json;
-        echo 'url : ' . $url . '<br><br>';
+        //echo 'url : ' . $url . '<br><br>';
         $data = "search=" . $search . "&status=" . $status . "&test=1";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

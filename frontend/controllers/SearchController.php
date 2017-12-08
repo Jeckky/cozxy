@@ -439,9 +439,18 @@ class SearchController extends MasterController {
           echo '<h1>Convert JSON to Array</h1> '; */
         $search = Yii::$app->request->get('search');
         $status = 1;
-        $search1 = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
-        echo '<pre>';
-        print_r($search1);
+        $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
+        //echo '<pre>';
+        //print_r($search1);
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'productId',
+            'allModels' => $search,
+                /* 'sort' => [
+                  'attributes' => ['id', 'name', 'email'],
+                  ], */
+        ]);
+
+        return $this->render('index_search_json', compact('dataProvider'));
     }
 
 }
