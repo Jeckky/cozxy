@@ -119,7 +119,7 @@ class ShipCozxyBoxController extends MasterController {
         $amphurId = $_POST['amphurId'];
 
         $pickingPoint = \common\models\costfit\PickingPoint::find()
-                        ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId)->all();
+                        ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId . ' and status =1')->all();
         foreach ($pickingPoint as $key => $value) {
             $pickUp[$value['pickingId']] = [
                 'pickingId' => $value['pickingId'],
