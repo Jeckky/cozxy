@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\costfit;
+namespace mobile\modules\v1\models;
 
 use Yii;
 use \common\models\costfit\master\ProductSuppliersMaster;

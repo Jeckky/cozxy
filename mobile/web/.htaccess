@@ -1,7 +1,7 @@
 RewriteEngine on
 
 #Rewrite on Alias delete when production
-RewriteBase /cozxy/mobile/web
+#RewriteBase /cozxy/mobile/web
 
 # If a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f

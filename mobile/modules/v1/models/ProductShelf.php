@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\costfit;
+namespace mobile\modules\v1\models;
 
 use Yii;
-use \common\models\costfit\master\ProductShelfMaster;
+use \common\models\costfit\ProductShelf as ProductShelfModel;
 
 /**
  * This is the model class for table "product_shelf".
@@ -15,7 +15,7 @@ use \common\models\costfit\master\ProductShelfMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductShelf extends \common\models\costfit\master\ProductShelfMaster {
+class ProductShelf extends ProductShelfModel {
 
     /**
      * @inheritdoc
