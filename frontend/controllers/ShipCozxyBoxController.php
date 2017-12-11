@@ -82,4 +82,58 @@ class ShipCozxyBoxController extends MasterController {
         }
     }
 
+    public static function actionLocationPickUp1() {
+        $stateId = $_POST['stateId'];
+        $amphurId = $_POST['amphurId'];
+        if (isset($stateId) && isset($amphurId)) {
+            $pickingPoint = \common\models\costfit\PickingPoint::find()
+                            ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId)->all();
+            foreach ($pickingPoint as $key => $value) {
+                $pickUp[$value['pickingId']] = [
+                    'pickingId' => $value['pickingId'],
+                    'title' => $value['title'],
+                    'description' => $value['description'],
+                    'latitude' => $value['latitude'],
+                    'longitude' => $value['longitude']
+                ];
+            }
+            return print_r($pickUp);
+            /* return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+              'pickingPointActiveShow' => $pickUp,
+              ]); */
+            if (isset($pickingPoint)) {
+
+                /* return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+                  'pickingPointActiveShow' => $pickingPointActiveShow,
+                  ]); */
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionLocationPickUp() {
+        $stateId = $_POST['stateId'];
+        $amphurId = $_POST['amphurId'];
+
+        $pickingPoint = \common\models\costfit\PickingPoint::find()
+                        ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId)->all();
+        foreach ($pickingPoint as $key => $value) {
+            $pickUp[$value['pickingId']] = [
+                'pickingId' => $value['pickingId'],
+                'title' => $value['title'],
+                'description' => $value['description'],
+                'latitude' => $value['latitude'],
+                'longitude' => $value['longitude']
+            ];
+        }
+        //return print_r($pickUp);
+        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+                    'pickingPointActiveShow' => $pickUp,
+        ]);
+        //return $this->renderAjax('locationPickUp', '');
+    }
+
 }

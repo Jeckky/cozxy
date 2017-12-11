@@ -186,7 +186,7 @@ function strip_tags_content($text) {
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-4 location-pick-up">
                                 <?php
                                 echo \yii\widgets\ListView::widget([
                                     'dataProvider' => $pickingPointActiveShow,
@@ -204,6 +204,7 @@ function strip_tags_content($text) {
                                     ],
                                 ]);
                                 ?>
+                                <?//= $this->render('@app/themes/cozxy/layouts/checkout/item/locationPickUp', compact('pickingPointActiveShow')) ?>
                             </div>
                             <div class="col-xs-8">
                                 <div id="map"></div>
