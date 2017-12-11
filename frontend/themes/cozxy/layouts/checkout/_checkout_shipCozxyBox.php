@@ -250,7 +250,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);         ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
                                 <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -341,7 +341,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);         ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -401,6 +401,8 @@ function strip_tags_content($text) {
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
     var latMe;
     var lngMe;
+    var lat;
+    var long;
     function initMap() {
         GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
         var directionsService = new google.maps.DirectionsService;
@@ -433,6 +435,19 @@ function strip_tags_content($text) {
         //alert(onChangeHandler);
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
+
+
+        var onSelectChangeHandler = function () {
+            pickUp(directionsService, directionsDisplay);
+        };
+        //document.getElementById('pickUpId').addEventListener('click', onSelectChangeHandler);
+        //document.getElementById("pickUpId").addEventListener("change", onSelectChangeHandler);
+        document.getElementById("pickUpId").addEventListener("click", function () {
+            pickUp(directionsService, directionsDisplay);
+        });
+        /*$(function () {
+         pickUp(lat, long, directionsService, directionsDisplay);
+         });*/
 
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
@@ -470,8 +485,6 @@ foreach ($activeMap as $key => $value) {
 }
 ?>
         ];
-
-
 
         features.forEach(function (feature) {
             var marker = new google.maps.Marker({
@@ -538,7 +551,7 @@ foreach ($activeMap as $key => $value) {
         var fields = LcpickingId.split('-');
         var pickingId = fields[0];
         var latlongMap = fields[1];
-        //alert(street);
+        // alert(street);
         directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
             //destination: document.getElementById('LcpickingId').value,
@@ -551,6 +564,39 @@ foreach ($activeMap as $key => $value) {
                 window.alert('Directions request failed due to ' + status);
             }
         });
+    }
+
+    function pickUp(directionsService, directionsDisplay) {
+        //alert('xxx');
+        var pickUpId = $('#pickUpId').attr("data-id");
+        //alert(pickUpId);
+        //alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
+        if (pickUpId != undefined) {
+            var fields = pickUpId.split('-');
+            var pickingId = fields[0];
+            var lat = fields[1];
+            var long = fields[2];
+            //alert(pickingId + '::' + lat + '::' + long);
+            //return  lat + ',' + long;
+            var latlongMap = lat + ',' + long;
+            //alert($('#start').val() + '::' + latlongMap);
+            directionsService.route({
+                origin: $('#start').val(), //document.getElementById('start').value,
+                //destination: document.getElementById('LcpickingId').value,
+                destination: latlongMap,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+    }
+
+    function pickUpSet() {
+
     }
 
     function attachInstructionText(stepDisplay, marker, text, map) {

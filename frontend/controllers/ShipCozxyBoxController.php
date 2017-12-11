@@ -52,7 +52,7 @@ class ShipCozxyBoxController extends MasterController {
         }
         //echo '<pre>';
         //print_r();
-        $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1');
+        $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1 and latitude is not null and longitude is not null');
         $pickingPointActiveShow = new \yii\data\ActiveDataProvider([
             'query' => $pickingPointActive,
             'pagination' => [
