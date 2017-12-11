@@ -403,6 +403,7 @@ function strip_tags_content($text) {
     var lngMe;
     var lat;
     var long;
+    var p;
     function initMap() {
         GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
         var directionsService = new google.maps.DirectionsService;
@@ -438,17 +439,19 @@ function strip_tags_content($text) {
 
 
         var onSelectChangeHandler = function () {
-            pickUp(directionsService, directionsDisplay);
+            //pickUp(directionsService, directionsDisplay);
         };
         //document.getElementById('pickUpId').addEventListener('click', onSelectChangeHandler);
         //document.getElementById("pickUpId").addEventListener("change", onSelectChangeHandler);
-        document.getElementById("pickUpId").addEventListener("click", function () {
-            pickUp(directionsService, directionsDisplay);
-        });
-        /*$(function () {
-         pickUp(lat, long, directionsService, directionsDisplay);
+        /*document.getElementById("pickUpId").addEventListener("click", function () {
+         pickUp(directionsService, directionsDisplay);
          });*/
-
+        $(function () {
+            //pickUpSet(p, lat, long, directionsService, directionsDisplay);
+        });
+        document.addEventListener("click", function () {
+            // pickUpSet(p, lat, long, directionsService, directionsDisplay);
+        });
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
         var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
         var icons = {
@@ -569,8 +572,8 @@ foreach ($activeMap as $key => $value) {
     function pickUp(directionsService, directionsDisplay) {
         //alert('xxx');
         var pickUpId = $('#pickUpId').attr("data-id");
-        //alert(pickUpId);
-        //alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
+        alert(pickUpId);
+        alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
         if (pickUpId != undefined) {
             var fields = pickUpId.split('-');
             var pickingId = fields[0];
@@ -595,8 +598,44 @@ foreach ($activeMap as $key => $value) {
         }
     }
 
-    function pickUpSet() {
+    function pickUpSet(p, lat, long, directionsService, directionsDisplay) {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_CENTER
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+        });
+        directionsDisplay.setMap(map);
 
+        //alert(p + ':' + lat + ':' + long + ':' + directionsService + ':' + directionsDisplay);
+        var latlongMap = lat + ',' + long;
+        directionsService.route({
+            origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+        }, function (response, status) {
+            if (status === 'OK') {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
     }
 
     function attachInstructionText(stepDisplay, marker, text, map) {
