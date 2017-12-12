@@ -182,7 +182,7 @@ function strip_tags_content($text) {
                                 <hr>
                                 <h4>COZXYBOX pick up location search results</h4>
                                 <div id="map-address-cozxy-box" style=" margin-bottom: 5px;">
-                                    &nbsp;Result for "Show All"
+                                    &nbsp;Result for " "
                                 </div>
                                 <hr>
                             </div>
@@ -404,9 +404,6 @@ function strip_tags_content($text) {
     var lat;
     var long;
     var p;
-    function showLocationMap() {
-
-    }
     function initMap() {
     GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
     var directionsService = new google.maps.DirectionsService;
@@ -634,7 +631,7 @@ foreach ($activeMap as $key => $value) {
     });
     }
 
-    function pickUp(directionsService, directionsDisplay) {
+    function pickUpTest(directionsService, directionsDisplay) {
     //alert('xxx');
     var pickUpId = $('#pickUpId').attr("data-id");
     alert(pickUpId);
@@ -763,7 +760,6 @@ foreach ($activeMap as $key => $value) {
     });
     }
 
-
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
     // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
@@ -780,9 +776,9 @@ foreach ($activeMap as $key => $value) {
 
 </script>
 
-            <!--<script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
-            </script>-->
+    <!--<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
+    </script>-->
 <?php
 $this->registerCss('
 #map {
