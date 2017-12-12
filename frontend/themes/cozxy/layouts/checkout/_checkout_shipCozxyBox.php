@@ -356,7 +356,7 @@ function strip_tags_content($text) {
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
-
+                        <div id="continue-pick-up"></div>
                         <a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -536,7 +536,6 @@ foreach ($activeMap as $key => $value) {
     });
     }
 
-
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -625,6 +624,7 @@ foreach ($activeMap as $key => $value) {
     }, function (response, status) {
     if (status === 'OK') {
     directionsDisplay.setDirections(response);
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latlongMap + '">');
     } else {
     window.alert('Directions request failed due to ' + status);
     }
@@ -660,7 +660,7 @@ foreach ($activeMap as $key => $value) {
     }
     }
 
-    function pickUpSet(p, lat, long, directionsService, directionsDisplay) {
+    function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -735,8 +735,8 @@ foreach ($activeMap as $key => $value) {
     }
     })(marker));
     });
-    //alert(p + ':' + lat + ':' + long + ':' + directionsService + ':' + directionsDisplay);
-    var latlongMap = lat + ',' + long;
+    alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
+    var latlongMap = lats + ',' + longs;
     directionsService.route({
     origin: $('#start').val(), //document.getElementById('start').value,
             //destination: document.getElementById('LcpickingId').value,
@@ -745,6 +745,9 @@ foreach ($activeMap as $key => $value) {
     }, function (response, status) {
     if (status === 'OK') {
     directionsDisplay.setDirections(response);
+    alert('OK');
+    //continue-pick-up
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + p + '-' + lats + ',' + longs + '">');
     } else {
     window.alert('Directions request failed due to ' + status);
     }
@@ -759,6 +762,8 @@ foreach ($activeMap as $key => $value) {
     stepDisplay.open(map, marker);
     });
     }
+
+
 
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
