@@ -12,6 +12,7 @@ use Yii;
     * @property string $title
     * @property string $description
     * @property integer $status
+    * @property integer $ordering
     * @property string $createDateTime
     * @property string $updateDateTime
     *
@@ -36,7 +37,7 @@ public function rules()
 {
 return [
             [['productGroupTemplateId', 'title', 'createDateTime'], 'required'],
-            [['productGroupTemplateId', 'status'], 'integer'],
+            [['productGroupTemplateId', 'status', 'ordering'], 'integer'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['title'], 'string', 'max' => 200],
@@ -55,6 +56,7 @@ return [
     'title' => Yii::t('product_group_template_option', 'Title'),
     'description' => Yii::t('product_group_template_option', 'Description'),
     'status' => Yii::t('product_group_template_option', 'Status'),
+    'ordering' => Yii::t('product_group_template_option', 'Ordering'),
     'createDateTime' => Yii::t('product_group_template_option', 'Create Date Time'),
     'updateDateTime' => Yii::t('product_group_template_option', 'Update Date Time'),
 ];

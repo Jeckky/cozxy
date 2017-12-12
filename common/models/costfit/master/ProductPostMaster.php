@@ -21,6 +21,7 @@ use Yii;
     * @property string $country
     * @property string $currency
     * @property string $image
+    * @property integer $totalScore
     * @property integer $isPublic
     * @property integer $status
     * @property string $createDateTime
@@ -42,7 +43,7 @@ return 'product_post';
 public function rules()
 {
 return [
-            [['productSuppId', 'productId', 'productSelfId', 'brandId', 'userId', 'price', 'isPublic', 'status'], 'integer'],
+            [['productSuppId', 'productId', 'productSelfId', 'brandId', 'userId', 'price', 'totalScore', 'isPublic', 'status'], 'integer'],
             [['productSelfId', 'userId', 'createDateTime'], 'required'],
             [['description'], 'string'],
             [['createDateTime', 'updateDateTime'], 'safe'],
@@ -73,6 +74,7 @@ return [
     'country' => Yii::t('product_post', 'Country'),
     'currency' => Yii::t('product_post', 'Currency'),
     'image' => Yii::t('product_post', 'Image'),
+    'totalScore' => Yii::t('product_post', 'Total Score'),
     'isPublic' => Yii::t('product_post', 'Is Public'),
     'status' => Yii::t('product_post', 'Status'),
     'createDateTime' => Yii::t('product_post', 'Create Date Time'),

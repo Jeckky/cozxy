@@ -63,9 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     foreach ($types as $type) {
         $aliass = Route::find()->where([
-            'status' => 1,
-            'type' => $type->type,
-        ])->all();
+                    'status' => 1,
+                    'type' => $type->type,
+                ])->all();
         echo (count($aliass) > 1) ? "<tr>" : "<tr style='background:yellow'>";
         echo "<th>" . $type->type . "</th>";
         echo "<td>";

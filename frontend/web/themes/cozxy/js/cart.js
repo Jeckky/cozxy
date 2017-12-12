@@ -152,6 +152,7 @@ function proceed(data) {
                     $('.price-detail').find('.coupon').removeClass("hidden");
                 } else
                 {
+
                     alert(data.message);
                 }
             }

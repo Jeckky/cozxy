@@ -220,6 +220,7 @@ class TopUpController extends MasterController {
             $devices = \common\helpers\GetBrowser::UserAgent();
             if ($devices != "mobile") {
                 //Production URL
+                //$sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx"; //test
                 $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
                 ////Production URL
             } else {
@@ -254,11 +255,12 @@ class TopUpController extends MasterController {
 
 
             if (Yii::$app->params["ePaymentServerType"] == 1) {
-                // For Test
-                // $merchantId = "402001605782521";
-                //$terminalId = "70352180";
-                // For Test
-                //$md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q"; // Old Payment For AreaWOW
+                //======================================= For Test =================================
+//                $merchantId = "402001605782521";
+//                $terminalId = "70352180";
+//                $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q";
+                //==================================================================================
+
                 $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
                 $merchantId = "451005319527001";
                 $terminalId = "74428381";
@@ -375,11 +377,12 @@ class TopUpController extends MasterController {
     }
 
     public function actionResult() {
-//        throw new \yii\base\Exception(print_r($_POST, true));
+        // throw new \yii\base\Exception(print_r($_POST, true));
         $currentPoint = 0;
         if (isset($_POST["HOSTRESP"]) && $_POST["HOSTRESP"] == "00") {
 //            throw new \yii\base\Exception(111);
-            $topUpNo = substr($_POST["RETURNINV"], 3);
+            //$topUpNo = substr($_POST["RETURNINV"], 3);
+            $topUpNo = $_POST["RETURNINV"];
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && count($topUp) > 0) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_SUCCESS;
@@ -434,7 +437,8 @@ class TopUpController extends MasterController {
                     $checkPayNow = Order::find()->where("userId='" . Yii::$app->user->id . "' and status='" . Order::ORDER_STATUS_DRAFT . "'")->one();
                     if (isset($checkPayNow)) {
                         if ($checkPayNow->isPayNow == 1) {
-                            return $this->redirect([Yii::$app->homeUrl . "checkout/confirm",
+                            //return $this->redirect([Yii::$app->homeUrl . "checkout/confirm",
+                            return $this->redirect(["checkout/confirm",
                                         'orderId' => $checkPayNow->orderId,
                                         'systemCoin' => $checkPayNow->cozxyCoin,
                                         'addressId' => $checkPayNow->addressId
@@ -459,7 +463,8 @@ class TopUpController extends MasterController {
             }
         } else {
 //            throw new \yii\base\Exception(222);
-            $topUpNo = substr($_POST["RETURNINV"], 3);
+            //$topUpNo = substr($_POST["RETURNINV"], 3);
+            $topUpNo = $_POST["RETURNINV"];
 //            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
             $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
             if (isset($topUp) && !empty($topUp)) {
