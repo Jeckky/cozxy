@@ -43,7 +43,22 @@ class ShipCozxyBoxController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
-
+        $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
+        foreach ($pickingPointActiveMap as $key => $value) {
+            //echo $value[$key]->attributes . '<br>';
+            //echo '<pre>';
+            //print_r($value->attributes);
+            $activeMap[] = $value->attributes;
+        }
+        //echo '<pre>';
+        //print_r();
+        $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1 and latitude is not null and longitude is not null');
+        $pickingPointActiveShow = new \yii\data\ActiveDataProvider([
+            'query' => $pickingPointActive,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 100,
+            ]
+        ]);
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
         if (isset($order->pickingId) && !empty($order->pickingId)) {
@@ -53,13 +68,72 @@ class ShipCozxyBoxController extends MasterController {
             }
         } else {
             $pickingPoint = new \common\models\costfit\PickingPoint();
-        }
-        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
+            $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
 
-        if (isset($defaultAddress)) {
-            $order->addressId = $defaultAddress->addressId;
+            if (isset($defaultAddress)) {
+                $order->addressId = $defaultAddress->addressId;
+            }
+            //echo count($pickingPoint) . '<pre>';
+            //print_r($pickingPoint);
+            //echo '<pre>';
+            //print_r($pickingPointActive);
+
+            return $this->render('/checkout/shipCozxyBox', compact('activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
         }
-        return $this->render('/checkout/shipCozxyBox', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+    }
+
+    public static function actionLocationPickUp1() {
+        $stateId = $_POST['stateId'];
+        $amphurId = $_POST['amphurId'];
+        if (isset($stateId) && isset($amphurId)) {
+            $pickingPoint = \common\models\costfit\PickingPoint::find()
+                            ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId)->all();
+            foreach ($pickingPoint as $key => $value) {
+                $pickUp[$value['pickingId']] = [
+                    'pickingId' => $value['pickingId'],
+                    'title' => $value['title'],
+                    'description' => $value['description'],
+                    'latitude' => $value['latitude'],
+                    'longitude' => $value['longitude']
+                ];
+            }
+            return print_r($pickUp);
+            /* return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+              'pickingPointActiveShow' => $pickUp,
+              ]); */
+            if (isset($pickingPoint)) {
+
+                /* return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+                  'pickingPointActiveShow' => $pickingPointActiveShow,
+                  ]); */
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function actionLocationPickUp() {
+        $stateId = $_POST['stateId'];
+        $amphurId = $_POST['amphurId'];
+
+        $pickingPoint = \common\models\costfit\PickingPoint::find()
+                        ->where('provinceId=' . $stateId . ' and amphurId=' . $amphurId . ' and status =1')->all();
+        foreach ($pickingPoint as $key => $value) {
+            $pickUp[$value['pickingId']] = [
+                'pickingId' => $value['pickingId'],
+                'title' => $value['title'],
+                'description' => $value['description'],
+                'latitude' => $value['latitude'],
+                'longitude' => $value['longitude']
+            ];
+        }
+        //return print_r($pickUp);
+        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+                    'pickingPointActiveShow' => $pickUp,
+        ]);
+        //return $this->renderAjax('locationPickUp', '');
     }
 
 }

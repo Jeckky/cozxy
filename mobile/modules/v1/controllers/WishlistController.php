@@ -191,4 +191,21 @@ class WishlistController extends Controller
         echo Json::encode($res);
     }
 
+    public function actionRenameShelf()
+    {
+        $res = ['success' => false, 'error' => NULL];
+        $productShelfId = $_POST['productShelfId'];
+        $newTitle = $_POST['newTitle'];
+
+        $productShelfModel = ProductShelf::findOne($productShelfId);
+        $productShelfModel->title = $newTitle;
+
+        if($productShelfModel->save()) {
+            $res['success'] = true;
+        } else {
+            $res['error'] = 'Can not save new title, please try again';
+        }
+
+        echo Json::encode($res);
+    }
 }

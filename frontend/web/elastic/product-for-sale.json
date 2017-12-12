@@ -1,85 +1,158 @@
-[{
+[
+    {
         "title": "TECTECTEC Rangefinder VPRO500S",
         "productId": "1632",
         "salePrice": "6967.00",
         "marketPrice": "9491.00",
-        "brand": "TECTECTEC"
+        "brand": "TECTECTEC",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/nkPAujid84xm8XQbGXMNzDAa6aAfpk6W.jpg",
+        "productSuppId": "1208",
+        "maxQnty": "47",
+        "receiveType": 1,
+        "supplierId": "19",
+        "isInWishlist": 1
     },
     {
         "title": "TECTECTEC Rangefinder VPRO500",
         "productId": "1631",
         "salePrice": "5806.00",
         "marketPrice": "7909.00",
-        "brand": "TECTECTEC"
+        "brand": "TECTECTEC",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/gWYeDn5aopSZD5PWhMJdRbrVAC_6wNVa.jpg",
+        "productSuppId": "1228",
+        "maxQnty": "49",
+        "receiveType": 1,
+        "supplierId": "19",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban RB2140 (Red)",
         "productId": "1806",
         "salePrice": "4900.00",
         "marketPrice": "7000.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/hUyCZRKRMEv_4ew-f8G9sDu4PnOz-NdZ.jpg",
+        "productSuppId": "1256",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban RB2140 (Yellow)",
         "productId": "1807",
         "salePrice": "6020.00",
         "marketPrice": "8600.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/iQdIycD_dKyTg6H38GCJHRe9FcKTnRaR.jpg",
+        "productSuppId": "1257",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
-        "title": "Ray - Ban RB2140 ( Bule)",
+        "title": "Ray-Ban RB2140 ( Bule)",
         "productId": "1808",
         "salePrice": "7700.00",
         "marketPrice": "11000.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/qkzg0vabpg964ZMf2vy1ANs9yFk8-Xxq.jpg",
+        "productSuppId": "1258",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban RB2140 (Tortoise)",
         "productId": "1809",
         "salePrice": "6020.00",
         "marketPrice": "8600.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/iTN5hF82vrPmIkGO7-peZAq3-WheIhGH.jpg",
+        "productSuppId": "1259",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban RB2447F ",
         "productId": "1820",
         "salePrice": "5215.00",
         "marketPrice": "7450.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/4YINyyni-FWyLNnjZF6tjFgmnRuAyjyq.jpg",
+        "productSuppId": "1260",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "PRADA PR 51SS ",
         "productId": "1893",
         "salePrice": "6930.00",
         "marketPrice": "11550.00",
-        "brand": "Prada"
+        "brand": "Prada",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/TTvhR6edOcnqO40yvdXxh6583YwUNhXy.png",
+        "productSuppId": "1291",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "37",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB4243F",
         "productId": "2598",
         "salePrice": "3745.00",
         "marketPrice": "5350.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/9UXe4XFQ0g-70shd17WFng47cezYA7LP.jpg",
+        "productSuppId": "1389",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 1
     },
     {
         "title": "Ray-Ban  RB3447 ",
         "productId": "2600",
         "salePrice": "7315.00",
         "marketPrice": "10450.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/9ZHpl1zA2xboXCz_JpjVyAy_ViTovTWJ.jpg",
+        "productSuppId": "1390",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB3447 ",
         "productId": "2603",
         "salePrice": "5005.00",
         "marketPrice": "7150.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/HObVoh4tyzDFZyXttoduMLn3B6odBGLA.jpg",
+        "productSuppId": "1391",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 0
     },
     {
         "title": "Ray-Ban  RB3447 ",
         "productId": "2605",
         "salePrice": "5005.00",
         "marketPrice": "7150.00",
-        "brand": "RAY-BAN"
+        "brand": "RAY-BAN",
+        "thumbnail": "/images/ProductImageSuppliers/thumbnail1/Nm2wauawayg1VuGH8k0gO7oVGMfOjSm9.jpg",
+        "productSuppId": "1392",
+        "maxQnty": "1",
+        "receiveType": 1,
+        "supplierId": "33",
+        "isInWishlist": 1
     }
 ]

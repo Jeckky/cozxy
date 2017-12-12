@@ -1744,6 +1744,26 @@ $('#amphurId').change(function () {
     if (LcpickingId == 1) {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
+
+
+    //alert(stateId + 'xxx' + amphurId);
+    var path = $baseUrl + "ship-cozxy-box/location-pick-up";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {'stateId': stateId, 'amphurId': amphurId},
+        success: function (data, status) {
+            //alert(status);
+            if (status == "success") {
+                $('.location-pick-up').html(data);
+                //alert(data);
+            } else {
+                //alert(status);
+            }
+        }
+    });
+
 });
 $('#LcpickingId').change(function () {
     var stateId = $('#stateId').val();
@@ -1772,6 +1792,32 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
+
+
+
+
+
+
+function shipCozxyBox() {
+    var shipProvince = $('#stateId').val();
+    var shipDistrict = $('#amphurId').val();
+    var shipLcpickingId = $('#LcpickingId').val();
+    var lat_value = $('#lat_value').val();
+    var lon_value = $('#lon_value').val();
+
+
+    alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
+}
+
+
+
+
+
+
+
+
+
+
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];

@@ -693,5 +693,4 @@ class FakeFactory extends Model {
           FROM `order` LEFT JOIN `order_item` ON order_item.orderId = `order`.orderId WHERE `order_item`.productId =145 group by `order_item`.productId
          * */
     }
-
 }

@@ -2,12 +2,6 @@
 
 namespace mobile\modules\v1\models;
 
-use Yii;
-use common\helpers\Base64Decode;
-use yii\data\ActiveDataProvider;
-use common\models\costfit\ProductSuppliers;
-use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use common\models\costfit\Product as ProductModel;
 
 /**
