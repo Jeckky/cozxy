@@ -211,8 +211,10 @@ class SectionController extends ProductPostMasterController {
         ->andWhere(['ps.approve'=>'approve', 'ps.status'=>1])
         ->andWhere('ps.result > 0')
         ->andWhere(['pps.status'=>1])
-        ->andWhere('pps.price > 0')
-        ->andWhere("product.productId not in ($productIdInSection)");
+        ->andWhere('pps.price > 0');
+            if($productIdInSection != '') {
+                $queryVariableProducts->andWhere("product.productId not in ($productIdInSection)");
+            }
 
         if (isset($_GET['title']) && $_GET['title'] != '') {
             $queryVariableProducts->andWhere("product.title like '%" . $_GET['title'] . "%'");
