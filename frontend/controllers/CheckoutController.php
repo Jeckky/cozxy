@@ -28,7 +28,7 @@ use common\helpers\CozxyCalculatesCart;
 
 class CheckoutController extends MasterController {
 
-    public function actionIndex() {
+    public function actionIndexBk() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
@@ -117,7 +117,171 @@ class CheckoutController extends MasterController {
         return $this->render('index', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
-    public function actionSummary() {
+    public function actionIndex() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
+        }
+        $myAddress['districtId'] = '';
+        $myAddress['amphurId'] = '';
+        $myAddress['provinceId'] = '';
+        $myAddress['countryId'] = '';
+        $myAddress['zipcode'] = '';
+        $shipTo = Yii::$app->request->post('shipping');
+        $shipTostart = Yii::$app->request->post('start');
+        $addressId = Yii::$app->request->post('addressId');
+        $shipTo = Yii::$app->request->post('shipping');
+        $provinceid = Yii::$app->request->post('provinceId');
+        $amphurid = Yii::$app->request->post('amphurId');
+        $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
+        $checkTax = Yii::$app->request->post('checkTax');
+        $tax = Yii::$app->request->post('billingTax');
+        $addressId = Yii::$app->request->post('addressId'); //addressId
+        //echo $addressId;
+        //exit();
+        $orderAddress = Yii::$app->request->post('Order');
+        $orderId = Yii::$app->request->post('orderId');
+        $tel = Yii::$app->request->post('tel');
+
+        $hash = 'add';
+        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
+        $order = Order::find()->where(['orderId' => $orderId])->one();
+
+
+        if ($shipTo == 1) {
+            //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
+            if (isset($_POST['pickingId-lats-longs'])) {
+                $pickingIdLatsLongs = $_POST['pickingId-lats-longs'];
+                $splitLocation = explode('-', $pickingIdLatsLongs);
+                $pickingId = $splitLocation[0];
+                $latsLongs = $splitLocation[1];
+                $splitlatsLongs = explode(',', $latsLongs);
+                $lats = $splitlatsLongs[0];
+                $longs = $splitlatsLongs[1];
+                $shipToCozxyBoxNew = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
+                $shipToCozxyBoxNew->scenario = 'picking_point_new';
+                //echo '<pre>';
+                //print_r($shipToCozxyBoxNew->scenario);
+                //exit();
+                $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
+                foreach ($pickingPointActiveMap as $key => $value) {
+                    $activeMap[] = $value->attributes;
+                }
+            } else {
+                //return $this->redirect(Yii::$app->homeUrl . 'ship-cozxy-box');
+                echo 'Picking Point Not Null 1';
+                //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
+            }
+        } else if ($shipTo == 2) {
+            $pickingId = '0';
+            /* if (isset($addressId)) {
+              $addressId = Yii::$app->request->post('addressId');
+              } else {
+              $addressId = Yii::$app->request->post('addressIdsummary');
+              } */
+            $this->resetDefault($orderId, $addressId, $pickingId, $shipTo, $orderAddress, $tax, $tel);
+            //$address = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
+            //echo '<pre>';
+            //print_r($address);
+            //exit();
+            return $this->redirect(Yii::$app->homeUrl . 'checkout/summary?orderId=' . $orderId);
+        } else {
+            echo 'Picking Point Not Null 2';
+            //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
+            //$shipToCozxyBoxNew->scenario = 'picking_point';
+        }
+
+        //echo 'addressId :' . $addressId;
+        //exit();
+        // throw new \yii\base\Exception('aaaaa');
+        // $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
+        $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
+
+        //$pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
+        //$pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
+        //$pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
+        //$pickingPoint_list_lockers_cool->scenario = 'checkout_summary';
+        //$pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
+        //$pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
+        //$pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
+        //$pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        if (isset($userPoint)) {
+            if ($userPoint->currentPoint < $order->summary) {
+                $order->isPayNow = 1;
+            }
+        } else {
+            $order->isPayNow = 1;
+        }
+
+        $order->save(false);
+        //Default address
+        //$defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
+        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
+
+        if (isset($defaultAddress)) {
+            $order->addressId = $defaultAddress->addressId;
+            $myAddress['districtId'] = $defaultAddress->district->districtName;
+            $myAddress['amphurId'] = $defaultAddress->cities->cityName;
+            $myAddress['provinceId'] = $defaultAddress->states->stateName;
+            $myAddress['countryId'] = $defaultAddress->countries->countryName;
+            $myAddress['zipcode'] = $defaultAddress->zipcodes->zipcode;
+        }
+
+        /* if (isset($order->pickingId) && !empty($order->pickingId)) {
+          $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
+          if (count($pickingPoint) <= 0) {
+          $pickingPoint = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
+          }
+          } else {
+          $pickingPoint = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
+          } */
+
+        //echo '<pre>';
+        //print_r($defaultAddress);
+        /*
+         * New Billing
+         */
+        $getUserInfos = \common\models\costfit\User::getUserInfo(Yii::$app->user->id);
+        if (count($getUserInfos) > 0) {
+            $getUserInfo['firstname'] = $getUserInfos->firstname;
+            $getUserInfo['lastname'] = $getUserInfos->lastname;
+            $getUserInfo['email'] = $getUserInfos->email;
+            $getUserInfo['tel'] = $getUserInfos->tel;
+        } else {
+            $getUserInfo['firstname'] = '';
+            $getUserInfo['lastname'] = '';
+            $getUserInfo['email'] = '';
+            $getUserInfo['tel'] = '';
+        }
+
+        $NewBilling = new \common\models\costfit\Address(['scenario' => 'new_checkouts_billing_address']);
+
+        if (isset($_POST['Address'])) {
+            $NewBilling->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $NewBilling->isDefault = 1;
+            }
+            $NewBilling->userId = Yii::$app->user->id;
+            $NewBilling->type = \common\models\costfit\Address::TYPE_BILLING;
+            $NewBilling->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                //return $this->redirect(['/my-account']);
+            }
+        }
+
+        if (!isset($NewBilling->isDefault)) {
+            $NewBilling->isDefault = 0;
+        }
+
+        //echo 'shipTo :' . $shipTo;
+        //exit();
+
+        return $this->render('index', compact('shipTo', 'myAddress', 'activeMap', 'shipTostart', 'shipToCozxyBoxNew', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+    }
+
+    public function actionSummaryBK() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
@@ -152,6 +316,67 @@ class CheckoutController extends MasterController {
         }
         //echo $addressId;
         $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
+        //echo '<pre>';
+        //print_r($myAddressInSummary);
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+
+        return $this->render('summary', compact('myAddressInSummary', 'pickingMap', 'order', 'addressId', 'userPoint'));
+    }
+
+    public function actionSummary() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login');
+        }
+
+        /* $shipTo = Yii::$app->request->post('shipping');
+          $provinceid = Yii::$app->request->post('provinceId');
+          $amphurid = Yii::$app->request->post('amphurId');
+          $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
+          $checkTax = Yii::$app->request->post('checkTax');
+          $tax = Yii::$app->request->post('billingTax');
+          $addressId = Yii::$app->request->post('addressId');
+          $orderAddress = Yii::$app->request->post('Order');
+
+          $tel = Yii::$app->request->post('tel');
+          if (isset($addressId)) {
+          $addressId = Yii::$app->request->post('addressId');
+          } else {
+          $addressId = Yii::$app->request->post('addressIdsummary');
+          } */
+
+        $orderId = $_REQUEST['orderId'];
+        $addressId = isset($_REQUEST['addressId']) ? $_REQUEST['addressId'] : '';
+        $LcpickingId = isset($_REQUEST['LcpickingId']) ? $_REQUEST['LcpickingId'] : '';
+        if (isset($_REQUEST['shipping'])) {
+            $shipTo = $_REQUEST['shipping'];
+
+            if ($shipTo == 1) {
+                $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress = NULL, $tax = NULL, $tel = NULL);
+            }
+        }
+
+        //throw new Exception(print_r());
+        if (isset($LcpickingId) && !empty($LcpickingId)) {
+            //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
+            $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();
+            if (isset($pickingMap->attributes) && !empty($pickingMap->attributes)) {
+                $pickingMap = $pickingMap->attributes;
+            } else {
+                $pickingMap = Null;
+            }
+        } else {
+            $pickingMap = Null;
+        }
+        //echo 'x:' . $addressId;
+        if (isset($addressId) && !empty($addressId)) {
+            //echo '1';
+            $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
+        } else {
+            $myAddressInSummary = DisplayMyAddress::myAddresssSummaryUser(Yii::$app->user->id, \common\models\costfit\Address::TYPE_BILLING);
+            $addressId = $myAddressInSummary['myAddresss']['addressId'];
+        }
         //echo '<pre>';
         //print_r($myAddressInSummary);
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
@@ -327,8 +552,9 @@ class CheckoutController extends MasterController {
         //throw new \yii\base\Exception($orderId);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         //$addressIdsummary = Yii::$app->request->post('addressIdsummary');
-        $addressIdsummary = $order->addressId;
-        //
+
+        $addressIdsummary = isset($order->addressId) ? $order->addressId : $_REQUEST['addressIdsummary'];
+
         $systemCoin = Yii::$app->request->post('systemCoin');
         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
@@ -337,7 +563,7 @@ class CheckoutController extends MasterController {
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
-
+        //exit();
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
                     'order' => $order,

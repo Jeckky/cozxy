@@ -27,7 +27,11 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
-                                    <?php if ($order->pickingId != 0): ?>
+                                    <?php
+                                    //echo '<pre>';
+                                    //print_r($order->attributes);
+                                    if ($order->pickingId != 0):
+                                        ?>
                                         <div class="col-xs-12">
                                             <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
                                             <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&sensor=true" type="text/javascript"></script>
@@ -123,17 +127,17 @@ use kartik\select2\Select2;
                                         <div class="size6">&nbsp;</div>
                                         <div class="col-lg-2 col-md-3 col-sm-12">Address:</div>
                                         <div class="col-lg-10 col-md-9 col-sm-12">
-                                            <?= $order->shippingAddress ?>&nbsp;
-                                            <?= $order->shippingDistrict->localName ?>&nbsp;
-                                            <?= $order->shippingCities->localName ?>&nbsp;
-                                            <?= $order->shippingProvince->localName ?>&nbsp;
+                                            <?= isset($order->shippingAddress) ? $order->shippingAddress : '-' ?>&nbsp;
+                                            <?= isset($order->shippingDistrict->localName) ? $order->shippingDistrict->localName : '-' ?>&nbsp;
+                                            <?= isset($order->shippingCities->localName) ? $order->shippingCities->localName : '-' ?>&nbsp;
+                                            <?= isset($order->shippingProvince->localName) ? $order->shippingProvince->localName : '-' ?>&nbsp;
                                         </div>
                                         <div class="size12">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Tel:</div>
-                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->shippingTel ?></div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->shippingTel) ? $order->shippingTel : '-' ?></div>
                                         <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Email:</div>
-                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->email ?></div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->email) ? $order->email : '-' ?></div>
                                         <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">TaxID:</div>
-                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= $order->billingTax ?></div>
+                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->billingTax) ? $order->billingTax : '-' ?></div>
                                         <div class="size6">&nbsp;</div>
                                     <?php endif; ?>
                                 </div>
@@ -146,7 +150,6 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
-
                                     <div class="col-xs-3 col-md-3 col-sm-3">Name:</div>
                                     <div class="col-xs-9 col-md-9 col-sm-9">
                                         <?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?>
@@ -166,7 +169,6 @@ use kartik\select2\Select2;
                                     <div class="col-xs-9 col-md-9 col-sm-9"><?= $order->billingTax ?></div>
                                     <div class="size6">&nbsp;</div>
                                     <div class="size12">&nbsp;</div>
-
                                 </div>
                             </div>
                         </div>
@@ -193,8 +195,10 @@ use kartik\select2\Select2;
 
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
+            <?php
+            echo 'addressId : ' . $addressId;
+            ?>
             <?= $this->render('_checkout_total', ['order' => $order, 'addressId' => $addressId, 'userPoint' => $userPoint]) ?>
-
         </div>
 
     </div>

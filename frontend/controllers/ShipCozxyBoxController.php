@@ -77,9 +77,8 @@ class ShipCozxyBoxController extends MasterController {
             //print_r($pickingPoint);
             //echo '<pre>';
             //print_r($pickingPointActive);
-
-            return $this->render('/checkout/shipCozxyBox', compact('activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
         }
+        return $this->render('/checkout/shipCozxyBox', compact('activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
     public static function actionLocationPickUp1() {
@@ -133,6 +132,60 @@ class ShipCozxyBoxController extends MasterController {
         return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
                     'pickingPointActiveShow' => $pickUp,
         ]);
+        //return $this->renderAjax('locationPickUp', '');
+    }
+
+    // location-pick-up-click
+    public function actionLocationPickUpClick() {
+
+        $pickingId = $_POST['pickingId'];
+
+        $pickingPoint = \common\models\costfit\PickingPoint::find()
+                        ->where('pickingId=' . $pickingId)->one();
+        //foreach ($pickingPoint as $key => $value) {
+        $pickUp[$pickingPoint['pickingId']] = [
+            'pickingId' => $pickingPoint['pickingId'],
+            'title' => $pickingPoint['title'],
+            'description' => $pickingPoint['description'],
+            'latitude' => $pickingPoint['latitude'],
+            'longitude' => $pickingPoint['longitude'],
+            'provinceId' => $pickingPoint['provinceId'],
+            'amphurId' => $pickingPoint['amphurId']
+        ];
+        //}
+        //return print_r($pickUp);
+        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+                    'pickingPointActiveShow' => $pickUp,
+        ]);
+        //return $this->renderAjax('locationPickUp', '');
+    }
+
+    //location-picking-point
+    public function actionLocationPickingPoint() {
+
+        $pickingId = $_POST['pickingId'];
+
+        $pickingPoint = \common\models\costfit\PickingPoint::find()
+                        ->where('pickingId=' . $pickingId)->one();
+        $pickingPointAmphur = \common\models\dbworld\Cities::find()->where('stateId=' . $pickingPoint['provinceId'])->one();
+        //foreach ($pickingPoint as $key => $value) {
+        $pickUp = [
+            'pickingId' => $pickingPoint['pickingId'],
+            'title' => $pickingPoint['title'],
+            'description' => $pickingPoint['description'],
+            'latitude' => $pickingPoint['latitude'],
+            'longitude' => $pickingPoint['longitude'],
+            'longitude' => $pickingPoint['longitude'],
+            'provinceId' => $pickingPoint['provinceId'],
+            'amphurId' => $pickingPoint['amphurId'],
+            'titleTh' => $pickingPointAmphur['localName'],
+            'titleEn' => $pickingPointAmphur['cityName'],
+        ];
+        //}
+        return json_encode($pickUp);
+        /* return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/locationPickUp", [
+          'pickingPointActiveShow' => $pickUp,
+          ]); */
         //return $this->renderAjax('locationPickUp', '');
     }
 

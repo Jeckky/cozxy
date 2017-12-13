@@ -1782,6 +1782,7 @@ $('#LcpickingId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 });
+
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
         $('#checkBillingTax').val(1);
@@ -1792,11 +1793,6 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
-
-
-
-
-
 
 function shipCozxyBox() {
     var shipProvince = $('#stateId').val();
@@ -1809,8 +1805,23 @@ function shipCozxyBox() {
     alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
 }
 
+$('.shippingOption').click(function () {
+    //alert('test::Choose shipping type ');
+    var shipping = $('input[name="shipping"]:checked').val();
+    //Ship To CozxyBox
+    if (shipping == 1) {
+        //alert(shipping);
+        $("#shipToAddress").css({'display': 'none'});
+        $("#shipToCozxyBox").removeAttr("style");
+    } else if (shipping == 2) { //Ship to address
+        //alert(shipping);
+        $("#shipToCozxyBox").css({'display': 'none'});
+        $("#shipToAddress").removeAttr("style");
+    } else {
+        alert('Please Choose shipping type');
+    }
 
-
+});
 
 
 
