@@ -203,7 +203,7 @@ class SectionController extends ProductPostMasterController {
         $array = ArrayHelper::map($sectionItemModels, 'productId','productId');
         $productIdInSection = implode(',', $array);
         $queryVariableProducts = Product::find()
-                            ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
+                            ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,product.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
         ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
         ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
         ->where('product.productId is not null')
