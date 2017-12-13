@@ -123,6 +123,9 @@ return [
         'productmanager' => [
             'class' => 'backend\modules\productmanager\ProductManager',
         ],
+        'promotion' => [
+            'class' => 'backend\modules\promotion\Promotion',
+        ],
     ],
     'components' => [
         'user' => [

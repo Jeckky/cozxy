@@ -182,28 +182,29 @@ function strip_tags_content($text) {
                                 <hr>
                                 <h4>COZXYBOX pick up location search results</h4>
                                 <div id="map-address-cozxy-box" style=" margin-bottom: 5px;">
-                                    &nbsp;Result for "Show All"
+                                    &nbsp;Result for " "
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-4 location-pick-up">
                                 <?php
-                                echo \yii\widgets\ListView::widget([
-                                    'dataProvider' => $pickingPointActiveShow,
-                                    'options' => [
-                                        'tag' => false,
-                                    ],
-                                    'itemView' => function ($model, $key, $index, $widget) {
-                                        return $this->render('@app/themes/cozxy/layouts/checkout/item/cozxyBox', ['model' => $model]);
-                                    }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
-                                    //  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                                    //'layout'=>"{summary}{pager}{items}"
-                                    'layout' => "{items}",
-                                    'itemOptions' => [
-                                        'tag' => false,
-                                    ],
-                                ]);
+                                /* echo \yii\widgets\ListView::widget([
+                                  'dataProvider' => $pickingPointActiveShow,
+                                  'options' => [
+                                  'tag' => false,
+                                  ],
+                                  'itemView' => function ($model, $key, $index, $widget) {
+                                  return $this->render('@app/themes/cozxy/layouts/checkout/item/cozxyBox', ['model' => $model]);
+                                  }, 'emptyText' => ' &nbsp; &nbsp; No results found.',
+                                  //  'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                  //'layout'=>"{summary}{pager}{items}"
+                                  'layout' => "{items}",
+                                  'itemOptions' => [
+                                  'tag' => false,
+                                  ],
+                                  ]); */
                                 ?>
+                                <?//= $this->render('@app/themes/cozxy/layouts/checkout/item/locationPickUp', compact('pickingPointActiveShow')) ?>
                             </div>
                             <div class="col-xs-8">
                                 <div id="map"></div>
@@ -249,7 +250,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);         ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
                                 <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -340,7 +341,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);         ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -355,7 +356,7 @@ function strip_tags_content($text) {
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
-
+                        <div id="continue-pick-up"></div>
                         <a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
@@ -400,186 +401,389 @@ function strip_tags_content($text) {
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
     var latMe;
     var lngMe;
+    var lat;
+    var long;
+    var p;
     function initMap() {
-        GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
+    GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
             center: {lat: 13.761728449950002, lng: 100.6527900695800},
             mapTypeControl: true,
             mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.TOP_CENTER
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
             },
             zoomControl: true,
             zoomControlOptions: {
-                position: google.maps.ControlPosition.LEFT_CENTER
+            position: google.maps.ControlPosition.LEFT_CENTER
             },
             scaleControl: true,
             streetViewControl: true,
             streetViewControlOptions: {
-                position: google.maps.ControlPosition.LEFT_TOP
+            position: google.maps.ControlPosition.LEFT_TOP
             },
             fullscreenControl: true
-        });
-        directionsDisplay.setMap(map);
-
-        var onChangeHandler = function () {
-            calculateAndDisplayRoute(directionsService, directionsDisplay);
-        };
-
-        //alert(onChangeHandler);
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
-
-        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-        var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-        var icons = {
-            parking: {
-                //icon: iconBase + 'parking_lot_maps.png'
-                icon: iconBase + 'parking_lot_maps.png'
-            },
+    });
+    directionsDisplay.setMap(map);
+    var onChangeHandler = function () {
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    };
+    //alert(onChangeHandler);
+    document.getElementById('start').addEventListener('change', onChangeHandler);
+    document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
+    /*
+     var onSelectChangeHandler = function () {
+     //pickUp(directionsService, directionsDisplay);
+     };
+     //document.getElementById('pickUpId').addEventListener('click', onSelectChangeHandler);
+     //document.getElementById("pickUpId").addEventListener("change", onSelectChangeHandler);
+     document.getElementById("pickUpId").addEventListener("click", function () {
+     pickUp(directionsService, directionsDisplay);
+     });
+     $(function () {
+     //pickUpSet(p, lat, long, directionsService, directionsDisplay);
+     });
+     document.addEventListener("click", function () {
+     // pickUpSet(p, lat, long, directionsService, directionsDisplay);
+     });*/
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
             library: {
-                //icon: iconBase + 'library_maps.png'
-                icon: iconBase + 'library_maps.png'
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
             },
             info: {
-                //icon: iconBase + 'info-i_maps.png'
-                icon: iconBase + 'info-i_maps.png'
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
             },
             cozxy: {
-                icon: iconBaseCozxy + 'cozxy-map.png'
+            icon: iconBaseCozxy + 'cozxy-map.png'
             }
-        };
-
-        var features = [
+    };
+    var features = [
 <?php
 foreach ($activeMap as $key => $value) {
     $order = array("\r\n", "\n", "\r");
     $replace = '';
     $description = str_replace($order, $replace, $value['description']);
     ?>{
-                    position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
-                    type: 'cozxy',
-                    location: "<?= strip_tags($value['title']) ?>",
-                    contentString: "<?= $description ?>"
-                }
-                ,<?php
-}
-?>
-        ];
-
-
-
-        features.forEach(function (feature) {
-            var marker = new google.maps.Marker({
-                position: feature.position,
-                icon: icons[feature.type].icon,
-                map: map,
-                title: feature.location,
-                content: feature.contentString,
-            });
-
-            info = new google.maps.InfoWindow();
-
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    //info.setContent(feature.content);
-                    info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                            'Place ID: ' + feature.contentString + '</div>');
-                    info.open(map, marker);
-                }
-            })(marker));
-
-        });
-        // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-
-                var infowindow = new GGM.InfoWindow({
-                    //map: map,
-                    position: pos,
-                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-                });
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: pos
-                });
-                var my_Point = infowindow.getPosition();  // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-                map.panTo(my_Point);  // ให้แผนที่แสดงไปที่ตัว marker
-                $("#lat_value").val(my_Point.lat());  // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-                $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-                $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-                latMe = my_Point.lat();
-                lngMe = my_Point.lng();
-                $("#start").val(latMe + ',' + lngMe);
-                map.setCenter(pos);
-            }, function () {
-                // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-                alert('ไม่ทำงาน');
-            });
-        } else {
-            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>"
         }
-
-        // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
-        GGM.event.addListener(map, 'zoom_changed', function () {
-            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-        });
-
+        ,<?php } ?>
+    ];
+    features.forEach(function (feature) {
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    //info.setContent(feature.content);
+    info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+            'Place ID: ' + feature.contentString + '</div>');
+    info.open(map, marker);
+    }
+    })(marker));
+    });
+    // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+    var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
+    var infowindow = new GGM.InfoWindow({
+    //map: map,
+    position: pos,
+            //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+    });
+    var marker = new google.maps.Marker({
+    map: map,
+            position: pos
+    });
+    var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+    map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
+    $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+    $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+    latMe = my_Point.lat();
+    lngMe = my_Point.lng();
+    $("#start").val(latMe + ',' + lngMe);
+    map.setCenter(pos);
+    }, function () {
+    // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+    alert('ไม่ทำงาน');
+    });
+    } else {
+    // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
     }
 
+    // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
+    GGM.event.addListener(map, 'zoom_changed', function () {
+    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+    });
+    }
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        var LcpickingId = $('#LcpickingId').val();
-        var fields = LcpickingId.split('-');
-        var pickingId = fields[0];
-        var latlongMap = fields[1];
-        //alert(street);
-        directionsService.route({
-            origin: $('#start').val(), //document.getElementById('start').value,
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+    });
+    directionsDisplay.setMap(map);
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
+            library: {
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
+            },
+            info: {
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
+            },
+            cozxy: {
+            icon: iconBaseCozxy + 'cozxy-map.png'
+            }
+    };
+    var features = [
+<?php
+foreach ($activeMap as $key => $value) {
+    $order = array("\r\n", "\n", "\r");
+    $replace = '';
+    $description = str_replace($order, $replace, $value['description']);
+    ?>{
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>"
+        }
+        ,
+<?php } ?>
+    ];
+    features.forEach(function (feature) {
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    //info.setContent(feature.content);
+    info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+            'Place ID: ' + feature.contentString + '</div>');
+    info.open(map, marker);
+    }
+    })(marker));
+    });
+    var LcpickingId = $('#LcpickingId').val();
+    var fields = LcpickingId.split('-');
+    var pickingId = fields[0];
+    var latlongMap = fields[1];
+    //alert(latlongMap);
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
             //destination: document.getElementById('LcpickingId').value,
             destination: latlongMap,
             travelMode: 'DRIVING'
-        }, function (response, status) {
-            if (status === 'OK') {
-                directionsDisplay.setDirections(response);
-            } else {
-                window.alert('Directions request failed due to ' + status);
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latlongMap + '">');
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
+    }
+
+    function pickUpTest(directionsService, directionsDisplay) {
+    //alert('xxx');
+    var pickUpId = $('#pickUpId').attr("data-id");
+    alert(pickUpId);
+    alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
+    if (pickUpId != undefined) {
+    var fields = pickUpId.split('-');
+    var pickingId = fields[0];
+    var lat = fields[1];
+    var long = fields[2];
+    //alert(pickingId + '::' + lat + '::' + long);
+    //return  lat + ',' + long;
+    var latlongMap = lat + ',' + long;
+    //alert($('#start').val() + '::' + latlongMap);
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
+    }
+    }
+
+    function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+    });
+    directionsDisplay.setMap(map);
+    //showLocationMap();
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
+            library: {
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
+            },
+            info: {
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
+            },
+            cozxy: {
+            icon: iconBaseCozxy + 'cozxy-map.png'
             }
-        });
+    };
+    var features = [
+<?php
+foreach ($activeMap as $key => $value) {
+    $order = array("\r\n", "\n", "\r");
+    $replace = '';
+    $description = str_replace($order, $replace, $value['description']);
+    ?>{
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>"
+        }
+        ,<?php } ?>
+    ];
+    features.forEach(function (feature) {
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    //info.setContent(feature.content);
+    info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+            'Place ID: ' + feature.contentString + '</div>');
+    info.open(map, marker);
+    }
+    })(marker));
+    });
+    alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
+    var latlongMap = lats + ',' + longs;
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    alert('OK');
+    //continue-pick-up
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + p + '-' + lats + ',' + longs + '">');
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
     }
 
     function attachInstructionText(stepDisplay, marker, text, map) {
-        google.maps.event.addListener(marker, 'click', function () {
-            // Open an info window when the marker is clicked on, containing the text
-            // of the step.
-            stepDisplay.setContent(text);
-            stepDisplay.open(map, marker);
-        });
+    google.maps.event.addListener(marker, 'click', function () {
+    // Open an info window when the marker is clicked on, containing the text
+    // of the step.
+    stepDisplay.setContent(text);
+    stepDisplay.open(map, marker);
+    });
     }
 
+
+
     $(function () {
-        // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
-        // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
-        // v=3.2&sensor=false&language=th&callback=initialize
-        //	v เวอร์ชัน่ 3.2
-        //	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
-        //	language ภาษา th ,en เป็นต้น
-        //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
-        $("<script/>", {
-            "type": "text/javascript",
+    // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
+    // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
+    // v=3.2&sensor=false&language=th&callback=initialize
+    //	v เวอร์ชัน่ 3.2
+    //	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
+    //	language ภาษา th ,en เป็นต้น
+    //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
+    $("<script/>", {
+    "type": "text/javascript",
             src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initMap"
-        }).appendTo("body");
+    }).appendTo("body");
     });
 
 </script>
 
-<!--<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
-</script>-->
+    <!--<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
+    </script>-->
 <?php
 $this->registerCss('
 #map {

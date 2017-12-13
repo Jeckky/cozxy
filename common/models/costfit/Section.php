@@ -103,7 +103,7 @@ class Section extends \common\models\costfit\master\SectionMaster {
         return new ActiveDataProvider([
             'query' => $products,
             'pagination' => [
-                'pageSize' => isset($n) ? $n : 12,
+            // 'pageSize' => isset($n) ? $n : 12,
             ]
         ]);
     }
