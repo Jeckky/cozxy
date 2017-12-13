@@ -97,7 +97,7 @@ class StoryController extends Controller
         return ProductPost::findOne($storyId);
     }
 
-    public function actionAddFavouriteStory()
+    public function actionAddFavoriteStory()
     {
         $res = ['success' => false, 'error' => NULL];
         $storyId = $_POST['storyId'];
@@ -162,6 +162,7 @@ class StoryController extends Controller
             if($flag) {
                 $transaction->commit();
                 $res['success'] = true;
+                $res['star'] = ProductPostRating::averageStar($storyId);
             } else {
                 $transaction->rollBack();
                 $res['error'] = 'Error :: Please try again';
@@ -226,12 +227,14 @@ class StoryController extends Controller
         $storyModel->isPublic = $isPublic;
         $storyModel->userId = $userId;
         $storyModel->totalScore = 0;
+        $storyModel->productSelfId = 0;
         $storyModel->createDateTime = $storyModel->updateDateTime = new Expression('NOW()');
 
         if($storyModel->save()) {
+            $res['storyId'] = Yii::$app->db->lastInsertID;
             $res['success'] = true;
         } else {
-            $res['error'] = 'Error : Please try again';
+            $res['error'] = $storyModel->errors;
         }
 
         echo Json::encode($res);

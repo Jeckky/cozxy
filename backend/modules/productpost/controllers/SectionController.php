@@ -5,6 +5,7 @@ namespace backend\modules\productpost\controllers;
 use Yii;
 use common\models\costfit\Section;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -189,24 +190,38 @@ class SectionController extends ProductPostMasterController {
         } else {
             $sort = "percent DESC";
         }
-        $queryVariableProducts = SectionItem::find()
-                ->select('p.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/p.price)) as percent')
-                ->join("RIGHT JOIN", "product_suppliers ps", "ps.productSuppId = section_item.productSuppId")
-                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
-                ->join('LEFT JOIN', 'product p', 'ps.productId=p.productId')
-                // ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 or (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null) or section_item.sectionId is not null')
-                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and p.price>0 or section_item.productId is not null')
-                ->groupBy('ps.productSuppId,section_item.productSuppId,p.productSuppId')
-                ->orderBy("section_item.status DESC,section_item.sectionId ASC," . $sort);
+//        $queryVariableProducts = SectionItem::find()
+//                ->select('p.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/p.price)) as percent')
+//                ->join("RIGHT JOIN", "product_suppliers ps", "ps.productSuppId = section_item.productSuppId")
+//                ->join("LEFT JOIN", "product_price_suppliers pps", "pps.productSuppId = ps.productSuppId")
+//                ->join('LEFT JOIN', 'product p', 'ps.productId=p.productId')
+//                // ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 or (section_item.sectionId=' . $_GET["sectionId"] . ' or section_item.sectionId is null) or section_item.sectionId is not null')
+//                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and p.price>0 or section_item.productId is not null')
+//                ->groupBy('ps.productSuppId,section_item.productSuppId,p.productSuppId')
+//                ->orderBy("section_item.status DESC,section_item.sectionId ASC," . $sort);
+        $sectionItemModels = SectionItem::find()->where(['sectionId'=>$_GET["sectionId"]])->select('productId')->all();
+        $array = ArrayHelper::map($sectionItemModels, 'productId','productId');
+        $productIdInSection = implode(',', $array);
+        $queryVariableProducts = Product::find()
+                            ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,p.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
+        ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
+        ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
+        ->where('product.productId is not null')
+        ->andWhere(['product.approve'=>'approve', 'product.status'=>1])
+        ->andWhere(['ps.approve'=>'approve', 'ps.status'=>1])
+        ->andWhere('ps.result > 0')
+        ->andWhere(['pps.status'=>1])
+        ->andWhere('pps.price > 0')
+        ->andWhere("product.productId not in ($productIdInSection)");
 
         if (isset($_GET['title']) && $_GET['title'] != '') {
-            $queryVariableProducts->andWhere("p.title like '%" . $_GET['title'] . "%'");
+            $queryVariableProducts->andWhere("product.title like '%" . $_GET['title'] . "%'");
         }
         if (isset($_GET['categoryId']) && $_GET['categoryId'] != '') {
-            $queryVariableProducts->andWhere("p.categoryId=" . $_GET['categoryId']);
+            $queryVariableProducts->andWhere("product.categoryId=" . $_GET['categoryId']);
         }
         if (isset($_GET['brandId']) && $_GET['brandId'] != '') {
-            $queryVariableProducts->andWhere("p.brandId=" . $_GET['brandId']);
+            $queryVariableProducts->andWhere("product.brandId=" . $_GET['brandId']);
         }
         $varibleProduct = new ActiveDataProvider([
             'query' => $queryVariableProducts

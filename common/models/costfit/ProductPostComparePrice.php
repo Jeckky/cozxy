@@ -38,9 +38,9 @@ class ProductPostComparePrice extends \common\models\costfit\master\ProductPostC
     }
 
     public function scenarios() {
-        return [
-            self::Cozxy_Product_Post_Compare_Price => ['shopName', 'price', 'country', 'currency'],
-        ];
+        $scenarios = parent::scenarios();
+        $scenarios[self::Cozxy_Product_Post_Compare_Price] = ['shopName', 'price', 'country', 'currency'];
+        return $scenarios;
     }
 
     /**
