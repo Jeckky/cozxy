@@ -217,15 +217,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $res["totalFormatText"] = number_format($order->total, 2);
             $res["receiveTypeArray"] = $receiveTypeArray;
 
-            if (isset($order->coupon)) {
-                if (Coupon::getCouponIsExpired($order->couponId)) {
-                    $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
-                    $order->couponId = NULL;
-                    $order->save();
-                    $res["couponCode"] = NULL;
-                } else {
-                    $res["couponCode"] = $order->coupon->code;
-                }
+            if (isset($order->coupon) && $order->coupon != null) {
+                /* if (Coupon::getCouponIsExpired($order->couponId)) {
+                  $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
+                  $order->couponId = NULL;
+                  $order->save();
+                  $res["couponCode"] = NULL;
+                  } else { */
+                $res["couponCode"] = $order->coupon->promotionCode;
+                //}
             } else {
                 $res["couponCode"] = NULL;
             }
@@ -349,15 +349,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
             $res["totalFormatText"] = number_format($order->total, 2);
 
-            if (isset($order->coupon)) {
-                if (Coupon::getCouponIsExpired($order->couponId)) {
-                    $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
-                    $order->couponId = NULL;
-                    $order->save();
-                    $res["couponCode"] = NULL;
-                } else {
-                    $res["couponCode"] = $order->coupon->code;
-                }
+            if (isset($order->coupon) && $order->coupon != null) {
+                /* if (Coupon::getCouponIsExpired($order->couponId)) {
+                  $order->orderMessage = "Coupon " . $order->coupon->code . " is expired.";
+                  $order->couponId = NULL;
+                  $order->save();
+                  $res["couponCode"] = NULL;
+                  } else { */
+                $res["couponCode"] = $order->coupon->promotionCode;
+                //}
             } else {
                 $res["couponCode"] = NULL;
             }
@@ -415,7 +415,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public function getCoupon() {
-        return $this->hasOne(Coupon::className(), ['couponId' => 'couponId']);
+        return $this->hasOne(Promotion::className(), ['promotionId' => 'couponId']);
     }
 
     public function beforeSave($insert) {
@@ -428,30 +428,43 @@ class Order extends \common\models\costfit\master\OrderMaster {
         //$this->vat = ($total) * 0.07;
         //$this->total = $total;
         $this->discount = null;
-        if (isset($this->coupon) && isset($this->couponId)) {
-            if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
+        /* if (isset($this->coupon) && isset($this->couponId)) {
+          if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
 
-            } else {
-                if (isset($this->coupon->discountValue)) {
-                    $this->discount = $this->coupon->discountValue;
-                } else {
-                    // $this->discount = $this->total * ($this->coupon->discountPercent / 100);
-                    $this->discount = $total * ($this->coupon->discountPercent / 100);
-                }
-            }
+          } else {
+          if (isset($this->coupon->discountValue)) {
+          $this->discount = $this->coupon->discountValue;
+          } else {
+          // $this->discount = $this->total * ($this->coupon->discountPercent / 100);
+          $this->discount = $total * ($this->coupon->discountPercent / 100);
+          }
+          }
+          } */
+        $promotionCategory = PromotionCategory::categoryItems($this->couponId);
+        $promotionBrand = PromotionBrand::brandItems($this->couponId);
+        $productCateInOrder = '';
+        $productBrandInOrder = '';
+        if ($promotionCategory != 0) {
+            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory);
         }
-
+        if ($promotionBrand != 0) {
+            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand);
+        }
+        $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder);
+        if ($productId != '') {
+            $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
+        }
         /*
          * เพิ่ม round() ปัดเศษขึ้น
          * By Taninut.Bm
          * Create 21/9/2017
          */
-        if ($this->discount == null) {
-            $result = round($total, 0, PHP_ROUND_HALF_UP);
-        } else {
-            $result = round($total, 0, PHP_ROUND_HALF_UP) - round($this->discount, 0, PHP_ROUND_HALF_UP);
-        }
-
+        /* if ($this->discount == null) {
+          $result = round($total, 0, PHP_ROUND_HALF_UP);
+          } else {
+          $result = round($total, 0, PHP_ROUND_HALF_UP) - round($this->discount, 0, PHP_ROUND_HALF_UP);
+          } */
+        $result = round($total, 0, PHP_ROUND_HALF_UP);
         $this->total = $result;
         $this->vat = $result - ($result * (100 / 107));
         $this->totalExVat = $result - round($this->vat, 0, PHP_ROUND_HALF_UP);
@@ -459,8 +472,59 @@ class Order extends \common\models\costfit\master\OrderMaster {
         //$this->grandTotal = $this->total - $this->discount;
         $this->grandTotal = $result;
         $this->shippingRate = $this->calculateShippingRate();
-        $this->summary = $this->grandTotal + $this->calculateShippingRate();
+        //$this->summary = $this->grandTotal + $this->calculateShippingRate();
+        $this->summary = round($result - $this->discount, 0, PHP_ROUND_HALF_UP);
         return TRUE;
+    }
+
+    public function promotionProductId($product1, $product2) {
+        $productId = '';
+        if ($product1 != '' || $product2 != '') {
+            if ($product1 != '' && $product2 == '') {
+                $productId = $product1;
+            } else if ($product1 == '' && $product2 != '') {
+                $productId = $product2;
+            } else {
+                $productId = $product1 . ',' . $product2;
+            }
+        }
+
+        return $productId;
+    }
+
+    public function calculateOrder($orderId, $promotionId, $productId) {
+
+        $promotion = Promotion::find()->where("promotionId=$promotionId")->one();
+        $orderItems = OrderItem::find()->where("orderId=$orderId and productId in($productId)")->groupBy("productId")->all();
+        $order = Order::find()->where("orderId=$orderId")->one();
+        if ($promotion->discountType == 2) {//เป็นเงินสด
+            $order->discount = $promotion->discount;
+        } else {
+
+            $totalDiscount = 0;
+            foreach ($orderItems as $orderItem):
+                $totalDiscount += ($orderItem->total * $promotion->discount) / 100;
+            endforeach;
+
+            if ($promotion->maximumDiscount != null) {//ถ้าจำนวนส่วนลดคิดเป็น % มากกว่า Maximun Discount ให้เอา Maximun Discount มาคิด
+                if ($totalDiscount > $promotion->maximumDiscount) {
+                    $order->discount = $promotion->maximumDiscount;
+                } else {
+                    foreach ($orderItems as $orderItem):
+                        $orderItem->discountValue = ($orderItem->total * $promotion->discount) / 100;
+                        $orderItem->save(false);
+                    endforeach;
+                    $order->discount = $totalDiscount;
+                }
+            } else {
+                foreach ($orderItems as $orderItem):
+                    $orderItem->discountValue = ($orderItem->total * $promotion->discount) / 100;
+                    $orderItem->save(false);
+                endforeach;
+                $order->discount = $totalDiscount;
+            }
+        }
+        return $order->discount;
     }
 
     public static function calculateShippingRate() {

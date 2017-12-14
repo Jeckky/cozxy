@@ -62,4 +62,51 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
         }
     }
 
+    public static function isOverUse($promotionId) {
+        $promotion = Promotion::find()->where("promotionId=" . $promotionId)->one();
+        if (isset($promotion)) {
+            if ($promotion->maximum == 0 || $promotion->maximum == null) { //ถ้าไม่ได้กำหนด หรือ กำหนดเป็น 0 = no limit
+                return 0;
+            } else {
+                $totalUse = count(Order::find()->where("couponId=" . $promotionId)->all());
+                if ($totalUse >= $promotion->maximum) {//เคยใช้ใน Order >= จำนวนสูงสุดที่ตั้งไว้
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public static function isOverUsePerPerson($promotionId) {
+        $promotion = Promotion::find()->where("promotionId=" . $promotionId)->one();
+        if (isset($promotion)) {
+            if ($promotion->perUser == 0 || $promotion->perUser == null) { //ถ้าไม่ได้กำหนด หรือ กำหนดเป็น 0 = no limit
+                return 0;
+            } else {
+                $totalUse = count(Order::find()->where("couponId=" . $promotionId . " and userId=" . \Yii::$app->user->id)->all());
+                if ($totalUse >= $promotion->perUser) {//ถ้า user คนนี้เคยใช้ code นี้ไปแล้ว
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public static function isOverUsePerOrder($orderId) {//1 order ใช้ได้แค่ 1 promocode
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        if (isset($order)) {
+            if ($order->couponId != null || $order->couponId != '') {
+                return 1; //มีการใช้ Promotion ไปแล้ว
+            } else {
+                return 0;
+            }
+        }
+    }
+
 }
