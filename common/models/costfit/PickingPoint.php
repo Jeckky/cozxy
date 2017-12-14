@@ -34,12 +34,24 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
 
     public function rules() {
         return array_merge(parent::rules(), [
-            //[['provinceId', 'amphurId', 'pickingId'], 'required'],
             [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
-            //[['pickingId', 'LcpickingId'], 'required', 'on' => self::COZXY_PICKING_POINT_SUMMARY],
             [['pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
             [['provinceId', 'amphurId', 'pickingId'], 'required', 'on' => 'picking_point_new'],
         ]);
+    }
+
+    public function rules1() {
+        return [
+            [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
+            [['pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
+            [['provinceId', 'amphurId', 'pickingId'], 'required', 'on' => 'picking_point_new'],
+        ];
+    }
+
+    public function scenarios1() {
+        $scenarios = parent::scenarios();
+        $scenarios['picking_point_new'] = ['provinceId', 'amphurId', 'pickingId']; //Scenario Values Only Accepted
+        return $scenarios;
     }
 
     /**

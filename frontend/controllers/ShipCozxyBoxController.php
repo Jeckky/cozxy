@@ -40,9 +40,17 @@ use common\helpers\CozxyCalculatesCart;
 class ShipCozxyBoxController extends MasterController {
 
     public function actionIndex() {
+
+        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
+
+        if (!isset($orderId)) {
+            return $this->redirect(Yii::$app->homeUrl);
+        }
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
+
         $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
         foreach ($pickingPointActiveMap as $key => $value) {
             //echo $value[$key]->attributes . '<br>';
@@ -59,14 +67,15 @@ class ShipCozxyBoxController extends MasterController {
                 'pageSize' => isset($n) ? $n : 100,
             ]
         ]);
-        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
+
         $order = Order::find()->where(['orderId' => $orderId])->one();
         if (isset($order->pickingId) && !empty($order->pickingId)) {
             $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
             if (count($pickingPoint) <= 0) {
                 $pickingPoint = new \common\models\costfit\PickingPoint();
             }
-        } else {
+            $shippingChooseActive = 1; //Ship To CozxyBox
+        } else if (isset($order->addressId) && !empty($order->addressId)) {
             $pickingPoint = new \common\models\costfit\PickingPoint();
             $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
 
@@ -77,8 +86,13 @@ class ShipCozxyBoxController extends MasterController {
             //print_r($pickingPoint);
             //echo '<pre>';
             //print_r($pickingPointActive);
+            $shippingChooseActive = 2; //Ship to address
+        } else {
+            $pickingPoint = new \common\models\costfit\PickingPoint();
+            $shippingChooseActive = 1; //Default Ship To CozxyBox
         }
-        return $this->render('/checkout/shipCozxyBox', compact('activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+
+        return $this->render('/checkout/shipCozxyBox', compact('shippingChooseActive', 'activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
     public static function actionLocationPickUp1() {
@@ -167,7 +181,7 @@ class ShipCozxyBoxController extends MasterController {
 
         $pickingPoint = \common\models\costfit\PickingPoint::find()
                         ->where('pickingId=' . $pickingId)->one();
-        $pickingPointAmphur = \common\models\dbworld\Cities::find()->where('stateId=' . $pickingPoint['provinceId'])->one();
+        $pickingPointAmphur = \common\models\dbworld\Cities::find()->where('stateId=' . $pickingPoint['provinceId'] . ' and cityId=' . $pickingPoint['amphurId'])->one();
         //foreach ($pickingPoint as $key => $value) {
         $pickUp = [
             'pickingId' => $pickingPoint['pickingId'],
@@ -187,6 +201,11 @@ class ShipCozxyBoxController extends MasterController {
           'pickingPointActiveShow' => $pickUp,
           ]); */
         //return $this->renderAjax('locationPickUp', '');
+    }
+
+    public function actionCozxyBoxSelect() {
+        $pickingPoint = new \common\models\costfit\PickingPoint();
+        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect", compact('pickingPoint'));
     }
 
 }

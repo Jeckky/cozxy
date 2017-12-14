@@ -102,7 +102,7 @@ $this->registerCss('
                     <div class="filter-product-cozxy col-sm-12">
 
                         <h3 class="b" style="word-wrap: break-word;white-space: normal;">
-                            RECOMMENDED
+                            RECOMMENDED ::   ตัวอย่าง Array Data Provider Yii 2 เพื่อส่งเข้า view
                             <small>
                             </small>
                         </h3>
@@ -147,7 +147,7 @@ $this->registerCss('
             </div>
             <div class="col-md-3 col-sm-12 col-xs-12">
                 <div class="size18">&nbsp;</div>
-                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId', 'categoryId', 'productStory')) ?> 
+                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId', 'categoryId', 'productStory')) ?>
             </div>
 
             <div class="col-xs-9">
@@ -155,7 +155,7 @@ $this->registerCss('
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                      ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                     ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                     ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                   ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

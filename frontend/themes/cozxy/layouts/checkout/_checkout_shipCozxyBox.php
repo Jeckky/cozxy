@@ -14,6 +14,14 @@ $pickingId = rand(0, 9999);
 function strip_tags_content($text) {
     return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text);
 }
+
+//echo '<pre>';
+//print_r($order->attributes['orderId']);
+//echo 'orderId :' . $order->attributes['orderId'] . '<br>';
+//echo 'addressId :' . $order->attributes['addressId'] . '<br>';
+//echo 'pickingId :' . $order->attributes['pickingId'] . '<br>';
+//echo 'shippingChooseActive : ' . $shippingChooseActive . '<br>';
+//echo $_SERVER['HTTP_REFERER'];
 ?>
 <style>
     /* css กำหนดความกว้าง ความสูงของแผนที่ */
@@ -37,7 +45,7 @@ function strip_tags_content($text) {
         $form = ActiveForm::begin([
                     'id' => 'default-shipping-address',
                     //'action' => Yii::$app->homeUrl . 'checkout/summary',
-                    'action' => Yii::$app->homeUrl . 'checkout/',
+                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout/summary',
                     'options' => ['class' => 'space-bottom'],
                         //'enableClientValidation' => false,
         ]);
@@ -54,11 +62,13 @@ function strip_tags_content($text) {
                         <div class="row">
                             <div class="col-lg-12">
                                 Choose shipping type : &nbsp; &nbsp; &nbsp;
-                                <?= Html::radio('shipping', ((isset($order->pickingId) && !empty($order->pickingId)) || !isset($order->shippingFirstname)) ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
+                                <?//= Html::radio('shipping', ((isset($order->pickingId) && !empty($order->pickingId)) || !isset($order->shippingFirstname)) ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
+                                <?= Html::radio('shipping', $shippingChooseActive == 1 ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
                                 Ship To CozxyBox
                                 <!--   <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
                                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <?= Html::radio('shipping', (isset($order->shippingFirstname) && !isset($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
+                                <?//= Html::radio('shipping', (isset($order->shippingFirstname) && !isset($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
+                                <?= Html::radio('shipping', $shippingChooseActive == 2 ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                 Ship to address
                             </div>
                             <div class="col-lg-12">
@@ -70,7 +80,7 @@ function strip_tags_content($text) {
                     </div>
 
                     <!-- Shipping -->
-                    <div class="cart-detail" id="shipToCozxyBox">
+                    <div class="cart-detail" id="shipToCozxyBox" <?= $shippingChooseActive == 2 ? 'style=" display: none;"' : '' ?>>
                         <div class="col-lg-12" style="padding-left:0px;">
                             <h3>Ship To CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>" target="_blank">view all</a></span></h3>
                         </div>
@@ -80,94 +90,96 @@ function strip_tags_content($text) {
                         </div>
 
                         <div class="row fc-g999" style="padding: 40px;">
-                            <div class="col-md-12 col-xs-12">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Select Province</label>
-                                    <div class="col-sm-6">
-                                        <?php
-                                        $a = "ssssss";
-                                        echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
-                                            //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
-                                            //'data' => \common\models\costfit\PickingPoint::availableProvince(),
-                                            'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', function($stateId) {
-                                                        return \common\models\costfit\PickingPoint::provinceName($stateId);
-                                                    }),
-                                            'hideSearch' => true,
-                                            'pluginOptions' => [
-                                                'placeholder' => 'Select Province',
-                                                'loadingText' => 'Loading Province ...',
-                                                'allowClear' => true
-                                            ],
-                                            'options' => ['placeholder' => 'Select Province ...',
-                                                'name' => 'provinceId', 'id' => 'stateId'],
-                                        ])->label(FALSE);
-                                        ?>
+                            <div id="ship-to-cozxy-box-select">
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Select Province</label>
+                                        <div class="col-sm-6">
+                                            <?php
+                                            //echo $form->field($pickingPoint, 'provinceId')->textInput();
+                                            $a = "ssssss";
+                                            echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
+                                                //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
+                                                //'data' => \common\models\costfit\PickingPoint::availableProvince(),
+                                                'data' => yii\helpers\ArrayHelper::map(common\models\costfit\PickingPoint::availableProvince(), 'stateId', function($stateId) {
+                                                            return \common\models\costfit\PickingPoint::provinceName($stateId);
+                                                        }),
+                                                'hideSearch' => true,
+                                                'pluginOptions' => [
+                                                    'placeholder' => 'Select Province',
+                                                    'loadingText' => 'Loading Province ...',
+                                                    'allowClear' => true
+                                                ],
+                                                'options' => ['placeholder' => 'Select Province ...',
+                                                    'name' => 'PickingPoint[provinceId]', 'id' => 'stateId'],
+                                            ])->label(FALSE);
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Select District</label>
+                                        <div class="col-sm-6">
+                                            <?php
+                                            ///throw new \yii\base\Exception(1111);
+                                            echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
+                                            echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
+                                            if (isset($pickingPoint->amphurId)) {
+                                                //echo 'edit';
+                                                echo Html::hiddenInput('input-type-33', 'edit', ['id' => 'input-type-33']);
+                                            } else {
+                                                //echo 'add';
+                                                echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
+                                            }
 
-                            </div>
-                            <div class="col-md-12 col-xs-12">
-
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Select District</label>
-                                    <div class="col-sm-6">
-                                        <?php
-                                        ///throw new \yii\base\Exception(1111);
-                                        echo Html::hiddenInput('input-type-11', $pickingPoint->amphurId, ['id' => 'input-type-11']);
-                                        echo Html::hiddenInput('input-type-22', $pickingPoint->amphurId, ['id' => 'input-type-22']);
-                                        if (isset($pickingPoint->amphurId)) {
-                                            //echo 'edit';
-                                            echo Html::hiddenInput('input-type-33', 'edit', ['id' => 'input-type-33']);
-                                        } else {
-                                            //echo 'add';
-                                            echo Html::hiddenInput('input-type-33', 'add', ['id' => 'input-type-33']);
-                                        }
-
-                                        echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
-                                            //'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
-                                            'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
-                                            'type' => DepDrop::TYPE_DEFAULT,
-                                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                                            'pluginOptions' => [
-                                                'depends' => ['stateId'],
-                                                'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
-                                                'loadingText' => 'Loading amphur ...',
-                                                'params' => ['input-type-11', 'input-type-22', 'input-type-33'],
-                                                'initialize' => TRUE,
-                                            ]
-                                        ])->label(FALSE);
-                                        ?>
+                                            echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
+                                                //'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
+                                                'options' => ['placeholder' => 'Select ...', 'name' => 'PickingPoint[amphurId]', 'id' => 'amphurId'],
+                                                'type' => DepDrop::TYPE_DEFAULT,
+                                                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                                'pluginOptions' => [
+                                                    'depends' => ['stateId'],
+                                                    'url' => Url::to(['child-amphur-address-picking-point-checkouts']),
+                                                    'loadingText' => 'Loading amphur ...',
+                                                    'params' => ['input-type-11', 'input-type-22', 'input-type-33'],
+                                                    'initialize' => TRUE,
+                                                ]
+                                            ])->label(FALSE);
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-3 control-label">Select Cozxybox</label>
+                                        <div class="col-sm-6">
+                                            <?php
+                                            echo Html::hiddenInput('input-type-13', $pickingPoint->provinceId, ['id' => 'input-type-13']);
+                                            echo Html::hiddenInput('input-type-23', $pickingPoint->amphurId, ['id' => 'input-type-23']);
+                                            echo Html::hiddenInput('picking-point-33', $pickingPoint->pickingId, ['id' => 'picking-point-33']);
+                                            echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
+                                            echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
+                                                //'model' => $pickingId,
+                                                //'data' => [$pickingPoint->pickingId => $pickingPoint->title],
+                                                'attribute' => 'pickingId',
+                                                'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'PickingPoint[pickingId]'],
+                                                'type' => DepDrop::TYPE_DEFAULT,
+                                                'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+                                                'pluginOptions' => [
+                                                    'depends' => ['amphurId'],
+                                                    'url' => Url::to(['child-picking-point-map']),
+                                                    'loadingText' => 'Loading picking point ...',
+                                                    'params' => ['input-type-13', 'input-type-23', 'picking-point-33', 'lockers-cool-input-type-33'],
+                                                    'initialize' => TRUE,
+                                                ]
+                                            ])->label(FALSE);
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xs-12">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-3 control-label">Select Cozxybox</label>
-                                    <div class="col-sm-6">
-                                        <?php
-                                        echo Html::hiddenInput('input-type-13', $pickingPoint->provinceId, ['id' => 'input-type-13']);
-                                        echo Html::hiddenInput('input-type-23', $pickingPoint->amphurId, ['id' => 'input-type-23']);
-                                        echo Html::hiddenInput('picking-point-33', $pickingPoint->pickingId, ['id' => 'picking-point-33']);
-                                        echo Html::hiddenInput('lockers-cool-input-type-33', '1', ['id' => 'lockers-cool-input-type-33']);
-                                        echo $form->field($pickingPoint, 'pickingId')->widget(kartik\depdrop\DepDrop::classname(), [
-                                            //'model' => $pickingId,
-                                            //'data' => [$pickingPoint->pickingId => $pickingPoint->title],
-                                            'attribute' => 'pickingId',
-                                            'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
-                                            'type' => DepDrop::TYPE_DEFAULT,
-                                            'select2Options' => ['pluginOptions' => ['allowClear' => true]],
-                                            'pluginOptions' => [
-                                                'depends' => ['amphurId'],
-                                                'url' => Url::to(['child-picking-point-map']),
-                                                'loadingText' => 'Loading picking point ...',
-                                                'params' => ['input-type-13', 'input-type-23', 'picking-point-33', 'lockers-cool-input-type-33'],
-                                                'initialize' => TRUE,
-                                            ]
-                                        ])->label(FALSE);
-                                        ?>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class=" text-center" style="margin-top: 10px;">
                                 <!--/*onclick="shipCozxyBox()"*/-->
                                 <!--<button type="button" class="btn btn-default btn-lg" id="shipCozxyBox-Map">
@@ -246,12 +258,12 @@ function strip_tags_content($text) {
                         </div>
                     </div>
 
-                    <div class="cart-detail login-box" id="shipToAddress" style=" display: none;">
+                    <div class="cart-detail login-box" id="shipToAddress" style=" display: none;" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
                         <h3>Ship to address 123</h3>
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);            ?>
                                 <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -343,7 +355,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);          ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);            ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -359,7 +371,7 @@ function strip_tags_content($text) {
                         <div id="continue-pick-up"></div>
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         <!--<a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>-->
-                        <button type="submit" class="b btn-yellow">CONTINUE TO CHECK OUT</button>
+                        <button type="submit" class="b btn-yellow check-out <?php echo $shippingChooseActive == 2 ? 'continue-ship-to-address' : '' ?>" >CONTINUE TO CHECK OUT</button>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
@@ -881,7 +893,7 @@ foreach ($activeMap as $key => $value) {
                                             dataType: "JSON",
                                             data: {'pickingId': pickingId},
                                             success: function (data, status) {
-                                            //alert(status + '::' + data.provinceId + '::' + data.amphurId + '::' + data.pickingId);
+                                            //alert(status + '::' + data.provinceId + '::' + data.amphurId + ':' + data.titleTh + '::' + data.pickingId);
                                             if (status == "success") {
                                             $('#title-location').html(location);
                                                     $('#stateId').val(data.provinceId).trigger('change');
@@ -950,12 +962,17 @@ foreach ($activeMap as $key => $value) {
     "type": "text/javascript",
             src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initMap"
     }).appendTo("body");
-    });
-
-</script>
+    });</script>
  <!--<script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
     </script>-->
+<script>
+
+            //alert(document.referrer);
+            //alert(window.history.previous);
+            alert("previous url is: " + window.history.previous.href);
+
+</script>
 <?php
 $this->registerCss('
 #map {

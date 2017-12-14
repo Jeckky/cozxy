@@ -30,6 +30,7 @@ use kartik\select2\Select2;
                                     <?php
                                     //echo '<pre>';
                                     //print_r($order->attributes);
+                                    //echo 'pickingId :' . $order->pickingId;
                                     if ($order->pickingId != 0):
                                         ?>
                                         <div class="col-xs-12">
@@ -150,13 +151,13 @@ use kartik\select2\Select2;
                                 </div>
 
                                 <div class="row fc-g999">
-                                    <div class="col-xs-3 col-md-3 col-sm-3">Name:</div>
-                                    <div class="col-xs-9 col-md-9 col-sm-9">
+                                    <div class="col-xs-2 col-md-2 col-sm-2">Name:</div>
+                                    <div class="col-xs-10 col-md-10 col-sm-10">
                                         <?php echo $myAddressInSummary['myAddresss']['firstname'] ?> <?php echo $myAddressInSummary['myAddresss']['lastname'] ?>
                                     </div>
                                     <div class="size6">&nbsp;</div>
-                                    <div class="col-xs-3 col-md-3 col-sm-3">Address:</div>
-                                    <div class="col-xs-9 col-md-9 col-sm-9">
+                                    <div class="col-xs-2 col-md-2 col-sm-2">Address:</div>
+                                    <div class="col-xs-10 col-md-10 col-sm-10">
                                         <?php echo $myAddressInSummary['myAddresss']['address'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['amphur'] ?>&nbsp;
                                         <?php echo $myAddressInSummary['myAddresss']['district'] ?>&nbsp;
@@ -165,8 +166,8 @@ use kartik\select2\Select2;
                                         <?php echo $myAddressInSummary['myAddresss']['country'] ?>&nbsp;
                                     </div>
                                     <div class="size6">&nbsp;</div>
-                                    <div class="col-xs-3 col-md-3 col-sm-3">TaxID:</div>
-                                    <div class="col-xs-9 col-md-9 col-sm-9"><?= $order->billingTax ?></div>
+                                    <div class="col-xs-2 col-md-2 col-sm-2">TaxID:</div>
+                                    <div class="col-xs-10 col-md-10 col-sm-10"><?= $order->billingTax ?></div>
                                     <div class="size6">&nbsp;</div>
                                     <div class="size12">&nbsp;</div>
                                 </div>
@@ -182,7 +183,7 @@ use kartik\select2\Select2;
                     }
                     ?>
                     <div class="col-xs-12 text-right">
-                        <a href="<?= Url::to(['/checkout']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
+                        <a href="<?= Url::to(['/ship-cozxy-box']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
                         &nbsp;
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                     </div>
@@ -196,7 +197,7 @@ use kartik\select2\Select2;
         <!-- Total -->
         <div class="col-lg-3 col-md-4">
             <?php
-            echo 'addressId : ' . $addressId;
+            //echo 'addressId : ' . $addressId;
             ?>
             <?= $this->render('_checkout_total', ['order' => $order, 'addressId' => $addressId, 'userPoint' => $userPoint]) ?>
         </div>
@@ -205,3 +206,17 @@ use kartik\select2\Select2;
 </div>
 
 <div class="size12 size10-xs">&nbsp;</div>
+
+<script>
+
+    /*window.location.hash = "no-back-button";
+     window.location.hash = "Again-No-back-button";//again because google chrome don't insert first hash into history
+     window.onhashchange = function () {
+     window.location.hash = "no-back-button";
+     }*/
+
+    //alert(window.history.go(-2));
+
+    //alert(window.location.href);
+
+</script>
