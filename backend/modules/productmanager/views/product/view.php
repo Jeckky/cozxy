@@ -190,7 +190,7 @@ $productId = $model->productId;
                             [
                                 'attribute' => 'price',
                                 'value' => function ($model) {
-                                    return $model->productPriceSuppliers->price;
+                                    return isset($model->productPriceSuppliers->price) ? $model->productPriceSuppliers->price : '-';
                                 }
                             ],
                             'quantity',

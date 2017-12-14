@@ -31,7 +31,7 @@ class QuickAddController extends Controller
         $currency = $_POST['currency'];
         $country = $_POST['country'];
         $imageIds = $_POST['imageIds'];
-        $userId = Yii::$app->user->id;
+        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
 
         $transaction = Yii::$app->db->beginTransaction();
         $flag = false;
@@ -41,7 +41,8 @@ class QuickAddController extends Controller
             $storyModel = new ProductPost();
             $storyModel->shortDescription = $memo;
             $storyModel->productId = $productId;
-            $storyModel->createDateTime = $storyModel->updateDateTime = new Expression('NOW()');
+            $storyModel->createDateTime = new Expression('NOW()');
+            $storyModel->updateDateTime = new Expression('NOW()');
             $storyModel->isPublic = 0;
             $storyModel->status = 2;
             $storyModel->userId = $userId;
@@ -80,8 +81,9 @@ class QuickAddController extends Controller
         }
         catch(Exception $e) {
             $transaction->rollBack();
-            $res['error'] = 'Error :: Please try again';
+            $res['error'] = $storyModel->errors;
         }
+        return Json::encode($res);
     }
 
     public function actionUploadFile()
@@ -90,8 +92,10 @@ class QuickAddController extends Controller
         $imageFile = UploadedFile::getInstanceByName("image");
 
         if(isset($imageFile) && !empty($imageFile)) {
-            $ext = end(explode('.', $imageFile->name));
+            $imageFileName = explode('.', $imageFile->name);
+            $ext = end($imageFileName);
             $fileName = Yii::$app->security->generateRandomString(12) . '.' . $ext;
+//            $fileName = uniqid() . '.' . $ext;
             $fileUrl = 'images/story/' . $fileName;
             $filePath = Yii::$app->basePath . '/../frontend/web/images/story/' . $fileName;
 

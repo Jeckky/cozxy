@@ -13,12 +13,15 @@ use common\helpers\Token;
 use yii\db\Expression;
 use yii\base\Exception;
 use frontend\controllers\CartController as CartFrontendController;
+use common\models\costfit\PaymentMethod;
 
 /**
  * Default controller for the `mobile` module
  */
 class CartController extends CartFrontendController
 {
+    public $enableCsrfValidation = false;
+
     public function actionIndex()
     {
         $res = [];
@@ -55,6 +58,9 @@ class CartController extends CartFrontendController
         $productId = $_POST['productId'];
         $productSuppId = $_POST['productSuppId'];
         $quantity = $_POST["quantity"];
+        $receiveType = $_POST['receiveType'];
+
+        $productSupplierModel = ProductSuppliers::findOne($productSuppId);
 
         $res = [];
         $order = Order::getOrder();
@@ -103,11 +109,11 @@ class CartController extends CartFrontendController
         $product = new Product();
         $orderItem->sendDate = $fastid;
         $orderItem->firstTimeSendDate = $fastid;
-        $orderItem->supplierId = $_POST['supplierId'];
+        $orderItem->supplierId = $productSupplierModel->userId;
         $orderItem->orderId = $order->orderId;
-        $orderItem->productId = $id;
+        $orderItem->productId = $productId;
         $orderItem->productSuppId = $productSuppId;
-        $orderItem->receiveType = $_POST['receiveType'];
+        $orderItem->receiveType = $receiveType;
         $productPrice = $product->calProductPrice($orderItem->productSuppId, $orderItem->quantity, 1, $fastid, NULL);
         $orderItem->priceOnePiece = $orderItem->product->calProductPrice($orderItem->productSuppId, 1, 0, NULL, NULL);
         $orderItem->price = $productPrice["price"];
@@ -136,7 +142,7 @@ class CartController extends CartFrontendController
             $res["cart"] = $cartArray;
             $pQuan = 0;
             foreach($cartArray["items"] as $item) {
-                if($item["productSuppId"] == $id) {
+                if($item["productSuppId"] == $productId) {
                     $pQuan += $item["qty"];
                 }
             }
@@ -156,9 +162,9 @@ class CartController extends CartFrontendController
 
     public function actionDeleteCartItem()
     {
-        $id = $_POST["id"];
+        $id = $_POST["orderItemId"];
         $res = [];
-        $orderItem = OrderItem::find()->where("orderItemId = " . $id)->one();
+        $orderItem = OrderItem::findOne($id);
         $qnty = intval($orderItem->quantity);
         $orderId = $orderItem->orderId;
 

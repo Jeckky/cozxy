@@ -40,9 +40,9 @@ class ProductPost extends \common\models\costfit\master\ProductPostMaster {
     }
 
     public function scenarios() {
-        return [
-            self::COZXY_WRITE_YOUR_STORY => ['productSelfId', 'title', 'description'],
-        ];
+        $scenarios = parent::scenarios();
+        $scenarios[self::COZXY_WRITE_YOUR_STORY] = ['productSelfId', 'title', 'description'];
+        return $scenarios;
     }
 
     /**
