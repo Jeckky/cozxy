@@ -150,17 +150,16 @@ class CheckoutController extends MasterController {
         if ($shipTo == 1) {
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint();
             //$shipToCozxyBoxNew->setScenario('picking_point_new');
-            $model = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
-            $model->validate();
-            $model->setScenario('picking_point_new');
-            echo '<pre>';
-            print_r($model->load(Yii::$app->request->post()));
-            if (isset($_POST["PickingPoint"])) {
-
-                $model->attributes = $_POST['PickingPoint'];
-                //echo '<pre>';
-                //print_r($model);
-            }
+            //$model = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
+            //$model->validate();
+            //$model->setScenario('picking_point_new');
+            //echo '<pre>';
+            //print_r($model->load(Yii::$app->request->post()));
+            //if (isset($_POST["PickingPoint"])) {
+            //$model->attributes = $_POST['PickingPoint'];
+            //echo '<pre>';
+            //print_r($model);
+            //}
             //echo '<pre>';
             //print_r($shipToCozxyBoxNew);
             //echo '<br>';
@@ -193,12 +192,12 @@ class CheckoutController extends MasterController {
               } else {
               $addressId = Yii::$app->request->post('addressIdsummary');
               } */
-            $this->resetDefault($orderId, $addressId, $pickingId, $shipTo, $orderAddress, $tax, $tel);
+            //$this->resetDefault($orderId, $addressId, $pickingId, $shipTo, $orderAddress, $tax, $tel);
             //$address = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
             //echo '<pre>';
             //print_r($address);
             //exit();
-            return $this->redirect(Yii::$app->homeUrl . 'checkout/summary?orderId=' . $orderId);
+            //return $this->redirect(Yii::$app->homeUrl . 'checkout/summary?orderId=' . $orderId);
         } else {
             echo 'Picking Point Not Null 2';
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);

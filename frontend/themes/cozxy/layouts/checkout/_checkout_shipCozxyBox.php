@@ -259,7 +259,7 @@ function strip_tags_content($text) {
                     </div>
 
                     <div class="cart-detail login-box" id="shipToAddress" style=" display: none;" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
-                        <h3>Ship to address 123</h3>
+                        <h3>Ship to address</h3>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -968,9 +968,9 @@ foreach ($activeMap as $key => $value) {
     </script>-->
 <script>
 
-            //alert(document.referrer);
-            //alert(window.history.previous);
-            alert("previous url is: " + window.history.previous.href);
+    //alert(document.referrer);
+    //alert(window.history.previous);
+    //alert("previous url is: " + window.history.previous.href);
 
 </script>
 <?php
