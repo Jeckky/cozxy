@@ -195,7 +195,7 @@ function strip_tags_content($text) {
                                 <hr>
                                 <h4>COZXYBOX pick up location search results</h4>
                                 <div id="map-address-cozxy-box" style=" margin-bottom: 5px;">
-                                    &nbsp;Result for " <span id="title-location" style=" color: #0000ff;"></span> "
+                                    &nbsp;Your COZXYBOX pick-up location: " <span id="title-location" style=" color: #0000ff;"></span> "
                                 </div>
                                 <hr>
                             </div>
