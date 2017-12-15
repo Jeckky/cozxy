@@ -564,7 +564,8 @@ foreach ($activeMap as $key => $value) {
     var bangkok = new google.maps.LatLng(13.755716, 100.501589);
 // no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
             function handleNoGeolocation() {
-            map.setCenter(bangkok);
+            alert('position :' + bangkok);
+                    map.setCenter(bangkok);
                     setMarker(bangkok);
                     //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
             }
