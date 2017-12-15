@@ -123,7 +123,7 @@ $productId = $model->productId;
                             [
                                 'header' => 'Image',
                                 'value' => function($model) {
-                                    return Yii::$app->homeUrl . $model->images->imageThumbnail1;
+                                    return isset($model->images->imageThumbnail1) ? Yii::$app->homeUrl . $model->images->imageThumbnail1 : '';
                                 },
                                 'format' => 'image'
                             ],
@@ -176,7 +176,7 @@ $productId = $model->productId;
                             [
                                 'header' => 'Image',
                                 'value' => function($model) {
-                                    return Yii::$app->homeUrl . $model->product->images->imageThumbnail1;
+                                    return isset($model->product->images->imageThumbnail1) ?  Yii::$app->homeUrl . $model->product->images->imageThumbnail1 : '';
                                 },
                                 'format' => 'image'
                             ],
