@@ -58,8 +58,9 @@ class CozxyCalculatesCart {
                 $OrderItemSumTotal = 0;
             }
             if (isset($Order->couponId)) {
-                $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
-                $couponValue = $coupon->discountValue;
+//              $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
+//              $couponValue = $coupon->discountValue;
+                $couponValue = $Order->discount;
             } else {
                 $couponValue = 0;
             }
@@ -74,8 +75,9 @@ class CozxyCalculatesCart {
                 $OrderItemSumTotal = 0;
             }
             if (isset($Order->couponId)) {
-                $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
-                $couponValue = $coupon->discountValue;
+                //              $coupon = \common\models\costfit\Coupon::find()->where('couponId=' . $Order->couponId)->one();
+//              $couponValue = $coupon->discountValue;
+                $couponValue = $Order->discount;
             } else {
                 $couponValue = 0;
             }
