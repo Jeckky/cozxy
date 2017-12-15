@@ -169,7 +169,7 @@ class CheckoutController extends MasterController {
             } else {
                 //return $this->redirect(Yii::$app->homeUrl . 'ship-cozxy-box');
                 echo 'Picking Point Not Null 1';
-                //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
+                $shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
             }
         } else if ($shipTo == 2) {
             $pickingId = '0';
