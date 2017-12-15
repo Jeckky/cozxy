@@ -34,7 +34,7 @@ $form = ActiveForm::begin([
                     'allowClear' => true
                 ],
                 'options' => ['placeholder' => 'Select Province ...',
-                    'name' => 'PickingPoint[provinceId]', 'id' => 'stateId'],
+                    'name' => 'provinceId', 'id' => 'stateId'],
             ])->label(FALSE);
             ?>
         </div>
@@ -58,7 +58,7 @@ $form = ActiveForm::begin([
 
             echo $form->field($pickingPoint, 'amphurId')->widget(DepDrop::classname(), [
                 //'data' => isset($pickingPoint->amphurId) ? [$pickingPoint->amphurId => $pickingPoint->citie->localName . '/' . $pickingPoint->citie->cityName] : [],
-                'options' => ['placeholder' => 'Select ...', 'name' => 'PickingPoint[amphurId]', 'id' => 'amphurId'],
+                'options' => ['placeholder' => 'Select ...', 'name' => 'amphurId', 'id' => 'amphurId'],
                 'type' => DepDrop::TYPE_DEFAULT,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [
@@ -86,7 +86,7 @@ $form = ActiveForm::begin([
                 //'model' => $pickingId,
                 //'data' => [$pickingPoint->pickingId => $pickingPoint->title],
                 'attribute' => 'pickingId',
-                'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'PickingPoint[pickingId]'],
+                'options' => ['placeholder' => 'Select ...', 'id' => 'LcpickingId', 'name' => 'LcpickingId'],
                 'type' => DepDrop::TYPE_DEFAULT,
                 'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                 'pluginOptions' => [

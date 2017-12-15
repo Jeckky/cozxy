@@ -36,7 +36,7 @@ class PickingPoint extends \common\models\costfit\master\PickingPointMaster {
         return array_merge(parent::rules(), [
             [['provinceId', 'amphurId', 'type', 'isDefault'], 'required', 'on' => 'picking_point'],
             [['pickingId', 'LcpickingId'], 'required', 'on' => 'checkout_summary'],
-            [['provinceId', 'amphurId', 'pickingId'], 'required', 'on' => 'picking_point_new'],
+            [['provinceId', 'amphurId', 'pickingId', 'LcpickingId'], 'required', 'on' => 'picking_point_new'],
         ]);
     }
 
