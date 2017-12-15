@@ -553,10 +553,21 @@ foreach ($activeMap as $key => $value) {
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
     alert('ไม่ทำงาน');
+            handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
     });
     } else {
     // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
     }
+    var bangkok = new google.maps.LatLng(13.755716, 100.501589);
+// no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
+            function handleNoGeolocation() {
+            map.setCenter(bangkok);
+                    setMarker(bangkok);
+                    $("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+            }
 
     // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
     GGM.event.addListener(map, 'zoom_changed', function () {
