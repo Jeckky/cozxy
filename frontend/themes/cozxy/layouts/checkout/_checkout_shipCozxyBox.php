@@ -569,17 +569,18 @@ foreach ($activeMap as $key => $value) {
                     //setMarker(bangkok);
                     var infowindow = new GGM.InfoWindow({
                     //map: map,
-                    position: pos,
+                    position: bangkok,
                             //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
                     });
                     var marker = new google.maps.Marker({
                     map: map,
-                            position: pos
+                            position: bangkok
                     });
-                    var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
                     map.panTo(bangkok); // ให้แผนที่แสดงไปที่ตัว marker
                     //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
             }
+
+
 
     // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
     GGM.event.addListener(map, 'zoom_changed', function () {
