@@ -148,21 +148,7 @@ class CheckoutController extends MasterController {
 
 
         if ($shipTo == 1) {
-            //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint();
-            //$shipToCozxyBoxNew->setScenario('picking_point_new');
-            //$model = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
-            //$model->validate();
-            //$model->setScenario('picking_point_new');
-            //echo '<pre>';
-            //print_r($model->load(Yii::$app->request->post()));
-            //if (isset($_POST["PickingPoint"])) {
-            //$model->attributes = $_POST['PickingPoint'];
-            //echo '<pre>';
-            //print_r($model);
-            //}
-            //echo '<pre>';
-            //print_r($shipToCozxyBoxNew);
-            //echo '<br>';
+
             if (isset($_POST['pickingId-lats-longs'])) {
                 $pickingIdLatsLongs = $_POST['pickingId-lats-longs'];
                 $splitLocation = explode('-', $pickingIdLatsLongs);
@@ -291,6 +277,10 @@ class CheckoutController extends MasterController {
 
         //echo 'shipTo :' . $shipTo;
         //exit();
+
+        echo '<pre>';
+        print_r($shipToCozxyBoxNew);
+        exit();
 
         return $this->render('index', compact('shipTo', 'myAddress', 'activeMap', 'shipTostart', 'shipToCozxyBoxNew', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
