@@ -577,6 +577,12 @@ foreach ($activeMap as $key => $value) {
                             map: map,
                                     position: bangkokCozxy
                             });
+                            $("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+                            $("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+                            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                            latMe = 13.871395;
+                            lngMe = 100.61732;
+                            $("#start").val(latMe + ',' + lngMe);
                             map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
                             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
                     }
