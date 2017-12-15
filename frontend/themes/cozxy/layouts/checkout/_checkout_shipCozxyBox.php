@@ -977,8 +977,6 @@ foreach ($activeMap as $key => $value) {
     });
     }
 
-
-
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
     // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
