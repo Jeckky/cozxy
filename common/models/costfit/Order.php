@@ -444,19 +444,21 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $promotionBrand = PromotionBrand::brandItems($this->couponId);
         $productCateInOrder = '';
         $productBrandInOrder = '';
-        if ($promotionCategory != 0) {
-            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1);
-        } else {
-            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0);
-        }
-        if ($promotionBrand != 0) {
-            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
-        } else {
-            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
-        }
-        $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder);
-        if ($productId != '') {
-            $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
+        if (isset($this->orderId) && $this->orderId != NULL) {
+            if ($promotionCategory != 0) {
+                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1);
+            } else {
+                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0);
+            }
+            if ($promotionBrand != 0) {
+                $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
+            } else {
+                $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
+            }
+            $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder);
+            if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
+                $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
+            }
         }
         /*
          * เพิ่ม round() ปัดเศษขึ้น
