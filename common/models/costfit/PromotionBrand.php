@@ -49,12 +49,18 @@ class PromotionBrand extends \common\models\costfit\master\PromotionBrandMaster 
         }
     }
 
-    public static function productInBrand($orderId, $brandId) {
-        $products = Product::find()
-                ->JOIN('LEFT JOIN', 'order_item oi', 'product.productId=oi.productId')
-                ->JOIN('LEFT JOIN', 'brand b', 'b.brandId=product.brandId')
-                ->where("oi.orderId=" . $orderId . " and b.brandId in($brandId)")
-                ->all();
+    public static function productInBrand($orderId, $brandId, $isAll) {
+        if ($isAll == 1) {
+            $products = Product::find()
+                    ->JOIN('LEFT JOIN', 'order_item oi', 'product.productId=oi.productId')
+                    ->JOIN('LEFT JOIN', 'brand b', 'b.brandId=product.brandId')
+                    ->where("oi.orderId=" . $orderId . " and b.brandId in($brandId)")
+                    ->all();
+        } else {
+            $products = OrderItem::find()
+                    ->where("orderId=$orderId")
+                    ->all();
+        }
         $productId = '';
         if (isset($products) && count($products) > 0) {
             foreach ($products as $product):

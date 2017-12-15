@@ -924,3 +924,50 @@ function orderingTemplateOption(id, total, action) {
 }
 
 /*End sprint3 sak */
+/*sptint 5 */
+function checkAllBrand(brandId) {
+    var value = $("#allBrand").val();
+    var url = $url + 'promotion/promotion/all-brand';
+    $.ajax({
+        url: url,
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (value == 1) {
+                for (var i = 0; i < data.count; i++) {
+                    $("#brand" + data.brandId[i]).prop("checked", "checked");
+                }
+                $("#allBrand").val(0);
+            } else {
+                for (var i = 0; i < data.count; i++) {
+                    $("#brand" + data.brandId[i]).removeAttr("checked");
+                }
+                $("#allBrand").val(1);
+            }
+
+        },
+    });
+}
+function checkAllCate(cateId) {
+    var value = $("#allCate").val();
+    var url = $url + 'promotion/promotion/all-cate';
+    $.ajax({
+        url: url,
+        dataType: 'JSON',
+        type: 'post',
+        success: function (data) {
+            if (value == 1) {
+                for (var i = 0; i < data.count; i++) {
+                    $("#cate" + data.cateId[i]).prop("checked", "checked");
+                }
+                $("#allCate").val(0);
+            } else {
+                for (var i = 0; i < data.count; i++) {
+                    $("#cate" + data.cateId[i]).removeAttr("checked");
+                }
+                $("#allCate").val(1);
+            }
+
+        },
+    });
+}

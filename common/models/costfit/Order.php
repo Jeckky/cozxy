@@ -445,10 +445,14 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $productCateInOrder = '';
         $productBrandInOrder = '';
         if ($promotionCategory != 0) {
-            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory);
+            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1);
+        } else {
+            $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0);
         }
         if ($promotionBrand != 0) {
-            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand);
+            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
+        } else {
+            $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
         }
         $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder);
         if ($productId != '') {

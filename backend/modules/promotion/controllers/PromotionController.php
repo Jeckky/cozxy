@@ -116,7 +116,7 @@ class PromotionController extends PromotionMasterController {
                 ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
                 ->where("category.parentId IS NULL AND category.status=1")
                 ->groupBy('category_to_product.categoryId')
-                //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+                ->orderBy('category.title ASC')
                 ->all();
         $brands = Brand::find()
                 ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
@@ -125,15 +125,20 @@ class PromotionController extends PromotionMasterController {
                 ->andWhere(['p.approve' => 'approve'])
                 ->andWhere(['p.status' => 1])
                 ->groupBy('brand.brandId')
+                ->orderBy('title')
                 ->all();
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-            $code = $this->generatePromotionCode();
+            if (isset($_POST["Promotion"]["promotionCode"]) && $_POST["Promotion"]["promotionCode"] != '') {
+                $code = $_POST["Promotion"]["promotionCode"];
+            } else {
+                $code = $this->generatePromotionCode();
+            }
             $model->promotionCode = $code;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->save(false);
-            $brand = $_POST["Promotion"]["brand"];
-            $categories = $_POST["Promotion"]["category"];
+            $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : null;
+            $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : null;
             if (isset($brand) && count($brand) > 0) {
                 $this->saveBrandPromotion($brand, $model->promotionId);
             }
@@ -163,7 +168,7 @@ class PromotionController extends PromotionMasterController {
                 ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
                 ->where("category.parentId IS NULL AND category.status=1")
                 ->groupBy('category_to_product.categoryId')
-                //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+                ->orderBy('category.title ASC')
                 ->all();
         $brands = Brand::find()
                 ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
@@ -172,6 +177,7 @@ class PromotionController extends PromotionMasterController {
                 ->andWhere(['p.approve' => 'approve'])
                 ->andWhere(['p.status' => 1])
                 ->groupBy('brand.brandId')
+                ->orderBy('title')
                 ->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
@@ -215,6 +221,52 @@ class PromotionController extends PromotionMasterController {
             endforeach;
         }
         return $this->redirect(['index']);
+    }
+
+    public function actionAllBrand() {
+        $brands = Brand::find()
+                ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
+                ->leftJoin('product p', 'p.brandId=brand.brandId')
+                ->where('p.parentId is not null')
+                ->andWhere(['p.approve' => 'approve'])
+                ->andWhere(['p.status' => 1])
+                ->groupBy('brand.brandId')
+                ->all();
+        $res = [];
+        if (isset($brands) && count($brands) > 0) {
+            $res["status"] = true;
+            $res["count"] = count($brands);
+            $i = 0;
+            foreach ($brands as $brand):
+                $res["brandId"][$i] = $brand->brandId;
+                $i++;
+            endforeach;
+        } else {
+            $res["status"] = false;
+        }
+        return json_encode($res);
+    }
+
+    public function actionAllCate() {
+        $categories = CategoryToProduct::find()
+                ->select('`category`.categoryId , `category`.title , `category`.parentId ')
+                ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
+                ->where("category.parentId IS NULL AND category.status=1")
+                ->groupBy('category_to_product.categoryId')
+                ->all();
+        $res = [];
+        if (isset($categories) && count($categories) > 0) {
+            $res["status"] = true;
+            $res["count"] = count($categories);
+            $i = 0;
+            foreach ($categories as $cate):
+                $res["cateId"][$i] = $cate->categoryId;
+                $i++;
+            endforeach;
+        } else {
+            $res["status"] = false;
+        }
+        return json_encode($res);
     }
 
     /**
