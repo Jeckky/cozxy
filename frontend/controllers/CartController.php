@@ -17,6 +17,9 @@ use common\models\costfit\Wishlist;
 use common\models\costfit\ProductShelf;
 use common\models\costfit\OrderItem;
 use common\models\costfit\Order;
+use common\models\costfit\Promotion;
+use common\models\costfit\PromotionCategory;
+use common\models\costfit\PromotionBrand;
 
 class CartController extends MasterController {
 
@@ -219,6 +222,13 @@ class CartController extends MasterController {
         $order = Order::findOne($id);
         $order->couponId = NULL;
         $order->save();
+        $orderItem = OrderItem::find()->where("orderId=$id")->all();
+        if (isset($orderItem) && count($orderItem) > 0) {
+            foreach ($orderItem as $item):
+                $item->discountValue = null;
+                $item->save(false);
+            endforeach;
+        }
         $cartArray = Order::findCartArray();
         $res["cart"] = $cartArray;
         return \yii\helpers\Json::encode($res);
@@ -261,9 +271,9 @@ class CartController extends MasterController {
             foreach ($showOrder as $item):
                 $productSupp = \common\models\costfit\ProductSuppliers::productSupplierName($item->productSuppId);
                 $text = $text . '<tr class = "item" id = "item' . $item->orderItemId . '">'
-                . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
-                . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
-                . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
+                        . '<td><div class = "delete"><input type = "hidden" id = "orderItemId" value = "' . $item->orderItemId . '"></div><a href = "' . Yii::$app->homeUrl . 'products/' . \common\models\ModelMaster::encodeParams(["productId" => $item->productId, "productSupplierId" => $item->productSuppId]) . '">' . $productSupp->title . '</a></td>'
+                        . '<td class = "qty"><input type = "text" id = "qty" value = "' . $item->quantity . '" readonly = "true"></td>'
+                        . '<td class = "price">' . number_format(\common\models\costfit\ProductSuppliers::productPriceSupplier($item->productSuppId), 2) . '</td><input type = "hidden" id = "productSuppId" value = "' . $item->productSuppId . '"></tr>';
             endforeach;
             $text = $header . $text . $footer;
         }
@@ -275,24 +285,81 @@ class CartController extends MasterController {
         return $text;
     }
 
-    public function actionAddCoupon() {
+    /* public function actionAddCoupon() {
+      $res = [];
+      $order = Order::getOrder();
+      $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
+      if (isset($coupon)) {
+      if (!$coupon->isExpired) {
+      $order->couponId = $coupon->couponId;
+      $order->save();
+      $res["status"] = TRUE;
+      $cartArray = Order::findCartArray();
+      $res["cart"] = $cartArray;
+      } else {
+      $res["status"] = FALSE;
+      $res["message"] = "This Coupon Expired.";
+      }
+      } else {
+      $res["status"] = FALSE;
+      $res["message"] = "No Found this Coupon Code.";
+      }
+      return \yii\helpers\Json::encode($res);
+      } */
+
+    public function actionAddPromotion() {
         $res = [];
         $order = Order::getOrder();
-        $coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
-        if (isset($coupon)) {
-            if (!$coupon->isExpired) {
-                $order->couponId = $coupon->couponId;
-                $order->save();
-                $res["status"] = TRUE;
-                $cartArray = Order::findCartArray();
-                $res["cart"] = $cartArray;
+        //$coupon = \common\models\costfit\Coupon::getCouponAvailable($_POST['couponCode']);
+        $error = '';
+        $code = Promotion::find()->where("promotionCode ='" . $_POST['couponCode'] . "' and status=1")->one();
+        $today = date('Y-m-d 00:00:00');
+        if (!isset($order)) {
+            $res["status"] = FALSE;
+            $res["message"] = "No Found Order";
+        } else {
+            if (isset($code)) {
+                $overUse = Promotion::isOverUse($code->promotionId);
+                $overUsePerPerson = Promotion::isOverUsePerPerson($code->promotionId);
+                $overUsePerOrder = Promotion::isOverUsePerOrder($order->orderId);
+                if ($today > $code->endDate) {//หมด อายุ
+                    $res["status"] = FALSE;
+                    $error = "This Promotion code expired.";
+                } else if ($overUse == 1) {//เกินMaximum
+                    $res["status"] = FALSE;
+                    $res["message"] = "Sorry, This promotion code has been fully redeemed.";
+                } else if ($overUsePerPerson == 1) { //ใช้ได้ไม่เกินจำนวนครั้งที่กำหนด/1คน/1promotion code
+                    $res["status"] = FALSE;
+                    $res["message"] = "Sorry, You have used this promotion code.";
+                } else if ($overUsePerOrder == 1) {//1order/1promotion
+                    $res["status"] = FALSE;
+                    $res["message"] = "Sorry, one order can use one promotion code.";
+                } else {
+                    /* $promotionCategory = PromotionCategory::categoryItems($code->promotionId);
+                      $promotionBrand = PromotionBrand::brandItems($code->promotionId);
+                      $productCateInOrder = '';
+                      $productBrandInOrder = '';
+                      if ($promotionCategory != 0) {
+                      $productCateInOrder = PromotionCategory::productInCate($order->orderId, $promotionCategory);
+                      }
+                      if ($promotionBrand != 0) {
+                      $productBrandInOrder = PromotionBrand::productInBrand($order->orderId, $promotionBrand);
+                      }
+                      $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder); */
+
+                    /* if ($productId != '') {
+                      $this->calculateOrder($order->orderId, $code->promotionId, $productId);
+                      } */
+                    $order->couponId = $code->promotionId;
+                    $order->save(false);
+                    $res["status"] = TRUE;
+                    $cartArray = Order::findCartArray();
+                    $res["cart"] = $cartArray;
+                }
             } else {
                 $res["status"] = FALSE;
-                $res["message"] = "This Coupon Expired.";
+                $res["message"] = "No Found this Coupon Code.";
             }
-        } else {
-            $res["status"] = FALSE;
-            $res["message"] = "No Found this Coupon Code.";
         }
         return \yii\helpers\Json::encode($res);
     }
@@ -576,15 +643,15 @@ class CartController extends MasterController {
             endforeach;
             $id = substr($id, 0, -1);
             $products = \common\models\costfit\ProductSuppliers::find()
-            ->where("productSuppId in ($id) and approve = 'approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
+                    ->where("productSuppId in ($id) and approve = 'approve'")
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
         } else {
             $products = \common\models\costfit\ProductSuppliers::find()->where("approve = 'approve'")
-            ->orderBy(new \yii\db\Expression('rand()'))
-            ->limit(4)
-            ->all();
+                    ->orderBy(new \yii\db\Expression('rand()'))
+                    ->limit(4)
+                    ->all();
         }
         $this->subSubTitle = '';
         //echo '<pre>';
@@ -620,6 +687,66 @@ class CartController extends MasterController {
         } else {
             echo '';
         }
+    }
+
+    public function promotionProductId($product1, $product2) {
+        $productId = '';
+        if ($product1 != '' || $product2 != '') {
+            if ($product1 != '' && $product2 == '') {
+                $productId = $product1;
+            } else if ($product1 == '' && $product2 != '') {
+                $productId = $product2;
+            } else {
+                $productId = $product1 . ',' . $product2;
+            }
+        }
+
+        return $productId;
+    }
+
+    public function calculateOrder($orderId, $promotionId, $productId) {
+
+        $promotion = Promotion::find()->where("promotionId=$promotionId")->one();
+        $orderItems = OrderItem::find()->where("orderId=$orderId and productId in($productId)")->groupBy("productId")->all();
+        $order = Order::find()->where("orderId=$orderId")->one();
+        if ($promotion->discountType == 2) {//เป็นเงินสด
+            $order->discount = $promotion->discount;
+        } else {
+
+            $totalDiscount = 0;
+            foreach ($orderItems as $orderItem):
+                $totalDiscount += ($orderItem->total * $promotion->discount) / 100;
+            endforeach;
+
+            if ($promotion->maximumDiscount != null) {//ถ้าจำนวนส่วนลดคิดเป็น % มากกว่า Maximun Discount ให้เอา Maximun Discount มาคิด
+                if ($totalDiscount > $promotion->maximumDiscount) {
+                    $order->discount = $promotion->maximumDiscount;
+                } else {
+                    foreach ($orderItems as $orderItem):
+                        $orderItem->discountValue = ($orderItem->total * $promotion->discount) / 100;
+                        $orderItem->save(false);
+                    endforeach;
+                    $order->discount = $totalDiscount;
+                }
+            } else {
+                foreach ($orderItems as $orderItem):
+                    $orderItem->discountValue = ($orderItem->total * $promotion->discount) / 100;
+                    $orderItem->save(false);
+                endforeach;
+                $order->discount = $totalDiscount;
+            }
+        }
+
+        $order->summary = $order->summary - $order->discount;
+        $order->grandTotal = $order->summary;
+        if ($order->summary <= 0) {
+            $order->summary = 0;
+            $order->grandTotal = 0;
+        }
+        //$order->vat = $order->summary - ($order->summary * (100 / 107));
+        //$order->totalExVat = $order->summary - round($order->vat, 0, PHP_ROUND_HALF_UP);
+
+        $order->save(false);
     }
 
 }

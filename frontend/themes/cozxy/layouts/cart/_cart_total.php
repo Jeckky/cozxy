@@ -1,7 +1,8 @@
 <div class="col-xs-12 bg-black" style="padding:18px;">
     <div class="rela">
         <input type="text" name="coupon-code" id="coupon-code" style="border: 0px solid #999; padding: 8px; width: 60%;" class="fullwidth" placeholder="Promo code">
-        <input type="button" value="APPLY" onclick="proceed('apply_coupon')" class="abs btn-yellow" style="padding: 7px 24px; right: 0; font-weight: 700">
+        <!--<input type="button" value="APPLY" onclick="proceed('apply_coupon')" class="abs btn-yellow" style="padding: 7px 24px; right: 0; font-weight: 700">-->
+        <input type="button" value="APPLY" onclick="promotion('apply_coupon')" class="abs btn-yellow" style="padding: 7px 24px; right: 0; font-weight: 700">
     </div>
 </div>
 <div class="col-xs-12 total-price bg-white">
@@ -20,7 +21,7 @@
                 </div>
 
                 <div class="col-lg-6 pull-right  open-coupon-trash <?php
-                if (isset($this->params['cart']['couponCode'])) {
+                if (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] != 0) {
                     echo 'display';
                 } else {
                     echo 'hidden';

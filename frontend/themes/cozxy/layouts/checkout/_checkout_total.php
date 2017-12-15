@@ -19,7 +19,7 @@ use common\models\costfit\UserPoint;
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate']) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
-            <div class="pull-right">– THB</div>
+            <div class="pull-right"><?= isset($this->params ['cart']['discount']) ? $this->params ['cart']['discount'] : '0.00' ?> THB</div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
             <div class="pull-right"><?= number_format($this->params ['cart']['summary']) ?> THB </div>
@@ -99,7 +99,9 @@ use common\models\costfit\UserPoint;
                     <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
                     <input type="hidden" id="systemCoin" value="0" name="systemCoin">
                     <input type="submit"  value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth">
-                    <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId       ?>)">-->
+
+                                   <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId        ?>)">-->
+
                     <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
                     <?php ActiveForm::end(); ?>
                     <br>
