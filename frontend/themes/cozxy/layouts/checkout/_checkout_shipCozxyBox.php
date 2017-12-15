@@ -195,7 +195,7 @@ function strip_tags_content($text) {
                                 <hr>
                                 <h4>COZXYBOX pick up location search results</h4>
                                 <div id="map-address-cozxy-box" style=" margin-bottom: 5px;">
-                                    &nbsp;Result for " <span id="title-location" style=" color: #0000ff;"></span> "
+                                    &nbsp;Your COZXYBOX pick-up location: " <span id="title-location" style=" color: #0000ff;"></span> "
                                 </div>
                                 <hr>
                             </div>
@@ -552,17 +552,46 @@ foreach ($activeMap as $key => $value) {
             map.setCenter(pos);
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-    alert('ไม่ทำงาน');
+    //alert('ไม่ทำงาน');
+    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
     });
     } else {
     // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
     }
 
-    // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
-    GGM.event.addListener(map, 'zoom_changed', function () {
-    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-    });
-    }
+    var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
+            // no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
+                    function handleNoGeolocation() {
+                    //alert('position :' + bangkokCozxy);
+                    map.setCenter(bangkokCozxy);
+                            //setMarker(bangkokCozxy);
+                            var infowindow = new GGM.InfoWindow({
+                            //map: map,
+                            position: bangkokCozxy,
+                                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+                            });
+                            var marker = new google.maps.Marker({
+                            map: map,
+                                    position: bangkokCozxy
+                            });
+                            $("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+                            $("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+                            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                            latMe = 13.871395;
+                            lngMe = 100.61732;
+                            $("#start").val(latMe + ',' + lngMe);
+                            map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
+                            //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+                    }
+
+            // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
+            GGM.event.addListener(map, 'zoom_changed', function () {
+            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+            });
+            }
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
@@ -947,8 +976,6 @@ foreach ($activeMap as $key => $value) {
             stepDisplay.open(map, marker);
     });
     }
-
-
 
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว

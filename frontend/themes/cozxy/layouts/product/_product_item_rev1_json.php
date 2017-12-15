@@ -48,7 +48,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         <?php } ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= isset($model['thumbnail']) ? 'http://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/s_ECKYzSKiEziI9mbnTers2SQO33aaGj.png' : Base64Decode::DataImageSvg('Svg260x260') ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= isset($model['thumbnail']) ? 'http://www.cozxy.com' . $model['thumbnail'] : Base64Decode::DataImageSvg('Svg260x260') ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>">
