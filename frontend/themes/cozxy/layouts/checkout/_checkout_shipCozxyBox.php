@@ -566,7 +566,18 @@ foreach ($activeMap as $key => $value) {
             function handleNoGeolocation() {
             alert('position :' + bangkok);
                     map.setCenter(bangkok);
-                    setMarker(bangkok);
+                    //setMarker(bangkok);
+                    var infowindow = new GGM.InfoWindow({
+                    //map: map,
+                    position: pos,
+                            //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+                    });
+                    var marker = new google.maps.Marker({
+                    map: map,
+                            position: pos
+                    });
+                    var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+                    map.panTo(bangkok); // ให้แผนที่แสดงไปที่ตัว marker
                     //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
             }
 
