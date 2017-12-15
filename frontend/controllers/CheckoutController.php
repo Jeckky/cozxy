@@ -977,4 +977,8 @@ class CheckoutController extends MasterController {
         ';
     }
 
+    public function actionTestMap() {
+        return $this->render('_test_map');
+    }
+
 }
