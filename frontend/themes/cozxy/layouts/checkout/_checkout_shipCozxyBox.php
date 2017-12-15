@@ -420,154 +420,161 @@ function strip_tags_content($text) {
     var p;
     function initMap() {
     GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
-            var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
-            var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-                    center: {lat: 13.761728449950002, lng: 100.6527900695800},
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                            position: google.maps.ControlPosition.TOP_CENTER
-                    },
-                    zoomControl: true,
-                    zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_CENTER
-                    },
-                    scaleControl: true,
-                    streetViewControl: true,
-                    streetViewControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_TOP
-                    },
-                    fullscreenControl: true
-            });
-            directionsDisplay.setMap(map);
-            var onChangeHandler = function () {
-            calculateAndDisplayRoute(directionsService, directionsDisplay);
-            };
-            //alert(onChangeHandler);
-            document.getElementById('start').addEventListener('change', onChangeHandler);
-            document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
-            /*
-             var onSelectChangeHandler = function () {
-             //pickUp(directionsService, directionsDisplay);
-             };
-             //document.getElementById('pickUpId').addEventListener('click', onSelectChangeHandler);
-             //document.getElementById("pickUpId").addEventListener("change", onSelectChangeHandler);
-             document.getElementById("pickUpId").addEventListener("click", function () {
-             pickUp(directionsService, directionsDisplay);
-             });
-             $(function () {
-             //pickUpSet(p, lat, long, directionsService, directionsDisplay);
-             });
-             document.addEventListener("click", function () {
-             // pickUpSet(p, lat, long, directionsService, directionsDisplay);
-             });*/
-            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-            var icons = {
-            parking: {
-            //icon: iconBase + 'parking_lot_maps.png'
-            icon: iconBase + 'parking_lot_maps.png'
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
             },
-                    library: {
-                    //icon: iconBase + 'library_maps.png'
-                    icon: iconBase + 'library_maps.png'
-                    },
-                    info: {
-                    //icon: iconBase + 'info-i_maps.png'
-                    icon: iconBase + 'info-i_maps.png'
-                    },
-                    cozxy: {
-                    icon: iconBaseCozxy + 'cozxy-map.png'
-                    }
-            };
-            var features = [
+            zoomControl: true,
+            zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+    });
+    directionsDisplay.setMap(map);
+    var onChangeHandler = function () {
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
+    };
+    //alert(onChangeHandler);
+    document.getElementById('start').addEventListener('change', onChangeHandler);
+    document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
+    /*
+     var onSelectChangeHandler = function () {
+     //pickUp(directionsService, directionsDisplay);
+     };
+     //document.getElementById('pickUpId').addEventListener('click', onSelectChangeHandler);
+     //document.getElementById("pickUpId").addEventListener("change", onSelectChangeHandler);
+     document.getElementById("pickUpId").addEventListener("click", function () {
+     pickUp(directionsService, directionsDisplay);
+     });
+     $(function () {
+     //pickUpSet(p, lat, long, directionsService, directionsDisplay);
+     });
+     document.addEventListener("click", function () {
+     // pickUpSet(p, lat, long, directionsService, directionsDisplay);
+     });*/
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
+            library: {
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
+            },
+            info: {
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
+            },
+            cozxy: {
+            icon: iconBaseCozxy + 'cozxy-map.png'
+            }
+    };
+    var features = [
 <?php
 foreach ($activeMap as $key => $value) {
     $order = array("\r\n", "\n", "\r");
     $replace = '';
     $description = str_replace($order, $replace, $value['description']);
     ?>{
-                position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
-                        type: 'cozxy',
-                        location: "<?= strip_tags($value['title']) ?>",
-                        contentString: "<?= $description ?>",
-                        pickingId:<?= $value['pickingId'] ?>,
-                        latitudes : <?= $value['latitude'] ?>,
-                        longitudes :<?= $value['longitude'] ?>
-                }
-                ,<?php } ?>
-            ];
-            features.forEach(function (feature) {
-            var mapDiv = document.getElementById('map');
-                    // We add a DOM event here to show an alert if the DIV containing the
-                    // map is clicked.
-                    /* google.maps.event.addDomListener(icons[feature.type].icon, 'click', function() {
-                     window.alert('Map was clicked!');
-                     });*/
-                    var marker = new google.maps.Marker({
-                    position: feature.position,
-                            icon: icons[feature.type].icon,
-                            map: map,
-                            title: feature.location,
-                            content: feature.contentString,
-                    });
-                    google.maps.event.addDomListener(marker, 'click', function () {
-                    //window.alert('Map was clicked!');
-                    //pickUpClick(feature.position, directionsService, directionsDisplay);
-                    });
-                    info = new google.maps.InfoWindow();
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-                            //info.setContent(feature.content);
-                            //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                            //'Place ID: ' + feature.contentString + '</div>');
-                            //info.open(map, marker);
-                    }
-                    })(marker));
-            });
-            // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
-            if (navigator.geolocation) {
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>",
+                pickingId:<?= $value['pickingId'] ?>,
+                latitudes : <?= $value['latitude'] ?>,
+                longitudes :<?= $value['longitude'] ?>
+        }
+        ,<?php } ?>
+    ];
+    features.forEach(function (feature) {
+    var mapDiv = document.getElementById('map');
+    // We add a DOM event here to show an alert if the DIV containing the
+    // map is clicked.
+    /* google.maps.event.addDomListener(icons[feature.type].icon, 'click', function() {
+     window.alert('Map was clicked!');
+     });*/
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    google.maps.event.addDomListener(marker, 'click', function () {
+    //window.alert('Map was clicked!');
+    //pickUpClick(feature.position, directionsService, directionsDisplay);
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+    //info.setContent(feature.content);
+    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+    //'Place ID: ' + feature.contentString + '</div>');
+    //info.open(map, marker);
+    }
+    })(marker));
+    });
+    // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
+    if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
     var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-            var infowindow = new GGM.InfoWindow({
-            //map: map,
-            position: pos,
-                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-            });
-            var marker = new google.maps.Marker({
-            map: map,
-                    position: pos
-            });
-            var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-            map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
-            $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-            $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-            latMe = my_Point.lat();
-            lngMe = my_Point.lng();
-            $("#start").val(latMe + ',' + lngMe);
-            map.setCenter(pos);
+    var infowindow = new GGM.InfoWindow({
+    //map: map,
+    position: pos,
+            //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+    });
+    var marker = new google.maps.Marker({
+    map: map,
+            position: pos
+    });
+    var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+    map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
+    $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+    $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+    latMe = my_Point.lat();
+    lngMe = my_Point.lng();
+    $("#start").val(latMe + ',' + lngMe);
+    map.setCenter(pos);
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-    alert('ไม่ทำงาน');
-            handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
-
+    //alert('ไม่ทำงาน');
+    //handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+    var bangkok = new google.maps.LatLng(13.755716, 100.501589);
+    var marker = new google.maps.Marker({
+    map: map,
+            position: bangkok
+    });
+    map.setCenter(bangkok);
+    //setMarker(bangkok);
+    //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+    }
     });
     } else {
     // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
-    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
-
-    }
+    //handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
     var bangkok = new google.maps.LatLng(13.755716, 100.501589);
-// no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
-            function handleNoGeolocation() {
-            map.setCenter(bangkok);
-                    setMarker(bangkok);
-                    $("#geo_data").html('lat: 13.755716<br />long: 100.501589');
-            }
+    map.setCenter(bangkok);
+    //setMarker(bangkok);
+    //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+    }
+    }
+
+
 
     // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
     GGM.event.addListener(map, 'zoom_changed', function () {
@@ -577,377 +584,377 @@ foreach ($activeMap as $key => $value) {
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
-            var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-                    center: {lat: 13.761728449950002, lng: 100.6527900695800},
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                            position: google.maps.ControlPosition.TOP_CENTER
-                    },
-                    zoomControl: true,
-                    zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_CENTER
-                    },
-                    scaleControl: true,
-                    streetViewControl: true,
-                    streetViewControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_TOP
-                    },
-                    fullscreenControl: true
-            });
-            directionsDisplay.setMap(map);
-            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-            var icons = {
-            parking: {
-            //icon: iconBase + 'parking_lot_maps.png'
-            icon: iconBase + 'parking_lot_maps.png'
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
             },
-                    library: {
-                    //icon: iconBase + 'library_maps.png'
-                    icon: iconBase + 'library_maps.png'
-                    },
-                    info: {
-                    //icon: iconBase + 'info-i_maps.png'
-                    icon: iconBase + 'info-i_maps.png'
-                    },
-                    cozxy: {
-                    icon: iconBaseCozxy + 'cozxy-map.png'
-                    }
-            };
-            var features = [
+            zoomControl: true,
+            zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+    });
+    directionsDisplay.setMap(map);
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
+            library: {
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
+            },
+            info: {
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
+            },
+            cozxy: {
+            icon: iconBaseCozxy + 'cozxy-map.png'
+            }
+    };
+    var features = [
 <?php
 foreach ($activeMap as $key => $value) {
     $order = array("\r\n", "\n", "\r");
     $replace = '';
     $description = str_replace($order, $replace, $value['description']);
     ?>{
-                position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
-                        type: 'cozxy',
-                        location: "<?= strip_tags($value['title']) ?>",
-                        contentString: "<?= $description ?>",
-                        pickingId: "<?= $value['pickingId'] ?>",
-                        latitudes: "<?= $value['latitude'] ?>",
-                        longitudes: "<?= $value['longitude'] ?>",
-                }
-                ,
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>",
+                pickingId: "<?= $value['pickingId'] ?>",
+                latitudes: "<?= $value['latitude'] ?>",
+                longitudes: "<?= $value['longitude'] ?>",
+        }
+        ,
 <?php } ?>
-            ];
-            features.forEach(function (feature) {
-            var marker = new google.maps.Marker({
-            position: feature.position,
-                    icon: icons[feature.type].icon,
-                    map: map,
-                    title: feature.location,
-                    content: feature.contentString,
-            });
-                    info = new google.maps.InfoWindow();
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-                            //info.setContent(feature.content);
-                            //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                            //        'Place ID: ' + feature.contentString + '</div>');
-                            //info.open(map, marker);
-                    }
-                    })(marker));
-            });
-            var LcpickingId = $('#LcpickingId').val();
-            var fields = LcpickingId.split('-');
-            var pickingId = fields[0];
-            var latlongMap = fields[1];
-            //alert(latlongMap);
-            directionsService.route({
-            origin: $('#start').val(), //document.getElementById('start').value,
-                    //destination: document.getElementById('LcpickingId').value,
-                    destination: latlongMap,
-                    travelMode: 'DRIVING'
-            }, function (response, status) {
-            if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-                    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latlongMap + '">');
-            } else {
-            window.alert('Directions request failed due to ' + status);
-            }
-            });
+    ];
+    features.forEach(function (feature) {
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+    //info.setContent(feature.content);
+    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+    //        'Place ID: ' + feature.contentString + '</div>');
+    //info.open(map, marker);
+    }
+    })(marker));
+    });
+    var LcpickingId = $('#LcpickingId').val();
+    var fields = LcpickingId.split('-');
+    var pickingId = fields[0];
+    var latlongMap = fields[1];
+    //alert(latlongMap);
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latlongMap + '">');
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
     }
 
     function pickUpTest(directionsService, directionsDisplay) {
     //alert('xxx');
     var pickUpId = $('#pickUpId').attr("data-id");
-            alert(pickUpId);
-            alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
-            if (pickUpId != undefined) {
+    alert(pickUpId);
+    alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
+    if (pickUpId != undefined) {
     var fields = pickUpId.split('-');
-            var pickingId = fields[0];
-            var lat = fields[1];
-            var long = fields[2];
-            //alert(pickingId + '::' + lat + '::' + long);
-            //return  lat + ',' + long;
-            var latlongMap = lat + ',' + long;
-            //alert($('#start').val() + '::' + latlongMap);
-            directionsService.route({
-            origin: $('#start').val(), //document.getElementById('start').value,
-                    //destination: document.getElementById('LcpickingId').value,
-                    destination: latlongMap,
-                    travelMode: 'DRIVING'
-            }, function (response, status) {
-            if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-            } else {
-            window.alert('Directions request failed due to ' + status);
-            }
-            });
+    var pickingId = fields[0];
+    var lat = fields[1];
+    var long = fields[2];
+    //alert(pickingId + '::' + lat + '::' + long);
+    //return  lat + ',' + long;
+    var latlongMap = lat + ',' + long;
+    //alert($('#start').val() + '::' + latlongMap);
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
     }
     }
 
     function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
-            var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
-                    center: {lat: 13.761728449950002, lng: 100.6527900695800},
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                            position: google.maps.ControlPosition.TOP_CENTER
-                    },
-                    zoomControl: true,
-                    zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_CENTER
-                    },
-                    scaleControl: true,
-                    streetViewControl: true,
-                    streetViewControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_TOP
-                    },
-                    fullscreenControl: true
-            });
-            directionsDisplay.setMap(map);
-            //showLocationMap();
-            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
-            var icons = {
-            parking: {
-            //icon: iconBase + 'parking_lot_maps.png'
-            icon: iconBase + 'parking_lot_maps.png'
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+            center: {lat: 13.761728449950002, lng: 100.6527900695800},
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.TOP_CENTER
             },
-                    library: {
-                    //icon: iconBase + 'library_maps.png'
-                    icon: iconBase + 'library_maps.png'
-                    },
-                    info: {
-                    //icon: iconBase + 'info-i_maps.png'
-                    icon: iconBase + 'info-i_maps.png'
-                    },
-                    cozxy: {
-                    icon: iconBaseCozxy + 'cozxy-map.png'
-                    }
-            };
-            var features = [
+            zoomControl: true,
+            zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+            },
+            fullscreenControl: true
+    });
+    directionsDisplay.setMap(map);
+    //showLocationMap();
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+    var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+    var icons = {
+    parking: {
+    //icon: iconBase + 'parking_lot_maps.png'
+    icon: iconBase + 'parking_lot_maps.png'
+    },
+            library: {
+            //icon: iconBase + 'library_maps.png'
+            icon: iconBase + 'library_maps.png'
+            },
+            info: {
+            //icon: iconBase + 'info-i_maps.png'
+            icon: iconBase + 'info-i_maps.png'
+            },
+            cozxy: {
+            icon: iconBaseCozxy + 'cozxy-map.png'
+            }
+    };
+    var features = [
 <?php
 foreach ($activeMap as $key => $value) {
     $order = array("\r\n", "\n", "\r");
     $replace = '';
     $description = str_replace($order, $replace, $value['description']);
     ?>{
-                position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
-                        type: 'cozxy',
-                        location: "<?= strip_tags($value['title']) ?>",
-                        contentString: "<?= $description ?>",
-                        pickingId: "<?= $value['pickingId'] ?>",
-                        latitudes: "<?= $value['latitude'] ?>",
-                        longitudes: "<?= $value['longitude'] ?>",
-                }
-                ,<?php } ?>
-            ];
-            features.forEach(function (feature) {
-            var marker = new google.maps.Marker({
-            position: feature.position,
-                    icon: icons[feature.type].icon,
-                    map: map,
-                    title: feature.location,
-                    content: feature.contentString,
-            });
-                    info = new google.maps.InfoWindow();
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-                            //info.setContent(feature.content);
-                            //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                            //'Place ID: ' + feature.contentString + '</div>');
-                            //info.open(map, marker);
-                    }
-                    })(marker));
-            });
-            //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
-            var latlongMap = lats + ',' + longs;
-            directionsService.route({
-            origin: $('#start').val(), //document.getElementById('start').value,
-                    //destination: document.getElementById('LcpickingId').value,
-                    destination: latlongMap,
-                    travelMode: 'DRIVING'
-            }, function (response, status) {
-            if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-                    //alert('OK');
-                    //continue-pick-up
-                    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + p + '-' + lats + ',' + longs + '">');
-                    var pickingId = p;
-                    var path = "ship-cozxy-box/location-pick-up-click";
+        position: new google.maps.LatLng(<?= $value['latitude'] ?>, <?= $value['longitude'] ?>),
+                type: 'cozxy',
+                location: "<?= strip_tags($value['title']) ?>",
+                contentString: "<?= $description ?>",
+                pickingId: "<?= $value['pickingId'] ?>",
+                latitudes: "<?= $value['latitude'] ?>",
+                longitudes: "<?= $value['longitude'] ?>",
+        }
+        ,<?php } ?>
+    ];
+    features.forEach(function (feature) {
+    var marker = new google.maps.Marker({
+    position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map,
+            title: feature.location,
+            content: feature.contentString,
+    });
+    info = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+    //info.setContent(feature.content);
+    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+    //'Place ID: ' + feature.contentString + '</div>');
+    //info.open(map, marker);
+    }
+    })(marker));
+    });
+    //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
+    var latlongMap = lats + ',' + longs;
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    //alert('OK');
+    //continue-pick-up
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + p + '-' + lats + ',' + longs + '">');
+    var pickingId = p;
+    var path = "ship-cozxy-box/location-pick-up-click";
+    $.ajax({
+    url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'pickingId': pickingId},
+            success: function (data, status) {
+            //alert(status);
+            if (status == "success") {
+
+            $('.location-pick-up').html(data);
+            //alert(location);
+            $('#title-location').html(location);
+            //$('#stateId').val(provinceId).trigger('change');
+            //$('#amphurId').val(amphurId).trigger('change');
+            //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
+            //alert(data);
+            var path = "ship-cozxy-box/location-picking-point";
+            $.ajax({
+            url: path,
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {'pickingId': pickingId},
+                    success: function (data, status) {
+                    //alert(status + '::' + data.provinceId + '::' + data.amphurId + '::' + data.pickingId);
+                    if (status == "success") {
+                    $('#title-location').html(location);
+                    $('#stateId').val(data.provinceId).trigger('change');
+                    $('#amphurId').removeAttr('disabled');
+                    $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
+                    //$('#amphurId').val(data.amphurId).trigger('change');
+                    $('#LcpickingId').removeAttr('disabled');
+                    $('#LcpickingId').html('<option value="' + data.pickingId + '-' + data.latitudes + ',' + data.longitudes + '">' + data.title + '</option>');
+                    //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
+                    //alert(data);
+                    $('#title-location').html(data.title);
+                    var ClickamphurId = data.amphurId;
+                    var ClickprovinceId = data.provinceId;
+                    //alert(ClickamphurId + '::' + ClickprovinceId);
+                    var path = "ship-cozxy-box/location-pick-up";
                     $.ajax({
                     url: path,
                             type: "POST",
                             //dataType: "JSON",
-                            data: {'pickingId': pickingId},
+                            data: {'stateId': ClickprovinceId, 'amphurId': ClickamphurId},
                             success: function (data, status) {
-                            //alert(status);
+                            //alert(status + ':x:' + ClickamphurId);
                             if (status == "success") {
-
                             $('.location-pick-up').html(data);
-                                    //alert(location);
-                                    $('#title-location').html(location);
-                                    //$('#stateId').val(provinceId).trigger('change');
-                                    //$('#amphurId').val(amphurId).trigger('change');
-                                    //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
-                                    //alert(data);
-                                    var path = "ship-cozxy-box/location-picking-point";
-                                    $.ajax({
-                                    url: path,
-                                            type: "POST",
-                                            dataType: "JSON",
-                                            data: {'pickingId': pickingId},
-                                            success: function (data, status) {
-                                            //alert(status + '::' + data.provinceId + '::' + data.amphurId + '::' + data.pickingId);
-                                            if (status == "success") {
-                                            $('#title-location').html(location);
-                                                    $('#stateId').val(data.provinceId).trigger('change');
-                                                    $('#amphurId').removeAttr('disabled');
-                                                    $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
-                                                    //$('#amphurId').val(data.amphurId).trigger('change');
-                                                    $('#LcpickingId').removeAttr('disabled');
-                                                    $('#LcpickingId').html('<option value="' + data.pickingId + '-' + data.latitudes + ',' + data.longitudes + '">' + data.title + '</option>');
-                                                    //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
-                                                    //alert(data);
-                                                    $('#title-location').html(data.title);
-                                                    var ClickamphurId = data.amphurId;
-                                                    var ClickprovinceId = data.provinceId;
-                                                    //alert(ClickamphurId + '::' + ClickprovinceId);
-                                                    var path = "ship-cozxy-box/location-pick-up";
-                                                    $.ajax({
-                                                    url: path,
-                                                            type: "POST",
-                                                            //dataType: "JSON",
-                                                            data: {'stateId': ClickprovinceId, 'amphurId': ClickamphurId},
-                                                            success: function (data, status) {
-                                                            //alert(status + ':x:' + ClickamphurId);
-                                                            if (status == "success") {
-                                                            $('.location-pick-up').html(data);
-                                                                    //alert(ClickprovinceId + '::' + ClickamphurId);
-                                                            } else {
-                                                            //alert(status);
-                                                            }
-                                                            }
-                                                    });
-                                            } else {
-                                            //alert(status);
-                                            }
-                                            }
-                                    });
+                            //alert(ClickprovinceId + '::' + ClickamphurId);
                             } else {
                             //alert(status);
                             }
                             }
                     });
-            } else {
-            window.alert('Directions request failed due to ' + status);
-            }
+                    } else {
+                    //alert(status);
+                    }
+                    }
             });
+            } else {
+            //alert(status);
+            }
+            }
+    });
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
     }
 
     function pickUpClick(pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
     //alert(pickingId);
     var latlongMap = latitudes + ',' + longitudes;
-            directionsService.route({
-            origin: $('#start').val(), //document.getElementById('start').value,
-                    //destination: document.getElementById('LcpickingId').value,
-                    destination: latlongMap,
-                    travelMode: 'DRIVING'
-            }, function (response, status) {
-            if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-                    //alert('OK');
-                    //continue-pick-up
-                    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latitudes + ',' + longitudes + '">');
-                    var path = "ship-cozxy-box/location-pick-up-click";
+    directionsService.route({
+    origin: $('#start').val(), //document.getElementById('start').value,
+            //destination: document.getElementById('LcpickingId').value,
+            destination: latlongMap,
+            travelMode: 'DRIVING'
+    }, function (response, status) {
+    if (status === 'OK') {
+    directionsDisplay.setDirections(response);
+    //alert('OK');
+    //continue-pick-up
+    $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latitudes + ',' + longitudes + '">');
+    var path = "ship-cozxy-box/location-pick-up-click";
+    $.ajax({
+    url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'pickingId': pickingId},
+            success: function (data, status) {
+            //alert(status);
+            if (status == "success") {
+
+            $('.location-pick-up').html(data);
+            $('#title-location').html(location);
+            //$('#stateId').val(provinceId).trigger('change');
+            //$('#amphurId').val(amphurId).trigger('change');
+            //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
+            //alert(data);
+            var path = "ship-cozxy-box/location-picking-point";
+            $.ajax({
+            url: path,
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {'pickingId': pickingId},
+                    success: function (data, status) {
+                    //alert(status + '::' + data.provinceId + '::' + data.amphurId + ':' + data.titleTh + '::' + data.pickingId);
+                    if (status == "success") {
+                    $('#title-location').html(location);
+                    $('#stateId').val(data.provinceId).trigger('change');
+                    $('#amphurId').removeAttr('disabled');
+                    $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
+                    //$('#amphurId').val(data.amphurId).trigger('change');
+                    $('#LcpickingId').removeAttr('disabled');
+                    $('#LcpickingId').html('<option value="' + data.pickingId + '-' + data.latitudes + ',' + data.longitudes + '">' + data.title + '</option>');
+                    //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
+                    //alert(data);
+                    var ClickamphurId = data.amphurId;
+                    var ClickprovinceId = data.provinceId;
+                    //alert(ClickamphurId + '::' + ClickprovinceId);
+                    var path = "ship-cozxy-box/location-pick-up";
                     $.ajax({
                     url: path,
                             type: "POST",
                             //dataType: "JSON",
-                            data: {'pickingId': pickingId},
+                            data: {'stateId': ClickprovinceId, 'amphurId': ClickamphurId},
                             success: function (data, status) {
-                            //alert(status);
+                            //alert(status + ':x:' + ClickamphurId);
                             if (status == "success") {
-
                             $('.location-pick-up').html(data);
-                                    $('#title-location').html(location);
-                                    //$('#stateId').val(provinceId).trigger('change');
-                                    //$('#amphurId').val(amphurId).trigger('change');
-                                    //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
-                                    //alert(data);
-                                    var path = "ship-cozxy-box/location-picking-point";
-                                    $.ajax({
-                                    url: path,
-                                            type: "POST",
-                                            dataType: "JSON",
-                                            data: {'pickingId': pickingId},
-                                            success: function (data, status) {
-                                            //alert(status + '::' + data.provinceId + '::' + data.amphurId + ':' + data.titleTh + '::' + data.pickingId);
-                                            if (status == "success") {
-                                            $('#title-location').html(location);
-                                                    $('#stateId').val(data.provinceId).trigger('change');
-                                                    $('#amphurId').removeAttr('disabled');
-                                                    $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
-                                                    //$('#amphurId').val(data.amphurId).trigger('change');
-                                                    $('#LcpickingId').removeAttr('disabled');
-                                                    $('#LcpickingId').html('<option value="' + data.pickingId + '-' + data.latitudes + ',' + data.longitudes + '">' + data.title + '</option>');
-                                                    //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
-                                                    //alert(data);
-                                                    var ClickamphurId = data.amphurId;
-                                                    var ClickprovinceId = data.provinceId;
-                                                    //alert(ClickamphurId + '::' + ClickprovinceId);
-                                                    var path = "ship-cozxy-box/location-pick-up";
-                                                    $.ajax({
-                                                    url: path,
-                                                            type: "POST",
-                                                            //dataType: "JSON",
-                                                            data: {'stateId': ClickprovinceId, 'amphurId': ClickamphurId},
-                                                            success: function (data, status) {
-                                                            //alert(status + ':x:' + ClickamphurId);
-                                                            if (status == "success") {
-                                                            $('.location-pick-up').html(data);
-                                                                    //alert(ClickprovinceId + '::' + ClickamphurId);
-                                                            } else {
-                                                            //alert(status);
-                                                            }
-                                                            }
-                                                    });
-                                            } else {
-                                            //alert(status);
-                                            }
-                                            }
-                                    });
+                            //alert(ClickprovinceId + '::' + ClickamphurId);
                             } else {
                             //alert(status);
                             }
                             }
                     });
-            } else {
-            window.alert('Directions request failed due to ' + status);
-            }
+                    } else {
+                    //alert(status);
+                    }
+                    }
             });
+            } else {
+            //alert(status);
+            }
+            }
+    });
+    } else {
+    window.alert('Directions request failed due to ' + status);
+    }
+    });
     }
 
     function attachInstructionText(stepDisplay, marker, text, map) {
@@ -955,7 +962,7 @@ foreach ($activeMap as $key => $value) {
     // Open an info window when the marker is clicked on, containing the text
     // of the step.
     stepDisplay.setContent(text);
-            stepDisplay.open(map, marker);
+    stepDisplay.open(map, marker);
     });
     }
 
