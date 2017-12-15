@@ -14,9 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Cart -->
         <?php
         $form = ActiveForm::begin([
-            'id' => 'cart-item',
-            'action' => Yii::$app->homeUrl . 'checkout',
-            'options' => ['class' => 'space-bottom'],
+                    'id' => 'cart-item',
+                    //'action' => Yii::$app->homeUrl . 'checkout',
+                    'action' => Yii::$app->homeUrl . 'ship-cozxy-box',
+                    'options' => ['class' => 'space-bottom'],
         ]);
         ?>
         <div class="col-lg-9 col-md-8 cart-body">
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if (isset($this->params['cart']['orderId']) && count($this->params['cart']['items']) > 0) {
                             // throw new \yii\base\Exception(print_r($this->params['cart']['items'], true));
                             ?>
-                                    <!--<a href="javascript:void(0)" class="b btn-yellow" id="checkout-btn" style="padding:12px 32px; margin:24px auto 12px; cursor: pointer;" onclick="javascript:checkItemInOrder(<?//= $this->params['cart']['orderId'] ?>)">CHECK OUT</a>-->
+                                            <!--<a href="javascript:void(0)" class="b btn-yellow" id="checkout-btn" style="padding:12px 32px; margin:24px auto 12px; cursor: pointer;" onclick="javascript:checkItemInOrder(<?//= $this->params['cart']['orderId'] ?>)">CHECK OUT</a>-->
                             <input type="button" value="CHECK OUT" class="b btn-yellow" id="checkout-btn" onclick="javascript:checkItemInOrder(<?= $this->params['cart']['orderId'] ?>)">
                         <?php } ?>
                     </div>

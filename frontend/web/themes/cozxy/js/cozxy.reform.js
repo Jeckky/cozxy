@@ -1782,6 +1782,7 @@ $('#LcpickingId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 });
+
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
         $('#checkBillingTax').val(1);
@@ -1792,11 +1793,6 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
-
-
-
-
-
 
 function shipCozxyBox() {
     var shipProvince = $('#stateId').val();
@@ -1809,8 +1805,47 @@ function shipCozxyBox() {
     alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
 }
 
+$('.shippingOption').click(function () {
+    //alert('test::Choose shipping type ');
+    var shipping = $('input[name="shipping"]:checked').val();
+    //Ship To CozxyBox
+    if (shipping == 1) {
+        //alert(shipping);
+        $("#shipToAddress").css({'display': 'none'});
+        $("#shipToCozxyBox").removeAttr("style");
+        document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
 
+        var path = $baseUrl + "ship-cozxy-box/cozxy-box-select";
+        $.ajax({
+            url: path,
+            type: "POST",
+            //dataType: "JSON",
+            data: {'stateId': '', 'amphurId': ''},
+            success: function (data, status) {
+                //alert(status);
+                if (status == "success") {
+                    $('#ship-to-cozxy-box-select').html(data);
+                    //alert(data);
+                } else {
+                    //alert(status);
+                }
+            }
+        });
 
+    } else if (shipping == 2) { //Ship to address
+        //alert(shipping);
+        $("#shipToCozxyBox").css({'display': 'none'});
+        $("#shipToAddress").removeAttr("style");
+        document.getElementById("default-shipping-address").action = $baseUrl + "checkout/summary";
+        document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
+        //document.getElementsByClassName("continue-ship-to-address").submit();
+        $('#ship-to-cozxy-box-select').html('');
+
+    } else {
+        alert('Please Choose shipping type');
+    }
+
+});
 
 
 

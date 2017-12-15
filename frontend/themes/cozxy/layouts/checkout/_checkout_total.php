@@ -99,7 +99,9 @@ use common\models\costfit\UserPoint;
                     <!--<a href="<?//= Url::to(['/checkout/order-summary/' . $order->encodeParams(['orderId' => $orderId])]) ?>" class="b btn-yellow fullwidth text-center" style="padding:12px 32px; margin:2px auto 12px">PAY by CozxyCoin</a>-->
                     <input type="hidden" id="systemCoin" value="0" name="systemCoin">
                     <input type="submit"  value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth">
-                    <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId           ?>)">-->
+
+                                   <!--<input type="button" id="payCozxyCoin" value="PAY BY COZXYCOIN" class="b btn-yellow fullwidth" onclick="javascript:checkItemInOrder(<?php // $orderId        ?>)">-->
+
                     <input type="hidden" id="firstCoin" value="<?= isset($userPoint) ? $userPoint->currentCozxySystemPoint : 0 ?>">
                     <?php ActiveForm::end(); ?>
                     <br>

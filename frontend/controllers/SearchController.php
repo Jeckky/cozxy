@@ -437,6 +437,8 @@ class SearchController extends MasterController {
           echo '<h1>JSON string</h1> <br> ' . $someJSON1;
           echo '<pre>';
           echo '<h1>Convert JSON to Array</h1> '; */
+
+
         $search = Yii::$app->request->get('search');
         $status = 1;
         $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
