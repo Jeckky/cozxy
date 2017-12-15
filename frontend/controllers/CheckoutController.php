@@ -277,10 +277,9 @@ class CheckoutController extends MasterController {
 
         //echo 'shipTo :' . $shipTo;
         //exit();
-
-        echo '<pre>';
-        print_r($shipToCozxyBoxNew);
-        exit();
+        //echo '<pre>';
+        //print_r($shipToCozxyBoxNew);
+        //exit();
 
         return $this->render('index', compact('shipTo', 'myAddress', 'activeMap', 'shipTostart', 'shipToCozxyBoxNew', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
