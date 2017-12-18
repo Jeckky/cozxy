@@ -22,8 +22,10 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'identityCookie' => ['name' => '_identity-mobile', 'httpOnly' => true],
+            'loginUrl'=>null,
+            'enableSession'=>false
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend

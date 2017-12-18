@@ -37,7 +37,8 @@ $id = uniqid();
                     <td>None</td>
                 </tr>-->
                 <?php
-                $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productSuppId = " . $item["productSuppId"])->all();
+                $options = \common\models\costfit\ProductGroupOptionValue::find()->where("productSuppId = " . $item["productSuppId"])->groupBy('productGroupId')->all();
+                echo $item['productSuppId'];
                 foreach ($options as $option):
                     ?>
                     <tr>
