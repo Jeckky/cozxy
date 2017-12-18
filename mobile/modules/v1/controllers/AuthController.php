@@ -2,6 +2,7 @@
 
 namespace mobile\modules\v1\controllers;
 
+use common\models\costfit\User;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use Yii;
@@ -10,7 +11,7 @@ use common\models\LoginForm;
 /**
  * Default controller for the `mobile` module
  */
-class UserController extends Controller
+class AuthController extends Controller
 {
 
     public function beforeAction($action)
@@ -33,27 +34,29 @@ class UserController extends Controller
 
     public function actionLogin()
     {
-        $res = [];
+        $res = ['success'=>false, 'error'=>''];
 
         $model = new LoginForm();
-
         $model->email = 'nattawoot@cozxy.com';
-//	    $model->username = 'nattawoot@cozxy.com';
-        $model->password = 'ktkt1234';
-//        $_POST['LoginForm']['username'] = 'nattawoot@cozxy.com';
-//	    $_POST['LoginForm']['email'] = 'nattawoot@cozxy.com';
-//	    $_POST['LoginForm']['password'] = 'ktkt1234';
-//        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $model->password = '12341234';
+
         if ($model->login()) {
             if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
+                $userModel = User::findOne(Yii::$app->user->id);
+                $userModel->auth_key = Yii::$app->security->generateRandomString();
+                $userModel->save(false);
+
+
                 $res['user']["email"] = Yii::$app->user->identity->email;
                 $res['user']["firstname"] = Yii::$app->user->identity->firstname;
                 $res['user']["lastname"] = Yii::$app->user->identity->lastname;
                 $res['user']["type"] = Yii::$app->user->identity->type;
-                $res['user']["gender"] = Yii::$app->user->identity->gender;
-                $res['user']["passportNo"] = Yii::$app->user->identity->passportNo;
-                $res['user']["passportImage"] = Yii::$app->user->identity->passportImage;
-                $res['result'] = true;
+//                $res['user']["gender"] = Yii::$app->user->identity->gender;
+//                $res['user']["passportNo"] = Yii::$app->user->identity->passportNo;
+//                $res['user']["passportImage"] = Yii::$app->user->identity->passportImage;
+//                $res['token'] = $userModel->auth_key;
+                $res['token'] = Yii::$app->user->identity->getAuthKey();
+                $res['success'] = true;
 
                 /**
                  * return cart array
@@ -68,7 +71,6 @@ class UserController extends Controller
             $res["error"] = "อีเมล์ หรือ รหัสผ่าน ไม่ถูกต้อง";
             $res['result'] = false;
         }
-//        return $this->render('index');
         print_r(Json::encode($res));
     }
 
