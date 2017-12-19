@@ -27,6 +27,7 @@ AppAsset::register($this);
         <?php $this->head() ?>
         <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
         <!-- Google Tag Manager -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111315034-1"></script>
         <?php
         /* $this->registerJs("
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -37,6 +38,13 @@ AppAsset::register($this);
           ga('create', 'UA-99594678-1', 'auto');
           ga('send', 'pageview');
           "); */
+        $this->registerJs("
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'UA-111315034-1');
+        ");
         $this->registerJs("
                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
