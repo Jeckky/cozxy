@@ -137,8 +137,6 @@ use kartik\select2\Select2;
                                         <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->shippingTel) ? $order->shippingTel : '-' ?></div>
                                         <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">Email:</div>
                                         <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->email) ? $order->email : '-' ?></div>
-                                        <div class="size6">&nbsp;</div><div class="col-lg-2 col-md-2 col-sm-12">TaxID:</div>
-                                        <div class="col-lg-10 col-md-10 col-sm-12"><?= isset($order->billingTax) ? $order->billingTax : '-' ?></div>
                                         <div class="size6">&nbsp;</div>
                                     <?php endif; ?>
                                 </div>

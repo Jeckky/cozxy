@@ -139,10 +139,10 @@ class PromotionController extends PromotionMasterController {
             $model->save(false);
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : null;
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : null;
-            if (isset($brand) && count($brand) > 0) {
+            if (isset($brand) && count($brand) > 0 && !empty($brand)) {
                 $this->saveBrandPromotion($brand, $model->promotionId);
             }
-            if (isset($categories) && count($categories) > 0) {
+            if (isset($categories) && count($categories) > 0 && !empty($categories)) {
                 $this->saveCategoryPromotion($categories, $model->promotionId);
             }
             return $this->redirect(['view', 'id' => $model->promotionId]);
@@ -182,12 +182,12 @@ class PromotionController extends PromotionMasterController {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->save(false);
-            $brand = $_POST["Promotion"]["brand"];
-            $categories = $_POST["Promotion"]["category"];
-            if (isset($brand) && count($brand) > 0) {
+            $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : '';
+            $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : '';
+            if (isset($brand) && count($brand) > 0 && !empty($brand)) {
                 $this->saveBrandPromotion($brand, $model->promotionId);
             }
-            if (isset($categories) && count($categories) > 0) {
+            if (isset($categories) && count($categories) > 0 && !empty($categories)) {
                 $this->saveCategoryPromotion($categories, $model->promotionId);
             }
             return $this->redirect(['view', 'id' => $model->promotionId]);

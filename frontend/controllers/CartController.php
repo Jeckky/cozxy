@@ -322,9 +322,10 @@ class CartController extends MasterController {
                 $overUse = Promotion::isOverUse($code->promotionId);
                 $overUsePerPerson = Promotion::isOverUsePerPerson($code->promotionId);
                 $overUsePerOrder = Promotion::isOverUsePerOrder($order->orderId);
-                if ($today > $code->endDate) {//หมด อายุ
+                $isExpired = Promotion::isExpired($today, $code->endDate);
+                if ($isExpired == 1) {//หมด อายุ
                     $res["status"] = FALSE;
-                    $error = "This Promotion code expired.";
+                    $res["message"] = "This Promotion code expired.";
                 } else if ($overUse == 1) {//เกินMaximum
                     $res["status"] = FALSE;
                     $res["message"] = "Sorry, This promotion code has been fully redeemed.";
@@ -333,7 +334,7 @@ class CartController extends MasterController {
                     $res["message"] = "Sorry, You have used this promotion code.";
                 } else if ($overUsePerOrder == 1) {//1order/1promotion
                     $res["status"] = FALSE;
-                    $res["message"] = "Sorry, one order can use one promotion code.";
+                    $res["message"] = "Please apply only one promocode.";
                 } else {
                     /* $promotionCategory = PromotionCategory::categoryItems($code->promotionId);
                       $promotionBrand = PromotionBrand::brandItems($code->promotionId);

@@ -275,9 +275,9 @@ class TopUpController extends MasterController {
         // $amount = $amount * 100;
         $amount .= '00';
         if (Yii::$app->getRequest()->serverName == "localhost") {
-            $url = "https://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
+            $url = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
-            $resUrl = "https://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
+            $resUrl = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
         } else {
             $url = "https://" . Yii::$app->getRequest()->serverName . "/top-up/result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
@@ -440,9 +440,9 @@ class TopUpController extends MasterController {
                                         'addressId' => $checkPayNow->addressId
                             ]);
                         } else {//checkout/order-summary-topup/
-                            return $this->redirect([Yii::$app->homeUrl . "checkout/order-summary-topup/" .
-                                        $checkPayNow->encodeParams(['orderId' => $checkPayNow->orderId])
-                            ]);
+                            return $this->redirect(Yii::$app->homeUrl . "checkout/order-summary-topup/" .
+                                            $checkPayNow->encodeParams(['orderId' => $checkPayNow->orderId])
+                            );
                         }
                     }
                 }

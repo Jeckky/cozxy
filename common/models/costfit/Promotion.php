@@ -109,4 +109,17 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
         }
     }
 
+    public static function isExpired($today, $endDate) {
+
+        if ($endDate == NULL) {
+            return 0;
+        } else {
+            if ($today > $endDate) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
 }
