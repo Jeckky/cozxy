@@ -124,7 +124,7 @@ return [
             'class' => 'backend\modules\productmanager\ProductManager',
         ],
         'promotion' => [
-            'class' => 'backend\modules\promotion\Promotion',
+            'class' => 'backend\modules\promotion\promotion',
         ],
     ],
     'components' => [

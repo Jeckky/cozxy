@@ -32,6 +32,7 @@ use common\models\costfit\Promotion;
                 ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                <?= $form->field($model, 'promotionCode')->textInput() ?>* ถ้าไม่ใส่ Promotion Code ระบบจะ Generate ให้
                 <hr>
                 <div class="col-md-12 col-lg-12 text-center"><h3><u>Discount</u></h3></div>
                 <div class="row">
@@ -89,35 +90,55 @@ use common\models\costfit\Promotion;
                         <?php if (isset($brands) && count($brands) > 0) { ?>
                             <h4>Brands</h4>
                             <?php
+                            $brandIds = [];
+                            $b = 0;
                             foreach ($brands as $brand):
-                                $checkBrand = Promotion::brandPromotion($brand->brandId, $model->promotionId)
+                                $checkBrand = Promotion::brandPromotion($brand->brandId, $model->promotionId);
+                                $brandIds[$b] = $brand->brandId;
                                 ?>
                                 <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
-                                    <input type="checkbox" name="Promotion[brand][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?>>
+                                    <input type="checkbox" id="brand<?= $brand->brandId ?>"name="Promotion[brand][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?>>
                                     &nbsp;&nbsp;<?= $brand->title ?>
                                 </div>
                                 <?php
+                                $b++;
                             endforeach;
                         }
                         ?>
-
-
+                        <br>
+                        <div class="text-left col-lg-6 col-md-6">
+                            <br> * ถ้าไม่เลือก Brand ใดเลย เป็นการให้ส่วนลดกับทุก Brand
+                        </div>
+                        <div class="text-right col-lg-6 col-md-6">
+                            <input type="checkbox" id="allBrand" onclick="javascript:checkAllBrand()" value="1"> &nbsp;&nbsp;เลือกทุก Brand
+                        </div>
                     </div>
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 20px;margin-bottom: 20px;">
                         <?php if (isset($categories) && count($categories) > 0) {
                             ?>
                             <h4>Categories</h4>
                             <?php
+                            $categoryIds = [];
+                            $c = 0;
                             foreach ($categories as $category):
-                                $checkcategory = Promotion::categoryPromotion($category->categoryId, $model->promotionId)
+                                $checkcategory = Promotion::categoryPromotion($category->categoryId, $model->promotionId);
+                                $categoryIds[$c] = $category->categoryId;
                                 ?>
                                 <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
-                                    <input type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" <?= $checkcategory ? 'checked' : '' ?>>
+                                    <input id="cate<?= $category->categoryId ?>" type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" <?= $checkcategory ? 'checked' : '' ?>>
                                     &nbsp;&nbsp;<?= $category->title ?></div>
                                 <?php
+                                $c++;
                             endforeach;
                         }
                         ?>
+                        <br>
+                        <div class="text-left col-lg-6 col-md-6">
+                            <br> * ถ้าไม่เลือก Category ใดเลย เป็นการให้ส่วนลดกับทุก Category
+                        </div>
+                        <div class="text-right col-lg-6 col-md-6">
+                            <input type="checkbox" id="allCate" onclick="javascript:checkAllCate()" value="1"> &nbsp;&nbsp;เลือกทุก Categories
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -139,7 +160,7 @@ use common\models\costfit\Promotion;
                         <?=
                         DatePicker::widget(['name' => 'Promotion[endDate]',
                             'dateFormat' => 'yyyy-MM-dd',
-                            'options' => ['placeholder' => 'Start Date',
+                            'options' => ['placeholder' => 'End Date',
                                 'class' => 'form-control',
                                 'style' => 'border-color: #66CCFF;height: 40px;',
                                 'language' => 'en',

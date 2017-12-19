@@ -49,12 +49,18 @@ class PromotionCategory extends \common\models\costfit\master\PromotionCategoryM
         }
     }
 
-    public static function productInCate($orderId, $categoryId) {
-        $products = Product::find()
-                ->JOIN('LEFT JOIN', 'order_item oi', 'product.productId=oi.productId')
-                ->JOIN('LEFT JOIN', 'category c', 'c.categoryId=product.categoryId')
-                ->where("oi.orderId=" . $orderId . " and c.categoryId in($categoryId)")
-                ->all();
+    public static function productInCate($orderId, $categoryId, $isAll) {
+        if ($isAll == 1) {
+            $products = Product::find()
+                    ->JOIN('LEFT JOIN', 'order_item oi', 'product.productId=oi.productId')
+                    ->JOIN('LEFT JOIN', 'category c', 'c.categoryId=product.categoryId')
+                    ->where("oi.orderId=" . $orderId . " and c.categoryId in($categoryId)")
+                    ->all();
+        } else {
+            $products = OrderItem::find()
+                    ->where("orderId=$orderId")
+                    ->all();
+        }
         $productId = '';
         if (isset($products) && count($products) > 0) {
             foreach ($products as $product):

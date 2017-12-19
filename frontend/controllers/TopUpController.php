@@ -203,6 +203,7 @@ class TopUpController extends MasterController {
     }
 
     public function actionSendPayment($hash) {
+
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
         $userId = $params["userId"];
@@ -213,22 +214,17 @@ class TopUpController extends MasterController {
         $amount = $this->setAmount($amount);
 //        $model = \common\models\areawow\UserPayment::find()->where("userPaymentId=" . $_GET["id"])->one();
 //        $package = \common\models\areawow\Package::find()->where("packageId = $model->packageId")->one();
-        if (Yii::$app->params["ePaymentServerType"] == 1) {
-            //URL Test
-            $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx";
-            //URL Test
+        if (Yii::$app->params["ePaymentServerType"] == 1) {//==1 is localhost
             $devices = \common\helpers\GetBrowser::UserAgent();
             if ($devices != "mobile") {
-                //Production URL
-                //$sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx"; //test
-                $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
-                ////Production URL
+                $sendUrl = "https://uatkpgw.kasikornbank.com/pgpayment/payment.aspx"; //test
+                // $sendUrl = "https://rt05.kasikornbank.com/pgpayment/payment.aspx";
             } else {
                 //Mobile URL
-                $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
-                ////Mobile URL
+                $sendUrl = "https://uatkpgw.kasikornbank.com/mobilepay/payment.aspx"; //test
+                // $sendUrl = "https://rt05.kasikornbank.com/mobilepay/payment.aspx";
             }
-        } else {
+        } else { //!=1  producttion or test101
             $devices = \common\helpers\GetBrowser::UserAgent();
             if ($devices != "mobile") {
                 //Production URL
@@ -254,16 +250,16 @@ class TopUpController extends MasterController {
             // MCC USD
 
 
-            if (Yii::$app->params["ePaymentServerType"] == 1) {
+            if (Yii::$app->params["ePaymentServerType"] == 1) {//localHost(Yii::$app->params["ePaymentServerType"]==1)
                 //======================================= For Test =================================
-//                $merchantId = "402001605782521";
-//                $terminalId = "70352180";
-//                $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q";
+                $merchantId = "402001605782521";
+                $terminalId = "70352180";
+                $md5Key = "SzabTAGU5fQYgHkVGU5f4re8pLw5423Q";
                 //==================================================================================
-
-                $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
-                $merchantId = "451005319527001";
-                $terminalId = "74428381";
+//
+//                $md5Key = "QxMjcGFzc3MOIQ=vUT0TFN1UUrM0TlRl"; // For Cozxy
+//                $merchantId = "451005319527001";
+//                $terminalId = "74428381";
             } else {
                 //For Cozxy
                 $merchantId = "451005319527001";
@@ -279,13 +275,13 @@ class TopUpController extends MasterController {
         // $amount = $amount * 100;
         $amount .= '00';
         if (Yii::$app->getRequest()->serverName == "localhost") {
-            $url = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
+            $url = "https://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
-            $resUrl = "http://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
+            $resUrl = "https://" . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . "top-up/result";
         } else {
-            $url = "http://" . Yii::$app->getRequest()->serverName . "/top-up/result";
+            $url = "https://" . Yii::$app->getRequest()->serverName . "/top-up/result";
 //        $url = "http://dev/areawow-frontend/user/payment-result";
-            $resUrl = "http://" . Yii::$app->getRequest()->serverName . "/top-up/result";
+            $resUrl = "https://" . Yii::$app->getRequest()->serverName . "/top-up/result";
         }
         $cusIp = Yii::$app->getRequest()->getUserIP();
 //        $description = "Buy Package " . $package->title;
@@ -464,9 +460,12 @@ class TopUpController extends MasterController {
         } else {
 //            throw new \yii\base\Exception(222);
             //$topUpNo = substr($_POST["RETURNINV"], 3);
-            $topUpNo = $_POST["RETURNINV"];
+            //$topUpNo = $_POST["RETURNINV"];
 //            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT)->one();
-            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
+            //$topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " AND topUpNo = '" . $topUpNo . "'" . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")->one();
+            $topUp = TopUp::find()->where("userId=" . Yii::$app->user->id . " and status=" . TopUp::TOPUP_STATUS_COMFIRM_PAYMENT . " and paymentMethod=2")
+                    ->orderBy("createDateTime DESC")
+                    ->one();
             if (isset($topUp) && !empty($topUp)) {
                 $topUp->status = TopUp::TOPUP_STATUS_E_PAYMENT_DISCLAIM;
                 $topUp->updateDateTime = new \yii\db\Expression('NOW()');
