@@ -29,6 +29,9 @@ use common\helpers\CozxyCalculatesCart;
 class CheckoutController extends MasterController {
 
     public function actionIndexBk() {
+
+
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
