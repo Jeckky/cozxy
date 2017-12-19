@@ -595,8 +595,9 @@ class CheckoutController extends MasterController {
         $params = ModelMaster::decodeParams($hash);
         $orderId = $params['orderId'];
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        $addressIdsummary = $order->addressId;
-        //$systemCoin = Yii::$app->request->post('systemCoin');
+        //$addressIdsummary = $order->addressId;
+        $addressIdsummary = isset($order->addressId) ? $order->addressId : $_REQUEST['addressIdsummary']; // Fix Bug 19/12/2017 by Pew : hidden addressId not null
+        $systemCoin = isset($order->cozxyCoin) ? $order->cozxyCoin : Yii::$app->request->post('systemCoin');
 
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
         if (isset($issetPoint)) {
@@ -610,7 +611,7 @@ class CheckoutController extends MasterController {
                     'order' => $order,
                     'userPoint' => $userPoint,
                     'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin,
+                    'systemCoin' => $systemCoin, //$order->cozxyCoin,
                     'cartCalculates' => $cartCalculates
         ]);
     }
