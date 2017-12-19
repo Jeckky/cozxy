@@ -95,7 +95,8 @@ class Product extends ProductModel
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'specification', $this->specification])
             ->andFilterWhere(['like', 'tags', $this->tags])
-            ->andFilterWhere(['like', 'approve', $this->approve])
+//            ->andFilterWhere(['like', 'approve', $this->approve])
+            ->andFilterWhere(['like', 'approve', 'approve'])
             ->andFilterWhere(['like', 'receiveType', $this->receiveType]);
 
         return $dataProvider;

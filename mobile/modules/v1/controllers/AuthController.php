@@ -14,14 +14,7 @@ use common\models\LoginForm;
 class AuthController extends Controller
 {
 
-    public function beforeAction($action)
-    {
-        if ($action->id == 'login') {
-            $this->enableCsrfValidation = false;
-        }
-
-        return parent::beforeAction($action);
-    }
+   public $enableCsrfValidation = false;
 
     /**
      * Renders the index view for the module
@@ -37,8 +30,8 @@ class AuthController extends Controller
         $res = ['success'=>false, 'error'=>''];
 
         $model = new LoginForm();
-        $model->email = 'nattawoot@cozxy.com';
-        $model->password = '12341234';
+        $model->email = $_POST['username'];
+        $model->password = $_POST['password'];
 
         if ($model->login()) {
             if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
@@ -76,15 +69,24 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        $res = [];
-        Yii::$app->user->logout();
-        $res['error'] = NULL;
+        $res = ['success'=>false, 'error'=>''];
+        $username = $_POST['username'];
+        $token = $_POST['token'];
+
+        $userModel = User::find()->where(['username'=>$username, 'auth_key'=>$token])->one();
+
+        if($userModel) {
+            $userModel->auth_key = Yii::$app->security->generateRandomString();
+            $userModel->save(false);
+            $res['success'] = true;
+        }
+
         print_r(Json::encode($res));
     }
 
     public function actionResetPassword()
     {
-        $res = [];
+        $res = ['success'=>false, 'error'=>''];
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {

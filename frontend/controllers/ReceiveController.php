@@ -84,7 +84,7 @@ class ReceiveController extends MasterController {
                     } else {
                         $user = User::find()->where("userId='" . $order->userId . "'")->one();
                         if (isset($user) && !empty($user)) {
-                            $address = Address::find()->where("addressId='" . $order->address)->one();
+                            $address = Address::find()->where("addressId=" . $order->addressId)->one();
                             if (isset($address) && !empty($address)) {
                                 $res["status"] = 200; //success
                                 $res["tel"] = $address->tel;

@@ -206,7 +206,7 @@ class SectionController extends ProductPostMasterController {
                             ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,product.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
         ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
         ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
-        ->where('product.productId is not null')
+        ->where('ps.productId is not null')
         ->andWhere(['product.approve'=>'approve', 'product.status'=>1])
         ->andWhere(['ps.approve'=>'approve', 'ps.status'=>1])
         ->andWhere('ps.result > 0')

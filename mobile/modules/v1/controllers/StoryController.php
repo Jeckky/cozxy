@@ -19,6 +19,7 @@ use \yii\helpers\Json;
 class StoryController extends Controller
 {
     public $enableCsrfValidation = false;
+    public $pageSize = 12;
 
     public function actionIndex()
     {
@@ -37,6 +38,9 @@ class StoryController extends Controller
             }
         }
 
+        $page = isset($_GET['page']) ? $_GET['page'] : 0;
+        $offset = $page * $this->pageSize;
+
         $storyModels = ProductPost::find()
             ->leftJoin('product p', 'product_post.productId=p.productId')
             ->leftJoin('brand b', 'p.brandId=b.brandid')
@@ -45,13 +49,19 @@ class StoryController extends Controller
             ->andWhere('b.brandId is not null')
             ->andWhere('u.userId is not null')
             ->orderBy($orderBy)
+            ->limit($this->pageSize)
+            ->offset($offset)
             ->all();
 
+        $items = [];
         $i = 0;
         foreach($storyModels as $storyModel) {
-            $res[$i] = self::prepareStoryData($storyModel);
+            $items[$i] = self::prepareStoryData($storyModel);
             $i++;
         }
+
+        $res['items'] = $items;
+        $res['page'] = $page;
 
         echo Json::encode($res);
     }
