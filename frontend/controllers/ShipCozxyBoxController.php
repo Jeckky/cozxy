@@ -31,6 +31,7 @@ use common\models\costfit\PointUsed;
 use frontend\models\DisplayMyAddress;
 use yii\data\ArrayDataProvider;
 use common\helpers\CozxyCalculatesCart;
+use common\helpers\CozxyMap;
 
 /**
  * Description of ShipCozxtBox
@@ -40,7 +41,9 @@ use common\helpers\CozxyCalculatesCart;
 class ShipCozxyBoxController extends MasterController {
 
     public function actionIndex() {
+        $PickingPointJson = CozxyMap::PickingPointJson();
 
+        //print_r($PickingPointJson);
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
 
         if (!isset($orderId)) {
