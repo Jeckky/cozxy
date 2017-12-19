@@ -26,6 +26,7 @@ AppAsset::register($this);
 
         <?php $this->head() ?>
         <link rel="shortcut icon" type="image/png" href="<?= Yii::$app->homeUrl ?>imgs/c_ico.png">
+        <!-- Google Tag Manager -->
         <?php
         /* $this->registerJs("
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -36,15 +37,15 @@ AppAsset::register($this);
           ga('create', 'UA-99594678-1', 'auto');
           ga('send', 'pageview');
           "); */
-        $this->registerJs("<!-- Google Tag Manager -->
-                <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        $this->registerJs("
+                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','GTM-KB5D282');</script>
-                <!-- End Google Tag Manager -->
-         ");
-        ?>
+                })(window,document,'script','dataLayer','GTM-KB5D282');
+
+         ", \yii\web\View::POS_HEAD);
+        ?><!-- End Google Tag Manager -->
     </head>
     <body>
         <?php $this->beginBody() ?>

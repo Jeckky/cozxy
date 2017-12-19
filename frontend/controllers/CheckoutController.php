@@ -611,7 +611,7 @@ class CheckoutController extends MasterController {
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
-
+        $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId); // Fix Bug 19/12/2017 by Pew :   call funciton  return data to view
         //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
                     'order' => $order,
