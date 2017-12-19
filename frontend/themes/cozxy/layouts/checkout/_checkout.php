@@ -33,30 +33,52 @@ $pickingId = rand(0, 9999);
                     <div class="cart-detail login-box" id="shipToAddress">
                         <h4>SHIP TO</h4>
 
-                        <div class="row">
-                            <div class="form-horizontal col-sm-12" role="form">
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">
-                                        <img src="http://www.cozxy.com/images/subscribe/cozxy-map.png">
-                                    </label>
-                                    <div class="col-sm-10">
-                                        <h4><?= isset($shipToCozxyBoxNew->title) ? $shipToCozxyBoxNew->title : '' ?></h4>
-                                        <span style="color:#928c8c;"><?= isset($shipToCozxyBoxNew->description) ? $shipToCozxyBoxNew->description : '' ?></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-1 control-label">
-                                        &nbsp;
-                                    </label>
-                                    <div class="col-sm-11">
-                                        <div id="map" style="height:450px;"></div>
-                                    </div>
-                                </div>
+                        <?php if($order->pickingId == 0):?>
+                        <div class="row address-checkouts">
+                            <div class="col-xs-3 col-md-2 col-sm-3 ">Name:</div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 name-show"><?= $order->shippingFirstname . ' ' . $order->shippingLastname ?></div>
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-xs-3 col-md-2 col-sm-3">Address:</div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 address-show">
+                                <?=$order->shippingAddress.' '.$order->shippingDistrict->localName.' '.$order->shippingCities->localName.' '.$order->shippingProvince->localName.' '.$order->shippingZipcodeRelation->zipcode;?>
                             </div>
-                            <div>
-
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-xs-3 col-md-2 col-sm-3">Email:</div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 email-show">
+                                <?=$order->email ?>
+                            </div>
+                            <div class="size6">&nbsp;</div>
+                            <div class="col-xs-3 col-md-2 col-sm-3">Tel:</div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
+                                <?=$order->shippingTel?>
                             </div>
                         </div>
+                        <?php else:?>
+                            <div class="row ">
+                                <div class="form-horizontal col-sm-12" role="form">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label">
+                                            <img src="http://www.cozxy.com/images/subscribe/cozxy-map.png">
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <h4><?= isset($shipToCozxyBoxNew->title) ? $shipToCozxyBoxNew->title : '' ?></h4>
+                                            <span style="color:#928c8c;"><?= isset($shipToCozxyBoxNew->description) ? $shipToCozxyBoxNew->description : '' ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-1 control-label">
+                                            &nbsp;
+                                        </label>
+                                        <div class="col-sm-11">
+                                            <div id="map" style="height:450px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+                        <?php endif;?>
 
                     </div>
 

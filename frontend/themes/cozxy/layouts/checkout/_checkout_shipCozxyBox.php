@@ -45,7 +45,7 @@ function strip_tags_content($text) {
         $form = ActiveForm::begin([
                     'id' => 'default-shipping-address',
                     //'action' => Yii::$app->homeUrl . 'checkout/summary',
-                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout/summary',
+                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout',
                     'options' => ['class' => 'space-bottom'],
                         //'enableClientValidation' => false,
         ]);
