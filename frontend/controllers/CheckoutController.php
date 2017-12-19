@@ -565,16 +565,11 @@ class CheckoutController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login');
         }
-        // $k = base64_decode(base64_decode($hash));
-        // $params = ModelMaster::decodeParams($hash);
-        //$orderId = $params['orderId'];
         $orderId = Yii::$app->request->post('orderId');
         //throw new \yii\base\Exception($orderId);
         $order = Order::find()->where("orderId=" . $orderId)->one();
         //$addressIdsummary = Yii::$app->request->post('addressIdsummary');
-
         $addressIdsummary = isset($order->addressId) ? $order->addressId : $_REQUEST['addressIdsummary'];
-
         $systemCoin = Yii::$app->request->post('systemCoin');
         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
         $issetPoint = UserPoint::find()->where("userId=" . $order->userId)->one();
@@ -583,8 +578,6 @@ class CheckoutController extends MasterController {
         } else {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
-        //exit();
-        //throw new \yii\base\Exception($orderId);
         return $this->render('/order/index', [
                     'order' => $order,
                     'userPoint' => $userPoint,
@@ -617,7 +610,8 @@ class CheckoutController extends MasterController {
                     'order' => $order,
                     'userPoint' => $userPoint,
                     'addressIdsummary' => $addressIdsummary,
-                    'systemCoin' => $order->cozxyCoin
+                    'systemCoin' => $order->cozxyCoin,
+                    'cartCalculates' => $cartCalculates
         ]);
     }
 
