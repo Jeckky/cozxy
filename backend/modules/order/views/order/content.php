@@ -106,11 +106,11 @@ foreach ($poId as $id):
         //throw new \yii\base\Exception(print_r($orders, true));
         $items = Po::allProductInPo($id); //group Product
         $allTotal = 0;
-        $empty = 20;
+        $empty = 15;
         if ($items != '' && !empty($items)) {
             foreach ($items as $item):
                 echo '<tr>';
-                echo '<td style="font-size: 8pt;height:30px;border-left: #000000 thin ridge;"><center>' . $i . '</center></td>';
+                echo '<td style="font-size: 8pt;height:25px;border-left: #000000 thin ridge;"><center>' . $i . '</center></td>';
                 $productSupp = ProductSuppliers::productSupplierName($item->productSuppId);
                 echo '<td style="font-size: 8pt;"><center>' . $productSupp->isbn . '</center></td>';
                 echo '<td style="font-size: 8pt;"><center>' . $productSupp->suppCode . '</center></td>';
@@ -128,9 +128,9 @@ foreach ($poId as $id):
                 $amount = $price * $item->quantity;
                 $allTotal += $amount;
             endforeach;
-            for ($empty = 0; $empty < 20 - count($items); $empty++)://print ช่องว่าง
+            for ($empty = 0; $empty < 15 - count($items); $empty++)://print ช่องว่าง
                 echo '<tr>';
-                echo '<td colspan="9" style="border-left: #000000 thin ridge;border-right: #000000 thin ridge;">&nbsp;&nbsp;&nbsp;</td>';
+                echo '<td colspan="9" style="border-left: #000000 thin ridge;border-right: #000000 thin ridge;font-size: 8pt;height:25px;">&nbsp;&nbsp;&nbsp;</td>';
                 echo '</tr>';
             endfor;
         }else {

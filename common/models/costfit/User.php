@@ -302,7 +302,7 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function supplierDetail($userId) {
         //$detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
-        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")
+        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1 and type=4")
                 ->orderBy("createDateTime DESC")
                 ->one();
         if (isset($detail)) {
@@ -335,7 +335,13 @@ class User extends \common\models\costfit\master\UserMaster {
             } else {
                 $state = '';
             }
-            $address = $text->address . " " . $district . "<br>" . $city . " " . $state . " " . $id . "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEL " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax " . $text->fax;
+            $zipcode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $text->zipcode)->one();
+            if (isset($zipcode) && !empty($zipcode)) {
+                $zipcodes = $zipcode->zipcode;
+            } else {
+                $zipcodes = '';
+            }
+            $address = $text->address . " " . $district . "" . $city . " " . $state . " " . $zipcodes . "<br>TEL " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax " . $text->fax;
             return $address;
         } else {
             return NULL;

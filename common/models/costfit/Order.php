@@ -446,16 +446,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $productBrandInOrder = '';
         if (isset($this->orderId) && $this->orderId != NULL) {
             if ($promotionCategory != 0) {
-                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1);
+                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1); //เฉพาะ cate ที่เลือก
             } else {
-                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0);
+                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0); //ได้ ทุก cate ในorder Item
             }
             if ($promotionBrand != 0) {
                 $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
             } else {
                 $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
             }
-            $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder);
+            $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder, $promotionCategory, $promotionBrand);
             if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
                 $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
             }
@@ -483,18 +483,34 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return TRUE;
     }
 
-    public function promotionProductId($product1, $product2) {
+    public function promotionProductId($product1, $product2, $promotionCategory, $promotionBrand) {
+        // $promotionCategory,$promotionBrand=0 คือ ไม่มีการเลือก cate or brand
         $productId = '';
-        if ($product1 != '' || $product2 != '') {
-            if ($product1 != '' && $product2 == '') {
-                $productId = $product1;
-            } else if ($product1 == '' && $product2 != '') {
-                $productId = $product2;
-            } else {
-                $productId = $product1 . ',' . $product2;
+        if ($promotionCategory == 0 && $promotionBrand == 0) {
+            if ($product1 != '' || $product2 != '') {
+                if ($product1 != '' && $product2 == '') {
+                    $productId = $product1;
+                } else if ($product1 == '' && $product2 != '') {
+                    $productId = $product2;
+                } else {
+                    $productId = $product1 . ',' . $product2;
+                }
+            }
+        } else if ($promotionCategory != 0 && $promotionBrand == 0) {
+            $productId = $product1;
+        } else if ($promotionCategory == 0 && $promotionBrand != 0) {
+            $productId = $product2;
+        } else {//มีการเลือกทั้ง Brand และ Cate
+            if ($product1 != '' || $product2 != '') {
+                if ($product1 != '' && $product2 == '') {
+                    $productId = $product1;
+                } else if ($product1 == '' && $product2 != '') {
+                    $productId = $product2;
+                } else {
+                    $productId = $product1 . ',' . $product2;
+                }
             }
         }
-
         return $productId;
     }
 
@@ -927,7 +943,8 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public function getShippingZipcodeRelation() {
-        return $this->hasOne(\common\models\dbworld\Zipcodes::className(), ['zipcodeId'=>'shippingZipcode']);;
+        return $this->hasOne(\common\models\dbworld\Zipcodes::className(), ['zipcodeId' => 'shippingZipcode']);
+        ;
     }
 
     public function getShippingCountry() {
