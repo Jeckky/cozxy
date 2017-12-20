@@ -40,7 +40,7 @@ $pickingId = rand(0, 9999);
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Address:</div>
                             <div class="col-xs-9 col-md-10 col-sm-9 address-show">
-                                <?=$order->shippingAddress.' '.$order->shippingDistrict->localName.' '.$order->shippingCities->localName.' '.$order->shippingProvince->localName.' '.$order->shippingZipcodeRelation->zipcode;?>
+                                <?=$order->shippingAddress.' '.$order->shippingDistrict->localName.' '.$order->shippingCities->localName.' '.$order->shippingProvince->localName.' '.isset($order->shippingZipcodeRelation->zipcode) ? $order->shippingZipcodeRelation->zipcode : '';?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Email:</div>
