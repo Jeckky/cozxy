@@ -305,8 +305,7 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
-        return $this->goBack();
-//        return $this->redirect(['index']);
+        return $this->redirect(['index']);
     }
 
     /**
