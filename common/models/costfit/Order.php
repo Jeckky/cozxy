@@ -926,6 +926,10 @@ class Order extends \common\models\costfit\master\OrderMaster {
         return $this->hasOne(\common\models\dbworld\District::className(), ['cityId' => 'shippingAmphurId']);
     }
 
+    public function getShippingZipcodeRelation() {
+        return $this->hasOne(\common\models\dbworld\Zipcodes::className(), ['zipcodeId'=>'shippingZipcode']);;
+    }
+
     public function getShippingCountry() {
         return $this->hasOne(\common\models\dbworld\Countries::className(), ['countryId' => 'shippingCountryId']);
     }

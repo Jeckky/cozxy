@@ -12,21 +12,36 @@ use \yii\helpers\Json;
  */
 class ContentController extends Controller
 {
+    public $enableCsrfValidation = false;
+    public $pageSize = 12;
+
     public function actionIndex()
     {
+        $page = isset($_GET['page']) ? $_GET['page'] : 0;
+        $offset = $page * $this->pageSize;
+
         $contentModels = Content::find()
             ->where('contentGroupId=1 AND status=1')
+            ->offset($offset)
+            ->limit($this->pageSize)
             ->all();
 
         $res = [];
         $i = 0;
+        $items = [];
 
         foreach($contentModels as $contentModel) {
-            $res[$i] = $contentModel->attributes;
-            $res[$i]['image'] = Yii::$app->homeUrl.$contentModel->image;
+            $items[$i] = $contentModel->attributes;
+            $items[$i]['image'] = Yii::$app->homeUrl.$contentModel->image;
 
             $i++;
         }
+
+        $res['items'] = $items;
+        $res['pagination'] = [
+            'pageSize'=>$this->pageSize,
+            'page'=>$page
+        ];
 
         echo Json::encode($res);
     }

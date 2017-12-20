@@ -304,8 +304,8 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
-
-        return $this->redirect(['index']);
+        return $this->goBack();
+//        return $this->redirect(['index']);
     }
 
     /**
@@ -426,9 +426,9 @@ class ProductController extends ProductManagerMasterController {
         $productImage = ProductImage::findOne($id);
         $productImage->delete();
 
-        unlink(Yii::$app->basePath . '/web/' . $productImage->image);
-        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail1);
-        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->image);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail1);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
     }
 
     public function actionPrepareProducts($id) {
