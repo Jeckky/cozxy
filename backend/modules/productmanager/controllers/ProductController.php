@@ -112,6 +112,7 @@ class ProductController extends ProductManagerMasterController {
     public function actionCreate() { //step 1
         $model = new Product(['createDateTime' => new Expression('NOW()')]);
         $model->scenario = 'createProductGroup';
+        $model->approve = 'approve';
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
