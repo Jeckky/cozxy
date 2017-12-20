@@ -34,6 +34,7 @@ $productId = $model->productId;
             ],
         ])
         ?>
+        <?= Html::a('Product Option', ['/product/product-group/add-option', 'id'=>$model->productId, 'template'=>$model->productGroupTemplateId], ['class' => 'btn btn-warning']) ?>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
