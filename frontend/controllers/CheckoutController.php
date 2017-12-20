@@ -175,18 +175,20 @@ class CheckoutController extends MasterController {
                 $shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
             }
         } else if ($shipTo == 2) {
+            $shippingAddress = Yii::$app->request->post('Order');
+            $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
+            $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
+            $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
+            $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
+            $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
+            $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
+            $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
+            $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
+            $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
+            $order->pickingId = 0;
+            $order->save(false);
             $pickingId = '0';
-            /* if (isset($addressId)) {
-              $addressId = Yii::$app->request->post('addressId');
-              } else {
-              $addressId = Yii::$app->request->post('addressIdsummary');
-              } */
-            //$this->resetDefault($orderId, $addressId, $pickingId, $shipTo, $orderAddress, $tax, $tel);
-            //$address = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
-            //echo '<pre>';
-            //print_r($address);
-            //exit();
-            //return $this->redirect(Yii::$app->homeUrl . 'checkout/summary?orderId=' . $orderId);
+
         } else {
             echo 'Picking Point Not Null 2';
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
@@ -522,20 +524,20 @@ class CheckoutController extends MasterController {
             //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
-            if ($shipTo == 2) {
-                //echo 'x:2';
-                $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
-                $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
-                $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
-                $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
-                $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
-                $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
-                $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
-                $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
-                $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
-                //$order->pickingId = new Expression('NULL');
-                $order->pickingId = 0;
-            }
+//            if ($shipTo == 2) {
+//                //echo 'x:2';
+//                $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
+//                $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
+//                $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
+//                $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
+//                $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
+//                $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
+//                $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
+//                $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
+//                $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
+//                //$order->pickingId = new Expression('NULL');
+//                $order->pickingId = 0;
+//            }
             if ($tax != '') {
                 $order->billingTax = $tax;
             }

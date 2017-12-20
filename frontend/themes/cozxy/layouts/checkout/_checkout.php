@@ -33,7 +33,7 @@ $pickingId = rand(0, 9999);
                     <div class="cart-detail login-box" id="shipToAddress">
                         <h4>SHIP TO</h4>
 
-                        <?php if($order->pickingId == 0):?>
+                        <?php if($shipTo == 2):?>
                         <div class="row address-checkouts">
                             <div class="col-xs-3 col-md-2 col-sm-3 ">Name:</div>
                             <div class="col-xs-9 col-md-10 col-sm-9 name-show"><?= $order->shippingFirstname . ' ' . $order->shippingLastname ?></div>

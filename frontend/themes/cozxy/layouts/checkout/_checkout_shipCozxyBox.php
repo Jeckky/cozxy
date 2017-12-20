@@ -258,7 +258,7 @@ function strip_tags_content($text) {
                         </div>
                     </div>
 
-                    <div class="cart-detail login-box" id="shipToAddress" style=" display: none;" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
+                    <div class="cart-detail login-box" id="shipToAddress" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
                         <h3>Ship to address</h3>
 
                         <div class="row">
