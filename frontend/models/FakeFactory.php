@@ -164,7 +164,7 @@ class FakeFactory extends Model {
           ->limit($n)
           ->all(); */
         $pCanSale = Product::find()
-                ->select('`order_item`.quantity as sumQ,`order`.* , `order_item`.*  , `product`.*,`product_suppliers`.productSuppId')
+                ->select('sum(`order_item`.quantity) as sumQ,`order`.* , `order_item`.*  , `product`.*,`product_suppliers`.productSuppId')
                 ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productId  = product.productId")
                 ->join(" LEFT JOIN", "order_item", "order_item.productId  = product.productId")
                 ->join(" LEFT JOIN", "order", "order.orderId = order_item.orderId")
