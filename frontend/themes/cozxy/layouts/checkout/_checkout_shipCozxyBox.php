@@ -1258,7 +1258,9 @@ foreach ($activeMap as $key => $value) {
     }
 
     function handleNoGeolocation(map) {
+
     var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
+            console.log('Fixes Localtion Cozxy');
             // no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
             //alert('position :' + bangkokCozxy);
             map.setCenter(bangkokCozxy);
