@@ -438,7 +438,8 @@ function strip_tags_content($text) {
                                     &nbsp;&nbsp;Search for a new COZXYBOX Pickup Location
                                 </p>
                                 <p>
-                                    COZXYBOX Pickup location offer package pickup as self-service COZXYBOX Lockers and at staffed locations. Please enter address, postal code, landmark, or Amazon Locker name.
+                                    COZXYBOX Pickup location offer package pickup as self-service COZXYBOX Lockers and at staffed locations.
+                                    Please enter address, postal code, landmark, or <span id="title-location-footer" style=" color: #0000ff;"></span>
                                 </p>
 
                             </div>
@@ -948,6 +949,7 @@ foreach ($activeMap as $key => $value) {
                             $('.location-pick-up').html(data);
                                     //alert(location);
                                     $('#title-location').html(location);
+                                    $('#title-location-footer').html(location);
                                     //$('#stateId').val(provinceId).trigger('change');
                                     //$('#amphurId').val(amphurId).trigger('change');
                                     //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
@@ -962,6 +964,7 @@ foreach ($activeMap as $key => $value) {
                                             //alert(status + '::' + data.provinceId + '::' + data.amphurId + '::' + data.pickingId);
                                             if (status == "success") {
                                             $('#title-location').html(location);
+                                                    $('#title-location-footer').html(location);
                                                     $('#stateId').val(data.provinceId).trigger('change');
                                                     $('#amphurId').removeAttr('disabled');
                                                     $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
@@ -971,6 +974,7 @@ foreach ($activeMap as $key => $value) {
                                                     //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
                                                     //alert(data);
                                                     $('#title-location').html(data.title);
+                                                    $('#title-location-footer').html(location);
                                                     var ClickamphurId = data.amphurId;
                                                     var ClickprovinceId = data.provinceId;
                                                     //alert(ClickamphurId + '::' + ClickprovinceId);
@@ -1038,6 +1042,7 @@ foreach ($activeMap as $key => $value) {
 
                             $('.location-pick-up').html(data);
                                     $('#title-location').html(location);
+                                    $('#title-location-footer').html(location);
                                     //$('#stateId').val(provinceId).trigger('change');
                                     //$('#amphurId').val(amphurId).trigger('change');
                                     //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
@@ -1052,6 +1057,7 @@ foreach ($activeMap as $key => $value) {
                                             //alert(status + '::' + data.provinceId + '::' + data.amphurId + ':' + data.titleTh + '::' + data.pickingId);
                                             if (status == "success") {
                                             $('#title-location').html(location);
+                                                    $('#title-location-footer').html(location);
                                                     $('#stateId').val(data.provinceId).trigger('change');
                                                     $('#amphurId').removeAttr('disabled');
                                                     $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
