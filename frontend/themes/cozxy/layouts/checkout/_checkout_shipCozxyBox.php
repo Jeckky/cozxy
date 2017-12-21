@@ -1011,6 +1011,8 @@ foreach ($activeMap as $key => $value) {
             /*******If Not Allow Map*************/
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
+
+
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1299,7 +1301,28 @@ foreach ($activeMap as $key => $value) {
 
     function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
     if (start == 0){
-    var llMap = latlongMap.split(',');
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+            var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+                    center: {lat: 13.761728449950002, lng: 100.6527900695800},
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                            position: google.maps.ControlPosition.TOP_CENTER
+                    },
+                    zoomControl: true,
+                    zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_CENTER
+                    },
+                    scaleControl: true,
+                    streetViewControl: true,
+                    streetViewControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_TOP
+                    },
+                    fullscreenControl: true
+            });
+            directionsDisplay.setMap(map);
+            var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
             $("#zoom_value").val(11);
