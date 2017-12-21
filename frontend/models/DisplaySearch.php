@@ -39,7 +39,7 @@ class DisplaySearch extends Model {
                         ['LIKE', 'product_suppliers.title', trim($search_hd)],
                         ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
                         //['LIKE', 'product_suppliers.description', trim($search_hd)],
-                        ['LIKE', 'product_suppliers.isbn', trim($search_hd)],
+                        ['LIKE', 'p.isbn', trim($search_hd)],
                             //                ['LIKE', 'product_suppliers.title', $search_hd],
                             //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
                     ])

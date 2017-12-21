@@ -24,19 +24,19 @@ function strip_tags_content($text) {
 //echo $_SERVER['HTTP_REFERER'];
 ?>
 <style>
-    /* css กำหนดความกว้าง ความสูงของแผนที่
+    /* css กำหนดความกว้าง ความสูงของแผนที่ */
     #map_canvas {
         width:550px;
         height:400px;
         margin:auto;
-        /*margin-top:100px;
+        /*  margin-top:100px;*/
     }
     #infowindow-content {
         display: none;
     }
     #map_canvas #infowindow-content {
         display: inline;
-    }*/
+    }
 </style>
 
 <style>
@@ -119,80 +119,6 @@ function strip_tags_content($text) {
         from {opacity: 0}
         to {opacity: 1}
     }
-
-
-    #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-    }
-
-    #infowindow-content .title {
-        font-weight: bold;
-    }
-
-    #infowindow-content {
-        display: none;
-    }
-
-    #map #infowindow-content {
-        display: inline;
-    }
-
-    .pac-card {
-        margin: 10px 0px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-    }
-
-    #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-    }
-
-    .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-    }
-
-    .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-    }
-
-    #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        /*margin-left: 12px;*/
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        /*width: 400px;*/
-        width: 100%;
-
-    }
-
-    #pac-input:focus {
-        border-color: #4d90fe;
-    }
-
-    #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        font-size: 12px;
-        font-weight: 200;
-        padding: 6px 12px;
-
-    }
 </style>
 <div class="container">
     <div class="size32">&nbsp;</div>
@@ -201,7 +127,7 @@ function strip_tags_content($text) {
         $form = ActiveForm::begin([
                     'id' => 'default-shipping-address',
                     //'action' => Yii::$app->homeUrl . 'checkout/summary',
-                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout',
+                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout/summary',
                     'options' => ['class' => 'space-bottom'],
                         //'enableClientValidation' => false,
         ]);
@@ -253,6 +179,7 @@ function strip_tags_content($text) {
                                         <div class="col-sm-6">
                                             <?php
                                             //echo $form->field($pickingPoint, 'provinceId')->textInput();
+                                            $a = "ssssss";
                                             echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                                                 //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                                 //'data' => \common\models\costfit\PickingPoint::availableProvince(),
@@ -375,47 +302,19 @@ function strip_tags_content($text) {
                                 <?//= $this->render('@app/themes/cozxy/layouts/checkout/item/locationPickUp', compact('pickingPointActiveShow')) ?>
                             </div>
                             <div class="col-xs-8">
-                                <div class="pac-card" id="pac-card">
-                                    <!--<div>-->
-                                    <div id="title">
-                                        <h5>
-                                            Autocomplete Places Search Box using Google Maps
-                                            <!--Autocomplete search location me-->
-                                        </h5>
-                                    </div>
-                                    <!--<div id="type-selector" class="pac-controls">
-                                        <input type="radio" name="type" id="changetype-all" checked="checked">
-                                        <label for="changetype-all">All</label>
 
-                                        <input type="radio" name="type" id="changetype-establishment">
-                                        <label for="changetype-establishment">Establishments</label>
-
-                                        <input type="radio" name="type" id="changetype-address">
-                                        <label for="changetype-address">Addresses</label>
-
-                                        <input type="radio" name="type" id="changetype-geocode">
-                                        <label for="changetype-geocode">Geocodes</label>
-                                    </div>
-                                    <div id="strict-bounds-selector" class="pac-controls">
-                                        <input type="checkbox" id="use-strict-bounds" value="">
-                                        <label for="use-strict-bounds">Strict Bounds</label>
-                                    </div>-->
-                                    <!--</div>-->
-                                    <div id="pac-containerx" style=" background-color: #5cb85c;">
-                                        <input id="pac-input" class="fullwidth" type="text" placeholder="Enter a location me">
-                                    </div>
-                                </div>
                                 <div id="map"></div>
-                                <div id="infowindow-content">
-                                    <img src="" width="16" height="16" id="place-icon">
-                                    <span id="place-name"  class="title"></span><br>
-                                    <span id="place-address"></span>
-                                </div>
 
+
+                                <!--<div id="infowindow-content">
+                                     <img id="place-icon" src="" height="16" width="16">
+                                     <span id="place-name"  class="title"></span><br>
+                                     Place ID <span id="place-id"></span><br>
+                                     <span id="place-address"></span>
+                                 </div>-->
                                 <input type="hidden" name="lat_value" id="lat_value" value="0">
                                 <input type="hidden" name="lon_value" id="lon_value" value="0">
                                 <input type="hidden" name="start" id="start" value="0">
-                                <input type="hidden" name="zoom_value" id="zoom_value" value="0">
                                 <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
@@ -437,36 +336,23 @@ function strip_tags_content($text) {
                                     &nbsp;&nbsp;Search for a new COZXYBOX Pickup Location
                                 </p>
                                 <p>
-                                    COZXYBOX Pickup location offer package pickup as self-service COZXYBOX Lockers and at staffed locations.
-                                    Please enter address, postal code, landmark, or <span id="title-location-footer" style=" color: #0000ff;"></span>
+                                    COZXYBOX Pickup location offer package pickup as self-service COZXYBOX Lockers and at staffed locations. Please enter address, postal code, landmark, or Amazon Locker name.
                                 </p>
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="cart-detail login-box" id="shipToAddress" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
+                    <div class="cart-detail login-box" id="shipToAddress" style=" display: none;" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
                         <h3>Ship to address</h3>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <?php // throw new \yii\base\Exception($model->scenario);            ?>
-                                <?=
-                                $form->field($order, 'shippingFirstname')->textInput([
-                                    'class' => 'fullwidth',
-                                    'placeholder' => 'FIRSTNAME',
-                                    'value' => $name["firstname"]
-                                ])->label(false);
-                                ?>
+                                <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
-                                <?=
-                                $form->field($order, 'shippingLastname')->textInput([
-                                    'class' => 'fullwidth',
-                                    'placeholder' => 'LASTNAME',
-                                    'value' => $name["lastname"]
-                                ])->label(false);
-                                ?>
+                                <?= $form->field($order, 'shippingLastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                             </div>
                         </div>
 
@@ -554,7 +440,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);              ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);            ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -607,7 +493,7 @@ function strip_tags_content($text) {
         border-top: 0px solid #e5e5e5;
     }
 </style>
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
 <script src="https://www.ninenik.com/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -618,7 +504,6 @@ function strip_tags_content($text) {
     var long;
     var p;
     function initMap() {
-
     GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -664,7 +549,7 @@ function strip_tags_content($text) {
              // pickUpSet(p, lat, long, directionsService, directionsDisplay);
              });*/
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
+            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -720,7 +605,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //'Place ID: ' + feature.contentString + '</div>');
@@ -729,17 +614,69 @@ foreach ($activeMap as $key => $value) {
                     })(marker));
             });
             // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
-            geoLocation(map, 'initMap', '', '');
-            /****** Autocomplete *******/
-            autocomplete(map);
-            /*******Test Not Allow Map*************/
-            //handleNoGeolocation(map);
+            if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+    var pos = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
+            var infowindow = new GGM.InfoWindow({
+            //map: map,
+            position: pos,
+                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+            });
+            var marker = new google.maps.Marker({
+            map: map,
+                    position: pos
+            });
+            var my_Point = infowindow.getPosition(); // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+            map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
+            $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+            $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+            latMe = my_Point.lat();
+            lngMe = my_Point.lng();
+            $("#start").val(latMe + ',' + lngMe);
+            map.setCenter(pos);
+    }, function () {
+    // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+    //alert('ไม่ทำงาน');
+    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
+    });
+    } else {
+    // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+    handleNoGeolocation(); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
+    }
+
+    var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
+            // no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
+                    function handleNoGeolocation() {
+                    //alert('position :' + bangkokCozxy);
+                    map.setCenter(bangkokCozxy);
+                            //setMarker(bangkokCozxy);
+                            var infowindow = new GGM.InfoWindow({
+                            //map: map,
+                            position: bangkokCozxy,
+                                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+                            });
+                            var marker = new google.maps.Marker({
+                            map: map,
+                                    position: bangkokCozxy
+                            });
+                            $("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+                            $("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+                            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                            latMe = 13.871395;
+                            lngMe = 100.61732;
+                            $("#start").val(latMe + ',' + lngMe);
+                            map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
+                            //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+                    }
+
             // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
             GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
             });
-    }
-
+            }
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     var directionsService = new google.maps.DirectionsService;
@@ -765,7 +702,7 @@ foreach ($activeMap as $key => $value) {
             });
             directionsDisplay.setMap(map);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
+            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -812,7 +749,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //        'Place ID: ' + feature.contentString + '</div>');
@@ -824,17 +761,6 @@ foreach ($activeMap as $key => $value) {
             var fields = LcpickingId.split('-');
             var pickingId = fields[0];
             var latlongMap = fields[1];
-            /*******If Not Allow Map*************/
-
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
-            /*if (start == 0){
-             var llMap = latlongMap.split(',');
-             $("#lat_value").val(llMap[0]);
-             $("#lon_value").val(llMap[1]);
-             $("#zoom_value").val(map.getZoom());
-             $("#start").val(latlongMap);
-             }*/
             //alert(latlongMap);
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
@@ -849,6 +775,35 @@ foreach ($activeMap as $key => $value) {
             window.alert('Directions request failed due to ' + status);
             }
             });
+    }
+
+    function pickUpTest(directionsService, directionsDisplay) {
+    //alert('xxx');
+    var pickUpId = $('#pickUpId').attr("data-id");
+            alert(pickUpId);
+            alert(pickUpId + '::' + directionsService + '::' + directionsDisplay);
+            if (pickUpId != undefined) {
+    var fields = pickUpId.split('-');
+            var pickingId = fields[0];
+            var lat = fields[1];
+            var long = fields[2];
+            //alert(pickingId + '::' + lat + '::' + long);
+            //return  lat + ',' + long;
+            var latlongMap = lat + ',' + long;
+            //alert($('#start').val() + '::' + latlongMap);
+            directionsService.route({
+            origin: $('#start').val(), //document.getElementById('start').value,
+                    //destination: document.getElementById('LcpickingId').value,
+                    destination: latlongMap,
+                    travelMode: 'DRIVING'
+            }, function (response, status) {
+            if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            } else {
+            window.alert('Directions request failed due to ' + status);
+            }
+            });
+    }
     }
 
     function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
@@ -876,7 +831,7 @@ foreach ($activeMap as $key => $value) {
             directionsDisplay.setMap(map);
             //showLocationMap();
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
+            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -922,7 +877,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //'Place ID: ' + feature.contentString + '</div>');
@@ -932,9 +887,6 @@ foreach ($activeMap as $key => $value) {
             });
             //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
             var latlongMap = lats + ',' + longs;
-            /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); // If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -960,7 +912,6 @@ foreach ($activeMap as $key => $value) {
                             $('.location-pick-up').html(data);
                                     //alert(location);
                                     $('#title-location').html(location);
-                                    $('#title-location-footer').html(location);
                                     //$('#stateId').val(provinceId).trigger('change');
                                     //$('#amphurId').val(amphurId).trigger('change');
                                     //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
@@ -975,7 +926,6 @@ foreach ($activeMap as $key => $value) {
                                             //alert(status + '::' + data.provinceId + '::' + data.amphurId + '::' + data.pickingId);
                                             if (status == "success") {
                                             $('#title-location').html(location);
-                                                    $('#title-location-footer').html(location);
                                                     $('#stateId').val(data.provinceId).trigger('change');
                                                     $('#amphurId').removeAttr('disabled');
                                                     $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
@@ -985,7 +935,6 @@ foreach ($activeMap as $key => $value) {
                                                     //$('#LcpickingId').val(data.pickingId + '-' + data.latitudes + ',' + data.longitudes).trigger('change');
                                                     //alert(data);
                                                     $('#title-location').html(data.title);
-                                                    $('#title-location-footer').html(location);
                                                     var ClickamphurId = data.amphurId;
                                                     var ClickprovinceId = data.provinceId;
                                                     //alert(ClickamphurId + '::' + ClickprovinceId);
@@ -1021,23 +970,17 @@ foreach ($activeMap as $key => $value) {
             });
     }
 
-    function pickUpClick(map, pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
-    //console.log(map.getZoom());
-    map.setZoom(11);
-            var latlongMap = latitudes + ',' + longitudes;
-            /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
+    function pickUpClick(pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
+    //alert(pickingId);
+    var latlongMap = latitudes + ',' + longitudes;
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
                     destination: latlongMap,
                     travelMode: 'DRIVING'
             }, function (response, status) {
-            ///console.log(response);
             if (status === 'OK') {
             directionsDisplay.setDirections(response);
-                    map.setZoom(11);
                     //alert('OK');
                     //continue-pick-up
                     $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latitudes + ',' + longitudes + '">');
@@ -1053,7 +996,6 @@ foreach ($activeMap as $key => $value) {
 
                             $('.location-pick-up').html(data);
                                     $('#title-location').html(location);
-                                    $('#title-location-footer').html(location);
                                     //$('#stateId').val(provinceId).trigger('change');
                                     //$('#amphurId').val(amphurId).trigger('change');
                                     //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
@@ -1068,7 +1010,6 @@ foreach ($activeMap as $key => $value) {
                                             //alert(status + '::' + data.provinceId + '::' + data.amphurId + ':' + data.titleTh + '::' + data.pickingId);
                                             if (status == "success") {
                                             $('#title-location').html(location);
-                                                    $('#title-location-footer').html(location);
                                                     $('#stateId').val(data.provinceId).trigger('change');
                                                     $('#amphurId').removeAttr('disabled');
                                                     $('#amphurId').html('<option value="' + data.amphurId + '">' + data.titleEn + ' / ' + data.titleTh + '   </option>');
@@ -1121,216 +1062,6 @@ foreach ($activeMap as $key => $value) {
     });
     }
 
-    function customIcon(opts) {
-    return Object.assign({
-    path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
-            fillColor: '#34495e',
-            fillOpacity: 1,
-            strokeColor: '#000',
-            strokeWeight: 2,
-            scale: 1,
-    }, opts);
-    }
-
-    function geoLocation(map, status, lat, lng) {
-    //alert(map);
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var labelIndex = 0;
-            var pos1 = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-            /** autocomplete **/
-            if (status == 'autocomplete') {
-
-    var image = 'https://cdn4.iconfinder.com/data/icons/icocentre-free-icons/114/f-cross_256-32.png';
-            var beachMarker = new google.maps.Marker({
-            position: pos1,
-                    map: map,
-                    icon: image
-            });
-            var my_Point = beachMarker.getPosition();
-            /*var flightPath = new google.maps.Marker({
-             map:map,
-             position: pos1, label: labels[labelIndex++ % labels.length],
-             });*/
-            //flightPath.setMap(null);
-    } else {
-    var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
-            /*var infowindow = new GGM.InfoWindow({
-             position: pos1,
-             //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-             });*/
-            var infowindow1 = new GGM.InfoWindow();
-            var markera = new google.maps.Marker({
-            map: map,
-                    position: pos1, label: labels[labelIndex++ % labels.length]
-            });
-            var my_Point = markera.getPosition();
-            /*var my_Point = infowindow.getPosition();*/ // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-            map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
-            $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-            $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-            latMe = my_Point.lat();
-            lngMe = my_Point.lng();
-            $("#start").val(latMe + ',' + lngMe);
-            //alert(latMe + ',' + lngMe);
-            map.setCenter(pos1);
-    }
-
-    //console.log(my_Point.lat());
-    }, function () {
-    // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-    //alert('ไม่ทำงาน');
-    handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
-
-    });
-    } else {
-    // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
-    handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
-
-    }
-    }
-
-    function autocomplete(map) {
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            var labelIndex = 0;
-            var card = document.getElementById('pac-card');
-            var input = document.getElementById('pac-input');
-            var types = document.getElementById('type-selector');
-            var strictBounds = document.getElementById('strict-bounds-selector');
-            //map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            // Bind the map's bounds (viewport) property to the autocomplete object,
-            // so that the autocomplete requests use the current map bounds for the
-            // bounds option in the request.
-            autocomplete.bindTo('bounds', map);
-            var infowindow = new google.maps.InfoWindow();
-            var infowindowContent = document.getElementById('infowindow-content');
-            infowindow.setContent(infowindowContent);
-            var marker = new google.maps.Marker({
-            map: map,
-                    anchorPoint: new google.maps.Point(0, - 29),
-                    icon: customIcon({
-                    fillColor: '#2ecc71'
-                    }), label: labels[labelIndex++ % labels.length]
-            });
-            autocomplete.addListener('place_changed', function() {
-            infowindow.close();
-                    marker.setVisible(false);
-                    var place = autocomplete.getPlace();
-                    //console.log(place);
-                    if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
-            window.alert("No details available for input: '" + place.name + "'");
-                    return;
-            } else{
-            //alert('auto complete :' + place.geometry.location.lat());
-            // Place a draggable marker on the map
-            /*var markerAuto = new google.maps.Marker({
-             map: map,
-             position: new google.maps.LatLng(13.8714014, 100.6173063),
-             map: map,
-             //draggable:true,
-             //title:"Drag me!"
-             });*/
-            geoLocation(map, 'autocomplete', place.geometry.location.lat(), place.geometry.location.lng());
-                    //markerAuto = false;
-                    //markerAuto = [];
-                    //marker = [];
-                    //console.log(marker);
-                    //var location = $("#start").val();
-                    //alert(location);
-                    $("#lat_value").val(place.geometry.location.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-                    $("#lon_value").val(place.geometry.location.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-                    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-                    //$("#zoom_value").val(map.setZoom(11)); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-                    latMe = place.geometry.location.lat();
-                    lngMe = place.geometry.location.lng();
-                    $("#start").val(latMe + ',' + lngMe);
-            }
-
-            // If the place has a geometry, then present it on a map.
-            if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-                    map.setZoom(11); // Why 17? Because it looks good.
-            } else {
-            map.setCenter(place.geometry.location);
-                    map.setZoom(11); // Why 17? Because it looks good.
-            }
-            marker.setPosition(place.geometry.location);
-                    marker.setVisible(true);
-                    var address = '';
-                    if (place.address_components) {
-            address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-            }
-
-            infowindowContent.children['place-icon'].src = place.icon;
-                    infowindowContent.children['place-name'].textContent = place.name;
-                    infowindowContent.children['place-address'].textContent = address;
-                    infowindow.open(map, marker);
-            }
-            );
-            // Sets a listener on a radio button to change the filter type on Places
-            // Autocomplete.
-            /*function setupClickListener(id, types) {
-             var radioButton = document.getElementById(id);
-             radioButton.addEventListener('click', function() {
-             autocomplete.setTypes(types);
-             });
-             }*/
-
-            /*setupClickListener('changetype-all', []);
-             setupClickListener('changetype-address', ['address']);
-             setupClickListener('changetype-establishment', ['establishment']);
-             setupClickListener('changetype-geocode', ['geocode']);
-             document.getElementById('use-strict-bounds')
-             .addEventListener('click', function() {
-             console.log('Checkbox clicked! New state=' + this.checked);
-             autocomplete.setOptions({strictBounds: this.checked});
-             });*/
-    }
-
-    function handleNoGeolocation(map) {
-
-    var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
-            /*map.setCenter(bangkokCozxy);
-             var infowindow = new GGM.InfoWindow({
-             position: bangkokCozxy,
-             //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-             });
-             var marker = new google.maps.Marker({
-             map: map,
-             position: bangkokCozxy
-             });*/
-            //$("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-            //$("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            $("#zoom_value").val(11); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-            latMe = 13.871395;
-            lngMe = 100.61732;
-            //$("#start").val(latMe + ',' + lngMe);
-            //map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
-            //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
-    }
-
-    function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
-    if (start == 0){
-    //console.log(map);
-    //console.log(map.getZoom());
-    var llMap = latlongMap.split(',');
-            $("#lat_value").val(llMap[0]);
-            $("#lon_value").val(llMap[1]);
-            $("#zoom_value").val(map.getZoom());
-            $("#start").val(latlongMap);
-            //alert(latlongMap);
-    }
-    }
-
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
     // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
@@ -1341,33 +1072,62 @@ foreach ($activeMap as $key => $value) {
     //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
     $("<script/>", {
     "type": "text/javascript",
-            src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initMap"
+            src: "//maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&callback=initMap"
     }).appendTo("body");
     });</script>
  <!--<script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
     </script>-->
-<?php $this->registerCss('
+<script>
+
+    //alert(document.referrer);
+    //alert(window.history.previous);
+    //alert("previous url is: " + window.history.previous.href);
+
+</script>
+
+<?php
+$this->registerCss('
 #map {
             height: 450px;
         }
 
-'); ?>
+');
+/* $this->registerJs('if ($("input[name=shipping]:checked").val() == 1) {
+  $("#shipToAddress").hide();
+  } else {
+  $("#shipToCozxyBox").hide();
+  $("#shipToAddress").show();
+  }
+
+  $("input[name=shipping]").change(function (e) {
+  var shipTo = $(this).val();
+  if (shipTo == 2) {
+  $("#shipToCozxyBox").hide();
+  $("#shipToAddress").show();
+  } else {
+  $("#shipToAddress").hide();
+  $("#shipToCozxyBox").show();
+  }
+  }); ', \yii\web\View::POS_END); */
+?>
 
 
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myGoogleMap">
 
-<div class = "modal fade bs-example-modal-lg" tabindex = "-1" role = "dialog" aria-labelledby = "myLargeModalLabel" aria-hidden = "true" id = "myGoogleMap" >
-    <div class = "modal-dialog" ><!-- Modal content-->
-        <div class = "modal-content" >
-            <div class = "modal-header" >
-                <button type = "button" class = "close" data-dismiss = "modal" > × </button>
-                <h4 class = "modal-title" > <i class = "fa fa-exclamation-circle" > </i>Your title goes here</h4 >
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i>Your title goes here</h4>
             </div>
-            <div class = "modal-body" >
+            <div class="modal-body">
                 Your content goes here
             </div>
-            <div class = "modal-footer" >
-                <button type = "button" class = "btn btn-default" data-dismiss = "modal" > Submit </button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
             </div>
         </div>
 

@@ -112,6 +112,7 @@ class ProductController extends ProductManagerMasterController {
     public function actionCreate() { //step 1
         $model = new Product(['createDateTime' => new Expression('NOW()')]);
         $model->scenario = 'createProductGroup';
+        $model->approve = 'approve';
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
@@ -304,8 +305,7 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
-        return $this->goBack();
-//        return $this->redirect(['index']);
+        return $this->redirect(['index']);
     }
 
     /**
