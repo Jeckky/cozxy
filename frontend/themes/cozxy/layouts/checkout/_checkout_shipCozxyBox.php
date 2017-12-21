@@ -720,6 +720,8 @@ foreach ($activeMap as $key => $value) {
             geoLocation(map, 'initMap', '', '');
             /****** Autocomplete *******/
             autocomplete(map);
+            /*******Test Not Allow Map*************/
+            //handleNoGeolocation(map);
             // กำหนด event ให้กับตัวแผนที่ เมื่อมีการเปลี่ยนแปลงการ zoom
             GGM.event.addListener(map, 'zoom_changed', function () {
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
@@ -810,6 +812,16 @@ foreach ($activeMap as $key => $value) {
             var fields = LcpickingId.split('-');
             var pickingId = fields[0];
             var latlongMap = fields[1];
+            /*******If Not Allow Map*************/
+            var start = $("#start").val();
+            NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
+            /*if (start == 0){
+             var llMap = latlongMap.split(',');
+             $("#lat_value").val(llMap[0]);
+             $("#lon_value").val(llMap[1]);
+             $("#zoom_value").val(map.getZoom());
+             $("#start").val(latlongMap);
+             }*/
             //alert(latlongMap);
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
@@ -907,6 +919,9 @@ foreach ($activeMap as $key => $value) {
             });
             //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
             var latlongMap = lats + ',' + longs;
+            /*******If Not Allow Map*************/
+            var start = $("#start").val();
+            NotAllowMap(map, start, latlongMap, ','); // If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -993,6 +1008,9 @@ foreach ($activeMap as $key => $value) {
     function pickUpClick(pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
     //alert(pickingId);
     var latlongMap = latitudes + ',' + longitudes;
+            /*******If Not Allow Map*************/
+            var start = $("#start").val();
+            NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1260,28 +1278,34 @@ foreach ($activeMap as $key => $value) {
     function handleNoGeolocation(map) {
 
     var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
-            console.log('Fixes Localtion Cozxy');
-            // no geolocation ฟังก์ชั่นนี้จะถูกเรียกใช้งานเมื่อตรวจค่า lat/lng ไม่ได้
-            //alert('position :' + bangkokCozxy);
-            map.setCenter(bangkokCozxy);
-            //setMarker(bangkokCozxy);
-            var infowindow = new GGM.InfoWindow({
-            //map: map,
-            position: bangkokCozxy,
-                    //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-            });
-            var marker = new google.maps.Marker({
-            map: map,
-                    position: bangkokCozxy
-            });
-            $("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-            $("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+            /*map.setCenter(bangkokCozxy);
+             var infowindow = new GGM.InfoWindow({
+             position: bangkokCozxy,
+             //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+             });
+             var marker = new google.maps.Marker({
+             map: map,
+             position: bangkokCozxy
+             });*/
+            //$("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+            //$("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+            //$("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
             latMe = 13.871395;
             lngMe = 100.61732;
-            $("#start").val(latMe + ',' + lngMe);
-            map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
+            //$("#start").val(latMe + ',' + lngMe);
+            //map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
+    }
+
+    function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
+    if (start == 0){
+    var llMap = latlongMap.split(',');
+            $("#lat_value").val(llMap[0]);
+            $("#lon_value").val(llMap[1]);
+            //$("#zoom_value").val(11);
+            $("#start").val(latlongMap);
+            //alert(latlongMap);
+    }
     }
 
     $(function () {
