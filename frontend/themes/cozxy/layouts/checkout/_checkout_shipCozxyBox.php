@@ -829,7 +829,7 @@ foreach ($activeMap as $key => $value) {
 
             //var start = $("#start").val();
             var noAllow = $("#no_allow").val();
-            NotAllowMap(map, noAllow, latlongMap, '-'); // If Not Allow Map Function
+            NotAllowMap(noAllow, latlongMap, '-'); // If Not Allow Map Function
             /*if (start == 0){
              var llMap = latlongMap.split(',');
              $("#lat_value").val(llMap[0]);
@@ -937,7 +937,7 @@ foreach ($activeMap as $key => $value) {
             /*******If Not Allow Map*************/
             //var start = $("#start").val();
             var noAllow = $("#no_allow").val();
-            NotAllowMap(map, noAllow, latlongMap, ','); // If Not Allow Map Function
+            NotAllowMap(noAllow, latlongMap, ','); // If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1031,7 +1031,7 @@ foreach ($activeMap as $key => $value) {
             /*******If Not Allow Map*************/
             //var start = $("#start").val();
             var noAllow = $("#no_allow").val();
-            NotAllowMap(map, noAllow, latlongMap, ','); //If Not Allow Map Function
+            NotAllowMap(noAllow, latlongMap, ','); //If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1324,7 +1324,7 @@ foreach ($activeMap as $key => $value) {
             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
     }
 
-    function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
+    function NotAllowMap(start, latlongMap, status){ // if not allow map function
 
     if (start == 0){
     console.log(latlongMap);
@@ -1335,6 +1335,7 @@ foreach ($activeMap as $key => $value) {
             //$("#zoom_value").val(map.getZoom());
             $("#start").val(latlongMap);
             //alert(latlongMap);
+            console.log(latlongMap + ':' + llMap[0] + ':' + llMap[1]);
     }
     }
 
