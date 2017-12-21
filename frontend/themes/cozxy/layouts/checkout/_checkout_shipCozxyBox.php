@@ -827,8 +827,9 @@ foreach ($activeMap as $key => $value) {
             var latlongMap = fields[1];
             /*******If Not Allow Map*************/
 
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(map, noAllow, latlongMap, '-'); // If Not Allow Map Function
             /*if (start == 0){
              var llMap = latlongMap.split(',');
              $("#lat_value").val(llMap[0]);
@@ -934,8 +935,9 @@ foreach ($activeMap as $key => $value) {
             //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
             var latlongMap = lats + ',' + longs;
             /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); // If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(map, noAllow, latlongMap, ','); // If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1027,8 +1029,9 @@ foreach ($activeMap as $key => $value) {
     map.setZoom(11);
             var latlongMap = latitudes + ',' + longitudes;
             /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(map, noAllow, latlongMap, ','); //If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1322,8 +1325,8 @@ foreach ($activeMap as $key => $value) {
     }
 
     function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
-    var noAllow = $("#no_allow").val();
-            if (noAllow == 0){
+
+    if (start == 0){
     console.log(latlongMap);
             //console.log(map.getZoom());
             var llMap = latlongMap.split(',');
