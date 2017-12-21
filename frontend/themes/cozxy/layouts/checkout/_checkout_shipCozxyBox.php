@@ -1327,15 +1327,15 @@ foreach ($activeMap as $key => $value) {
     function NotAllowMap(start, latlongMap, status){ // if not allow map function
 
     if (start == 0){
-    console.log(latlongMap);
-            //console.log(map.getZoom());
-            var llMap = latlongMap.split(',');
+    //console.log(latlongMap);
+    //console.log(map.getZoom());
+    var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
             //$("#zoom_value").val(map.getZoom());
             $("#start").val(latlongMap);
             //alert(latlongMap);
-            console.log(latlongMap + ':' + llMap[0] + ':' + llMap[1]);
+            //console.log(latlongMap + ':' + llMap[0] + ':' + llMap[1]);
     }
     }
 
