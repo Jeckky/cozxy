@@ -651,7 +651,7 @@ function strip_tags_content($text) {
              // pickUpSet(p, lat, long, directionsService, directionsDisplay);
              });*/
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -750,7 +750,7 @@ foreach ($activeMap as $key => $value) {
             });
             directionsDisplay.setMap(map);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -850,7 +850,7 @@ foreach ($activeMap as $key => $value) {
             directionsDisplay.setMap(map);
             //showLocationMap();
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -1080,7 +1080,16 @@ foreach ($activeMap as $key => $value) {
             stepDisplay.open(map, marker);
     });
     }
-
+    function customIcon (opts) {
+    return Object.assign({
+    path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+            fillColor: '#34495e',
+            fillOpacity: 1,
+            strokeColor: '#000',
+            strokeWeight: 2,
+            scale: 1,
+    }, opts);
+    }
     function geoLocation(map, status, lat, lng){
     //alert(map);
     if (navigator.geolocation) {
@@ -1161,7 +1170,10 @@ foreach ($activeMap as $key => $value) {
             infowindow.setContent(infowindowContent);
             var marker = new google.maps.Marker({
             map: map,
-                    anchorPoint: new google.maps.Point(0, - 29), label: labels[labelIndex++ % labels.length]
+                    anchorPoint: new google.maps.Point(0, - 29),
+                    icon: customIcon({
+                    fillColor: '#2ecc71'
+                    }), label: labels[labelIndex++ % labels.length]
             });
             autocomplete.addListener('place_changed', function() {
             infowindow.close();
@@ -1265,6 +1277,8 @@ foreach ($activeMap as $key => $value) {
             map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
     }
+
+
 
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
