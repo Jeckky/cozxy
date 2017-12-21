@@ -1836,7 +1836,7 @@ $('.shippingOption').click(function () {
         //alert(shipping);
         $("#shipToCozxyBox").css({'display': 'none'});
         $("#shipToAddress").removeAttr("style");
-        document.getElementById("default-shipping-address").action = $baseUrl + "checkout/summary";
+        document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
         document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
         //document.getElementsByClassName("continue-ship-to-address").submit();
         $('#ship-to-cozxy-box-select').html('');

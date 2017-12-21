@@ -76,7 +76,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <tr>
                                 <td style="line-height: 20px; padding: 0px;">
                                     <?php
-                                    if (isset($addressIdsummary)) {
+                                    if (isset($addressIdsummary) && $addressIdsummary != NULL) {
                                         $address = common\models\costfit\Address::find()->where('addressId=' . $addressIdsummary)->one();
                                         echo isset($address['company']) ? '' . $address['company'] . '<br>' : '&nbsp;' . $address['firstname'] . " " . $address['lastname'] . '<br>';
                                         echo isset($address['address']) ? ',' . $address['address'] : '';
@@ -154,7 +154,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr><?//php echo number_format($order->totalExVat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);                  ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);                   ?>
                             </td>
                         </tr>
 
@@ -166,7 +166,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr> <?//php echo number_format($order->vat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                   ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                    ?>
                             </td>
                         </tr>
                         <tr>
@@ -183,7 +183,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                    ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                     ?>
                             </td>
                         </tr>
                     </tbody>

@@ -15,15 +15,8 @@ use mobile\modules\v1\models\Wishlist;
  */
 class WishlistController extends Controller
 {
-    public function beforeAction($action)
-    {
-//        if ($action->id == 'for-sale' || $action->id=='not-sale' || $action->id=='view') {
-        if(in_array($action->id, ['index', 'add-wishlist', 'delete-wishlist', 'add-shelf', 'delete-shelf'])) {
-            $this->enableCsrfValidation = false;
-        }
-
-        return parent::beforeAction($action);
-    }
+    public $enableCsrfValidation = false;
+    public $pageSize = 2;
 
     /**
      * Renders the index view for the module
@@ -33,43 +26,68 @@ class WishlistController extends Controller
     public function actionIndex()
     {
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
+        $productShelfId = $_POST['productShelfId'];
         $res = [];
 
-        $productShelfs = ProductShelf::find()->where(['userId' => $userId, 'status' => 1])->all();
+        $page = isset($_POST['page']) ? $_POST['page'] : 0;
+        $offset = $page * $this->pageSize;
 
+        $items = [];
+
+        $wishlists = Wishlist::find()
+            ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
+            ->from('wishlist w')
+            ->leftJoin('product p', 'p.productId=w.productId')
+            ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
+            ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+            ->where(['w.productShelfId' => $productShelfId, 'pps.status' => 1])
+            ->limit($this->pageSize)
+            ->offset($offset)
+            ->all();
+
+        $j = 0;
+        foreach($wishlists as $wishlist) {
+            $items[$j] = [
+                'wishlistId' => $wishlist->wishlistId,
+                'productId' => $wishlist->productId,
+                'marketPrice' => $wishlist->marketPrice,
+                'sellingPrice' => $wishlist->sellingPrice,
+                'title' => $wishlist->product->title,
+                'image' => $wishlist->product->images->imageThumbnail1,
+                'brand' => $wishlist->product->brand->title
+            ];
+            $j++;
+        }
+
+        $res['items'] = $items;
+        $res['productShelfId'] = $productShelfId;
+        $res['page'] = $page;
+
+        echo Json::encode($res);
+    }
+
+    public function actionWishlistGroup()
+    {
+        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
+        $res = [];
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 0;
+        $offset = $page * $this->pageSize;
+
+        $productShelfs = ProductShelf::find()
+            ->where(['userId' => $userId, 'status' => 1])
+            ->limit($this->pageSize)
+            ->offset($offset)
+            ->all();
+
+        $items = [];
         $i = 0;
         foreach($productShelfs as $productShelf) {
-            $res[$i] = $productShelf->attributes;
-
-            $items = [];
-
-            $wishlists = Wishlist::find()
-                ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
-                ->from('wishlist w')
-                ->leftJoin('product p', 'p.productId=w.productId')
-                ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
-                ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
-                ->where(['w.productShelfId' => $productShelf->productShelfId, 'pps.status' => 1])
-                ->all();
-
-            $j = 0;
-            foreach($wishlists as $wishlist) {
-                $items[$j] = [
-                    'wishlistId' => $wishlist->wishlistId,
-                    'productId' => $wishlist->productId,
-                    'marketPrice' => $wishlist->marketPrice,
-                    'sellingPrice' => $wishlist->sellingPrice,
-                    'title' => $wishlist->product->title,
-                    'image' => $wishlist->product->images->imageThumbnail1,
-                    'brand' => $wishlist->product->brand->title
-                ];
-                $j++;
-            }
-
-            $res[$i]['items'] = $items;
-
+            $items[$i] = $productShelf->attributes;
             $i++;
         }
+        $res['items'] = $items;
+        $res['page'] = $page;
 
         echo Json::encode($res);
     }

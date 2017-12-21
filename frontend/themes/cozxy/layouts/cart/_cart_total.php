@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="col-lg-6 pull-right  open-coupon-trash <?php
-                if (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] != 0) {
+                if (isset($this->params['cart']['couponCode'])) {
                     echo 'display';
                 } else {
                     echo 'hidden';

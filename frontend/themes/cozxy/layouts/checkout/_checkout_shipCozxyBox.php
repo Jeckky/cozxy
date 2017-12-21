@@ -201,7 +201,7 @@ function strip_tags_content($text) {
         $form = ActiveForm::begin([
                     'id' => 'default-shipping-address',
                     //'action' => Yii::$app->homeUrl . 'checkout/summary',
-                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout/summary',
+                    'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout',
                     'options' => ['class' => 'space-bottom'],
                         //'enableClientValidation' => false,
         ]);
@@ -444,7 +444,7 @@ function strip_tags_content($text) {
                         </div>
                     </div>
 
-                    <div class="cart-detail login-box" id="shipToAddress" style=" display: none;" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
+                    <div class="cart-detail login-box" id="shipToAddress" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
                         <h3>Ship to address</h3>
 
                         <div class="row">
@@ -651,7 +651,7 @@ function strip_tags_content($text) {
              // pickUpSet(p, lat, long, directionsService, directionsDisplay);
              });*/
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+            var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -750,7 +750,7 @@ foreach ($activeMap as $key => $value) {
             });
             directionsDisplay.setMap(map);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -850,7 +850,7 @@ foreach ($activeMap as $key => $value) {
             directionsDisplay.setMap(map);
             //showLocationMap();
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = 'http://www.cozxy.com/images/subscribe/';
+        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'

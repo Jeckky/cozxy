@@ -112,6 +112,7 @@ class ProductController extends ProductManagerMasterController {
     public function actionCreate() { //step 1
         $model = new Product(['createDateTime' => new Expression('NOW()')]);
         $model->scenario = 'createProductGroup';
+        $model->approve = 'approve';
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
@@ -304,7 +305,6 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
-
         return $this->redirect(['index']);
     }
 
@@ -426,9 +426,9 @@ class ProductController extends ProductManagerMasterController {
         $productImage = ProductImage::findOne($id);
         $productImage->delete();
 
-        unlink(Yii::$app->basePath . '/web/' . $productImage->image);
-        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail1);
-        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->image);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail1);
+//        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
     }
 
     public function actionPrepareProducts($id) {

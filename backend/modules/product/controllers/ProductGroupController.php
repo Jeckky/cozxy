@@ -1274,13 +1274,14 @@ class ProductGroupController extends ProductMasterController {
                     $productGroup->save(false);
                 }
             endforeach;
-            return $this->redirect(['update-product',
-                        'productGroupId' => $_POST['productGroupId'],
-                        'productGroupTemplateId' => $_POST['templateId'],
-                        'step' => '4',
-                        'userId' => Yii::$app->user->id,
-                        'id' => $id
-            ]);
+//            return $this->redirect(['update-product',
+//                        'productGroupId' => $_POST['productGroupId'],
+//                        'productGroupTemplateId' => $_POST['templateId'],
+//                        'step' => '4',
+//                        'userId' => Yii::$app->user->id,
+//                        'id' => $id
+//            ]);
+            return $this->redirect(['/productmanager/product/view', 'id'=>$_POST['productGroupId']]);
         } else {
             throw new \ErrorException('เกิดข้อผิดพลาด!!!');
         }

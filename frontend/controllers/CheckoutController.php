@@ -175,18 +175,20 @@ class CheckoutController extends MasterController {
                 $shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
             }
         } else if ($shipTo == 2) {
+            $shippingAddress = Yii::$app->request->post('Order');
+            $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
+            $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
+            $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
+            $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
+            $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
+            $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
+            $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
+            $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
+            $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
+            $order->pickingId = 0;
+            $order->save(false);
             $pickingId = '0';
-            /* if (isset($addressId)) {
-              $addressId = Yii::$app->request->post('addressId');
-              } else {
-              $addressId = Yii::$app->request->post('addressIdsummary');
-              } */
-            //$this->resetDefault($orderId, $addressId, $pickingId, $shipTo, $orderAddress, $tax, $tel);
-            //$address = \common\models\costfit\Order::find()->where('orderId=' . $orderId)->one();
-            //echo '<pre>';
-            //print_r($address);
-            //exit();
-            //return $this->redirect(Yii::$app->homeUrl . 'checkout/summary?orderId=' . $orderId);
+
         } else {
             echo 'Picking Point Not Null 2';
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
@@ -333,6 +335,7 @@ class CheckoutController extends MasterController {
             $myAddressInSummary = DisplayMyAddress::myAddresssSummary($addressId, \common\models\costfit\Address::TYPE_BILLING);
         } else {
             $myAddressInSummary = DisplayMyAddress::myAddresssSummaryUser(Yii::$app->user->id, \common\models\costfit\Address::TYPE_BILLING);
+            $this->updateDefaultBillingToOrder($orderId);
             $addressId = $myAddressInSummary['myAddresss']['addressId'];
         }
 
@@ -521,20 +524,20 @@ class CheckoutController extends MasterController {
             //$order->isPayNow = 0;
             $order->addressId = $addressId;
             $order->pickingId = $pickingId;
-            if ($shipTo == 2) {
-                //echo 'x:2';
-                $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
-                $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
-                $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
-                $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
-                $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
-                $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
-                $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
-                $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
-                $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
-                //$order->pickingId = new Expression('NULL');
-                $order->pickingId = 0;
-            }
+//            if ($shipTo == 2) {
+//                //echo 'x:2';
+//                $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
+//                $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';
+//                $order->shippingAddress = isset($orderAddress['shippingAddress']) ? $orderAddress['shippingAddress'] : '';
+//                $order->shippingProvinceId = isset($orderAddress['shippingProvinceId']) ? $orderAddress['shippingProvinceId'] : '';
+//                $order->shippingAmphurId = isset($orderAddress['shippingAmphurId']) ? $orderAddress['shippingAmphurId'] : '';
+//                $order->shippingDistrictId = isset($orderAddress['shippingDistrictId']) ? $orderAddress['shippingDistrictId'] : '';
+//                $order->shippingZipcode = isset($orderAddress['shippingZipcode']) ? $orderAddress['shippingZipcode'] : '';
+//                $order->shippingTel = isset($orderAddress['shippingTel']) ? $orderAddress['shippingTel'] : '';
+//                $order->email = isset($orderAddress['email']) ? $orderAddress['email'] : '';
+//                //$order->pickingId = new Expression('NULL');
+//                $order->pickingId = 0;
+//            }
             if ($tax != '') {
                 $order->billingTax = $tax;
             }
@@ -596,6 +599,7 @@ class CheckoutController extends MasterController {
         $orderId = $params['orderId'];
         $order = Order::find()->where("orderId=" . $orderId)->one();
         $addressIdsummary = $order->addressId;
+        //$systemCoin = Yii::$app->request->post('systemCoin');
         //$addressIdsummary = isset($order->addressId) ? $order->addressId : $_REQUEST['addressIdsummary']; // Fix Bug 19/12/2017 by Pew : hidden addressId not null
         //$systemCoin = isset($order->cozxyCoin) ? $order->cozxyCoin : Yii::$app->request->post('systemCoin');
 
@@ -606,7 +610,7 @@ class CheckoutController extends MasterController {
             $userPoint = $this->CreateUserPoint($order->userId);
         }
         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId); // Fix Bug 19/12/2017 by Pew :   call funciton  return data to view
-        //throw new \yii\base\Exception($orderId);
+
         return $this->render('/order/index', [
                     'order' => $order,
                     'userPoint' => $userPoint,
@@ -623,7 +627,7 @@ class CheckoutController extends MasterController {
         if (isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
             $orderId = $_GET['orderId'];
             $systemCoin = $_GET['systemCoin'];
-            $addressId = $_GET['addressId'];
+            $addressId = isset($_GET['addressId']) ? $_GET['addressId'] : NULL;
         }
         $isHasNotEnough = $this->CheckEnoughItem($orderId);
         if ($isHasNotEnough == 1) {
@@ -674,36 +678,40 @@ class CheckoutController extends MasterController {
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "my-account";
                         $userName = $member->firstname . ' ' . $member->lastname;
                         $Subject = 'Your order has been received: ' . $order->invoiceNo;
-                        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
+                        //if ($addressId != NULL) {
+                        //  $addressId = \common\models\costfit\Address::find()->where("addressId=" . $addressId . " and userId=" . $order->userId)->one();
+                        //  } else {
+                        $addressId = Order::find()->where("orderId=" . $order->orderId)->one();
+                        // }
                         $adress = [];
-                        $adress['billingCompany'] = $addressId->company;
-                        $adress['billingTax'] = $addressId->tax;
+                        $adress['billingCompany'] = $addressId->billingCompany;
+                        $adress['billingTax'] = $addressId->billingTax;
 
-                        $adress['billingFirstname'] = $addressId->firstname;
-                        $adress['billingLastname'] = $addressId->lastname;
-                        $adress['billingAddress'] = $addressId->address;
+                        $adress['billingFirstname'] = $addressId->billingFirstname;
+                        $adress['billingLastname'] = $addressId->billingLastname;
+                        $adress['billingAddress'] = $addressId->billingAddress;
 
-                        $billingCountryId = $addressId->countryId; //ประเทศ
+                        $billingCountryId = $addressId->billingCountryId; //ประเทศ
                         $country = Local::Countries($billingCountryId);
                         $adress['billingCountryId'] = $country['localName'];
 
-                        $billingProvinceId = $addressId->provinceId; //จังหวัด
+                        $billingProvinceId = $addressId->billingProvinceId; //จังหวัด
                         $States = Local::States($billingProvinceId);
                         $adress['billingProvinceId'] = $States['localName'];
 
-                        $billingAmphurId = $addressId->amphurId; //อำเภอ
+                        $billingAmphurId = $addressId->billingAmphurId; //อำเภอ
                         $Cities = Local::Cities($billingAmphurId);
                         $adress['billingAmphurId'] = $Cities['localName'];
 
-                        $billingDistrictId = $addressId->districtId; //ตำบล
+                        $billingDistrictId = $addressId->billingDistrictId; //ตำบล
                         $District = Local::District($billingDistrictId);
                         $adress['billingDistrictId'] = $District['localName'];
 
-                        $billingZipcode = $addressId->zipcode;
+                        $billingZipcode = $addressId->billingZipcode;
                         $Zipcodes = Local::Zipcodes($billingZipcode);
                         $adress['billingZipcode'] = $Zipcodes['zipcode'];
 
-                        $adress['billingTel'] = $addressId->tel;
+                        $adress['billingTel'] = $addressId->billingTel;
 
                         $orderList = \common\models\costfit\Order::find()->where('orderId = ' . $orderId)->one();
                         $receiveType = [];
@@ -730,38 +738,78 @@ class CheckoutController extends MasterController {
 
     public function updateBillingToOrder($billingAddressId, $orderId, $systemCoin) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
-        $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
+        if (isset($billingAddressId) && $billingAddressId != NULL) {
+            $addressId = \common\models\costfit\Address::find()->where("addressId=" . $billingAddressId . " and userId=" . $order->userId)->one();
+        } else {
+            $addressId = \common\models\costfit\Address::find()->where("userId=" . $order->userId . " and isDefault=1")->one();
+        }
+        if (isset($addressId)) {
+            $order->billingCompany = $addressId->company;
+            $order->billingTax = $addressId->tax;
 
-        $order->billingCompany = $addressId->company;
-        $order->billingTax = $addressId->tax;
+            $order->billingFirstname = $addressId->firstname;
+            $order->billingLastname = $addressId->lastname;
+            $order->billingAddress = $addressId->address;
 
-        $order->billingFirstname = $addressId->firstname;
-        $order->billingLastname = $addressId->lastname;
-        $order->billingAddress = $addressId->address;
+            $billingCountryId = $addressId->countryId; //ประเทศ
+            $country = Local::Countries($billingCountryId);
+            $order->billingCountryId = $country['countryId'];
 
-        $billingCountryId = $addressId->countryId; //ประเทศ
-        $country = Local::Countries($billingCountryId);
-        $order->billingCountryId = $country['countryId'];
+            $billingProvinceId = $addressId->provinceId; //จังหวัด
+            $States = Local::States($billingProvinceId);
+            $order->billingProvinceId = $States['stateId'];
 
-        $billingProvinceId = $addressId->provinceId; //จังหวัด
-        $States = Local::States($billingProvinceId);
-        $order->billingProvinceId = $States['stateId'];
+            $billingAmphurId = $addressId->amphurId; //อำเภอ
+            $Cities = Local::Cities($billingAmphurId);
+            $order->billingAmphurId = $Cities['cityId'];
 
-        $billingAmphurId = $addressId->amphurId; //อำเภอ
-        $Cities = Local::Cities($billingAmphurId);
-        $order->billingAmphurId = $Cities['cityId'];
+            $billingDistrictId = $addressId->districtId; //ตำบล
+            $District = Local::District($billingDistrictId);
+            $order->billingDistrictId = $District['districtId'];
 
-        $billingDistrictId = $addressId->districtId; //ตำบล
-        $District = Local::District($billingDistrictId);
-        $order->billingDistrictId = $District['districtId'];
+            $billingZipcode = $addressId->zipcode;
+            $Zipcodes = Local::Zipcodes($billingZipcode);
+            $order->billingZipcode = $Zipcodes['zipcodeId'];
+            $order->userCoin = $order->summary - $systemCoin;
+            $order->cozxyCoin = $systemCoin;
+            $order->billingTel = $addressId->tel;
+            $order->save(false);
+        }
+    }
 
-        $billingZipcode = $addressId->zipcode;
-        $Zipcodes = Local::Zipcodes($billingZipcode);
-        $order->billingZipcode = $Zipcodes['zipcodeId'];
-        $order->userCoin = $order->summary - $systemCoin;
-        $order->cozxyCoin = $systemCoin;
-        $order->billingTel = $addressId->tel;
-        $order->save(false);
+    public function updateDefaultBillingToOrder($orderId) {
+        $order = Order::find()->where("orderId=" . $orderId)->one();
+        $addressId = \common\models\costfit\Address::find()->where("userId=" . $order->userId . " and isDefault=1")->one();
+        if (isset($addressId)) {
+            $order->billingCompany = $addressId->company;
+            $order->billingTax = $addressId->tax;
+
+            $order->billingFirstname = $addressId->firstname;
+            $order->billingLastname = $addressId->lastname;
+            $order->billingAddress = $addressId->address;
+
+            $billingCountryId = $addressId->countryId; //ประเทศ
+            $country = Local::Countries($billingCountryId);
+            $order->billingCountryId = $country['countryId'];
+
+            $billingProvinceId = $addressId->provinceId; //จังหวัด
+            $States = Local::States($billingProvinceId);
+            $order->billingProvinceId = $States['stateId'];
+
+            $billingAmphurId = $addressId->amphurId; //อำเภอ
+            $Cities = Local::Cities($billingAmphurId);
+            $order->billingAmphurId = $Cities['cityId'];
+
+            $billingDistrictId = $addressId->districtId; //ตำบล
+            $District = Local::District($billingDistrictId);
+            $order->billingDistrictId = $District['districtId'];
+
+            $billingZipcode = $addressId->zipcode;
+            $Zipcodes = Local::Zipcodes($billingZipcode);
+            $order->billingZipcode = $Zipcodes['zipcodeId'];
+            $order->billingTel = $addressId->tel;
+            $order->save(false);
+        }
     }
 
     function CreateUserPoint($userId) {

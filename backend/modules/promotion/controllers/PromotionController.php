@@ -139,10 +139,10 @@ class PromotionController extends PromotionMasterController {
             $model->save(false);
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : null;
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : null;
-            if (isset($brand) && count($brand) > 0) {
+            if (isset($brand) && count($brand) > 0 && !empty($brand)) {
                 $this->saveBrandPromotion($brand, $model->promotionId);
             }
-            if (isset($categories) && count($categories) > 0) {
+            if (isset($categories) && count($categories) > 0 && !empty($categories)) {
                 $this->saveCategoryPromotion($categories, $model->promotionId);
             }
             return $this->redirect(['view', 'id' => $model->promotionId]);
@@ -182,14 +182,14 @@ class PromotionController extends PromotionMasterController {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->save(false);
-            $brand = $_POST["Promotion"]["brand"];
-            $categories = $_POST["Promotion"]["category"];
-            if (isset($brand) && count($brand) > 0) {
-                $this->saveBrandPromotion($brand, $model->promotionId);
-            }
-            if (isset($categories) && count($categories) > 0) {
-                $this->saveCategoryPromotion($categories, $model->promotionId);
-            }
+            $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : '';
+            $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : '';
+            // if (isset($brand) && count($brand) > 0 && !empty($brand)) {
+            $this->saveBrandPromotion($brand, $model->promotionId);
+            // }
+            // if (isset($categories) && count($categories) > 0 && !empty($categories)) {
+            $this->saveCategoryPromotion($categories, $model->promotionId);
+            // }
             return $this->redirect(['view', 'id' => $model->promotionId]);
         } else {
             return $this->render('update', [
@@ -315,18 +315,20 @@ class PromotionController extends PromotionMasterController {
                 $pro->delete();
             endforeach;
         }
-        foreach ($brands as $brandId):
-            $brandPromotion = PromotionBrand::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId . "")->one();
-            if (!isset($brandPromotion)) {
-                $brand = new PromotionBrand();
-                $brand->promotionId = $promotionId;
-                $brand->brandId = $brandId;
-                $brand->createDateTime = new \yii\db\Expression('NOW()');
-                $brand->updateDateTime = new \yii\db\Expression('NOW()');
-                $brand->status = 1;
-                $brand->save(false);
-            }
-        endforeach;
+        if (isset($brands) && count($brands) > 0 && !empty($brands)) {
+            foreach ($brands as $brandId):
+                $brandPromotion = PromotionBrand::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId . "")->one();
+                if (!isset($brandPromotion)) {
+                    $brand = new PromotionBrand();
+                    $brand->promotionId = $promotionId;
+                    $brand->brandId = $brandId;
+                    $brand->createDateTime = new \yii\db\Expression('NOW()');
+                    $brand->updateDateTime = new \yii\db\Expression('NOW()');
+                    $brand->status = 1;
+                    $brand->save(false);
+                }
+            endforeach;
+        }
     }
 
     public function saveCategoryPromotion($categories, $promotionId) {
@@ -336,18 +338,20 @@ class PromotionController extends PromotionMasterController {
                 $pro->delete();
             endforeach;
         }
-        foreach ($categories as $categoryId):
-            $categoryPromotion = PromotionCategory::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId . "")->one();
-            if (!isset($categoryPromotion)) {
-                $category = new PromotionCategory();
-                $category->promotionId = $promotionId;
-                $category->categoryId = $categoryId;
-                $category->createDateTime = new \yii\db\Expression('NOW()');
-                $category->updateDateTime = new \yii\db\Expression('NOW()');
-                $category->status = 1;
-                $category->save(false);
-            }
-        endforeach;
+        if (isset($categories) && count($categories) > 0 && !empty($categories)) {
+            foreach ($categories as $categoryId):
+                $categoryPromotion = PromotionCategory::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId . "")->one();
+                if (!isset($categoryPromotion)) {
+                    $category = new PromotionCategory();
+                    $category->promotionId = $promotionId;
+                    $category->categoryId = $categoryId;
+                    $category->createDateTime = new \yii\db\Expression('NOW()');
+                    $category->updateDateTime = new \yii\db\Expression('NOW()');
+                    $category->status = 1;
+                    $category->save(false);
+                }
+            endforeach;
+        }
     }
 
 }
