@@ -1302,7 +1302,7 @@ foreach ($activeMap as $key => $value) {
     var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
-            //$("#zoom_value").val(11);
+            $("#zoom_value").val(11);
             $("#start").val(latlongMap);
             //alert(latlongMap);
     }
