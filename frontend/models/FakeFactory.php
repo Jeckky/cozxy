@@ -152,20 +152,33 @@ class FakeFactory extends Model {
         $products = [];
         $whereArray = [];
 
-        $pCanSale = \common\models\costfit\OrderItem::find()
-                        ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
-                        ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
-                        ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
-                        ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
-                        ->orderBy([
-                            'sum(`order_item`.quantity) ' => SORT_DESC,
-                            ' `order_item`.productId' => SORT_DESC
-                        ])
-                        ->limit($n)->all();
+        /* $pCanSale = \common\models\costfit\OrderItem::find()
+          ->select(' sum(`order_item`.quantity) ,`order`.* , `order_item`.*  , `product_suppliers`.*')
+          ->join(" LEFT JOIN", "order", "order.orderId  = order_item.orderId")
+          ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productSuppId = order_item.productSuppId")
+          ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product_suppliers.approve="approve" ')
+          ->orderBy([
+          'sum(`order_item`.quantity) ' => SORT_DESC,
+          ' `order_item`.productI' => SORT_DESC
+          ])
+          ->limit($n)
+          ->all(); */
+        $pCanSale = Product::find()
+                ->select('`order_item`.quantity as sumQ,`order`.* , `order_item`.*  , `product`.*,`product_suppliers`.productSuppId')
+                ->join(" LEFT JOIN", "product_suppliers", "product_suppliers.productId  = product.productId")
+                ->join(" LEFT JOIN", "order_item", "order_item.productId  = product.productId")
+                ->join(" LEFT JOIN", "order", "order.orderId = order_item.orderId")
+                ->where('order.status >= ' . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS . ' and  product.approve="approve" ')
+                ->groupBy('product.productId')
+                ->orderBy([
+                    'sumQ' => SORT_DESC,
+                    ' `order_item`.productId' => SORT_DESC
+                ])
+                ->limit($n)
+                ->all();
 
         foreach ($pCanSale as $value) {
-            if ($value->attributes['orderItemId'] > 0) {
-
+            if ($value->attributes['productId'] > 0) {
                 $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg195x195');
                 if (Yii::$app->controller->id == 'product') {
                     $title = isset($value->title) ? substr($value->title, 0, 35) : '';
@@ -211,7 +224,6 @@ class FakeFactory extends Model {
                 ];
             }
         }
-
         return $products;
     }
 
@@ -693,4 +705,5 @@ class FakeFactory extends Model {
           FROM `order` LEFT JOIN `order_item` ON order_item.orderId = `order`.orderId WHERE `order_item`.productId =145 group by `order_item`.productId
          * */
     }
+
 }

@@ -71,8 +71,8 @@ $(window).resize(function() { descSet(); });
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
-                            },
+                        return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
+                    },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
                             'layout' => "{items}",
