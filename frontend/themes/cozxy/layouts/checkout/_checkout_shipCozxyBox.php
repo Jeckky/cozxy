@@ -708,7 +708,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //'Place ID: ' + feature.contentString + '</div>');
@@ -716,7 +716,6 @@ foreach ($activeMap as $key => $value) {
                     }
                     })(marker));
             });
-            console.log(map.getZoom());
             // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
             geoLocation(map, 'initMap', '', '');
             /****** Autocomplete *******/
@@ -801,7 +800,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //        'Place ID: ' + feature.contentString + '</div>');
@@ -911,7 +910,7 @@ foreach ($activeMap as $key => $value) {
                     info = new google.maps.InfoWindow();
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                    pickUpClick(feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
                             //info.setContent(feature.content);
                             //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
                             //'Place ID: ' + feature.contentString + '</div>');
@@ -1007,10 +1006,10 @@ foreach ($activeMap as $key => $value) {
             });
     }
 
-    function pickUpClick(pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
-    //alert(pickingId);
-
-    var latlongMap = latitudes + ',' + longitudes;
+    function pickUpClick(map, pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
+    //console.log(map.getZoom());
+    map.setZoom(11);
+            var latlongMap = latitudes + ',' + longitudes;
             /*******If Not Allow Map*************/
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
@@ -1020,8 +1019,10 @@ foreach ($activeMap as $key => $value) {
                     destination: latlongMap,
                     travelMode: 'DRIVING'
             }, function (response, status) {
+            ///console.log(response);
             if (status === 'OK') {
             directionsDisplay.setDirections(response);
+                    map.setZoom(11);
                     //alert('OK');
                     //continue-pick-up
                     $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latitudes + ',' + longitudes + '">');
@@ -1302,10 +1303,12 @@ foreach ($activeMap as $key => $value) {
 
     function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
     if (start == 0){
+    //console.log(map);
+    //console.log(map.getZoom());
     var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
-            $("#zoom_value").val(11);
+            $("#zoom_value").val(map.getZoom());
             $("#start").val(latlongMap);
             //alert(latlongMap);
     }
