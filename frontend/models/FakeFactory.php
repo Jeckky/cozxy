@@ -263,7 +263,7 @@ class FakeFactory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => number_format($results_rating, 2),
+                    'star' => number_format($results_rating),
                 ];
             }
         }
@@ -321,7 +321,7 @@ class FakeFactory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => number_format($results_rating, 2),
+                    'star' => number_format($results_rating),
                 ];
             }
         }
@@ -660,7 +660,7 @@ class FakeFactory extends Model {
                     'price_s' => $price_s,
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                    'star' => number_format($results_rating, 2),
+                    'star' => number_format($results_rating),
                     'avatar' => \common\models\costfit\User::getAvatar($value->userId),
                 ];
             }
@@ -693,4 +693,5 @@ class FakeFactory extends Model {
           FROM `order` LEFT JOIN `order_item` ON order_item.orderId = `order`.orderId WHERE `order_item`.productId =145 group by `order_item`.productId
          * */
     }
+
 }

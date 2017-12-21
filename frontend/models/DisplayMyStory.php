@@ -442,7 +442,7 @@ class DisplayMyStory extends Model {
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                     //'star' => $values[0],
-                    'star' => number_format($results_rating, 2),
+                    'star' => number_format($results_rating),
                     'avatar' => \common\models\costfit\User::getAvatar(Yii::$app->user->id),
                     'productPostId' => $value->productPostId,
                 ];
@@ -504,7 +504,7 @@ class DisplayMyStory extends Model {
                         'price_s' => $price_s,
                         'price' => $price,
                         'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
-                        'star' => number_format($results_rating, 2),
+                        'star' => number_format($results_rating),
                         'productPostId' => $value->productPostId,
                         'avatar' => \common\models\costfit\User::getAvatar($value->userId),
                     ];
@@ -634,7 +634,7 @@ class DisplayMyStory extends Model {
                     'price' => $price,
                     'views' => number_format(\common\models\costfit\ProductPost::getCountViews($value->productPostId)),
                     //'star' => $values[0],
-                    'star' => number_format($results_rating, 2),
+                    'star' => number_format($results_rating),
                     'productPostId' => $value->productPostId,
                     'sort' => $sort,
                     'urlProduct' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $items->productId, 'productSupplierId' => $items['productSuppId']]),
