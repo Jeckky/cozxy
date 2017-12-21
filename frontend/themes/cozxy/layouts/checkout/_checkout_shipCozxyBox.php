@@ -1324,12 +1324,12 @@ foreach ($activeMap as $key => $value) {
     function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
     var noAllow = $("#no_allow").val();
             if (noAllow == 0){
-    //console.log(map);
-    //console.log(map.getZoom());
-    var llMap = latlongMap.split(',');
+    console.log(latlongMap);
+            //console.log(map.getZoom());
+            var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
-            $("#zoom_value").val(map.getZoom());
+            //$("#zoom_value").val(map.getZoom());
             $("#start").val(latlongMap);
             //alert(latlongMap);
     }
