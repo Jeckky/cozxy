@@ -716,6 +716,7 @@ foreach ($activeMap as $key => $value) {
                     }
                     })(marker));
             });
+            console.log(map.getZoom());
             // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
             geoLocation(map, 'initMap', '', '');
             /****** Autocomplete *******/
@@ -1008,8 +1009,8 @@ foreach ($activeMap as $key => $value) {
 
     function pickUpClick(pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
     //alert(pickingId);
-    $("#zoom_value").val(11);
-            var latlongMap = latitudes + ',' + longitudes;
+
+    var latlongMap = latitudes + ',' + longitudes;
             /*******If Not Allow Map*************/
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
@@ -1151,7 +1152,7 @@ foreach ($activeMap as $key => $value) {
             map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
             $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
             $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            $("#zoom_value").val(map.setZoom(11)); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
             latMe = my_Point.lat();
             lngMe = my_Point.lng();
             $("#start").val(latMe + ',' + lngMe);
