@@ -97,7 +97,6 @@ function strip_tags_content($text) {
                                         <div class="col-sm-6">
                                             <?php
                                             //echo $form->field($pickingPoint, 'provinceId')->textInput();
-                                            $a = "ssssss";
                                             echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                                                 //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                                 //'data' => \common\models\costfit\PickingPoint::availableProvince(),
@@ -264,10 +263,22 @@ function strip_tags_content($text) {
                         <div class="row">
                             <div class="col-md-6">
                                 <?php // throw new \yii\base\Exception($model->scenario);            ?>
-                                <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                                <?=
+                                $form->field($order, 'shippingFirstname')->textInput([
+                                    'class' => 'fullwidth',
+                                    'placeholder' => 'FIRSTNAME',
+                                    'value' => $name["firstname"]
+                                ])->label(false);
+                                ?>
                             </div>
                             <div class="col-md-6">
-                                <?= $form->field($order, 'shippingLastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                                <?=
+                                $form->field($order, 'shippingLastname')->textInput([
+                                    'class' => 'fullwidth',
+                                    'placeholder' => 'LASTNAME',
+                                    'value' => $name["lastname"]
+                                ])->label(false);
+                                ?>
                             </div>
                         </div>
 
@@ -355,7 +366,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);            ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);              ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -464,7 +475,7 @@ function strip_tags_content($text) {
              // pickUpSet(p, lat, long, directionsService, directionsDisplay);
              });*/
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -617,7 +628,7 @@ foreach ($activeMap as $key => $value) {
             });
             directionsDisplay.setMap(map);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -746,7 +757,7 @@ foreach ($activeMap as $key => $value) {
             directionsDisplay.setMap(map);
             //showLocationMap();
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-        var iconBaseCozxy = '<?=Yii::$app->homeUrl?>images/subscribe/';
+            var iconBaseCozxy = '<?= Yii::$app->homeUrl ?>images/subscribe/';
             var icons = {
             parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -995,9 +1006,9 @@ foreach ($activeMap as $key => $value) {
     </script>-->
 <script>
 
-    //alert(document.referrer);
-    //alert(window.history.previous);
-    //alert("previous url is: " + window.history.previous.href);
+            //alert(document.referrer);
+            //alert(window.history.previous);
+            //alert("previous url is: " + window.history.previous.href);
 
 </script>
 <?php

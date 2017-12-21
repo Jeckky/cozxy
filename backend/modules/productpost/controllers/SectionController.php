@@ -145,9 +145,10 @@ class SectionController extends ProductPostMasterController {
                 }
                 $imageObj->saveAs($urlFile);
             }
+            $model->type = $_POST["Section"]["type"];
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
-            $model->save();
+            $model->save(false);
             return $this->redirect('index');
         } else {
             return $this->render('update', [
@@ -199,22 +200,22 @@ class SectionController extends ProductPostMasterController {
 //                ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and ps.approve="approve" and ps.status=1 and ps.result>0 AND pps.status =1 AND  pps.price > 0 and p.price>0 or section_item.productId is not null')
 //                ->groupBy('ps.productSuppId,section_item.productSuppId,p.productSuppId')
 //                ->orderBy("section_item.status DESC,section_item.sectionId ASC," . $sort);
-        $sectionItemModels = SectionItem::find()->where(['sectionId'=>$_GET["sectionId"]])->select('productId')->all();
-        $array = ArrayHelper::map($sectionItemModels, 'productId','productId');
+        $sectionItemModels = SectionItem::find()->where(['sectionId' => $_GET["sectionId"]])->select('productId')->all();
+        $array = ArrayHelper::map($sectionItemModels, 'productId', 'productId');
         $productIdInSection = implode(',', $array);
         $queryVariableProducts = Product::find()
-                            ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,product.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
-        ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
-        ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
-        ->where('ps.productId is not null')
-        ->andWhere(['product.approve'=>'approve', 'product.status'=>1])
-        ->andWhere(['ps.approve'=>'approve', 'ps.status'=>1])
-        ->andWhere('ps.result > 0')
-        ->andWhere(['pps.status'=>1])
-        ->andWhere('pps.price > 0');
-            if($productIdInSection != '') {
-                $queryVariableProducts->andWhere("product.productId not in ($productIdInSection)");
-            }
+                ->select('product.productId as productId,ps.productSuppId as productSuppId, pps.price as price,ps.title as title,product.price as marketPrice,100-(100*(pps.price/product.price)) as percent')
+                ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
+                ->leftJoin('product_price_suppliers pps', 'pps.productSuppId=ps.productSuppId')
+                ->where('ps.productId is not null')
+                ->andWhere(['product.approve' => 'approve', 'product.status' => 1])
+                ->andWhere(['ps.approve' => 'approve', 'ps.status' => 1])
+                ->andWhere('ps.result > 0')
+                ->andWhere(['pps.status' => 1])
+                ->andWhere('pps.price > 0');
+        if ($productIdInSection != '') {
+            $queryVariableProducts->andWhere("product.productId not in ($productIdInSection)");
+        }
 
         if (isset($_GET['title']) && $_GET['title'] != '') {
             $queryVariableProducts->andWhere("product.title like '%" . $_GET['title'] . "%'");

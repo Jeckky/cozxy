@@ -323,35 +323,51 @@ class BackendMasterController extends MasterController {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
+
             if ($parents != null) {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
+                //echo $param3;
                 $list = \common\models\dbworld\States::find()->andWhere(['countryId' => $cat_id])->asArray()->all();
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['stateId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['stateId'], 'name' => $account['localName'] . ' / ' . $account['stateName']];
                         $param1 = ($param1 != '') ? $param1 : $account['stateId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         }
                     }
 
                     // Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
                     return;
                 }
             }
-
             //echo 'no';
         }
         echo \yii\helpers\Json::encode(['output' => '', 'selected..' => '']);
@@ -362,37 +378,61 @@ class BackendMasterController extends MasterController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-            //print_r($parents);
             if ($parents != null) {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
-
-                $list = \common\models\dbworld\Cities::find()->andWhere(['stateId' => $cat_id])->asArray()->all();
+                $text = 'khet ';
+                $textInfo = '';
+                $asterisk = '*';
+                $Notasterisk = '';
+                $list = \common\models\dbworld\Cities::find()
+                        ->select(['cities.cityId', 'cities.stateId', 'cities.cityName', 'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '")) as localName'])
+                        ->andWhere(['cities.stateId' => $cat_id])->asArray()
+                        ->orderBy([
+                            'LTRIM(REPLACE(REPLACE(LOWER(cities.localName), "' . $text . '", "' . $textInfo . '"), "' . $asterisk . '", "' . $Notasterisk . '"))' => SORT_ASC
+                        ])
+                        ->all(); //->orderBy('SUBSTR(cities.localName,6,1) asc')
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
+                    //echo '<pre>';
+                    //print_r($list);
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['cityId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['cityId'], 'name' => ($cat_id == 1) ? 'Khet ' . $account['localName'] . ' / ' . $account['cityName'] : $account['localName'] . ' / ' . $account['cityName']];
                         $param1 = ($param1 != '') ? $param1 : $account['cityId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 
                     // Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
                     return;
                 }
             }
-
             //echo 'no';
         }
 
@@ -408,32 +448,50 @@ class BackendMasterController extends MasterController {
                 $cat_id = $parents[0];
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
                     $params = $_POST['depdrop_params'];
                     $param1 = $params[0]; // get the value of input-type-1
                     $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
-
-                $list = \common\models\dbworld\District::find()->andWhere(['cityId' => $cat_id])->asArray()->all();
+                $asterisk = '*';
+                $Notasterisk = '';
+                $list = \common\models\dbworld\District::find()
+                        ->select(['district.districtId', 'district.districtName', 'LTRIM(REPLACE(LOWER(district.localName), "' . $asterisk . '", "' . $Notasterisk . '")) as localName'])
+                        ->andWhere(['cityId' => $cat_id])->asArray()
+                        ->all();
                 $selected = null;
                 if ($cat_id != null && count($list) > 0) {
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName']];
+                        $out[] = ['id' => $account['districtId'], 'name' => $account['localName'] . ' / ' . $account['districtName']];
                         $param1 = ($param1 != '') ? $param1 : $account['districtId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = $param1;
+                            if ($param3 != 'add') {
+
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 
                     // Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
                     return;
                 }
             }
-
             //echo 'no';
         }
 
@@ -445,39 +503,55 @@ class BackendMasterController extends MasterController {
 
         if (isset($_POST['depdrop_parents'])) {
             $parents = ($_POST['depdrop_parents']);
-//            throw new \yii\base\Exception(print_r($parents, true));
+            //throw new \yii\base\Exception(print_r($parents[0], true));
             if ($parents != null) {
                 $districtId = $parents[0];
+
                 $param1 = null;
                 $param2 = null;
+                $param3 = null;
                 if (!empty($_POST['depdrop_params'])) {
-                    $params = $_POST['depdrop_params'];
-                    $param1 = $params[0]; // get the value of input-type-1
+                    //$params = $_POST['depdrop_params'];
+                    //$param1 = $params[0]; // get the value of input-type-1
 //                    $param2 = $params[1]; // get the value of input-type-2
+                    $params = $_POST['depdrop_params'];
+                    // throw new \yii\base\Exception(print_r($params, true));
+                    $param1 = $params[0]; // get the value of input-type-1
+                    $param2 = $params[1]; // get the value of input-type-2
+                    $param3 = $params[2]; // get the value of input-type-3
                 }
 
-                $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
-//                throw new Exception($district->code);
-                $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
-                $selected = null;
-                if ($districtId != null && count($list) > 0) {
+
+                if ($districtId != null) {
+                    $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
+                    $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
                     $selected = '';
                     foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['zipcode'], 'name' => $account['zipcode']];
-                        $param1 = ($param1 != '') ? $param1 : $account['zipcode'];
+                        $out[] = ['id' => $account['zipcodeId'], 'name' => $account['zipcode']];
+                        $param1 = ($param1 != '') ? $param1 : $account['zipcodeId'];
                         if ($i == 0) {
-                            $selected = $param1; //$account['stateId'];
+                            if ($param3 != 'add') {
+                                $selected = $param1; //$account['stateId'];
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1; //$account['stateId'];
+                            }
                         } else {
-                            $selected = $param1;
+                            if ($param3 != 'add') {
+                                $selected = $param1;
+                            } else {
+                                $selected = 'Select ...';
+                                $selected .= $param1;
+                            }
                         }
                     }
 
-                    // Shows how you can preselect a value
+                    //Shows how you can preselect a value
                     echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
                     return;
                 }
             }
-
             //echo 'no';
         }
 
