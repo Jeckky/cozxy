@@ -526,7 +526,7 @@ $pickingId = rand(0, 9999);
             var startUserCozxy = new google.maps.LatLng(<?= $_REQUEST['start'] ?>);
             var marker = new google.maps.Marker({
                 map: map,
-                position: bangkokCozxy
+                position: startUserCozxy
             });
             $("#start").val(<?= $_REQUEST['start'] ?>);
             map.panTo(startUserCozxy); // ให้แผนที่แสดงไปที่ตัว marker
