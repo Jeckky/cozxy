@@ -630,6 +630,7 @@ function strip_tags_content($text) {
                     fullscreenControl: true
             });
             directionsDisplay.setMap(map);
+            map.setZoom(11);
             var onChangeHandler = function () {
             calculateAndDisplayRoute(directionsService, directionsDisplay);
             };
@@ -813,7 +814,7 @@ foreach ($activeMap as $key => $value) {
             var pickingId = fields[0];
             var latlongMap = fields[1];
             /*******If Not Allow Map*************/
-            alert(map.getZoom);
+
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
             /*if (start == 0){
@@ -1012,8 +1013,6 @@ foreach ($activeMap as $key => $value) {
             /*******If Not Allow Map*************/
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
-
-
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
