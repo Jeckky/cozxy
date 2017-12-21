@@ -44,10 +44,10 @@ SCRIPT;
                 'name' => 'state_2',
                 'value' => '',
                 'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()
-                ->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue, $index = 1) {
-                    //return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
-                    return strtolower($model['ctry_name']) . ' (' . $model['currency_name'] . ')';
-                }, 'currency_code'),
+                                ->where('status=2')->asArray()->all(), 'currencyId', function($model, $defaultValue, $index = 1) {
+                            //return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                            return strtolower($model['ctry_name']) . ' (' . $model['currency_name'] . ')';
+                        }, 'currency_code'),
                 'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'onchange' => 'CurrencyExchangeRate(this.value)'],
                 'pluginOptions' => [
                     //'templateResult' => new JsExpression('format'),
@@ -55,19 +55,19 @@ SCRIPT;
                     //'escapeMarkup' => $escape,
                     'allowClear' => true
                 ],
-            /* , 'addon' => [
-              'prepend' => [
-              'content' => Html::icon('globe')
-              ],
-              'append' => [
-              'content' => Html::button(Html::icon('map-marker'), [
-              'class' => 'btn btn-primary',
-              'title' => 'Mark on map',
-              'data-toggle' => 'tooltip'
-              ]),
-              'asButton' => true
-              ]
-              ] */
+                    /* , 'addon' => [
+                      'prepend' => [
+                      'content' => Html::icon('globe')
+                      ],
+                      'append' => [
+                      'content' => Html::button(Html::icon('map-marker'), [
+                      'class' => 'btn btn-primary',
+                      'title' => 'Mark on map',
+                      'data-toggle' => 'tooltip'
+                      ]),
+                      'asButton' => true
+                      ]
+                      ] */
             ]);
             ?>
         </div>
@@ -127,9 +127,9 @@ SCRIPT;
     <div class="modal-dialog modal-lg" role="document">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'default-add-new-compare-price-story',
-            'method' => 'POST',
-            'options' => ['enctype' => 'multipart/form-data']
+                    'id' => 'default-add-new-compare-price-story',
+                    'method' => 'POST',
+                    'options' => ['enctype' => 'multipart/form-data']
         ]);
         ?>
         <div class="modal-content">
@@ -153,16 +153,7 @@ SCRIPT;
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Price</label><!--฿-->
-                                    <?= $form->field($modelComparePrices, 'price', ['template' => '
-                                            <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
-                                                <div class="input-group col-sm-12">
-                                                   <span class="input-group-addon">
-
-                                                   </span>
-                                                   {input}
-                                                </div>
-                                                {error}{hint}
-                                            </div>'])->textInput(['data-default' => ''])
+                                    <?= $form->field($modelComparePrices, 'price')->textInput(['data-default' => ''])->label(FALSE)
                                     ?>
                                     <!--<div class="input-group">
                                         <div class="input-group-addon">฿</div>
@@ -199,8 +190,8 @@ SCRIPT;
                                         'name' => 'currencyModal',
                                         'value' => '',
                                         'data' => yii\helpers\ArrayHelper::map(common\models\costfit\CurrencyInfo::find()->asArray()->all(), 'currencyId', function($model, $defaultValue) {
-                                            return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
-                                        }, 'currency_code'),
+                                                    return isset($model['currrency_symbol']) ? '(' . $model['currrency_symbol'] . ')' . $model['ctry_name'] : $model['ctry_name'];
+                                                }, 'currency_code'),
                                         'options' => ['multiple' => FALSE, 'placeholder' => 'Select Currency ...', 'id' => 'productpost-currency']
                                     ]);
                                     ?>

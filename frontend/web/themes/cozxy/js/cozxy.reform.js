@@ -1562,9 +1562,11 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
 
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
+                    var price = JSONObject.price;
+                    var prices = price.toString().split('.');
                     $('#productpost-currency').val(JSONObject.currency).trigger('change');
                     $('#productpost-shopname').val(JSONObject.shopName);
-                    $('#productpostcompareprice-price').val(JSONObject.price);
+                    $('#productpostcompareprice-price').val(prices[0]);
                     $('#productpost-country').val(JSONObject.country);
                     $('#productpost-currency').val(JSONObject.currency);
                     $('#latitude').val(JSONObject.latitude);

@@ -398,7 +398,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             </div>
 
 
-            <div class="col-xs-3">
+            <div class="col-xs-12 col-md-3 col-sm-3">
                 <?php if (isset($otherProducts)): ?>
                     <div class="row ">
                         <div class="special box_width_4 line_h">
