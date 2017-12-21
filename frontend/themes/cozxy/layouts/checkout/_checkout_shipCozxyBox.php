@@ -416,6 +416,7 @@ function strip_tags_content($text) {
                                 <input type="hidden" name="lat_value" id="lat_value" value="0">
                                 <input type="hidden" name="lon_value" id="lon_value" value="0">
                                 <input type="hidden" name="start" id="start" value="0">
+                                <input type="hidden" name="zoom_value" id="zoom_value" value="0">
                                 <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
@@ -1080,7 +1081,8 @@ foreach ($activeMap as $key => $value) {
             stepDisplay.open(map, marker);
     });
     }
-    function customIcon (opts) {
+
+    function customIcon(opts) {
     return Object.assign({
     path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
             fillColor: '#34495e',
@@ -1090,7 +1092,8 @@ foreach ($activeMap as $key => $value) {
             scale: 1,
     }, opts);
     }
-    function geoLocation(map, status, lat, lng){
+
+    function geoLocation(map, status, lat, lng) {
     //alert(map);
     if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -1098,31 +1101,29 @@ foreach ($activeMap as $key => $value) {
             var labelIndex = 0;
             var pos1 = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
             /** autocomplete **/
-            if (status == 'autocomplete'){
-    /*var infowindow = new GGM.InfoWindow({
-     position: pos1,
-     content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>', map:map
-     });*/
+            if (status == 'autocomplete') {
+
     var image = 'https://cdn4.iconfinder.com/data/icons/icocentre-free-icons/114/f-cross_256-32.png';
             var beachMarker = new google.maps.Marker({
             position: pos1,
                     map: map,
                     icon: image
             });
+            var my_Point = beachMarker.getPosition();
             /*var flightPath = new google.maps.Marker({
              map:map,
              position: pos1, label: labels[labelIndex++ % labels.length],
              });*/
             //flightPath.setMap(null);
-    } else{
+    } else {
     var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
             /*var infowindow = new GGM.InfoWindow({
              position: pos1,
              //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
              });*/
-            var infowindow = new GGM.InfoWindow();
+            var infowindow1 = new GGM.InfoWindow();
             var markera = new google.maps.Marker({
-            map:map,
+            map: map,
                     position: pos1, label: labels[labelIndex++ % labels.length]
             });
             var my_Point = markera.getPosition();
@@ -1138,7 +1139,7 @@ foreach ($activeMap as $key => $value) {
             map.setCenter(pos1);
     }
 
-
+    //console.log(my_Point.lat());
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
     //alert('ไม่ทำงาน');
@@ -1152,7 +1153,7 @@ foreach ($activeMap as $key => $value) {
     }
     }
 
-    function autocomplete(map){
+    function autocomplete(map) {
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             var labelIndex = 0;
             var card = document.getElementById('pac-card');
@@ -1205,6 +1206,7 @@ foreach ($activeMap as $key => $value) {
                     $("#lat_value").val(place.geometry.location.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
                     $("#lon_value").val(place.geometry.location.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
                     $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+                    //$("#zoom_value").val(map.setZoom(11)); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
                     latMe = place.geometry.location.lat();
                     lngMe = place.geometry.location.lng();
                     $("#start").val(latMe + ',' + lngMe);
@@ -1213,9 +1215,10 @@ foreach ($activeMap as $key => $value) {
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
+                    map.setZoom(11); // Why 17? Because it looks good.
             } else {
             map.setCenter(place.geometry.location);
-                    map.setZoom(17); // Why 17? Because it looks good.
+                    map.setZoom(11); // Why 17? Because it looks good.
             }
             marker.setPosition(place.geometry.location);
                     marker.setVisible(true);
@@ -1232,7 +1235,8 @@ foreach ($activeMap as $key => $value) {
                     infowindowContent.children['place-name'].textContent = place.name;
                     infowindowContent.children['place-address'].textContent = address;
                     infowindow.open(map, marker);
-            });
+            }
+            );
             // Sets a listener on a radio button to change the filter type on Places
             // Autocomplete.
             /*function setupClickListener(id, types) {
@@ -1277,8 +1281,6 @@ foreach ($activeMap as $key => $value) {
             map.panTo(bangkokCozxy); // ให้แผนที่แสดงไปที่ตัว marker
             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
     }
-
-
 
     $(function () {
     // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
