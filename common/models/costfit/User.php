@@ -313,11 +313,11 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     public static function supplierAddressText($addressId) {
-        $text = Address::find()->where("addressId=" . $addressId . " and isDefault=1")->one();
+        $text = Address::find()->where("addressId=" . $addressId . " and type=4")->one();
         if (isset($text) && !empty($text)) {
             $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
             if (isset($districtId) && !empty($districtId)) {
-                $district = $districtId->localName;
+                $district = $districtId->districtName;
                 $id = $districtId->cityId;
             } else {
                 $district = '';
@@ -341,7 +341,7 @@ class User extends \common\models\costfit\master\UserMaster {
             } else {
                 $zipcodes = '';
             }
-            $address = $text->address . " " . $district . "" . $city . " " . $state . " " . $zipcodes . "<br>TEL " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax " . $text->fax;
+            $address = $text->address . " แขวง" . $district . " " . $city . " " . $state . " " . $zipcodes;
             return $address;
         } else {
             return NULL;

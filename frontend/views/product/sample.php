@@ -47,7 +47,7 @@ $(window).resize(function() { descSet(); });
 <div class="container">
     <div class="row">
         <div class="col-md-9">
-            <div class="size48">&nbsp;</div> 
+            <div class="size48">&nbsp;</div>
             <?php
             echo $this->render('@app/themes/cozxy/layouts/product/_product_detail_sample', ['model' => $productViews, 'productGroupOptionValues' => $productGroupOptionValues, 'selectedOptions' => $selectedOptions, 'productGroupOptionValueSelect' => $productGroupOptionValueSelect]);
             ?>
@@ -71,8 +71,8 @@ $(window).resize(function() { descSet(); });
                                 'tag' => false,
                             ],
                             'itemView' => function ($model, $key, $index, $widget) {
-                                return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
-                            },
+                        return $this->render('@app/themes/cozxy/layouts/product/_product_item', ['model' => $model, 'colSize' => '3']);
+                    },
 //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
                             'layout' => "{items}",

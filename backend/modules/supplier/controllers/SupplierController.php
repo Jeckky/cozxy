@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use backend\controllers\BackendMasterController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\costfit\Address;
 
 /**
  * SupplierController implements the CRUD actions for Supplier model.
@@ -47,7 +48,7 @@ class SupplierController extends SupplierMasterController {
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -58,7 +59,7 @@ class SupplierController extends SupplierMasterController {
      */
     public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -77,7 +78,39 @@ class SupplierController extends SupplierMasterController {
             }
         }
         return $this->render('create', [
-            'model' => $model,
+                    'model' => $model,
+        ]);
+    }
+
+    public function actionSupplierAddress() {
+        $model = Address::find()->where("userId=" . \Yii::$app->user->id . " and type=4")->one();
+        return $this->render('supplier_address', [
+                    'model' => $model
+        ]);
+    }
+
+    public function actionCreateSupplierAddress() {
+        $model = Address::find()->where("userId=" . \Yii::$app->user->id . " and type=4")->one();
+        $hash = 'edit';
+        if (!isset($model)) {
+            $model = new Address();
+            $hash = 'add';
+        }
+
+        if (isset($_POST["Address"])) {
+            $model->attributes = $_POST["Address"];
+            $model->status = 1;
+            $model->userId = \Yii::$app->user->id;
+            $model->type = 0x4;
+            $model->createDateTime = new \yii\db\Expression('NOW()');
+            $model->updateDateTime = new \yii\db\Expression('NOW()');
+            if ($model->save()) {
+                return $this->redirect(['supplier-address']);
+            }
+        }
+        return $this->render('address_form', [
+                    'model' => $model,
+                    'hash' => $hash
         ]);
     }
 
@@ -100,7 +133,7 @@ class SupplierController extends SupplierMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 

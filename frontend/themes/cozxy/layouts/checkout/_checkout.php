@@ -103,7 +103,8 @@ $pickingId = rand(0, 9999);
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
                                                     ->asArray()
-                                                    ->where(['userId' => Yii::$app->user->identity->userId])->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
+                                                    ->where('userId=' . Yii::$app->user->identity->userId . ' and type!=4')
+                                                    ->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
                                                 $index = $index++;
                                                 //echo '<pre>';
                                                 //print_r($model);
@@ -188,7 +189,7 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">&nbsp;</div>
-                            <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
+                            <div class="col-xs-9 col-md-10 col-sm-9">
                                 <input type="checkbox" id="checkBillingTax" value="0" name="checkTax">&nbsp;&nbsp;&nbsp;To get the full tax invoice for tax reductions, please fill in your tax code (national ID)<br>
                                 <!--<input type="text" name="billingTax" id="inputBillingTax" class="form-control" style="display:none;" required="true">-->
                                 <input type="text" name="inputBillingTax" id="inputBillingTax" class="form-control" style="display:none;">

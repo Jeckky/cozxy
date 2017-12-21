@@ -188,7 +188,6 @@ class CheckoutController extends MasterController {
             $order->pickingId = 0;
             $order->save(false);
             $pickingId = '0';
-
         } else {
             echo 'Picking Point Not Null 2';
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
@@ -302,7 +301,7 @@ class CheckoutController extends MasterController {
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
         $checkTax = Yii::$app->request->post('checkTax');
-        $tax = Yii::$app->request->post('billingTax');
+        $tax = Yii::$app->request->post('inputBillingTax');
         $addressId = Yii::$app->request->post('addressId');
         $orderAddress = Yii::$app->request->post('Order');
         $orderId = Yii::$app->request->post('orderId');
@@ -316,7 +315,6 @@ class CheckoutController extends MasterController {
         //print_r($orderAddress);
         //exit();
         $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress, $tax, $tel);
-        //throw new Exception(print_r());
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
             $pickingMap = \common\models\costfit\PickingPoint::find()->where('pickingId=' . $LcpickingId)->one();

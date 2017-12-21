@@ -44,6 +44,7 @@ class ShipCozxyBoxController extends MasterController {
         $PickingPointJson = CozxyMap::PickingPointJson();
 
         //print_r($PickingPointJson);
+        $name = [];
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
 
         if (!isset($orderId)) {
@@ -53,7 +54,17 @@ class ShipCozxyBoxController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
-
+        $billing = \common\models\costfit\Address::find()->where("userId=" . \Yii::$app->user->id . " and isDefault=1 and type!=4")->one();
+        if (isset($billing)) {
+            $name["firstname"] = $billing->firstname;
+            $name["lastname"] = $billing->lastname;
+        } else {
+            $user = \common\models\costfit\User::find()->where("userId=" . \Yii::$app->user->id)->one();
+            if (isset($user)) {
+                $name["firstname"] = $user->firstname;
+                $name["lastname"] = $user->lastname;
+            }
+        }
         $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
         foreach ($pickingPointActiveMap as $key => $value) {
             //echo $value[$key]->attributes . '<br>';
@@ -95,7 +106,7 @@ class ShipCozxyBoxController extends MasterController {
             $shippingChooseActive = 1; //Default Ship To CozxyBox
         }
 
-        return $this->render('/checkout/shipCozxyBox', compact('shippingChooseActive', 'activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
+        return $this->render('/checkout/shipCozxyBox', compact('shippingChooseActive', 'activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress', 'name'));
     }
 
     public static function actionLocationPickUp1() {

@@ -253,7 +253,6 @@ function strip_tags_content($text) {
                                         <div class="col-sm-6">
                                             <?php
                                             //echo $form->field($pickingPoint, 'provinceId')->textInput();
-                                            $a = "ssssss";
                                             echo $form->field($pickingPoint, 'provinceId')->widget(kartik\select2\Select2::classname(), [
                                                 //'data' => yii\helpers\ArrayHelper::map(common\models\dbworld\States::find()->asArray()->all(), 'stateId', 'localName'),
                                                 //'data' => \common\models\costfit\PickingPoint::availableProvince(),
@@ -452,10 +451,22 @@ function strip_tags_content($text) {
                         <div class="row">
                             <div class="col-md-6">
                                 <?php // throw new \yii\base\Exception($model->scenario);            ?>
-                                <?= $form->field($order, 'shippingFirstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
+                                <?=
+                                $form->field($order, 'shippingFirstname')->textInput([
+                                    'class' => 'fullwidth',
+                                    'placeholder' => 'FIRSTNAME',
+                                    'value' => $name["firstname"]
+                                ])->label(false);
+                                ?>
                             </div>
                             <div class="col-md-6">
-                                <?= $form->field($order, 'shippingLastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                                <?=
+                                $form->field($order, 'shippingLastname')->textInput([
+                                    'class' => 'fullwidth',
+                                    'placeholder' => 'LASTNAME',
+                                    'value' => $name["lastname"]
+                                ])->label(false);
+                                ?>
                             </div>
                         </div>
 
@@ -543,7 +554,7 @@ function strip_tags_content($text) {
 
                         <div class="row">
                             <div class="col-md-6">
-                                <?php // throw new \yii\base\Exception($model->scenario);            ?>
+                                <?php // throw new \yii\base\Exception($model->scenario);              ?>
                                 <?= $form->field($order, 'shippingTel')->textInput(['class' => 'fullwidth', 'placeholder' => 'PHONE'])->label(false); ?>
                             </div>
                             <div class="col-md-6">
@@ -1336,49 +1347,27 @@ foreach ($activeMap as $key => $value) {
  <!--<script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&callback=initMap">
     </script>-->
-
-<?php
-$this->registerCss('
+<?php $this->registerCss('
 #map {
             height: 450px;
         }
 
-');
-/* $this->registerJs('if ($("input[name=shipping]:checked").val() == 1) {
-  $("#shipToAddress").hide();
-  } else {
-  $("#shipToCozxyBox").hide();
-  $("#shipToAddress").show();
-  }
-
-  $("input[name=shipping]").change(function (e) {
-  var shipTo = $(this).val();
-  if (shipTo == 2) {
-  $("#shipToCozxyBox").hide();
-  $("#shipToAddress").show();
-  } else {
-  $("#shipToAddress").hide();
-  $("#shipToCozxyBox").show();
-  }
-  }); ', \yii\web\View::POS_END); */
-?>
+'); ?>
 
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myGoogleMap">
 
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i>Your title goes here</h4>
+<div class = "modal fade bs-example-modal-lg" tabindex = "-1" role = "dialog" aria-labelledby = "myLargeModalLabel" aria-hidden = "true" id = "myGoogleMap" >
+    <div class = "modal-dialog" ><!-- Modal content-->
+        <div class = "modal-content" >
+            <div class = "modal-header" >
+                <button type = "button" class = "close" data-dismiss = "modal" > × </button>
+                <h4 class = "modal-title" > <i class = "fa fa-exclamation-circle" > </i>Your title goes here</h4 >
             </div>
-            <div class="modal-body">
+            <div class = "modal-body" >
                 Your content goes here
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+            <div class = "modal-footer" >
+                <button type = "button" class = "btn btn-default" data-dismiss = "modal" > Submit </button>
             </div>
         </div>
 
