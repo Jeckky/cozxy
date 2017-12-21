@@ -416,6 +416,7 @@ function strip_tags_content($text) {
                                 <input type="hidden" name="lon_value" id="lon_value" value="0">
                                 <input type="hidden" name="start" id="start" value="0">
                                 <input type="hidden" name="zoom_value" id="zoom_value" value="0">
+                                <input type="hidden" name="no_allow" id="no_allow" value="0">
                                 <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
@@ -1171,14 +1172,15 @@ foreach ($activeMap as $key => $value) {
             $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
             $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+
             latMe = my_Point.lat();
             lngMe = my_Point.lng();
             $("#start").val(latMe + ',' + lngMe);
             //alert(latMe + ',' + lngMe);
             map.setCenter(pos1);
     }
-
-    //console.log(my_Point.lat());
+    $("#no_allow").val('1');
+            //console.log(my_Point.lat());
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
     //alert('ไม่ทำงาน');
@@ -1299,6 +1301,7 @@ foreach ($activeMap as $key => $value) {
     function handleNoGeolocation(map) {
 
     var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
+            $("#no_allow").val('0');
             /*map.setCenter(bangkokCozxy);
              var infowindow = new GGM.InfoWindow({
              position: bangkokCozxy,
@@ -1319,7 +1322,8 @@ foreach ($activeMap as $key => $value) {
     }
 
     function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
-    if (start == 0){
+    var noAllow = $("#no_allow").val();
+            if (noAllow == 0){
     //console.log(map);
     //console.log(map.getZoom());
     var llMap = latlongMap.split(',');
