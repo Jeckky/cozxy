@@ -552,38 +552,40 @@ class MasterController extends MasterCommonController {
                     $param3 = $params[2]; // get the value of input-type-3
                 }
 
+                //echo $districtId;
+                if ($districtId != 'Loading district ...') {
+                    if ($districtId != null) {
+                        $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
+                        //throw new \yii\base\Exception($district->code);
+                        $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
 
-                if ($districtId != null) {
-                    $district = \common\models\dbworld\District::find()->where("districtId = $districtId")->one();
-                    //throw new \yii\base\Exception($district->code);
-                    $list = \common\models\dbworld\Zipcodes::find()->andWhere(['districtCode' => $district->code])->asArray()->all();
+                        $selected = '';
+                        foreach ($list as $i => $account) {
+                            $out[] = ['id' => $account['zipcodeId'], 'name' => $account['zipcode']];
+                            $param1 = ($param1 != '') ? $param1 : $account['zipcodeId'];
 
-                    $selected = '';
-                    foreach ($list as $i => $account) {
-                        $out[] = ['id' => $account['zipcodeId'], 'name' => $account['zipcode']];
-                        $param1 = ($param1 != '') ? $param1 : $account['zipcodeId'];
-
-                        if ($i == 0) {
-                            if ($param3 != 'add') {
-                                $selected = $param1; //$account['stateId'];
+                            if ($i == 0) {
+                                if ($param3 != 'add') {
+                                    $selected = $param1; //$account['stateId'];
+                                } else {
+                                    $selected = 'Select ...';
+                                    $selected .= $param1; //$account['stateId'];
+                                }
                             } else {
-                                $selected = 'Select ...';
-                                $selected .= $param1; //$account['stateId'];
-                            }
-                        } else {
-                            if ($param3 != 'add') {
-                                $selected = $param1;
-                            } else {
-                                $selected = 'Select ...';
-                                $selected .= $param1;
+                                if ($param3 != 'add') {
+                                    $selected = $param1;
+                                } else {
+                                    $selected = 'Select ...';
+                                    $selected .= $param1;
+                                }
                             }
                         }
+
+                        // Shows how you can preselect a value
+                        echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
+
+                        return;
                     }
-
-                    // Shows how you can preselect a value
-                    echo \yii\helpers\Json::encode(['output' => $out, 'selected' => $selected]);
-
-                    return;
                 }
             }
             //echo 'no';
