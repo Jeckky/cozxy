@@ -813,6 +813,7 @@ foreach ($activeMap as $key => $value) {
             var pickingId = fields[0];
             var latlongMap = fields[1];
             /*******If Not Allow Map*************/
+            alert(map.getZoom);
             var start = $("#start").val();
             NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
             /*if (start == 0){
@@ -1291,7 +1292,7 @@ foreach ($activeMap as $key => $value) {
              });*/
             //$("#lat_value").val(13.871395); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
             //$("#lon_value").val(100.61732); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-            //$("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+            $("#zoom_value").val(11); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
             latMe = 13.871395;
             lngMe = 100.61732;
             //$("#start").val(latMe + ',' + lngMe);
