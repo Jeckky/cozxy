@@ -34,6 +34,17 @@ $this->registerCss('
 #logoParade .scrollingHotSpotRight {
 	background: #fff url(imgs/ban-arrow-right.png) center no-repeat;
 }
+p.test {
+        /* Keyword values */
+        overflow-wrap: normal;
+        overflow-wrap: break-word;
+
+        /* Global values */
+        overflow-wrap: inherit;
+        overflow-wrap: initial;
+        overflow-wrap: unset;
+        overflow-wrap: break-word;
+    }
 ');
 
 
@@ -278,19 +289,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <blockquote style="font-size: 14px;">
                         <p>Find details, prices, and stories on other products coming to our website soon.</p>
                      </blockquote>-->
-                    <style>
-                        p.test {
-                            /* Keyword values */
-                            overflow-wrap: normal;
-                            overflow-wrap: break-word;
 
-                            /* Global values */
-                            overflow-wrap: inherit;
-                            overflow-wrap: initial;
-                            overflow-wrap: unset;
-                            overflow-wrap: break-word;
-                        }
-                    </style>
                     <div class="row">
                         <div class="special box_width_4 line_h">
                             <div class="col-md-2 col-sm-2 col-xs-2 padding-product-detail" align="left">
