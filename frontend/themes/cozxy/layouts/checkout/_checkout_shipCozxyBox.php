@@ -1153,11 +1153,6 @@ foreach ($activeMap as $key => $value) {
                     icon: image
             });
             var my_Point = beachMarker.getPosition();
-            /*var flightPath = new google.maps.Marker({
-             map:map,
-             position: pos1, label: labels[labelIndex++ % labels.length],
-             });*/
-            //flightPath.setMap(null);
     } else {
     var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
             /*var infowindow = new GGM.InfoWindow({
