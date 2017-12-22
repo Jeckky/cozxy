@@ -295,7 +295,7 @@ $pickingId = rand(0, 9999);
                                 <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LAST NAME', 'value' => isset($getUserInfo['lastname']) ? $getUserInfo['lastname'] : ''])->label(false); ?>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 field-address-tel-unique">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"><?php echo strtoupper('Mobile Phone Number*'); ?></label>
                                 <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Phone Number', 'value' => isset($getUserInfo['tel']) ? $getUserInfo['tel'] : ''])->label(false); ?>

@@ -805,25 +805,51 @@ function checkoutNewBilling() {
     var push_districtid = $('#address-districtid').val();
     var push_zipcode = $('#address-zipcode').val();
     var push_isDefault = $('#address-isDefault').val();
+
     $.ajax({
         type: "POST",
-        url: $baseUrl + "checkout/checkout-new-billing",
-        data: {'co_country': push_co_country, 'firstname': push_firstname, 'lastname': push_lastname, 'address': push_address, 'email': push_email, 'tel': push_tel
-            , 'company': push_company, 'tax': push_tax, 'countryid': push_countryid, 'provinceid': push_provinceid, 'amphurid': push_amphurid
-            , 'districtid': push_districtid, 'zipcode': push_zipcode, 'isDefault': push_isDefault
-        },
+        url: $baseUrl + "my-account/tel-unique",
+        data: {'tel': push_tel},
         success: function (data, status)
         {
-
             if (status == "success") {
-                //window.location = $baseUrl + 'checkout';
-                $(".bs-example-modal-lg").modal("hide");
-                $('#addressId').append(data);
+                if (data == 1) {
+                    htmls = "<div class=\"form-group\">"
+                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + push_tel + " aria-required=\"true\" aria-invalid=\"true\">"
+                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                    htmls += "</div></div> ";
+                    $('.field-address-tel-unique').html(htmls);
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: $baseUrl + "checkout/checkout-new-billing",
+                        data: {'co_country': push_co_country, 'firstname': push_firstname, 'lastname': push_lastname, 'address': push_address, 'email': push_email, 'tel': push_tel
+                            , 'company': push_company, 'tax': push_tax, 'countryid': push_countryid, 'provinceid': push_provinceid, 'amphurid': push_amphurid
+                            , 'districtid': push_districtid, 'zipcode': push_zipcode, 'isDefault': push_isDefault
+                        },
+                        success: function (data, status)
+                        {
+
+                            if (status == "success") {
+                                //window.location = $baseUrl + 'checkout';
+                                $(".bs-example-modal-lg").modal("hide");
+                                $('#addressId').append(data);
+                            } else {
+                                alert('Please try again.');
+                            }
+                        }
+                    });
+                }
+
             } else {
-                alert('Please try again.');
+                //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
             }
         }
     });
+
+
 }
 
 $(".upload-payment-slip").click(function () {
