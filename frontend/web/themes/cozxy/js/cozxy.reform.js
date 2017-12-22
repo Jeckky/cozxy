@@ -791,7 +791,7 @@ function checkoutNewBilling() {
     setTimeout(function () {
         $this.button('reset');
     }, 8000);
-    var push_co_country = 'personal';//$('#co-country').val();
+    var push_co_country = 'personal'; //$('#co-country').val();
     var push_firstname = $('#address-firstname').val();
     var push_lastname = $('#address-lastname').val();
     var push_address = $('#address-address').val();
@@ -1765,7 +1765,6 @@ $('#amphurId').change(function () {
             }
         }
     });
-
 });
 $('#LcpickingId').change(function () {
     var stateId = $('#stateId').val();
@@ -1784,7 +1783,6 @@ $('#LcpickingId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 });
-
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
         $('#checkBillingTax').val(1);
@@ -1795,15 +1793,12 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
-
 function shipCozxyBox() {
     var shipProvince = $('#stateId').val();
     var shipDistrict = $('#amphurId').val();
     var shipLcpickingId = $('#LcpickingId').val();
     var lat_value = $('#lat_value').val();
     var lon_value = $('#lon_value').val();
-
-
     alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
 }
 
@@ -1816,7 +1811,6 @@ $('.shippingOption').click(function () {
         $("#shipToAddress").css({'display': 'none'});
         $("#shipToCozxyBox").removeAttr("style");
         document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
-
         var path = $baseUrl + "ship-cozxy-box/cozxy-box-select";
         $.ajax({
             url: path,
@@ -1833,7 +1827,6 @@ $('.shippingOption').click(function () {
                 }
             }
         });
-
     } else if (shipping == 2) { //Ship to address
         //alert(shipping);
         $("#shipToCozxyBox").css({'display': 'none'});
@@ -1842,16 +1835,46 @@ $('.shippingOption').click(function () {
         document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
         //document.getElementsByClassName("continue-ship-to-address").submit();
         $('#ship-to-cozxy-box-select').html('');
-
     } else {
         alert('Please Choose shipping type');
     }
 
 });
+function newBillingTelUnique() {
 
+    var addressTel = $('#address-tel').val();
+    //alert(addressTel);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/tel-unique",
+        data: {'tel': addressTel},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                if (data == 1) {
+                    htmls = "<div class=\"form-group\">"
+                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + addressTel + " aria-required=\"true\" aria-invalid=\"true\">"
+                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                    htmls += "</div></div> ";
+                    $('.field-address-tel-unique').html(htmls);
+                } else {
+                    //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
+                }
 
-
-
+                ///$('.field-address-tel').setAttribute("class", "form-group field-address-tel required has-error");
+                //$('#address-tel').setAttribute("aria-invalid", "true");
+                //$('.help-block help-block-error').html('Incorrect Tel.');
+                //has-error
+                //aria-invalid="true"
+                //help-block help-block-error
+            } else {
+                //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
+            }
+        }
+    });
+}
 
 
 

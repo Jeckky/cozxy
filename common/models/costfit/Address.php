@@ -42,15 +42,9 @@ class Address extends \common\models\costfit\master\AddressMaster {
 
         return array_merge(parent::rules(), [//, 'countryId'
             //['tel', 'required', 'message' => 'Mobile Number cannot be blank.'],
-
-            ['tel', 'required', 'message' => 'Your security code and OTP will be sent by SMS to your mobile phone number'],
-            ['tel', 'number'],
-            //[['tel'], 'unique', 'targetAttribute' => ['validateTel']],
-            //[['tel'], 'unique', 'message' => '55555'],
             ['tel', 'string', 'min' => 10],
             ['tel', 'string', 'max' => 10],
-            ['tel', 'unique', 'message' => 'This issue already exists.'],
-            //['tel', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['tel', 'required', 'message' => 'Your security code and OTP will be sent by SMS to your mobile phone number'],
             ['countryId', 'required', 'message' => 'Country cannot be blank.'],
             ['provinceId', 'required', 'message' => 'Province cannot be blank.'],
             ['amphurId', 'required', 'message' => 'City cannot be blank.'],
@@ -58,6 +52,7 @@ class Address extends \common\models\costfit\master\AddressMaster {
             ['zipcode', 'required', 'message' => 'Zipcode cannot be blank.'],
             [['firstname', 'lastname', 'address', 'countryId', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'type', 'isDefault', 'status', 'tel']
                 , 'required', 'on' => 'shipping_address'],
+            ['tel', 'number'],
             ['zipcode', 'number'],
             [['countryId', 'firstname', 'lastname', 'address', 'provinceId', 'amphurId', 'districtId', 'zipcode', 'email']
                 , 'required', 'on' => 'checkout-billing-address'],
@@ -203,16 +198,6 @@ class Address extends \common\models\costfit\master\AddressMaster {
                 return null;
             }
         }
-    }
-
-    public function validateTel($attribute, $params) {
-        $this->addError($attribute, 'Incorrect Tel.');
-        /* if (!$this->hasErrors()) {
-          $user = $this->getUser();
-          if (!$user || !$user->validateTel($this->tell)) {
-          $this->addError($attribute, 'Incorrect Tel.');
-          }
-          } */
     }
 
 }
