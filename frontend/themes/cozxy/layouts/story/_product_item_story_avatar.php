@@ -1,6 +1,4 @@
-<style type="text/css">
 
-</style>
 <?php
 if (isset($model->user->avatar) && !empty($model->user->avatar)) {
     $i = '1';
@@ -11,7 +9,7 @@ if (isset($model->user->avatar) && !empty($model->user->avatar)) {
     //\Yii::$app->homeUrl . 'images/user/avatar/150952763159f9904f9095d6.52583311.jpg'
 }
 ?>
-<div class="col-md-3 col-sm-6 item-to-stories-<?= $model->productPostId ?> card"  style=" padding: 5px;  border-top: 1px #d8d8d8 solid;">
+<div class=" item-to-stories-<?= $model->productPostId ?> card"  style="float: left;  border-top: 1px #d8d8d8 solid; padding: 5px; width: 100% !important;">
     <!--<div class="col-sm-3" style=" padding: 2px; ">-->
     <div class="hovercard product-img">
         <img id="viewPost" data-src="holder.js/64x64" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>" class="fullwidth"  style="border-bottom: 1px #d8d8d8 solid;">
