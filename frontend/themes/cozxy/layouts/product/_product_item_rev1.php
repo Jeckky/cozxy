@@ -17,6 +17,7 @@ if (Yii::$app->controller->id == 'product') {
 $marketPrice = isset($model->product) ? $model->product->price : 0;
 $supplierPrice = isset($model->price) ? $model->price : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
+//GetBrowser::UserAgent() == 'computer'
 ?>
 <style type="text/css">
 

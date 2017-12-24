@@ -47,7 +47,7 @@ if (isset($sortstatus)) {
 <div class="row">
     <div class="wf-container">
         <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
-            <div class="filter-product-cozxy col-sm-12">
+            <div class="filter-product-cozxy col-md-4 col-sm-6 col-xs-12">
                 <h3 class="b text-center-sm text-center-xs">
                     HOT DEALS
                     <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
