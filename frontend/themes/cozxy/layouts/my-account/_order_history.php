@@ -7,6 +7,11 @@ use common\models\costfit\Order;
     .ias-trigger{
         width: 100%;
     }
+    .ias-noneleft{
+        float: left !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
 </style>
 <div class="table-responsive order-list">
     <div class="col-sm-12">
@@ -85,16 +90,16 @@ use common\models\costfit\Order;
                                 , 'title' => Yii::t('app', ' ')]);
                     return $txt;
                 }
-                    ],
-                ],
-                'pager' => [
-                    'class' => \kop\y2sp\ScrollPager::className(),
-                    'container' => '.grid-view tbody',
-                    'item' => 'tr',
-                    'paginationSelector' => '.grid-view .pagination',
-                    'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer">{text}</a></td></tr>',
-                ],
-            ]);
-            ?>
+            ],
+        ],
+        'pager' => [
+            'class' => \kop\y2sp\ScrollPager::className(), 'triggerOffset' => 5,
+            'container' => '.grid-view tbody',
+            'item' => 'tr ',
+            'paginationSelector' => '.grid-view .pagination col-sm-12',
+            'triggerTemplate' => '<div class="ias-trigger" style="text-align: center; cursor: pointer; width: 100% !important;"><a>{text}</a></div>',
+        ],
+    ]);
+    ?>
 
 </div>
