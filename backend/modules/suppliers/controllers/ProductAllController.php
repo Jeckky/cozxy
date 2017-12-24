@@ -15,14 +15,40 @@ class ProductAllController extends SuppliersMasterController {
         $userId = Yii::$app->request->get('userId');
 
         $user = \common\helpers\Suppliers::GetUser($userId);
-
+        $productParner = 'select *
+from product as p
+left join product_suppliers as ps on p.productId=ps.productId
+left join product_price_suppliers as pps on ps.productSuppId=pps.productSuppId
+where p.status=1
+AND p.approve=‘approve’
+AND ps.status=1
+AND p.parentId is not null
+AND ps.approve=‘approve’
+AND ps.productId is not null
+AND ps.result >0
+AND pps.status=1
+AND pps.price > 0 and userId=' . $userId;
+        $product = Product::find()
+                ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
+                ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+                ->where("product.status=1 AND product.approve='approve'
+                        AND ps.status=1
+                        AND product.parentId is not null
+                        AND ps.approve='approve'
+                        AND ps.productId is not null
+                        AND ps.result >0
+                        AND pps.status=1
+                        AND pps.price > 0 ");
+        //->andWhere('product.userId=' . $userId);
         $dataProvider = new ActiveDataProvider([
-            'query' => Product::find()->where('userId=' . $userId)->orderBy('product.productId desc'), 'pagination' => [
+            //'query' => Product::find()->where('userId=' . $userId)->orderBy('product.productId desc'),
+            'query' => $product,
+            'pagination' => [
                 'pageSize' => 10000,
             ],
         ]);
 
-        return $this->render('index_new', [
+        return $this->render('index_1', [
                     'dataProvider' => $dataProvider, 'user' => $user
         ]);
     }
