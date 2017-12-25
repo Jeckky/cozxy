@@ -444,18 +444,25 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $promotionBrand = PromotionBrand::brandItems($this->couponId);
         $productCateInOrder = '';
         $productBrandInOrder = '';
+        $productId = '';
+        //throw new \yii\base\Exception($this->orderId);
         if (isset($this->orderId) && $this->orderId != NULL) {
-            if ($promotionCategory != 0) {
-                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1); //เฉพาะ cate ที่เลือก
+            if (Promotion::variablePromotion($this->orderId, $this->couponId)) {
+                if ($promotionCategory != 0) {
+                    $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1); //เฉพาะ cate ที่เลือก
+                } else {
+                    $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0); //ได้ ทุก cate ในorder Item
+                }
+                if ($promotionBrand != 0) {
+                    $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
+                } else {
+                    $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
+                }
+                $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder, $promotionCategory, $promotionBrand);
             } else {
-                $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 0); //ได้ ทุก cate ในorder Item
+                $this->couponId = null;
             }
-            if ($promotionBrand != 0) {
-                $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 1);
-            } else {
-                $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
-            }
-            $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder, $promotionCategory, $promotionBrand);
+
             if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
                 $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
             }
