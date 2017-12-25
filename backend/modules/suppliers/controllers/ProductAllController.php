@@ -29,6 +29,7 @@ AND ps.result >0
 AND pps.status=1
 AND pps.price > 0 and userId=' . $userId;
         $product = Product::find()
+                ->select('pps.price as sellingPrice ,ps.result as resultSupp, product.*,ps.*')
                 ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
                 ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
                 ->where("product.status=1 AND product.approve='approve'

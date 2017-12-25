@@ -12,17 +12,24 @@ use yii\widgets\Pjax;
     GridView::widget([
         'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-hover'],
         'pager' => [
             'options' => ['class' => 'pagination pagination-xs']
         ],
         'options' => [
-            'class' => 'table-light'
+            'class' => 'table-light '
         ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             //'productId',
             //'userId',
-            //'productGroupId',
+            [
+                'attribute' => 'user',
+                'value' => function($model) {
+                    return $model->user['username'] . '(' . $model->productId . '::' . $model->parentId . ')';
+                }
+            ],
+            //'productGroupId ',
             [
                 'attribute' => 'brand',
                 'value' => function($model) {
@@ -36,8 +43,39 @@ use yii\widgets\Pjax;
                 }
             ],
             'isbn:ntext',
-            'code',
+            //'code',
             'title',
+            [
+                'attribute' => 'mkt price',
+                'value' => function($model) {
+                    return number_format($model->price);
+                }
+            ],
+            [
+                'attribute' => 'selling price',
+                'value' => function($model) {
+                    return number_format($model->sellingPrice);
+                }
+            ],
+            [
+                'attribute' => 'stock',
+                'value' => function($model) {
+                    return $model->resultSupp;
+                }
+            ],
+            [
+                'attribute' => 'option detail',
+                'value' => function($model) {
+                    $productGroupOptionValue = common\models\costfit\ProductGroupOptionValue::find()->where('productGroupId=' . $model->parentId . ' and productId = ' . $model->productId)->all();
+                    foreach ($productGroupOptionValue as $key => $value) {
+                        //$productGroupOption = common\models\costfit\ProductGroupOption::find()->where('productGroupOptionId=' . $value->productGroupOptionId)->all();
+                        //foreach ($productGroupOption as $key => $item) {
+                        //return $item->name;
+                        //}
+                        return $value->value;
+                    }
+                }
+            ],
             // 'optionName',
             // 'shortDescription:ntext',
             // 'description:ntext',
@@ -55,22 +93,6 @@ use yii\widgets\Pjax;
               }
               ], */
             //'approve',
-            [
-                'attribute' => 'approve',
-                'format' => 'html',
-                'value' => function($model) {
-                    if ($model->approve == 'old') {
-                        $txt = '<span class="text-warning">รออนุมัติ</span>';
-                    } else if ($model->approve == 'approve') {
-                        $txt = '<span class="text-success">อนุมัติแล้ว</span>';
-                    } else if ($model->approve == 'new') {
-                        $txt = '<span class="text-warning">รออนุมัติ</span>';
-                    } else {
-                        $txt = '<span class="text-danger">แจ้งเจ้าหน้าที่</span>';
-                    }
-                    return $txt;
-                }
-            ],
             // 'unit',
             // 'smallUnit',
             // 'tags',
@@ -103,7 +125,7 @@ use yii\widgets\Pjax;
                 'header' => 'Actions',
                 'template' => '{view}  ',
                 'buttons' => [
-                    'view' => function ($url, $model) {
+                    'view' => function($url, $model) {
                         return Html::a('<i class="fa fa-eye"></i>', $url, [
                                     'title' => Yii::t('yii', 'view'),
                         ]);
