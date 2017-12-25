@@ -26,7 +26,15 @@ use yii\widgets\Pjax;
             [
                 'attribute' => 'user',
                 'value' => function($model) {
-                    return $model->user['username'] . '(' . $model->productId . '::' . $model->parentId . ')';
+                    //return $model->user['username'] . '(' . $model->productId . '::' . $model->parentId . ')';
+                    if (isset($model->userIdSupp)) {
+
+                        $userIdSupp = common\models\costfit\User::find()->where('userId=' . $model->userIdSupp)->one();
+                        $userIdSupps = $userIdSupp['username'];
+                    } else {
+                        $userIdSupps = '-';
+                    }
+                    return $userIdSupps;
                 }
             ],
             //'productGroupId ',
