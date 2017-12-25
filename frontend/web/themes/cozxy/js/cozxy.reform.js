@@ -1793,6 +1793,7 @@ $('#amphurId').change(function () {
     });
 });
 $('#LcpickingId').change(function () {
+    alert('LcpickingId');
     var stateId = $('#stateId').val();
     var amphurId = $('#amphurId').val();
     var LcpickingId = $('#LcpickingId').val();
@@ -1808,7 +1809,7 @@ $('#LcpickingId').change(function () {
     if (LcpickingId == 1) {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
-    console.log(LcpickingId + '::' + stateId + '::' + amphurId);
+
 });
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {

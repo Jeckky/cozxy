@@ -1139,59 +1139,59 @@ foreach ($activeMap as $key => $value) {
     function geoLocation(map, status, lat, lng) {
 
     if (navigator.geolocation) {
-    alert('test 1');
-            navigator.geolocation.getCurrentPosition(function (position) {
-            alert('test 1.1');
-                    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    var labelIndex = 0;
-                    var pos1 = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
-                    /** autocomplete **/
-                    if (status == 'autocomplete') {
-            alert('test 1.1.1');
-                    var image = 'https://cdn4.iconfinder.com/data/icons/icocentre-free-icons/114/f-cross_256-32.png';
-                    var beachMarker = new google.maps.Marker({
-                    position: pos1,
-                            map: map,
-                            icon: image
-                    });
-                    var my_Point = beachMarker.getPosition();
-            } else {
-            alert('test 1.2');
-                    var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
-                    /*var infowindow = new GGM.InfoWindow({
-                     position: pos1,
-                     //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
-                     });*/
-                    var infowindow1 = new GGM.InfoWindow();
-                    var markera = new google.maps.Marker({
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var labelIndex = 0;
+            var pos1 = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
+            /** autocomplete **/
+            if (status == 'autocomplete') {
+
+    var image = 'https://cdn4.iconfinder.com/data/icons/icocentre-free-icons/114/f-cross_256-32.png';
+            var beachMarker = new google.maps.Marker({
+            position: pos1,
                     map: map,
-                            position: pos1, label: labels[labelIndex++ % labels.length]
-                    });
-                    var my_Point = markera.getPosition();
-                    /*var my_Point = infowindow.getPosition();*/ // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
-                    map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
-                    $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
-                    $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
-                    $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
-
-                    latMe = my_Point.lat();
-                    lngMe = my_Point.lng();
-                    $("#start").val(latMe + ',' + lngMe);
-                    alert(latMe + ',' + lngMe);
-                    map.setCenter(pos1);
-            }
-            $("#no_allow").val('1');
-                    //console.log(my_Point.lat());
-            }, function () {
-            // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-            alert('ไม่ทำงาน');
-                    handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
-
+                    icon: image
             });
+            var my_Point = beachMarker.getPosition();
     } else {
-    alert('test 2');
-            // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
-            handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
+    var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
+            /*var infowindow = new GGM.InfoWindow({
+             position: pos1,
+             //content: '<div class="size18 fc-red">คุณอยู่ที่นี่.</div>'
+             });*/
+            var infowindow1 = new GGM.InfoWindow();
+            var markera = new google.maps.Marker({
+            map: map,
+                    position: pos1, label: labels[labelIndex++ % labels.length]
+            });
+            var my_Point = markera.getPosition();
+            /*var my_Point = infowindow.getPosition();*/ // หาตำแหน่งของตัว marker เมื่อกดลากแล้วปล่อย
+            map.panTo(my_Point); // ให้แผนที่แสดงไปที่ตัว marker
+            $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
+            $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
+            $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+
+            latMe = my_Point.lat();
+            lngMe = my_Point.lng();
+            $("#start").val(latMe + ',' + lngMe);
+            alert(latMe + ',' + lngMe);
+            map.setCenter(pos1);
+    }
+    $("#no_allow").val('1');
+            //console.log(my_Point.lat());
+    }, function () {
+    // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+
+    handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
+
+    });
+    } else {
+
+    // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+    handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
     }
     }
