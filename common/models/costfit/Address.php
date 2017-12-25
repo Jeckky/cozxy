@@ -42,6 +42,8 @@ class Address extends \common\models\costfit\master\AddressMaster {
 
         return array_merge(parent::rules(), [//, 'countryId'
             //['tel', 'required', 'message' => 'Mobile Number cannot be blank.'],
+            ['tel', 'string', 'min' => 10],
+            ['tel', 'string', 'max' => 10],
             ['tel', 'required', 'message' => 'Your security code and OTP will be sent by SMS to your mobile phone number'],
             ['countryId', 'required', 'message' => 'Country cannot be blank.'],
             ['provinceId', 'required', 'message' => 'Province cannot be blank.'],

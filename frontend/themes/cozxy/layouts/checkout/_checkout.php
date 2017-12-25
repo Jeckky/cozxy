@@ -102,24 +102,13 @@ $pickingId = rand(0, 9999);
                                 //print_r($myAddress);
                                 echo $form->field($order, 'addressId')->widget(kartik\select2\Select2::classname(), [
                                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Address::find()
-                                                    ->asArray()
                                                     ->where('userId=' . Yii::$app->user->identity->userId . ' and type!=4')
                                                     ->all(), 'addressId', function ($model, $defaultValue, $index = 0) {
                                                 $index = $index++;
                                                 //echo '<pre>';
                                                 //print_r($model);
-                                                $myAddress = $model['address'];
-                                                $myDistrictId = common\models\dbworld\District::find()->where('districtId=' . $model['districtId'])->one();
-                                                $myAmphurId = common\models\dbworld\Cities::find()->where('cityId=' . $model['amphurId'])->one();
-                                                $myProvinceId = common\models\dbworld\States::find()->where('stateId=' . $model['provinceId'])->one();
-                                                $myCountryId = common\models\dbworld\Countries::find()->where('countryId="' . $model['countryId'] . '"')->one();
-                                                $myZipcode = common\models\dbworld\Zipcodes::find()->where('zipcodeId="' . $model['zipcode'] . '"')->one();
-                                                //$myDistrictId = $districtId;
-                                                //$myAmphurId = $myAddress['amphurId'];
-                                                //$myProvinceId = $myAddress['provinceId'];
-                                                //$myCountryId = $myAddress['countryId'];
-                                                //$myZipcode = $myAddress['zipcode'];
-                                                $myListAddress = $myAddress . ' ' . $myDistrictId['districtName'] . ' ' . $myAmphurId['cityName'] . ' ' . $myProvinceId['stateName'] . ' ' . $myCountryId['countryName'] . ' ' . $myZipcode['zipcode'];
+                                                $myAddress = $model->address;
+                                                $myListAddress = $myAddress . ' ' . $model->district['districtName'] . ' ' . $model->cities['cityName'] . ' ' . $model->states['stateName'] . ' ' . $model->countries['countryName'] . ' ' . $model->zipcodes['zipcode'];
                                                 return $model['firstname'] . ' ' . $model['lastname'] . ' : ' . $myListAddress;
                                             }),
                                     'hideSearch' => true,
@@ -306,7 +295,7 @@ $pickingId = rand(0, 9999);
                                 <?= $form->field($NewBilling, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LAST NAME', 'value' => isset($getUserInfo['lastname']) ? $getUserInfo['lastname'] : ''])->label(false); ?>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 field-address-tel-unique">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"><?php echo strtoupper('Mobile Phone Number*'); ?></label>
                                 <?php echo $form->field($NewBilling, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'Mobile Phone Number', 'value' => isset($getUserInfo['tel']) ? $getUserInfo['tel'] : ''])->label(false); ?>

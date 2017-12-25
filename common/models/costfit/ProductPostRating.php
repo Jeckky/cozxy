@@ -20,6 +20,7 @@ class ProductPostRating extends \common\models\costfit\master\ProductPostRatingM
 
     public $sumStar;
     public $rowCount;
+
     /**
      * @inheritdoc
      */
@@ -37,9 +38,9 @@ class ProductPostRating extends \common\models\costfit\master\ProductPostRatingM
         ]);
     }
 
-    public static function averageStar($productPostId)
-    {
-        $model = self::find()->select('sum(score) as sumStar, count(score) as rowCount')->where(['productPostId'=>$productPostId, 'status'=>1])->one();
-        return ($model->rowCount > 0) ? number_format($model->sumStar/$model->rowCount, 2) : 0;
+    public static function averageStar($productPostId) {
+        $model = self::find()->select('sum(score) as sumStar, count(score) as rowCount')->where(['productPostId' => $productPostId, 'status' => 1])->one();
+        return ($model->rowCount > 0) ? number_format($model->sumStar / $model->rowCount) : 0;
     }
+
 }

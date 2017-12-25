@@ -28,98 +28,6 @@ use common\helpers\CozxyCalculatesCart;
 
 class CheckoutController extends MasterController {
 
-    public function actionIndexBk() {
-
-
-
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
-        }
-
-        // throw new \yii\base\Exception('aaaaa');
-//        $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
-        $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
-
-        $pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
-        $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
-
-        $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
-        $pickingPoint_list_lockers_cool->scenario = 'checkout_summary';
-
-        $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
-
-        $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
-        $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
-        $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
-
-        $hash = 'add';
-        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
-        $order = Order::find()->where(['orderId' => $orderId])->one();
-
-        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
-        if (isset($userPoint)) {
-            if ($userPoint->currentPoint < $order->summary) {
-                $order->isPayNow = 1;
-            }
-        } else {
-            $order->isPayNow = 1;
-        }
-
-        $order->save(false);
-        //Default address
-        //$defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
-        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
-
-        if (isset($defaultAddress)) {
-            $order->addressId = $defaultAddress->addressId;
-        }
-
-        if (isset($order->pickingId) && !empty($order->pickingId)) {
-            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
-            if (count($pickingPoint) <= 0) {
-                $pickingPoint = new \common\models\costfit\PickingPoint();
-            }
-        } else {
-            $pickingPoint = new \common\models\costfit\PickingPoint();
-        }
-
-        //echo '<pre>';
-        //print_r($defaultAddress);
-        /*
-         * New Billing
-         */
-        $getUserInfos = \common\models\costfit\User::getUserInfo(Yii::$app->user->id);
-        if (count($getUserInfos) > 0) {
-            $getUserInfo['firstname'] = $getUserInfos->firstname;
-            $getUserInfo['lastname'] = $getUserInfos->lastname;
-            $getUserInfo['email'] = $getUserInfos->email;
-            $getUserInfo['tel'] = $getUserInfos->tel;
-        } else {
-            $getUserInfo['firstname'] = '';
-            $getUserInfo['lastname'] = '';
-            $getUserInfo['email'] = '';
-            $getUserInfo['tel'] = '';
-        }
-        $NewBilling = new \common\models\costfit\Address(['scenario' => 'new_checkouts_billing_address']);
-        if (isset($_POST['Address'])) {
-            $NewBilling->attributes = $_POST['Address'];
-            if ($_POST["Address"]['isDefault']) {
-                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
-                $NewBilling->isDefault = 1;
-            }
-            $NewBilling->userId = Yii::$app->user->id;
-            $NewBilling->type = \common\models\costfit\Address::TYPE_BILLING;
-            $NewBilling->createDateTime = new \yii\db\Expression("NOW()");
-            if ($model->save(FALSE)) {
-                //return $this->redirect(['/my-account']);
-            }
-        }
-        if (!isset($NewBilling->isDefault)) {
-            $NewBilling->isDefault = 0;
-        }
-        return $this->render('index', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
-    }
-
     public function actionIndex() {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
@@ -199,7 +107,8 @@ class CheckoutController extends MasterController {
         // throw new \yii\base\Exception('aaaaa');
         // $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
         $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
-
+        //echo '<pre>';
+        //print_r($model);
         //$pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
         //$pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
         //$pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
@@ -1054,6 +963,98 @@ class CheckoutController extends MasterController {
 
     public function actionTestMap() {
         return $this->render('_test_map');
+    }
+
+    public function actionIndexBk() {
+
+
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
+        }
+
+        // throw new \yii\base\Exception('aaaaa');
+//        $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
+        $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
+
+        $pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
+        $pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
+
+        $pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
+        $pickingPoint_list_lockers_cool->scenario = 'checkout_summary';
+
+        $pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
+
+        $pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
+        $pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
+        $pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+
+        $hash = 'add';
+        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
+        $order = Order::find()->where(['orderId' => $orderId])->one();
+
+        $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
+        if (isset($userPoint)) {
+            if ($userPoint->currentPoint < $order->summary) {
+                $order->isPayNow = 1;
+            }
+        } else {
+            $order->isPayNow = 1;
+        }
+
+        $order->save(false);
+        //Default address
+        //$defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId, 'isDefault' => 1])->one();
+        $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
+
+        if (isset($defaultAddress)) {
+            $order->addressId = $defaultAddress->addressId;
+        }
+
+        if (isset($order->pickingId) && !empty($order->pickingId)) {
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
+            if (count($pickingPoint) <= 0) {
+                $pickingPoint = new \common\models\costfit\PickingPoint();
+            }
+        } else {
+            $pickingPoint = new \common\models\costfit\PickingPoint();
+        }
+
+        //echo '<pre>';
+        //print_r($defaultAddress);
+        /*
+         * New Billing
+         */
+        $getUserInfos = \common\models\costfit\User::getUserInfo(Yii::$app->user->id);
+        if (count($getUserInfos) > 0) {
+            $getUserInfo['firstname'] = $getUserInfos->firstname;
+            $getUserInfo['lastname'] = $getUserInfos->lastname;
+            $getUserInfo['email'] = $getUserInfos->email;
+            $getUserInfo['tel'] = $getUserInfos->tel;
+        } else {
+            $getUserInfo['firstname'] = '';
+            $getUserInfo['lastname'] = '';
+            $getUserInfo['email'] = '';
+            $getUserInfo['tel'] = '';
+        }
+        $NewBilling = new \common\models\costfit\Address(['scenario' => 'new_checkouts_billing_address']);
+        if (isset($_POST['Address'])) {
+            $NewBilling->attributes = $_POST['Address'];
+            if ($_POST["Address"]['isDefault']) {
+                \common\models\costfit\Address::updateAll(['isDefault' => 0], ['userId' => Yii::$app->user->id, 'type' => \common\models\costfit\Address::TYPE_BILLING]);
+                $NewBilling->isDefault = 1;
+            }
+            $NewBilling->userId = Yii::$app->user->id;
+            $NewBilling->type = \common\models\costfit\Address::TYPE_BILLING;
+            $NewBilling->createDateTime = new \yii\db\Expression("NOW()");
+            if ($model->save(FALSE)) {
+                //return $this->redirect(['/my-account']);
+            }
+        }
+        if (!isset($NewBilling->isDefault)) {
+            $NewBilling->isDefault = 0;
+        }
+        return $this->render('index', compact('getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress'));
     }
 
 }

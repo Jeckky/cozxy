@@ -34,6 +34,17 @@ $this->registerCss('
 #logoParade .scrollingHotSpotRight {
 	background: #fff url(imgs/ban-arrow-right.png) center no-repeat;
 }
+p.test {
+        /* Keyword values */
+        overflow-wrap: normal;
+        overflow-wrap: break-word;
+
+        /* Global values */
+        overflow-wrap: inherit;
+        overflow-wrap: initial;
+        overflow-wrap: unset;
+        overflow-wrap: break-word;
+    }
 ');
 
 
@@ -299,13 +310,12 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             <div class="col-xs-12" style="background:#000; height: 1px;">
                                 &nbsp;
                             </div>
-                            <div class="col-xs-12 padding-product-detail explore-explain" >
-                                <p style="word-wrap: break-word;">
-                                    Find details, prices, and stories on other products coming to our website soon.
-                                </p>
-                            </div>
                         </div>
-
+                        <div class="col-xs-12 padding-product-detail explore-explain" >
+                            <p class="test">
+                                Find details, prices, and stories on other products coming to our website soon.
+                            </p>
+                        </div>
                         <!--PRODUCTS-->
                         <?php
 //                        yii\widgets\Pjax::begin(['id' => 'notsale', 'timeout' => false, 'enablePushState' => false])
@@ -398,7 +408,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             </div>
 
 
-            <div class="col-xs-3">
+            <div class="col-xs-12 col-md-3 col-sm-3">
                 <?php if (isset($otherProducts)): ?>
                     <div class="row ">
                         <div class="special box_width_4 line_h">

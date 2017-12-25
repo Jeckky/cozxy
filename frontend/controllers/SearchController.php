@@ -447,9 +447,12 @@ class SearchController extends MasterController {
         $dataProvider = new ArrayDataProvider([
             'key' => 'productId',
             'allModels' => $search,
-                /* 'sort' => [
-                  'attributes' => ['id', 'name', 'email'],
-                  ], */
+            /* 'sort' => [
+              'attributes' => ['id', 'name', 'email'],
+              ], */
+            'pagination' => [
+                'pageSize' => 6,
+            ],
         ]);
 
         return $this->render('index_search_json', compact('dataProvider'));

@@ -81,10 +81,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
+                    <div class="col-md-6 field-address-tel-unique">
+                        <div class="form-group ">
                             <label for=""><?php echo strtoupper('Mobile Phone Number*') ?></label>
-                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'MOBILE PHONE NUMBER'])->label(false); ?>
+                            <?php echo $form->field($model, 'tel')->textInput(['class' => 'fullwidth', 'placeholder' => 'MOBILE PHONE NUMBER', 'onchange' => 'newBillingTelUnique()'])->label(false); ?>
                         </div>
                     </div>
                     <div class="col-md-6">

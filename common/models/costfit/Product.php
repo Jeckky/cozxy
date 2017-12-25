@@ -70,7 +70,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function attributes() {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result', 'isbn'
+            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result', 'isbn', 'sellingPrice', 'resultSupp'
         ]);
     }
 
@@ -493,6 +493,10 @@ class Product extends \common\models\costfit\master\ProductMaster {
 
     public function getProductGroup() {
         return $this->hasOne(ProductGroup::className(), ['productGroupId' => 'productGroupId']);
+    }
+
+    public function getUser() {
+        return $this->hasOne(User::className(), ['userId' => 'userId']);
     }
 
     public static function productSupplierGroup() {

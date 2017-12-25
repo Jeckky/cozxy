@@ -109,6 +109,7 @@ class MyAccountController extends MasterController {
             return $this->goHome();
         }
         $model = new \common\models\costfit\Address(['scenario' => 'shipping_address']);
+
         if (isset($_POST['Address'])) {
             $model->attributes = $_POST['Address'];
             if ($_POST["Address"]['isDefault']) {
@@ -716,6 +717,16 @@ class MyAccountController extends MasterController {
         }
 
         echo '';
+    }
+
+    public function actionTelUnique() {
+        $tel = $_POST['tel'];
+        $address = \common\models\costfit\Address::find()->where('tel = "' . $tel . '"')->count();
+        if ($address >= 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

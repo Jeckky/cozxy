@@ -791,7 +791,7 @@ function checkoutNewBilling() {
     setTimeout(function () {
         $this.button('reset');
     }, 8000);
-    var push_co_country = 'personal';//$('#co-country').val();
+    var push_co_country = 'personal'; //$('#co-country').val();
     var push_firstname = $('#address-firstname').val();
     var push_lastname = $('#address-lastname').val();
     var push_address = $('#address-address').val();
@@ -805,25 +805,51 @@ function checkoutNewBilling() {
     var push_districtid = $('#address-districtid').val();
     var push_zipcode = $('#address-zipcode').val();
     var push_isDefault = $('#address-isDefault').val();
+
     $.ajax({
         type: "POST",
-        url: $baseUrl + "checkout/checkout-new-billing",
-        data: {'co_country': push_co_country, 'firstname': push_firstname, 'lastname': push_lastname, 'address': push_address, 'email': push_email, 'tel': push_tel
-            , 'company': push_company, 'tax': push_tax, 'countryid': push_countryid, 'provinceid': push_provinceid, 'amphurid': push_amphurid
-            , 'districtid': push_districtid, 'zipcode': push_zipcode, 'isDefault': push_isDefault
-        },
+        url: $baseUrl + "my-account/tel-unique",
+        data: {'tel': push_tel},
         success: function (data, status)
         {
-
             if (status == "success") {
-                //window.location = $baseUrl + 'checkout';
-                $(".bs-example-modal-lg").modal("hide");
-                $('#addressId').append(data);
+                if (data == 1) {
+                    htmls = "<div class=\"form-group\">"
+                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + push_tel + " aria-required=\"true\" aria-invalid=\"true\">"
+                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                    htmls += "</div></div> ";
+                    $('.field-address-tel-unique').html(htmls);
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: $baseUrl + "checkout/checkout-new-billing",
+                        data: {'co_country': push_co_country, 'firstname': push_firstname, 'lastname': push_lastname, 'address': push_address, 'email': push_email, 'tel': push_tel
+                            , 'company': push_company, 'tax': push_tax, 'countryid': push_countryid, 'provinceid': push_provinceid, 'amphurid': push_amphurid
+                            , 'districtid': push_districtid, 'zipcode': push_zipcode, 'isDefault': push_isDefault
+                        },
+                        success: function (data, status)
+                        {
+
+                            if (status == "success") {
+                                //window.location = $baseUrl + 'checkout';
+                                $(".bs-example-modal-lg").modal("hide");
+                                $('#addressId').append(data);
+                            } else {
+                                alert('Please try again.');
+                            }
+                        }
+                    });
+                }
+
             } else {
-                alert('Please try again.');
+                //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
             }
         }
     });
+
+
 }
 
 $(".upload-payment-slip").click(function () {
@@ -1562,9 +1588,11 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
 
                 if (status == "success") {
                     var JSONObject = JSON.parse(data);
+                    var price = JSONObject.price;
+                    var prices = price.toString().split('.');
                     $('#productpost-currency').val(JSONObject.currency).trigger('change');
                     $('#productpost-shopname').val(JSONObject.shopName);
-                    $('#productpostcompareprice-price').val(JSONObject.price);
+                    $('#productpostcompareprice-price').val(prices[0]);
                     $('#productpost-country').val(JSONObject.country);
                     $('#productpost-currency').val(JSONObject.currency);
                     $('#latitude').val(JSONObject.latitude);
@@ -1763,9 +1791,9 @@ $('#amphurId').change(function () {
             }
         }
     });
-
 });
 $('#LcpickingId').change(function () {
+    alert('LcpickingId');
     var stateId = $('#stateId').val();
     var amphurId = $('#amphurId').val();
     var LcpickingId = $('#LcpickingId').val();
@@ -1781,8 +1809,8 @@ $('#LcpickingId').change(function () {
     if (LcpickingId == 1) {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
-});
 
+});
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
         $('#checkBillingTax').val(1);
@@ -1793,15 +1821,12 @@ $('#checkBillingTax').click(function () {
         $("#billingTaxText").html("");
     }
 });
-
 function shipCozxyBox() {
     var shipProvince = $('#stateId').val();
     var shipDistrict = $('#amphurId').val();
     var shipLcpickingId = $('#LcpickingId').val();
     var lat_value = $('#lat_value').val();
     var lon_value = $('#lon_value').val();
-
-
     alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
 }
 
@@ -1814,7 +1839,6 @@ $('.shippingOption').click(function () {
         $("#shipToAddress").css({'display': 'none'});
         $("#shipToCozxyBox").removeAttr("style");
         document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
-
         var path = $baseUrl + "ship-cozxy-box/cozxy-box-select";
         $.ajax({
             url: path,
@@ -1831,7 +1855,6 @@ $('.shippingOption').click(function () {
                 }
             }
         });
-
     } else if (shipping == 2) { //Ship to address
         //alert(shipping);
         $("#shipToCozxyBox").css({'display': 'none'});
@@ -1840,16 +1863,46 @@ $('.shippingOption').click(function () {
         document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
         //document.getElementsByClassName("continue-ship-to-address").submit();
         $('#ship-to-cozxy-box-select').html('');
-
     } else {
         alert('Please Choose shipping type');
     }
 
 });
+function newBillingTelUnique() {
 
+    var addressTel = $('#address-tel').val();
+    //alert(addressTel);
+    $.ajax({
+        type: "POST",
+        url: $baseUrl + "my-account/tel-unique",
+        data: {'tel': addressTel},
+        success: function (data, status)
+        {
+            if (status == "success") {
+                if (data == 1) {
+                    htmls = "<div class=\"form-group\">"
+                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + addressTel + " aria-required=\"true\" aria-invalid=\"true\">"
+                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                    htmls += "</div></div> ";
+                    $('.field-address-tel-unique').html(htmls);
+                } else {
+                    //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
+                }
 
-
-
+                ///$('.field-address-tel').setAttribute("class", "form-group field-address-tel required has-error");
+                //$('#address-tel').setAttribute("aria-invalid", "true");
+                //$('.help-block help-block-error').html('Incorrect Tel.');
+                //has-error
+                //aria-invalid="true"
+                //help-block help-block-error
+            } else {
+                //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
+            }
+        }
+    });
+}
 
 
 

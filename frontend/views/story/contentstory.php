@@ -10,6 +10,10 @@ $this->params['breadcrumbs'][] = $this->title;
     .ias-trigger{
         width: 100%;
     }
+    .ias-noneleft{
+        float: left;
+        width: 100%;
+    }
 </style>
 <div class="container login-box">
     <div class="size32">&nbsp;</div>
@@ -17,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
             <p class="size20 size18-xs">See more stories</p>
         </div>
-        <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
+        <div class="col-md-12 bg-white size18 b" style="padding: 20px;">
 
             <?php //yii\widgets\Pjax::begin(['id' => 'products-table']); ?>
             <?php
@@ -36,8 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'itemOptions' => [
                 //'tag' => false,
                 //],
-                , 'itemOptions' => ['class' => 'item']
-                , 'pager' => ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
+                , 'itemOptions' => ['class' => 'col-md-3 col-sm-6 col-xs-6']
+                , 'pager' =>
+                ['class' => \kop\y2sp\ScrollPager::className()] //\kop\y2sp\ScrollPager::className()
             ]);
             //yii\widgets\Pjax::end();
             ?>

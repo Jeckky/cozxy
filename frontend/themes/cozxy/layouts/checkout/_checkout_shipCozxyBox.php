@@ -416,6 +416,7 @@ function strip_tags_content($text) {
                                 <input type="hidden" name="lon_value" id="lon_value" value="0">
                                 <input type="hidden" name="start" id="start" value="0">
                                 <input type="hidden" name="zoom_value" id="zoom_value" value="0">
+                                <input type="hidden" name="no_allow" id="no_allow" value="0">
                                 <!-- <div id="showDD" style="margin:auto;padding-top:5px;width:550px;"> 
                                       <form id="form_get_detailMap" name="form_get_detailMap" method="post" action=""> 
                                             Latitude 
@@ -826,8 +827,9 @@ foreach ($activeMap as $key => $value) {
             var latlongMap = fields[1];
             /*******If Not Allow Map*************/
 
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, '-'); // If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(noAllow, latlongMap, '-'); // If Not Allow Map Function
             /*if (start == 0){
              var llMap = latlongMap.split(',');
              $("#lat_value").val(llMap[0]);
@@ -933,8 +935,9 @@ foreach ($activeMap as $key => $value) {
             //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
             var latlongMap = lats + ',' + longs;
             /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); // If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(noAllow, latlongMap, ','); // If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1026,8 +1029,9 @@ foreach ($activeMap as $key => $value) {
     map.setZoom(11);
             var latlongMap = latitudes + ',' + longitudes;
             /*******If Not Allow Map*************/
-            var start = $("#start").val();
-            NotAllowMap(map, start, latlongMap, ','); //If Not Allow Map Function
+            //var start = $("#start").val();
+            var noAllow = $("#no_allow").val();
+            NotAllowMap(noAllow, latlongMap, ','); //If Not Allow Map Function
             directionsService.route({
             origin: $('#start').val(), //document.getElementById('start').value,
                     //destination: document.getElementById('LcpickingId').value,
@@ -1133,9 +1137,11 @@ foreach ($activeMap as $key => $value) {
     }
 
     function geoLocation(map, status, lat, lng) {
-    //alert(map);
+
     if (navigator.geolocation) {
+
     navigator.geolocation.getCurrentPosition(function (position) {
+
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             var labelIndex = 0;
             var pos1 = new GGM.LatLng(position.coords.latitude, position.coords.longitude);
@@ -1149,12 +1155,8 @@ foreach ($activeMap as $key => $value) {
                     icon: image
             });
             var my_Point = beachMarker.getPosition();
-            /*var flightPath = new google.maps.Marker({
-             map:map,
-             position: pos1, label: labels[labelIndex++ % labels.length],
-             });*/
-            //flightPath.setMap(null);
     } else {
+
     var image = 'https://cdn1.iconfinder.com/data/icons/free-98-icons/32/map-marker-48.png';
             /*var infowindow = new GGM.InfoWindow({
              position: pos1,
@@ -1171,21 +1173,23 @@ foreach ($activeMap as $key => $value) {
             $("#lat_value").val(my_Point.lat()); // เอาค่า latitude ตัว marker แสดงใน textbox id=lat_value
             $("#lon_value").val(my_Point.lng()); // เอาค่า longitude ตัว marker แสดงใน textbox id=lon_value
             $("#zoom_value").val(map.getZoom()); // เอาขนาด zoom ของแผนที่แสดงใน textbox id=zoom_value
+
             latMe = my_Point.lat();
             lngMe = my_Point.lng();
             $("#start").val(latMe + ',' + lngMe);
-            //alert(latMe + ',' + lngMe);
+            alert(latMe + ',' + lngMe);
             map.setCenter(pos1);
     }
-
-    //console.log(my_Point.lat());
+    $("#no_allow").val('1');
+            //console.log(my_Point.lat());
     }, function () {
     // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
-    //alert('ไม่ทำงาน');
+
     handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
     });
     } else {
+
     // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
     handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
@@ -1299,6 +1303,7 @@ foreach ($activeMap as $key => $value) {
     function handleNoGeolocation(map) {
 
     var bangkokCozxy = new google.maps.LatLng(13.871395, 100.61732);
+            $("#no_allow").val('0');
             /*map.setCenter(bangkokCozxy);
              var infowindow = new GGM.InfoWindow({
              position: bangkokCozxy,
@@ -1318,16 +1323,18 @@ foreach ($activeMap as $key => $value) {
             //$("#geo_data").html('lat: 13.755716<br />long: 100.501589');
     }
 
-    function NotAllowMap(map, start, latlongMap, status){ // if not allow map function
+    function NotAllowMap(start, latlongMap, status){ // if not allow map function
+
     if (start == 0){
-    //console.log(map);
+    //console.log(latlongMap);
     //console.log(map.getZoom());
     var llMap = latlongMap.split(',');
             $("#lat_value").val(llMap[0]);
             $("#lon_value").val(llMap[1]);
-            $("#zoom_value").val(map.getZoom());
+            //$("#zoom_value").val(map.getZoom());
             $("#start").val(latlongMap);
             //alert(latlongMap);
+            //console.log(latlongMap + ':' + llMap[0] + ':' + llMap[1]);
     }
     }
 

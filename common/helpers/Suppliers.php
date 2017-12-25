@@ -253,7 +253,18 @@ class Suppliers {
     }
 
     public static function GetCountMyProduct($userId) {
-        $count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId)->count();
+        //$count = \common\models\costfit\ProductSuppliers::find()->where('userId=' . $userId )->count();
+        $count = \common\models\costfit\Product::find()
+                        ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
+                        ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+                        ->where("product.status=1 AND product.approve='approve'
+                        AND ps.status=1
+                        AND product.parentId is not null
+                        AND ps.approve='approve'
+                        AND ps.productId is not null
+                        AND ps.result >0
+                        AND pps.status=1
+                        AND pps.price > 0 ")->count();
         return $count;
     }
 
