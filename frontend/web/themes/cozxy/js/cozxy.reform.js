@@ -1808,6 +1808,7 @@ $('#LcpickingId').change(function () {
     if (LcpickingId == 1) {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
+    console.log(LcpickingId + '::' + stateId + '::' + amphurId);
 });
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
