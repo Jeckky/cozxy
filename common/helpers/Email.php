@@ -45,8 +45,15 @@ class Email {
                 ->send();
     }
 
-    public static function mailOrderFullfillment($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates) {//ส่งรายการ Order ให้fullfillment
-        \Yii::$app->mail->compose('orderToFulFillment', ['url' => $url, 'userName' => $userName, 'adress' => $adress, 'order' => $orderList, 'receiveType' => $receiveType, 'cartCalculates' => $cartCalculates])
+    public static function mailOrderFullfillment($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates, $shipTo) {//ส่งรายการ Order ให้fullfillment
+        \Yii::$app->mail->compose('orderToFulFillment', [
+                    'url' => $url,
+                    'userName' => $userName,
+                    'adress' => $adress,
+                    'order' => $orderList,
+                    'receiveType' => $receiveType,
+                    'cartCalculates' => $cartCalculates,
+                    'shipTo' => $shipTo])
                 ->setTo($toMail)//tomail
                 ->setFrom('cozxy@cozxy.com')
                 ->setSubject($Subject)

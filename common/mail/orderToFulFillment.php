@@ -72,9 +72,9 @@
                 <div class="head title" style=" background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     <span style="color:  rgba(255,212,36,.9); ">COZXY</span>
                 </div>
-                <div class="content" style="background-color: #f5f5f5; padding: 30px;">
+                <div style="padding: 30px;">
                     <p>
-                        <strong>Hello <?php "Fullfillment" ?>,</strong>
+                        <strong>Hello " Fulfillment " ,</strong>
                     </p>
                     <p>
                         Order from &nbsp;&nbsp;&nbsp;<strong><?= $userName ?> </strong>
@@ -98,6 +98,12 @@
                         Tel: <?php echo $billingTel; ?>
                     </p>
                     <p>
+                        <strong>Ship to :</strong> <br>
+                        <?php
+                        echo $shipTo;
+                        ?>
+                    </p>
+                    <p>
                         <?php
                         /* $GetOrderItemShipping = \common\models\costfit\OrderItem::find()->where("orderId='" . $order->orderId . "' ")->groupBy(['sendDate'])->sum('sendDate');
                           //2017-04-03  วันที่จัดส่งสินค้า ภายในวันที่ Dates Month Years
@@ -115,6 +121,9 @@
                           } */
                         ?>
                     </p>
+                </div>
+                <div class="content" style="background-color: #f5f5f5; padding: 30px;">
+
                     <center>
                         <table width="100%"  text-align="center"  style=" width:100% ; height: auto;  text-align: center; margin-left: 20px;">
                             <tr>
@@ -258,11 +267,11 @@
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">Total Before VAT:</td>
-                                                <td style="text-align: right;"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2)         ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2)                   ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">VAT 7%:</td>
-                                                <td style="text-align: right;"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);        ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                  ?></td>
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;">Discount Coupons:</td>
@@ -278,7 +287,7 @@
                                             </tr>
                                             <tr style="font-size: 12px;">
                                                 <td colspan="6" style="text-align: right;"> Order Total: </td>
-                                                <td style="text-align: right;"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);        ?></td>
+                                                <td style="text-align: right;"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                  ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
