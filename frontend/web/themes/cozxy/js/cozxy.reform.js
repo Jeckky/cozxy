@@ -1556,6 +1556,7 @@ $(".bs-example-modal-lg-x").click(function () {
         }
     });
 });
+
 function CozxyComparePriceModernBest(id, type, dataIndex) {
     //$('.edit-price-' + id + ' i').removeClass('fa fa-pencil-square-o');
     //$('.shopping-' + id + ' i').addClass('fa fa-times fa-spin');
@@ -1608,10 +1609,6 @@ function CozxyComparePriceModernBest(id, type, dataIndex) {
         });
     }
 }
-
-
-
-
 
 counter = function () {
 
@@ -1756,6 +1753,7 @@ $('#stateId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 });
+
 $('#amphurId').change(function () {
     var stateId = $('#stateId').val();
     var amphurId = $('#amphurId').val();
@@ -1792,8 +1790,13 @@ $('#amphurId').change(function () {
         }
     });
 });
+
+$('#LcpickingIdxx').change(function () {
+    alert('test 123');
+});
+
 $('#LcpickingId').change(function () {
-    alert('LcpickingId');
+    //alert('LcpickingId');
     var stateId = $('#stateId').val();
     var amphurId = $('#amphurId').val();
     var LcpickingId = $('#LcpickingId').val();
@@ -1828,6 +1831,7 @@ function shipCozxyBox() {
     var lat_value = $('#lat_value').val();
     var lon_value = $('#lon_value').val();
     alert(0 + '::' + shipProvince + ':' + shipDistrict + ':' + shipLcpickingId + ':' + lat_value + ':' + lon_value);
+
 }
 
 $('.shippingOption').click(function () {
@@ -1838,7 +1842,9 @@ $('.shippingOption').click(function () {
         //alert(shipping);
         $("#shipToAddress").css({'display': 'none'});
         $("#shipToCozxyBox").removeAttr("style");
-        document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
+        //$('form').removeAttr('id', 'default-shipping-address');
+        //$('form').attr('id', 'default-ship-cozxy-box');
+        document.getElementById("default-ship-cozxy-box").action = $baseUrl + "checkout";
         var path = $baseUrl + "ship-cozxy-box/cozxy-box-select";
         $.ajax({
             url: path,
@@ -1848,7 +1854,7 @@ $('.shippingOption').click(function () {
             success: function (data, status) {
                 //alert(status);
                 if (status == "success") {
-                    $('#ship-to-cozxy-box-select').html(data);
+                    //$('#ship-to-cozxy-box-select').html(data);
                     //alert(data);
                 } else {
                     //alert(status);
@@ -1859,15 +1865,21 @@ $('.shippingOption').click(function () {
         //alert(shipping);
         $("#shipToCozxyBox").css({'display': 'none'});
         $("#shipToAddress").removeAttr("style");
+        //$('form').removeAttr('id', 'default-ship-cozxy-box');
+        //$('form').attr('id', 'default-shipping-address');
+
+
         document.getElementById("default-shipping-address").action = $baseUrl + "checkout";
-        document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
+        //document.getElementsByClassName("check-out")[0].setAttribute("class", "b btn-yellow check-out  continue-ship-to-address");
+        $('.check-out').attr('class', 'b btn-yellow check-out  continue-ship-to-address');
         //document.getElementsByClassName("continue-ship-to-address").submit();
-        $('#ship-to-cozxy-box-select').html('');
+        //$('#ship-to-cozxy-box-select').html('');
     } else {
         alert('Please Choose shipping type');
     }
 
 });
+
 function newBillingTelUnique() {
 
     var addressTel = $('#address-tel').val();
@@ -1905,7 +1917,25 @@ function newBillingTelUnique() {
 }
 
 
+function shipCozxyBox() {
+    var shipping = $('input[name="shipping"]:checked').val();
+    //aria-invalid="true"
+    //alert('test error' + shipping);
+    if (shipping == 1) {
+        var LcpickingId = $('#LcpickingId').val();
+        //alert(LcpickingId);
+        if (LcpickingId == '') {
+            $('#LcpickingId').attr('aria-invalid', 'true');
+            $('.field-LcpickingId').attr('class', 'form-group field-LcpickingId required has-error');
+            $('.field-LcpickingId').find('.help-block-error').html('Picking ID cannot be blank.');
+        } else {
+            document.forms['default-ship-cozxy-box'].submit();
+        }
 
+    } else if (shipping == 2) {
+        document.forms['default-ship-cozxy-box'].submit();
+    }
+}
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];
