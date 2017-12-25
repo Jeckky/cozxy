@@ -86,9 +86,13 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
             if ($promotion->perUser == 0 || $promotion->perUser == null) { //ถ้าไม่ได้กำหนด หรือ กำหนดเป็น 0 = no limit
                 return 0;
             } else {
-                $totalUse = count(Order::find()->where("couponId=" . $promotionId . " and userId=" . \Yii::$app->user->id)->all());
-                if ($totalUse >= $promotion->perUser) {//ถ้า user คนนี้เคยใช้ code นี้ไปแล้ว
-                    return 1;
+                if (isset(\Yii::$app->user->id)) {
+                    $totalUse = count(Order::find()->where("couponId=" . $promotionId . " and userId=" . \Yii::$app->user->id)->all());
+                    if ($totalUse >= $promotion->perUser) {//ถ้า user คนนี้เคยใช้ code นี้ไปแล้ว
+                        return 1;
+                    } else {
+                        return 0;
+                    }
                 } else {
                     return 0;
                 }
@@ -118,6 +122,24 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                 return 1;
             } else {
                 return 0;
+            }
+        }
+    }
+
+    public static function variablePromotion($orderId, $couponId) {
+        $order = Order::find()->where("orderId=$orderId")->one();
+        if ($order->couponId == null || $order->couponId == '') {
+            return 1;
+        } else {
+            if ($couponId == null) {
+                return 1;
+            } else {
+                $checkVarible = Promotion::isOverUsePerPerson($couponId);
+                if ($checkVarible) {//ไช้ไม่ได้
+                    return 0;
+                } else {
+                    return 1;
+                }
             }
         }
     }

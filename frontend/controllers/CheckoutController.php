@@ -531,6 +531,7 @@ class CheckoutController extends MasterController {
         $orderId = Yii::$app->request->post('orderId');
         $systemCoin = Yii::$app->request->post('systemCoin');
         $addressId = Yii::$app->request->post('addressId');
+        $shipTo = '';
         if (isset($_GET['orderId']) && isset($_GET['systemCoin'])) {
             $orderId = $_GET['orderId'];
             $systemCoin = $_GET['systemCoin'];
@@ -617,18 +618,24 @@ class CheckoutController extends MasterController {
                         $billingZipcode = $addressId->billingZipcode;
                         $Zipcodes = Local::Zipcodes($billingZipcode);
                         $adress['billingZipcode'] = $Zipcodes['zipcode'];
-
                         $adress['billingTel'] = $addressId->billingTel;
-
                         $orderList = \common\models\costfit\Order::find()->where('orderId = ' . $orderId)->one();
                         $receiveType = [];
                         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($orderId);
                         $fulfillment = "fulfillment@cozxy.com";
                         $subjectFulFillment = "Order to cozxy :" . $order->invoiceNo;
                         $orderEmail = Email::mailOrderMember($toMail, $Subject, $url, $userName, $adress, $orderList, $receiveType, $cartCalculates);
-
+                        $pickingId = $orderList->pickingId;
+                        if ($pickingId == 0) {//ship to address
+                            $shipTo = $this->shipToAddress($orderId);
+                        } else {//ship to cozxy box
+                            $ship = \common\models\costfit\PickingPoint::find()->where("pickingId=$orderList->pickingId")->one();
+                            if (isset($ship)) {
+                                $shipTo = $ship->title;
+                            }
+                        }
                         $urlFulfillment = "http://backend101.cozxy.com/order/order/purchase-order";
-                        $fulfillmentMail = Email::mailOrderFullfillment($fulfillment, $subjectFulFillment, $urlFulfillment, $userName, $adress, $orderList, $receiveType, $cartCalculates);
+                        $fulfillmentMail = Email::mailOrderFullfillment($fulfillment, $subjectFulFillment, $urlFulfillment, $userName, $adress, $orderList, $receiveType, $cartCalculates, $shipTo);
                         $trackingOrder = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyTracking::productShowTracking($order->orderId)]);
                         return $this->render('_thank', compact('res', 'trackingOrder'));
                     }
@@ -917,6 +924,41 @@ class CheckoutController extends MasterController {
         </tr>
         </thead><tbody>
         ';
+    }
+
+    public function shipToAddress($orderId) {
+        $order = Order::find()->where("orderId=$orderId")->one();
+        $shippingAddress = '';
+        $districtName = '';
+        $amphurName = '';
+        $provinceName = '';
+        $zipcode = '';
+        $tel = '';
+        if (isset($order)) {
+            $name = $order->shippingFirstname . " " . $order->shippingLastname;
+            $address = $order->shippingAddress;
+            $district = \common\models\dbworld\District::find()->where("districtId=$order->shippingDistrictId")->one();
+            if (isset($district)) {
+                $districtName = $district->districtName;
+            }
+            $amphur = \common\models\dbworld\Cities::find()->where("cityId=$order->shippingAmphurId")->one();
+            if (isset($amphur)) {
+                $amphurName = $amphur->cityName;
+            }
+            $province = States::find()->where("stateId=$order->shippingProvinceId")->one();
+            if (isset($province)) {
+                $provinceName = $province->stateName;
+            }
+            $zipcodeId = \common\models\costfit\Zipcodes::find()->where("zipcodeId=$order->shippingZipcode")->one();
+            if (isset($zipcodeId)) {
+                $zipcode = $zipcodeId->zipcode;
+            }
+            if ($order->shippingTel != '' && $order->shippingTel != null) {
+                $tel = $order->shippingTel;
+            }
+            $shippingAddress = $name . '<br>' . $address . ' ' . $districtName . ' ' . $amphurName . ' ' . $provinceName . ' ' . $zipcode . '<br>' . $tel;
+        }
+        return $shippingAddress;
     }
 
     public function actionTestMap() {
