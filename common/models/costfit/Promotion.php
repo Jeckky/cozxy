@@ -127,6 +127,7 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
     }
 
     public static function variablePromotion($orderId, $couponId) {
+        //throw new \yii\base\Exception($couponId);
         $order = Order::find()->where("orderId=$orderId")->one();
         if ($order->couponId == null || $order->couponId == '') {
             return 1;
@@ -135,8 +136,8 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                 return 1;
             } else {
                 $checkVarible = Promotion::isOverUsePerPerson($couponId);
-                if ($checkVarible) {//ไช้ไม่ได้
-                    return 0;
+                if ($checkVarible) {
+                    return 0; //ไช้ไม่ได้
                 } else {
                     return 1;
                 }

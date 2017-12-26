@@ -427,7 +427,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         //$this->totalExVat = $total * 0.93;/**sak**/หักส่วนลดก่อนแล้วค่อยถอด VAT (การเงิน)
         //$this->vat = ($total) * 0.07;
         //$this->total = $total;
-        $this->discount = null;
+        // $this->discount = null;
         /* if (isset($this->coupon) && isset($this->couponId)) {
           if (isset($this->coupon->orderSummaryTotal) && $total >= $this->coupon->orderSummaryTotal) {
 
@@ -440,14 +440,16 @@ class Order extends \common\models\costfit\master\OrderMaster {
           }
           }
           } */
-        $promotionCategory = PromotionCategory::categoryItems($this->couponId);
-        $promotionBrand = PromotionBrand::brandItems($this->couponId);
-        $productCateInOrder = '';
-        $productBrandInOrder = '';
         $productId = '';
-        //throw new \yii\base\Exception($this->orderId);
-        if (isset($this->orderId) && $this->orderId != NULL) {
-            if (Promotion::variablePromotion($this->orderId, $this->couponId)) {
+        if (isset($this->coupon) && isset($this->couponId)) {
+            $promotionCategory = PromotionCategory::categoryItems($this->couponId);
+            $promotionBrand = PromotionBrand::brandItems($this->couponId);
+            $productCateInOrder = '';
+            $productBrandInOrder = '';
+
+            //throw new \yii\base\Exception($this->couponId);
+            if (isset($this->orderId) && $this->orderId != NULL) {
+                //if (Promotion::variablePromotion($this->orderId, $this->couponId)) {
                 if ($promotionCategory != 0) {
                     $productCateInOrder = PromotionCategory::productInCate($this->orderId, $promotionCategory, 1); //เฉพาะ cate ที่เลือก
                 } else {
@@ -459,13 +461,15 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
                 }
                 $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder, $promotionCategory, $promotionBrand);
-            } else {
-                $this->couponId = null;
+                // }
             }
-
-            if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
-                $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
-            }
+        }
+        if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
+            $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
+            //throw new \yii\base\Exception($this->discount . '===' . $productId);
+        } else {
+            $this->discount = null;
+            $this->resetOrder($this->orderId);
         }
         /*
          * เพิ่ม round() ปัดเศษขึ้น
@@ -487,6 +491,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $this->shippingRate = $this->calculateShippingRate();
         //$this->summary = $this->grandTotal + $this->calculateShippingRate();
         $this->summary = round($result - $this->discount, 0, PHP_ROUND_HALF_UP);
+        //throw new \yii\base\Exception($this->discount);
         return TRUE;
     }
 
@@ -518,6 +523,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 }
             }
         }
+        //throw new \yii\base\Exception($productId);
         return $productId;
     }
 
@@ -553,6 +559,22 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 $order->discount = $totalDiscount;
             }
         }
+        // throw new \yii\base\Exception($this->couponId . '==' . $productId . "===" . $order->discount);
+        return $order->discount;
+    }
+
+    public function resetOrder($orderId) {
+        $orderItems = OrderItem::find()->where("orderId=$orderId")->all();
+        $order = Order::find()->where("orderId=$orderId")->one();
+        $totalDiscount = 0;
+        if (isset($orderItems) && count($orderItems) > 0) {
+            foreach ($orderItems as $orderItem):
+                $orderItem->discountValue = 0.00;
+                $orderItem->save(false);
+            endforeach;
+        }
+        $order->discount = $totalDiscount;
+// throw new \yii\base\Exception($this->couponId . '==' . $productId . "===" . $order->discount);
         return $order->discount;
     }
 
@@ -877,7 +899,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
 
         $query = \common\models\costfit\Order::find()
                 ->where("userId ='" . Yii::$app->user->id . "' and status > " . Order::ORDER_STATUS_REGISTER_USER . "");
-        //  and orderNo  is not null order by orderId desc
+//  and orderNo  is not null order by orderId desc
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -886,7 +908,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             ],
         ]);
 
-        // load the search form data and validate
+// load the search form data and validate
         if (!($this->load($params) )) {
             return $dataProvider;
         }
@@ -978,7 +1000,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function getItems($orderId) {
-        //throw new \yii\base\Exception($orderId);
+//throw new \yii\base\Exception($orderId);
         $item = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($item)) {
             return $item;
@@ -1068,7 +1090,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
     }
 
     public static function getItemString($orderId) {
-        //throw new \yii\base\Exception($orderId);
+//throw new \yii\base\Exception($orderId);
         $string = '';
         $items = OrderItem::find()->where("orderId=" . $orderId)->all();
         if (isset($items) && !empty($items)) {

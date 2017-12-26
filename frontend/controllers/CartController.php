@@ -221,6 +221,7 @@ class CartController extends MasterController {
         $id = $_POST["id"];
         $order = Order::findOne($id);
         $order->couponId = NULL;
+        $order->discount = null;
         $order->save();
         $orderItem = OrderItem::find()->where("orderId=$id")->all();
         if (isset($orderItem) && count($orderItem) > 0) {
@@ -336,23 +337,8 @@ class CartController extends MasterController {
                     $res["status"] = FALSE;
                     $res["message"] = "Please apply only one promocode.";
                 } else {
-                    /* $promotionCategory = PromotionCategory::categoryItems($code->promotionId);
-                      $promotionBrand = PromotionBrand::brandItems($code->promotionId);
-                      $productCateInOrder = '';
-                      $productBrandInOrder = '';
-                      if ($promotionCategory != 0) {
-                      $productCateInOrder = PromotionCategory::productInCate($order->orderId, $promotionCategory);
-                      }
-                      if ($promotionBrand != 0) {
-                      $productBrandInOrder = PromotionBrand::productInBrand($order->orderId, $promotionBrand);
-                      }
-                      $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder); */
-
-                    /* if ($productId != '') {
-                      $this->calculateOrder($order->orderId, $code->promotionId, $productId);
-                      } */
                     $order->couponId = $code->promotionId;
-                    $order->save(false);
+                    $order->save();
                     $res["status"] = TRUE;
                     $cartArray = Order::findCartArray();
                     $res["cart"] = $cartArray;
@@ -362,6 +348,7 @@ class CartController extends MasterController {
                 $res["message"] = "No Found this Coupon Code.";
             }
         }
+        //throw new \yii\base\Exception(print_r($res, true));
         return \yii\helpers\Json::encode($res);
     }
 
