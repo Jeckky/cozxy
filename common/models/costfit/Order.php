@@ -461,12 +461,11 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     $productBrandInOrder = PromotionBrand::productInBrand($this->orderId, $promotionBrand, 0);
                 }
                 $productId = $this->promotionProductId($productCateInOrder, $productBrandInOrder, $promotionCategory, $promotionBrand);
-                // }
+                //}
             }
         }
         if ($productId != '' && $this->couponId != '' && $this->couponId != NULL) {
             $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
-            //throw new \yii\base\Exception($this->discount . '===' . $productId);
         } else {
             $this->discount = null;
             $this->resetOrder($this->orderId);
