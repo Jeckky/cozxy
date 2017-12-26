@@ -33,14 +33,20 @@ $pickingId = rand(0, 9999);
                     <div class="cart-detail login-box" id="shipToAddress">
                         <h4>SHIP TO</h4>
 
-                        <?php if ($shipTo == 2): ?>
+                        <?php
+                        if ($shipTo == 2):
+                            $District = isset($order->shippingDistrict) ? $order->shippingDistrict->localName : '';
+                            $Cities = isset($order->shippingCities) ? $order->shippingCities->localName : '';
+                            $Province = isset($order->shippingProvince) ? $order->shippingProvince->localName : '';
+                            $zipcode = isset($order->shippingZipcodeRelation->zipcode) ? $order->shippingZipcodeRelation->zipcode : ''
+                            ?>
                             <div class="row address-checkouts">
                                 <div class="col-xs-3 col-md-2 col-sm-3 ">Name:</div>
                                 <div class="col-xs-9 col-md-10 col-sm-9 name-show"><?= $order->shippingFirstname . ' ' . $order->shippingLastname ?></div>
                                 <div class="size6">&nbsp;</div>
                                 <div class="col-xs-3 col-md-2 col-sm-3">Address:</div>
                                 <div class="col-xs-9 col-md-10 col-sm-9 address-show">
-                                    <?= $order->shippingAddress . ' ' . $order->shippingDistrict->localName . ' ' . $order->shippingCities->localName . ' ' . $order->shippingProvince->localName . ' ' . isset($order->shippingZipcodeRelation->zipcode) ? $order->shippingZipcodeRelation->zipcode : ''; ?>
+                                    <?= $order->shippingAddress . ' ' . $District . ' ' . $Cities . ' ' . $Province . ' ' . $zipcode; ?>
                                 </div>
                                 <div class="size6">&nbsp;</div>
                                 <div class="col-xs-3 col-md-2 col-sm-3">Email:</div>

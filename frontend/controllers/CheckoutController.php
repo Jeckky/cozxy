@@ -50,6 +50,9 @@ class CheckoutController extends MasterController {
         //echo $addressId;
         //exit();
         $orderAddress = Yii::$app->request->post('Order');
+        //echo '<pre>';
+        //print_r($orderAddress);
+        //exit();
         $orderId = Yii::$app->request->post('orderId');
         $tel = Yii::$app->request->post('tel');
 
@@ -79,10 +82,19 @@ class CheckoutController extends MasterController {
                 }
             } else {
                 //return $this->redirect(Yii::$app->homeUrl . 'ship-cozxy-box');
-                echo 'Picking Point Not Null 1';
+                //echo 'Picking Point Not Null 1';
                 $shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point_new']);
             }
         } else if ($shipTo == 2) {
+            /* [shippingFirstname] => taninut
+              [shippingLastname] => bangmuang
+              [shippingAddress] => test
+              [shippingProvinceId] => 1
+              [shippingAmphurId] => 6
+              [shippingDistrictId] => 43
+              [shippingZipcode] => 33
+              [shippingTel] => 0616539889
+              [email] => sodapew17@gmail.com */
             $shippingAddress = Yii::$app->request->post('Order');
             $order->shippingFirstname = isset($orderAddress['shippingFirstname']) ? $orderAddress['shippingFirstname'] : '';
             $order->shippingLastname = isset($orderAddress['shippingLastname']) ? $orderAddress['shippingLastname'] : '';

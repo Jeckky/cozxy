@@ -199,11 +199,11 @@ function strip_tags_content($text) {
     <div class="row">
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'default-ship-cozxy-box',
+                    'id' => 'default-shipping-address',
                     //'action' => Yii::$app->homeUrl . 'checkout/summary',
                     'action' => $shippingChooseActive == 1 ? Yii::$app->homeUrl . 'checkout' : Yii::$app->homeUrl . 'checkout',
                     'options' => ['class' => 'space-bottom'],
-                    'enableClientValidation' => false,
+                        //'enableClientValidation' => false,
         ]);
         ?>
         <!-- YOUR SHIPPING & BILLING ADDRESS -->
@@ -219,12 +219,12 @@ function strip_tags_content($text) {
                             <div class="col-lg-12">
                                 Choose shipping type : &nbsp; &nbsp; &nbsp;
                                 <?//= Html::radio('shipping', ((isset($order->pickingId) && !empty($order->pickingId)) || !isset($order->shippingFirstname)) ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
-                                <?= Html::radio('shipping', $shippingChooseActive == 1 ? true : false, ['value' => 1, 'class' => 'shippingOption', 'id' => 'shipping']) ?>
+                                <?= Html::radio('shipping', $shippingChooseActive == 1 ? true : false, ['value' => 1, 'class' => 'shippingOption']) ?>
                                 Ship To CozxyBox
                                 <!--   <a href="chk-edit1.php" class="pull-right btn-g999 p-edit">Edit</a></div><div class="col-xs-12 size6">&nbsp;-->
                                 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                 <?//= Html::radio('shipping', (isset($order->shippingFirstname) && !isset($order->pickingId)) ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
-                                <?= Html::radio('shipping', $shippingChooseActive == 2 ? true : false, ['value' => 2, 'class' => 'shippingOption', 'id' => 'shipping']) ?>
+                                <?= Html::radio('shipping', $shippingChooseActive == 2 ? true : false, ['value' => 2, 'class' => 'shippingOption']) ?>
                                 Ship to address
                             </div>
                             <div class="col-lg-12">
@@ -570,8 +570,8 @@ function strip_tags_content($text) {
                         <input type="hidden" name="orderId" value="<?= $order->orderId ?>">
                         <div id="continue-pick-up"></div>
                         <a href="<?= Url::to(['/cart']) ?>" class="b btn-black" style="padding:12px 32px; margin:24px auto 12px">BACK</a>
-                        <a href="javascript:shipCozxyBox()" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>
-                        <!--<button type="submit" class="b btn-yellow check-out <?php echo $shippingChooseActive == 2 ? 'continue-ship-to-address' : '' ?>" >CONTINUE TO CHECK OUT</button>-->
+                        <!--<a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>-->
+                        <button type="submit" class="b btn-yellow check-out <?php echo $shippingChooseActive == 2 ? 'continue-ship-to-address' : '' ?>" >CONTINUE TO CHECK OUT</button>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>
@@ -1177,7 +1177,7 @@ foreach ($activeMap as $key => $value) {
             latMe = my_Point.lat();
             lngMe = my_Point.lng();
             $("#start").val(latMe + ',' + lngMe);
-            //alert(latMe + ',' + lngMe);
+            alert(latMe + ',' + lngMe);
             map.setCenter(pos1);
     }
     $("#no_allow").val('1');

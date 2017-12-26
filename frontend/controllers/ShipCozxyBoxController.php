@@ -23,7 +23,7 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use \common\models\costfit\Order;
 use common\helpers\RewardPoints;
-use common\helpers\PickingPoint;
+//use common\helpers\PickingPoint;
 use common\helpers\Email;
 use common\helpers\Local;
 use common\models\costfit\UserPoint;
@@ -41,8 +41,7 @@ use common\helpers\CozxyMap;
 class ShipCozxyBoxController extends MasterController {
 
     public function actionIndex() {
-        $PickingPointJson = CozxyMap::PickingPointJson();
-
+        //$PickingPointJson = CozxyMap::PickingPointJson();
         //print_r($PickingPointJson);
         $name = [];
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
@@ -54,6 +53,7 @@ class ShipCozxyBoxController extends MasterController {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
         }
+
         $billing = \common\models\costfit\Address::find()->where("userId=" . \Yii::$app->user->id . " and isDefault=1 and type!=4")->one();
         if (isset($billing)) {
             $name["firstname"] = $billing->firstname;
@@ -65,6 +65,7 @@ class ShipCozxyBoxController extends MasterController {
                 $name["lastname"] = $user->lastname;
             }
         }
+
         $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
         foreach ($pickingPointActiveMap as $key => $value) {
             //echo $value[$key]->attributes . '<br>';
@@ -218,8 +219,16 @@ class ShipCozxyBoxController extends MasterController {
     }
 
     public function actionCozxyBoxSelect() {
+        $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
+        foreach ($pickingPointActiveMap as $key => $value) {
+            //echo $value[$key]->attributes . '<br>';
+            //echo '<pre>';
+            //print_r($value->attributes);
+            $activeMap[] = $value->attributes;
+        }
         $pickingPoint = new \common\models\costfit\PickingPoint();
-        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect", compact('pickingPoint'));
+        return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect", compact('pickingPoint', 'activeMap'));
+        //return $this->renderPartial('@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect', compact('pickingPoint'), false, false);
     }
 
 }
