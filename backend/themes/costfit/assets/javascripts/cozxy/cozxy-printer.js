@@ -20,7 +20,7 @@ $url = $baseUrl;
 $(document).on('click', '.links', function (e) {
     var status = $(this).attr('status');
     var orderId = $(this).attr('orderId');
-    var url = $baseUrl + 'order/order/detail2';
+    var url = $url + 'order/order/detail2';
     // alert(orderId + '->' + status);
     $.ajax({
         url: url,
@@ -303,7 +303,7 @@ function newKey(key) {
     return a;
 }
 $(document).on('click', '.reprint', function (e) {
-    var url = $baseUrl + 'order/order/reprint-real-time';
+    var url = $url + 'order/order/reprint-real-time';
     //var url = 'http://localhost/cozxy/backend/web/order/order/reprint-real-time';
     $.ajax({
         url: url,
@@ -328,7 +328,7 @@ $(document).on('keyup', '.productQr', function (event) {
         var isbn = $(".productQr").val();
         var orderId = $(this).parent().find("#orderId").val();
         var ticketId = $(this).parent().find("#ticketId").val();
-        var url = $baseUrl + 'returnproduct/return-product/return-list';
+        var url = $url + 'returnproduct/return-product/return-list';
         $.ajax({
             url: url,
             data: {orderId: orderId, isbn: isbn, ticketId: ticketId},
@@ -349,7 +349,7 @@ $(document).on('keyup', '.productQr', function (event) {
 $(document).on('click', '.deleteR', function () {
     var returnId = $(this).parent().parent().find("#pSuppId").val();
     var orderId = $(this).parent().parent().find("#pOrderId").val();
-    var url = $baseUrl + 'returnproduct/return-product/delete-return-list';
+    var url = $url + 'returnproduct/return-product/delete-return-list';
     $.ajax({
         url: url,
         data: {returnId: returnId, pOrderId: orderId},
@@ -377,7 +377,7 @@ $(document).on('click', '#incr-return', function () {
     } else {
         incr = "-";
     }
-    var url = $baseUrl + 'returnproduct/return-product/change-quantity-return-list';
+    var url = $url + 'returnproduct/return-product/change-quantity-return-list';
     $.ajax({
         url: url,
         data: {returnId: returnId, orderId: orderId, qnty: qntyReturn, incr: incr},
@@ -422,7 +422,7 @@ $(document).on('click', '#confirm-return', function () {
 $(document).on('click', '#approve', function () {
     var ticketId = $(this).parent().find("#ticketId").val();
     var approve = 'Approve';
-    var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
+    var url = $url + 'returnproduct/return-product/approve-ticket';
     if (confirm('ต้องการอนุมัติรายการนี้ ?')) {
         $.ajax({
             url: url,
@@ -432,7 +432,7 @@ $(document).on('click', '#approve', function () {
             success: function (data) {
                 if (data.status) {
 
-                    window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+                    window.location.href = $url + 'returnproduct/return-product/request-ticket';
 
                 }
             }
@@ -443,7 +443,7 @@ $(document).on('click', '#approve', function () {
 $(document).on('click', '#approve-by-cozxy', function () {
     var ticketId = $(this).parent().find("#ticketId").val();
     var approve = $('#approve').text();
-    var url = $baseUrl + 'returnproduct/return-product/approve-ticket-cozxy';
+    var url = $url + 'returnproduct/return-product/approve-ticket-cozxy';
     //alert(ticketId);
     if (confirm('ต้องการอนุมัติรายการ ?')) {
         $.ajax({
@@ -453,7 +453,7 @@ $(document).on('click', '#approve-by-cozxy', function () {
             type: 'POST',
             success: function (data) {
                 if (data.status) {
-                    window.location.href = $baseUrl + 'returnproduct/return-product/cozxy-approve-return';
+                    window.location.href = $url + 'returnproduct/return-product/cozxy-approve-return';
 
                 }
             }
@@ -470,7 +470,7 @@ $(document).on('click', '#not-approve-cozxy', function () {
 $(document).on('click', '#send-remark', function () {//////////////
     var ticketId = $(this).parent().parent().find("#ticketId").val();
     var remark = $(this).parent().find("#remark").val();
-    var url = $baseUrl + 'returnproduct/return-product/approve-ticket';
+    var url = $url + 'returnproduct/return-product/approve-ticket';
     if (remark == '') {
         alert('กรุณากรอก Remark (เหตุผลที่ไม่อนุมัติ)');
         return false;
@@ -483,7 +483,7 @@ $(document).on('click', '#send-remark', function () {//////////////
             success: function (data) {
                 if (!data.status) {
                     alert('ดำเนินการเรียบร้อย');
-                    window.location.href = $baseUrl + 'returnproduct/return-product/request-ticket';
+                    window.location.href = $url + 'returnproduct/return-product/request-ticket';
                 }
             }
 
@@ -494,7 +494,7 @@ $(document).on('click', '#send-remark', function () {//////////////
 $(document).on('click', '#send-remark-cozxy', function () {//////////////
     var ticketId = $(this).parent().parent().find("#ticketId").val();
     var remark = $(this).parent().find("#remark").val();
-    var url = $baseUrl + 'returnproduct/return-product/approve-ticket-cozxy';
+    var url = $url + 'returnproduct/return-product/approve-ticket-cozxy';
     if (remark == '') {
         alert('กรุณากรอก Remark (เหตุผลที่ไม่อนุมัติ)');
         return false;
@@ -507,7 +507,7 @@ $(document).on('click', '#send-remark-cozxy', function () {//////////////
             success: function (data) {
                 if (!data.status) {
                     alert('ดำเนินการเรียบร้อย');
-                    window.location.href = $baseUrl + 'returnproduct/return-product/cozxy-approve-return';
+                    window.location.href = $url + 'returnproduct/return-product/cozxy-approve-return';
                 }
             }
 
@@ -523,7 +523,7 @@ $(document).on('click', '#sendMessage', function () {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/save-message',
+        url: $url + 'returnproduct/return-product/save-message',
         data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
         success: function (data) {
             if (data.status) {
@@ -543,7 +543,7 @@ $(document).on('keyup', '#message', function (e) {
         $.ajax({
             type: 'POST',
             dataType: 'JSON',
-            url: $baseUrl + 'returnproduct/return-product/save-message',
+            url: $url + 'returnproduct/return-product/save-message',
             data: {message: message, orderId: orderId, userId: userId, ticketId: ticketId},
             success: function (data) {
                 if (data.status) {
@@ -558,7 +558,7 @@ $(document).on('keyup', '#search-wait', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-wait',
+        url: $url + 'returnproduct/return-product/search-wait',
         data: {ms: ms},
         success: function (data) {
             $("#search-w").html(data.wait);
@@ -570,7 +570,7 @@ $(document).on('keyup', '#search-approve', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-approve',
+        url: $url + 'returnproduct/return-product/search-approve',
         data: {ms: ms},
         success: function (data) {
             $("#search-a").html(data.wait);
@@ -582,7 +582,7 @@ $(document).on('keyup', '#search-approve-cozxy', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-approve-cozxy',
+        url: $url + 'returnproduct/return-product/search-approve-cozxy',
         data: {ms: ms},
         success: function (data) {
             $("#search-ac").html(data.wait);
@@ -594,7 +594,7 @@ $(document).on('keyup', '#search-not-approve-cozxy', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-not-approve-cozxy',
+        url: $url + 'returnproduct/return-product/search-not-approve-cozxy',
         data: {ms: ms},
         success: function (data) {
             $("#search-not-ac").html(data.wait);
@@ -606,7 +606,7 @@ $(document).on('keyup', '#search-wait-cozxyapprove', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-wait-cozxy',
+        url: $url + 'returnproduct/return-product/search-wait-cozxy',
         data: {ms: ms},
         success: function (data) {
             $("#search-wc").html(data.wait);
@@ -618,7 +618,7 @@ $(document).on('keyup', '#search-wait-cozxy-confirm', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-wait-cozxy-confirm',
+        url: $url + 'returnproduct/return-product/search-wait-cozxy-confirm',
         data: {ms: ms},
         success: function (data) {
             $("#search-wcc").html(data.wait);
@@ -630,7 +630,7 @@ $(document).on('keyup', '#search-notApprove', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'returnproduct/return-product/search-not-approve',
+        url: $url + 'returnproduct/return-product/search-not-approve',
         data: {ms: ms},
         success: function (data) {
             $('#search-n').html(data.wait);
@@ -643,12 +643,12 @@ $(document).on('click', '#export-txt', function (e) {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
-        url: $baseUrl + 'report/report/export',
+        url: $url + 'report/report/export',
         data: {fromDate: fromDate, toDate: toDate},
         success: function (data) {
             if (data.status) {
 
-                window.location.href = $baseUrl + 'report/report/download?files=' + data.file;
+                window.location.href = $url + 'report/report/download?files=' + data.file;
                 alert("Download successful,please check '" + data.filename + "' in Download folder");
             } else {
                 alert('Please try to search and download again');
@@ -665,7 +665,7 @@ function showRemark(id) {
 function saveIsbn(productSuppId, poItemId) {
     var isbn = $("#inputIsbn" + poItemId).val();
     //var url = 'http://localhost/cozxy/backend/web/store/store-product/save-isbn';
-    var url = $baseUrl + 'store/store-product/save-isbn';
+    var url = $url + 'store/store-product/save-isbn';
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
@@ -694,7 +694,7 @@ function enableEdit(id) {
 }
 function saveEdit(id, value) {
     // var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-option';
-    var url = $baseUrl + 'product/product-group/edit-option';
+    var url = $url + 'product/product-group/edit-option';
     var newVal = $("#optionValue" + id).val();
     if (newVal != '') {
         $.ajax({
@@ -732,7 +732,7 @@ function disableInput(templateOptionId) {
 }
 function savceChangeProductGroupTitle(id) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-title';
-    var url = $baseUrl + 'product/product-group/edit-title';
+    var url = $url + 'product/product-group/edit-title';
     var newVal = $("#productTitle").val();
     if (confirm('Are you sure to change this title to "' + newVal + '"')) {
         $.ajax({
@@ -760,7 +760,7 @@ function savceChangeProductGroupTitle(id) {
 }
 function orderingImage(id, total, action) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image';
-    var url = $baseUrl + 'product/product-group/edit-sort-image';
+    var url = $url + 'product/product-group/edit-sort-image';
     $.ajax({
         url: url,
         data: {id: id, total: total, action: action},
@@ -777,7 +777,7 @@ function orderingImage(id, total, action) {
 }
 function orderingImageMaster(id, total, action) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/edit-sort-image-master';
-    var url = $baseUrl + 'product/product-group/edit-sort-image-master';
+    var url = $url + 'product/product-group/edit-sort-image-master';
     $.ajax({
         url: url,
         data: {id: id, total: total, action: action},
@@ -794,7 +794,7 @@ function orderingImageMaster(id, total, action) {
 }
 function changeImageStatus(id) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/image-active';
-    var url = $baseUrl + 'product/product-group/image-active';
+    var url = $url + 'product/product-group/image-active';
     $.ajax({
         url: url,
         data: {id: id},
@@ -809,7 +809,7 @@ function changeImageStatus(id) {
 }
 function changeImageMasterStatus(id) {
     //var url = 'http://localhost/cozxy/backend/web/product/product-group/image-master-active';
-    var url = $baseUrl + 'product/product-group/image-master-active';
+    var url = $url + 'product/product-group/image-master-active';
     $.ajax({
         url: url,
         data: {id: id},

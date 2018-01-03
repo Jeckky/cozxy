@@ -41,7 +41,7 @@ use common\models\costfit\Product;
                                 <td style="border: white solid thin;">
                                     <input type="text" id="optionValue<?= $value->productGroupOptionValueId ?>" name="optionValue[<?= $value->productGroupOptionValueId ?>]" value="<?= $value->value ?>" style="height: 40px;" disabled>
                                     <a class="btn btn-warning"  id="edit<?= $value->productGroupOptionValueId ?>"href="javascript:enableEdit(<?= $value->productGroupOptionValueId ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
-                                    <a class="btn btn-success"  id="save<?= $value->productGroupOptionValueId ?>"href="javascript:saveEdit(<?= $value->productGroupOptionValueId ?>,<?= $value->value ?>);" style="display: none;"><i class="fa fa-check" aria-hidden="true"></i> Save</a>
+                                    <a class="btn btn-success"  id="save<?= $value->productGroupOptionValueId ?>"href="javascript:saveEdit(<?= $value->productGroupOptionValueId ?>,'<?= $value->value ?>');" style="display: none;"><i class="fa fa-check" aria-hidden="true"></i> Save</a>
                                 </td>
                             </tr>
                             <?php
