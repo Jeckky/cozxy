@@ -286,7 +286,7 @@ class TopupController extends TopupMasterController {
         if (isset($topUp)) {
             $customerName = User::userName($topUp->userId);
             //throw new \yii\base\Exception($topUp->userId);
-            $address = User::userAddressText(User::supplierDetail($topUp->userId)->addressId, false);
+            $address = User::userAddressText(User::userDetail($topUp->userId)->addressId, false);
             $topUpNo = $topUp->topUpNo;
             $subDate = substr($topUp->updateDateTime, 0, -9);
             $date = $this->changDateFormat($subDate);
