@@ -468,7 +468,9 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $this->discount = $this->calculateOrder($this->orderId, $this->couponId, $productId);
         } else {
             $this->discount = null;
-            $this->resetOrder($this->orderId);
+            if (isset($this->orderId) && $this->orderId != NULL) {
+                $this->resetOrder($this->orderId);
+            }
         }
         /*
          * เพิ่ม round() ปัดเศษขึ้น

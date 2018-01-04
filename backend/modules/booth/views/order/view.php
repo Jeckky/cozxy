@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                               return $user->firstname . ' ' . $user->lastname;
                               }
                               ], */
-                                [
+                            [
                                 'attribute' => 'userId',
                                 'value' => $model->user->firstname . ' ' . $model->user->lastname
                             ],
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                               return $model->getStatusText($model->status);
                               }
                               ], */
-                                [
+                            [
                                 'attribute' => 'status',
                                 'value' => $model->getStatusText($model->status)
                             ],
@@ -168,51 +168,51 @@ $this->params['breadcrumbs'][] = $this->title;
                             'query' => \common\models\costfit\OrderItem::find()->where(['orderId' => $model->orderId])
                                 ]),
                         'rowOptions' => function ($model) {
-                            $options = ['id' => 'r' . $model->orderItemId];
-                            $options['class'] = ($model->status == 16) ? 'success' : '';
+                    $options = ['id' => 'r' . $model->orderItemId];
+                    $options['class'] = ($model->status == 16) ? 'success' : '';
 
-                            return $options;
-                        },
+                    return $options;
+                },
                         'columns' => [
-                                ['class' => 'yii\grid\SerialColumn'],
-                                [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            [
                                 'attribute' => 'Image',
                                 'format' => 'html',
                                 'value' => function($model) {
                                     return '<div align="center">' . Html::img(Yii::$app->homeUrl . $model->productSupplier->images->image, ['style' => 'width:100px;height:100px;']) . '</div>';
                                 }
-                            ],
-                                [
-                                'attribute' => 'productId',
-                                'value' => function ($model) {
+                                    ],
+                                    [
+                                        'attribute' => 'productId',
+                                        'value' => function ($model) {
 
-                                    return $model->product->title;
-                                }
-                            ],
-                            'quantity',
-                                [
-                                'attribute' => 'Total',
-                                'value' => function ($model) {
+                                            return $model->product->title;
+                                        }
+                                    ],
+                                    'quantity',
+                                    [
+                                        'attribute' => 'Total',
+                                        'value' => function ($model) {
 
-                                    return number_format($model->total, 2);
-                                }
-                            ],
-                        /*  [
-                          'class' => 'yii\grid\ActionColumn',
-                          'template' => '{view}'
-                          ], */
-                        ],
-                    ]);
-                    ?>
+                                            return number_format($model->total, 2);
+                                        }
+                                    ],
+                                /*  [
+                                  'class' => 'yii\grid\ActionColumn',
+                                  'template' => '{view}'
+                                  ], */
+                                ],
+                            ]);
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
 
-</div>
-
-<?php
-$this->registerJs("
+        <?php
+        $this->registerJs("
     $('#pSubmit').click(function(e) {
         e.preventDefault();
 
@@ -248,10 +248,8 @@ $this->registerJs("
 
     $('#orderForm').click(function(e) {
         e.preventDefault();
-
         var orderCode = $('#orderCode').val();
         var orderId = $('#orderId').val();
-
         $.ajax({
             url:'" . Yii::$app->homeUrl . "booth/order/booth-check-order-code',
             data:{orderCode:orderCode, orderId:orderId},
@@ -269,4 +267,4 @@ $this->registerJs("
         });
     });
 ");
-?>
+        ?>

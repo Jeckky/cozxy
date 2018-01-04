@@ -249,13 +249,17 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionCreatePo() {
+    public function actionCreatePo($orderId1 = false) {
         $supplierId[0] = 0;
         $i = 0;
         $r = 0;
         $orderIds = [];
-        if (isset($_GET['orderId']) && !empty($_GET['orderId'])) {
+        if ($orderId1 != false) {
+            $orders[0] = $orderId1;
+        } else {
             $orders = $_GET['orderId'];
+        }
+        if (isset($orders) && count($orders) > 0) {
             foreach ($orders as $orderId):
                 $checkStatus = false;
                 $checkStatus = $this->checkOrderStatus($orderId);
@@ -277,7 +281,8 @@ class OrderController extends OrderMasterController {
                     $r++;
                 }
             endforeach;
-            if (isset($orderIds) && !empty($orderIds)) {
+            //throw new \yii\base\Exception(print_r($orderIds, true));
+            if (isset($orderIds) && count($orderIds) > 0) {
                 $poId = $this->savePo($orderIds, $supplierId);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
                 //$this->sendEmail($poId);
@@ -286,7 +291,9 @@ class OrderController extends OrderMasterController {
                 $content = $this->renderPartial('content', [
                     'poId' => $poId,
                 ]);
-                $this->printPdf($content, $header);
+                if ($orderId1 == false) {
+                    $this->printPdf($content, $header);
+                }
             } else {
                 $ms = '';
                 $model = Order::find()->where("status=" . Order::ORDER_STATUS_E_PAYMENT_SUCCESS)->all();
@@ -464,7 +471,7 @@ class OrderController extends OrderMasterController {
     public static function checkOrderStatus($orderId) {
         $order = Order::find()->where("orderId=" . $orderId)->one();
         if (isset($order) && !empty($order)) {
-            if ($order->status == Order::ORDER_STATUS_E_PAYMENT_SUCCESS) {
+            if ($order->status == Order::ORDER_STATUS_E_PAYMENT_SUCCESS || $order->status == Order::ORDER_STATUS_BOOTH_PACKING) {
                 return true;
             } else {
                 return false;
