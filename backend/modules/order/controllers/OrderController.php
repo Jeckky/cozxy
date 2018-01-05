@@ -249,15 +249,19 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public function actionCreatePo($orderId1 = false) {
+    public function actionCreatePo($orderId1 = false, $booth = false) {
         $supplierId[0] = 0;
         $i = 0;
         $r = 0;
         $orderIds = [];
+        $fromBooth = '';
         if ($orderId1 != false) {
             $orders[0] = $orderId1;
         } else {
             $orders = $_GET['orderId'];
+        }
+        if ($booth == 'booth') {
+            $fromBooth = $booth;
         }
         if (isset($orders) && count($orders) > 0) {
             foreach ($orders as $orderId):
@@ -283,7 +287,7 @@ class OrderController extends OrderMasterController {
             endforeach;
             //throw new \yii\base\Exception(print_r($orderIds, true));
             if (isset($orderIds) && count($orderIds) > 0) {
-                $poId = $this->savePo($orderIds, $supplierId);
+                $poId = $this->savePo($orderIds, $supplierId, $booth);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
                 //$this->sendEmail($poId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
@@ -481,7 +485,7 @@ class OrderController extends OrderMasterController {
         }
     }
 
-    public static function savePo($orders, $supplierId) {
+    public static function savePo($orders, $supplierId, $booth) {
         $poId = [];
         $i = 0;
         foreach ($supplierId as $suppId):
@@ -489,7 +493,9 @@ class OrderController extends OrderMasterController {
             //$storeProductGroup = new \common\models\costfit\StoreProductGroup();
             $po->supplierId = $suppId;
             $po->poNo = Po::genPoNo();
-
+            if ($booth == 'booth') {
+                $po->status = 4;
+            }
             $po->createDateTime = new \yii\db\Expression('NOW()');
             $po->updateDateTime = new \yii\db\Expression('NOW()');
             $po->save(false);
@@ -512,6 +518,10 @@ class OrderController extends OrderMasterController {
                 $poItems->marginPrice = $poItems->price - $poItems->marginValue;
                 $poItems->total = $poItems->marginPrice * $poItems->quantity;
                 $stpgSum += $poItems->total;
+                if ($booth == 'booth') {
+                    $poItems->status = 4;
+                    $poItems->importQuantity = $poItems->quantity;
+                }
                 $poItems->createDateTime = new \yii\db\Expression('NOW()');
                 $poItems->updateDateTime = new \yii\db\Expression('NOW()');
                 $poItems->save(false);

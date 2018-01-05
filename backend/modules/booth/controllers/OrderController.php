@@ -176,7 +176,7 @@ class OrderController extends BoothMasterController {
         if (isset($_POST['orderCode']) && isset($_POST['orderId'])) {
             $order = Order::find()->where(['password' => $_POST['orderCode'], 'orderId' => $_POST['orderId'], 'status' => Order::ORDER_STATUS_BOOTH_PACKING])->one();
             if (isset($order)) {
-                Yii::$app->runAction('order/order/create-po', ['orderId1' => $_POST['orderId']]);
+                Yii::$app->runAction('order/order/create-po', ['orderId1' => $_POST['orderId'], 'booth' => 'booth']);
                 $order->status = Order::ORDER_STATUS_RECEIVED;
                 $order->save(false);
                 return Json::encode(['result' => true]);
