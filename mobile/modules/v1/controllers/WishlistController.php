@@ -3,6 +3,7 @@
 namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\ProductShelf;
+use common\models\costfit\User;
 use Yii;
 use yii\db\Exception;
 use yii\db\Expression;
@@ -127,20 +128,26 @@ class WishlistController extends Controller
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
-        $res = ['success' => false, 'error' => NULL];
-        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $wishlistId = $contents['wishlistId'];
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
 
-        $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
-        if(isset($ws)) {
-            $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
-            if($isDeleteWishlist) {
-                $res['success'] = true;
+        if(isset($userModel)) {
+            $res = ['success' => false, 'error' => NULL];
+            $userId = $userModel->userId;
+            $wishlistId = $contents['wishlistId'];
+
+            $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
+            if(isset($ws)) {
+                $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
+                if($isDeleteWishlist) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error :: Please try again';
+                }
             } else {
-                $res['error'] = 'Error :: Please try again';
+                $res["error"] = "Error :: Item not found.";
             }
         } else {
-            $res["error"] = "Error :: Item not found.";
+            $res['error'] = 'User not found.';
         }
         print_r(Json::encode($res));
     }
