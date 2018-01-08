@@ -462,7 +462,7 @@ class SearchController extends MasterController {
 
         //echo '<pre>';
         //print_r($dataProvider);
-        return $this->render('index_search_json', compact('dataProvider'));
+        return $this->render('index_search_json', compact('dataProvider', 'search'));
     }
 
 }
