@@ -1201,7 +1201,36 @@ function filterBrandCozxy($categoryId) {
         }
     });
 }
+function filterBrandAndCategoryCozxyApi() {
 
+    var brandName = [];
+    var search = $("#search").val();
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
+    $brandName = brandName;
+    var brandName = '';
+    for (i = 0; i < $brandName.length; i++) {
+        brandName += $brandName[i] + ',';
+    }
+    console.log(brandName);
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+
+
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
+        "method": "GET",
+        "headers": {}
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+    });
+}
 function sortCozxy($categoryId, status) {
     var brandName = [];
     $("input:checked").each(function () {

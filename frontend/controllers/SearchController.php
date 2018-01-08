@@ -447,6 +447,7 @@ class SearchController extends MasterController {
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, $categoryId);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)]);
         $catPrice = DisplaySearch::findAllPriceSearch($search);
+
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
@@ -457,7 +458,6 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
-
 
         return $this->render('index_search_json', compact('dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
     }
