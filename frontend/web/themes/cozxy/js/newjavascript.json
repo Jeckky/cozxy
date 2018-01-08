@@ -1,0 +1,129 @@
+[{
+        "position": "13.8010263,100.6129732",
+        "type": "cozxy",
+        "location": "Tesco Lotus Extra Ekamai-Ramintra",
+        "contentString": "59 Mu 8, Pradit Manutham Road, Khwaeng Lat Phrao, Khet Lat Phrao, Krung Thep Maha Nakhon 10230",
+        "pickingId": 20,
+        "latitudes": "13.8010263",
+        "longitudes": "100.6129732"
+    }, {
+        "position": "13.81239,100.70503",
+        "type": "cozxy",
+        "location": "Bangchak - Ramintra KM.14",
+        "contentString": "50 Ramintra Road Khwaeng Min Buri, Khet Min Buri, Krung Thep Maha Nakhon 10510, Thailand",
+        "pickingId": 83,
+        "latitudes": "13.81239",
+        "longitudes": "100.70503"
+    }, {
+        "position": "13.69271,100.6077",
+        "type": "cozxy",
+        "location": "Bangchak - Sukhumvit 99",
+        "contentString": "2999/1 Sukhumvit Rd, Khwaeng Bang Chak, Khet Phra Khanong, Krung Thep Maha Nakhon 10260, Thailand",
+        "pickingId": 87,
+        "latitudes": "13.69271",
+        "longitudes": "100.6077"
+    }, {
+        "position": "13.83518,100.63125",
+        "type": "cozxy",
+        "location": "Bangchak - Ekamai Ramintra 4",
+        "contentString": "569 Mu - Pradit Manutham Road Khwaeng Lat Phrao Khet Lat Phrao, Krung Thep Maha Nakhon 10230, Thailand",
+        "pickingId": 91,
+        "latitudes": "13.83518",
+        "longitudes": "100.63125"
+    }, {
+        "position": "13.80753,100.61879",
+        "type": "cozxy",
+        "location": "Bangchak - Ekamai Ramintra 1",
+        "contentString": "28 Soi Yothinpattana Mu - Ramintra Ladprao Road Kwang klongjon Khet Bangkapi Krung Thep Maha Nakhon 10240, Thailand",
+        "pickingId": 92,
+        "latitudes": "13.80753",
+        "longitudes": "100.61879"
+    }, {
+        "position": "13.74714,100.64362",
+        "type": "cozxy",
+        "location": "Bangchak - Srinagarindra Samitivej",
+        "contentString": "138 Srinagarindra Rd, Khwaeng Hua Mak, Khet Bang Kapi, Krung Thep Maha Nakhon 10240, Thailand",
+        "pickingId": 96,
+        "latitudes": "13.74714",
+        "longitudes": "100.64362"
+    }, {
+        "position": "13.73662,100.62333",
+        "type": "cozxy",
+        "location": "Bangchak - Phatthanakan 27",
+        "contentString": "1348 Phatthanakan Rd, Khwaeng Suan Luang, Khet Suan Luang, Krung Thep Maha Nakhon 10250, Thailand",
+        "pickingId": 97,
+        "latitudes": "13.73662",
+        "longitudes": "100.62333"
+    }, {
+        "position": "13.70434,100.64598",
+        "type": "cozxy",
+        "location": "Bangchak - Srinagarindra 41",
+        "contentString": "Srinagarindra Rd, Khwaeng Suan Luang, Khet Suan Luang, Krung Thep Maha Nakhon 10250, Thailand",
+        "pickingId": 98,
+        "latitudes": "13.70434",
+        "longitudes": "100.64598"
+    }, {
+        "position": "13.7365,100.5721",
+        "type": "cozxy",
+        "location": "Bangchak - Sukhumvit 39",
+        "contentString": "1/2 Soi PromSri Sukhumvit Road 39 Kwang Klongton Nua Khet Wattana Krung Thep Maha Nakhon 10250, Thailand",
+        "pickingId": 100,
+        "latitudes": "13.7365",
+        "longitudes": "100.5721"
+    }, {
+        "position": "13.67788,100.65045",
+        "type": "cozxy",
+        "location": "Bangchak - Udomsuk 45",
+        "contentString": "695 Sukhumvit 103 Sukhumvit Road 103 Khwaeng Bangchak Phra Khanong, Bangkok 10260",
+        "pickingId": 101,
+        "latitudes": "13.67788",
+        "longitudes": "100.65045"
+    }, {
+        "position": "13.73805,100.58866",
+        "type": "cozxy",
+        "location": "Bangchak - Ekamai",
+        "contentString": "427/1 Soi Sukhumvit 63(Ekamai) Sukhumvit 63 Khang Klongton Nua Khet Wattana Krung Thep Maha Nakhon 10250, Thailand",
+        "pickingId": 102,
+        "latitudes": "13.73805",
+        "longitudes": "100.58866"
+    }, {
+        "position": "13.7474,100.59834",
+        "type": "cozxy",
+        "location": "Bangchak - New Phetburi-Rama 9 ",
+        "contentString": "25/21 Rim Klong Samsab Rd Bang Kapi Khwang Khet Huai Khwang, Krung Thep Maha Nakhon 10310, Thailand",
+        "pickingId": 103,
+        "latitudes": "13.7474",
+        "longitudes": "100.59834"
+    }, {
+        "position": "13.86636,100.57246",
+        "type": "cozxy",
+        "location": "Bangchak - Vibhavadi-Rangsit",
+        "contentString": "21/43-44 Vibhavadi-Rangsit Road Kwang Bang Ken Khet Lak Si, Krung Thep Maha Nakhon 10210, Thailand",
+        "pickingId": 109,
+        "latitudes": "13.86636",
+        "longitudes": "100.57246"
+    }, {
+        "position": "13.82374,100.5576",
+        "type": "cozxy",
+        "location": "Bangchak - ENCO Vibhavadi Chatuchak",
+        "contentString": "1079 Vibhavadi Rangsit Rd, Khwaeng Chatuchak, Khet Chatuchak, Krung Thep Maha Nakhon 10900, Thailand",
+        "pickingId": 124,
+        "latitudes": "13.82374",
+        "longitudes": "100.5576"
+    }, {
+        "position": "13.73682,100.62335",
+        "type": "cozxy",
+        "location": "Bangchak - Phatthanakan 34",
+        "contentString": "1348 Phatthanakan Rd, Khwaeng Suan Luang, Khet Suan Luang, Krung Thep Maha Nakhon 10250",
+        "pickingId": 126,
+        "latitudes": "13.73682",
+        "longitudes": "100.62335"
+    }, {
+        "position": "13.7106467,100.6117197",
+        "type": "cozxy",
+        "location": "Bangchak - On Nut 17/1",
+        "contentString": "923/1 On Nut Rd, Khwaeng Suan Luang, Khet Suan Luang, Krung Thep Maha Nakhon 10250",
+        "pickingId": 127,
+        "latitudes": "13.7106467",
+        "longitudes": "100.6117197"
+    }]

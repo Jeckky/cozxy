@@ -438,23 +438,30 @@ class SearchController extends MasterController {
           echo '<pre>';
           echo '<h1>Convert JSON to Array</h1> '; */
 
-
+        //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
         $search = Yii::$app->request->get('search');
+        $brand_id = Yii::$app->request->get('brand_id');
+        $category_id = Yii::$app->request->get('category_id');
+
         $status = 1;
-        $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale');
+        $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brand_id, $category_id);
         //echo '<pre>';
-        //print_r($search1);
+        //print_r($search);
+        //exit();
+
         $dataProvider = new ArrayDataProvider([
-            'key' => 'productId',
-            'allModels' => $search,
+            //'key' => 'productid',
+            'allModels' => $search['data'],
             /* 'sort' => [
-              'attributes' => ['id', 'name', 'email'],
+              'attributes' => ['total', 'took', 'size', 'page', 'data'],
               ], */
             'pagination' => [
                 'pageSize' => 6,
             ],
         ]);
 
+        //echo '<pre>';
+        //print_r($dataProvider);
         return $this->render('index_search_json', compact('dataProvider'));
     }
 
