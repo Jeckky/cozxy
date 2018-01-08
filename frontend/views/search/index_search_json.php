@@ -78,11 +78,56 @@ $this->registerCss('
 
 }
 ');
+$this->registerJs('
+$(function() {
+	var waterfall = new Waterfall({
+		containerSelector: \'.wf-container\',
+		boxSelector: \'.wf-box\',
+		minBoxWidth: 256
+	});
+	$( "#slider-range" ).slider({
+		range: true,
+		min: ' . $catPrice['minPrice'] . ',
+		max: ' . $catPrice['maxPrice'] . ',
+		values: [ ' . $catPrice['minPrice'] . ', ' . $catPrice['maxPrice'] . ' ],
+		slide: function( event, ui ) {
+			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
+            $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
+            $("input:hidden:eq(1)","#amount-min").val(ui.values[ 1 ]);
 
+		},
+        stop: function (event, ui) {
+            //debugger;
+            //var path = "' . Yii::$app->homeUrl . 'search/filter-price";
+           /* $.ajax({
+                url: path,
+                type: "POST",
+                dataType: "JSON",
+                data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $categoryId . '},
+                success: function (data){
+                    alert(data.status);
+                    if (data.status) {
+
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });*/
+        }
+	});
+	$( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
+});
+');
 
 \frontend\assets\SearchAsset::register($this);
 ?>
-
+<?=
+$this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
+    'categoryId' => $categoryId,
+    'productFilterBrand' => $productFilterBrand,
+    'search' => $search
+]);
+?>
 <div class="product-list">
     <div class="container">
 
@@ -103,7 +148,7 @@ $this->registerCss('
 
                         <h3 class="b" style="word-wrap: break-word;white-space: normal;">
                             <!--RECOMMENDED-->Search "<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"&nbsp;
-                            <span class="size16" style="margin:0px;color:#989898;"><?= $search['total'] ?> results (<?= $search['took'] ?>ms)</span>
+                            <span class="size16" style="margin:0px;color:#989898;"><?= $searchElastic['total'] ?> results (<?= $searchElastic['took'] ?>ms)</span>
                         </h3>
 
                         <div class="row">
@@ -154,7 +199,7 @@ $this->registerCss('
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                           ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                          ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                          ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                        ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                               ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                              ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                              ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                             ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                            ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

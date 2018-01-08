@@ -440,29 +440,26 @@ class SearchController extends MasterController {
 
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
         $search = Yii::$app->request->get('search');
-        $brand_id = Yii::$app->request->get('brand_id');
-        $category_id = Yii::$app->request->get('category_id');
+        $brandId = Yii::$app->request->get('brand_id');
+        $categoryId = Yii::$app->request->get('category_id');
 
         $status = 1;
-        $search = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brand_id, $category_id);
-        //echo '<pre>';
-        //print_r($search);
-        //exit();
-
+        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, $categoryId);
+        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)]);
+        $catPrice = DisplaySearch::findAllPriceSearch($search);
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
-            'allModels' => $search['data'],
+            'allModels' => $searchElastic['data'],
             /* 'sort' => [
               'attributes' => ['total', 'took', 'size', 'page', 'data'],
               ], */
             'pagination' => [
-                'pageSize' => $search['size'],
+                'pageSize' => $searchElastic['size'],
             ],
         ]);
 
-        //echo '<pre>';
-        //print_r($dataProvider);
-        return $this->render('index_search_json', compact('dataProvider', 'search'));
+
+        return $this->render('index_search_json', compact('dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
     }
 
 }
