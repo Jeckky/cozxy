@@ -77,7 +77,7 @@ class QuickAddController extends Controller
                 $res['success'] = true;
             } else {
                 $transaction->rollBack();
-                $res['error'] = 'Error :: Please try again'.print_r($productPostComparePriceModel->errors);
+                $res['error'] = 'Error :: Please try again'.print_r($productPostComparePriceModel->errors, true);
             }
         }
         catch(Exception $e) {
