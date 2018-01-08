@@ -70,7 +70,8 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function attributes() {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
-            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand', 'result', 'isbn', 'sellingPrice', 'resultSupp', 'userIdSupp'
+            'storeProductId', 'sumViews', 'importQuantity', 'storeProductId', 'storeProductGroupId', 'imagebrand',
+            'result', 'isbn', 'sellingPrice', 'resultSupp', 'userIdSupp', 'pbTitle'
         ]);
     }
 
@@ -812,6 +813,15 @@ class Product extends \common\models\costfit\master\ProductMaster {
     public function productOptions() {
         $productOptions = ProductGroupOptionValue::find()->where(['productId' => $this->productId])->all();
         return ArrayHelper::map($productOptions, 'productGroupOptionValueId', 'value');
+    }
+
+    public static function productBrand($productid) {
+        $products = Product::find()
+                ->select('b.title as pbTitle')
+                ->leftJoin('brand b', 'b.brandId=product.brandId')
+                ->where('product.productId=' . $productid . '  ')
+                ->one();
+        return $products;
     }
 
 }

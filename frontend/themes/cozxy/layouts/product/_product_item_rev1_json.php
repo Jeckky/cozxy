@@ -7,17 +7,23 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
-$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPrice($model['productid']);
+$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPriceAndResult($model['productid']);
 
 if (isset($productSellingsPrice)) {
     $cozxyResult = $productSellingsPrice['result'];
     $cozxySellingsPrice = $productSellingsPrice['price'];
     $cozxyproductSuppId = $productSellingsPrice['productSuppId'];
-    $cozxyBrandTitle = $productSellingsPrice['bTitle'];
 } else {
     $cozxyResult = NULL;
     $cozxySellingsPrice = NULL;
     $cozxyproductSuppId = NULL;
+}
+
+$productBrand = common\models\costfit\Product::productBrand($model['productid']);
+
+if (isset($productBrand)) {
+    $cozxyBrandTitle = $productBrand['pbTitle'];
+} else {
     $cozxyBrandTitle = NULL;
 }
 
@@ -145,7 +151,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 </a>
             </p>
             <?php
-            if ($model['price'] > 0) {
+            if ($cozxySellingsPrice > 0) {
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
