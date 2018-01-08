@@ -91,20 +91,18 @@ $this->registerCss('
                 <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
 
 
-                    <div class="filter-product-cozxy col-sm-12">
+                    <!--<div class="filter-product-cozxy col-sm-12">
                         <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
                         <div class="row">
                             HOT DEALS
                         </div>
-                    </div>
+                    </div>-->
 
 
                     <div class="filter-product-cozxy col-sm-12">
 
                         <h3 class="b" style="word-wrap: break-word;white-space: normal;">
-                            RECOMMENDED ::   ตัวอย่าง Array Data Provider Yii 2 เพื่อส่งเข้า view
-                            <small>
-                            </small>
+                            <!--RECOMMENDED-->Search "<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"
                         </h3>
 
                         <div class="row">
@@ -129,7 +127,7 @@ $this->registerCss('
                             </div>
                         </div>
                     </div>
-                    <div class="filter-product-cozxy-not-sale col-sm-12">
+                    <!--<div class="filter-product-cozxy-not-sale col-sm-12">
                         <h3 class="b" style="word-wrap: break-word;white-space: normal;">
                             PRODUCTS EXPLORE
                         </h3>
@@ -137,11 +135,11 @@ $this->registerCss('
                         <div class="row">
                             <div class="wf-container">
 
-                                EXPLORE
+
 
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
             </div>
@@ -155,7 +153,7 @@ $this->registerCss('
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                            ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                           ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                           ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                          ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                         ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                 ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>

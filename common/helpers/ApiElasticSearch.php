@@ -69,9 +69,7 @@ class ApiElasticSearch {
 
         curl_setopt_array($curl, array(
             CURLOPT_PORT => "3000",
-            //CURLOPT_URL => "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
             CURLOPT_URL => $url,
-            //CURLOPT_URL => "http://45.76.157.59:3000/search?text=" . $search . "&brand_id=" . $brand_id . "&category_id=" . $category_id . "",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
