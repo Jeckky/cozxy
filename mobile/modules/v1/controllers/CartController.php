@@ -55,10 +55,11 @@ class CartController extends CartFrontendController
 
     public function actionAddCartItem()
     {
-        $productId = $_POST['productId'];
-        $productSuppId = $_POST['productSuppId'];
-        $quantity = $_POST["quantity"];
-        $receiveType = $_POST['receiveType'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productId = $contents['productId'];
+        $productSuppId = $contents['productSuppId'];
+        $quantity = $contents["quantity"];
+        $receiveType = $contents['receiveType'];
 
         $productSupplierModel = ProductSuppliers::findOne($productSuppId);
 
@@ -155,6 +156,7 @@ class CartController extends CartFrontendController
             }
         } else {
             $res["status"] = FALSE;
+            $res["error"] = $orderItem->errors;
         }
 
         return Json::encode($res);
@@ -162,7 +164,8 @@ class CartController extends CartFrontendController
 
     public function actionDeleteCartItem()
     {
-        $id = $_POST["orderItemId"];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $id = $contents["orderItemId"];
         $res = [];
         $orderItem = OrderItem::findOne($id);
         $qnty = intval($orderItem->quantity);

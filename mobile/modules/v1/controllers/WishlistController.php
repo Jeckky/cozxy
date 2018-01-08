@@ -25,11 +25,12 @@ class WishlistController extends Controller
 
     public function actionIndex()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productShelfId = $_POST['productShelfId'];
+        $productShelfId = $contents['productShelfId'];
         $res = [];
 
-        $page = isset($_POST['page']) ? $_POST['page'] : 0;
+        $page = isset($contents['page']) ? $contents['page'] : 0;
         $offset = $page * $this->pageSize;
 
         $items = [];
@@ -94,13 +95,14 @@ class WishlistController extends Controller
 
     public function actionAddWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
         $res = ['success' => false, 'error' => NULL];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productId = $_POST['productId'];
-        $productShelfId = $_POST['productShelfId'];
+        $productId = $contents['productId'];
+        $productShelfId = $contents['productShelfId'];
         $ws = Wishlist::find()->where(['productId' => $productId, 'userId' => $userId])->one();
         if(!isset($ws)) {
             $ws = new Wishlist();
@@ -121,12 +123,13 @@ class WishlistController extends Controller
 
     public function actionDeleteWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
         $res = ['success' => false, 'error' => NULL];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $wishlistId = $_POST['wishlistId'];
+        $wishlistId = $contents['wishlistId'];
 
         $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
         if(isset($ws)) {
@@ -144,7 +147,8 @@ class WishlistController extends Controller
 
     public function actionAddShelf()
     {
-        $title = $_POST['title'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $title = $contents['title'];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
         $res = ['success' => false, 'error' => NULL];
 
@@ -167,7 +171,8 @@ class WishlistController extends Controller
 
     public function actionDeleteShelf()
     {
-        $productShelfId = $_POST['productShelfId'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productShelfId = $contents['productShelfId'];
 
         $transaction = Yii::$app->db->beginTransaction();
         $flag = false;
@@ -211,9 +216,10 @@ class WishlistController extends Controller
 
     public function actionRenameShelf()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productShelfId = $_POST['productShelfId'];
-        $newTitle = $_POST['newTitle'];
+        $productShelfId = $contents['productShelfId'];
+        $newTitle = $contents['newTitle'];
 
         $productShelfModel = ProductShelf::findOne($productShelfId);
         $productShelfModel->title = $newTitle;
