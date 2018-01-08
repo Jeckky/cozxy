@@ -10,6 +10,12 @@ use common\helpers\CozxyCalculatesCart;
 $cozxyResult = NULL;
 $cozxyMarketPrice = NULL;
 $cozxyBrandTitle = NULL;
+$productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
+if (isset($productImageThumbnail)) {
+    $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
+} else {
+    $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
+}
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
@@ -61,7 +67,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         <?php } ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productid']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $productImageThumbnail ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productid']])) ?>">
@@ -93,14 +99,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 <?php } ?>
                 <?php
                 if ($cozxyResult > 0) {
-                    if ($model->receiveType != '') {
-                        $receiveType = $model->receiveType;
+                    if ($model['receiveType'] != '') {
+                        $receiveType = $model['receiveType'];
                     } else {
                         $receiveType = 1;
                     }
                     ?>
-                    <a  href="javascript:addItemToCartUnitys('<?= $model->productSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model->userId ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model->productSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model->productSuppId ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
-                        <div class="col-xs-4 shopping-<?= $model->productSuppId ?>"><i id="cart-plus-<?= $model->productSuppId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
+                    <a  href="javascript:addItemToCartUnitys('<?= $model['productsuppid'] ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model['productsuppid'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                        <div class="col-xs-4 shopping-<?= $model['productsuppid'] ?>"><i id="cart-plus-<?= $model['productsuppid'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>
             </div>
