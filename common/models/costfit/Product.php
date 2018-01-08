@@ -570,7 +570,7 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
     }
 
-    public function isInWishlist($productId = Null) {
+    public static function isInWishlist($productId = Null) {
         if (Yii::$app->user->isGuest)
             return 0;
 

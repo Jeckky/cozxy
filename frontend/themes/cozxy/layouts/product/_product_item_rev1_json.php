@@ -7,15 +7,28 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
-$cozxyResult = NULL;
-$cozxyMarketPrice = NULL;
-$cozxyBrandTitle = NULL;
+$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPrice($model['productid']);
+
+if (isset($productSellingsPrice)) {
+    $cozxyResult = $productSellingsPrice['result'];
+    $cozxySellingsPrice = $productSellingsPrice['price'];
+    $cozxyproductSuppId = $productSellingsPrice['productSuppId'];
+    $cozxyBrandTitle = $productSellingsPrice['bTitle'];
+} else {
+    $cozxyResult = NULL;
+    $cozxySellingsPrice = NULL;
+    $cozxyproductSuppId = NULL;
+    $cozxyBrandTitle = NULL;
+}
+
 $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
 if (isset($productImageThumbnail)) {
     $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
 } else {
     $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
 }
+$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productid']);
+
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
@@ -24,8 +37,8 @@ if (Yii::$app->controller->id == 'product') {
     $width = "width: 260px";
     $height = "height: 260px";
 }
-$marketPrice = isset($model->product) ? $model->product->price : 0;
-$supplierPrice = isset($model->price) ? $model->price : 0;
+$marketPrice = isset($model['price']) ? $model['price'] : 0;
+$supplierPrice = isset($cozxySellingsPrice) ? $cozxySellingsPrice : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //GetBrowser::UserAgent() == 'computer'
 ?>
@@ -75,8 +88,8 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 </a>
                 <?php
                 if (Yii::$app->user->id) {
-                    if (isset($model->product)) {
-                        if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
+                    if (isset($cozxyIsInWishlist)) {
+                        if ($cozxyIsInWishlist == 1) { // เคย wishList ไปแล้ว
                             ?>
                             <a href="javascript:addItemToDefaultWishlist(<?= $model['productid'] ?>);">
                                 <div class="col-xs-4 heart-<?= $model['productid'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
@@ -99,13 +112,13 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 <?php } ?>
                 <?php
                 if ($cozxyResult > 0) {
-                    if ($model['receiveType'] != '') {
+                    if ($model['receivetype'] != null) {
                         $receiveType = $model['receiveType'];
                     } else {
                         $receiveType = 1;
                     }
                     ?>
-                    <a  href="javascript:addItemToCartUnitys('<?= $model['productsuppid'] ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model['productsuppid'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                    <a href="javascript:addItemToCartUnitys('<?= $model['productsuppid'] ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model['productsuppid'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
                         <div class="col-xs-4 shopping-<?= $model['productsuppid'] ?>"><i id="cart-plus-<?= $model['productsuppid'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>
@@ -113,7 +126,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         </div>
         <div class="product-txt">
             <?php
-            if (isset($cozxyBrandTitle) && empty($cozxyBrandTitle)) {
+            if (isset($cozxyBrandTitle) && !empty($cozxyBrandTitle)) {
                 ?>
                 <p class="brand">
                     <span class="size14"><?= strtoupper($cozxyBrandTitle) ?></span>
@@ -136,13 +149,13 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
-                        <span class="size18 fc-red"><?= isset($model['cozxyMarketPrice']) ? number_format($model['cozxyMarketPrice']) : 'NONE' . ' THB' ?> </span><br>
+                        <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span><br>
                         <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="size18 fc-red"><?= isset($model['cozxyMarketPrice']) ? number_format($model['cozxyMarketPrice']) : 'NONE' . ' THB' ?> </span><br>
+                        <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span><br>
                         <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
                     </p>
                     <?php

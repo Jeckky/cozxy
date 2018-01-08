@@ -456,7 +456,7 @@ class SearchController extends MasterController {
               'attributes' => ['total', 'took', 'size', 'page', 'data'],
               ], */
             'pagination' => [
-                'pageSize' => 6,
+                'pageSize' => $search['size'],
             ],
         ]);
 

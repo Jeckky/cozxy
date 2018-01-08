@@ -94,8 +94,4 @@ class ApiElasticSearch {
         }
     }
 
-    public static function searchProductImage($productId) {
-
-    }
-
 }

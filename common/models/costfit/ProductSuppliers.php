@@ -350,4 +350,15 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         }
     }
 
+    public static function productSellingsPrice($productid) {
+        $products = ProductSuppliers::find()
+                ->select('`product_suppliers`.productSuppId, `product_suppliers`.result, `product_suppliers`.productId, `pps`.`price` AS `price` ,b.title as bTitle')
+                ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
+                ->leftJoin('product p', 'product_suppliers.productId=p.productId')
+                ->leftJoin('brand b', 'b.brandId=product_suppliers.brandId')
+                ->where('p.productId=' . $productid . ' and pps.status = 1 order by price asc limit 1')
+                ->one();
+        return $products;
+    }
+
 }
