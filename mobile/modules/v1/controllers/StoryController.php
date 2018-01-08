@@ -371,7 +371,6 @@ class StoryController extends Controller
             $flag = false;
 
             try {
-
                 $storyModel = new ProductPost();
                 $storyModel->productId = $productId;
                 $storyModel->title = $title;
