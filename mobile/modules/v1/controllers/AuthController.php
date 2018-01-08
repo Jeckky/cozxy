@@ -3,10 +3,12 @@
 namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\User;
+use frontend\models\SignupForm;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use Yii;
 use common\models\LoginForm;
+use common\helpers\Email;
 
 /**
  * Default controller for the `mobile` module
@@ -14,7 +16,7 @@ use common\models\LoginForm;
 class AuthController extends Controller
 {
 
-   public $enableCsrfValidation = false;
+    public $enableCsrfValidation = false;
 
     /**
      * Renders the index view for the module
@@ -27,14 +29,15 @@ class AuthController extends Controller
 
     public function actionLogin()
     {
-        $res = ['success'=>false, 'error'=>''];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
 
         $model = new LoginForm();
-        $model->email = $_POST['username'];
-        $model->password = $_POST['password'];
+        $model->email = $contents['username'];
+        $model->password = $contents['password'];
 
-        if ($model->login()) {
-            if (\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
+        if($model->login()) {
+            if(\Yii::$app->user->identity->type == 1 || \Yii::$app->user->identity->type == 3) {
                 $userModel = User::findOne(Yii::$app->user->id);
                 $userModel->auth_key = Yii::$app->security->generateRandomString();
                 $userModel->save(false);
@@ -48,7 +51,10 @@ class AuthController extends Controller
 //                $res['user']["passportNo"] = Yii::$app->user->identity->passportNo;
 //                $res['user']["passportImage"] = Yii::$app->user->identity->passportImage;
 //                $res['token'] = $userModel->auth_key;
-                $res['token'] = Yii::$app->user->identity->getAuthKey();
+                $res['token'] = $userModel->auth_key;
+                $res['birthDate'] = $userModel->birthDate;
+                $res['avatar'] = Yii::$app->homeUrl.$userModel->avatar;
+                $res['mobile'] = $userModel->tel;
                 $res['success'] = true;
 
                 /**
@@ -69,11 +75,12 @@ class AuthController extends Controller
 
     public function actionLogout()
     {
-        $res = ['success'=>false, 'error'=>''];
-        $username = $_POST['username'];
-        $token = $_POST['token'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+        $username = $contents['username'];
+        $token = $contents['token'];
 
-        $userModel = User::find()->where(['username'=>$username, 'auth_key'=>$token])->one();
+        $userModel = User::find()->where(['username' => $username, 'auth_key' => $token])->one();
 
         if($userModel) {
             $userModel->auth_key = Yii::$app->security->generateRandomString();
@@ -86,10 +93,10 @@ class AuthController extends Controller
 
     public function actionResetPassword()
     {
-        $res = ['success'=>false, 'error'=>''];
+        $res = ['success' => false, 'error' => ''];
         $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
+        if($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if($model->sendEmail()) {
                 $res['error'] = NULL;
             } else {
                 $res['error'] = "Sorry, we are unable to reset password for email provided.";
@@ -99,16 +106,16 @@ class AuthController extends Controller
         print_r(Json::encode($res));
     }
 
-    public function actionRegister()
+    public function actionRegistera()
     {
         $res = [];
         $model = new \common\models\costfit\User(['scenario' => 'register']);
         $loginForm = new \common\models\LoginForm();
         $ms = '';
-        if (isset($_GET['ms'])) {
+        if(isset($_GET['ms'])) {
             $res['error'] = 'เนื่องจากบัญชี facebook นี้ไม่ได้ใช้ email ในการสมัคร กรุณาสมัครสมาชิกเพื่อเข้าใช้งาน';
         }
-        if (isset($_POST["User"])) {
+        if(isset($_POST["User"])) {
             $model->attributes = $_POST["User"];
             $model->username = $_POST["User"]['email'];
             $user = new \common\models\User();
@@ -116,11 +123,11 @@ class AuthController extends Controller
             $model->status = 0;
             $model->token = Yii::$app->security->generateRandomString(10);
             $model->createDateTime = new \yii\db\Expression("NOW()");
-            if ($_POST["User"]['password'] == $_POST["User"]['confirmPassword']) {
-                if (!isset($_POST["User"]['acceptTerm'])) {
+            if($_POST["User"]['password'] == $_POST["User"]['confirmPassword']) {
+                if(!isset($_POST["User"]['acceptTerm'])) {
                     $res['error'] = 'Please Accept Term&Condition';
                 } else {
-                    if ($model->save()) {
+                    if($model->save()) {
                         $emailSend = new \frontend\controllers\EmailSend();
                         $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "register/confirm?token=" . $model->token;
                         $toMail = $model->email;
@@ -139,6 +146,85 @@ class AuthController extends Controller
         $res['termTitle'] = $term->contents[0]->title;
         $res['termDescription'] = $term->contents[0]->description;
         print_r(Json::encode($res));
+    }
+
+    public function actionForgetPassword()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+        $forget = $contents['forget'];
+        $user = \common\models\costfit\User::find()->where('email = "' . $forget . '  " ')->one();
+        if(count($user) > 0) {
+            if($user['status'] == 1) {
+                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
+                $toMail = $user->email;
+                Email::mailForgetPassword($toMail, $url);
+                $res['success'] = true;
+            } else {
+                $res['error'] = 'Your email is invalid';
+            }
+        } else {
+            $res['error'] = 'Your email not found.';
+        }
+
+        return Json::encode($res);
+    }
+
+    public function actionRegister()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+
+        if(isset($contents) && $contents !== []) {
+            $res = ['success' => false, 'error' => '', 'msg' => ''];
+
+            $userCount = User::find()->where(['email' => $contents['email']])->count();
+
+            if($userCount) {
+                $res['error'] = 'Duplicate email address.';
+            } else {
+                $signupModel = new SignupForm(['scenario' => SignupForm::COZXY_MOBILE_REGIS]);
+                $signupModel->attributes = $contents;
+                $signupModel->birthDate = $contents['birthDate'];
+
+                $user = $signupModel->signup();
+
+                if(isset($user)) {
+                    $res['success'] = true;
+                    $res['msg'] = 'Register complete : Plase verify your email to complete your registration';
+                } else {
+                    //register faild
+                    $res['error'] = 'Error : can not register at this time, please try again.';
+                }
+            }
+
+            return Json::encode($res);
+        }
+    }
+
+    public function actionChangePassword()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        if(isset($contents) && $contents !== []) {
+            $res = ['success' => false, 'error' => ''];
+
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+            if(isset($userModel)) {
+                if(Yii::$app->security->validatePassword($contents['currentPassword'], $userModel->password_hash)) {
+                    //change password
+                    $userModel->password_hash = Yii::$app->security->generatePasswordHash($contents['newPassword']);
+                    $userModel->save(false);
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error : Password miss match';
+                }
+            } else {
+                $res['error'] = 'User not found.';
+            }
+
+
+            return Json::encode($res);
+        }
     }
 
 }

@@ -54,7 +54,7 @@ class PromotionCategory extends \common\models\costfit\master\PromotionCategoryM
             $products = Product::find()
                     ->JOIN('LEFT JOIN', 'order_item oi', 'product.productId=oi.productId')
                     ->JOIN('LEFT JOIN', 'category c', 'c.categoryId=product.categoryId')
-                    ->where("oi.orderId=" . $orderId . " and c.categoryId in($categoryId)")
+                    ->where("oi.orderId=" . $orderId . " and (c.categoryId in($categoryId) or c.parentId in($categoryId))")
                     ->all();
         } else {
             $products = OrderItem::find()

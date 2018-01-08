@@ -21,16 +21,17 @@ class QuickAddController extends Controller
 
     public function actionSave()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productId = $_POST['productId'];
-        $memo = $_POST['memo'];
-        $price = $_POST['price'];
-        $nameOfPlace = $_POST['nameOfPlace'];
-        $latitude = $_POST['latitude'];
-        $longitude = $_POST['longitude'];
-        $currency = $_POST['currency'];
-        $country = $_POST['country'];
-        $imageIds = $_POST['imageIds'];
+        $productId = $contents['productId'];
+        $memo = $contents['memo'];
+        $price = $contents['price'];
+        $nameOfPlace = $contents['nameOfPlace'];
+        $latitude = $contents['latitude'];
+        $longitude = $contents['longitude'];
+        $currency = $contents['currency'];
+        $country = $contents['country'];
+        $imageIds = $contents['imageIds'];
         $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -76,7 +77,7 @@ class QuickAddController extends Controller
                 $res['success'] = true;
             } else {
                 $transaction->rollBack();
-                $res['error'] = 'Error :: Please try again';
+                $res['error'] = 'Error :: Please try again'.print_r($productPostComparePriceModel->errors);
             }
         }
         catch(Exception $e) {

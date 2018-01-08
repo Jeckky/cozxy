@@ -305,7 +305,8 @@ class ProductController extends \common\controllers\MasterController
 
     public function actionView()
     {
-        $id = $_POST['id'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $id = $contents['id'];
         $res = [];
         $product = Product::findProductById($id);
 
@@ -319,6 +320,7 @@ class ProductController extends \common\controllers\MasterController
             $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
             $res['salePrice'] = $productPriceSupplier->price;
         }
+        $res['shareUrl'] = 'https://www.cozxy.com/product/'.ModelMaster::encodeParams(['productId'=>$id]);
 
         return Json::encode($res);
     }

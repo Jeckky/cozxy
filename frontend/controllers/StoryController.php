@@ -28,7 +28,9 @@ class StoryController extends MasterController {
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
-
+        /* $productPost = ProductPost::find()->where("productPostId=" . $params['productPostId'])->one();
+          $productPost->totalView = count(\common\models\costfit\ProductPostView::find()->where("productPostId=" . $params['productPostId'])->all());
+          $productPost->save(FALSE); *///test save totalView
         /*
          * Product Post View : Count Story
          */
@@ -52,6 +54,7 @@ class StoryController extends MasterController {
                 $productViews->save(FALSE);
                 $productPost = ProductPost::find()->where("productPostId=" . $params['productPostId'])->one();
                 $productPost->totalScore+=ProductPost::VIEW_SCORE;
+                $productPost->totalView = count(\common\models\costfit\ProductPostView::find()->where("productPostId=" . $params['productPostId'])->all());
                 $productPost->save(FALSE);
             }
         }
@@ -283,6 +286,9 @@ class StoryController extends MasterController {
             $productPost = ProductPost::find()->where("productPostId=" . $rate->productPostId)->one();
             if (isset($productPost)) {
                 $productPost->totalScore = $productPost->totalScore + $score;
+                $averageStar = DisplayMyStory::calculatePostRating($rate->productPostId);
+                $avgStar = explode(',', $averageStar);
+                $productPost->averageStar = $avgStar[0];
                 $productPost->save(false);
             }
             $res['status'] = true;

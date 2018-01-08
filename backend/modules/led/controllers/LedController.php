@@ -581,7 +581,7 @@ class LedController extends LedMasterController {
         //$qr = ['R1C1S1', 'R1C1S2', 'R1C1S3', 'R1C1S4', 'R1C1S5', 'R1C1S6', 'R1C1S7', 'R1C1S8', 'R1C1S9', 'R1C1S10'];
         //$qr = ['R1C2S1', 'R1C2S2', 'R1C2S3', 'R1C2S4', 'R1C2S5', 'R1C2S6', 'R1C2S7', 'R1C2S8', 'R1C2S9', 'R1C2S10'];
         //$qr = ['R1C3S1', 'R1C3S2', 'R1C3S3', 'R1C3S4', 'R1C3S5', 'R1C3S6', 'R1C3S7', 'R1C3S8', 'R1C3S9', 'R1C3S10'];
-        $qrCode = ['LC-0115'];
+        $qrCode = ['LC-0108'];
         //$qr = ['AA0AB56', 'AA0AB57', 'AA0BL59'];
         return $this->render('show_qr', ['qrCode' => $qrCode]);
     }

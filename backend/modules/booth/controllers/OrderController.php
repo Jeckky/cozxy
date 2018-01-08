@@ -174,13 +174,11 @@ class OrderController extends BoothMasterController {
 
     public function actionBoothCheckOrderCode() {
         if (isset($_POST['orderCode']) && isset($_POST['orderId'])) {
-            //check match password & orderId
             $order = Order::find()->where(['password' => $_POST['orderCode'], 'orderId' => $_POST['orderId'], 'status' => Order::ORDER_STATUS_BOOTH_PACKING])->one();
-
             if (isset($order)) {
+                Yii::$app->runAction('order/order/create-po', ['orderId1' => $_POST['orderId'], 'booth' => 'booth']);
                 $order->status = Order::ORDER_STATUS_RECEIVED;
                 $order->save(false);
-
                 return Json::encode(['result' => true]);
             }
         }
@@ -191,7 +189,10 @@ class OrderController extends BoothMasterController {
      */
 
     public function actionPrintReciept() {
+
         if (isset($_GET["orderId"]) && !empty($_GET["orderId"])) {
+            $orderId = $_GET["orderId"];
+            $render = 'no';
             $order = Order::find()->where("orderId=" . $_GET["orderId"])->one();
             if (isset($order)) {
                 $fullYear = date('Y');

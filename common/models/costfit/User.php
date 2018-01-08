@@ -292,8 +292,8 @@ class User extends \common\models\costfit\master\UserMaster {
     }
 
     public static function userName($id) {
-        $user = User::find()->where("userId=" . $id)->one();
-        if (isset($user) && !empty($user)) {
+        $user = Address::find()->where("userId=" . $id . " and isDefault=1")->one();
+        if (isset($user)) {
             return $user->firstname . " " . $user->lastname;
         } else {
             return '';
@@ -302,7 +302,18 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function supplierDetail($userId) {
         //$detail = Address::find()->where("userId=" . $userId . " and isDefault=1")->one();
-        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1 and type=4")
+        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1 and type=4")//type=4 is suppliers
+                ->orderBy("createDateTime DESC")
+                ->one();
+        if (isset($detail)) {
+            return $detail;
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function userDetail($userId) {
+        $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")
                 ->orderBy("createDateTime DESC")
                 ->one();
         if (isset($detail)) {

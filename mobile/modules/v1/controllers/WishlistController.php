@@ -3,6 +3,7 @@
 namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\ProductShelf;
+use common\models\costfit\User;
 use Yii;
 use yii\db\Exception;
 use yii\db\Expression;
@@ -25,11 +26,12 @@ class WishlistController extends Controller
 
     public function actionIndex()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productShelfId = $_POST['productShelfId'];
+        $productShelfId = $contents['productShelfId'];
         $res = [];
 
-        $page = isset($_POST['page']) ? $_POST['page'] : 0;
+        $page = isset($contents['page']) ? $contents['page'] : 0;
         $offset = $page * $this->pageSize;
 
         $items = [];
@@ -94,13 +96,14 @@ class WishlistController extends Controller
 
     public function actionAddWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
         $res = ['success' => false, 'error' => NULL];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productId = $_POST['productId'];
-        $productShelfId = $_POST['productShelfId'];
+        $productId = $contents['productId'];
+        $productShelfId = $contents['productShelfId'];
         $ws = Wishlist::find()->where(['productId' => $productId, 'userId' => $userId])->one();
         if(!isset($ws)) {
             $ws = new Wishlist();
@@ -121,30 +124,38 @@ class WishlistController extends Controller
 
     public function actionDeleteWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
-        $res = ['success' => false, 'error' => NULL];
-        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $wishlistId = $_POST['wishlistId'];
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
 
-        $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
-        if(isset($ws)) {
-            $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
-            if($isDeleteWishlist) {
-                $res['success'] = true;
+        if(isset($userModel)) {
+            $res = ['success' => false, 'error' => NULL];
+            $userId = $userModel->userId;
+            $wishlistId = $contents['wishlistId'];
+
+            $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
+            if(isset($ws)) {
+                $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
+                if($isDeleteWishlist) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error :: Please try again';
+                }
             } else {
-                $res['error'] = 'Error :: Please try again';
+                $res["error"] = "Error :: Item not found.";
             }
         } else {
-            $res["error"] = "Error :: Item not found.";
+            $res['error'] = 'User not found.';
         }
         print_r(Json::encode($res));
     }
 
     public function actionAddShelf()
     {
-        $title = $_POST['title'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $title = $contents['title'];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
         $res = ['success' => false, 'error' => NULL];
 
@@ -167,7 +178,8 @@ class WishlistController extends Controller
 
     public function actionDeleteShelf()
     {
-        $productShelfId = $_POST['productShelfId'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productShelfId = $contents['productShelfId'];
 
         $transaction = Yii::$app->db->beginTransaction();
         $flag = false;
@@ -211,9 +223,10 @@ class WishlistController extends Controller
 
     public function actionRenameShelf()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productShelfId = $_POST['productShelfId'];
-        $newTitle = $_POST['newTitle'];
+        $productShelfId = $contents['productShelfId'];
+        $newTitle = $contents['newTitle'];
 
         $productShelfModel = ProductShelf::findOne($productShelfId);
         $productShelfModel->title = $newTitle;
