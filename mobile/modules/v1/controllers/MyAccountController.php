@@ -48,7 +48,7 @@ class MyAccountController extends MyAccountFrontendController
 
                     if($avatar->saveAs($filePath) && $userModel->save(false)) {
                         $res['success'] = true;
-                        $res['avatar'] = Yii::$app->homeUrl.'images/user/avatar/'.$fileName;
+                        $res['avatar'] = Url::home(true).'images/user/avatar/'.$fileName;
                     }
                 } else {
                     $res['error'] = 'Can not uploaded file, please try again';
@@ -82,5 +82,22 @@ class MyAccountController extends MyAccountFrontendController
             'name'=>$address->firstname.' '.$address->lastname,
             'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName
         ];
+    }
+
+    public function actionRequestChangeMobile()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success'=>false, 'error'=>''];
+
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+
+        if(isset($userModel)) {
+            //send confirm code via sms
+
+        } else {
+            $res['error'] = 'Error : User not found';
+        }
+
+        echo Json::encode($res);
     }
 }
