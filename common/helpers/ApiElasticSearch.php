@@ -17,6 +17,53 @@ use Yii;
  */
 class ApiElasticSearch {
 
+    //public static function searchProduct($search, $status, $brand_id, $category_id, $mins, $maxs, $size, $pages) {
+    public static function searchProduct($Eparameter) {
+        $search = $Eparameter['search'];
+        $status = $Eparameter['status'];
+        $brand_id = $Eparameter['brandId'];
+        $category_id = $Eparameter['categoryId'];
+        $mins = $Eparameter['mins'];
+        $maxs = $Eparameter['maxs'];
+        $size = $Eparameter['size'];
+        $pages = $Eparameter['pages'];
+        //echo $search;
+        $search = str_replace(" ", "%20", $search);
+        //echo $search;
+        if ($category_id == 0) {
+            $category_id = '';
+        }
+        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs;
+        //echo $url;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_PORT => "3000",
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return "cURL Error #:" . $err;
+        } else {
+            $someResponse = json_decode($response, true);
+            //echo '<pre>';
+            //print_r($someArray);
+            //exit();
+            return $someResponse;
+        }
+    }
+
     public static function searchProductBk($search, $status, $brand_id, $category_id) {
 
         /* Function AddtoCart : paramenter
@@ -57,44 +104,6 @@ class ApiElasticSearch {
         //$someObject = json_decode($someJSON);
         //print_r($someObject);      // Dump all data of the Object
         //echo $someObject[0]->name; // Access Object data
-    }
-
-    public static function searchProduct($search, $status, $brand_id, $category_id) {
-        //echo $search;
-        $search = str_replace(" ", "%20", $search);
-        //echo $search;
-        if ($category_id == 0) {
-            $category_id = '';
-        }
-        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id;
-        //echo $url;
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_PORT => "3000",
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            return "cURL Error #:" . $err;
-        } else {
-            $someResponse = json_decode($response, true);
-            //echo '<pre>';
-            //print_r($someArray);
-            //exit();
-            return $someResponse;
-        }
     }
 
 }

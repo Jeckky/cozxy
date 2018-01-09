@@ -1213,9 +1213,9 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
     for (i = 0; i < $brandName.length; i++) {
         brandName += $brandName[i] + ',';
     }
-
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
+    $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
     var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
     $.ajax({
@@ -1224,7 +1224,8 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         data: {mins: $min, maxs: $max, search: search},
         success: function (data, status) {
 
-            console.log(data);
+            //console.log(data);
+
             $('.filter-e-search').html(data);
             /*if (data == '') {
              $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');

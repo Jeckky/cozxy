@@ -106,7 +106,7 @@ $(function() {
                 url: path,
                 type: "POST",
                 dataType: "JSON",
-                data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $categoryId . '},
+                data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $ConfigpParameter['categoryId'] . '},
                 success: function (data){
                     alert(data.status);
                     if (data.status) {
@@ -121,7 +121,7 @@ $(function() {
 	$( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
 });
 ');
-if ($site == 'category') {
+if ($ConfigpParameter['site'] == 'category') {
     if (isset($title) && !empty($title)) {
         $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
         $this->params['breadcrumbs'][] = $this->title;
@@ -151,9 +151,9 @@ if ($site == 'category') {
 <div class="filter-e-search">
     <?=
     $this->render('@app/themes/cozxy/layouts/search/_search_filter_all_rev1', [
-        'categoryId' => $categoryId,
+        'categoryId' => $ConfigpParameter['categoryId'],
         'productFilterBrand' => $productFilterBrand,
-        'search' => $search
+        'search' => $ConfigpParameter['search']
     ]);
     ?>
     <div class="product-list">
@@ -180,16 +180,16 @@ if ($site == 'category') {
                                 </h3>
                             </div>
                             <div class="col-md-12" style="padding-right: 0px;padding-left: 0px;">
-                                <a href="javascript:filterESortCozxy('<?php echo $categoryId; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <a href="javascript:filterESortCozxy('<?php echo $ConfigpParameter['categoryId']; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
-                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php echo $categoryId; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php echo $ConfigpParameter['categoryId']; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
-                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php echo $categoryId; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php echo $ConfigpParameter['categoryId']; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
                             </div>
 
                             <div class="row">
-                                <div class="wf-container ">
+                                <div class="wf-container filter-e-search-cozxy">
                                     <?php
                                     echo \yii\widgets\ListView::widget([
                                         'dataProvider' => $dataProvider,
@@ -236,7 +236,7 @@ if ($site == 'category') {
                 </div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                          ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                       ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                               ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                              ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                              ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                             ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                            ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                         <span class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>
