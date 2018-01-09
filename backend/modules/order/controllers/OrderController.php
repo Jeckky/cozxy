@@ -289,7 +289,7 @@ class OrderController extends OrderMasterController {
             if (isset($orderIds) && count($orderIds) > 0) {
                 $poId = $this->savePo($orderIds, $supplierId, $booth);
                 /* ######################################## SEND EMAIL TO SUPPLIERS ################################ */
-                //$this->sendEmail($poId);
+                $this->sendEmail($poId);
                 /* ######################################## END SEND EMAIL TO SUPPLIERS ############################ */
                 $header = $this->renderPartial('header', ['poId' => $poId]);
                 $content = $this->renderPartial('content', [

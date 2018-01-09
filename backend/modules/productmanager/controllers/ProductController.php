@@ -121,6 +121,8 @@ class ProductController extends ProductManagerMasterController {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $productId = Yii::$app->db->lastInsertID;
+            $model->userId = Yii::$app->user->id;
+            $model->save();
 
             $productGroupTemplate = ProductGroupTemplate::find()->where(['productGroupTemplateId' => $model->productGroupTemplateId])->one();
 
@@ -185,6 +187,7 @@ class ProductController extends ProductManagerMasterController {
                 $p->isNewRecord = true;
                 $p->approve = 'approve';
                 $p->status = 1;
+                $p->userId = Yii::$app->user->id;
                 $p->save();
 
                 $pid = Yii::$app->db->lastInsertID;
