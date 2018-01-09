@@ -2,6 +2,7 @@
 
 namespace mobile\modules\v1\controllers;
 
+use common\helpers\Sms;
 use common\models\costfit\Address;
 use common\models\costfit\User;
 use Yii;
@@ -64,23 +65,61 @@ class MyAccountController extends MyAccountFrontendController
     public function actionBillingAddress()
     {
         $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['items'=>[], 'error' => NULL];
 
         if(isset($contents) && $contents !== []) {
             $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
-            $res = ['success' => false, 'error' => NULL];
 
             if(isset($userModel)) {
-                $addressModels = Address::find()->where(['userId'=>$userModel->userId])->all();
+                $addressModels = Address::find()
+                    ->where(['userId'=>$userModel->userId, 'type'=>Address::TYPE_BILLING])
+                    ->orderBy(['isDefault'=>SORT_DESC])
+                    ->all();
+                $i = 0;
+                foreach($addressModels as $addressModel) {
+                    $data[$i] = self::prepareAddress($addressModel);
+                    $i++;
+                }
+                $res['items'] = $data;
             }
+
+            echo Json::encode($res);
+        }
+    }
+
+    public function actionShippingAddress()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['items'=>[], 'error' => NULL];
+
+        if(isset($contents) && $contents !== []) {
+            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+
+            if(isset($userModel)) {
+                $addressModels = Address::find()
+                    ->where(['userId'=>$userModel->userId, 'type'=>Address::TYPE_SHIPPING])
+                    ->orderBy(['isDefault'=>SORT_DESC])
+                    ->all();
+                $i = 0;
+                foreach($addressModels as $addressModel) {
+                    $data[$i] = self::prepareAddress($addressModel);
+                    $i++;
+                }
+                $res['items'] = $data;
+            }
+
+            echo Json::encode($res);
         }
     }
 
     private static function prepareAddress($address)
     {
+        $zipcde = isset($address->zipcodes->zipcode) ? $address->zipcodes->zipcode : '';
         return [
             'addressId'=>$address->addressId,
+            'isDefaule'=>$address->isDefault,
             'name'=>$address->firstname.' '.$address->lastname,
-            'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName
+            'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName.' '.$zipcde
         ];
     }
 
@@ -93,11 +132,53 @@ class MyAccountController extends MyAccountFrontendController
 
         if(isset($userModel)) {
             //send confirm code via sms
+            $code = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+
+            $userModel->code = $code;
+            $userModel->save(false);
+
+            $res['otp'] = $code;
+            $res['success'] = true;
+
+            Sms::Send('POST', Sms::SMS_URL, Json::encode([
+                'from'=>'Cozxy',
+                'to'=>[self::preparePhoneNumber($userModel->tel)],
+                'text'=>"รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
+            ]));
 
         } else {
             $res['error'] = 'Error : User not found';
         }
 
         echo Json::encode($res);
+    }
+
+    public function actionConfirmChangeMobile()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success'=>false, 'error'=>''];
+
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+
+        if(isset($userModel)) {
+            if($userModel->code == $contents['otp']) {
+                $userModel->tel = $contents['newMobile'];
+                $userModel->code = '';
+                $userModel->save(false);
+
+                $res['success'] = true;
+            } else {
+                $res['error'] = 'Error : OTP miss match';
+            }
+        } else {
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
+    }
+
+    private static function preparePhoneNumber($tel)
+    {
+        return '66'.substr($tel, 1);
     }
 }
