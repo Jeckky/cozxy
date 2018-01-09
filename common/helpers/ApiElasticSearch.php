@@ -63,6 +63,9 @@ class ApiElasticSearch {
         //echo $search;
         $search = str_replace(" ", "%20", $search);
         //echo $search;
+        if ($category_id == 0) {
+            $category_id = '';
+        }
         $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id;
         //echo $url;
         $curl = curl_init();
