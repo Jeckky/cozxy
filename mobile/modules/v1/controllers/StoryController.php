@@ -14,6 +14,7 @@ use mobile\modules\v1\models\ProductPostComparePrice;
 use Yii;
 use yii\db\Expression;
 use yii\db\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 
@@ -179,11 +180,11 @@ class StoryController extends Controller
             'id' => $storyModel->productPostId,
             'shortDescription' => $storyModel->shortDescription,
             'description' => $storyModel->description,
-            'image' => Yii::$app->homeUrl . $storyModel->product->images->imageThumbnail1,
+            'image' => Url::home(true) . $storyModel->product->images->imageThumbnail1,
             'views' => $storyModel->countView(),
             'stars' => $storyModel->averageStar(),
             'lastUpdate' => $storyModel->updateDateTime,
-            'shareUrl' => 'https://www.cozxy.com/story/' . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
+            'shareUrl' => Url::home(true).'story/' . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
         ];
 
         $data['product'] = [
@@ -198,7 +199,7 @@ class StoryController extends Controller
 
         $data['author'] = [
             'name' => $storyModel->user->firstname . ' ' . $storyModel->user->lastname,
-            'avatar' => Yii::$app->homeUrl . 'images/user/avatar/' . $storyModel->user->avatar
+            'avatar' => Url::home(true) . 'images/user/avatar/' . $storyModel->user->avatar
         ];
 
         $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);
@@ -218,6 +219,7 @@ class StoryController extends Controller
                 'currency' => $productComparePriceModel->currencyInfo->ccy,
                 'price' => number_format($productComparePriceModel->price, 2),
                 'shopName' => $productComparePriceModel->shopName,
+                'placeName' => $productComparePriceModel->placeName,
                 'latitude' => $productComparePriceModel->latitude,
                 'longitude' => $productComparePriceModel->longitude,
             ];
@@ -393,7 +395,7 @@ class StoryController extends Controller
                     $productComparePriceModel->placeName = $comparePrice['placeName'];
                     $productComparePriceModel->moreDetail = $comparePrice['moreDetail'];
                     $productComparePriceModel->price = $comparePrice['price'];
-                    $productComparePriceModel->currency = $currencyInfoModel->ccy;
+                    $productComparePriceModel->currency = $currencyInfoModel->currencyId;
                     $productComparePriceModel->country = $currencyInfoModel->ctry_name;
                     $productComparePriceModel->latitude = $comparePrice['latitude'];
                     $productComparePriceModel->longitude = $comparePrice['longitude'];

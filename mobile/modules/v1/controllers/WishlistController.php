@@ -7,6 +7,7 @@ use common\models\costfit\User;
 use Yii;
 use yii\db\Exception;
 use yii\db\Expression;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use mobile\modules\v1\models\Wishlist;
@@ -27,45 +28,89 @@ class WishlistController extends Controller
     public function actionIndex()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productShelfId = $contents['productShelfId'];
-        $res = [];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+        if(isset($userModel)) {
+            $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
+            $productShelfId = $contents['productShelfId'];
+            $res = [];
 
-        $page = isset($contents['page']) ? $contents['page'] : 0;
-        $offset = $page * $this->pageSize;
+            $page = isset($contents['page']) ? $contents['page'] : 0;
+            $offset = $page * $this->pageSize;
+            $orderBy = [];
 
-        $items = [];
+            if(isset($contents['sort']) && !empty($contents['sort'])){
+                $orderBy = self::prepareSort($contents['sort']);
+            }
 
-        $wishlists = Wishlist::find()
-            ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
-            ->from('wishlist w')
-            ->leftJoin('product p', 'p.productId=w.productId')
-            ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
-            ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
-            ->where(['w.productShelfId' => $productShelfId, 'pps.status' => 1])
-            ->limit($this->pageSize)
-            ->offset($offset)
-            ->all();
+            $items = [];
 
-        $j = 0;
-        foreach($wishlists as $wishlist) {
-            $items[$j] = [
-                'wishlistId' => $wishlist->wishlistId,
-                'productId' => $wishlist->productId,
-                'marketPrice' => $wishlist->marketPrice,
-                'sellingPrice' => $wishlist->sellingPrice,
-                'title' => $wishlist->product->title,
-                'image' => $wishlist->product->images->imageThumbnail1,
-                'brand' => $wishlist->product->brand->title
-            ];
-            $j++;
+            $wishlists = Wishlist::find()
+                ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
+                ->from('wishlist w')
+                ->leftJoin('product p', 'p.productId=w.productId')
+                ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
+                ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+                ->leftJoin('brand b', 'b.brandId=p.brandId')
+                ->where(['w.productShelfId' => $productShelfId, 'pps.status' => 1])
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->orderBy($orderBy)
+                ->all();
+
+            $j = 0;
+            foreach($wishlists as $wishlist) {
+                $items[$j] = [
+                    'wishlistId' => $wishlist->wishlistId,
+                    'productId' => $wishlist->productId,
+                    'marketPrice' => $wishlist->marketPrice,
+                    'sellingPrice' => $wishlist->sellingPrice,
+                    'title' => $wishlist->product->title,
+                    'image' => Url::home(true).$wishlist->product->images->imageThumbnail1,
+                    'brand' => $wishlist->product->brand->title
+                ];
+                $j++;
+            }
+
+            $res['items'] = $items;
+            $res['productShelfId'] = $productShelfId;
+            $res['page'] = $page;
+        } else {
+            $res['error'] = 'Error : User not found.';
         }
 
-        $res['items'] = $items;
-        $res['productShelfId'] = $productShelfId;
-        $res['page'] = $page;
 
         echo Json::encode($res);
+    }
+
+
+    private static function prepareSort($sort)
+    {
+        $sortType = SORT_ASC;
+        if(substr($sort, 0, 1) == '-') {
+            //sort desc
+            $sort = substr($sort, 1);
+            $sortType = SORT_DESC;
+        }
+
+        return [self::sortField($sort) => $sortType];
+    }
+
+    private static function sortField($sort)
+    {
+        $sortField = '';
+        switch($sort) {
+            case 'price':
+                $sortField = 'pps.price';
+                break;
+            case 'popular':
+                $sortField = 'p.productId';
+                break;
+            case 'brand':
+                $sortField = 'b.brandId';
+                break;
+        }
+
+        return $sortField;
     }
 
     public function actionWishlistGroup()
@@ -128,7 +173,7 @@ class WishlistController extends Controller
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
-        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
         if(isset($userModel)) {
             $res = ['success' => false, 'error' => NULL];

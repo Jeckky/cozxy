@@ -11,6 +11,7 @@ use common\models\ModelMaster;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 class ProductController extends \common\controllers\MasterController
 {
@@ -320,7 +321,7 @@ class ProductController extends \common\controllers\MasterController
             $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
             $res['salePrice'] = $productPriceSupplier->price;
         }
-        $res['shareUrl'] = 'https://www.cozxy.com/product/'.ModelMaster::encodeParams(['productId'=>$id]);
+        $res['shareUrl'] = Url::home(true).'product/'.ModelMaster::encodeParams(['productId'=>$id]);
 
         return Json::encode($res);
     }
