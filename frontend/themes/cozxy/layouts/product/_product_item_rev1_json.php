@@ -129,8 +129,8 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                         $receiveType = 1;
                     }
                     ?>
-                    <a href="javascript:addItemToCartUnitys('<?= $model['productsuppid'] ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= $model['productsuppid'] ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
-                        <div class="col-xs-4 shopping-<?= $model['productsuppid'] ?>"><i id="cart-plus-<?= $model['productsuppid'] ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
+                    <a href="javascript:addItemToCartUnitys('<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                        <div class="col-xs-4 shopping-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>"><i id="cart-plus-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>
             </div>
