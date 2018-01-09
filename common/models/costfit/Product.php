@@ -571,11 +571,11 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return ($thumbnail == 1) ? $productImageThumbnail->imageThumbnail1 : $productImageThumbnail->imageThumbnail2;
     }
 
-    public static function isInWishlist($productId = Null) {
+    public function isInWishlist($productId = Null) {
         if (Yii::$app->user->isGuest)
             return 0;
 
-        $productId = isset($productId) ? $productId : $this->productId;
+        $productId = isset($productId) ? $productId : $this->productId; //$this->context->productId
         $wishlist = Wishlist::find()->where(['userId' => Yii::$app->user->id, 'productId' => $productId, 'status' => 1])->count();
 
         if ($wishlist > 0) {

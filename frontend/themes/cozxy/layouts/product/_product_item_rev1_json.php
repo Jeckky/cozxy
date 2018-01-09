@@ -33,8 +33,10 @@ if (isset($productImageThumbnail)) {
 } else {
     $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
 }
-$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productid']);
+//$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productid']);
 
+$cozxyIsInWishlist = new common\models\costfit\Product();
+$cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productid']);
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
