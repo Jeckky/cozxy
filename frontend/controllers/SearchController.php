@@ -543,6 +543,11 @@ class SearchController extends MasterController {
 
         if ($type == 'searching') {
             $search = Yii::$app->request->get('search');
+            if (isset($search)) {
+                $search = Yii::$app->request->get('search');
+            } else {
+                $search = Yii::$app->request->post('search');
+            }
             $brandId = Yii::$app->request->get('brand_id');
             $categoryId = Yii::$app->request->get('category_id');
             $mins = NULL;
