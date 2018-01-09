@@ -5,9 +5,11 @@ namespace mobile\modules\v1\controllers;
 use common\helpers\Sms;
 use common\models\costfit\Address;
 use common\models\costfit\User;
+use common\models\costfit\Zipcodes;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ArrayDataProvider;
+use yii\db\Expression;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -112,17 +114,6 @@ class MyAccountController extends MyAccountFrontendController
         }
     }
 
-    private static function prepareAddress($address)
-    {
-        $zipcde = isset($address->zipcodes->zipcode) ? $address->zipcodes->zipcode : '';
-        return [
-            'addressId'=>$address->addressId,
-            'isDefaule'=>$address->isDefault,
-            'name'=>$address->firstname.' '.$address->lastname,
-            'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName.' '.$zipcde
-        ];
-    }
-
     public function actionRequestChangeMobile()
     {
         $contents = Json::decode(file_get_contents("php://input"));
@@ -180,5 +171,62 @@ class MyAccountController extends MyAccountFrontendController
     private static function preparePhoneNumber($tel)
     {
         return '66'.substr($tel, 1);
+    }
+
+    public function actionSaveAddress()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success'=>false, 'error'=>''];
+
+        if(isset($contents) && $contents !== []) {
+            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+            if(isset($userModel)) {
+                $addressModel = new Address();
+                $addressModel->address = $contents['address'];
+                $addressModel->countryId = $contents['countryId'];
+                $addressModel->provinceId = $contents['provinceId'];
+                $addressModel->amphurId = $contents['amphurId'];
+                $addressModel->districtId = $contents['districtId'];
+                $addressModel->type = $contents['type'];
+                $addressModel->userId = $userModel->userId;
+                $addressModel->createDateTime = $addressModel->updateDateTime = new Expression('NOW()');
+                $addressModel->tel = $contents['tel'];
+                $addressModel->isDefault = $contents['isDefault'];
+
+                //if $contents['isDefault'] = 1 change all isDefault=0
+                Address::updateAll(['isDefault'=>0], ['userId'=>$userModel->userId, 'type'=>$contents['type']]);
+
+                //zipcode
+                $zipCode = Zipcodes::find()
+                ->leftJoin('district d', 'd.code=zipcodes.districtCode')
+                ->where(['d.districtId'=>$contents['districtId']])
+                ->one();
+
+                $addressModel->zipcode = $zipCode->zipcodeId;
+
+                if($addressModel->save()) {
+                    $res['success'] = true;
+                    $res['address'] = self::prepareAddress($addressModel);
+                } else {
+                    $res['error'] = $addressModel->errors;
+                }
+            } else {
+                $res['error'] = 'Error : User not found.';
+            }
+
+            echo Json::encode($res);
+        }
+    }
+
+    private static function prepareAddress($address)
+    {
+        $zipcde = isset($address->zipcodes->zipcode) ? $address->zipcodes->zipcode : '';
+        return [
+            'addressId'=>$address->addressId,
+            'isDefaule'=>$address->isDefault,
+            'name'=>$address->firstname.' '.$address->lastname,
+            'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName.' '.$zipcde,
+            'tel'=>$address->tel,
+        ];
     }
 }
