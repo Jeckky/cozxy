@@ -19,13 +19,13 @@ if (isset($productSellingsPrice)) {
     $cozxyproductSuppId = NULL;
 }
 
-$productBrand = common\models\costfit\Product::productBrand($model['productid']);
+$productBrand = common\models\costfit\Product::productBrand($model['brandid']);
 //$productBrand = new common\models\costfit\Product();
 //$productBrand = $productBrand->getBrand();
 //echo '<pre>';
 //print_r($productBrand->modelclass);
 if (isset($productBrand)) {
-    $cozxyBrandTitle = $productBrand['pbTitle'];
+    $cozxyBrandTitle = $productBrand['title'];
 } else {
     $cozxyBrandTitle = NULL;
 }

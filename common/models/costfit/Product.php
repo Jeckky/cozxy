@@ -815,11 +815,11 @@ class Product extends \common\models\costfit\master\ProductMaster {
         return ArrayHelper::map($productOptions, 'productGroupOptionValueId', 'value');
     }
 
-    public static function productBrand($productid) {
-        $products = Product::find()
-                ->select('b.title as pbTitle')
-                ->leftJoin('brand b', 'b.brandId=product.brandId')
-                ->where('product.productId=' . $productid . '  ')
+    public static function productBrand($brandId) {
+        $products = Brand::find()
+                //->select('b.title as pbTitle')
+                //->leftJoin('brand b', 'b.brandId=product.brandId')
+                ->where('brand.brandId=' . $brandId . '  ')
                 ->one();
         return $products;
     }
