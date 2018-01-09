@@ -20,14 +20,16 @@ use \common\models\costfit\master\ProductPostComparePriceMaster;
  * @property string $createDateTime
  * @property string $updateDateTime
  */
-class ProductPostComparePrice extends \common\models\costfit\master\ProductPostComparePriceMaster {
+class ProductPostComparePrice extends \common\models\costfit\master\ProductPostComparePriceMaster
+{
 
     const Cozxy_Product_Post_Compare_Price = 'ComparePrice';
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return array_merge(parent::rules(), [
             ['shopName', 'required'],
             ['price', 'required'],
@@ -37,25 +39,34 @@ class ProductPostComparePrice extends \common\models\costfit\master\ProductPostC
         ]);
     }
 
-    public function scenarios() {
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
         $scenarios[self::Cozxy_Product_Post_Compare_Price] = ['shopName', 'price', 'country', 'currency'];
+
         return $scenarios;
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
         ]);
     }
 
-    public function attributes() {
+    public function attributes()
+    {
         // add related fields to searchable attributes
         return array_merge(parent::attributes(), [
             'currency_code', 'ccy_name', 'images'
         ]);
+    }
+
+    public function getCurrencyInfo()
+    {
+        return $this->hasOne(CurrencyInfo::className(), ['currencyId'=>'currency']);
     }
 
 }
