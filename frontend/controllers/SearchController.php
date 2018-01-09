@@ -433,19 +433,8 @@ class SearchController extends MasterController {
     public function actionElasticSearch() {
 
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
-        /* $search = Yii::$app->request->get('search');
-          $brandId = Yii::$app->request->get('brand_id');
-          $categoryId = Yii::$app->request->get('category_id');
-          $mins = NULL;
-          $maxs = NULL;
-          $size = NULL;
-          $pages = NULL;
-          $status = 1;
-          $site = 'brand'; */
+
         $ConfigpParameter = $this->ConfigpParameter('searching');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
@@ -453,7 +442,7 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
+            'size' => 10,
             'pages' => $ConfigpParameter['pages']
         );
 
@@ -463,7 +452,8 @@ class SearchController extends MasterController {
 
         //echo '<pre>';
         //print_r($searchElastic);
-
+        $perPage = $searchElastic['total'] / $searchElastic['size'];
+        //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
@@ -474,39 +464,14 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
-        //echo '<pre>';
-        //print_r($catPrice->attributes);
+
         return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
 
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
     }
 
     public function actionFilterESearch() {
-        //brand: $brandName, mins: $min, maxs: $max, search: search
-        /* $mins = Yii::$app->request->post('mins');
-          $maxs = Yii::$app->request->post('maxs');
-          $brand = Yii::$app->request->post('brand');
-          $size = Yii::$app->request->post('size');
-          $pages = Yii::$app->request->post('pages');
-          $status = 1;
-          //print_r($brand);
-          $categoryId = Yii::$app->request->post('categoryId');
-          $search = Yii::$app->request->post('search');
-          $brandName = Yii::$app->request->get('brandName');
-          if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
-          $brand = Yii::$app->request->get('brandName');
-          $brandId = substr($brand, 0, -1);
-          } else {
-          $brandId = NULL;
-          }
 
-          if ($categoryId != 'undefined') {
-          $categoryId = Yii::$app->request->post('categoryId');
-          $site = 'category';
-          } else {
-          $category = NULL;
-          $site = 'brand';
-          } */
         $ConfigpParameter = $this->ConfigpParameter('searching');
         //echo 'ConfigpParameter : ';
         //print_r($ConfigpParameter);
@@ -518,10 +483,10 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
+            'size' => 10,
             'pages' => $ConfigpParameter['pages']
         );
-
+        $perPage = $searchElastic['total'] / $searchElastic['size'];
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
@@ -529,11 +494,8 @@ class SearchController extends MasterController {
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
-            /* 'sort' => [
-              'attributes' => ['total', 'took', 'size', 'page', 'data'],
-              ], */
             'pagination' => [
-                'pageSize' => $searchElastic['size'],
+                'pageSize' => $perPage,
             ],
         ]);
 
@@ -542,31 +504,6 @@ class SearchController extends MasterController {
     }
 
     public function actionSortESearch() {
-        //brand: $brandName, mins: $min, maxs: $max, search: search
-        /* $mins = Yii::$app->request->post('mins');
-          $maxs = Yii::$app->request->post('maxs');
-          $brand = Yii::$app->request->post('brand');
-          $size = Yii::$app->request->post('size');
-          $pages = Yii::$app->request->post('pages');
-          $status = 1;
-          //print_r($brand);
-          $categoryId = Yii::$app->request->post('categoryId');
-          $search = Yii::$app->request->post('search');
-          $brandName = Yii::$app->request->get('brandName');
-          if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
-          $brand = Yii::$app->request->get('brandName');
-          $brandId = substr($brand, 0, -1);
-          } else {
-          $brandId = NULL;
-          }
-
-          if ($categoryId != 'undefined') {
-          $categoryId = Yii::$app->request->post('categoryId');
-          $site = 'category';
-          } else {
-          $category = NULL;
-          $site = 'brand';
-          } */
 
         $ConfigpParameter = $this->ConfigpParameter('sort');
         //echo 'ConfigpParameter : ';
@@ -579,7 +516,7 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
+            'size' => 10,
             'pages' => $ConfigpParameter['pages']
         );
 
@@ -588,14 +525,12 @@ class SearchController extends MasterController {
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
+        $perPage = $searchElastic['total'] / $searchElastic['size'];
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
-            /* 'sort' => [
-              'attributes' => ['total', 'took', 'size', 'page', 'data'],
-              ], */
             'pagination' => [
-                'pageSize' => $searchElastic['size'],
+                'pageSize' => $perPage,
             ],
         ]);
 

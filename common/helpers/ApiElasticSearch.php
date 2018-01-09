@@ -33,7 +33,7 @@ class ApiElasticSearch {
         if ($category_id == 0) {
             $category_id = '';
         }
-        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs;
+        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size;
         //echo $url;
         $curl = curl_init();
 
