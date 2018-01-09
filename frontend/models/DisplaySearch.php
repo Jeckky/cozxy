@@ -919,13 +919,19 @@ class DisplaySearch extends Model {
                 ->where($whereArray)
                 ->andWhere([">", "ps.result", 0])
                 ->andWhere([">", "pps.price", 0])
-                ->andFilterWhere(['OR',
-                    ['LIKE', 'ps.title', trim($search_hd)],
-                    ['LIKE', 'strip_tags(ps.description)', trim($search_hd)],
-                    // ['LIKE', 'ps.description', trim($search_hd)],
-                    ['LIKE', 'ps.isbn', trim($search_hd)],
-                        //                ['LIKE', 'product_suppliers.title', $search_hd],
-                        //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                /* ->andFilterWhere(['OR',
+                  ['LIKE', 'ps.title', trim($search_hd)],
+                  ['LIKE', 'strip_tags(ps.description)', trim($search_hd)],
+                  // ['LIKE', 'ps.description', trim($search_hd)],
+                  ['LIKE', 'ps.isbn', trim($search_hd)],
+                  //                ['LIKE', 'product_suppliers.title', $search_hd],
+                  //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+                  ]) */
+                ->andFilterWhere([
+                    'OR',
+                    'ps.title LIKE "%' . $search_hd . '" ',
+                    'strip_tags(ps.description) LIKE "%' . $search_hd . '%"',
+                    'ps.isbn LIKE "%' . $search_hd . '%"'
                 ])
                 ->one();
 
