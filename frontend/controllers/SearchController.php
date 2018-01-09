@@ -486,9 +486,9 @@ class SearchController extends MasterController {
             'size' => 10,
             'pages' => $ConfigpParameter['pages']
         );
-        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
 
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
+        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
