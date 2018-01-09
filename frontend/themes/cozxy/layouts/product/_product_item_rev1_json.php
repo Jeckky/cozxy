@@ -20,7 +20,10 @@ if (isset($productSellingsPrice)) {
 }
 
 $productBrand = common\models\costfit\Product::productBrand($model['productid']);
-
+//$productBrand = new common\models\costfit\Product();
+//$productBrand = $productBrand->getBrand();
+//echo '<pre>';
+//print_r($productBrand->modelclass);
 if (isset($productBrand)) {
     $cozxyBrandTitle = $productBrand['pbTitle'];
 } else {

@@ -452,7 +452,7 @@ class SearchController extends MasterController {
 
         //echo '<pre>';
         //print_r($searchElastic);
-        $perPage = $searchElastic['total'] / $searchElastic['size'];
+        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -465,7 +465,7 @@ class SearchController extends MasterController {
             ],
         ]);
 
-        return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
+        return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
 
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
     }
@@ -486,7 +486,8 @@ class SearchController extends MasterController {
             'size' => 10,
             'pages' => $ConfigpParameter['pages']
         );
-        $perPage = $searchElastic['total'] / $searchElastic['size'];
+        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
+
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
@@ -495,12 +496,12 @@ class SearchController extends MasterController {
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
             'pagination' => [
-                'pageSize' => $perPage,
+                'pageSize' => $searchElastic['size'],
             ],
         ]);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice'));
+        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function actionSortESearch() {
@@ -525,17 +526,17 @@ class SearchController extends MasterController {
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
-        $perPage = $searchElastic['total'] / $searchElastic['size'];
+        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
             'pagination' => [
-                'pageSize' => $perPage,
+                'pageSize' => $searchElastic['size'],
             ],
         ]);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
+        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function ConfigpParameter($type) {
@@ -547,7 +548,7 @@ class SearchController extends MasterController {
             $mins = NULL;
             $maxs = NULL;
             $size = NULL;
-            $pages = NULL;
+            $pages = $pages = Yii::$app->request->get('pages');
             $status = 1;
             $site = 'brand';
         } else {
