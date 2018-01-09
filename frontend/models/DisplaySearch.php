@@ -921,7 +921,7 @@ class DisplaySearch extends Model {
                 ->andWhere([">", "pps.price", 0])
                 ->andFilterWhere(['OR',
                     ['LIKE', 'ps.title', trim($search_hd)],
-                    ['LIKE', 'strip_tags(ps.description)', trim($search_hd)],
+                    ['LIKE', 'strip_tags(ps.descriptionx)', trim($search_hd)],
                     // ['LIKE', 'ps.description', trim($search_hd)],
                     ['LIKE', 'ps.isbn', trim($search_hd)],
                         //                ['LIKE', 'product_suppliers.title', $search_hd],
