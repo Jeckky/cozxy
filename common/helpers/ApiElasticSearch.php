@@ -29,6 +29,10 @@ class ApiElasticSearch {
         $pages = $Eparameter['pages'];
         //echo $search;
         $search = str_replace(" ", "%20", $search);
+        if ($search == '') {
+            $mins = '';
+            $maxs = '';
+        }
         //echo $search;
         if ($category_id == 0) {
             $category_id = '';

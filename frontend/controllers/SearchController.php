@@ -450,8 +450,6 @@ class SearchController extends MasterController {
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
 
-        //echo '<pre>';
-        //print_r($searchElastic);
         $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([

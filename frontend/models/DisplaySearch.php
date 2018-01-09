@@ -911,6 +911,7 @@ class DisplaySearch extends Model {
         $whereArray = [];
         $whereArray["ps.approve"] = "approve";
         $whereArray["pps.status"] = "1";
+
         $pCanSale = \common\models\costfit\CategoryToProduct::find()
                 ->select('MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice')
                 ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")
