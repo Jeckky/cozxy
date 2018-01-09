@@ -472,7 +472,7 @@ class SearchController extends MasterController {
 
     public function actionFilterESearch() {
 
-        $ConfigpParameter = $this->ConfigpParameter('searching');
+        $ConfigpParameter = $this->ConfigpParameter('filter');
         //echo 'ConfigpParameter : ';
         //print_r($ConfigpParameter);
         //$ConfigpParameter['search'];
