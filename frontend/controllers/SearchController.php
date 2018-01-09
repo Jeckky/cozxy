@@ -453,7 +453,7 @@ class SearchController extends MasterController {
             ],
         ]);
         //echo '<pre>';
-        //print_r($dataProvider);
+        print_r($catPrice->attributes);
         $site = 'brand';
         return $this->render('index_search_json', compact('site', 'dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
     }
