@@ -32,7 +32,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                                     <input type="hidden" name="search" id="search" value="<?= $search ?>">
                                 </div>
                                 <a href="javascript:filterPriceCozxyClear()"><u class="fc-black">CLEAR ALL</u></a> &nbsp;
-                                <a href="javascript:filterPriceAll()" class="b btn-black-s size16">APPLY</a>
+                                <a href="javascript:filterBrandAndCategoryCozxyApi()" class="b btn-black-s size16">APPLY</a>
                             </div>
                         </form>
                     </div>

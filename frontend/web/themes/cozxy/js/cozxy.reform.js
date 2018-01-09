@@ -1201,7 +1201,7 @@ function filterBrandCozxy($categoryId) {
         }
     });
 }
-function filterBrandAndCategoryCozxyApi() {
+function filterBrandAndCategoryCozxyApi($categoryId) {
 
     var brandName = [];
     var search = $("#search").val();
@@ -1213,23 +1213,44 @@ function filterBrandAndCategoryCozxyApi() {
     for (i = 0; i < $brandName.length; i++) {
         brandName += $brandName[i] + ',';
     }
-    console.log(brandName);
+
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
+    //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
+    var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: {mins: $min, maxs: $max, search: search},
+        success: function (data, status) {
 
+            console.log(data);
+            $('.filter-e-search').html(data);
+            /*if (data == '') {
+             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+             } else {
+             if (status == "success") {
+             $('.brand-price-filter').html(data);
+             } else {
+             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
+             }
+             }*/
 
-
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
-        "method": "GET",
-        "headers": {}
-    }
-
-    $.ajax(settings).done(function (response) {
-        console.log(response);
+        }
     });
+
+
+    /*var settings = {
+     "async": true,
+     "crossDomain": true,
+     "url": "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
+     "method": "GET",
+     "headers": {}
+     }
+
+     $.ajax(settings).done(function (response) {
+     console.log(response);
+     });*/
 }
 function sortCozxy($categoryId, status) {
     var brandName = [];

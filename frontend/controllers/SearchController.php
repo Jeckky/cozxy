@@ -431,12 +431,6 @@ class SearchController extends MasterController {
     }
 
     public function actionElasticSearch() {
-        //http://localhost/cozxy/frontend/web/search/elastic-search?search=APRIL+
-        /* $someJSON1 = '[{"user":"Jonathan Suh","brand":"RAY-BAN","Category": "Sunglasses" ,"title":"RAY-BAN RB3447","price":"4900" ,"market price":"7000","images":"/images/ProductImageSuppliers/thumbnail1/Nm2wauawayg1VuGH8k0gO7oVGMfOjSm9.jpg"},'
-          . '{"user":"Allison McKinnery","brand":"RAY-BAN","Category": "Sunglasses" ,"title":"RAY-BAN RB2140 (RED)","price":"5005","market price":"7150","images":"/images/ProductImageSuppliers/thumbnail1/hUyCZRKRMEv_4ew-f8G9sDu4PnOz-NdZ.jpg"}]';
-          echo '<h1>JSON string</h1> <br> ' . $someJSON1;
-          echo '<pre>';
-          echo '<h1>Convert JSON to Array</h1> '; */
 
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
         $search = Yii::$app->request->get('search');
@@ -458,8 +452,51 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+        //echo '<pre>';
+        print_r($catPrice->attributes);
+        $site = 'brand';
+        return $this->render('index_search_json', compact('site', 'dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
+    }
 
-        return $this->render('index_search_json', compact('dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
+    public function actionFilterESearch() {
+        //brand: $brandName, mins: $min, maxs: $max, search: search
+        $mins = Yii::$app->request->post('mins');
+        $maxs = Yii::$app->request->post('maxs');
+        $brand = Yii::$app->request->post('brand');
+        //print_r($brand);
+        $categoryId = Yii::$app->request->post('categoryId');
+        $search = Yii::$app->request->post('search');
+        $brandName = Yii::$app->request->get('brandName');
+        if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
+            $brand = Yii::$app->request->get('brandName');
+            $brandId = substr($brand, 0, -1);
+        } else {
+            $brandId = NULL;
+        }
+
+        if ($categoryId != 'undefined') {
+            $categoryId = Yii::$app->request->post('categoryId');
+            $site = 'category';
+        } else {
+            $category = NULL;
+            $site = 'brand';
+        }
+        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId);
+        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)]);
+        $catPrice = DisplaySearch::findAllPriceSearch($search);
+        $dataProvider = new ArrayDataProvider([
+            //'key' => 'productid',
+            'allModels' => $searchElastic['data'],
+            /* 'sort' => [
+              'attributes' => ['total', 'took', 'size', 'page', 'data'],
+              ], */
+            'pagination' => [
+                'pageSize' => $searchElastic['size'],
+            ],
+        ]);
+
+        //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
+        return $this->renderAjax('index_search_json', compact('site', 'dataProvider', 'search', 'searchElastic', 'categoryId', 'brandId', 'productFilterBrand', 'catPrice'));
     }
 
 }
