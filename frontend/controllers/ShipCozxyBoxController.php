@@ -41,7 +41,7 @@ use common\helpers\CozxyMap;
 class ShipCozxyBoxController extends MasterController {
 
     public function actionIndex() {
-        //$PickingPointJson = CozxyMap::PickingPointJson();
+        //echo '<pre>';
         //print_r($PickingPointJson);
         $name = [];
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
@@ -229,6 +229,81 @@ class ShipCozxyBoxController extends MasterController {
         $pickingPoint = new \common\models\costfit\PickingPoint();
         return $this->renderAjax("@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect", compact('pickingPoint', 'activeMap'));
         //return $this->renderPartial('@app/themes/cozxy/layouts/checkout/item/shipToCozxyBoxSelect', compact('pickingPoint'), false, false);
+    }
+
+    public static function actionCozxyBoxJson() {
+        $PickingPointJson = CozxyMap::PickingPointJson();
+        return $PickingPointJson;
+    }
+
+    public function actionTest() {
+        //echo '<pre>';
+        //print_r($PickingPointJson);
+        $name = [];
+        $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
+
+        if (!isset($orderId)) {
+            return $this->redirect(Yii::$app->homeUrl);
+        }
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Yii::$app->homeUrl . 'site/login?cz=' . time());
+        }
+
+        $billing = \common\models\costfit\Address::find()->where("userId=" . \Yii::$app->user->id . " and isDefault=1 and type!=4")->one();
+        if (isset($billing)) {
+            $name["firstname"] = $billing->firstname;
+            $name["lastname"] = $billing->lastname;
+        } else {
+            $user = \common\models\costfit\User::find()->where("userId=" . \Yii::$app->user->id)->one();
+            if (isset($user)) {
+                $name["firstname"] = $user->firstname;
+                $name["lastname"] = $user->lastname;
+            }
+        }
+
+        $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
+        foreach ($pickingPointActiveMap as $key => $value) {
+            //echo $value[$key]->attributes . '<br>';
+            //echo '<pre>';
+            //print_r($value->attributes);
+            $activeMap[] = $value->attributes;
+        }
+        //echo '<pre>';
+        //print_r();
+        $pickingPointActive = \common\models\costfit\PickingPoint::find()->where('status =1 and latitude is not null and longitude is not null');
+        $pickingPointActiveShow = new \yii\data\ActiveDataProvider([
+            'query' => $pickingPointActive,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 100,
+            ]
+        ]);
+
+        $order = Order::find()->where(['orderId' => $orderId])->one();
+        if (isset($order->pickingId) && !empty($order->pickingId)) {
+            $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
+            if (count($pickingPoint) <= 0) {
+                $pickingPoint = new \common\models\costfit\PickingPoint();
+            }
+            $shippingChooseActive = 1; //Ship To CozxyBox
+        } else if (isset($order->addressId) && !empty($order->addressId)) {
+            $pickingPoint = new \common\models\costfit\PickingPoint();
+            $defaultAddress = \common\models\costfit\Address::find()->where(['userId' => Yii::$app->user->identity->userId])->orderBy('isDefault desc')->one();
+
+            if (isset($defaultAddress)) {
+                $order->addressId = $defaultAddress->addressId;
+            }
+            //echo count($pickingPoint) . '<pre>';
+            //print_r($pickingPoint);
+            //echo '<pre>';
+            //print_r($pickingPointActive);
+            $shippingChooseActive = 2; //Ship to address
+        } else {
+            $pickingPoint = new \common\models\costfit\PickingPoint();
+            $shippingChooseActive = 1; //Default Ship To CozxyBox
+        }
+
+        return $this->render('/checkout/shipCozxyBox_1', compact('shippingChooseActive', 'activeMap', 'pickingPointActiveShow', 'getUserInfo', 'NewBilling', 'model', 'pickingPointLockers', 'pickingPointLockersCool', 'pickingPointBooth', 'order', 'hash', 'pickingPoint', 'defaultAddress', 'name'));
     }
 
 }

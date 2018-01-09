@@ -13,6 +13,7 @@ class SignupForm extends Model {
 
     const COZXY_REGIS = 'register';
     const COZXY_BOOTH_REGIS = 'registerBooth';
+    const COZXY_MOBILE_REGIS = 'registerBooth';
 
     public $firstname;
     public $lastname;
@@ -76,6 +77,7 @@ class SignupForm extends Model {
         return [
             self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
             self::COZXY_BOOTH_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'],
+            self::COZXY_MOBILE_REGIS => ['firstname', 'lastname', 'email', 'password', 'gender', 'birthDate'],
         ];
     }
 

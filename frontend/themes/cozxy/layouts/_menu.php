@@ -286,6 +286,11 @@ $this->registerCss("
 ");
 
 $UserAgent = common\helpers\GetBrowser::UserAgent();
+if (Yii::$app->controller->action->id != 'elastic-search') {
+    $urlSearch = Yii::$app->homeUrl . 'search/cozxy-product/';
+} else {
+    $urlSearch = Yii::$app->homeUrl . 'search/elastic-search/';
+}
 ?>
 <style type="text/css">
     /**
@@ -531,52 +536,52 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : ''; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
             <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
                 <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
-                    <?php
-                    if (isset(Yii::$app->user->identity->userId)) {
-                        //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
-                    } else {
-                        echo '';
-                    }
-                    ?>
+<?php
+if (isset(Yii::$app->user->identity->userId)) {
+    //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
+} else {
+    echo '';
+}
+?>
                     <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
                     <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
-                        <?php
-                        if (Yii::$app->user->id != '') {
-                            $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
-                            if (count($Product) > 0) {
-                                $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
-                                if (isset($orderItem)) {
-                                    $quantity = (int) $orderItem;
-                                } else {
-                                    $quantity = '';
-                                }
-                            } else {
-                                $quantity = '';
-                            }
-                        } else {
-                            $order = \common\models\costfit\Order::getOrder();
-                            if (isset($order->attributes['orderId'])) {
+<?php
+if (Yii::$app->user->id != '') {
+    $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
+    if (count($Product) > 0) {
+        $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+        if (isset($orderItem)) {
+            $quantity = (int) $orderItem;
+        } else {
+            $quantity = '';
+        }
+    } else {
+        $quantity = '';
+    }
+} else {
+    $order = \common\models\costfit\Order::getOrder();
+    if (isset($order->attributes['orderId'])) {
 
-                                $orderId = $order->attributes['orderId'];
-                                $Product = \common\models\costfit\Order::find()->where('orderId =' . $orderId . ' and status=0')->one();
-                                if (count($Product) > 0) {
-                                    $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
-                                    if (isset($orderItem)) {
-                                        $quantity = (int) $orderItem;
-                                    } else {
-                                        $quantity = '';
-                                    }
-                                } else {
-                                    $quantity = '';
-                                }
-                            } else {
-                                $quantity = '';
-                            }
-                        }
-                        if (Yii::$app->user->id != '') {
-                            ?>
+        $orderId = $order->attributes['orderId'];
+        $Product = \common\models\costfit\Order::find()->where('orderId =' . $orderId . ' and status=0')->one();
+        if (count($Product) > 0) {
+            $orderItem = \common\models\costfit\OrderItem::find()->where('orderId=' . $Product['orderId'])->sum('quantity');
+            if (isset($orderItem)) {
+                $quantity = (int) $orderItem;
+            } else {
+                $quantity = '';
+            }
+        } else {
+            $quantity = '';
+        }
+    } else {
+        $quantity = '';
+    }
+}
+if (Yii::$app->user->id != '') {
+    ?>
                             <span id="notify-cart-top-menu"><?php echo $quantity; ?></span>
                             <?php
                         } else {
@@ -584,16 +589,16 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                             <span id="<?php if (isset($order->attributes['orderId'])) { ?>notify-cart-top-menu<?php } else { ?>notify-cart-top-menu<?php } ?>"><?php echo $quantity; ?></span>
                         <?php } ?>
                     </div>
-                    <?php
-                    if (isset(Yii::$app->user->identity->userId)) {
-                        ?>
+                        <?php
+                        if (isset(Yii::$app->user->identity->userId)) {
+                            ?>
                         <div class="col-xs-3 menuWrapper">
                             <div class="dropdown">
                                 <a href="#" class="dropdown-menu-title u-menu-1"  id="dLabel" data-toggle="dropdown" data-target="#"></a>
-                                <?php
-                                //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
-                                //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
-                                ?>
+    <?php
+    //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'site/logout', ['class' => 'u-menu-4']);
+    //echo Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1 ']);
+    ?>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu" style="z-index: 99999; min-width: 153px;">
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=account-detail">ACCOUNT DETAIL</a></li>
                                     <li><a href="<?= Yii::$app->homeUrl ?>my-account?act=order-history">ORDER HISTORY</a></li>
@@ -614,25 +619,25 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                             </div>
 
                         </div>
-                    <?php } else { ?>
+<?php } else { ?>
                         <div class="col-xs-6">
                             <a href = "<?= Yii::$app->homeUrl ?>site/login">
                                 <p id = "rcorners1" class = "w3-theme">LOGIN / REGISTER</p>
                             </a>
                         </div>
-                        <?php
-                    }
-                    if (isset($_GET["search"]) && !empty($_GET['search'])) {
-                        $search = $_GET["search"];
-                    } else {
-                        $search = '';
-                    }
-                    ?>
+    <?php
+}
+if (isset($_GET["search"]) && !empty($_GET['search'])) {
+    $search = $_GET["search"];
+} else {
+    $search = '';
+}
+?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="rela" style="height: 64px;">
-                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => Yii::$app->homeUrl . 'search/cozxy-product/', 'options' => ['class' => 'registr-form']]); ?>
+<?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => $urlSearch, 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
                         <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
                     </div>
@@ -642,7 +647,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </div>
-                    <?= $this->registerJS("
+<?= $this->registerJS("
 //                                $('#search').blur(function(event){
 //                                    if(event.which == 13 || event.keyCode == 13)
 //                                    {
@@ -695,17 +700,17 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 <!-- Main Category -->
                 <div class="col-lg-2 col-md-4">
                     <div class="row main-category">
-                        <?php
-                        //$cate = common\models\costfit\Category::find()->where('parentId IS NULL')->all();
-                        $cate = \common\models\costfit\CategoryToProduct::find()
-                        ->select('`category`.categoryId , `category`.title , `category`.parentId ')
-                        ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
-                        ->where("category.parentId IS NULL AND category.status=1")
-                        ->groupBy('category_to_product.categoryId')
-                        //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
-                        ->all();
-                        foreach ($cate as $key => $value) {
-                            ?>
+<?php
+//$cate = common\models\costfit\Category::find()->where('parentId IS NULL')->all();
+$cate = \common\models\costfit\CategoryToProduct::find()
+        ->select('`category`.categoryId , `category`.title , `category`.parentId ')
+        ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
+        ->where("category.parentId IS NULL AND category.status=1")
+        ->groupBy('category_to_product.categoryId')
+        //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+        ->all();
+foreach ($cate as $key => $value) {
+    ?>
                             <div class="menu-item sub-<?= $value['categoryId'] ?>"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);"><?= $value['title'] ?></a><a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a></div>
                         <?php } ?>
                     </div>
@@ -713,32 +718,32 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 <!-- Sub Category -->
                 <div class="sr-only">
                     <!-- Item 1 -->
-                    <?php
-                    foreach ($this->params['actionTreeSub'] as $key => $value) {
-                        //echo common\models\ModelMaster::createTitleArray($value['title']);
-                        ?>
+<?php
+foreach ($this->params['actionTreeSub'] as $key => $value) {
+    //echo common\models\ModelMaster::createTitleArray($value['title']);
+    ?>
                         <div class="sub-item-<?= $value['categoryId'] ?>">
-                            <?php
-                            if (isset($value['Children'])) {
-                                //echo 'count :' . count($value['Children']);
-                                foreach ($value['Children'] as $key => $items) {
-                                    ?>
+                        <?php
+                        if (isset($value['Children'])) {
+                            //echo 'count :' . count($value['Children']);
+                            foreach ($value['Children'] as $key => $items) {
+                                ?>
                                     <div class="sub-cate"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($items['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $items['categoryId']]) ?>"><?= $items['title'] ?></a></div>
                                     <?php
                                     if (isset($items['Children'])) {
                                         ?>
                                         <div class="row sub-items">
-                                            <?php
-                                            foreach ($items['Children'] as $key => $sub) {
-                                                ?>
+                                        <?php
+                                        foreach ($items['Children'] as $key => $sub) {
+                                            ?>
                                                 <div class="col-md-4"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($sub['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $sub['categoryId']]) ?>" class="fc-yellow2">– <?= $sub['title'] ?></a></div>
                                             <?php } ?>
                                         </div>
-                                    <?php } ?>
+                                        <?php } ?>
                                 <?php } ?>
                             <?php } ?>
                         </div>
-                    <?php } ?>
+                        <?php } ?>
                     <!-- Item End -->
                 </div>
                 <!-- End Category -->

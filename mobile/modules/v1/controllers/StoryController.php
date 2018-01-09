@@ -2,14 +2,19 @@
 
 namespace mobile\modules\v1\controllers;
 
+use common\models\costfit\CurrencyInfo;
 use common\models\costfit\FavoriteStory;
 use common\models\costfit\ProductPostRating;
 use common\models\costfit\ProductPostView;
+use common\models\costfit\User;
+use common\models\ModelMaster;
 use mobile\modules\v1\models\ProductPost;
 use common\helpers\Token;
+use mobile\modules\v1\models\ProductPostComparePrice;
 use Yii;
 use yii\db\Expression;
 use yii\db\Exception;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 
@@ -26,32 +31,40 @@ class StoryController extends Controller
         $res = [];
         $orderBy = ['totalScore' => SORT_DESC];
 
-        if(isset($_POST['sort'])) {
-            $sort = $_POST['sort'];
-            if(substr($sort, 0, 1) == '-') {
-                //sort desc
-                $sort = substr($sort, 1);
-                $orderBy = [$sort=>SORT_DESC];
-            } else {
-                //sort asc
-                $orderBy = [$sort=>SORT_ASC];
-            }
+        if(isset($_GET['sort']) && !empty($_GET['sort'])) {
+            $orderBy = self::prepareSort($_GET['sort']);
         }
 
         $page = isset($_GET['page']) ? $_GET['page'] : 0;
         $offset = $page * $this->pageSize;
 
-        $storyModels = ProductPost::find()
-            ->leftJoin('product p', 'product_post.productId=p.productId')
-            ->leftJoin('brand b', 'p.brandId=b.brandid')
-            ->leftJoin('user u', 'product_post.userId=u.userId')
-            ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
-            ->andWhere('b.brandId is not null')
-            ->andWhere('u.userId is not null')
-            ->orderBy($orderBy)
-            ->limit($this->pageSize)
-            ->offset($offset)
-            ->all();
+        if(!isset($_GET['productId'])) {
+            $storyModels = ProductPost::find()
+                ->leftJoin('product p', 'product_post.productId=p.productId')
+                ->leftJoin('brand b', 'p.brandId=b.brandid')
+                ->leftJoin('user u', 'product_post.userId=u.userId')
+                ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
+                ->andWhere('b.brandId is not null')
+                ->andWhere('u.userId is not null')
+                ->orderBy($orderBy)
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->all();
+        } else {
+            $storyModels = ProductPost::find()
+                ->leftJoin('product p', 'product_post.productId=p.productId')
+                ->leftJoin('brand b', 'p.brandId=b.brandid')
+                ->leftJoin('user u', 'product_post.userId=u.userId')
+                ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
+                ->andWhere('b.brandId is not null')
+                ->andWhere('u.userId is not null')
+                ->andWhere(['product_post.productId' => $_GET['productId']])
+                ->orderBy($orderBy)
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->all();
+        }
+
 
         $items = [];
         $i = 0;
@@ -66,6 +79,100 @@ class StoryController extends Controller
         echo Json::encode($res);
     }
 
+    public function actionMyStory()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+        if(isset($userModel)) {
+            $res = [];
+            $orderBy = ['totalScore' => SORT_DESC];
+
+            if(isset($contents['sort']) && !empty($contents['sort'])) {
+                $orderBy = self::prepareSort($contents['sort']);
+            }
+
+//            if(isset($contents['sort'])) {
+//                /**
+//                 * sort by
+//                 * view, -view
+//                 * rate, -rate
+//                 * recent, -recent
+//                 */
+//
+//
+//                $sort = $contents['sort'];
+//                if(substr($sort, 0, 1) == '-') {
+//                    //sort desc
+//                    $sort = substr($sort, 1);
+//                    $orderBy = [$sort => SORT_DESC];
+//                } else {
+//                    //sort asc
+//                    $orderBy = [$sort => SORT_ASC];
+//                }
+//            }
+
+            $page = isset($contents['page']) ? $contents['page'] : 0;
+            $offset = $page * $this->pageSize;
+
+            $storyModels = ProductPost::find()
+                ->leftJoin('product p', 'product_post.productId=p.productId')
+                ->leftJoin('brand b', 'p.brandId=b.brandid')
+                ->leftJoin('user u', 'product_post.userId=u.userId')
+                ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
+                ->andWhere('b.brandId is not null')
+                ->andWhere('u.userId is not null')
+                ->andWhere(['product_post.userId' => $userModel->userId])
+                ->orderBy($orderBy)
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->all();
+
+
+            $items = [];
+            $i = 0;
+            foreach($storyModels as $storyModel) {
+                $items[$i] = self::prepareStoryData($storyModel);
+                $i++;
+            }
+
+            $res['items'] = $items;
+            $res['page'] = $page;
+
+            echo Json::encode($res);
+        }
+    }
+
+    private static function prepareSort($sort)
+    {
+        $sortType = SORT_ASC;
+        if(substr($sort, 0, 1) == '-') {
+            //sort desc
+            $sort = substr($sort, 1);
+            $sortType = SORT_DESC;
+        }
+
+        return [self::sortField($sort) => $sortType];
+    }
+
+    private static function sortField($sort)
+    {
+        $sortField = '';
+        switch($sort) {
+            case 'recent':
+                $sortField = 'createDateTime';
+                break;
+            case 'rating':
+                $sortField = 'averageStar';
+                break;
+            case 'view':
+                $sortField = 'totalView';
+                break;
+        }
+
+        return $sortField;
+    }
+
     private static function prepareStoryData($storyModel)
     {
         $data = [
@@ -73,10 +180,11 @@ class StoryController extends Controller
             'id' => $storyModel->productPostId,
             'shortDescription' => $storyModel->shortDescription,
             'description' => $storyModel->description,
-            'image' => Yii::$app->homeUrl . $storyModel->product->images->imageThumbnail1,
+            'image' => Url::home(true) . $storyModel->product->images->imageThumbnail1,
             'views' => $storyModel->countView(),
             'stars' => $storyModel->averageStar(),
-            'lastUpdate' => $storyModel->updateDateTime
+            'lastUpdate' => $storyModel->updateDateTime,
+            'shareUrl' => Url::home(true).'story/' . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
         ];
 
         $data['product'] = [
@@ -91,15 +199,40 @@ class StoryController extends Controller
 
         $data['author'] = [
             'name' => $storyModel->user->firstname . ' ' . $storyModel->user->lastname,
-            'avatar' => Yii::$app->homeUrl . 'images/user/avatar/' . $storyModel->user->avatar
+            'avatar' => Url::home(true) . 'images/user/avatar/' . $storyModel->user->avatar
         ];
+
+        $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);
+
+        return $data;
+    }
+
+    private static function prepareComparePrice($storyId)
+    {
+        $data = [];
+
+        $productComparePriceModels = ProductPostComparePrice::find()->where(['productPostId' => $storyId, 'status' => 1])->all();
+        $i = 0;
+
+        foreach($productComparePriceModels as $productComparePriceModel) {
+            $data[$i] = [
+                'currency' => $productComparePriceModel->currencyInfo->ccy,
+                'price' => number_format($productComparePriceModel->price, 2),
+                'shopName' => $productComparePriceModel->shopName,
+                'placeName' => $productComparePriceModel->placeName,
+                'latitude' => $productComparePriceModel->latitude,
+                'longitude' => $productComparePriceModel->longitude,
+            ];
+            $i++;
+        }
 
         return $data;
     }
 
     public function actionStoryDetail()
     {
-        echo Json::encode(self::prepareStoryData(ProductPost::findOne($_POST['id'])));
+        $contents = Json::decode(file_get_contents("php://input"));
+        echo Json::encode(self::prepareStoryData(ProductPost::findOne($contents['id'])));
     }
 
     private static function findStory($storyId)
@@ -109,8 +242,9 @@ class StoryController extends Controller
 
     public function actionAddFavoriteStory()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $_POST['storyId'];
+        $storyId = $contents['storyId'];
         $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
         $storyModel = self::findStory($storyId);
 
@@ -147,9 +281,10 @@ class StoryController extends Controller
 
     public function actionVote()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $_POST['storyId'];
-        $star = $_POST['star'];
+        $storyId = $contents['storyId'];
+        $star = $contents['star'];
         $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -221,30 +356,128 @@ class StoryController extends Controller
 
     public function actionSave()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productId = $_POST['productId'];
-        $title = $_POST['title'];
-        $shortDescription = $_POST['shortDescription'];
-        $description = $_POST['description'];
-        $isPublic = $_POST['isPublic'];
-        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
+        $productId = $contents['productId'];
+        $title = $contents['title'];
+        $shortDescription = $contents['shortDescription'];
+        $description = $contents['description'];
+        $isPublic = $contents['isPublic'];
 
-        $storyModel = new ProductPost();
-        $storyModel->productId = $productId;
-        $storyModel->title = $title;
-        $storyModel->shortDescription = $shortDescription;
-        $storyModel->description = $description;
-        $storyModel->isPublic = $isPublic;
-        $storyModel->userId = $userId;
-        $storyModel->totalScore = 0;
-        $storyModel->productSelfId = 0;
-        $storyModel->createDateTime = $storyModel->updateDateTime = new Expression('NOW()');
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
-        if($storyModel->save()) {
-            $res['storyId'] = Yii::$app->db->lastInsertID;
-            $res['success'] = true;
+        if(isset($userModel)) {
+            $userId = $userModel->userId;
+
+            $transaction = Yii::$app->db->beginTransaction();
+            $flag = false;
+
+            try {
+                $storyModel = new ProductPost();
+                $storyModel->productId = $productId;
+                $storyModel->title = $title;
+                $storyModel->shortDescription = $shortDescription;
+                $storyModel->description = $description;
+                $storyModel->isPublic = $isPublic;
+                $storyModel->userId = $userId;
+                $storyModel->totalScore = 0;
+                $storyModel->productSelfId = 0;
+                $storyModel->createDateTime = $storyModel->updateDateTime = new Expression('NOW()');
+
+                if($storyModel->save()) {
+                    $res['storyId'] = Yii::$app->db->lastInsertID;
+                    $comparePrice = $contents['comparePrice'];
+                    $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $comparePrice['currencyId']])->one();
+
+                    $productComparePriceModel = new ProductPostComparePrice();
+                    $productComparePriceModel->productId = $productId;
+                    $productComparePriceModel->shopName = $comparePrice['shopName'];
+                    $productComparePriceModel->placeName = $comparePrice['placeName'];
+                    $productComparePriceModel->moreDetail = $comparePrice['moreDetail'];
+                    $productComparePriceModel->price = $comparePrice['price'];
+                    $productComparePriceModel->currency = $currencyInfoModel->currencyId;
+                    $productComparePriceModel->country = $currencyInfoModel->ctry_name;
+                    $productComparePriceModel->latitude = $comparePrice['latitude'];
+                    $productComparePriceModel->longitude = $comparePrice['longitude'];
+                    $productComparePriceModel->productPostId = $res['storyId'];
+                    $productComparePriceModel->userId = $userId;
+                    $productComparePriceModel->createDateTime = $productComparePriceModel->updateDateTime = new Expression('NOW()');
+
+                    if($productComparePriceModel->save()) {
+                        $flag = true;
+                    } else {
+                        $res['error'] = $productComparePriceModel->errors;
+                    }
+                } else {
+                    $res['error'] = $storyModel->errors;
+                }
+
+                if($flag) {
+                    $transaction->commit();
+                    $res['success'] = true;
+                } else {
+                    $transaction->rollBack();
+                }
+            }
+            catch(Exception $e) {
+                $transaction->rollBack();
+            }
         } else {
-            $res['error'] = $storyModel->errors;
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
+    }
+
+    public function actionSaveComparePrice()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => NULL];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+        if(isset($userModel)) {
+            $userId = $userModel->userId;
+
+            $transaction = Yii::$app->db->beginTransaction();
+            $flag = false;
+
+            try {
+                $storyModel = ProductPost::findOne($contents['storyId']);
+                $comparePrice = $contents['comparePrice'];
+                $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $comparePrice['currencyId']])->one();
+
+                $productComparePriceModel = new ProductPostComparePrice();
+                $productComparePriceModel->productId = $storyModel->productId;
+                $productComparePriceModel->shopName = $comparePrice['shopName'];
+                $productComparePriceModel->placeName = $comparePrice['placeName'];
+                $productComparePriceModel->moreDetail = $comparePrice['moreDetail'];
+                $productComparePriceModel->price = $comparePrice['price'];
+                $productComparePriceModel->currency = $currencyInfoModel->ccy;
+                $productComparePriceModel->country = $currencyInfoModel->ctry_name;
+                $productComparePriceModel->latitude = $comparePrice['latitude'];
+                $productComparePriceModel->longitude = $comparePrice['longitude'];
+                $productComparePriceModel->productPostId = $contents['storyId'];
+                $productComparePriceModel->userId = $userId;
+                $productComparePriceModel->createDateTime = $productComparePriceModel->updateDateTime = new Expression('NOW()');
+
+                if($productComparePriceModel->save()) {
+                    $flag = true;
+                } else {
+                    $res['error'] = $productComparePriceModel->errors;
+                }
+
+                if($flag) {
+                    $transaction->commit();
+                    $res['success'] = true;
+                } else {
+                    $transaction->rollBack();
+                }
+            }
+            catch(Exception $e) {
+                $transaction->rollBack();
+            }
+        } else {
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);
@@ -252,12 +485,13 @@ class StoryController extends Controller
 
     public function actionUpdate()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $title = $_POST['title'];
-        $shortDescription = $_POST['shortDescription'];
-        $description = $_POST['description'];
-        $isPublic = $_POST['isPublic'];
-        $storyId = $_POST['storyId'];
+        $title = $contents['title'];
+        $shortDescription = $contents['shortDescription'];
+        $description = $contents['description'];
+        $isPublic = $contents['isPublic'];
+        $storyId = $contents['storyId'];
 
         $storyModel = self::findStory($storyId);
         $storyModel->title = $title;
@@ -277,10 +511,11 @@ class StoryController extends Controller
 
     public function actionDelete()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $_POST['storyId'];
+        $storyId = $contents['storyId'];
 
-        $numRow  = ProductPost::deleteAll(['productPostId'=>$storyId]);
+        $numRow = ProductPost::deleteAll(['productPostId' => $storyId]);
 
         if($numRow) {
             $res['success'] = true;

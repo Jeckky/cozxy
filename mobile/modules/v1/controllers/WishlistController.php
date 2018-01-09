@@ -3,9 +3,11 @@
 namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\ProductShelf;
+use common\models\costfit\User;
 use Yii;
 use yii\db\Exception;
 use yii\db\Expression;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use mobile\modules\v1\models\Wishlist;
@@ -25,45 +27,90 @@ class WishlistController extends Controller
 
     public function actionIndex()
     {
-        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productShelfId = $_POST['productShelfId'];
-        $res = [];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+        if(isset($userModel)) {
+            $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
+            $productShelfId = $contents['productShelfId'];
+            $res = [];
 
-        $page = isset($_POST['page']) ? $_POST['page'] : 0;
-        $offset = $page * $this->pageSize;
+            $page = isset($contents['page']) ? $contents['page'] : 0;
+            $offset = $page * $this->pageSize;
+            $orderBy = [];
 
-        $items = [];
+            if(isset($contents['sort']) && !empty($contents['sort'])){
+                $orderBy = self::prepareSort($contents['sort']);
+            }
 
-        $wishlists = Wishlist::find()
-            ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
-            ->from('wishlist w')
-            ->leftJoin('product p', 'p.productId=w.productId')
-            ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
-            ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
-            ->where(['w.productShelfId' => $productShelfId, 'pps.status' => 1])
-            ->limit($this->pageSize)
-            ->offset($offset)
-            ->all();
+            $items = [];
 
-        $j = 0;
-        foreach($wishlists as $wishlist) {
-            $items[$j] = [
-                'wishlistId' => $wishlist->wishlistId,
-                'productId' => $wishlist->productId,
-                'marketPrice' => $wishlist->marketPrice,
-                'sellingPrice' => $wishlist->sellingPrice,
-                'title' => $wishlist->product->title,
-                'image' => $wishlist->product->images->imageThumbnail1,
-                'brand' => $wishlist->product->brand->title
-            ];
-            $j++;
+            $wishlists = Wishlist::find()
+                ->select('w.wishlistId, w.productId, p.title, p.price as marketPrice, pps.price as sellingPrice')
+                ->from('wishlist w')
+                ->leftJoin('product p', 'p.productId=w.productId')
+                ->leftJoin('product_suppliers ps', 'p.productId=ps.productId')
+                ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+                ->leftJoin('brand b', 'b.brandId=p.brandId')
+                ->where(['w.productShelfId' => $productShelfId, 'pps.status' => 1])
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->orderBy($orderBy)
+                ->all();
+
+            $j = 0;
+            foreach($wishlists as $wishlist) {
+                $items[$j] = [
+                    'wishlistId' => $wishlist->wishlistId,
+                    'productId' => $wishlist->productId,
+                    'marketPrice' => $wishlist->marketPrice,
+                    'sellingPrice' => $wishlist->sellingPrice,
+                    'title' => $wishlist->product->title,
+                    'image' => Url::home(true).$wishlist->product->images->imageThumbnail1,
+                    'brand' => $wishlist->product->brand->title
+                ];
+                $j++;
+            }
+
+            $res['items'] = $items;
+            $res['productShelfId'] = $productShelfId;
+            $res['page'] = $page;
+        } else {
+            $res['error'] = 'Error : User not found.';
         }
 
-        $res['items'] = $items;
-        $res['productShelfId'] = $productShelfId;
-        $res['page'] = $page;
 
         echo Json::encode($res);
+    }
+
+
+    private static function prepareSort($sort)
+    {
+        $sortType = SORT_ASC;
+        if(substr($sort, 0, 1) == '-') {
+            //sort desc
+            $sort = substr($sort, 1);
+            $sortType = SORT_DESC;
+        }
+
+        return [self::sortField($sort) => $sortType];
+    }
+
+    private static function sortField($sort)
+    {
+        $sortField = '';
+        switch($sort) {
+            case 'price':
+                $sortField = 'pps.price';
+                break;
+            case 'popular':
+                $sortField = 'p.productId';
+                break;
+            case 'brand':
+                $sortField = 'b.brandId';
+                break;
+        }
+
+        return $sortField;
     }
 
     public function actionWishlistGroup()
@@ -94,13 +141,14 @@ class WishlistController extends Controller
 
     public function actionAddWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
         $res = ['success' => false, 'error' => NULL];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $productId = $_POST['productId'];
-        $productShelfId = $_POST['productShelfId'];
+        $productId = $contents['productId'];
+        $productShelfId = $contents['productShelfId'];
         $ws = Wishlist::find()->where(['productId' => $productId, 'userId' => $userId])->one();
         if(!isset($ws)) {
             $ws = new Wishlist();
@@ -121,30 +169,38 @@ class WishlistController extends Controller
 
     public function actionDeleteWishlist()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         //Receive Get Parameter
         //$_POST[productId] = productId
         //Return Array of error
-        $res = ['success' => false, 'error' => NULL];
-        $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
-        $wishlistId = $_POST['wishlistId'];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
-        $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
-        if(isset($ws)) {
-            $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
-            if($isDeleteWishlist) {
-                $res['success'] = true;
+        if(isset($userModel)) {
+            $res = ['success' => false, 'error' => NULL];
+            $userId = $userModel->userId;
+            $wishlistId = $contents['wishlistId'];
+
+            $ws = Wishlist::find()->where(['wishlistId' => $wishlistId, 'userId' => $userId])->one();
+            if(isset($ws)) {
+                $isDeleteWishlist = Wishlist::deleteAll(['wishlistId' => $wishlistId, 'userId' => $userId]);
+                if($isDeleteWishlist) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error :: Please try again';
+                }
             } else {
-                $res['error'] = 'Error :: Please try again';
+                $res["error"] = "Error :: Item not found.";
             }
         } else {
-            $res["error"] = "Error :: Item not found.";
+            $res['error'] = 'User not found.';
         }
         print_r(Json::encode($res));
     }
 
     public function actionAddShelf()
     {
-        $title = $_POST['title'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $title = $contents['title'];
         $userId = !Yii::$app->user->id ? 43 : Yii::$app->user->id;
         $res = ['success' => false, 'error' => NULL];
 
@@ -167,7 +223,8 @@ class WishlistController extends Controller
 
     public function actionDeleteShelf()
     {
-        $productShelfId = $_POST['productShelfId'];
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productShelfId = $contents['productShelfId'];
 
         $transaction = Yii::$app->db->beginTransaction();
         $flag = false;
@@ -211,9 +268,10 @@ class WishlistController extends Controller
 
     public function actionRenameShelf()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productShelfId = $_POST['productShelfId'];
-        $newTitle = $_POST['newTitle'];
+        $productShelfId = $contents['productShelfId'];
+        $newTitle = $contents['newTitle'];
 
         $productShelfModel = ProductShelf::findOne($productShelfId);
         $productShelfModel->title = $newTitle;

@@ -4,6 +4,7 @@ namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\Content;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 
@@ -32,7 +33,7 @@ class ContentController extends Controller
 
         foreach($contentModels as $contentModel) {
             $items[$i] = $contentModel->attributes;
-            $items[$i]['image'] = Yii::$app->homeUrl.$contentModel->image;
+            $items[$i]['image'] = Url::home(true).$contentModel->image;
 
             $i++;
         }

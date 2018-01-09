@@ -17,15 +17,18 @@ class CozxyMap {
 
     //put your code here
     public static function PickingPointJson() {
+        $order = array("\r\n", "\n", "\r");
+        $replace = '';
+        //$description = str_replace($order, $replace, $value['description']);
         $pickingPointActiveMap = \common\models\costfit\PickingPoint::find()->where('status =1 and `latitude` is not null and `longitude` is not null')->all();
         foreach ($pickingPointActiveMap as $key => $value) {
-            $activeMap['position'] = $value->latitude . ',' . $value->longitude;
-            $activeMap['type'] = 'cozxy';
-            $activeMap['location'] = $value->title;
-            $activeMap['contentString'] = $value->description;
-            $activeMap['pickingId'] = $value->pickingId;
-            $activeMap['latitudes'] = $value->latitude;
-            $activeMap['longitudes'] = $value->longitude;
+            $activeMap[$key]['position'] = $value->latitude . ',' . $value->longitude;
+            $activeMap[$key]['type'] = 'cozxy';
+            $activeMap[$key]['location'] = $value->title;
+            $activeMap[$key]['contentString'] = str_replace($order, $replace, $value->description);
+            $activeMap[$key]['pickingId'] = $value->pickingId;
+            $activeMap[$key]['latitudes'] = $value->latitude;
+            $activeMap[$key]['longitudes'] = $value->longitude;
         }
 
         return \yii\helpers\Json::encode($activeMap);

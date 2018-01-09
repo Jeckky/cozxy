@@ -11,6 +11,8 @@ use yii\db\Exception;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use yii\web\UploadedFile;
+use common\models\costfit\User;
+use common\models\costfit\CurrencyInfo;
 
 /**
  * Default controller for the `mobile` module
@@ -21,67 +23,79 @@ class QuickAddController extends Controller
 
     public function actionSave()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $productId = $_POST['productId'];
-        $memo = $_POST['memo'];
-        $price = $_POST['price'];
-        $nameOfPlace = $_POST['nameOfPlace'];
-        $latitude = $_POST['latitude'];
-        $longitude = $_POST['longitude'];
-        $currency = $_POST['currency'];
-        $country = $_POST['country'];
-        $imageIds = $_POST['imageIds'];
-        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
+        $productId = $contents['productId'];
+        $memo = $contents['memo'];
+        $imageIds = $contents['imageIds'];
+        $comparePrice = $contents['comparePrice'];
+        $price = $comparePrice['price'];
+        $shopName = $comparePrice['shopName'];
+        $placeName = $comparePrice['placeName'];
+        $latitude = $comparePrice['latitude'];
+        $longitude = $comparePrice['longitude'];
+        $currencyId = $comparePrice['currencyId'];
+        $country = $comparePrice['countryCode'];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
-        $transaction = Yii::$app->db->beginTransaction();
-        $flag = false;
+        if(isset($userModel)) {
+            $userId = $userModel->userId;
 
-        try {
-            //create Product Post isPublic=0, status=2
-            $storyModel = new ProductPost();
-            $storyModel->shortDescription = $memo;
-            $storyModel->productId = $productId;
-            $storyModel->createDateTime = new Expression('NOW()');
-            $storyModel->updateDateTime = new Expression('NOW()');
-            $storyModel->isPublic = 0;
-            $storyModel->status = 2;
-            $storyModel->userId = $userId;
-            $storyModel->save(false);
-            $storyId = Yii::$app->db->lastInsertID;
+            $transaction = Yii::$app->db->beginTransaction();
+            $flag = false;
 
-            //create ProductPostPrice
-            $productPostComparePriceModel = new ProductPostComparePrice();
-            $productPostComparePriceModel->productId = $productId;
-            $productPostComparePriceModel->productPostId = $storyId;
-            $productPostComparePriceModel->userId = $userId;
-            $productPostComparePriceModel->latitude = $latitude;
-            $productPostComparePriceModel->longitude = $longitude;
-            $productPostComparePriceModel->shopName = $nameOfPlace;
-            $productPostComparePriceModel->price = $price;
-            $productPostComparePriceModel->createDateTime = $productPostComparePriceModel->updateDateTime = new Expression('NOW()');
-            $productPostComparePriceModel->status = 2;
-            $productPostComparePriceModel->currency = $currency;
-            $productPostComparePriceModel->country = $country;
+            try {
+                //create Product Post isPublic=0, status=2
+                $storyModel = new ProductPost();
+                $storyModel->shortDescription = $memo;
+                $storyModel->productId = $productId;
+                $storyModel->createDateTime = new Expression('NOW()');
+                $storyModel->updateDateTime = new Expression('NOW()');
+                $storyModel->isPublic = 0;
+                $storyModel->status = 2;
+                $storyModel->userId = $userId;
+                $storyModel->save(false);
+                $storyId = Yii::$app->db->lastInsertID;
 
-            if($productPostComparePriceModel->save()) {
-                $numRows = ProductPostImages::updateAll(['productPostId'=>$storyId], 'imagesId in ('.implode(',', $imageIds).')');
+                $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $currencyId])->one();
 
-                if($numRows == sizeof($imageIds)) {
-                    $flag = true;
+                //create ProductPostPrice
+                $productPostComparePriceModel = new ProductPostComparePrice();
+                $productPostComparePriceModel->productId = $productId;
+                $productPostComparePriceModel->productPostId = $storyId;
+                $productPostComparePriceModel->userId = $userId;
+                $productPostComparePriceModel->latitude = $latitude;
+                $productPostComparePriceModel->longitude = $longitude;
+                $productPostComparePriceModel->shopName = $shopName;
+                $productPostComparePriceModel->placeName = $placeName;
+                $productPostComparePriceModel->price = $price;
+                $productPostComparePriceModel->createDateTime = $productPostComparePriceModel->updateDateTime = new Expression('NOW()');
+                $productPostComparePriceModel->status = 2;
+                $productPostComparePriceModel->currency = $currencyInfoModel->ccy;
+                $productPostComparePriceModel->country = $country;
+
+                if($productPostComparePriceModel->save()) {
+                    $numRows = ProductPostImages::updateAll(['productPostId' => $storyId], 'imagesId in (' . implode(',', $imageIds) . ')');
+
+                    if($numRows == sizeof($imageIds)) {
+                        $flag = true;
+                    }
+                }
+
+                if($flag) {
+                    $transaction->commit();
+                    $res['success'] = true;
+                } else {
+                    $transaction->rollBack();
+                    $res['error'] = 'Error :: Please try again' . print_r($productPostComparePriceModel->errors, true);
                 }
             }
-
-            if($flag) {
-                $transaction->commit();
-                $res['success'] = true;
-            } else {
+            catch(Exception $e) {
                 $transaction->rollBack();
-                $res['error'] = 'Error :: Please try again';
+                $res['error'] = $storyModel->errors;
             }
-        }
-        catch(Exception $e) {
-            $transaction->rollBack();
-            $res['error'] = $storyModel->errors;
+        } else {
+            $res['error'] = 'Error : User not found.';
         }
         return Json::encode($res);
     }
