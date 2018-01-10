@@ -569,6 +569,10 @@ class SearchController extends MasterController {
           } else { */
         $mins = Yii::$app->request->get('mins');
         $maxs = Yii::$app->request->get('maxs');
+        if ($mins == 100 && $maxs == 100) {
+            $mins = '';
+            $maxs = '';
+        }
         $brand = Yii::$app->request->get('brand');
         $size = Yii::$app->request->get('size');
         $pages = Yii::$app->request->get('pages');
