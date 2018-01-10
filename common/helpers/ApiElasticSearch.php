@@ -71,6 +71,10 @@ class ApiElasticSearch {
         }
     }
 
+    public function pagination() {
+        
+    }
+
     public static function searchProductBk($search, $status, $brand_id, $category_id) {
 
         /* Function AddtoCart : paramenter

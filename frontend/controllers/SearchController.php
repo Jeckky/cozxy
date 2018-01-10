@@ -431,9 +431,7 @@ class SearchController extends MasterController {
     }
 
     public function actionElasticSearch() {
-
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
-
         $ConfigpParameter = $this->ConfigpParameter('searching');
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
@@ -546,47 +544,53 @@ class SearchController extends MasterController {
 
     public function ConfigpParameter($type) {
 
-        if ($type == 'searching') {
+        /* if ($type == 'searching') {
+          $search = Yii::$app->request->get('search');
+          if (isset($search)) {
+          $search = Yii::$app->request->get('search');
+          } else {
+          $search = Yii::$app->request->post('search');
+          }
+          $brandId = Yii::$app->request->get('brand_id');
+          $categoryId = Yii::$app->request->get('category_id');
+          $mins = NULL;
+          $maxs = NULL;
+          $size = NULL;
+          $pages = $pages = Yii::$app->request->get('pages');
+          $status = 1;
+          $site = 'brand';
+          } else { */
+        $mins = Yii::$app->request->get('mins');
+        $maxs = Yii::$app->request->get('maxs');
+        $brand = Yii::$app->request->get('brand');
+        $size = Yii::$app->request->get('size');
+        $pages = Yii::$app->request->get('pages');
+        $status = 1;
+        //print_r($brand);
+        $categoryId = Yii::$app->request->get('categoryId');
+        //$search = Yii::$app->request->get('search');
+        $search = Yii::$app->request->get('search');
+        if (isset($search)) {
             $search = Yii::$app->request->get('search');
-            if (isset($search)) {
-                $search = Yii::$app->request->get('search');
-            } else {
-                $search = Yii::$app->request->post('search');
-            }
-            $brandId = Yii::$app->request->get('brand_id');
-            $categoryId = Yii::$app->request->get('category_id');
-            $mins = NULL;
-            $maxs = NULL;
-            $size = NULL;
-            $pages = $pages = Yii::$app->request->get('pages');
-            $status = 1;
-            $site = 'brand';
         } else {
-            $mins = Yii::$app->request->get('mins');
-            $maxs = Yii::$app->request->get('maxs');
-            $brand = Yii::$app->request->get('brand');
-            $size = Yii::$app->request->get('size');
-            $pages = Yii::$app->request->get('pages');
-            $status = 1;
-            //print_r($brand);
-            $categoryId = Yii::$app->request->get('categoryId');
-            $search = Yii::$app->request->get('search');
-            $brandName = Yii::$app->request->get('brandName');
-            if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
-                $brand = Yii::$app->request->get('brandName');
-                $brandId = substr($brand, 0, -1);
-            } else {
-                $brandId = NULL;
-            }
-
-            if ($categoryId != 'undefined') {
-                $categoryId = Yii::$app->request->get('categoryId');
-                $site = 'category';
-            } else {
-                $categoryId = NULL;
-                $site = 'brand';
-            }
+            $search = Yii::$app->request->post('search');
         }
+        $brandName = Yii::$app->request->get('brandName');
+        if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
+            $brand = Yii::$app->request->get('brandName');
+            $brandId = substr($brand, 0, -1);
+        } else {
+            $brandId = NULL;
+        }
+
+        if ($categoryId != 'undefined') {
+            $categoryId = Yii::$app->request->get('categoryId');
+            $site = 'category';
+        } else {
+            $categoryId = NULL;
+            $site = 'brand';
+        }
+        //}
         $Eparameter = array(
             'search' => $search,
             'status' => $status,
