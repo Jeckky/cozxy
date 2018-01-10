@@ -24,11 +24,11 @@ $productBrand = common\models\costfit\Product::productBrand($model['brandid']);
 //$productBrand = $productBrand->getBrand();
 //echo '<pre>';
 //print_r($productBrand->modelclass);
-if (isset($productBrand)) {
-    $cozxyBrandTitle = $productBrand['title'];
-} else {
-    $cozxyBrandTitle = NULL;
-}
+/* if (isset($productBrand)) {
+  $cozxyBrandTitle = $productBrand['title'];
+  } else {
+  $cozxyBrandTitle = NULL;
+  } */
 
 $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
 if (isset($productImageThumbnail)) {
@@ -142,10 +142,10 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         </div>
         <div class="product-txt">
             <?php
-            if (isset($cozxyBrandTitle) && !empty($cozxyBrandTitle)) {
+            if (isset($productBrand)) {
                 ?>
                 <p class="brand">
-                    <span class="size14"><?= strtoupper($cozxyBrandTitle) ?></span>
+                    <span class="size14"><?= strtoupper($productBrand['title']) ?>(<?= $model['brandid'] ?>)</span>
                 </p>
             <?php } else {
                 ?>
