@@ -147,6 +147,9 @@ if ($ConfigpParameter['site'] == 'category') {
     }
 }
 \frontend\assets\SearchAsset::register($this);
+
+//echo '<pre>';
+//print_r($dataProvider->allModels);
 ?>
 <div class="filter-e-search">
     <?=
@@ -163,14 +166,12 @@ if ($ConfigpParameter['site'] == 'category') {
                 <div class="col-md-9 col-sm-12 col-xs-12">
                     <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
 
-
                         <!--<div class="filter-product-cozxy col-sm-12">
                             <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
                             <div class="row">
                                 HOT DEALS
                             </div>
                         </div>-->
-
 
                         <div class="filter-product-cozxy col-sm-12">
                             <div class="col-md-12" style="padding-right: 0px;padding-left: 0px;">
@@ -220,7 +221,7 @@ if ($ConfigpParameter['site'] == 'category') {
                                           } */
                                         ?>
                                                     <li class="<?//= $active ?>"><a href="<?= Yii::$app->homeUrl ?>search/elastic-search?search=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="<?//= $dataPage++ ?>"><?//= $index1 ?></a></li>
-                                        <?php //} ?>
+                                        <?php //}   ?>
                                             <li class="next"><a href="<?//= Yii::$app->homeUrl ?>search/elastic-search?search=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="1">next</a></li>
                                             <li class="last"><a href="<?//= Yii::$app->homeUrl ?>search/elastic-searchsearch=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="1">last</a></li>
                                         </ul>-->
@@ -298,7 +299,7 @@ if ($ConfigpParameter['site'] == 'category') {
                 </div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                         <span class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>

@@ -442,13 +442,12 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => 10,
+            'size' => 12,
             'pages' => $ConfigpParameter['pages']
         );
 
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
 
         $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         //echo 'perPage : ' . $perPage;
@@ -462,6 +461,14 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+
+        foreach ($dataProvider->allModels as $key => $value) {
+            $productid[] = $value['productid'];
+        }
+        //$productid .= $productid;
+        //$productid = substr($productid, 0, -1);
+        //print_r($productid);
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
 
         return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
 
@@ -481,7 +488,7 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => 10,
+            'size' => 12,
             'pages' => $ConfigpParameter['pages']
         );
 
@@ -515,7 +522,7 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => 10,
+            'size' => 12,
             'pages' => $ConfigpParameter['pages']
         );
 

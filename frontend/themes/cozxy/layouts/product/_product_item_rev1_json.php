@@ -129,7 +129,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 <?php
                 if ($cozxyResult > 0) {
                     if ($model['receivetype'] != null) {
-                        $receiveType = $model['receiveType'];
+                        $receiveType = $model['receivetype'];
                     } else {
                         $receiveType = 1;
                     }
@@ -164,7 +164,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             if ($cozxySellingsPrice > 0) {
                 if (isset($hotDeal)) {
                     ?>
-                    <p class="price" >
+                    <p class="price">
                         <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span><br>
                         <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
                     </p>

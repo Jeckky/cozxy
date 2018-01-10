@@ -29,14 +29,17 @@ class ApiElasticSearch {
         $pages = $Eparameter['pages'];
         //echo $search;
         $search = str_replace(" ", "%20", $search);
-        if ($search == '') {
+
+        if ($mins == 100 && $maxs == 100) {
             $mins = '';
             $maxs = '';
         }
+
         //echo $search;
         if ($category_id == 0) {
             $category_id = '';
         }
+
         $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size;
         //echo $url;
         $curl = curl_init();
@@ -85,7 +88,6 @@ class ApiElasticSearch {
         //url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
         //$url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "elastic/" . $json;
         $url = "http://45.76.157.59:3000/search?text=" . $search . "&brand_id=" . $brand_id . "&category_id=" . $category_id . "";
-
 
         //echo 'url : ' . $url . '<br><br>';
         $data = "search=" . $search . "&status=" . $status . "&test=1&brand_id=" . $brand_id . '&category_id=' . $category_id;
