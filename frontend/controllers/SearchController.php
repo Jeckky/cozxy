@@ -483,7 +483,7 @@ class SearchController extends MasterController {
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
         if (isset($ConfigpParameter['pages'])) {
-            return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
         } else {
             return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
         }
@@ -537,7 +537,7 @@ class SearchController extends MasterController {
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+        return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function actionSortESearch() {
@@ -589,7 +589,7 @@ class SearchController extends MasterController {
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+        return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function ConfigpParameter($type) {

@@ -1225,7 +1225,7 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         data: {},
         success: function (data, status) {
             //console.log(data);
-            $('.filter-e-search').html(data);
+            $('.filter-e-search-cozxy').html(data);
 
         }
     });
