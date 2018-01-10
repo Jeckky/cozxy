@@ -569,7 +569,7 @@ class SearchController extends MasterController {
             $pages = Yii::$app->request->post('pages');
             $status = 1;
             //print_r($brand);
-            $categoryId = Yii::$app->request->post('categoryId');
+            $categoryId = Yii::$app->request->get('categoryId');
             $search = Yii::$app->request->post('search');
             $brandName = Yii::$app->request->get('brandName');
             if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
@@ -580,7 +580,7 @@ class SearchController extends MasterController {
             }
 
             if ($categoryId != 'undefined') {
-                $categoryId = Yii::$app->request->post('categoryId');
+                $categoryId = Yii::$app->request->get('categoryId');
                 $site = 'category';
             } else {
                 $category = NULL;
