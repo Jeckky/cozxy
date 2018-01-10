@@ -1205,7 +1205,7 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
 
     var brandName = [];
     var search = $("#search").val();
-    alert(search);
+    //alert(search);
     $("input:checked").each(function () {
         brandName.push($(this).val());
     });
