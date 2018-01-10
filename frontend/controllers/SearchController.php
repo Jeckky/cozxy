@@ -478,7 +478,7 @@ class SearchController extends MasterController {
         $item_per_page = $searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        $total_pages = $searchElastic['total'] / 12;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
@@ -532,7 +532,7 @@ class SearchController extends MasterController {
         $item_per_page = $searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        $total_pages = $searchElastic['total'] / 12;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
@@ -584,7 +584,7 @@ class SearchController extends MasterController {
         $item_per_page = $searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        $total_pages = $searchElastic['total'] / 12;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
