@@ -241,7 +241,7 @@ if ($ConfigpParameter['site'] == 'category') {
                 </div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                         <span class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>
@@ -252,7 +252,6 @@ if ($ConfigpParameter['site'] == 'category') {
 <script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
-        /*$("#results").load("fetch_pages.php"); //load initial records*/
 
         //executes code below when user click on pagination links
         $("#results").on("click", ".pagination a", function (e) {
@@ -265,10 +264,7 @@ if ($ConfigpParameter['site'] == 'category') {
             var mins = $(this).attr("data-mins");
             var maxs = $(this).attr("data-maxs");
             var category = $(this).attr("data-category");
-            alert(page);
-            /*$("#results").load("fetch_pages.php", {"page": page}, function () { //get content from PHP page
-             $(".loading-div").hide(); //once done, hide loading element
-             });*/
+
             $.ajax({
                 url: '<?= Yii::$app->homeUrl ?>search/e-paginate',
                 type: "GET",
@@ -278,9 +274,7 @@ if ($ConfigpParameter['site'] == 'category') {
                     //alert(status);
                     if (status == "success") {
                         $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
-                        //alert(data)
-                        //var dataESerch = filterBrandAndCategoryCozxyApi($categoryId);
-                        //$('.filter-e-search').html(dataESerch);
+
                         $.ajax({
                             url: '<?= Yii::$app->homeUrl ?>search/elastic-search',
                             type: "GET",
@@ -289,9 +283,6 @@ if ($ConfigpParameter['site'] == 'category') {
                             success: function (data, status) {
                                 //alert(status);
                                 if (status == "success") {
-                                    //alert(data)
-                                    //var dataESerch = filterBrandAndCategoryCozxyApi($categoryId);
-                                    //$('.filter-e-search').html(dataESerch);
                                     $('.filter-e-search').html(data);
                                     //alert(data);
                                 } else {
