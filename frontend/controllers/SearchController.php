@@ -460,9 +460,16 @@ class SearchController extends MasterController {
             ],
         ]);
 
+        //$productid[] = '';
         foreach ($dataProvider->allModels as $key => $value) {
             $productid[] = $value['productid'];
         }
+        if (isset($productid) && count($productid) > 0) {
+            $productid = $productid;
+        } else {
+            $productid = NULL;
+        }
+
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
         //print_r($productid);

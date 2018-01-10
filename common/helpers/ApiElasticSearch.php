@@ -41,7 +41,7 @@ class ApiElasticSearch {
         }
 
         $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size;
-        echo $url;
+        //echo $url;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -72,7 +72,7 @@ class ApiElasticSearch {
     }
 
     public function pagination() {
-        
+
     }
 
     public static function searchProductBk($search, $status, $brand_id, $category_id) {
