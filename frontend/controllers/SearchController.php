@@ -587,7 +587,7 @@ class SearchController extends MasterController {
             $categoryId = Yii::$app->request->get('categoryId');
             $site = 'category';
         } else {
-            $categoryId = Yii::$app->request->get('categoryId');
+            $categoryId = FALSE;
             $site = 'brand';
         }
         //}
