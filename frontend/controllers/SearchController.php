@@ -511,7 +511,7 @@ class SearchController extends MasterController {
         $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
+
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
@@ -519,6 +519,16 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+
+        foreach ($dataProvider->allModels as $key => $value) {
+            $productid[] = $value['productid'];
+        }
+        if (isset($productid) && count($productid) > 0) {
+            $productid = $productid;
+        } else {
+            $productid = NULL;
+        }
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
         $item_per_page = $searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
@@ -551,7 +561,7 @@ class SearchController extends MasterController {
 
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
+
         $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -560,6 +570,17 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+
+        foreach ($dataProvider->allModels as $key => $value) {
+            $productid[] = $value['productid'];
+        }
+        if (isset($productid) && count($productid) > 0) {
+            $productid = $productid;
+        } else {
+            $productid = NULL;
+        }
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+
         $item_per_page = $searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
