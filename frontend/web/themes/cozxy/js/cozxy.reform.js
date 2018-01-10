@@ -1224,19 +1224,8 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         type: "POST",
         data: {},
         success: function (data, status) {
-
             //console.log(data);
-
             $('.filter-e-search').html(data);
-            /*if (data == '') {
-             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
-             } else {
-             if (status == "success") {
-             $('.brand-price-filter').html(data);
-             } else {
-             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
-             }
-             }*/
 
         }
     });
@@ -1768,6 +1757,7 @@ $(function () {
         $(this).find('.dropdown-menu.multi-level').css('display', 'block');
     })
 });
+
 function subscribe() {
     var subscribe = $('#subscribe_email').val();
     //alert(subscribe);
@@ -1786,7 +1776,6 @@ function subscribe() {
         }
     });
 }
-
 
 $('#stateId').change(function () {
     var stateId = $('#stateId').val();
@@ -1968,7 +1957,6 @@ function newBillingTelUnique() {
     });
 }
 
-
 function shipCozxyBox() {
     var shipping = $('input[name="shipping"]:checked').val();
     //aria-invalid="true"
@@ -1988,6 +1976,12 @@ function shipCozxyBox() {
         document.forms['default-ship-cozxy-box'].submit();
     }
 }
+
+
+
+
+
+
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];

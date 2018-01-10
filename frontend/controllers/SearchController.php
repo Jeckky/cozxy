@@ -475,8 +475,18 @@ class SearchController extends MasterController {
         //print_r($productid);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
 
-        return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+        $item_per_page = $searchElastic['size'];
+        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records = $searchElastic['total'];
+        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
+        if (isset($ConfigpParameter['pages'])) {
+            return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+        } else {
+            return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+        }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
     }
 
@@ -509,9 +519,15 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+        $item_per_page = $searchElastic['size'];
+        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records = $searchElastic['total'];
+        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+        return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function actionSortESearch() {
@@ -544,29 +560,20 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+        $item_per_page = $searchElastic['size'];
+        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records = $searchElastic['total'];
+        $total_pages = $searchElastic['total'] / $searchElastic['size'];
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
         //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+        return $this->renderAjax('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
     }
 
     public function ConfigpParameter($type) {
 
-        /* if ($type == 'searching') {
-          $search = Yii::$app->request->get('search');
-          if (isset($search)) {
-          $search = Yii::$app->request->get('search');
-          } else {
-          $search = Yii::$app->request->post('search');
-          }
-          $brandId = Yii::$app->request->get('brand_id');
-          $categoryId = Yii::$app->request->get('category_id');
-          $mins = NULL;
-          $maxs = NULL;
-          $size = NULL;
-          $pages = $pages = Yii::$app->request->get('pages');
-          $status = 1;
-          $site = 'brand';
-          } else { */
+
         $mins = Yii::$app->request->get('mins');
         $maxs = Yii::$app->request->get('maxs');
         if ($mins == 100 && $maxs == 100) {
@@ -575,7 +582,7 @@ class SearchController extends MasterController {
         }
         $brand = Yii::$app->request->get('brand');
         $size = Yii::$app->request->get('size');
-        $pages = Yii::$app->request->get('pages');
+        $pages = Yii::$app->request->get('page');
         $status = 1;
         //print_r($brand);
         $categoryId = Yii::$app->request->get('categoryId');
@@ -598,7 +605,6 @@ class SearchController extends MasterController {
             }
         }
 
-
         if ($categoryId != 'undefined') {
             $categoryId = Yii::$app->request->get('categoryId');
             $site = 'category';
@@ -606,7 +612,7 @@ class SearchController extends MasterController {
             $categoryId = NULL;
             $site = 'brand';
         }
-        //}
+
         $Eparameter = array(
             'search' => $search,
             'status' => $status,
@@ -619,6 +625,22 @@ class SearchController extends MasterController {
             'site' => $site
         );
         return $Eparameter;
+    }
+
+    public function actionEPaginate() {
+
+        $page = $_GET['page'];
+        $search = $_GET['search'];
+        $brandName = $_GET['brandName'];
+        $mins = $_GET['mins'];
+        $maxs = $_GET['maxs'];
+        $category = $_GET['category'];
+        $item_per_page = 10;
+        $current_page = $page;
+        $total_records = 250;
+        $total_pages = 21;
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category);
+        echo $paginate;
     }
 
 }

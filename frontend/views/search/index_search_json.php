@@ -90,9 +90,9 @@ $(function() {
 	});
 	$( "#slider-range" ).slider({
 		range: true,
-		min: ' . $catPrice['minPrice'] . ',
-		max: ' . $catPrice['maxPrice'] . ',
-		values: [ ' . $catPrice['minPrice'] . ', ' . $catPrice['maxPrice'] . ' ],
+		min: "' . $catPrice['minPrice'] . '",
+		max: "' . $catPrice['maxPrice'] . '",
+		values: [ "' . $catPrice['minPrice'] . '", "' . $catPrice['maxPrice'] . '" ],
 		slide: function( event, ui ) {
 			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
             $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
@@ -209,67 +209,8 @@ if ($ConfigpParameter['site'] == 'category') {
                                     //yii\widgets\Pjax::end();
                                     ?>
                                     <div class="col-md-12">
-                                        <!--<ul class="pagination">
-                                            <li class="first disabled"><span>first</span></li>
-                                            <li class="prev disabled"><span>previous</span></li>
-                                        <?php
-                                        /* $dataPage = 0;
-                                          for ($index1 = 1; $index1 < $perPage; $index1++) {
-                                          if ($index1 == 1) {
-                                          $active = 'active';
-                                          } else {
-                                          $active = '';
-                                          } */
-                                        ?>
-                                                    <li class="<?//= $active ?>"><a href="<?= Yii::$app->homeUrl ?>search/elastic-search?search=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="<?//= $dataPage++ ?>"><?//= $index1 ?></a></li>
-                                        <?php //}   ?>
-                                            <li class="next"><a href="<?//= Yii::$app->homeUrl ?>search/elastic-search?search=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="1">next</a></li>
-                                            <li class="last"><a href="<?//= Yii::$app->homeUrl ?>search/elastic-searchsearch=<?//= isset($_GET['search']) ? $_GET['search'] : '' ?>&pages=<?//= $index1 ?>&per-page=<?//= $perPage ?>" data-page="1">last</a></li>
-                                        </ul>-->
-                                        <?php
-                                        $Num_Rows = $searchElastic['total'];
-
-                                        $Per_Page = 10;   // Per Page
-
-                                        $Page = isset($_GET["pages"]) ? $_GET["pages"] : '';
-                                        if (!$Page) {
-                                            $Page = 1;
-                                        }
-
-                                        $Prev_Page = $Page - 1;
-                                        $Next_Page = $Page + 1;
-
-                                        $Page_Start = (($Per_Page * $Page) - $Per_Page);
-                                        if ($Num_Rows <= $Per_Page) {
-                                            $Num_Pages = 1;
-                                        } else if (($Num_Rows % $Per_Page) == 0) {
-                                            $Num_Pages = ($Num_Rows / $Per_Page);
-                                        } else {
-                                            $Num_Pages = ($Num_Rows / $Per_Page) + 1;
-                                            $Num_Pages = (int) $Num_Pages;
-                                        }
-                                        ?>
-                                        <br>
-                                        Demo Pagination : Total <?php echo $Num_Rows; ?> Record : <?php echo $Num_Pages; ?> Page :
-                                        <?php
-                                        $searchE = isset($_GET['search']) ? $_GET['search'] : '';
-                                        $url = Yii::$app->homeUrl . 'search/elastic-search?search=' . $searchE . '&brandName=' . $ConfigpParameter['brandId'] . '&mins=' . $ConfigpParameter['mins'] . '&maxs=' . $ConfigpParameter['maxs'] . '&categoryId=' . $ConfigpParameter['categoryId'];
-                                        if ($Prev_Page) {
-                                            echo " <a href='$url&pages=$Prev_Page'><< Back</a> ";
-                                        }
-
-                                        for ($i = 1; $i <= $Num_Pages; $i++) {
-                                            if ($i != $Page) {
-                                                echo "[ <a href='$url&pages=$i'>$i</a> ]";
-                                            } else {
-                                                echo "<b> $i </b>";
-                                            }
-                                        }
-                                        if ($Page != $Num_Pages) {
-                                            echo " <a href ='$url&pages=$Next_Page'>Next>></a> ";
-                                        }
-                                        ?>
-
+                                        <div class="loading-div">&nbsp;</div>
+                                        <div id="results" class="col-lg-offset-4"> <?= $paginate ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +241,7 @@ if ($ConfigpParameter['site'] == 'category') {
                 </div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                         <span class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>
@@ -308,4 +249,68 @@ if ($ConfigpParameter['site'] == 'category') {
         </div>
     </div>
 </div>
+<script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        /*$("#results").load("fetch_pages.php"); //load initial records*/
+
+        //executes code below when user click on pagination links
+        $("#results").on("click", ".pagination a", function (e) {
+            //alert('test');
+            e.preventDefault();
+            $(".loading-div").show(); //show loading element
+            var page = $(this).attr("data-page"); //get page number from link
+            var search = $(this).attr("data-search");
+            var brandName = $(this).attr("data-brandName");
+            var mins = $(this).attr("data-mins");
+            var maxs = $(this).attr("data-maxs");
+            var category = $(this).attr("data-category");
+            alert(page);
+            /*$("#results").load("fetch_pages.php", {"page": page}, function () { //get content from PHP page
+             $(".loading-div").hide(); //once done, hide loading element
+             });*/
+            $.ajax({
+                url: '<?= Yii::$app->homeUrl ?>search/e-paginate',
+                type: "GET",
+                //dataType: "JSON",
+                data: {'page': page, 'search': search, 'brandName': brandName, 'mins': mins, 'maxs': maxs, 'category': category},
+                success: function (data, status) {
+                    //alert(status);
+                    if (status == "success") {
+                        $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+                        //alert(data)
+                        //var dataESerch = filterBrandAndCategoryCozxyApi($categoryId);
+                        //$('.filter-e-search').html(dataESerch);
+                        $.ajax({
+                            url: '<?= Yii::$app->homeUrl ?>search/elastic-search',
+                            type: "GET",
+                            //dataType: "JSON",
+                            data: {'page': page, 'search': search, 'brandName': brandName, 'mins': mins, 'maxs': maxs, 'category': category},
+                            success: function (data, status) {
+                                //alert(status);
+                                if (status == "success") {
+                                    //alert(data)
+                                    //var dataESerch = filterBrandAndCategoryCozxyApi($categoryId);
+                                    //$('.filter-e-search').html(dataESerch);
+                                    $('.filter-e-search').html(data);
+                                    //alert(data);
+                                } else {
+                                    //alert(status);
+                                }
+                            }
+                        });
+                        $('#results').html(data);
+                        //alert(data);
+                    } else {
+                        //alert(status);
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+
+
+
 
