@@ -485,112 +485,115 @@ class SearchController extends MasterController {
         if (isset($ConfigpParameter['pages'])) {
             return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
         } else {
-            return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+            if (isset($_GET['type'])) {
+                return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            } else {
+                return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+            }
         }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
     }
 
-    public function actionFilterESearch() {
+    /* public function actionFilterESearch() {
 
-        $ConfigpParameter = $this->ConfigpParameter('filter');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
-        $Eparameter = array(
-            'search' => $ConfigpParameter['search'],
-            'status' => $ConfigpParameter['status'],
-            'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $ConfigpParameter['categoryId'],
-            'mins' => $ConfigpParameter['mins'],
-            'maxs' => $ConfigpParameter['maxs'],
-            'size' => 12,
-            'pages' => $ConfigpParameter['pages']
-        );
+      $ConfigpParameter = $this->ConfigpParameter('filter');
+      //echo 'ConfigpParameter : ';
+      //print_r($ConfigpParameter);
+      //$ConfigpParameter['search'];
+      $Eparameter = array(
+      'search' => $ConfigpParameter['search'],
+      'status' => $ConfigpParameter['status'],
+      'brandId' => $ConfigpParameter['brandId'],
+      'categoryId' => $ConfigpParameter['categoryId'],
+      'mins' => $ConfigpParameter['mins'],
+      'maxs' => $ConfigpParameter['maxs'],
+      'size' => 12,
+      'pages' => $ConfigpParameter['pages']
+      );
 
-        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
-        //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+      $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
+      $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
+      //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
+      $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
-        $dataProvider = new ArrayDataProvider([
-            //'key' => 'productid',
-            'allModels' => $searchElastic['data'],
-            'pagination' => [
-                'pageSize' => $searchElastic['size'],
-            ],
-        ]);
+      $dataProvider = new ArrayDataProvider([
+      //'key' => 'productid',
+      'allModels' => $searchElastic['data'],
+      'pagination' => [
+      'pageSize' => $searchElastic['size'],
+      ],
+      ]);
 
-        foreach ($dataProvider->allModels as $key => $value) {
-            $productid[] = $value['productid'];
-        }
-        if (isset($productid) && count($productid) > 0) {
-            $productid = $productid;
-        } else {
-            $productid = NULL;
-        }
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
-        $item_per_page = 12; //$searchElastic['size'];
-        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
-        $total_records = $searchElastic['total'];
-        $total_pages = $perPage;
-        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
+      foreach ($dataProvider->allModels as $key => $value) {
+      $productid[] = $value['productid'];
+      }
+      if (isset($productid) && count($productid) > 0) {
+      $productid = $productid;
+      } else {
+      $productid = NULL;
+      }
+      $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+      $item_per_page = 12; //$searchElastic['size'];
+      $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+      $total_records = $searchElastic['total'];
+      $total_pages = $perPage;
+      //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+      $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
-        //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
-    }
+      //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
+      return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+      }
 
-    public function actionSortESearch() {
+      public function actionSortESearch() {
 
-        $ConfigpParameter = $this->ConfigpParameter('sort');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
-        $Eparameter = array(
-            'search' => $ConfigpParameter['search'],
-            'status' => $ConfigpParameter['status'],
-            'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $ConfigpParameter['categoryId'],
-            'mins' => $ConfigpParameter['mins'],
-            'maxs' => $ConfigpParameter['maxs'],
-            'size' => 12,
-            'pages' => $ConfigpParameter['pages']
-        );
+      $ConfigpParameter = $this->ConfigpParameter('sort');
+      //echo 'ConfigpParameter : ';
+      //print_r($ConfigpParameter);
+      //$ConfigpParameter['search'];
+      $Eparameter = array(
+      'search' => $ConfigpParameter['search'],
+      'status' => $ConfigpParameter['status'],
+      'brandId' => $ConfigpParameter['brandId'],
+      'categoryId' => $ConfigpParameter['categoryId'],
+      'mins' => $ConfigpParameter['mins'],
+      'maxs' => $ConfigpParameter['maxs'],
+      'size' => 12,
+      'pages' => $ConfigpParameter['pages']
+      );
 
-        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
+      $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
 
-        //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+      $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
-        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
-        $dataProvider = new ArrayDataProvider([
-            //'key' => 'productid',
-            'allModels' => $searchElastic['data'],
-            'pagination' => [
-                'pageSize' => $searchElastic['size'],
-            ],
-        ]);
+      $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
+      $dataProvider = new ArrayDataProvider([
+      //'key' => 'productid',
+      'allModels' => $searchElastic['data'],
+      'pagination' => [
+      'pageSize' => $searchElastic['size'],
+      ],
+      ]);
 
-        foreach ($dataProvider->allModels as $key => $value) {
-            $productid[] = $value['productid'];
-        }
-        if (isset($productid) && count($productid) > 0) {
-            $productid = $productid;
-        } else {
-            $productid = NULL;
-        }
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+      foreach ($dataProvider->allModels as $key => $value) {
+      $productid[] = $value['productid'];
+      }
+      if (isset($productid) && count($productid) > 0) {
+      $productid = $productid;
+      } else {
+      $productid = NULL;
+      }
+      $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
 
-        $item_per_page = 12; //$searchElastic['size'];
-        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
-        $total_records = $searchElastic['total'];
-        $total_pages = $perPage;
-        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
+      $item_per_page = 12; //$searchElastic['size'];
+      $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+      $total_records = $searchElastic['total'];
+      $total_pages = $perPage;
+      //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+      $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
-        //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
-    }
+      //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
+      return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+      } */
 
     public function ConfigpParameter($type) {
 

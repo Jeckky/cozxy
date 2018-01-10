@@ -1218,7 +1218,7 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
     $max = $('input:hidden:eq(1)', '#amount-min').val();
     $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
-    var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '&mins=' + $min + '&maxs=' + $max + '&search=' + search;
+    var path = $baseUrl + "search/elastic-search?categoryId=" + $categoryId + '&brandName=' + brandName + '&mins=' + $min + '&maxs=' + $max + '&search=' + search + '&type=filter';
     $.ajax({
         url: path,
         type: "POST",
