@@ -576,12 +576,17 @@ class SearchController extends MasterController {
             $search = Yii::$app->request->post('search');
         }
         $brandName = Yii::$app->request->get('brandName');
-        if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
+        if ($type == 'searching') {
             $brand = Yii::$app->request->get('brandName');
-            $brandId = substr($brand, 0, -1);
         } else {
-            $brandId = NULL;
+            if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
+                $brand = Yii::$app->request->get('brandName');
+                $brandId = substr($brand, 0, -1);
+            } else {
+                $brandId = NULL;
+            }
         }
+
 
         if ($categoryId != 'undefined') {
             $categoryId = Yii::$app->request->get('categoryId');
