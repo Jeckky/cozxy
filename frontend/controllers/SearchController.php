@@ -562,15 +562,15 @@ class SearchController extends MasterController {
             $status = 1;
             $site = 'brand';
         } else {
-            $mins = Yii::$app->request->post('mins');
-            $maxs = Yii::$app->request->post('maxs');
-            $brand = Yii::$app->request->post('brand');
-            $size = Yii::$app->request->post('size');
-            $pages = Yii::$app->request->post('pages');
+            $mins = Yii::$app->request->get('mins');
+            $maxs = Yii::$app->request->get('maxs');
+            $brand = Yii::$app->request->get('brand');
+            $size = Yii::$app->request->get('size');
+            $pages = Yii::$app->request->get('pages');
             $status = 1;
             //print_r($brand);
             $categoryId = Yii::$app->request->get('categoryId');
-            $search = Yii::$app->request->post('search');
+            $search = Yii::$app->request->get('search');
             $brandName = Yii::$app->request->get('brandName');
             if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
                 $brand = Yii::$app->request->get('brandName');
