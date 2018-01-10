@@ -81,6 +81,16 @@ $this->registerCss('
 text-align: right;
 }
 ');
+if (isset($catPrice['minPrice'])) {
+    $minPrice = $catPrice['minPrice'];
+} else {
+    $minPrice = '""';
+}
+if (isset($catPrice['maxPrice'])) {
+    $maxPrice = $catPrice['maxPrice'];
+} else {
+    $maxPrice = '""';
+}
 $this->registerJs('
 $(function() {
 	var waterfall = new Waterfall({
@@ -90,40 +100,41 @@ $(function() {
 	});
 
 	$( "#slider-range" ).slider({
-		range: true,
-		min: ' . isset($catPrice['minPrice']) ? $catPrice['minPrice'] : "" . ',
-		max: ' . isset($catPrice['maxPrice']) ? $catPrice['maxPrice'] : "" . ',
-		values: [ "' . $catPrice['minPrice'] . '", "' . $catPrice['maxPrice'] . '" ],
-		slide: function( event, ui ) {
-			$( "#amount" ).val( "From " + ui.values[ 0 ] + " THB to " + ui.values[ 1 ] + " THB");
-            $("input:hidden:eq(0)","#amount-min").val(ui.values[ 0 ]);
-            $("input:hidden:eq(1)","#amount-min").val(ui.values[ 1 ]);
+            range: true,
+            min: ' . $minPrice . ',
+            max: ' . $maxPrice . ',
+            values: ["' . $catPrice['minPrice'] . '", "' . $catPrice['maxPrice'] . '"],
+            slide: function( event, ui ) {
+            $( "#amount" ).val( "From " + ui.values[0] + " THB to " + ui.values[1] + " THB");
+            $("input:hidden:eq(0)", "#amount-min").val(ui.values[0]);
+            $("input:hidden:eq(1)", "#amount-min").val(ui.values[1]);
 
-		},
-        stop: function (event, ui) {
+            },
+            stop: function (event, ui) {
             //debugger;
             //var path = "' . Yii::$app->homeUrl . 'search/filter-price";
-           /* $.ajax({
-                url: path,
-                type: "POST",
-                dataType: "JSON",
-                data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $ConfigpParameter['categoryId'] . '},
-                success: function (data){
-                    alert(data.status);
-                    if (data.status) {
+            /* $.ajax({
+              url: path,
+              type: "POST",
+              dataType: "JSON",
+              data: {mins:ui.values[ 0 ],maxs:ui.values[ 1 ],categoryId:' . $ConfigpParameter['categoryId'] . '},
+              success: function (data){
+              alert(data.status);
+              if (data.status) {
 
-                    } else {
-                        alert(data.message);
-                    }
-                }
-            });*/
-        }
-	});
-	$( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
-});
+              } else {
+              alert(data.message);
+              }
+              }
+              }); */
+            }
+            });
+
+            $( "#amount" ).val( "From " + $( "#slider-range" ).slider( "values", 0 ) + " THB to " + $( "#slider-range" ).slider( "values", 1 ) + " THB" );
+            });
 
 
-$("#results").on("click", ".pagination a", function (e) {
+            $("#results").on("click", ".pagination a", function (e) {
 
             e.preventDefault();
             $(".loading-div").show(); //show loading element
@@ -135,41 +146,41 @@ $("#results").on("click", ".pagination a", function (e) {
             var category = $(this).attr("data-category");
 
             $.ajax({
-                url: "' . Yii::$app->homeUrl . 'search/e-paginate",
-                type: "GET",
-                //dataType: "JSON",
-                data: {"page": page, "search": search, "brandName": brandName, "mins": mins, "maxs": maxs, "category": category},
-                success: function (data, status) {
-                    //alert(status);
-                    if (status == "success") {
-                        $(".filter-e-search-cozxy").html("<div class=\"text-center\" style=\"zoom: 5; \"><br><i class=\"fa fa-spinner fa-spin\" aria-hidden=\"true\"></i></div>");
-                                $.ajax({
-                                    url: "' . Yii::$app->homeUrl . 'search/elastic-search",
-                                    type: "GET",
-                                    //dataType: "JSON",
-                                    data: {"page": page, "search": search, "brandName": brandName, "mins": mins, "maxs": maxs, "category": category},
-                                    success: function (data, status) {
-                                        //alert(status);
-                                        if (status == "success") {
-                                            $(".filter-e-search").html(data);
-                                            //alert(data);
-                                        } else {
-                                            //alert(status);
-                                        }
-                                    }
-                                });
-                        $("#results").html(data);
-                        //alert(data);
-                    } else {
-                        //alert(status);
-                    }
-                }
+            url: "' . Yii::$app->homeUrl . 'search/e-paginate",
+            type: "GET",
+            //dataType: "JSON",
+            data: {"page": page, "search": search, "brandName": brandName, "mins": mins, "maxs": maxs, "category": category},
+            success: function (data, status) {
+            //alert(status);
+            if (status == "success") {
+            $(".filter-e-search-cozxy").html("<div class=\"text-center\" style=\"zoom: 5; \"><br><i class=\"fa fa-spinner fa-spin\" aria-hidden=\"true\"></i></div>");
+            $.ajax({
+            url: "' . Yii::$app->homeUrl . 'search/elastic-search",
+            type: "GET",
+            //dataType: "JSON",
+            data: {"page": page, "search": search, "brandName": brandName, "mins": mins, "maxs": maxs, "category": category},
+            success: function (data, status) {
+            //alert(status);
+            if (status == "success") {
+            $(".filter-e-search").html(data);
+            //alert(data);
+            } else {
+            //alert(status);
+            }
+            }
+            });
+            $("#results").html(data);
+            //alert(data);
+            } else {
+            //alert(status);
+            }
+            }
             });
 
-        });
+            });
 
 
-');
+            ');
 if ($ConfigpParameter['site'] == 'category') {
     if (isset($title) && !empty($title)) {
         $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
@@ -231,7 +242,8 @@ if ($ConfigpParameter['site'] == 'category') {
                                 </h3>
                             </div>
                             <div class="col-md-12" style="padding-right: 0px;padding-left: 0px;">
-                                <a href="javascript:filterESortCozxy('<?php echo $ConfigpParameter['categoryId']; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <a href="javascript:filterESortCozxy('< ? php echo $ConfigpParameter['categoryId'];
+                                   ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
                                 <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php echo $ConfigpParameter['categoryId']; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
@@ -290,8 +302,8 @@ if ($ConfigpParameter['site'] == 'category') {
                 </div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
-                        <span class="size16">&nbsp; ↓ </span></a>-->
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ?> ')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+            <          span class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>
             </div>
