@@ -24,18 +24,18 @@ class DisplayMyBrand {
     public static function MyFilterBrand($categoryId) {
         $products = [];
         $categoryIds = \common\models\costfit\CategoryToProduct::find()
-        ->select("ctp.*")
-        ->join(" LEFT JOIN", "category_to_product ctp", "ctp.productId  = category_to_product.productId")
-        ->where((isset($categoryId)) ? "category_to_product.categoryId = $categoryId  " : '1=1')
-        ->groupBy("ctp.categoryId")
-        ->all();
+                ->select("ctp.*")
+                ->join(" LEFT JOIN", "category_to_product ctp", "ctp.productId  = category_to_product.productId")
+                ->where(($categoryId = '') ? "category_to_product.categoryId = $categoryId  " : '1=1')
+                ->groupBy("ctp.categoryId")
+                ->all();
         $cStr = "";
         $i = 1;
         if (count($categoryIds) > 0) {
             foreach ($categoryIds as $c) {
-                $cStr.=$c->categoryId;
+                $cStr .= $c->categoryId;
                 if ($i < count($categoryIds)) {
-                    $cStr.=",";
+                    $cStr .= ",";
                 }
                 $i++;
             }
@@ -43,14 +43,14 @@ class DisplayMyBrand {
 
 
         $brand = \common\models\costfit\ProductSuppliers::find()
-        ->select(' `brand`.*,product_suppliers.categoryId')
-        ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-        ->where("product_suppliers.status = 1 and product_suppliers.approve = 'approve' ")
-        ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1 ')
-        ->andWhere('brand.title is not null')
-        ->groupBy(['product_suppliers.brandId'])
-        ->orderBy('brand.title')
-        ->all();
+                ->select(' `brand`.*,product_suppliers.categoryId')
+                ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
+                ->where("product_suppliers.status = 1 and product_suppliers.approve = 'approve' ")
+                ->andWhere((!empty($cStr)) ? "product_suppliers.categoryId IN ($cStr)" : '1=1 ')
+                ->andWhere('brand.title is not null')
+                ->groupBy(['product_suppliers.brandId'])
+                ->orderBy('brand.title')
+                ->all();
 
 
         foreach ($brand as $items) {
