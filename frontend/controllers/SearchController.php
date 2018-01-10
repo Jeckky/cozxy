@@ -447,7 +447,7 @@ class SearchController extends MasterController {
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
-        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -475,10 +475,10 @@ class SearchController extends MasterController {
         //print_r($productid);
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
 
-        $item_per_page = $searchElastic['size'];
+        $item_per_page = 12; //$searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / 12;
+        $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
@@ -508,7 +508,7 @@ class SearchController extends MasterController {
         );
 
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
@@ -529,10 +529,10 @@ class SearchController extends MasterController {
             $productid = NULL;
         }
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
-        $item_per_page = $searchElastic['size'];
+        $item_per_page = 12; //$searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / 12;
+        $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
@@ -562,7 +562,7 @@ class SearchController extends MasterController {
         //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
-        $perPage = round($searchElastic['total'] / $searchElastic['size'], 0, PHP_ROUND_HALF_UP);
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
@@ -581,10 +581,10 @@ class SearchController extends MasterController {
         }
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
 
-        $item_per_page = $searchElastic['size'];
+        $item_per_page = 12; //$searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
-        $total_pages = $searchElastic['total'] / 12;
+        $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
 
@@ -656,10 +656,12 @@ class SearchController extends MasterController {
         $mins = $_GET['mins'];
         $maxs = $_GET['maxs'];
         $category = $_GET['category'];
-        $item_per_page = 10;
+        $Trecords = $_GET['Trecords'];
+        $Tpages = $_GET['Tpages'];
+        $item_per_page = 12;
         $current_page = $page;
-        $total_records = 250;
-        $total_pages = 21;
+        $total_records = $Trecords;
+        $total_pages = $Tpages;
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category);
         echo $paginate;
     }
