@@ -577,7 +577,7 @@ class SearchController extends MasterController {
         }
         $brandName = Yii::$app->request->get('brandName');
         if ($type == 'searching') {
-            $brand = Yii::$app->request->get('brandName');
+            $brandId = Yii::$app->request->get('brandName');
         } else {
             if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
                 $brand = Yii::$app->request->get('brandName');
