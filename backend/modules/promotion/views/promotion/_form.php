@@ -95,7 +95,7 @@ use common\models\costfit\Promotion;
                                 $checkcategory = Promotion::categoryPromotion($category->categoryId, $model->promotionId);
                                 ?>
                                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 20px;margin-bottom: 10px;font-size: 12pt;">
-                                    <input id="cate<?= $category->categoryId ?>" type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" <?= $checkcategory ? 'checked' : '' ?> onclick="javascript:unCheckBrand(<?= $category->categoryId ?>)">
+                                    <input id="cate<?= $category->categoryId ?>" type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" onclick="javascript:unCheckBrand(<?= $category->categoryId ?>)" <?= $checkcategory ? 'checked' : '' ?>>
                                     &nbsp;&nbsp;<b><?= $category->title ?></b>
                                 </div>
                                 <?php
@@ -106,7 +106,7 @@ use common\models\costfit\Promotion;
                                         $checkBrand = Promotion::brandPromotion($brand->brandId, $model->promotionId);
                                         ?>
                                         <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
-                                            <input type="checkbox" id="brand<?= $category->categoryId ?><?= $brand->brandId ?>"name="Promotion[brand][<?= $category->categoryId ?>][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?>onclick="javascript:checkCategory(<?= $category->categoryId ?>)">
+                                            <input type="checkbox" id="brand<?= $category->categoryId ?><?= $brand->brandId ?>"name="Promotion[brand][<?= $category->categoryId ?>][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?> onclick="javascript:checkCategory(<?= $category->categoryId ?>)">
                                             &nbsp;&nbsp;<?= $brand->title ?>
                                         </div>
                                         <?php

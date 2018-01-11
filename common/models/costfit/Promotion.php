@@ -42,7 +42,7 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
 
     public static function brandPromotion($brandId, $promotionId) {
         if (isset($promotionId) && $promotionId != '') {
-            $brand = PromotionBrand::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId)->one();
+            $brand = CategoryBrandPromotion::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId)->one();
             if (isset($brand)) {
                 return 1;
             }
@@ -53,8 +53,8 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
 
     public static function categoryPromotion($categoryId, $promotionId) {
         if (isset($promotionId) && $promotionId != '') {
-            $brand = PromotionCategory::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId)->one();
-            if (isset($brand)) {
+            $category = CategoryBrandPromotion::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId)->one();
+            if (isset($category)) {
                 return 1;
             }
         } else {
