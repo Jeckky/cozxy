@@ -907,10 +907,13 @@ class DisplaySearch extends Model {
         return $pCanSale;
     }
 
-    public static function findAllPriceSearch($search_hd) {
+    public static function findAllPriceSearch($search_hd, $productid = NULL) {
         $whereArray = [];
         $whereArray["ps.approve"] = "approve";
         $whereArray["pps.status"] = "1";
+        if (isset($productid)) {
+            $whereArray["product.productId"] = $productid;
+        }
         $pCanSale = \common\models\costfit\CategoryToProduct::find()
                 ->select('MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice')
                 ->join("LEFT JOIN", "product", "product.productId = category_to_product.productId")

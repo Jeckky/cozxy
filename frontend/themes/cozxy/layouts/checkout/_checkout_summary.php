@@ -34,8 +34,8 @@ use kartik\select2\Select2;
                                     if ($order->pickingId != 0):
                                         ?>
                                         <div class="col-xs-12">
-                                            <script src="http://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
-                                            <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&sensor=true" type="text/javascript"></script>
+                                            <script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
+
                                             <script type="text/javascript">
 
                                                 var map;
@@ -118,6 +118,9 @@ use kartik\select2\Select2;
                                                     }
                                                 }
 
+                                            </script>
+                                            <script async defer
+                                                    src="https:////maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=true&language=th&libraries=places">
                                             </script>
                                             <h4>Map</h4>
                                             <div id="map-canvas" style=" width:100%;height:300px;border:0;"> </div>

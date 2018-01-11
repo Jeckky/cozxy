@@ -431,21 +431,8 @@ class SearchController extends MasterController {
     }
 
     public function actionElasticSearch() {
-
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
-        /* $search = Yii::$app->request->get('search');
-          $brandId = Yii::$app->request->get('brand_id');
-          $categoryId = Yii::$app->request->get('category_id');
-          $mins = NULL;
-          $maxs = NULL;
-          $size = NULL;
-          $pages = NULL;
-          $status = 1;
-          $site = 'brand'; */
         $ConfigpParameter = $this->ConfigpParameter('searching');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
@@ -453,17 +440,15 @@ class SearchController extends MasterController {
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
+            'size' => 12,
             'pages' => $ConfigpParameter['pages']
         );
 
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
 
-        //echo '<pre>';
-        //print_r($searchElastic);
-
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
+        //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElastic['data'],
@@ -474,173 +459,82 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
-        //echo '<pre>';
-        //print_r($catPrice->attributes);
-        return $this->render('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
 
+        //$productid[] = '';
+        foreach ($dataProvider->allModels as $key => $value) {
+            $productid[] = $value['productid'];
+        }
+        if (isset($productid) && count($productid) > 0) {
+            $productid = $productid;
+        } else {
+            $productid = NULL;
+        }
+
+        //$productid .= $productid;
+        //$productid = substr($productid, 0, -1);
+        //print_r($productid);
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+
+        $item_per_page = 12; //$searchElastic['size'];
+        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records = $searchElastic['total'];
+        $total_pages = $perPage;
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
+
+        if (isset($ConfigpParameter['pages'])) {
+            return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+        } else {
+            if (isset($_GET['type'])) {
+                return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            } else {
+                return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+            }
+        }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
-    }
-
-    public function actionFilterESearch() {
-        //brand: $brandName, mins: $min, maxs: $max, search: search
-        /* $mins = Yii::$app->request->post('mins');
-          $maxs = Yii::$app->request->post('maxs');
-          $brand = Yii::$app->request->post('brand');
-          $size = Yii::$app->request->post('size');
-          $pages = Yii::$app->request->post('pages');
-          $status = 1;
-          //print_r($brand);
-          $categoryId = Yii::$app->request->post('categoryId');
-          $search = Yii::$app->request->post('search');
-          $brandName = Yii::$app->request->get('brandName');
-          if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
-          $brand = Yii::$app->request->get('brandName');
-          $brandId = substr($brand, 0, -1);
-          } else {
-          $brandId = NULL;
-          }
-
-          if ($categoryId != 'undefined') {
-          $categoryId = Yii::$app->request->post('categoryId');
-          $site = 'category';
-          } else {
-          $category = NULL;
-          $site = 'brand';
-          } */
-        $ConfigpParameter = $this->ConfigpParameter('searching');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
-        $Eparameter = array(
-            'search' => $ConfigpParameter['search'],
-            'status' => $ConfigpParameter['status'],
-            'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $ConfigpParameter['categoryId'],
-            'mins' => $ConfigpParameter['mins'],
-            'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
-            'pages' => $ConfigpParameter['pages']
-        );
-
-        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-        //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
-        $dataProvider = new ArrayDataProvider([
-            //'key' => 'productid',
-            'allModels' => $searchElastic['data'],
-            /* 'sort' => [
-              'attributes' => ['total', 'took', 'size', 'page', 'data'],
-              ], */
-            'pagination' => [
-                'pageSize' => $searchElastic['size'],
-            ],
-        ]);
-
-        //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice'));
-    }
-
-    public function actionSortESearch() {
-        //brand: $brandName, mins: $min, maxs: $max, search: search
-        /* $mins = Yii::$app->request->post('mins');
-          $maxs = Yii::$app->request->post('maxs');
-          $brand = Yii::$app->request->post('brand');
-          $size = Yii::$app->request->post('size');
-          $pages = Yii::$app->request->post('pages');
-          $status = 1;
-          //print_r($brand);
-          $categoryId = Yii::$app->request->post('categoryId');
-          $search = Yii::$app->request->post('search');
-          $brandName = Yii::$app->request->get('brandName');
-          if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
-          $brand = Yii::$app->request->get('brandName');
-          $brandId = substr($brand, 0, -1);
-          } else {
-          $brandId = NULL;
-          }
-
-          if ($categoryId != 'undefined') {
-          $categoryId = Yii::$app->request->post('categoryId');
-          $site = 'category';
-          } else {
-          $category = NULL;
-          $site = 'brand';
-          } */
-
-        $ConfigpParameter = $this->ConfigpParameter('sort');
-        //echo 'ConfigpParameter : ';
-        //print_r($ConfigpParameter);
-        //$ConfigpParameter['search'];
-        $Eparameter = array(
-            'search' => $ConfigpParameter['search'],
-            'status' => $ConfigpParameter['status'],
-            'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $ConfigpParameter['categoryId'],
-            'mins' => $ConfigpParameter['mins'],
-            'maxs' => $ConfigpParameter['maxs'],
-            'size' => $ConfigpParameter['size'],
-            'pages' => $ConfigpParameter['pages']
-        );
-
-        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-
-        //$searchElastic = \common\helpers\ApiElasticSearch::searchProduct($search, 'for-sale', $brandId, (int) $categoryId, $mins, $maxs, $size, $pages);
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search']);
-        $dataProvider = new ArrayDataProvider([
-            //'key' => 'productid',
-            'allModels' => $searchElastic['data'],
-            /* 'sort' => [
-              'attributes' => ['total', 'took', 'size', 'page', 'data'],
-              ], */
-            'pagination' => [
-                'pageSize' => $searchElastic['size'],
-            ],
-        ]);
-
-        //echo $mins . '::' . $maxs . '::' . $brand . '::' . $categoryId . '::' . $search;
-        return $this->renderAjax('index_search_json', compact('ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
     }
 
     public function ConfigpParameter($type) {
 
-        if ($type == 'searching') {
+        $mins = Yii::$app->request->get('mins');
+        $maxs = Yii::$app->request->get('maxs');
+        if ($mins == 100 && $maxs == 100) {
+            $mins = '';
+            $maxs = '';
+        }
+        $brand = Yii::$app->request->get('brand');
+        $size = Yii::$app->request->get('size');
+        $pages = Yii::$app->request->get('page');
+        $status = 1;
+        //print_r($brand);
+        $categoryId = Yii::$app->request->get('categoryId');
+        //$search = Yii::$app->request->get('search');
+        $search = Yii::$app->request->get('search');
+        if (isset($search)) {
             $search = Yii::$app->request->get('search');
-            $brandId = Yii::$app->request->get('brand_id');
-            $categoryId = Yii::$app->request->get('category_id');
-            $mins = NULL;
-            $maxs = NULL;
-            $size = NULL;
-            $pages = NULL;
-            $status = 1;
-            $site = 'brand';
         } else {
-            $mins = Yii::$app->request->post('mins');
-            $maxs = Yii::$app->request->post('maxs');
-            $brand = Yii::$app->request->post('brand');
-            $size = Yii::$app->request->post('size');
-            $pages = Yii::$app->request->post('pages');
-            $status = 1;
-            //print_r($brand);
-            $categoryId = Yii::$app->request->post('categoryId');
             $search = Yii::$app->request->post('search');
-            $brandName = Yii::$app->request->get('brandName');
+        }
+        $brandName = Yii::$app->request->get('brandName');
+        if ($type == 'searching') {
+            $brandId = Yii::$app->request->get('brandName');
+        } else {
             if (isset($_GET['brandName']) && !empty($_GET['brandName']) && $_GET['brandName'] != '') {
                 $brand = Yii::$app->request->get('brandName');
                 $brandId = substr($brand, 0, -1);
             } else {
                 $brandId = NULL;
             }
-
-            if ($categoryId != 'undefined') {
-                $categoryId = Yii::$app->request->post('categoryId');
-                $site = 'category';
-            } else {
-                $category = NULL;
-                $site = 'brand';
-            }
         }
+
+        if ($categoryId != 'undefined') {
+            $categoryId = Yii::$app->request->get('categoryId');
+            $site = 'category';
+        } else {
+            $categoryId = NULL;
+            $site = 'brand';
+        }
+
         $Eparameter = array(
             'search' => $search,
             'status' => $status,
@@ -653,6 +547,24 @@ class SearchController extends MasterController {
             'site' => $site
         );
         return $Eparameter;
+    }
+
+    public function actionEPaginate() {
+
+        $page = $_GET['page'];
+        $search = $_GET['search'];
+        $brandName = $_GET['brandName'];
+        $mins = $_GET['mins'];
+        $maxs = $_GET['maxs'];
+        $category = $_GET['category'];
+        $Trecords = $_GET['Trecords'];
+        $Tpages = $_GET['Tpages'];
+        $item_per_page = 12;
+        $current_page = $page;
+        $total_records = $Trecords;
+        $total_pages = $Tpages;
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category);
+        echo $paginate;
     }
 
 }

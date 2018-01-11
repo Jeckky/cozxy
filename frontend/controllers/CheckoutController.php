@@ -109,11 +109,12 @@ class CheckoutController extends MasterController {
             $order->save(false);
             $pickingId = '0';
         } else {
-            echo 'Picking Point Not Null 2';
+            //echo 'Picking Point Not Null 2';
             //$shipToCozxyBoxNew = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
             //$shipToCozxyBoxNew->scenario = 'picking_point';
         }
 
+        //echo 'pickingId :' . $pickingId;
         //echo 'addressId :' . $addressId;
         //exit();
         // throw new \yii\base\Exception('aaaaa');

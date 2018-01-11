@@ -403,12 +403,11 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         <a href="<?= Yii::$app->homeUrl ?>story/views-all/" class="btn-default btn size14-xs">SEE MORE</a>
                     </div>
                     <br><br>
-
                 <?php endif; ?>
             </div>
 
 
-            <div class="col-xs-12 col-md-3 col-sm-3">
+            <div class="col-xs-12 col-md-3 col-sm-12 col-lg-3">
                 <?php if (isset($otherProducts)): ?>
                     <div class="row ">
                         <div class="special box_width_4 line_h">

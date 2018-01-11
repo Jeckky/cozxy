@@ -19,13 +19,16 @@ if (isset($productSellingsPrice)) {
     $cozxyproductSuppId = NULL;
 }
 
-$productBrand = common\models\costfit\Product::productBrand($model['productid']);
-
-if (isset($productBrand)) {
-    $cozxyBrandTitle = $productBrand['pbTitle'];
-} else {
-    $cozxyBrandTitle = NULL;
-}
+$productBrand = common\models\costfit\Product::productBrand($model['brandid']);
+//$productBrand = new common\models\costfit\Product();
+//$productBrand = $productBrand->getBrand();
+//echo '<pre>';
+//print_r($productBrand->modelclass);
+/* if (isset($productBrand)) {
+  $cozxyBrandTitle = $productBrand['title'];
+  } else {
+  $cozxyBrandTitle = NULL;
+  } */
 
 $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
 if (isset($productImageThumbnail)) {
@@ -126,7 +129,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 <?php
                 if ($cozxyResult > 0) {
                     if ($model['receivetype'] != null) {
-                        $receiveType = $model['receiveType'];
+                        $receiveType = $model['receivetype'];
                     } else {
                         $receiveType = 1;
                     }
@@ -139,10 +142,10 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         </div>
         <div class="product-txt">
             <?php
-            if (isset($cozxyBrandTitle) && !empty($cozxyBrandTitle)) {
+            if (isset($productBrand)) {
                 ?>
                 <p class="brand">
-                    <span class="size14"><?= strtoupper($cozxyBrandTitle) ?></span>
+                    <span class="size14"><?= strtoupper($productBrand['title']) ?></span>
                 </p>
             <?php } else {
                 ?>
@@ -161,7 +164,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             if ($cozxySellingsPrice > 0) {
                 if (isset($hotDeal)) {
                     ?>
-                    <p class="price" >
+                    <p class="price">
                         <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span><br>
                         <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
                     </p>

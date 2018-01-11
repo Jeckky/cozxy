@@ -354,7 +354,7 @@ function strip_tags_content($text) {
                                 </div>
                                 <hr>
                             </div>
-                            <div class="col-xs-4 location-pick-up">
+                            <div class="col-xs-12 location-pick-up col-lg-4 col-md-4">
                                 <?php
                                 /* echo \yii\widgets\ListView::widget([
                                   'dataProvider' => $pickingPointActiveShow,
@@ -374,7 +374,7 @@ function strip_tags_content($text) {
                                 ?>
                                 <?//= $this->render('@app/themes/cozxy/layouts/checkout/item/locationPickUp', compact('pickingPointActiveShow')) ?>
                             </div>
-                            <div class="col-xs-8">
+                            <div class="col-xs-12  col-lg-8 col-md-4">
                                 <div class="pac-card" id="pac-card">
                                     <!--<div>-->
                                     <div id="title">
@@ -609,7 +609,7 @@ function strip_tags_content($text) {
     }
 </style>
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--> 
-<script src="https://www.ninenik.com/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 
     var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น

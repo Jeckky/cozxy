@@ -1201,58 +1201,7 @@ function filterBrandCozxy($categoryId) {
         }
     });
 }
-function filterBrandAndCategoryCozxyApi($categoryId) {
 
-    var brandName = [];
-    var search = $("#search").val();
-    $("input:checked").each(function () {
-        brandName.push($(this).val());
-    });
-    $brandName = brandName;
-    var brandName = '';
-    for (i = 0; i < $brandName.length; i++) {
-        brandName += $brandName[i] + ',';
-    }
-    $min = $('input:hidden:eq(0)', '#amount-min').val();
-    $max = $('input:hidden:eq(1)', '#amount-min').val();
-    $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
-    //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
-    var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
-    $.ajax({
-        url: path,
-        type: "POST",
-        data: {mins: $min, maxs: $max, search: search},
-        success: function (data, status) {
-
-            //console.log(data);
-
-            $('.filter-e-search').html(data);
-            /*if (data == '') {
-             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
-             } else {
-             if (status == "success") {
-             $('.brand-price-filter').html(data);
-             } else {
-             $('.brand-price-filter').html('<center><br><br><br><br><br><br>No results found.</center>');
-             }
-             }*/
-
-        }
-    });
-
-
-    /*var settings = {
-     "async": true,
-     "crossDomain": true,
-     "url": "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
-     "method": "GET",
-     "headers": {}
-     }
-
-     $.ajax(settings).done(function (response) {
-     console.log(response);
-     });*/
-}
 function sortCozxy($categoryId, status) {
     var brandName = [];
     $("input:checked").each(function () {
@@ -1299,6 +1248,7 @@ function sortCozxy($categoryId, status) {
         }
     });
 }
+
 function sortCozxyFixBrand(brandId, status) {
     var brandName = [];
     $("input:checked").each(function () {
@@ -1767,6 +1717,7 @@ $(function () {
         $(this).find('.dropdown-menu.multi-level').css('display', 'block');
     })
 });
+
 function subscribe() {
     var subscribe = $('#subscribe_email').val();
     //alert(subscribe);
@@ -1785,7 +1736,6 @@ function subscribe() {
         }
     });
 }
-
 
 $('#stateId').change(function () {
     var stateId = $('#stateId').val();
@@ -1967,7 +1917,6 @@ function newBillingTelUnique() {
     });
 }
 
-
 function shipCozxyBox() {
     var shipping = $('input[name="shipping"]:checked').val();
     //aria-invalid="true"
@@ -1987,6 +1936,58 @@ function shipCozxyBox() {
         document.forms['default-ship-cozxy-box'].submit();
     }
 }
+
+function filterBrandAndCategoryCozxyApi($categoryId) {
+
+    var brandName = [];
+    var search = $("#search").val();
+    //alert(search);
+    $("input:checked").each(function () {
+        brandName.push($(this).val());
+    });
+    $brandName = brandName;
+    var brandName = '';
+    for (i = 0; i < $brandName.length; i++) {
+        brandName += $brandName[i] + ',';
+    }
+    $min = $('input:hidden:eq(0)', '#amount-min').val();
+    $max = $('input:hidden:eq(1)', '#amount-min').val();
+    $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
+    //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
+    var path = $baseUrl + "search/elastic-search?categoryId=" + $categoryId + '&brandName=' + brandName + '&mins=' + $min + '&maxs=' + $max + '&search=' + search + '&type=filter';
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: {},
+        success: function (data, status) {
+            //console.log(data);
+            $('.filter-e-search-cozxy').html(data);
+
+        }
+    });
+
+
+    /*var settings = {
+     "async": true,
+     "crossDomain": true,
+     "url": "http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16",
+     "method": "GET",
+     "headers": {}
+     }
+
+     $.ajax(settings).done(function (response) {
+     console.log(response);
+     });*/
+}
+
+function filterESortCozxy($categoryId, status) {
+    //Sort by price  |Sort by brand  |Sort by new product
+    console.log('Sort by ' + status);
+}
+
+
+
+
 //********************************touchmove touchstart touchend************************************//
 /*
  var collected = [];

@@ -182,6 +182,8 @@ class MyAccountController extends MyAccountFrontendController
             $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
             if(isset($userModel)) {
                 $addressModel = new Address();
+                $addressModel->firstname = $contents['firstname'];
+                $addressModel->lastname = $contents['lastname'];
                 $addressModel->address = $contents['address'];
                 $addressModel->countryId = $contents['countryId'];
                 $addressModel->provinceId = $contents['provinceId'];
