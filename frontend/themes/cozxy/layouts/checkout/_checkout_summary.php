@@ -35,7 +35,9 @@ use kartik\select2\Select2;
                                         ?>
                                         <div class="col-xs-12">
                                             <script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
-                                            <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&sensor=true" type="text/javascript"></script>
+                                            <script async defer
+                                                    src="https:////maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=true&language=th&libraries=places">
+                                            </script>
                                             <script type="text/javascript">
 
                                                 var map;
