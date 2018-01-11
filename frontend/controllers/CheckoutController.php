@@ -114,22 +114,9 @@ class CheckoutController extends MasterController {
             //$shipToCozxyBoxNew->scenario = 'picking_point';
         }
 
-        //echo 'pickingId :' . $pickingId;
-        //echo 'addressId :' . $addressId;
-        //exit();
-        // throw new \yii\base\Exception('aaaaa');
-        // $model = new \common\models\costfit\Address(['sdscenario' => 'billing_address']);
+
         $model = new \common\models\costfit\Address(['scenario' => 'billing_address']);
-        //echo '<pre>';
-        //print_r($model);
-        //$pickingPoint_list_lockers_cool = new \common\models\costfit\PickingPoint(['scenario' => 'checkout_summary']);
-        //$pickingPoint_list_lockers = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_HOT)->one(); // Lockers ร้อน
-        //$pickingPoint_list_lockers_cool = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_LOCKERS_COOL)->one(); // Lockers เย็น
-        //$pickingPoint_list_lockers_cool->scenario = 'checkout_summary';
-        //$pickingPoint_list_booth = \common\models\costfit\PickingPoint::find()->where('type = ' . \common\models\costfit\ProductSuppliers::APPROVE_RECEIVE_BOOTH)->one(); // Booth
-        //$pickingPointLockers = isset($pickingPoint_list_lockers) ? $pickingPoint_list_lockers : NULL;
-        //$pickingPointLockersCool = isset($pickingPoint_list_lockers_cool) ? $pickingPoint_list_lockers_cool : NULL;
-        //$pickingPointBooth = isset($pickingPoint_list_booth) ? $pickingPoint_list_booth : NULL;
+
 
         $userPoint = UserPoint::find()->where("userId=" . Yii::$app->user->id)->one();
         if (isset($userPoint)) {
@@ -153,15 +140,6 @@ class CheckoutController extends MasterController {
             $myAddress['countryId'] = $defaultAddress->countries->countryName;
             $myAddress['zipcode'] = $defaultAddress->zipcodes->zipcode;
         }
-
-        /* if (isset($order->pickingId) && !empty($order->pickingId)) {
-          $pickingPoint = \common\models\costfit\PickingPoint::find()->where(['pickingId' => $order->pickingId, 'status' => 1])->one();
-          if (count($pickingPoint) <= 0) {
-          $pickingPoint = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
-          }
-          } else {
-          $pickingPoint = new \common\models\costfit\PickingPoint(['scenario' => 'picking_point']);
-          } */
 
         //echo '<pre>';
         //print_r($defaultAddress);
@@ -236,6 +214,7 @@ class CheckoutController extends MasterController {
         //echo '<pre>';
         //print_r($orderAddress);
         //exit();
+
         $this->resetDefault($orderId, $addressId, $LcpickingId, $shipTo, $orderAddress, $tax, $tel);
         if (isset($LcpickingId) && !empty($LcpickingId)) {
             //$model = new \common\models\costfit\Address(['scenario' => 'billing_address']);

@@ -125,15 +125,16 @@ $pickingId = rand(0, 9999);
                                     'options' => ['placeholder' => 'Select Billing Address ...', 'id' => 'addressId', 'name' => 'addressId'],
                                 ])->label(FALSE);
                                 ?>
+                                <div class="error-address"></div>
                             </div>
 
                             <div class="size14">&nbsp;</div>
 
                             <div class="col-xs-3 col-md-2 col-sm-3 ">Name:</div>
-                            <div class="col-xs-9 col-md-10 col-sm-9 name-show"><?= isset($defaultAddress) ? $defaultAddress->firstname . ' ' . $defaultAddress->lastname : '&nbsp;' ?></div>
+                            <div class="col-xs-9 col-md-10 col-sm-9 name-show">&nbsp;<?= isset($defaultAddress) ? $defaultAddress->firstname . ' ' . $defaultAddress->lastname : '&nbsp;' ?></div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Address:</div>
-                            <div class="col-xs-9 col-md-10 col-sm-9 address-show">
+                            <div class="col-xs-9 col-md-10 col-sm-9 address-show">&nbsp;
                                 <?//= isset($defaultAddress) ? $defaultAddress->address . ', ' . $defaultAddress->district->localName . ', ' . $defaultAddress->cities->localName . ', ' . $defaultAddress->states->localName . ', ' . $defaultAddress->countries->localName . ', ' . $defaultAddress->zipcode : '&nbsp;' ?>
                                 <?php
                                 if (isset($defaultAddress)) {
@@ -171,12 +172,12 @@ $pickingId = rand(0, 9999);
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Email:</div>
-                            <div class="col-xs-9 col-md-10 col-sm-9 email-show">
+                            <div class="col-xs-9 col-md-10 col-sm-9 email-show">&nbsp;
                                 <?= isset($defaultAddress) ? $defaultAddress->email : '&nbsp;' ?>
                             </div>
                             <div class="size6">&nbsp;</div>
                             <div class="col-xs-3 col-md-2 col-sm-3">Tel:</div>
-                            <div class="col-xs-9 col-md-10 col-sm-9 tel-show">
+                            <div class="col-xs-9 col-md-10 col-sm-9 tel-show">&nbsp;
                                 <?= isset($defaultAddress) && ($defaultAddress->tel != '' || $defaultAddress->tel != null) ? $defaultAddress->tel : '<input type="text" name="tel" id="tel"><span class="text-danger" id="enterTel"> Please enter your mobile phone.</span>' ?>
                                 <?php if (isset($defaultAddress) && ($defaultAddress->tel != '' || $defaultAddress->tel != null)) { ?>
                                     <input type="hidden" id="checkTel" value="<?= $defaultAddress->tel ?>">
@@ -205,7 +206,8 @@ $pickingId = rand(0, 9999);
                         <input type="hidden" name="LcpickingId" id="LcpickingId" value="<?= isset($shipToCozxyBoxNew['pickingId']) ? $shipToCozxyBoxNew['pickingId'] : '' ?>">
                         <input type="hidden" name="shipping" value="<?= $shipTo ?>">
                         <!--<a href="#" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>-->
-                        <button type="submit" class="b btn-yellow">CONTINUE TO PAYMENT METHOD</button>
+                        <!--<button type="submit" class="b btn-yellow">CONTINUE TO PAYMENT METHOD</button>-->
+                        <a href="javascript:summary()" class="b btn-yellow" id="checkoutBtn">CONTINUE TO PAYMENT METHOD</a>
                     </div>
                     <div class="size12 size10-xs">&nbsp;</div>
                 </div>

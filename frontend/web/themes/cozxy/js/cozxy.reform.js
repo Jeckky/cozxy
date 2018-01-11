@@ -1937,6 +1937,19 @@ function shipCozxyBox() {
     }
 }
 
+function summary() {
+
+    var addressId = $('#addressId').val();
+    //alert(addressId);
+    if (addressId == '') {
+        $('.error-address').html('<p class="help-block help-block-error" style="color:#a94442">Select Billing Address Or Add New Billing Address</p>');
+    } else {
+        document.forms['default-shipping-address'].submit();
+    }
+
+
+}
+
 function filterBrandAndCategoryCozxyApi($categoryId) {
 
     var brandName = [];
