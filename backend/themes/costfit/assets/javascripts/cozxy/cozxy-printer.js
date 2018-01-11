@@ -925,47 +925,47 @@ function orderingTemplateOption(id, total, action) {
 
 /*End sprint3 sak */
 /*sptint 5 */
-function checkAllBrand(brandId) {
-    var value = $("#allBrand").val();
+function checkCategory(categoryId) {
+    $("#cate" + categoryId).prop("checked", "checked");
+}
+function unCheckBrand(categoryId) {
+    var value = $("#allBrand" + categoryId).val();
     var url = $url + 'promotion/promotion/all-brand';
     $.ajax({
         url: url,
+        data: {categoryId: categoryId},
         dataType: 'JSON',
         type: 'post',
         success: function (data) {
-            if (value == 1) {
-                for (var i = 0; i < data.count; i++) {
-                    $("#brand" + data.brandId[i]).prop("checked", "checked");
-                }
-                $("#allBrand").val(0);
-            } else {
-                for (var i = 0; i < data.count; i++) {
-                    $("#brand" + data.brandId[i]).removeAttr("checked");
-                }
-                $("#allBrand").val(1);
+            for (var i = 0; i < data.count; i++) {
+                $("#brand" + categoryId + data.brandId[i]).removeAttr("checked");
             }
-
+            $("#allBrand" + categoryId).val(1);
+            $("#allBrand" + categoryId).removeAttr("checked");
         },
     });
 }
-function checkAllCate(cateId) {
-    var value = $("#allCate").val();
-    var url = $url + 'promotion/promotion/all-cate';
+function checkAllBrand(categoryId) {
+    var value = $("#allBrand" + categoryId).val();
+    var url = $url + 'promotion/promotion/all-brand';
     $.ajax({
         url: url,
+        data: {categoryId: categoryId},
         dataType: 'JSON',
         type: 'post',
         success: function (data) {
             if (value == 1) {
                 for (var i = 0; i < data.count; i++) {
-                    $("#cate" + data.cateId[i]).prop("checked", "checked");
+                    $("#brand" + categoryId + data.brandId[i]).prop("checked", "checked");
                 }
-                $("#allCate").val(0);
+                $("#allBrand" + categoryId).val(0);
+                $("#cate" + categoryId).prop("checked", "checked");
             } else {
                 for (var i = 0; i < data.count; i++) {
-                    $("#cate" + data.cateId[i]).removeAttr("checked");
+                    $("#brand" + categoryId + data.brandId[i]).removeAttr("checked");
                 }
-                $("#allCate").val(1);
+                $("#allBrand" + categoryId).val(1);
+                $("#cate" + categoryId).removeAttr("checked");
             }
 
         },

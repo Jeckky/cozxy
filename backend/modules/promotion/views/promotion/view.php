@@ -60,12 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $model->endDate ?></td>
             </tr>
             <tr>
-                <td>Brand</td>
-                <td><?= $brands ?></td>
-            </tr>
-            <tr>
-                <td>Category</td>
-                <td><?= $categories ?></td>
+                <td>Detail</td>
+                <td><?= $text ?></td>
             </tr>
         </table> <a class="btn btn-warning btn-lg pull-right" href="<?= Yii::$app->homeUrl ?>promotion/promotion"> << BACK </a>
     </div>
