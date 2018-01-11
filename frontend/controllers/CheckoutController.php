@@ -114,6 +114,7 @@ class CheckoutController extends MasterController {
             //$shipToCozxyBoxNew->scenario = 'picking_point';
         }
 
+        //echo 'pickingId :' . $pickingId;
         //echo 'addressId :' . $addressId;
         //exit();
         // throw new \yii\base\Exception('aaaaa');
