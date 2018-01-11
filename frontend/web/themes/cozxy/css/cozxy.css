@@ -551,7 +551,7 @@ label {
     text-shadow: 0 1px 0 #ff0, 1px 0 0 #ff0, 0 -1px 0 #ff0, -1px 0 0 #ff0;
 }
 .product-txt {
-    padding: 12px 20px;
+    padding: 12px 20px 0;
     position: relative;
 }
 .product-txt p.brand {
@@ -576,7 +576,7 @@ label {
 }
 /* Price 2 Line (index) */
 .product-txt p.price {
-    margin: 18px auto 12px;
+    margin: 18px auto 0px;/*12px;*/
     height: 40px;
     overflow-y: hidden;
     line-height: 1em;
