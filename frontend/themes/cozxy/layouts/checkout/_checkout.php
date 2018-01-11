@@ -477,7 +477,7 @@ $pickingId = rand(0, 9999);
 </div>
 <?php if ($shipTo == 1) { ?>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
-    <script src="https://www.ninenik.com/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="<?= Yii::$app->homeUrl ?>themes/cozxy/jquery-1.7.1.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
         var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
