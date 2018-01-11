@@ -84,61 +84,44 @@ use common\models\costfit\Promotion;
                 </div>
                 <br>
                 <hr>
-                <div class="col-md-12 col-lg-12 text-center"><h3><u>Brands / Categories</u></h3></div>
+                <div class="col-md-12 col-lg-12 text-center"><h3><u>Selsect Category / Brand</u></h3></div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                        <?php if (isset($brands) && count($brands) > 0) { ?>
-                            <h4>Brands</h4>
-                            <?php
-                            $brandIds = [];
-                            $b = 0;
-                            foreach ($brands as $brand):
-                                $checkBrand = Promotion::brandPromotion($brand->brandId, $model->promotionId);
-                                $brandIds[$b] = $brand->brandId;
-                                ?>
-                                <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
-                                    <input type="checkbox" id="brand<?= $brand->brandId ?>"name="Promotion[brand][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?>>
-                                    &nbsp;&nbsp;<?= $brand->title ?>
-                                </div>
-                                <?php
-                                $b++;
-                            endforeach;
-                        }
-                        ?>
-                        <br>
-                        <div class="text-left col-lg-6 col-md-6">
-                            <br> * ถ้าไม่เลือก Brand ใดเลย เป็นการให้ส่วนลดกับทุก Brand
-                        </div>
-                        <div class="text-right col-lg-6 col-md-6">
-                            <input type="checkbox" id="allBrand" onclick="javascript:checkAllBrand()" value="1"> &nbsp;&nbsp;เลือกทุก Brand
-                        </div>
-                    </div>
+
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 20px;margin-bottom: 20px;">
-                        <?php if (isset($categories) && count($categories) > 0) {
-                            ?>
-                            <h4>Categories</h4>
-                            <?php
-                            $categoryIds = [];
-                            $c = 0;
+                        <?php
+                        if (isset($categories) && count($categories) > 0) {
+
                             foreach ($categories as $category):
                                 $checkcategory = Promotion::categoryPromotion($category->categoryId, $model->promotionId);
-                                $categoryIds[$c] = $category->categoryId;
                                 ?>
-                                <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
-                                    <input id="cate<?= $category->categoryId ?>" type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" <?= $checkcategory ? 'checked' : '' ?>>
-                                    &nbsp;&nbsp;<?= $category->title ?></div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 20px;margin-bottom: 10px;font-size: 12pt;">
+                                    <input id="cate<?= $category->categoryId ?>" type="checkbox" name="Promotion[category][<?= $category->categoryId ?>]" value="<?= $category->categoryId ?>" onclick="javascript:unCheckBrand(<?= $category->categoryId ?>)" <?= $checkcategory ? 'checked' : '' ?>>
+                                    &nbsp;&nbsp;<b><?= $category->title ?></b>
+                                </div>
                                 <?php
-                                $c++;
+                                $brands = Promotion::categoryToBrandPromotion($category->categoryId);
+                                if (isset($brands) && count($brands) > 0) {
+
+                                    foreach ($brands as $brand):
+                                        $checkBrand = Promotion::brandPromotion($brand->brandId, $model->promotionId);
+                                        ?>
+                                        <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+                                            <input type="checkbox" id="brand<?= $category->categoryId ?><?= $brand->brandId ?>"name="Promotion[brand][<?= $category->categoryId ?>][<?= $brand->brandId ?>]" value="<?= $brand->brandId ?>" <?= $checkBrand ? 'checked' : '' ?> onclick="javascript:checkCategory(<?= $category->categoryId ?>)">
+                                            &nbsp;&nbsp;<?= $brand->title ?>
+                                        </div>
+                                        <?php
+                                    endforeach;
+                                    ?>
+                                    <div class="text-right col-lg-12 col-md-12">
+                                        <input type="checkbox" id="allBrand<?= $category->categoryId ?>" onclick="javascript:checkAllBrand(<?= $category->categoryId ?>)" value="1"> &nbsp;&nbsp;เลือกทุก Brand
+                                    </div>
+                                    <?php
+                                }
+
                             endforeach;
                         }
                         ?>
                         <br>
-                        <div class="text-left col-lg-6 col-md-6">
-                            <br> * ถ้าไม่เลือก Category ใดเลย เป็นการให้ส่วนลดกับทุก Category
-                        </div>
-                        <div class="text-right col-lg-6 col-md-6">
-                            <input type="checkbox" id="allCate" onclick="javascript:checkAllCate()" value="1"> &nbsp;&nbsp;เลือกทุก Categories
-                        </div>
                     </div>
                 </div>
                 <hr>

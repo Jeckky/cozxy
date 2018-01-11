@@ -42,7 +42,7 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
 
     public static function brandPromotion($brandId, $promotionId) {
         if (isset($promotionId) && $promotionId != '') {
-            $brand = PromotionBrand::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId)->one();
+            $brand = CategoryBrandPromotion::find()->where("brandId=" . $brandId . " and promotionId=" . $promotionId)->one();
             if (isset($brand)) {
                 return 1;
             }
@@ -53,13 +53,48 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
 
     public static function categoryPromotion($categoryId, $promotionId) {
         if (isset($promotionId) && $promotionId != '') {
-            $brand = PromotionCategory::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId)->one();
-            if (isset($brand)) {
+            $category = CategoryBrandPromotion::find()->where("categoryId=" . $categoryId . " and promotionId=" . $promotionId)->one();
+            if (isset($category)) {
                 return 1;
             }
         } else {
             return 0;
         }
+    }
+
+    public static function categoryToBrandPromotion($categoryId) {
+        $brandId = "";
+        $brand = null;
+        $allCategoryId = '';
+        //throw new \yii\base\Exception($categoryId);
+        if (isset($categoryId) && $categoryId != '') {
+            $allCategory = Category::find()->where("categoryId=$categoryId or parentId=$categoryId")->all();
+            if (isset($allCategory) && count($allCategory) > 0) {
+                foreach ($allCategory as $category):
+                    $allCategoryId.=$category->categoryId . ",";
+                endforeach;
+                $allCategoryId = substr($allCategoryId, 0, -1);
+                $products = Product::find()->where("categoryId in($allCategoryId)")
+                        ->groupBy("brandId")
+                        ->all();
+                if (isset($products) && count($products) > 0) {
+                    foreach ($products as $product):
+                        if ($product->brandId != null && $product->brandId != '') {
+                            $brandId.= $product->brandId . ",";
+                        }
+                    endforeach;
+                    if ($brandId != "") {
+                        $brandId = substr($brandId, 0, -1);
+                    }
+                }
+            }
+            if ($brandId != "") {
+                $brandId = substr($brandId, 0, -1);
+
+                $brand = Brand::find()->where("brandId in ($brandId)")->all();
+            }
+        }
+        return $brand;
     }
 
     public static function isOverUse($promotionId) {

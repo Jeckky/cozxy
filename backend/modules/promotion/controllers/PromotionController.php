@@ -14,6 +14,7 @@ use common\models\costfit\Brand;
 use common\models\costfit\PromotionBrand;
 use common\models\costfit\PromotionCategory;
 use common\models\costfit\Category;
+use common\models\costfit\CategoryBrandPromotion;
 
 /**
  * PromotionController implements the CRUD actions for Promotion model.
@@ -67,40 +68,36 @@ class PromotionController extends PromotionMasterController {
      * @return mixed
      */
     public function actionView($id) {
-        $brands = Brand::find()
-                ->select("brand.title")
-                ->join("LEFT JOIN", "promotion_brand pb", "pb.brandId=brand.brandId")
-                ->where("pb.promotionId=" . $id)
+        $text = "";
+        $cate2Brand = CategoryBrandPromotion::find()->where("promotionId=$id")
+                ->groupBy("categoryId")
                 ->all();
-        $textBrand = '';
-        $textCate = '';
-        if (isset($brands) && count($brands) > 0) {
-            $i = 1;
-            foreach ($brands as $brand):
-                $textBrand.=$i . '. ' . $brand->title . '<br>';
-                $i++;
+        if (isset($cate2Brand) && count($cate2Brand) > 0) {
+            foreach ($cate2Brand as $c2b):
+                $category = Category::find()->where("categoryId=$c2b->categoryId")->one();
+                $text.="<b>" . $category->title . "</b> : ";
+                $brands = Brand::find()
+                        ->select("brand.title")
+                        ->join("LEFT JOIN", "category_brand_promotion cbp", "cbp.brandId=brand.brandId")
+                        ->where("cbp.promotionId=" . $id . " and cbp.categoryId=$c2b->categoryId")
+                        ->all();
+                if (isset($brands) && count($brands) > 0) {
+                    foreach ($brands as $brand):
+                        $text.="&nbsp;&nbsp;&nbsp;" . $brand->title . ",";
+                    endforeach;
+                    $text = substr($text, 0, -1);
+                    $text.="<br>";
+                }else {
+                    $text.="&nbsp;&nbsp;&nbsp;Every brand.<br>";
+                }
             endforeach;
-        }else {
-            $textBrand = "All brands";
-        }
-        $categories = Category::find()
-                ->select("category.title")
-                ->join("LEFT JOIN", "promotion_category pc", "pc.categoryId=category.categoryId")
-                ->where("pc.promotionId=" . $id)
-                ->all();
-        if (isset($categories) && count($categories) > 0) {
-            $i = 1;
-            foreach ($categories as $category):
-                $textCate.=$i . '. ' . $category->title . '<br>';
-                $i++;
-            endforeach;
-        }else {
-            $textCate = "All categories";
+            $text = substr($text, 0, -1);
+        } else {
+            $text = "&nbsp;&nbsp;&nbsp;Every products.<br>";
         }
         return $this->render('view', [
                     'model' => $this->findModel($id),
-                    'brands' => $textBrand,
-                    'categories' => $textCate
+                    'text' => $text
         ]);
     }
 
@@ -139,11 +136,11 @@ class PromotionController extends PromotionMasterController {
             $model->save(false);
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : null;
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : null;
-            if (isset($brand) && count($brand) > 0 && !empty($brand)) {
-                $this->saveBrandPromotion($brand, $model->promotionId);
-            }
+            /* if (isset($brand) && count($brand) > 0 && !empty($brand)) {
+              $this->saveBrandPromotion($brand, $model->promotionId);
+              } */
             if (isset($categories) && count($categories) > 0 && !empty($categories)) {
-                $this->saveCategoryPromotion($categories, $model->promotionId);
+                $this->saveCategoryToBrandPromotion($categories, $model->promotionId, $brand);
             }
             return $this->redirect(['view', 'id' => $model->promotionId]);
         } else {
@@ -185,11 +182,14 @@ class PromotionController extends PromotionMasterController {
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : '';
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : '';
             // if (isset($brand) && count($brand) > 0 && !empty($brand)) {
-            $this->saveBrandPromotion($brand, $model->promotionId);
+            //$this->saveBrandPromotion($brand, $model->promotionId);
             // }
             // if (isset($categories) && count($categories) > 0 && !empty($categories)) {
-            $this->saveCategoryPromotion($categories, $model->promotionId);
+            //$this->saveCategoryPromotion($categories, $model->promotionId);
             // }
+            if (isset($categories) && count($categories) > 0 && !empty($categories)) {
+                $this->saveCategoryToBrandPromotion($categories, $model->promotionId, $brand);
+            }
             return $this->redirect(['view', 'id' => $model->promotionId]);
         } else {
             return $this->render('update', [
@@ -208,30 +208,26 @@ class PromotionController extends PromotionMasterController {
      */
     public function actionDelete($id) {
         $this->findModel($id)->delete();
-        $categories = PromotionCategory::find()->where("promotionId=" . $id)->all();
-        if (isset($categories) && count($categories) > 0) {
-            foreach ($categories as $category):
-                $category->delete();
-            endforeach;
-        }
-        $brands = PromotionBrand::find()->where("promotionId=" . $id)->all();
-        if (isset($brands) && count($brands) > 0) {
-            foreach ($brands as $brand):
-                $brand->delete();
+        $promotion = CategoryBrandPromotion::find()->where("promotionId=" . $id)->all();
+        if (isset($promotion) && count($promotion) > 0) {
+            foreach ($promotion as $p):
+                $p->delete();
             endforeach;
         }
         return $this->redirect(['index']);
     }
 
     public function actionAllBrand() {
-        $brands = Brand::find()
-                ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
-                ->leftJoin('product p', 'p.brandId=brand.brandId')
-                ->where('p.parentId is not null')
-                ->andWhere(['p.approve' => 'approve'])
-                ->andWhere(['p.status' => 1])
-                ->groupBy('brand.brandId')
-                ->all();
+        $catgoryId = $_POST["categoryId"];
+        $brands = Promotion::categoryToBrandPromotion($catgoryId);
+        /* $brands = Brand::find()
+          ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
+          ->leftJoin('product p', 'p.brandId=brand.brandId')
+          ->where('p.parentId is not null')
+          ->andWhere(['p.approve' => 'approve'])
+          ->andWhere(['p.status' => 1])
+          ->groupBy('brand.brandId')
+          ->all(); */
         $res = [];
         if (isset($brands) && count($brands) > 0) {
             $res["status"] = true;
@@ -350,6 +346,41 @@ class PromotionController extends PromotionMasterController {
                     $category->status = 1;
                     $category->save(false);
                 }
+            endforeach;
+        }
+    }
+
+    public function saveCategoryToBrandPromotion($categories, $promotionId, $brand) {
+        $oldPro = CategoryBrandPromotion::find()->where("promotionId=" . $promotionId)->all();
+        if (isset($oldPro) && count($oldPro) > 0) {
+            foreach ($oldPro as $pro):
+                $pro->delete();
+            endforeach;
+        }
+        if (isset($categories) && count($categories) > 0 && !empty($categories)) {
+            foreach ($categories as $categoryId):
+                if (isset($brand[$categoryId]) && count($brand[$categoryId]) > 0) {
+                    foreach ($brand[$categoryId] as $brandId):
+                        $category = new CategoryBrandPromotion();
+                        $category->promotionId = $promotionId;
+                        $category->categoryId = $categoryId;
+                        $category->brandId = $brandId;
+                        $category->createDateTime = new \yii\db\Expression('NOW()');
+                        $category->updateDateTime = new \yii\db\Expression('NOW()');
+                        $category->status = 1;
+                        $category->save(false);
+                    endforeach;
+                }else {
+                    $category = new CategoryBrandPromotion();
+                    $category->promotionId = $promotionId;
+                    $category->categoryId = $categoryId;
+                    $category->brandId = null;
+                    $category->createDateTime = new \yii\db\Expression('NOW()');
+                    $category->updateDateTime = new \yii\db\Expression('NOW()');
+                    $category->status = 1;
+                    $category->save(false);
+                }
+
             endforeach;
         }
     }
