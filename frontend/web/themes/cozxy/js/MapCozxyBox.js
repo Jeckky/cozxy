@@ -54,7 +54,7 @@ function initMap() {
     document.getElementById('start').addEventListener('change', onChangeHandler);
     document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-    var iconBaseCozxy = 'http://localhost/cozxy/frontend/web/images/subscribe/';
+    var iconBaseCozxy = $baseUrl + 'images/subscribe/';
     var icons = {
         parking: {
             //icon: iconBase + 'parking_lot_maps.png'
