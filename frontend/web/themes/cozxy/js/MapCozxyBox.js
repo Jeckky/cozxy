@@ -202,6 +202,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             //var position = feature.position;
             //var textPosition = position.toString().replace('"', '\\"')
             var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
+            alert(positionS);
             //console.log(positionS);
             var marker = new google.maps.Marker({
                 position: positionS,

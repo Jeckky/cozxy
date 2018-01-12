@@ -25,7 +25,9 @@ class CheckoutAsset extends AssetBundle {
         'css/checkout.css',
     ];
     public $js = [
-        'js/checkout.js'
+        'js/checkout.js',
+        'js/MapCozxyBox.js',
+        'https://maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initMap'
     ];
     public $depends = [
         'frontend\assets\CozxyAsset',
