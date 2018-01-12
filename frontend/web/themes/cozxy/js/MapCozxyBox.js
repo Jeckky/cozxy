@@ -604,20 +604,20 @@ function geoLocation(map, status, lat, lng) {
                 latMe = my_Point.lat();
                 lngMe = my_Point.lng();
                 $("#start").val(latMe + ',' + lngMe);
-//alert(latMe + ',' + lngMe);
+                //alert(latMe + ',' + lngMe);
                 map.setCenter(pos1);
             }
             $("#no_allow").val('1');
-//console.log(my_Point.lat());
+            //console.log(my_Point.lat());
         }, function () {
-// คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+            // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
 
             handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
         });
     } else {
 
-// คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+        // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
         handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
     }
