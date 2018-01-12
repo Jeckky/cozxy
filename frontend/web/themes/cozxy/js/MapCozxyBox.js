@@ -94,7 +94,7 @@ function initMap() {
             //var position = feature.position;
             //var textPosition = position.toString().replace('"', '\\"')
             var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
-            alert(icons[feature.type].icon);
+            //alert(icons[feature.type].icon);
             //console.log(positionS);
             var marker = new google.maps.Marker({
                 position: positionS,
@@ -163,7 +163,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     });
     directionsDisplay.setMap(map);
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-    var iconBaseCozxy = 'http://localhost/cozxy/frontend/web/images/subscribe/';
+    var iconBaseCozxy = $baseUrl + 'images/subscribe/';
     var icons = {
         parking: {
             //icon: iconBase + 'parking_lot_maps.png'
@@ -292,7 +292,7 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
     directionsDisplay.setMap(map);
 //showLocationMap();
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-    var iconBaseCozxy = 'http://localhost/cozxy/frontend/web/images/subscribe/';
+    var iconBaseCozxy = $baseUrl + 'images/subscribe/';
     var icons = {
         parking: {
             //icon: iconBase + 'parking_lot_maps.png'
