@@ -79,7 +79,7 @@ function initMap() {
             type: 'GET'
         });
     }
-
+    //alert($baseUrl + 'ship-cozxy-box/cozxy-box-json');
     function handleData(data) {
         //console.log(data);
         var features = JSON.parse(data);
@@ -94,7 +94,7 @@ function initMap() {
             //var position = feature.position;
             //var textPosition = position.toString().replace('"', '\\"')
             var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
-            alert(positionS);
+            alert(icons[feature.type].icon);
             //console.log(positionS);
             var marker = new google.maps.Marker({
                 position: positionS,
