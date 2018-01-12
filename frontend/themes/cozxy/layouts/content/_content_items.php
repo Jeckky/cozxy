@@ -15,8 +15,7 @@ if ($index == 0) {
     <p class="name">
         <a href="<?php echo $model['url']; ?>" class="size18  fc-black" target="_bank"><?= $model['title'] ?></a>
     <hr>
-    <p class="step-up">Step up your style</p>
-</p>
+    <p class="step-up">Step up your style</p> 
 </div>
 <?php
 if ($index == 1) {
