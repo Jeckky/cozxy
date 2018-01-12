@@ -593,11 +593,11 @@ function strip_tags_content($text) {
         border-top: 0px solid #e5e5e5;
     }
 </style>
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="<?= Yii::$app->homeUrl ?>themes/cozxy/js/MapCozxyBox.js"></script>
 <script async defer
         src="https://maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initMap">
-</script>-->
+</script>
 <?php $this->registerCss('
 #map {
         height: 450px;
