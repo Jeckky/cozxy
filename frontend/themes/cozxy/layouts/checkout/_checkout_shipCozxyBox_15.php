@@ -590,7 +590,7 @@ function strip_tags_content($text) {
 <!--<script src="https://www.ninenik.com/js/jquery-1.7.1.min.js" type="text/javascript"></script>--> 
 <script src="/cozxy/frontend/web/themes/cozxy/js/MapCozxyBox.js"></script>
 <script async defer
-        src="https:////maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initMap">
+        src="https://maps.google.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw&v=3.2&sensor=false&language=th&libraries=places&callback=initMap">
 </script>
 <?php $this->registerCss('
 #map {

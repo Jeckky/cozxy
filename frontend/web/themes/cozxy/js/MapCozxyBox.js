@@ -1,10 +1,27 @@
-
+/*
+ * Create date :  12/01/2018
+ * Create By : Taninut.Bm
+ */
 var GGM; // กำหนดตัวแปร GGM ไว้เก็บ google.maps Object จะได้เรียกใช้งานได้ง่ายขึ้น
 var latMe;
 var lngMe;
 var lat;
 var long;
 var p;
+var $baseUrl = window.location.protocol + "//" + window.location.host;
+if (window.location.host == 'localhost' || window.location.host == 'dev') {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cozxy/frontend/web/';
+} else if (window.location.host == '192.168.100.8' || window.location.host == '192.168.100.20') {
+//console.log($baseUrl);
+    var str = window.location.pathname;
+    var res = str.split("/");
+
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/' + res[1] + '/frontend/web/';
+} else {
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/';
+}
+
+
 function initMap() {
 
     GGM = new Object(google.maps); // เก็บตัวแปร google.maps Object ไว้ในตัวแปร GGM
@@ -36,7 +53,6 @@ function initMap() {
     //alert(onChangeHandler);
     document.getElementById('start').addEventListener('change', onChangeHandler);
     document.getElementById('LcpickingId').addEventListener('change', onChangeHandler);
-
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
     var iconBaseCozxy = 'http://localhost/cozxy/frontend/web/images/subscribe/';
     var icons = {
@@ -56,63 +72,58 @@ function initMap() {
             icon: iconBaseCozxy + 'cozxy-map.png'
         }
     };
-    /*var person = $.ajax({
-     url: 'http://localhost/cozxy/frontend/web/ship-cozxy-box/cozxy-box-json',
-     async: false//true
-     }).responseText; //.responseText;*/
 
-    //alert(person);
-    /*features = JSON.parse(person);
-     features.forEach(function (feature) {
-     var mapDiv = document.getElementById('map');
-
-     //alert(icons[feature.type].icon);
-     var marker = new google.maps.Marker({
-     position: new google.maps.LatLng(feature.latitudes, feature.location),
-     icon: icons[feature.type].icon,
-     map: map,
-     title: feature.location,
-     content: feature.contentString,
-     });
-     google.maps.event.addDomListener(marker, 'click', function () {
-     //window.alert('Map was clicked!');
-     //pickUpClick(feature.position, directionsService, directionsDisplay);
-     });
-     info = new google.maps.InfoWindow();
-     google.maps.event.addListener(marker, 'click', (function (marker, i) {
-     return function () {
-     pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-     //info.setContent(feature.content);
-     //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-     //'Place ID: ' + feature.contentString + '</div>');
-     //info.open(map, marker);
-     }
-     })(marker));
-     });*/
-    /*var myCallback = function (attr) {
-     //alert(attr);
-     }*/
-    var myCallback = function (data) {
-        console.log(data);
-        return data
-    };
-
-    /*myCallback.forEach(function (feature) {
-
-     });*/
-
-    function foo(address, fn) {
-        $.ajax({
-            type: "GET",
-            url: 'http://localhost/cozxy/frontend/web/ship-cozxy-box/cozxy-box-json',
-            datatype: "json",
-            success: address,
+    function getData() {
+        return $.ajax({
+            url: $baseUrl + 'ship-cozxy-box/cozxy-box-json',
+            type: 'GET'
         });
     }
 
-    foo("address", function (location) {
-        alert(location); // this is where you get the return value
-    });
+    function handleData(data) {
+        //console.log(data);
+        var features = JSON.parse(data);
+        features.forEach(function (feature) {
+            var mapDiv = document.getElementById('map');
+            //console.log(feature.position);
+            // We add a DOM event here to show an alert if the DIV containing the
+            // map is clicked.
+            /* google.maps.event.addDomListener(icons[feature.type].icon, 'click', function() {
+             window.alert('Map was clicked!');
+             });*/
+            //var position = feature.position;
+            //var textPosition = position.toString().replace('"', '\\"')
+            var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
+            //console.log(positionS);
+            var marker = new google.maps.Marker({
+                position: positionS,
+                icon: icons[feature.type].icon,
+                map: map,
+                title: feature.location,
+                content: feature.contentString,
+            });
+            //console.log(marker);
+
+            google.maps.event.addDomListener(marker, 'click', function () {
+                //window.alert('Map was clicked!');
+                //pickUpClick(feature.position, directionsService, directionsDisplay);
+                //console.log('test 2018');
+            });
+            info = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    //info.setContent(feature.content);
+                    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+                    //'Place ID: ' + feature.contentString + '</div>');
+                    //info.open(map, marker);
+                }
+            })(marker));
+        });
+
+    }
+
+    getData().done(handleData);
 
     // เรียกใช้คุณสมบัติ ระบุตำแหน่ง ของ html 5 ถ้ามี
     geoLocation(map, 'initMap', '', '');
@@ -169,31 +180,59 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             icon: iconBaseCozxy + 'cozxy-map.png'
         }
     };
-    var person = $.ajax({
-        url: 'http://localhost/cozxy/frontend/web/ship-cozxy-box/cozxy-box-json',
-        async: false
-    }).responseText; //.responseText;
 
-    features = JSON.parse(person);
-    features.forEach(function (feature) {
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(feature.latitudes, feature.location),
-            icon: icons[feature.type].icon,
-            map: map,
-            title: feature.location,
-            content: feature.contentString,
+    function getData() {
+        return $.ajax({
+            url: $baseUrl + 'ship-cozxy-box/cozxy-box-json',
+            type: 'GET'
         });
-        info = new google.maps.InfoWindow();
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-                //info.setContent(feature.content);
-                //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                //        'Place ID: ' + feature.contentString + '</div>');
-                //info.open(map, marker);
-            }
-        })(marker));
-    });
+    }
+
+    function handleData(data) {
+        //console.log(data);
+        var features = JSON.parse(data);
+        features.forEach(function (feature) {
+            var mapDiv = document.getElementById('map');
+            //console.log(feature.position);
+            // We add a DOM event here to show an alert if the DIV containing the
+            // map is clicked.
+            /* google.maps.event.addDomListener(icons[feature.type].icon, 'click', function() {
+             window.alert('Map was clicked!');
+             });*/
+            //var position = feature.position;
+            //var textPosition = position.toString().replace('"', '\\"')
+            var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
+            //console.log(positionS);
+            var marker = new google.maps.Marker({
+                position: positionS,
+                icon: icons[feature.type].icon,
+                map: map,
+                title: feature.location,
+                content: feature.contentString,
+            });
+            //console.log(marker);
+
+            google.maps.event.addDomListener(marker, 'click', function () {
+                //window.alert('Map was clicked!');
+                //pickUpClick(feature.position, directionsService, directionsDisplay);
+                //console.log('test 2018');
+            });
+            info = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    //info.setContent(feature.content);
+                    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+                    //'Place ID: ' + feature.contentString + '</div>');
+                    //info.open(map, marker);
+                }
+            })(marker));
+        });
+
+    }
+
+    getData().done(handleData);
+
     var LcpickingId = $('#LcpickingId').val();
     var fields = LcpickingId.split('-');
     var pickingId = fields[0];
@@ -269,31 +308,57 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
             icon: iconBaseCozxy + 'cozxy-map.png'
         }
     };
-    var person = $.ajax({
-        url: 'http://localhost/cozxy/frontend/web/ship-cozxy-box/cozxy-box-json',
-        async: false
-    }).responseText; //.responseText;
-
-    features = JSON.parse(person);
-    features.forEach(function (feature) {
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(feature.latitudes, feature.location),
-            icon: icons[feature.type].icon,
-            map: map,
-            title: feature.location,
-            content: feature.contentString,
+    function getData() {
+        return $.ajax({
+            url: $baseUrl + 'ship-cozxy-box/cozxy-box-json',
+            type: 'GET'
         });
-        info = new google.maps.InfoWindow();
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
-                //info.setContent(feature.content);
-                //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
-                //'Place ID: ' + feature.contentString + '</div>');
-                //info.open(map, marker);
-            }
-        })(marker));
-    });
+    }
+
+    function handleData(data) {
+        //console.log(data);
+        var features = JSON.parse(data);
+        features.forEach(function (feature) {
+            var mapDiv = document.getElementById('map');
+            //console.log(feature.position);
+            // We add a DOM event here to show an alert if the DIV containing the
+            // map is clicked.
+            /* google.maps.event.addDomListener(icons[feature.type].icon, 'click', function() {
+             window.alert('Map was clicked!');
+             });*/
+            //var position = feature.position;
+            //var textPosition = position.toString().replace('"', '\\"')
+            var positionS = new google.maps.LatLng(feature.latitudes, feature.longitudes);
+            //console.log(positionS);
+            var marker = new google.maps.Marker({
+                position: positionS,
+                icon: icons[feature.type].icon,
+                map: map,
+                title: feature.location,
+                content: feature.contentString,
+            });
+            //console.log(marker);
+
+            google.maps.event.addDomListener(marker, 'click', function () {
+                //window.alert('Map was clicked!');
+                //pickUpClick(feature.position, directionsService, directionsDisplay);
+                //console.log('test 2018');
+            });
+            info = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    pickUpClick(map, feature.pickingId, feature.location, feature.latitudes, feature.longitudes, directionsService, directionsDisplay);
+                    //info.setContent(feature.content);
+                    //info.setContent('<div><strong>' + feature.location + '</strong><br>' +
+                    //'Place ID: ' + feature.contentString + '</div>');
+                    //info.open(map, marker);
+                }
+            })(marker));
+        });
+
+    }
+
+    getData().done(handleData);
 //alert(p + ':' + lats + ':' + longs + ':' + directionsService + ':' + directionsDisplay);
     var latlongMap = lats + ',' + longs;
     /*******If Not Allow Map*************/
@@ -312,7 +377,7 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
             //continue-pick-up
             $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + p + '-' + lats + ',' + longs + '">');
             var pickingId = p;
-            var path = "ship-cozxy-box/location-pick-up-click";
+            var path = $baseUrl + "ship-cozxy-box/location-pick-up-click";
             $.ajax({
                 url: path,
                 type: "POST",
@@ -330,7 +395,7 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
                         //$('#amphurId').val(amphurId).trigger('change');
                         //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
                         //alert(data);
-                        var path = "ship-cozxy-box/location-picking-point";
+                        var path = $baseUrl + "ship-cozxy-box/location-picking-point";
                         $.ajax({
                             url: path,
                             type: "POST",
@@ -354,7 +419,7 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
                                     var ClickamphurId = data.amphurId;
                                     var ClickprovinceId = data.provinceId;
                                     //alert(ClickamphurId + '::' + ClickprovinceId);
-                                    var path = "ship-cozxy-box/location-pick-up";
+                                    var path = $baseUrl + "ship-cozxy-box/location-pick-up";
                                     $.ajax({
                                         url: path,
                                         type: "POST",
@@ -387,7 +452,7 @@ function pickUpSet(p, lats, longs, directionsService, directionsDisplay) {
 }
 
 function pickUpClick(map, pickingId, location, latitudes, longitudes, directionsService, directionsDisplay) {
-    //console.log(map.getZoom());
+//console.log(map.getZoom());
     map.setZoom(11);
     var latlongMap = latitudes + ',' + longitudes;
     /*******If Not Allow Map*************/
@@ -407,7 +472,7 @@ function pickUpClick(map, pickingId, location, latitudes, longitudes, directions
             //alert('OK');
             //continue-pick-up
             $('#continue-pick-up').html('<input type="hidden" name="pickingId-lats-longs" value="' + pickingId + '-' + latitudes + ',' + longitudes + '">');
-            var path = "ship-cozxy-box/location-pick-up-click";
+            var path = $baseUrl + "ship-cozxy-box/location-pick-up-click";
             $.ajax({
                 url: path,
                 type: "POST",
@@ -424,7 +489,7 @@ function pickUpClick(map, pickingId, location, latitudes, longitudes, directions
                         //$('#amphurId').val(amphurId).trigger('change');
                         //$('#LcpickingId').val(pickingId + '-' + latitudes + ',' + longitudes).trigger('change');
                         //alert(data);
-                        var path = "ship-cozxy-box/location-picking-point";
+                        var path = $baseUrl + "ship-cozxy-box/location-picking-point";
                         $.ajax({
                             url: path,
                             type: "POST",
@@ -446,7 +511,7 @@ function pickUpClick(map, pickingId, location, latitudes, longitudes, directions
                                     var ClickamphurId = data.amphurId;
                                     var ClickprovinceId = data.provinceId;
                                     //alert(ClickamphurId + '::' + ClickprovinceId);
-                                    var path = "ship-cozxy-box/location-pick-up";
+                                    var path = $baseUrl + "ship-cozxy-box/location-pick-up";
                                     $.ajax({
                                         url: path,
                                         type: "POST",
@@ -480,8 +545,8 @@ function pickUpClick(map, pickingId, location, latitudes, longitudes, directions
 
 function attachInstructionText(stepDisplay, marker, text, map) {
     google.maps.event.addListener(marker, 'click', function () {
-        // Open an info window when the marker is clicked on, containing the text
-        // of the step.
+// Open an info window when the marker is clicked on, containing the text
+// of the step.
         stepDisplay.setContent(text);
         stepDisplay.open(map, marker);
     });
@@ -545,14 +610,14 @@ function geoLocation(map, status, lat, lng) {
             $("#no_allow").val('1');
 //console.log(my_Point.lat());
         }, function () {
-            // คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
+// คำสั่งทำงาน ถ้า ระบบระบุตำแหน่ง geolocation ผิดพลาด หรือไม่ทำงาน
 
             handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
         });
     } else {
 
-        // คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
+// คำสั่งทำงาน ถ้า บราวเซอร์ ไม่สนับสนุน ระบุตำแหน่ง
         handleNoGeolocation(map); // ตรวจตำแหน่ง lat/lng ไม่ได้ ให้ใช้ค่าเริ่มต้น
 
     }
@@ -688,8 +753,8 @@ function handleNoGeolocation(map) {
 function NotAllowMap(start, latlongMap, status) { // if not allow map function
 
     if (start == 0) {
-        //console.log(latlongMap);
-        //console.log(map.getZoom());
+//console.log(latlongMap);
+//console.log(map.getZoom());
         var llMap = latlongMap.split(',');
         $("#lat_value").val(llMap[0]);
         $("#lon_value").val(llMap[1]);
@@ -701,13 +766,13 @@ function NotAllowMap(start, latlongMap, status) { // if not allow map function
 }
 
 $(function () {
-    // โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
-    // ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
-    // v=3.2&sensor=false&language=th&callback=initialize
-    //	v เวอร์ชัน่ 3.2
-    //	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
-    //	language ภาษา th ,en เป็นต้น
-    //	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
+// โหลด สคริป google map api เมื่อเว็บโหลดเรียบร้อยแล้ว
+// ค่าตัวแปร ที่ส่งไปในไฟล์ google map api
+// v=3.2&sensor=false&language=th&callback=initialize
+//	v เวอร์ชัน่ 3.2
+//	sensor กำหนดให้สามารถแสดงตำแหน่งทำเปิดแผนที่อยู่ได้ เหมาะสำหรับมือถือ ปกติใช้ false
+//	language ภาษา th ,en เป็นต้น
+//	callback ให้เรียกใช้ฟังก์ชันแสดง แผนที่ initialize
 
 }
 );
