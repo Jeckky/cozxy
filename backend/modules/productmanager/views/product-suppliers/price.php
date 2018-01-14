@@ -6,43 +6,47 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\productmanager\models\ProductSuppliers */
 
-$this->title = 'Price : '. $model->title;
+$this->title = 'Price : ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Product Suppliers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-suppliers-create">
+    <div class="product-suppliers-create">
 
-    <div class="panel panel-default">
-        <div class="panel-heading"><?= Html::encode($this->title) ?></div>
-        <div class="panel-body">
-            <?php $form = ActiveForm::begin([
-                'options' => [
-                    'class' => 'form-horizontal',
-                    'enctype' => 'multipart/form-data'
-                ],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label'
+        <div class="panel panel-default">
+            <div class="panel-heading"><?= Html::encode($this->title) ?></div>
+            <div class="panel-body">
+                <?php $form = ActiveForm::begin([
+                    'options' => [
+                        'class' => 'form-horizontal',
+                        'enctype' => 'multipart/form-data'
+                    ],
+                    'fieldConfig' => [
+                        'template' => '{label}<div class="col-sm-9">{input}</div>',
+                        'labelOptions' => [
+                            'class' => 'col-sm-3 control-label'
+                        ]
                     ]
-                ]
-            ]); ?>
+                ]); ?>
 
-            <div class="form-group field-productpricesuppliers-price required">
-                <label class="col-sm-3 control-label" for="marketPrice">Market Price</label>
-                <div class="col-sm-9"><input type="text" id="marketPrice" class="form-control" name="marketPrice" value="<?=$model->product->price?>" disabled="" aria-required="true"></div>
-            </div>
-            <?= $form->field($model->productPriceSuppliers, 'price')->textInput(['disabled'=>true, 'name'=>'currentPrice'])->label('Current Price') ?>
-            <?= $form->field($productPriceSuppliers, 'price')->textInput(['value'=>0, 'id'=>'productPrice'])->label('New Price') ?>
-            <div class="col-md-9 col-md-offset-3">
-                <?=Html::submitButton('Change Price', ['class'=>'btn btn-primary btn-block btn-lg'])?>
-            </div>
+                <div class="form-group field-productpricesuppliers-price required">
+                    <label class="col-sm-3 control-label" for="marketPrice">Market Price</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="marketPrice" class="form-control" name="marketPrice" value="<?= $model->product->price ?>" disabled="" aria-required="true">
+                    </div>
+                </div>
+                <?php if(isset($model->productPriceSuppliers)): ?>
+                    <?= $form->field($model->productPriceSuppliers, 'price')->textInput(['disabled' => true, 'name' => 'currentPrice'])->label('Current Price') ?>
+                <?php endif; ?>
+                <?= $form->field($productPriceSuppliers, 'price')->textInput(['value' => 0, 'id' => 'productPrice'])->label('New Price') ?>
+                <div class="col-md-9 col-md-offset-3">
+                    <?= Html::submitButton('Change Price', ['class' => 'btn btn-primary btn-block btn-lg']) ?>
+                </div>
 
-            <?php ActiveForm::end();?>
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 
 <?php
 $this->registerJs("

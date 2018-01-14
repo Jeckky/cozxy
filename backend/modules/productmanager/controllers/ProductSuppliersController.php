@@ -150,9 +150,11 @@ class ProductSuppliersController extends ProductManagerMasterController
             $newPrice = $_POST['ProductPriceSuppliers']['price'];
 
             //disable current price
-            $currentPrice = $model->productPriceSuppliers;
-            $currentPrice->status = 2;
-            $currentPrice->save(false);
+            if(isset($model->productPriceSuppliers)) {
+                $currentPrice = $model->productPriceSuppliers;
+                $currentPrice->status = 2;
+                $currentPrice->save(false);
+            }
 
             //create new price
             $productPriceSuppliers->price = $newPrice;
