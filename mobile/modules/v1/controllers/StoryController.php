@@ -204,6 +204,8 @@ class StoryController extends Controller
 
         $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);
 
+        $data['isFavorite'] = self::isFavorite($storyModel);
+
         return $data;
     }
 
@@ -227,6 +229,13 @@ class StoryController extends Controller
         }
 
         return $data;
+    }
+
+    private static function isFavorite($storyModel)
+    {
+        $favCount = FavoriteStory::find()->where(['productPostId'=>$storyModel->productPostId, 'userId'=>$storyModel->userId, 'status'=>1])->count();
+
+        return ($favCount > 0) ? true : false;
     }
 
     public function actionStoryDetail()
