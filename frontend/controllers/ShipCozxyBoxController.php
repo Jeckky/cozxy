@@ -41,6 +41,9 @@ use common\helpers\CozxyMap;
 class ShipCozxyBoxController extends MasterController {
 
     public function actionIndex() {
+        if (!isset($_REQUEST['orderId'])) {
+            return $this->redirect(Yii::$app->homeUrl);
+        }
         //echo '<pre>';
         //print_r($PickingPointJson);
         $name = [];
