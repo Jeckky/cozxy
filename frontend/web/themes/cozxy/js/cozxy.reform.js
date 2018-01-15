@@ -1862,6 +1862,8 @@ $('.shippingOption').click(function () {
                 }
             }
         });
+        //window.location.reload();
+
     } else if (shipping == 2) { //Ship to address
         //alert(shipping);
         $("#shipToCozxyBox").css({'display': 'none'});
