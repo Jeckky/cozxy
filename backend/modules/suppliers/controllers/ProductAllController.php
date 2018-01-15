@@ -13,6 +13,11 @@ class ProductAllController extends SuppliersMasterController {
     public function actionIndex() {
 
         $userId = Yii::$app->request->get('userId');
+        $CategoryId = Yii::$app->request->post('CategoryId');
+        $BrandId = Yii::$app->request->post('BrandId');
+        $title = Yii::$app->request->post('title');
+
+        //echo 'CategoryId :' . $CategoryId;
 
         $user = \common\helpers\Suppliers::GetUser($userId);
 
@@ -30,6 +35,7 @@ class ProductAllController extends SuppliersMasterController {
           AND pps.status=1
           AND pps.price > 0 and userId=' . $userId; */
 
+
         $product = Product::find()
                 ->select('pps.price as sellingPrice ,ps.result as resultSupp,ps.userId as userIdSupp, product.*,ps.*')
                 ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
@@ -42,6 +48,19 @@ class ProductAllController extends SuppliersMasterController {
                         AND ps.result >0
                         AND pps.status=1
                         AND pps.price > 0 ");
+
+        if (isset($title) && !empty($title)) {
+            $product->andFilterWhere([
+                'OR',
+                'product.title LIKE "%' . $title . '%" ',
+            ]);
+        }
+        if (isset($BrandId) && !empty($BrandId)) {
+            $product->andWhere(['product.brandId' => $BrandId]);
+        }
+        if (isset($CategoryId) && !empty($CategoryId)) {
+            $product->andWhere(['product.categoryId' => $CategoryId]);
+        }
         //->andWhere('product.userId=' . $userId);
         $dataProvider = new ActiveDataProvider([
             //'query' => Product::find()->where('userId=' . $userId)->orderBy('product.productId desc'),
