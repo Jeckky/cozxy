@@ -4,9 +4,44 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 ?>
 <h1>product ของ Suppliers/index</h1>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-12">Search</div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <?php
+        $form = yii\widgets\ActiveForm::begin([
+                    'options' => ['class' => 'form-horizontalx', 'enctype' => 'multipart/form-data'],
+        ]);
+        ?>
 
+        <div class ="col-sm-4">
+            -
+        </div>
+        <div class ="col-sm-4">
+            -
+        </div>
+        <div class ="col-sm-4">
+            -
+        </div>
+        <div class ="col-sm-4">
+            -
+        </div>
+        <div class =" col-sm-4">
+            -
+        </div>
+        <div class ="col-sm-12"><br>
+            &nbsp;&nbsp;&nbsp;<button type="submit" class="btn"><i class="fa fa-search"></i> ค้นหา</button>
+        </div>
+        <?php yii\widgets\ActiveForm::end(); ?>
+
+    </div>
+</div>
 <div class="panel-body">
     <?=
     GridView::widget([
@@ -52,7 +87,13 @@ use yii\widgets\Pjax;
             ],
             'isbn:ntext',
             //'code',
-            'title',
+            [
+                'attribute' => 'title',
+                'headerOptions' => ['style' => 'width:20%'],
+                'value' => function($model) {
+                    return $model->title;
+                }
+            ],
             [
                 'attribute' => 'mkt price',
                 'value' => function($model) {
@@ -84,55 +125,16 @@ use yii\widgets\Pjax;
                     }
                 }
             ],
-            // 'optionName',
-            // 'shortDescription:ntext',
-            // 'description:ntext',
-            // 'specification:ntext',
-            // 'width',
-            // 'height',
-            // 'depth',
-            // 'weight',
-            /* 'quantity',
-              [
-              'attribute' => 'ราคาล่าสุด',
-              'format' => 'html',
-              'value' => function($model) {
-              return $model->priceSuppliers;
-              }
-              ], */
-            //'approve',
-            // 'unit',
-            // 'smallUnit',
-            // 'tags',
-            // 'status',
-            // 'createDateTime',
-            // 'updateDateTime',
-            //'image',
-            /* [
-              'attribute' => 'view',
-              'format' => 'html',
-              'value' => function($model) {
-              $views = common\models\costfit\ProductPageViews::find()->where('productSuppId=' . $model->productSuppId)->count();
-              if (isset($views)) {
-              return $views . ' ครั้ง';
-              } else {
-              return 0 . ' ครั้ง';
-              }
-              }
-              ], */
-            /*
-              [
-              'attribute' => 'Smart',
-              'format' => 'html',
-              'value' => function($model) {
-              return Html::a('<i class = "fa fa-btc"></i> เพิ่มราคาขายและราคาค่าจัดส่ง', Yii::$app->homeUrl . "suppliers/product-price-suppliers?productSuppId=" . $model->productSuppId,[
-              'title' => Yii::t('app', 'image'), 'class' => 'text-center']);
-              }
-              ], */
             ['class' => 'yii\grid\ActionColumn',
                 'header' => 'Actions',
-                'template' => '{view}  ',
+                'template' => '{stock} {price} {view}  ',
                 'buttons' => [
+                    'stock' => function ($url, $model, $index) {
+                        return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);
+                    },
+                    'price' => function ($url, $model, $index) {
+                        return Html::a('Price', Url::to(Url::home() . 'productmanager/product-suppliers/price?id=' . $model->productSuppId), ['class' => 'btn btn-warning btn-xs']);
+                    },
                     'view' => function($url, $model) {
                         return Html::a('<i class="fa fa-eye"></i>', $url, [
                                     'title' => Yii::t('yii', 'view'),

@@ -15,19 +15,21 @@ class ProductAllController extends SuppliersMasterController {
         $userId = Yii::$app->request->get('userId');
 
         $user = \common\helpers\Suppliers::GetUser($userId);
-        $productParner = 'select *
-from product as p
-left join product_suppliers as ps on p.productId=ps.productId
-left join product_price_suppliers as pps on ps.productSuppId=pps.productSuppId
-where p.status=1
-AND p.approve=‘approve’
-AND ps.status=1
-AND p.parentId is not null
-AND ps.approve=‘approve’
-AND ps.productId is not null
-AND ps.result >0
-AND pps.status=1
-AND pps.price > 0 and userId=' . $userId;
+
+        /* $productParner = 'select *
+          from product as p
+          left join product_suppliers as ps on p.productId=ps.productId
+          left join product_price_suppliers as pps on ps.productSuppId=pps.productSuppId
+          where p.status=1
+          AND p.approve=‘approve’
+          AND ps.status=1
+          AND p.parentId is not null
+          AND ps.approve=‘approve’
+          AND ps.productId is not null
+          AND ps.result >0
+          AND pps.status=1
+          AND pps.price > 0 and userId=' . $userId; */
+
         $product = Product::find()
                 ->select('pps.price as sellingPrice ,ps.result as resultSupp,ps.userId as userIdSupp, product.*,ps.*')
                 ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
