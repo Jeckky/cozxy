@@ -84,7 +84,7 @@ use common\models\costfit\Promotion;
                 </div>
                 <br>
                 <hr>
-                <div class="col-md-12 col-lg-12 text-center"><h3><u>Selsect Category / Brand</u></h3></div>
+                <div class="col-md-12 col-lg-12 text-center"><h3><u>Select Category / Brand</u></h3></div>
                 <div class="row">
 
                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 20px;margin-bottom: 20px;">

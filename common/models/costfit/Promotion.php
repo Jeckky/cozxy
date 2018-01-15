@@ -66,14 +66,24 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
         $brandId = "";
         $brand = null;
         $allCategoryId = '';
+        $level2 = '';
+        $level4 = '';
         //throw new \yii\base\Exception($categoryId);
         if (isset($categoryId) && $categoryId != '') {
             $allCategory = Category::find()->where("categoryId=$categoryId or parentId=$categoryId")->all();
             if (isset($allCategory) && count($allCategory) > 0) {
                 foreach ($allCategory as $category):
-                    $allCategoryId.=$category->categoryId . ",";
+                    $subCategory = Category::find()->where("parentId=$category->categoryId and level=4")->all();
+                    if (isset($subCategory) && count($subCategory) > 0) {
+                        foreach ($subCategory as $sub):
+                            $level4.=$sub->categoryId . ",";
+                        endforeach;
+                    }
+                    $level2.=$category->categoryId . ",";
                 endforeach;
-                $allCategoryId = substr($allCategoryId, 0, -1);
+                $level2 = substr($level2, 0, -1);
+                $level4 = substr($level4, 0, -1);
+                $allCategoryId = $level2 . $level4;
                 $products = Product::find()->where("categoryId in($allCategoryId)")
                         ->groupBy("brandId")
                         ->all();
