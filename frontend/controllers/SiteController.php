@@ -316,6 +316,7 @@ class SiteController extends MasterController {
         $data['cz'] = $cz;
         $data['token'] = $token;
         if (count($user) > 0) {
+            //echo '2018';
             if (isset($_POST['User']) && !empty($_POST['User'])) {
                 $user->attributes = $_POST['User'];
                 $token = $_POST['User']['token'];
@@ -329,15 +330,17 @@ class SiteController extends MasterController {
                     return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $token);
                 }
             } else {
-                return $this->render('verification', [
-                            'model' => $user, 'data' => $data
-                ]);
+                /* return $this->render('verification', [
+                  'model' => $user, 'data' => $data
+                  ]); */
+                return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $token);
             }
         } else {
-
-            return $this->render('verification', [
-                        'model' => $user, 'data' => $data
-            ]);
+            /*
+              return $this->render('verification', [
+              'model' => $user, 'data' => $data
+              ]); */
+            return $this->redirect(Yii::$app->homeUrl . 'site/thank?verification=complete&token=' . $token);
         }
     }
 
