@@ -73,4 +73,10 @@ class DisplayMyBrand {
         return $products;
     }
 
+    public static function MyFilterBrandNew($brandId) {
+        $whereArray["brandId"] = $brandId;
+        $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        return $brand;
+    }
+
 }

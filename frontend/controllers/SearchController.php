@@ -448,7 +448,7 @@ class SearchController extends MasterController {
         );
 
 
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
 
@@ -471,7 +471,11 @@ class SearchController extends MasterController {
         //$productid[] = '';
         foreach ($dataProvider->allModels as $key => $value) {
             $productid[] = $value['productid'];
+            $brandid[] = $value['brandid'];
+            //$productid['brandid'] = $value['brandid'];
         }
+        //print_r($brandid);
+        //exit();
         if (isset($productid) && count($productid) > 0) {
             $productid = $productid;
         } else {
@@ -479,10 +483,11 @@ class SearchController extends MasterController {
         }
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
-        //print_r($productid);
+        //echo $productid;
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
         /* end 2 */
-
+        //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
         /* 3.หา paginate */
         $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         $item_per_page = 12; //$searchElastic['size'];
