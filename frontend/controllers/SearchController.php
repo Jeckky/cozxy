@@ -451,7 +451,7 @@ class SearchController extends MasterController {
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
+
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -484,6 +484,7 @@ class SearchController extends MasterController {
         /* end 2 */
 
         /* 3.หา paginate */
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         $item_per_page = 12; //$searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
