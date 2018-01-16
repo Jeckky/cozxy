@@ -56,7 +56,13 @@ class MasterController extends MasterCommonController {
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
         $this->view->params['actionTree'] = \frontend\controllers\CategoriesController::actionTree();
         $this->view->params['actionTreeSub'] = \frontend\controllers\CategoriesController::actionTreeSub();
-
+        $this->view->params['cate'] = \common\models\costfit\CategoryToProduct::find()
+                ->select('`category`.categoryId , `category`.title , `category`.parentId ')
+                ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
+                ->where("category.parentId IS NULL AND category.status=1")
+                ->groupBy('category_to_product.categoryId')
+                //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+                ->all();
 
 
         //echo '<pre>';

@@ -702,15 +702,15 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                 <div class="col-lg-2 col-md-4">
                     <div class="row main-category">
                         <?php
-//$cate = common\models\costfit\Category::find()->where('parentId IS NULL')->all();
-                        $cate = \common\models\costfit\CategoryToProduct::find()
-                                ->select('`category`.categoryId , `category`.title , `category`.parentId ')
-                                ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
-                                ->where("category.parentId IS NULL AND category.status=1")
-                                ->groupBy('category_to_product.categoryId')
-                                //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
-                                ->all();
-                        foreach ($cate as $key => $value) {
+                        //$cate = common\models\costfit\Category::find()->where('parentId IS NULL')->all();
+                        /* $cate = \common\models\costfit\CategoryToProduct::find()
+                          ->select('`category`.categoryId , `category`.title , `category`.parentId ')
+                          ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
+                          ->where("category.parentId IS NULL AND category.status=1")
+                          ->groupBy('category_to_product.categoryId')
+                          //->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+                          ->all(); */
+                        foreach ($this->params['cate'] as $key => $value) {
                             ?>
                             <div class="menu-item sub-<?= $value['categoryId'] ?>"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);"><?= $value['title'] ?></a><a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a></div>
                         <?php } ?>
