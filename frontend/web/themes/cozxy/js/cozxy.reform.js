@@ -1472,7 +1472,7 @@ function sortStoriesCompare(type, status, productPostId, productId) {
                                         $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                                     }
 //
-                                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                                    $.getJSON("https://api.fixer.io/latest?base=ZAR", demo);
                                 });
                                 //$('#local-price-85').html('xxxxx');
                             } else {
