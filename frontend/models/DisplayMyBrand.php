@@ -80,7 +80,7 @@ class DisplayMyBrand {
         } else {
             $brand = \common\models\costfit\Brand::find()->all();
         }
-        $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        //$brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
         return $brand;
     }
 
