@@ -222,7 +222,7 @@ function strip_tags_content($text) {
                     </div>
 
                     <!-- Shipping -->
-                    <div class="cart-detail" id="shipToCozxyBox" <?= $shippingChooseActive == 2 ? 'style=" display: none;"' : '' ?>>
+                    <div class="cart-detail" id="shipToCozxyBox" <?= $shippingChooseActive == 2 ? 'style=" visibility: hidden; position: absolute; top: -9999px;  left: -9999px;"' : '' ?>>
                         <div class="col-lg-12" style="padding-left:0px;">
                             <h3>Ship To CozxyBox <span class="small"><a href="<?= Url::to(['/checkout/ship-to-cozxy-box']) ?>" target="_blank">view all</a></span></h3>
                         </div>
@@ -431,8 +431,8 @@ function strip_tags_content($text) {
                             </div>
                         </div>
                     </div>
-
-                    <div class="cart-detail login-box" id="shipToAddress" <?= $shippingChooseActive == 1 ? 'style=" display: none;"' : '' ?>>
+                    <!--visibility: hidden vs. display: none -->
+                    <div class="cart-detail login-box" id="shipToAddress" <?= $shippingChooseActive == 1 ? 'style=" visibility: hidden;  position: absolute; top: -9999px;  left: -9999px;"' : '' ?>>
                         <h3>Ship to address</h3>
 
                         <div class="row">
