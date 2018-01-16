@@ -123,7 +123,7 @@ use yii\helpers\Url;
                 //'code',
                 [
                     'attribute' => 'title',
-                    'headerOptions' => ['style' => 'width:20%'],
+                    'headerOptions' => ['style' => 'width:15%'],
                     'value' => function($model) {
                         return $model->title;
                     }

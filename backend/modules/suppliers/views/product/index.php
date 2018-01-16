@@ -33,13 +33,13 @@ use yii\widgets\Pjax;
                                 <div class="col-sm-12" style="padding: 5px;">
                                     จำนวน Product Master&nbsp;
                                     <span class="label label-info ticket-label">
-                                        <?php echo common\helpers\Suppliers::GetCountProductMaster($items[0]->attributes['userId']); ?>
+                                        <?php echo common\helpers\Suppliers::GetCountProductMaster(Yii::$app->user->identity->userId); ?>
                                     </span>&nbsp;รายการ
                                 </div>
                                 <div class="col-sm-12" style="padding: 5px;">
                                     จำนวน My Product&nbsp;
                                     <span class="label label-info ticket-label">
-                                        <?php echo common\helpers\Suppliers::GetCountMyProduct($items[0]->attributes['userId']); ?>
+                                        <?php echo common\helpers\Suppliers::GetCountMyProduct(Yii::$app->user->identity->userId); ?>
                                     </span>&nbsp;รายการ
                                 </div>
                                 <!--<div class="col-sm-12" style="padding: 5px;">

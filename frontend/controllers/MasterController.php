@@ -56,7 +56,7 @@ class MasterController extends MasterCommonController {
         $this->view->params['cart'] = \common\models\costfit\Order::findCartArray();
         $this->view->params['actionTree'] = \frontend\controllers\CategoriesController::actionTree();
         $this->view->params['actionTreeSub'] = \frontend\controllers\CategoriesController::actionTreeSub();
-
+        $this->view->params['cate'] = \frontend\models\DisplayMyCategory::ShowMenuCategory();
 
 
         //echo '<pre>';
