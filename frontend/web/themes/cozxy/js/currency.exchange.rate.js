@@ -217,7 +217,7 @@ function CurrencyExchangeRate(id) {
                 $.each(datax, function (i, field) {
                     //console.log(JSON.stringify(field));
                     //var fields = JSON.stringify(field);
-                    console.log(field.price + ':' + field.currency_code);
+                    console.log(field.price + ':' + field.currency_code + ':' + currencyCodes);
                     var demo = function (datax) {
                         fx.rates = datax.rates;
                         var rate = fx(field.price).from(field.currency_code).to(currencyCodes);//to("THB");
