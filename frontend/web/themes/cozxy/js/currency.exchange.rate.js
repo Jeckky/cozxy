@@ -121,7 +121,7 @@ function ComparePriceStory() {
                         //alert("£1 = $" + rate.toFixed(4))
                         cell5.innerHTML = 'THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
                     }
-                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                    $.getJSON("https://api.fixer.io/latest?base=ZAR", demo);
                     //});
                     //cell5.innerHTML = JSONObject.LocalPrice;
                     cell6.innerHTML = '<code><a class="text-danger" onclick="CozxyComparePriceModernBest(' + data.comparePriceId + ',' + '\'edit\'' + ',' + dataIndex + ')"><i class=\'fa fa-pencil-square-o\'></i>Edit Price</a></code>';
@@ -177,7 +177,7 @@ function ComparePriceStory() {
                         //$('#local-price-' + data.comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                         $('#local-price-' + comparePriceId).html('THB ' + rate.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')).attr('class', 'warning');
                     }
-                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                    $.getJSON("https://api.fixer.io/latest?base=ZAR", demo);
 
                     $(".bs-example-modal-lg").modal("hide");
                 } else {
@@ -217,7 +217,7 @@ function CurrencyExchangeRate(id) {
                 $.each(datax, function (i, field) {
                     //console.log(JSON.stringify(field));
                     //var fields = JSON.stringify(field);
-                    //console.log(field.price + ':' + field.currency_code);
+                    //console.log(field.price + ':' + field.currency_code + ':' + currencyCodes);
                     var demo = function (datax) {
                         fx.rates = datax.rates;
                         var rate = fx(field.price).from(field.currency_code).to(currencyCodes);//to("THB");
@@ -226,7 +226,7 @@ function CurrencyExchangeRate(id) {
                         $('#local-price-' + field.comparePriceId).html('<span style="color: #128a05;font-weight: bold;"> ' + currencyCodes + '</span> ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     }
 //
-                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                    $.getJSON("https://api.fixer.io/latest?base=ZAR", demo);
                 });
                 //$('#local-price-85').html('xxxxx');
             } else {
@@ -273,7 +273,7 @@ if (str[1] == 'story') {
                         $('#local-price-' + field.comparePriceId).html('THB ' + rate.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     }
 //
-                    $.getJSON("http://api.fixer.io/latest?base=ZAR", demo);
+                    $.getJSON("https://api.fixer.io/latest?base=ZAR", demo);
                 });
                 //$('#local-price-85').html('xxxxx');
             } else {
