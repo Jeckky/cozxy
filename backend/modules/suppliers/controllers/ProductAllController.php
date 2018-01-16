@@ -47,7 +47,7 @@ class ProductAllController extends SuppliersMasterController {
                         AND ps.productId is not null
                         AND ps.result >0
                         AND pps.status=1
-                        AND pps.price > 0 ");
+                        AND pps.price > 0 and ps.userId =" . Yii::$app->user->identity->userId);
 
         if (isset($title) && !empty($title)) {
             $product->andFilterWhere([
@@ -55,12 +55,15 @@ class ProductAllController extends SuppliersMasterController {
                 'product.title LIKE "%' . $title . '%" ',
             ]);
         }
+
         if (isset($BrandId) && !empty($BrandId)) {
             $product->andWhere(['product.brandId' => $BrandId]);
         }
+
         if (isset($CategoryId) && !empty($CategoryId)) {
             $product->andWhere(['product.categoryId' => $CategoryId]);
         }
+
         //->andWhere('product.userId=' . $userId);
         $dataProvider = new ActiveDataProvider([
             //'query' => Product::find()->where('userId=' . $userId)->orderBy('product.productId desc'),

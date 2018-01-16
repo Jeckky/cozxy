@@ -264,7 +264,7 @@ class Suppliers {
                         AND ps.productId is not null
                         AND ps.result >0
                         AND pps.status=1
-                        AND pps.price > 0 ")->count();
+                        AND pps.price > 0 and ps.userId =" . $userId)->count();
         return $count;
     }
 
