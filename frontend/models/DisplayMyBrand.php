@@ -74,7 +74,12 @@ class DisplayMyBrand {
     }
 
     public static function MyFilterBrandNew($brandId) {
-        $whereArray["brandId"] = $brandId;
+        if (isset($brandId)) {
+            $whereArray["brandId"] = $brandId;
+            $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        } else {
+            $brand = \common\models\costfit\Brand::find()->all();
+        }
         $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
         return $brand;
     }

@@ -481,6 +481,11 @@ class SearchController extends MasterController {
         } else {
             $productid = NULL;
         }
+        if (isset($brandid)) {
+            $brandid = $brandid;
+        } else {
+            $brandid = NULL;
+        }
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
         //echo $productid;
