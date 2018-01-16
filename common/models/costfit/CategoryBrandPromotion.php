@@ -92,9 +92,15 @@ class CategoryBrandPromotion extends \common\models\costfit\master\CategoryBrand
                 }
                 $level2.=$cat->categoryId . ",";
             endforeach;
-            $level2 = substr($level2, 0, -1);
-            $level4 = substr($level4, 0, -1);
-            $categoryId = $level2 . $level4;
+            if ($level2 != '' && $level4 != '') {
+                $level2 = substr($level2, 0, -1);
+                $level4 = substr($level4, 0, -1);
+                $categoryId = $level2 . "," . $level4;
+            } else if ($level2 != '' && $level4 == '') {
+                $categoryId = substr($level2, 0, -1);
+            } else if ($level2 == '' && $level4 != '') {
+                $categoryId = substr($level4, 0, -1);
+            }
         }
         return $categoryId;
     }
