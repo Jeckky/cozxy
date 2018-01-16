@@ -70,20 +70,24 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
         $level4 = '';
         //throw new \yii\base\Exception($categoryId);
         if (isset($categoryId) && $categoryId != '') {
-            $allCategory = Category::find()->where("categoryId=$categoryId or parentId=$categoryId")->all();
+            $allCategory = Category::find()->where("categoryId=$categoryId or parentId=$categoryId")
+                    ->orderBy("title")
+                    ->all();
             if (isset($allCategory) && count($allCategory) > 0) {
                 foreach ($allCategory as $category):
-                    $subCategory = Category::find()->where("parentId=$category->categoryId and level=4")->all();
+                    $subCategory = Category::find()->where("parentId=$category->categoryId and level=4 and status=1")
+                            ->orderBy("title")
+                            ->all();
                     if (isset($subCategory) && count($subCategory) > 0) {
+
                         foreach ($subCategory as $sub):
                             $level4.=$sub->categoryId . ",";
                         endforeach;
                     }
                     $level2.=$category->categoryId . ",";
                 endforeach;
-                $level2 = substr($level2, 0, -1);
-                $level4 = substr($level4, 0, -1);
-                $allCategoryId = $level2 . $level4;
+
+                $allCategoryId = self::category($level2, $level4);
                 $products = Product::find()->where("categoryId in($allCategoryId)")
                         ->groupBy("brandId")
                         ->all();
@@ -93,18 +97,28 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                             $brandId.= $product->brandId . ",";
                         }
                     endforeach;
-                    if ($brandId != "") {
-                        $brandId = substr($brandId, 0, -1);
-                    }
                 }
             }
             if ($brandId != "") {
                 $brandId = substr($brandId, 0, -1);
-
                 $brand = Brand::find()->where("brandId in ($brandId)")->all();
             }
         }
         return $brand;
+    }
+
+    public static function category($level2, $level4) {
+        $allCate = '';
+        if ($level2 != '' && $level4 != '') {
+            $level2 = substr($level2, 0, -1);
+            $level4 = substr($level4, 0, -1);
+            $allCate = $level2 . "," . $level4;
+        } else if ($level2 != '' && $level4 == '') {
+            $allCate = substr($level2, 0, -1);
+        } else if ($level2 == '' && $level4 != '') {
+            $allCate = substr($level4, 0, -1);
+        }
+        return $allCate;
     }
 
     public static function isOverUse($promotionId) {

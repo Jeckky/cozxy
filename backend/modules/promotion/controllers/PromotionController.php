@@ -160,12 +160,15 @@ class PromotionController extends PromotionMasterController {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $categories = CategoryToProduct::find()
-                ->select('`category`.categoryId , `category`.title , `category`.parentId ')
-                ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
-                ->where("category.parentId IS NULL AND category.status=1")
-                ->groupBy('category_to_product.categoryId')
-                ->orderBy('category.title ASC')
+        /* $categories = CategoryToProduct::find()
+          ->select('`category`.categoryId , `category`.title , `category`.parentId ')
+          ->join("LEFT JOIN", "category", "category.categoryId = category_to_product.categoryId")
+          ->where("category.parentId IS NULL AND category.status=1")
+          ->groupBy('category_to_product.categoryId')
+          ->orderBy('category.title ASC')
+          ->all(); */
+        $categories = Category::find()->where("parentId is null and level=1 and status=1")
+                ->orderBy("title")
                 ->all();
         $brands = Brand::find()
                 ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
