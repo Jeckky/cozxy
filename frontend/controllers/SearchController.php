@@ -447,8 +447,6 @@ class SearchController extends MasterController {
             'pages' => $ConfigpParameter['pages']
         );
 
-
-
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
 
@@ -474,6 +472,7 @@ class SearchController extends MasterController {
             $brandid[] = $value['brandid'];
             //$productid['brandid'] = $value['brandid'];
         }
+        //print_r($productid);
         //print_r($brandid);
         //exit();
         if (isset($productid) && count($productid) > 0) {

@@ -16,8 +16,13 @@ class ProductAllController extends SuppliersMasterController {
         $CategoryId = Yii::$app->request->post('CategoryId');
         $BrandId = Yii::$app->request->post('BrandId');
         $title = Yii::$app->request->post('title');
-
+        $id = Yii::$app->request->get('id');
+        $type = Yii::$app->request->get('type');
+        //echo 'id :' . Yii::$app->request->get('id');
+        //echo 'BrandId :' . $BrandId;
         //echo 'CategoryId :' . $CategoryId;
+        ///echo 'title :' . $title;
+        //$idx = Yii::$app->request->post('id');
 
         $user = \common\helpers\Suppliers::GetUser($userId);
 
