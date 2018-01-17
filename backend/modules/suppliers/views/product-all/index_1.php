@@ -18,12 +18,16 @@ use yii\helpers\Url;
         $form = yii\widgets\ActiveForm::begin([
                     'options' => ['class' => 'form-product-my-prodcut', 'id' => 'form-product-my-prodcut', 'enctype' => 'multipart/form-data'],
         ]);
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
         ?>
 
         <div class ="col-sm-12">
 
             <div class ="col-sm-4">
-                <?= Html::input('text', 'title', '', ['class' => 'form-control', 'id' => 'title', 'onchange' => 'selectChange(this,"title")']) ?>
+                <?= Html::input('text', 'title', isset($title) ? $title : '', ['class' => 'form-control', 'id' => 'title', 'onchange' => 'selectChange(this,"title")']) ?>
+                <p>
+                    <br><code>*** พิมพ์คำที่ค้นหาแล้วกดEnter</code>
+                </p>
             </div>
 
             <div class ="col-sm-4">
