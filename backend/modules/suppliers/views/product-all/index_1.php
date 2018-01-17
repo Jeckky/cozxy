@@ -42,6 +42,7 @@ use yii\helpers\Url;
                         'placeholder' => 'Select or Search ...',
                         'loadingText' => 'Loading Category ...',
                         'initialize' => true,
+                        'allowClear' => true
                     ],
                 ]);
                 ?>
@@ -53,12 +54,13 @@ use yii\helpers\Url;
                 echo kartik\select2\Select2::widget([
                     'name' => 'BrandId',
                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
-                    'value' => isset($BrandId) ? $BrandId : '',
+                    'value' => isset($brandId) ? $brandId : '',
                     'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId', 'onchange' => 'selectChange(this,"brand")'], //, 'onchange' => 'this.form.submit()'
                     'pluginOptions' => [
                         'tags' => true,
                         'placeholder' => 'Select or Search ...',
                         'loadingText' => 'Loading Brand ...',
+                        'allowClear' => true
                     //'initialize' => true,
                     ],
                 ]);
