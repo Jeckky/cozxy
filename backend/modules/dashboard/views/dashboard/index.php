@@ -667,7 +667,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                             <td><?php echo isset($valueU->firstname) ? $valueU->firstname : 'ยังไม่ระบุ'; ?>&nbsp;
                                 <?php echo isset($valueU->lastname) ? $valueU->lastname : 'ยังไม่ระบุ'; ?></td>
                             <td><?php echo $valueU->email; ?></td>
-                            <td><?php echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web'; ?></td>
+                            <td><?php
+                                $typeWeb = $valueU->password;
+                                if (isset($typeWeb)) {
+                                    $booth = 'Booth';
+                                } else {
+                                    $booth = '';
+                                }
+                                echo isset($valueU->auth_type) ? $valueU->auth_type : ($valueU->auth_type != '') ? $valueU->auth_type : 'web' . '(' . $booth . ')';
+                                ?></td>
                         </tr>
                         <?php
                         //$num = $num++;
