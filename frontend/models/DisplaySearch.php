@@ -18,7 +18,7 @@ class DisplaySearch extends Model {
 
     public $score;
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch1($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -106,6 +106,54 @@ class DisplaySearch extends Model {
           }
           }
          */
+
+        return new ActiveDataProvider([
+            'query' => $pCanSale,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 12,
+            ]
+        ]);
+        //return $products;
+    }
+
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
+        $products = [];
+
+        $whereArray = [];
+        $productInStock = ProductSuppliers::find()
+                ->select('productId')
+                ->where('result>=0')
+                ->andWhere(['status' => 1])
+                ->andWhere(['approve' => 'approve'])
+                ->groupBy('productId')
+                ->asArray()
+                ->all();
+
+        $productInStock = array_values(ArrayHelper::map($productInStock, 'productId', 'productId'));
+
+        $pCanSale = Product::find()
+                ->select('product.*')
+                ->leftJoin('product_suppliers ps', ['product.productId' => 'ps.productId'])
+                ->where('product.parentId is not null')
+                ->andWhere(['product.approve' => 'approve'])
+                ->andWhere(['product.status' => 1])
+                ->andWhere(['not in', 'product.productId', $productInStock])
+                ->orderBy(new Expression('rand()'))
+                ->limit(isset($n) ? $n : 0);
+
+        if (isset($search_hd)) {
+            $pCanSale->andFilterWhere(['OR',
+                //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
+                //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
+                ['LIKE', 'product.title', trim($search_hd)],
+                ['LIKE', 'product.description', trim($search_hd)],
+                ['LIKE', 'product.isbn', trim($search_hd)],
+                    //                ['LIKE', 'product_suppliers.title', $search_hd],
+                    //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
+            ]);
+        }
+
+
 
         return new ActiveDataProvider([
             'query' => $pCanSale,
