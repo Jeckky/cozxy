@@ -79,11 +79,27 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                        'tag' => false,
 //                    ],
 //                ]);
-                $i = 0;
-                foreach ($slideGroup as $banner) {
-                    echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $banner, 'index' => $i]);
-                    $i++;
-                }
+                echo \yii\widgets\ListView::widget([
+                    'dataProvider' => $slideGroup,
+                    'summary' => "",
+                    'options' => [
+                        'tag' => false,
+                    ],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $model, 'index' => $index]);
+                    },
+                    // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                    //'layout'=>"{summary}{pager}{items}"
+                    //'layout' => "{items}",
+                    'itemOptions' => [
+                        'tag' => false,
+                    ],
+                ]);
+                //$i = 0;
+                //foreach ($slideGroup as $banner) {
+                //echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $banner, 'index' => $i]);
+                //$i++;
+                //}
                 ?>
 
             </div>
