@@ -122,7 +122,7 @@ class DisplaySearch extends Model {
         $whereArray = [];
         $productInStock = ProductSuppliers::find()
                 ->select('productId')
-                ->where('result>=0')
+                ->where('result > 0')
                 ->andWhere(['status' => 1])
                 ->andWhere(['approve' => 'approve'])
                 ->groupBy('productId')
