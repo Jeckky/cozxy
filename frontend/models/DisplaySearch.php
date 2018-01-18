@@ -136,7 +136,7 @@ class DisplaySearch extends Model {
                 ->leftJoin('product_suppliers ps', ['product.productId' => 'ps.productId'])
                 ->where('product.parentId is not null')
                 ->andWhere(['product.approve' => 'approve'])
-                ->andWhere(['product.statusx' => 1])
+                ->andWhere(['product.status' => 1])
                 ->andWhere(['not in', 'product.productId', $productInStock])
                 ->orderBy(new Expression('rand()'))
                 ->limit(isset($n) ? $n : 0);
