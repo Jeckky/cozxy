@@ -36,7 +36,7 @@ class DisplaySearch extends Model {
                     ->andFilterWhere(['OR',
                         //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                         //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
-                        ['LIKE', 'product_suppliers.title', trim($search_hd)],
+                        //['LIKE', 'product_suppliers.title', trim($search_hd)],
                         ['LIKE', 'p.title', trim($search_hd)],
                         ['LIKE', 'strip_tags(product_suppliers.description)', trim($search_hd)],
                         //['LIKE', 'product_suppliers.description', trim($search_hd)],
