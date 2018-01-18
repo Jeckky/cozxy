@@ -86,12 +86,27 @@ class DisplayMyBrand {
 
     public static function MyFilterBrand($categoryId) {
         if (isset($categoryId)) {
+            /*
+             * หา CategoryId และ parentId
+             */
+            $CategoryFindProduct = \common\models\costfit\Category::find()->where('`categoryId` = ' . $categoryId . ' or  `parentId` = ' . $categoryId . '')->all();
+            foreach ($CategoryFindProduct as $value) {
+                $category[] = $value['categoryId'];
+            }
+            /*
+             * หา brandId จากเทเบิล Product
+             */
+            $whereArrayCate["categoryId"] = $category;
             $BendFindProduct = \common\models\costfit\Product::find()
                             ->select(' DISTINCT `brandId`  ')
-                            ->where('categoryId = ' . $categoryId . ' and  approve="approve" AND  parentId is not null')->all();
+                            ->where($whereArrayCate)
+                            ->andWhere('approve="approve" AND  parentId is not null')->all();
             foreach ($BendFindProduct as $key => $value) {
                 $brand[] = $value['brandId'];
             }
+            /*
+             * หา tile Brand
+             */
             if (isset($brand)) {
                 $whereArray["brandId"] = $brand;
                 $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
