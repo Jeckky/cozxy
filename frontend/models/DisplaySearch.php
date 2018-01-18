@@ -25,7 +25,7 @@ class DisplaySearch extends Model {
 
         if ($search_hd !== '') {
             $pCanSale = \common\models\costfit\ProductSuppliers::find()
-                    ->select('product_suppliers.*,product_price_suppliers.price ')
+                    ->select('product_suppliers.*,product_price_suppliers.price ,p.*')
                     //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
                     ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
                     ->leftJoin('product p', 'p.productId=product_suppliers.productId')
