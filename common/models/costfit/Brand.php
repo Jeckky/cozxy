@@ -47,7 +47,8 @@ class Brand extends \common\models\costfit\master\BrandMaster {
                 ->where('p.parentId is not null')
                 ->andWhere(['p.approve' => 'approve'])
                 ->andWhere(['p.status' => 1])
-                ->groupBy('brand.brandId');
+                ->groupBy('brand.brandId')
+                ->orderBy(new \yii\db\Expression('rand()'));
         // ->all();
         return new ActiveDataProvider([
             'query' => $brands,
