@@ -21,7 +21,7 @@ use yii\data\ActiveDataProvider;
 class DisplayMyBrand {
 
     //put your code here
-    public static function MyFilterBrand($categoryId) {
+    public static function MyFilterBrandBk($categoryId) {
         $products = [];
         $categoryIds = \common\models\costfit\CategoryToProduct::find()
                 ->select("ctp.*")
@@ -76,6 +76,23 @@ class DisplayMyBrand {
     public static function MyFilterBrandNew($brandId) {
         if (isset($brandId)) {
             $whereArray["brandId"] = $brandId;
+            $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        } else {
+            $brand = \common\models\costfit\Brand::find()->all();
+        }
+        //$brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        return $brand;
+    }
+
+    public static function MyFilterBrand($categoryId) {
+        if (isset($categoryId)) {
+            $BendFindProduct = \common\models\costfit\Product::find()
+                            ->select(' DISTINCT `brandId`  ')
+                            ->where('categoryId = ' . $categoryId . ' and  approve="approve" AND  parentId is not null')->all();
+            foreach ($BendFindProduct as $key => $value) {
+                $brand[] = $value['brandId'];
+            }
+            $whereArray["brandId"] = $brand;
             $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
         } else {
             $brand = \common\models\costfit\Brand::find()->all();

@@ -63,6 +63,9 @@ class SearchController extends MasterController {
         $productCanSell = Product::productForSale(12, $categoryId);
         $productNotSell = Product::productForNotSale(12, $categoryId);
 
+
+        //print_r($productNotSell);
+
         if ($categoryId != 'undefined') {
             $site = 'category';
         } else {
