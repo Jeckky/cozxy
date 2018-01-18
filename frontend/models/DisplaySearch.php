@@ -29,7 +29,7 @@ class DisplaySearch extends Model {
                     //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
                     ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
                     ->leftJoin('product p', 'p.productId=product_suppliers.productId')
-                    ->where("p.status=1 and p.approve='approve' and product_suppliers.result > 0 and product_price_suppliers.price > 0")
+                    ->where("p.status=1 and p.approve='approve' and product_suppliersx.result > 0 and product_price_suppliers.price > 0")
                     ->andWhere('p.productId is not null')
                     ->andWhere('p.parentId is not null')
                     ->andWhere(['product_price_suppliers.status' => 1])
