@@ -18,7 +18,7 @@ class DisplaySearch extends Model {
 
     public $score;
 
-    public static function productSearch1($search_hd, $n, $cat = FALSE) {
+    public static function productSearch($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
@@ -116,7 +116,7 @@ class DisplaySearch extends Model {
         //return $products;
     }
 
-    public static function productSearch($search_hd, $n, $cat = FALSE) {
+    public static function productSearch1($search_hd, $n, $cat = FALSE) {
         $products = [];
 
         $whereArray = [];
