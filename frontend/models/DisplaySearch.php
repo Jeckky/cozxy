@@ -136,7 +136,7 @@ class DisplaySearch extends Model {
                 ->leftJoin('product_suppliers ps', ['product.productId' => 'ps.productId'])
                 ->where('product.parentId is not null')
                 ->andWhere(['product.approve' => 'approve'])
-                ->andWhere(['product.status' => 1])
+                ->andWhere(['product.statusx' => 1])
                 ->andWhere(['not in', 'product.productId', $productInStock])
                 ->orderBy(new Expression('rand()'))
                 ->limit(isset($n) ? $n : 0);
@@ -199,80 +199,9 @@ class DisplaySearch extends Model {
                     //                ['LIKE', 'product_suppliers.title', $search_hd],
                     //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
             ]);
-            /*
-              $pNotSale = \common\models\costfit\ProductSuppliers::find()
-              ->select('product_suppliers.*')
-              //->addSelect('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) as score')
-              ->join("LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-              ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result = 0 and product_price_suppliers.price = 0")
-              ->andFilterWhere(['OR',
-              //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
-              //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
-              ['LIKE', 'product_suppliers.title', trim($search_hd)],
-              ['LIKE', 'product_suppliers.description', trim($search_hd)],
-              //                ['LIKE', 'product_suppliers.title', $search_hd],
-              //                ['LIKE', 'strip_tags(product_suppliers.description)', $search_hd],
-              ])
-
-              // ->andWhere('match(product_suppliers.title, product_suppliers.optionName, product_suppliers.shortDescription, product_suppliers.description) against("' . trim($search_hd) . '*" in boolean mode) ')
-              //->andWhere('group by product_suppliers.productSuppId ')
-              ->groupBy(' product_suppliers.productSuppId ')
-              ->orderBy(new \yii\db\Expression('rand()'));
-              //->orderBy('score')
-              //->all();
-              } else {
-              $pNotSale = \common\models\costfit\ProductSuppliers::find()
-              ->select('product_suppliers.*')
-              ->join(" LEFT JOIN", "product_price_suppliers", "product_price_suppliers.productSuppId = product_suppliers.productSuppId")
-              ->where(' product_suppliers.approve="approve" and product_suppliers.result > 0 AND product_price_suppliers.status =1 AND '
-              . ' product_price_suppliers.price > 0')
-              ->orderBy(new \yii\db\Expression('rand()'));
-             */
         }
 
-        /* foreach ($pCanSale as $value) {
-          if (isset($value->productSuppId)) {
 
-          $price_s = isset($value->product) ? number_format($value->product->price, 2) : '';
-          $price = number_format($value->price, 2);
-          $wishList = \frontend\models\DisplayMyWishList::productWishList($value->productSuppId);
-          $productImagesThumbnail1 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $value->productSuppId, 'Svg260x260');
-
-          $products[$value->productSuppId] = [
-          'productId' => $value->productId,
-          'productSuppId' => $value->productSuppId,
-          'image' => $productImagesThumbnail1,
-          'url' => Yii::$app->homeUrl . 'product/' . $value->encodeParams(['productId' => $value->productId, 'productSupplierId' => $value->productSuppId]),
-          'brand' => isset($value->brand) ? $value->brand->title : '',
-          'title' => substr($value->title, 0, 35),
-          'price_s' => isset($price_s) ? $price_s : '',
-          'price' => isset($price) ? $price : '',
-          'maxQnty' => $value->result,
-          'fastId' => FALSE,
-          'productId' => $value->productId,
-          'supplierId' => $value->userId,
-          'receiveType' => $value->receiveType,
-          'wishList' => $wishList
-          ];
-          } else {
-          $products[$value->productSuppId] = [
-          'productId' => FALSE,
-          'productSuppId' => FALSE,
-          'image' => FALSE,
-          'url' => FALSE,
-          'brand' => FALSE,
-          'title' => FALSE,
-          'price_s' => FALSE,
-          'price' => FALSE,
-          'maxQnty' => FALSE,
-          'fastId' => FALSE,
-          'productId' => FALSE,
-          'supplierId' => FALSE,
-          'receiveType' => FALSE,
-          'wishList' => FALSE,
-          ];
-          }
-          } */
 
         return new ActiveDataProvider([
             'query' => $pNotSale,
