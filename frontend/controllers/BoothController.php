@@ -33,6 +33,7 @@ class BoothController extends MasterController {
 
         if (isset($_POST["SignupForm"])) {
 
+            //print_r($_POST["SignupForm"]);
             if ($model->load(Yii::$app->request->post())) {
                 $model->attributes = $_POST["SignupForm"];
                 $model->birthDate = '' . '-' . '' . '-' . '';
@@ -43,6 +44,8 @@ class BoothController extends MasterController {
                         //return $this->redirect(Yii::$app->homeUrl . 'site/thank' . '?token=' . $user->attributes['token']);
                         return $this->redirect(Yii::$app->homeUrl . 'booth/confirm' . '?token=' . $user->attributes['token']);
                         // http://cozxy.com/booth/confirm?token=F80-SBgXV9
+                    } else {
+                        //echo 'xx';
                     }
                 }
             } else {
@@ -52,7 +55,7 @@ class BoothController extends MasterController {
 
         }
         return $this->render('@app/themes/cozxy/layouts/_register_booth', [
-            'model' => $model, 'content' => $content
+                    'model' => $model, 'content' => $content
         ]);
     }
 

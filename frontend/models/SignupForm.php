@@ -77,7 +77,7 @@ class SignupForm extends Model {
         return [
             self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
             self::COZXY_BOOTH_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'],
-            self::COZXY_MOBILE_REGIS => ['firstname', 'lastname', 'email', 'password', 'gender', 'birthDate'],
+                //self::COZXY_MOBILE_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'gender', 'birthDate'],
         ];
     }
 
@@ -88,6 +88,7 @@ class SignupForm extends Model {
      */
     public function signup() {
         //echo 'birthDate :' . $this->birthDate . '<br>';
+        //print_r($this->validate());
         $otp_code = strtoupper(substr(md5(uniqid()), 0, 6));   // A smart code to generate OTP PIN.
         if (!$this->validate()) {
             return null;
