@@ -131,7 +131,7 @@ class DisplaySearch extends Model {
 
         $productInStock = array_values(ArrayHelper::map($productInStock, 'productId', 'productId'));
 
-        $pNotSale = Product::find()
+        $pCanSale = Product::find()
                 ->select('product.*')
                 ->leftJoin('product_suppliers ps', ['product.productId' => 'ps.productId'])
                 ->where('product.parentId is not null')
@@ -142,7 +142,7 @@ class DisplaySearch extends Model {
                 ->limit(isset($n) ? $n : 0);
 
         if (isset($search_hd)) {
-            $pNotSale->andFilterWhere(['OR',
+            $pCanSale->andFilterWhere(['OR',
                 //                ['REGEXP', 'product_suppliers.title', trim($search_hd)],
                 //                ['REGEXP', 'product_suppliers.description', trim($search_hd)],
                 ['LIKE', 'product.title', trim($search_hd)],
@@ -227,7 +227,7 @@ class DisplaySearch extends Model {
           } */
 
         return new ActiveDataProvider([
-            'query' => $pNotSale,
+            'query' => $pCanSale,
             'pagination' => [
                 'pageSize' => isset($n) ? $n : 12,
             ]
