@@ -92,8 +92,12 @@ class DisplayMyBrand {
             foreach ($BendFindProduct as $key => $value) {
                 $brand[] = $value['brandId'];
             }
-            $whereArray["brandId"] = $brand;
-            $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+            if (isset($brand)) {
+                $whereArray["brandId"] = $brand;
+                $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+            } else {
+                $brand = \common\models\costfit\Brand::find()->all();
+            }
         } else {
             $brand = \common\models\costfit\Brand::find()->all();
         }
