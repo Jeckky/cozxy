@@ -139,9 +139,6 @@ class PromotionController extends PromotionMasterController {
             $model->save(false);
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : null;
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : null;
-            /* if (isset($brand) && count($brand) > 0 && !empty($brand)) {
-              $this->saveBrandPromotion($brand, $model->promotionId);
-              } */
             if (isset($categories) && count($categories) > 0 && !empty($categories)) {
                 $this->saveCategoryToBrandPromotion($categories, $model->promotionId, $brand);
             }
