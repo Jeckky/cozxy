@@ -9,9 +9,10 @@
  * Create Date : 6/02/2017
 
  */
-var $baseUrl = window.location.protocol + "/ / " + window.location.host;
+var $baseUrl = window.location.protocol + "// " + window.location.host;
+
 if (window.location.host == 'localhost') {
-    $baseUrl = window.location.protocol + "//" + window.location.host + '/cost.fit-backend/';
+    $baseUrl = window.location.protocol + "//" + window.location.host + '/cozxy/backend/web/';
 } else if (window.location.host == '192.168.100.8' || window.location.host == '192.168.100.20') {
     //console.log($baseUrl);
     var str = window.location.pathname;
@@ -24,6 +25,26 @@ if (window.location.host == 'localhost') {
     $baseUrl = window.location.protocol + "//" + window.location.host + '/';
 }
 
+function selectChange(id, type) {
+    //alert(id.value);
+    //alert($baseUrl);
+    //console.log($baseUrl);
+    var text = id.value;
+    //window.location = $baseUrl + 'suppliers/product-all?userId=13&id=' + text + '&type=' + type;
+    var url = $baseUrl + 'suppliers/product-all?userId=13&id=' + text + '&type=' + type;
+    //alert(url);
+    //window.location = url;
+    //document.forms['form-product-my-prodcut'].submit();
+    document.getElementById("form-product-my-prodcut").submit();// Form submission
+
+}
+function selectChangeTitle() {
+    alert(id.value);
+    //alert($baseUrl);
+    //console.log($baseUrl);
+    window.location = $baseUrl + 'suppliers/product-all?userId=13&id=' + id.value + '&type=' + type;
+    //document.forms['form-product-my-prodcut'].submit();
+}
 //$.get($baseUrl + "store/virtual/leditems", function (data, status) {
 //    var json_obj = $.parseJSON(data); //parse JSON
 //    /*
@@ -689,4 +710,5 @@ function approveReceiveType(productSuppId, value) {
     $(".switchers-xx-" + productSuppId).removeClass("hidden");
     $('.text-switcher-warning-' + productSuppId).html('');
 }
+
 

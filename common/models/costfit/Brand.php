@@ -42,15 +42,21 @@ class Brand extends \common\models\costfit\master\BrandMaster {
 
     public static function allAvailableBrands() {
         $brands = self::find()
-        ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
-        ->leftJoin('product p', 'p.brandId=brand.brandId')
-        ->where('p.parentId is not null')
-        ->andWhere(['p.approve' => 'approve'])
-        ->andWhere(['p.status' => 1])
-        ->groupBy('brand.brandId')
-        ->all();
-
-        return $brands;
+                ->select('brand.image as image, brand.brandId as brandId, brand.title as title')
+                ->leftJoin('product p', 'p.brandId=brand.brandId')
+                ->where('p.parentId is not null')
+                ->andWhere(['p.approve' => 'approve'])
+                ->andWhere(['p.status' => 1])
+                ->groupBy('brand.brandId')
+                ->orderBy(new \yii\db\Expression('rand()'));
+        // ->all();
+        return new ActiveDataProvider([
+            'query' => $brands,
+            'pagination' => [
+                'pageSize' => 100,
+            ]
+        ]);
+        //return $brands;
     }
 
 }

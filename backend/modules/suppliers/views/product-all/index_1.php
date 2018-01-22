@@ -16,48 +16,55 @@ use yii\helpers\Url;
     <div class="panel-body">
         <?php
         $form = yii\widgets\ActiveForm::begin([
-                    'options' => ['class' => 'form-horizontalx', 'enctype' => 'multipart/form-data'],
+                    'options' => ['class' => 'form-product-my-prodcut', 'id' => 'form-product-my-prodcut', 'enctype' => 'multipart/form-data'],
         ]);
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
         ?>
 
         <div class ="col-sm-12">
 
             <div class ="col-sm-4">
-                <?= Html::input('text', 'title', '', ['class' => 'form-control']) ?>
+                <?= Html::input('text', 'title', isset($title) ? $title : '', ['class' => 'form-control', 'id' => 'title', 'onchange' => 'selectChange(this,"title")']) ?>
+                <p>
+                    <br><code>*** พิมพ์คำที่ค้นหาแล้วกดEnter</code>
+                </p>
             </div>
 
             <div class ="col-sm-4">
                 <?php
                 //echo '<label class="control-label">Provinces</label>';
-                //$CategoryId = isset($_GET["CategoryId"]) ? $_GET["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+
+                $CategoryId = isset($_POST["CategoryId"]) ? $_POST["CategoryId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                 echo kartik\select2\Select2::widget([
                     'name' => 'CategoryId',
-                    //'value' => $categoryId == '' ? '' : $categoryId,
+                    'value' => isset($CategoryId) ? $CategoryId : '',
                     'data' => common\models\costfit\Category::findCategoryArrayWithMultiLevelBackend(),
                     //'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Category::find()->all(), 'categoryId', 'title'),
-                    'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId'], //, 'onchange' => 'this.form.submit()'
+                    'options' => ['placeholder' => 'Select or Search User Category ...', 'id' => 'CategoryId', 'onchange' => 'selectChange(this,"category")'], //, 'onchange' => 'this.form.submit()'
                     'pluginOptions' => [
                         'tags' => true,
                         'placeholder' => 'Select or Search ...',
                         'loadingText' => 'Loading Category ...',
                         'initialize' => true,
+                        'allowClear' => true
                     ],
                 ]);
                 ?>
             </div>
             <div class ="col-sm-4">
                 <?php
-                //$brandId = isset($_GET["BrandId"]) ? $_GET["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
+                $brandId = isset($_POST["BrandId"]) ? $_POST["BrandId"] : ''; //isset($_POST['BrandId'] ? $_POST['BrandId'] : '');
                 //echo '<label class="control-label">Provinces</label>';
                 echo kartik\select2\Select2::widget([
                     'name' => 'BrandId',
                     'data' => yii\helpers\ArrayHelper::map(common\models\costfit\Brand::find()->all(), 'brandId', 'title'),
-                    //'value' => $brandId == '' ? '' : $brandId,
-                    'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId'], //, 'onchange' => 'this.form.submit()'
+                    'value' => isset($brandId) ? $brandId : '',
+                    'options' => ['placeholder' => 'Select or Search User Brand ...', 'id' => 'BrandId', 'onchange' => 'selectChange(this,"brand")'], //, 'onchange' => 'this.form.submit()'
                     'pluginOptions' => [
                         'tags' => true,
                         'placeholder' => 'Select or Search ...',
                         'loadingText' => 'Loading Brand ...',
+                        'allowClear' => true
                     //'initialize' => true,
                     ],
                 ]);
@@ -70,7 +77,7 @@ use yii\helpers\Url;
                 -
             </div>
             <div class ="col-sm-12"><br>
-                &nbsp;&nbsp;&nbsp;<button type="submit" class="btn"><i class="fa fa-search"></i> ค้นหา</button>
+               <!-- &nbsp;&nbsp;&nbsp;<button type="submit" class="btn"><i class="fa fa-search"></i> ค้นหา</button>-->
             </div>
             <?php yii\widgets\ActiveForm::end(); ?>
 
@@ -124,7 +131,7 @@ use yii\helpers\Url;
                 [
                     'attribute' => 'title',
                     'headerOptions' => ['style' => 'width:15%'],
-                    'value' => function($model) {
+                    'value' => function($model ) {
                         return $model->title;
                     }
                 ],

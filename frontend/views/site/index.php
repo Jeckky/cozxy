@@ -79,11 +79,27 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 //                        'tag' => false,
 //                    ],
 //                ]);
-                $i = 0;
-                foreach ($slideGroup as $banner) {
-                    echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $banner, 'index' => $i]);
-                    $i++;
-                }
+                echo \yii\widgets\ListView::widget([
+                    'dataProvider' => $slideGroup,
+                    'summary' => "",
+                    'options' => [
+                        'tag' => false,
+                    ],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $model, 'index' => $index]);
+                    },
+                    // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                    //'layout'=>"{summary}{pager}{items}"
+                    //'layout' => "{items}",
+                    'itemOptions' => [
+                        'tag' => false,
+                    ],
+                ]);
+                //$i = 0;
+                //foreach ($slideGroup as $banner) {
+                //echo $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $banner, 'index' => $i]);
+                //$i++;
+                //}
                 ?>
 
             </div>
@@ -111,25 +127,25 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                         <!--<a class="align-middle fc-g999 size24 scrollingHotSpotLeft" href="#" style="padding-top:8px;left:0"><span class="glyphicon glyphicon-menu-left"></span></a>-->
                         <div id="logoParade">
                             <?php
-//                            echo \yii\widgets\ListView::widget([
-//                                'dataProvider' => $productBrand,
-//                                'options' => [
-//                                    'tag' => false,
-//                                ],
-//                                'itemView' => function ($model, $key, $index, $widget) {
-//                                    return $this->render('@app/themes/cozxy/layouts/_brand', ['model' => $model, 'index' => $index]);
-//                                },
-//                                // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-//                                //'layout'=>"{summary}{pager}{items}"
-//                                'layout' => "{items}",
-//                                'itemOptions' => [
-//                                    'tag' => false,
-//                                ],
-//                            ]);
-
-                            foreach ($productBrand as $brand) {
-                                echo $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model' => $brand]);
-                            }
+                            echo \yii\widgets\ListView::widget([
+                                'dataProvider' => $productBrand,
+                                'summary' => "",
+                                'options' => [
+                                    'tag' => false,
+                                ],
+                                'itemView' => function ($model, $key, $index, $widget) {
+                                    return $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model' => $model, 'index' => $index]);
+                                },
+                                // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                //'layout'=>"{summary}{pager}{items}"
+                                //'layout' => "{items}",
+                                'itemOptions' => [
+                                    'tag' => false,
+                                ],
+                            ]);
+                            //foreach ($productBrand as $brand) {
+                            //echo $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model' => $brand]);
+                            //}
                             ?>
                         </div>
                         <!--<a class="align-middle fc-g999 size24 scrollingHotSpotRight" href="#" style="padding-top:8px;right:0"><span class="glyphicon glyphicon-menu-right"></span></a>-->

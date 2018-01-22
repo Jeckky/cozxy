@@ -63,6 +63,9 @@ class SearchController extends MasterController {
         $productCanSell = Product::productForSale(12, $categoryId);
         $productNotSell = Product::productForNotSale(12, $categoryId);
 
+
+        //print_r($productNotSell);
+
         if ($categoryId != 'undefined') {
             $site = 'category';
         } else {
@@ -431,7 +434,10 @@ class SearchController extends MasterController {
     }
 
     public function actionElasticSearch() {
+
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
+
+
         $ConfigpParameter = $this->ConfigpParameter('searching');
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
@@ -444,10 +450,9 @@ class SearchController extends MasterController {
             'pages' => $ConfigpParameter['pages']
         );
 
+        /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
 
-        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -459,28 +464,46 @@ class SearchController extends MasterController {
                 'pageSize' => $searchElastic['size'],
             ],
         ]);
+        /* end 1 */
 
+        /*
+         * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
+         */
         //$productid[] = '';
         foreach ($dataProvider->allModels as $key => $value) {
             $productid[] = $value['productid'];
+            $brandid[] = $value['brandid'];
+            //$productid['brandid'] = $value['brandid'];
         }
+        //print_r($productid);
+        //print_r($brandid);
+        //exit();
         if (isset($productid) && count($productid) > 0) {
             $productid = $productid;
         } else {
             $productid = NULL;
         }
-
+        if (isset($brandid)) {
+            $brandid = $brandid;
+        } else {
+            $brandid = NULL;
+        }
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
-        //print_r($productid);
+        //echo $productid;
         $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
-
+        /* end 2 */
+        //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
+        /* 3.หา paginate */
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
         $item_per_page = 12; //$searchElastic['size'];
         $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
         $total_records = $searchElastic['total'];
         $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
         $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
+        /* end 2 */
 
         if (isset($ConfigpParameter['pages'])) {
             return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));

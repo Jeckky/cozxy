@@ -21,7 +21,7 @@ use yii\data\ActiveDataProvider;
 class DisplayMyBrand {
 
     //put your code here
-    public static function MyFilterBrand($categoryId) {
+    public static function MyFilterBrandBk($categoryId) {
         $products = [];
         $categoryIds = \common\models\costfit\CategoryToProduct::find()
                 ->select("ctp.*")
@@ -71,6 +71,53 @@ class DisplayMyBrand {
             ];
         }
         return $products;
+    }
+
+    public static function MyFilterBrandNew($brandId) {
+        if (isset($brandId)) {
+            $whereArray["brandId"] = $brandId;
+            $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        } else {
+            $brand = \common\models\costfit\Brand::find()->all();
+        }
+        //$brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        return $brand;
+    }
+
+    public static function MyFilterBrand($categoryId) {
+        if (isset($categoryId)) {
+            /*
+             * หา CategoryId และ parentId
+             */
+            $CategoryFindProduct = \common\models\costfit\Category::find()->where('`categoryId` = ' . $categoryId . ' or  `parentId` = ' . $categoryId . '')->all();
+            foreach ($CategoryFindProduct as $value) {
+                $category[] = $value['categoryId'];
+            }
+            /*
+             * หา brandId จากเทเบิล Product
+             */
+            $whereArrayCate["categoryId"] = $category;
+            $BendFindProduct = \common\models\costfit\Product::find()
+                            ->select(' DISTINCT `brandId`  ')
+                            ->where($whereArrayCate)
+                            ->andWhere('approve="approve" AND  parentId is not null')->all();
+            foreach ($BendFindProduct as $key => $value) {
+                $brand[] = $value['brandId'];
+            }
+            /*
+             * หา tile Brand
+             */
+            if (isset($brand)) {
+                $whereArray["brandId"] = $brand;
+                $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+            } else {
+                $brand = \common\models\costfit\Brand::find()->all();
+            }
+        } else {
+            $brand = \common\models\costfit\Brand::find()->all();
+        }
+        //$brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+        return $brand;
     }
 
 }

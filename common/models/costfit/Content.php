@@ -5,6 +5,7 @@ namespace common\models\costfit;
 use Yii;
 use \common\models\costfit\master\ContentMaster;
 use yii\db\Expression;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "content".
@@ -34,12 +35,18 @@ class Content extends \common\models\costfit\master\ContentMaster {
     }
 
     public static function banners() {
-        return self::find()
-                        ->leftJoin('content_group cg', 'content.contentGroupId=cg.contentGroupId')
-                        ->where(['cg.title' => 'Banner'])
-                        ->andWhere(['content.status' => 1])
-                        ->orderBy(new Expression('rand()'))
-                        ->all();
+        $slideImages = self::find()
+                ->leftJoin('content_group cg', 'content.contentGroupId=cg.contentGroupId')
+                ->where(['cg.title' => 'Banner'])
+                ->andWhere(['content.status' => 1])
+                ->orderBy(new Expression('rand()'));
+        //->all();
+        return new ActiveDataProvider([
+            'query' => $slideImages,
+            'pagination' => [
+                'pageSize' => 100,
+            ]
+        ]);
     }
 
 }
