@@ -82,7 +82,7 @@ class Section extends \common\models\costfit\master\SectionMaster {
                 ->where('p.productSuppId is null and p.parentId is not null and p.approve="approve" and p.status=1 and product_suppliers.approve="approve" and product_suppliers.status=1 and product_suppliers.result>0 AND pps.status =1 AND  pps.price > 0')
                 ->andWhere(['in', 'product_suppliers.productSuppId', explode(',', $productSectionItems)])
                 ->andWhere(($maxs > 100) ? 'pps.price ' . 'between ' . $mins . ' and ' . $maxs : " product_suppliers.result >= 0")
-                ->limit($n)
+                //->limit($n)
                 ->orderBy($sortStr);
         //->orderBy(new Expression('rand()') . " , pps.price");
         if (isset($cat) && !empty($cat)) {
@@ -99,11 +99,10 @@ class Section extends \common\models\costfit\master\SectionMaster {
                 $products->leftJoin('brand b', 'b.brandId=product_suppliers.brandId');
             }
         }
-
         return new ActiveDataProvider([
             'query' => $products,
             'pagination' => [
-            // 'pageSize' => isset($n) ? $n : 12,
+                'pageSize' => isset($n) ? $n : null,
             ]
         ]);
     }
