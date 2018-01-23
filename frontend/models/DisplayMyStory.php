@@ -101,8 +101,8 @@ class DisplayMyStory extends Model {
                 $productImagesThumbnail2 = \common\helpers\DataImageSystems::DataImageMaster($value->productId, $productSupplierId, 'Svg64x64');
                 if (isset($productSupplierId)) {
                     $productPrice = \common\models\costfit\ProductPriceSuppliers::find()->where('productSuppId=' . $productSupplierId)->orderBy('productPriceId desc')->limit(1)->one();
-                    $price_s = number_format($productPrice->price);
-                    $price = number_format($productPrice->price);
+                    $price_s = isset($productPrice->price) ? number_format($productPrice->price) : '';
+                    $price = isset($productPrice->price) ? number_format($productPrice->price) : '';
                 } else {
                     $price_s = '';
                     $price = '';
