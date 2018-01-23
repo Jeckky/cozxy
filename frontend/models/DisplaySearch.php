@@ -137,7 +137,7 @@ class DisplaySearch extends Model {
                 ->where('product.parentId is not null')
                 ->andWhere(['product.approve' => 'approve'])
                 ->andWhere(['product.status' => 1])
-                ->andWhere(['not in', 'product.productId', $productInStock])
+                ->andWhere(['in', 'product.productId', $productInStock])
                 ->orderBy(new Expression('rand()'))
                 ->limit(isset($n) ? $n : 0);
 

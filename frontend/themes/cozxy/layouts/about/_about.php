@@ -6,7 +6,7 @@
         </div>
         <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
             <?php foreach ($content as $detail): ?>
-                <div class="col-xs-12 bg-white size18 b" style="padding: 20px;border: #cccccc thin solid;margin-bottom: 10px;border-radius: 20px 20px 20px 20px;">
+                <div class="col-xs-12 bg-white" style="padding: 20px; margin-bottom: 10px; ">
                     <h3><?= $detail->title ?></h3>
                     <?= $detail->description ?>
                 </div>
