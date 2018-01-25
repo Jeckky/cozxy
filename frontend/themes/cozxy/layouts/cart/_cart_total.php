@@ -14,7 +14,7 @@
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate']) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
-            <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? number_format($this->params['cart']['discount'], 2) : '0' ?> THB</div>
+            <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? $this->params['cart']['discount'] : '0' ?> THB</div>
             <div class="row coupon  ">
                 <div class="col-lg-6 promo-coupon-codes-code">
                     <?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?>

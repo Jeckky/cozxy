@@ -211,7 +211,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $res["vatFormatText"] = number_format($order->vat, 2);
             $res["total"] = $order->total;
             $res["totalWithoutDiscount"] = $totalWithoutDiacount;
-            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount, 2);
+            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount);
             $res["totalItemDiscount"] = $totalItemDiscount;
             $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
             $res["totalFormatText"] = number_format($order->total, 2);
@@ -230,12 +230,12 @@ class Order extends \common\models\costfit\master\OrderMaster {
             } else {
                 $res["couponCode"] = NULL;
             }
-            $res["discount"] = $order->discount;
-            $res["discountFormatText"] = number_format($order->discount, 2);
+            $res["discount"] = number_format($order->discount);
+            $res["discountFormatText"] = number_format($order->discount);
             $res["shippingRate"] = $order->shippingRate;
             $res["shippingRateFormatText"] = number_format($order->shippingRate, 2);
             $res["summary"] = $order->summary;
-            $res["summaryFormatText"] = number_format($order->summary, 2);
+            $res["summaryFormatText"] = number_format($order->summary);
             $res["items"] = $items;
             $res["qty"] = $quantity;
             if (isset($order->orderMessage)) {
@@ -249,7 +249,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 'shippingRate' => $shipping,
                 'shippingRateFormatText' => number_format($shipping, 2),
                 'summary' => $total + $shipping,
-                'summaryFormatText' => number_format($total + $shipping, 2),
+                'summaryFormatText' => number_format($total + $shipping),
                 'totalWithoutDiscount' => $totalWithoutDiacount,
                 'totalItemDiscount' => $totalItemDiscount,
                 'qty' => $quantity,
@@ -345,7 +345,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $res["vatFormatText"] = number_format($order->vat, 2);
             $res["total"] = $order->total;
             $res["totalWithoutDiscount"] = $totalWithoutDiacount;
-            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount, 2);
+            $res["totalWithoutDiscountText"] = number_format($totalWithoutDiacount);
             $res["totalItemDiscount"] = $totalItemDiscount;
             $res["totalItemDiscountText"] = number_format($totalItemDiscount, 2);
             $res["totalFormatText"] = number_format($order->total, 2);
@@ -367,7 +367,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
             $res["shippingRate"] = $order->shippingRate;
             $res["shippingRateFormatText"] = number_format($order->shippingRate, 2);
             $res["summary"] = $order->summary;
-            $res["summaryFormatText"] = number_format($order->summary, 2);
+            $res["summaryFormatText"] = number_format($order->summary);
             $res["items"] = $items;
             $res["qty"] = $quantity;
             if (isset($order->orderMessage)) {
@@ -382,7 +382,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 'shippingRate' => $shipping,
                 'shippingRateFormatText' => number_format($shipping, 2),
                 'summary' => $total + $shipping,
-                'summaryFormatText' => number_format($total + $shipping, 2),
+                'summaryFormatText' => number_format($total + $shipping),
                 'totalWithoutDiscount' => $totalWithoutDiacount,
                 'totalItemDiscount' => $totalItemDiscount,
                 'qty' => $quantity,
