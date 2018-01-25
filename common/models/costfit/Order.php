@@ -543,7 +543,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
         $order = Order::find()->where("orderId=$orderId")->one();
         if ($promotion->discountType == 2) {//เป็นเงินสด
             $order->discount = $promotion->discount;
-        } else {
+        } else if ($promotion->discountType == 1) {
 
             $totalDiscount = 0;
             foreach ($orderItems as $orderItem):
@@ -566,6 +566,12 @@ class Order extends \common\models\costfit\master\OrderMaster {
                     $orderItem->save(false);
                 endforeach;
                 $order->discount = $totalDiscount;
+            }
+        }else {//type =3 ลดเมื่อซื้อครบจำนวนที่กำหนด
+            if ($order->summary >= $promotion->orderSummary) {
+                $order->discount = $promotion->discount;
+            } else {
+                $order->discount = 0;
             }
         }
         // throw new \yii\base\Exception($this->couponId . '==' . $productId . "===" . $order->discount);

@@ -40,6 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $model->discount ?><?= $model->discountType == 1 ? ' % ' : 'cash ( THB )' ?></td>
             </tr>
             <tr>
+                <td>Order Summary</td>
+                <td><?= $model->orderSummary ?>cash ( THB )</td>
+            </tr>
+            <tr>
                 <td>Maximum Discount</td>
                 <td><?= $model->maximumDiscount ?> (cash THB)</td>
             </tr>

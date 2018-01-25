@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->discount . $type;
                         }
                     ],
-                    //'maximumDiscount',
+                    'orderSummary',
                     //'maximum',
                     //'startDate',
                     //'endDate',
