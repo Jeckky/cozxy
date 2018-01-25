@@ -225,6 +225,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                   $res["couponCode"] = NULL;
                   } else { */
                 $res["couponCode"] = $order->coupon->promotionCode;
+                $res["couponDescription"] = $order->coupon->description;
                 //}
             } else {
                 $res["couponCode"] = NULL;

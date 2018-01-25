@@ -29,7 +29,10 @@
                 ?> text-right">
                     <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : ''; ?>"></i></a>
                 </div>
+                <div class="col-lg-12 <?= isset($this->params['cart']['couponCode']) ? 'display' : 'hidden' ?>" id="couponDescription" style="font-size: 10pt;margin-top: 5px;">
+                    <?= isset($this->params['cart']['couponDescription']) ? "<span>* " . $this->params['cart']['couponDescription'] . "</span>" : "" ?>
 
+                </div>
             </div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL
