@@ -39,7 +39,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
             <!--Left Column-->
             <div class="col-lg-12 col-md-12 ">
                 <div class="col-lg-6 col-md-6 ">
-                    <!--<h5>Send DatePicking Point</h5>-->
+                    <!--<h5>Send DatePicking Point</h5>-->  <h5><br></h5>
                     <table class="table">
                         <tbody>
                             <tr>
@@ -144,7 +144,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                     </thead>
                     <tbody>
                         <?=
-                        $this->render('@app/themes/cozxy/layouts/order/data_product', [
+                        $this->render('data_product', [
                             'order' => $order
                         ]);
                         ?>
@@ -152,9 +152,9 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                             <td colspan="6">&nbsp;</td>
                             <td >&nbsp;</td>
                         </tr>
-                        <tr><?//php echo number_format($order->totalExVat, 2); ?>
+                        <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Total Before VAT:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);                    ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['TotalExVat']; //echo number_format($order->totalExVat, 2);                            ?>
                             </td>
                         </tr>
 
@@ -166,7 +166,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         -->
                         <tr> <?//php echo number_format($order->vat, 2); ?>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">VAT 7%: </td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                     ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['vat']; //echo number_format($order->vat, 2);                             ?>
                             </td>
                         </tr>
                         <tr>
@@ -183,7 +183,7 @@ $orderIdParams = \common\models\ModelMaster::encodeParams(['orderId' => $order->
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right" class="foorter-purchase-order">Order Total:</td>
-                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                      ?>
+                            <td class="bg-purchase-order text-right"><?php echo $cartCalculates['total']; //echo number_format($order->summary, 2);                              ?>
                             </td>
                         </tr>
                     </tbody>

@@ -23,50 +23,50 @@ $this->params['breadcrumbs'][] = $this->title;
             GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-                        [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
                         'attribute' => 'PO#',
                         'format' => 'raw',
                         'value' => function($model) {
                             return $model->poNo;
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Supplier',
                         'format' => 'raw',
                         'value' => function($model) {
                             return common\models\costfit\Address::CompanyName($model->supplierId);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Summary',
                         'format' => 'raw',
                         'value' => function($model) {
                             return number_format($model->summary, 2);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Date Time',
                         'format' => 'raw',
                         'value' => function($model) {
                             return $this->context->dateThai($model->createDateTime, 2);
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'Bill',
                         'format' => 'raw',
                         'value' => function($model) {
 
-                            return Html::a('รายละเอียด', [Yii::$app->homeUrl . 'order/order/reprint-po?poId=' . $model->poId], [
+                            return Html::a('รายละเอียด', Yii::$app->homeUrl . 'order/order/reprint-po?poId=' . $model->poId, [
                                         'target' => '_blank',
                                             ]
                             );
                         }
-                    ],
-                // 'updateDateTime',
-                //  ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]);
-            ?>
+                            ],
+                        // 'updateDateTime',
+                        //  ['class' => 'yii\grid\ActionColumn'],
+                        ],
+                    ]);
+                    ?>
         </div>
     </div>

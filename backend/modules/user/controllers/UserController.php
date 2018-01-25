@@ -24,7 +24,7 @@ class UserController extends UserMasterController {
                 'only' => ['index', 'create', 'update', 'view'],
                 'rules' => [
                     // allow authenticated users
-                        [
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,7 +47,10 @@ class UserController extends UserMasterController {
     public function actionIndex() {
         //throw new \yii\base\Exception('aaa');
         $model = new User();
-        $query = User::find();
+        $query = User::find()
+                ->JOIN('LEFT JOIN', '`order` o', 'o.userId=`user`.userId')
+                ->where("o.status>=" . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS)
+                ->orderBy("o.paymentDateTime DESC");
         if (isset($_GET['searchName'])) {
             $query = User::find()->where("firstname like '%" . $_GET['searchName'] . "%' or lastname like '%" . $_GET['searchName'] . "%' or email like '%" . $_GET['searchName'] . "%'");
         }
@@ -192,7 +195,9 @@ class UserController extends UserMasterController {
     public function actionOrderHistory() {
         $userId = $_GET['id'];
         $user = User::find()->where("userId=" . $userId)->one();
-        $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " order by createDateTime DESC")->all();
+        $model = \common\models\costfit\Order::find()->where("userId=" . $userId . " and status>=" . \common\models\costfit\Order::ORDER_STATUS_E_PAYMENT_SUCCESS)
+                ->orderBy("paymentDateTime DESC")
+                ->all();
         return $this->render('order', [
                     'model' => $model,
                     'userName' => $user->firstname . " " . $user->lastname

@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['attribute' => 'orderSummary',
                     'format' => 'html',
                     'value' => function($model) {
-                        return isset($model->OrderSummary) ? '<span class="pull-right">' . $model->OrderSummary . '</span>' : ' ';
+                        return isset($model->OrderSummary) ? '<span class="pull-right">' . number_format($model->OrderSummary, 2) . '</span>' : ' ';
                     }
                 ],
                 // 'token:ntext',
@@ -84,14 +84,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'createDateTime',
                 // 'updateDateTime',
                 ['class' => 'yii\grid\ActionColumn',
-                    'header' => 'Actions',
-                    'template' => '{update}{block}{delete}',
+                    'header' => 'Actions(user)',
+                    // 'template' => '{update}{block}{delete}',
+                    'template' => '{block}{delete}',
                     'buttons' => [
                         'delete' => function ($url, $model) {
                             return Html::a('<span class="btn btn-xs btn-danger" style="margin-left: 5px;
             " >Delete</span>', '../user/delete?id=' . $model->userId, ['data-confirm' => 'Are you sure?']);
                         },
-                        'block' => function ($url, $model) {
+                                'block' => function ($url, $model) {
                             if ($model->status != 99) {
                                 return Html::a('<span class="btn btn-xs btn-warning" style="margin-left: 5px;
             " >Block</span>', '../user/block?id=' . $model->userId);
@@ -100,14 +101,14 @@ $this->params['breadcrumbs'][] = $this->title;
             " >Unblock</span>', '../user/un-block?id=' . $model->userId);
                             }
                         },
-                        'update' => function ($url, $model) {
+                                'update' => function ($url, $model) {
                             return Html::a('<span class="btn btn-xs btn-success" style="margin-left: 5px;
             " >Edit</span>', 'user/update?id=' . $model->userId);
                         },
+                            ],
+                        ],
                     ],
-                ],
-            ],
-        ]);
-        ?>
+                ]);
+                ?>
     </div>
 </div>

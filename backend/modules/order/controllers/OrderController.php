@@ -68,7 +68,8 @@ class OrderController extends OrderMasterController {
         $params = \common\models\ModelMaster::decodeParams($hash);
         $order = \common\models\costfit\Order::find()->where('orderId = "' . $params['id'] . '" ')
                 ->one();
-        return $this->render('@frontend/views-v.1/profile/purchase_order', compact('order'));
+        $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($params['id']);
+        return $this->render('purchase_order', compact('order', 'cartCalculates'));
     }
 
     /**
