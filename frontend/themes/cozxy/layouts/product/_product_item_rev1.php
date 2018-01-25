@@ -18,10 +18,9 @@ $marketPrice = isset($model->product) ? $model->product->price : 0;
 $supplierPrice = isset($model->price) ? $model->price : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //GetBrowser::UserAgent() == 'computer'
+//print_r($model);
 ?>
-<style type="text/css">
 
-</style>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
@@ -121,7 +120,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
 
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
-                    <?= strtoupper($model->product->title) ?>
+                    <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
                 </a>
             </p>
             <?php
