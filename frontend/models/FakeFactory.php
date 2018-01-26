@@ -372,7 +372,7 @@ class FakeFactory extends Model {
         //echo 'getOrderAndItems :' . $getOrderAndItems;
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productIdParams . ' and result >0')->one();
         if (isset($GetProductSuppliers)) {
-            echo '1:<pre>';
+            //echo '1:<pre>';
             //print_r($getOrderAndItems);
             $quantityOrderItems = $getOrderAndItems; //หาจำนวนสินค้าในเทเบิล OrderItems
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
