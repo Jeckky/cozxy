@@ -15,7 +15,7 @@ use yii\helpers\Html; ?>
                     <th class="text-center">No.</th>
                     <th class="text-center">Order No.</th>
                     <th class="text-center">Invoice No.</th>
-                    <th class="text-center">CreateDate</th>
+                    <th class="text-center">PaymentDate</th>
                     <th class="text-center">Status</th>
                     <th class="text-right">Summary (THB.)</th>
                 </tr>
@@ -29,7 +29,7 @@ use yii\helpers\Html; ?>
                     echo '<td class="text-center">' . $i . '</td>';
                     echo '<td class="text-center">' . $order->orderNo . '</td>';
                     echo '<td class="text-center">' . $order->invoiceNo . '</td>';
-                    echo '<td class="text-center">' . $order->createDateTime . '</td>';
+                    echo '<td class="text-center">' . $order->paymentDateTime . '</td>';
                     echo '<td class="text-center">' . $order->getStatusText($order->status) . '</td>';
                     echo '<td class="text-right">' . number_format($order->summary, 2) . '</td>';
                     echo '<td>' . Html::a('<span style="margin-left:30px;">รายละเอียด</span>', Yii::$app->homeUrl . "order/order/view/" . $order->encodeParams(['id' => $order->orderId])) . '</td>';
