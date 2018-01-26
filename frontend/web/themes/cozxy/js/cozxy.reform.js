@@ -814,13 +814,13 @@ function checkoutNewBilling() {
         {
             if (status == "success") {
                 if (data == 1) {
-                    htmls = "<div class=\"form-group\">"
-                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
-                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
-                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + push_tel + " aria-required=\"true\" aria-invalid=\"true\">"
-                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
-                    htmls += "</div></div> ";
-                    $('.field-address-tel-unique').html(htmls);
+                    /*htmls = "<div class=\"form-group\">"
+                     htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                     htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                     htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + push_tel + " aria-required=\"true\" aria-invalid=\"true\">"
+                     htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                     htmls += "</div></div> ";
+                     $('.field-address-tel-unique').html(htmls);*/
                 } else {
                     $.ajax({
                         type: "POST",
@@ -1895,13 +1895,13 @@ function newBillingTelUnique() {
         {
             if (status == "success") {
                 if (data == 1) {
-                    htmls = "<div class=\"form-group\">"
-                    htmls += "<label>MOBILE PHONE NUMBER*</label>"
-                    htmls += " <div class = \"form-group field-address-tel required has-error\">"
-                    htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + addressTel + " aria-required=\"true\" aria-invalid=\"true\">"
-                    htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
-                    htmls += "</div></div> ";
-                    $('.field-address-tel-unique').html(htmls);
+                    /*htmls = "<div class=\"form-group\">"
+                     htmls += "<label>MOBILE PHONE NUMBER*</label>"
+                     htmls += " <div class = \"form-group field-address-tel required has-error\">"
+                     htmls += "<input type = \"text\" id=\"address-tel\" class=\"fullwidth\" name=\"Address[tel]\" placeholder=\"MOBILE PHONE NUMBER\" onchange=\"newBillingTelUnique()\" value=" + addressTel + " aria-required=\"true\" aria-invalid=\"true\">"
+                     htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
+                     htmls += "</div></div> ";
+                     $('.field-address-tel-unique').html(htmls);*/
                 } else {
                     //$('.help-block help-block-error').html('Your security code and OTP will be sent by SMS to your mobile phone number');
                 }

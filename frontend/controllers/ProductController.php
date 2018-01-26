@@ -23,7 +23,7 @@ class ProductController extends MasterController {
         // print_r($params);
         //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId
-        //echo 'ccc;' . $productIdParams;
+        //echo 'ccc=' . $productIdParams;
         //$productSupplierId = $params['productSupplierId'];
         if (isset($params['selectedOptions'])) {
             $selectedOptions = $params['selectedOptions'];

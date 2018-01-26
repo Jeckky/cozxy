@@ -113,7 +113,9 @@ class DataImageSystems {
 
                 foreach ($productImagesAll as $items) {
                     if (isset($items['imageThumbnail2']) && !empty($items['imageThumbnail2'])) {
+
                         if (file_exists(Yii::$app->basePath . "/web/" . $items['imageThumbnail2'])) {
+                            //echo 'xx';
                             $productimageThumbnail1 = Yii::$app->homeUrl . $items['imageThumbnail2'];
                             $productimageBig = Yii::$app->homeUrl . $items['image'];
                         } else {

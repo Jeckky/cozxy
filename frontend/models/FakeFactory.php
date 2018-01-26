@@ -363,6 +363,7 @@ class FakeFactory extends Model {
     }
 
     public static function productViews($productIdParams, $cartOrderId, $selectedOptions) {
+
         $products = [];
         //$imagAll = [];
         //$GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
@@ -371,7 +372,7 @@ class FakeFactory extends Model {
         //echo 'getOrderAndItems :' . $getOrderAndItems;
         $GetProductSuppliers = \common\models\costfit\ProductSuppliers::find()->where("productId=" . $productIdParams . ' and result >0')->one();
         if (isset($GetProductSuppliers)) {
-            //echo '<pre>';
+            echo '1:<pre>';
             //print_r($getOrderAndItems);
             $quantityOrderItems = $getOrderAndItems; //หาจำนวนสินค้าในเทเบิล OrderItems
             $resultProductSuppliers = $GetProductSuppliers->attributes['result']; //หาจำนวนสินค้าในเทเบิล Product Suppliers
@@ -396,6 +397,8 @@ class FakeFactory extends Model {
         } else {
             $GetProductSuppliers = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
             $txtAlert = 'No';
+            //echo '2:<pre>';
+            //print_r($GetProductSuppliers);
         }
 
         $marketPrice = \common\models\costfit\Product::find()->where("productId=" . $productIdParams)->one();
@@ -409,22 +412,13 @@ class FakeFactory extends Model {
 
         $productImagesMulti = \common\helpers\DataImageSystems::DataImageMasterViewsProdcuts($productIdParams, isset($GetProductSuppliers->attributes['productSuppId']) ? $GetProductSuppliers->attributes['productSuppId'] : 0, 'Svg116x116', 'Svg555x340');
         //throw new \yii\base\Exception(print_r($GetProductSuppliers->attributes, true));
-        /* if (isset($GetProductSuppliers['categoryId'])) {
-          $GetCategory = \common\models\costfit\Category::find()->where("categoryId=" . $GetProductSuppliers->attributes['categoryId'])->one();
-          } */
-        /*
-         * ราคาสินค้า
-         */
-        //$price = \common\models\costfit\ProductSuppliers::productPriceSupplier($GetProductSuppliers->attributes['productSuppId']);
+
+
         /*
          * wishList
          */
         $wishList = \frontend\models\DisplayMyWishList::productWishList($productIdParams);
-        //echo $GetProductSuppliers->product->brand->title;
-        //echo $marketPrice->brand->title;
-        //echo 'productId :' . $marketPrice->productId . '<hr>';
-        //echo $GetProductSuppliers['title'] . '<br>';
-        //echo $marketPrice->category->title;
+
         $products['ProductSuppliersDetail'] = [
             'productSuppId' => isset($marketPrice->productSuppId) ? $marketPrice->productSuppId : $GetProductSuppliers['productSuppId'],
             'productId' => isset($marketPrice->productId) ? $marketPrice->productId : $GetProductSuppliers['productId'],
