@@ -189,7 +189,7 @@ function promotion(data) {
                      );
                      $('.shopping-cart .cart-sidebar .cart-totals .summary').text(data.cart.summaryFormatText + " ฿");*/
                     $('.price-detail').find('.promo-coupon-codes-code').html('<span class=\'label label-primary\'>' + data.cart.couponCode + '</span>');
-                    $('.price-detail').find('.promo-coupon-codes').html(data.cart.discountFormatText + ' THB');
+                    $('.price-detail').find('.promo-coupon-codes').html('<span style="color:#f65d35">' + data.cart.discountFormatText + ' THB</span>');
                     $('.open-coupon-trash').removeClass('hidden');
                     $('.open-coupon-trash').addClass('display');
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
@@ -229,7 +229,8 @@ function deleteItemCart(ItemOrderId) {
                     $('#item' + ItemOrderId).remove();
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                     $('.price-detail').find('.totalFormatText').html(data.cart.totalWithoutDiscountText + ' THB');
-                    $('.price-detail').find('.discountFormatText').html(data.cart.discountFormatText + ' THB');
+                    $('.price-detail').find('.discountFormatText').html('<span style="color:#f65d35">' + data.cart.discountFormatText + ' THB</span>');
+
                     if (data.showCheckout == 'no') {
                         $("#checkout-btn").hide();
                     }
