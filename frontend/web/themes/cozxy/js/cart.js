@@ -195,6 +195,9 @@ function promotion(data) {
                     $('.price-detail').find('.summaryFormatText').html(data.cart.summaryFormatText + ' THB');
                     $("#coupon-code").val('');
                     $('.price-detail').find('.coupon').removeClass("hidden");
+                    $('#couponDescription').removeClass('hidden');
+                    $('#couponDescription').html(data.message);
+                    $('#couponDescription').addClass('display');
                 } else
                 {
                     alert(data.message);

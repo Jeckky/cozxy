@@ -7,7 +7,9 @@ use common\models\costfit\CategoryToProduct;
 use common\models\costfit\Product;
 use common\models\costfit\ProductPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
+use common\models\costfit\User;
 use common\models\ModelMaster;
+use mobile\modules\v1\models\Wishlist;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -307,6 +309,15 @@ class ProductController extends \common\controllers\MasterController
     public function actionView()
     {
         $contents = Json::decode(file_get_contents("php://input"));
+        $userId = -1;
+
+        if(isset($contents['token'])) {
+            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+            if(isset($userModel)) {
+                $userId = $userModel->userId;
+            }
+        }
+
         $id = $contents['id'];
         $res = [];
         $product = Product::findProductById($id);
@@ -322,6 +333,7 @@ class ProductController extends \common\controllers\MasterController
             $res['salePrice'] = $productPriceSupplier->price;
         }
         $res['shareUrl'] = Url::home(true).'product/'.ModelMaster::encodeParams(['productId'=>$id]);
+        $res['isWishlist'] = self::isWishlist($product->productId, $userId);
 
         return Json::encode($res);
     }
@@ -329,6 +341,13 @@ class ProductController extends \common\controllers\MasterController
     public function actionSearch()
     {
         $searchText = $_POST['text'];
+    }
+
+    private static function isWishlist($productId, $userId)
+    {
+        $count = Wishlist::find()->where(['productId'=>$productId, 'userId'=>$userId])->count();
+
+        return ($count > 0) ? true : false;
     }
 
 }

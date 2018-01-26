@@ -28,6 +28,13 @@ class StoryController extends Controller
 
     public function actionIndex()
     {
+        $userId = -1;
+        $contents = Json::decode(file_get_contents("php://input"));
+        if(isset($contents['token'])) {
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+            $userId = isset($userModel) ? $userModel->userId : $userId;
+        }
+
         $res = [];
         $orderBy = ['totalScore' => SORT_DESC];
 
@@ -69,7 +76,7 @@ class StoryController extends Controller
         $items = [];
         $i = 0;
         foreach($storyModels as $storyModel) {
-            $items[$i] = self::prepareStoryData($storyModel);
+            $items[$i] = self::prepareStoryData($storyModel, $userId);
             $i++;
         }
 
@@ -83,9 +90,9 @@ class StoryController extends Controller
     {
         $contents = Json::decode(file_get_contents("php://input"));
         $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+        $res = [];
 
         if(isset($userModel)) {
-            $res = [];
             $orderBy = ['totalScore' => SORT_DESC];
 
             if(isset($contents['sort']) && !empty($contents['sort'])) {
@@ -132,7 +139,7 @@ class StoryController extends Controller
             $items = [];
             $i = 0;
             foreach($storyModels as $storyModel) {
-                $items[$i] = self::prepareStoryData($storyModel);
+                $items[$i] = self::prepareStoryData($storyModel, $userModel->userId);
                 $i++;
             }
 
@@ -141,6 +148,73 @@ class StoryController extends Controller
 
             echo Json::encode($res);
         }
+    }
+
+    public function actionMyFavoriteStory()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+        $res = [];
+
+        if(isset($userModel)) {
+            $orderBy = ['totalScore' => SORT_DESC];
+
+            if(isset($contents['sort']) && !empty($contents['sort'])) {
+                $orderBy = self::prepareSort($contents['sort']);
+            }
+
+//            if(isset($contents['sort'])) {
+//                /**
+//                 * sort by
+//                 * view, -view
+//                 * rate, -rate
+//                 * recent, -recent
+//                 */
+//
+//
+//                $sort = $contents['sort'];
+//                if(substr($sort, 0, 1) == '-') {
+//                    //sort desc
+//                    $sort = substr($sort, 1);
+//                    $orderBy = [$sort => SORT_DESC];
+//                } else {
+//                    //sort asc
+//                    $orderBy = [$sort => SORT_ASC];
+//                }
+//            }
+
+            $page = isset($contents['page']) ? $contents['page'] : 0;
+            $offset = $page * $this->pageSize;
+
+            $storyModels = ProductPost::find()
+                ->leftJoin('product p', 'product_post.productId=p.productId')
+                ->leftJoin('brand b', 'p.brandId=b.brandid')
+                ->leftJoin('favorite_story fs', 'product_post.productPostId=fs.productPostId')
+                ->leftJoin('user u', 'fs.userId=u.userId')
+                ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
+                ->andWhere('b.brandId is not null')
+                ->andWhere('u.userId is not null')
+                ->andWhere(['fs.userId' => $userModel->userId])
+                ->orderBy($orderBy)
+                ->limit($this->pageSize)
+                ->offset($offset)
+                ->all();
+
+
+            $items = [];
+            $i = 0;
+            foreach($storyModels as $storyModel) {
+                $items[$i] = self::prepareStoryData($storyModel, $userModel->userId);
+                $i++;
+            }
+
+            $res['items'] = $items;
+            $res['page'] = $page;
+        } else {
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
     }
 
     private static function prepareSort($sort)
@@ -173,7 +247,7 @@ class StoryController extends Controller
         return $sortField;
     }
 
-    private static function prepareStoryData($storyModel)
+    private static function prepareStoryData($storyModel, $userId)
     {
         $data = [
             'title' => $storyModel->title,
@@ -204,7 +278,7 @@ class StoryController extends Controller
 
         $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);
 
-        $data['isFavorite'] = self::isFavorite($storyModel);
+        $data['isFavorite'] = self::isFavorite($storyModel, $userId);
 
         return $data;
     }
@@ -231,9 +305,9 @@ class StoryController extends Controller
         return $data;
     }
 
-    private static function isFavorite($storyModel)
+    private static function isFavorite($storyModel, $userId)
     {
-        $favCount = FavoriteStory::find()->where(['productPostId'=>$storyModel->productPostId, 'userId'=>$storyModel->userId, 'status'=>1])->count();
+        $favCount = FavoriteStory::find()->where(['productPostId'=>$storyModel->productPostId, 'userId'=>$userId, 'status'=>1])->count();
 
         return ($favCount > 0) ? true : false;
     }
@@ -241,7 +315,13 @@ class StoryController extends Controller
     public function actionStoryDetail()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        echo Json::encode(self::prepareStoryData(ProductPost::findOne($contents['id'])));
+        $userId = -1;
+        if(isset($contents['token'])) {
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+            $userId = isset($userModel) ? $userModel->userId : $userId;
+        }
+
+        echo Json::encode(self::prepareStoryData(ProductPost::findOne($contents['id']), $userId));
     }
 
     private static function findStory($storyId)
@@ -253,36 +333,55 @@ class StoryController extends Controller
     {
         $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $contents['storyId'];
-        $userId = isset(Yii::$app->user->id) ? Yii::$app->user->id : 43;
-        $storyModel = self::findStory($storyId);
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
 
-        $favoriteStoryModel = new FavoriteStory();
-        $favoriteStoryModel->productPostId = $storyId;
-        $favoriteStoryModel->productId = $storyModel->productId;
-        $favoriteStoryModel->userId = $userId;
-        $favoriteStoryModel->createDateTime = $favoriteStoryModel->updateDateTime = new Expression('NOW()');
+        if(isset($userModel)) {
 
-        if($favoriteStoryModel->save()) {
-            $res['success'] = true;
+            $storyId = $contents['storyId'];
+            $userId = $userModel->userId;
+            $storyModel = self::findStory($storyId);
+
+            if(!self::isFavorite($storyModel, $userId)) {
+
+                $favoriteStoryModel = new FavoriteStory();
+                $favoriteStoryModel->productPostId = $storyId;
+                $favoriteStoryModel->productId = $storyModel->productId;
+                $favoriteStoryModel->userId = $userId;
+                $favoriteStoryModel->createDateTime = $favoriteStoryModel->updateDateTime = new Expression('NOW()');
+                $favoriteStoryModel->status = 1;
+
+                if($favoriteStoryModel->save()) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error :: Please try again';
+                }
+            } else {
+                $res['error'] = 'Errro : You already favorite this story.';
+            }
         } else {
-            $res['error'] = 'Error :: Please try again';
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);
     }
 
-    public function actionRemoveFavouriteStory()
+    public function actionRemoveFavoriteStory()
     {
+        $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $_POST['storyId'];
+        $storyId = $contents['storyId'];
+        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
 
-        $numRows = FavoriteStory::deleteAll(['productPostId' => $storyId]);
+        if(isset($userModel)) {
+            $numRows = FavoriteStory::deleteAll(['productPostId' => $storyId]);
 
-        if($numRows) {
-            $res['success'] = true;
+            if($numRows) {
+                $res['success'] = true;
+            } else {
+                $res['error'] = 'Error :: Please try again';
+            }
         } else {
-            $res['error'] = 'Error :: Please try again';
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);

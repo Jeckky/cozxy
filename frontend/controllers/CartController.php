@@ -342,6 +342,7 @@ class CartController extends MasterController {
                     $res["status"] = TRUE;
                     $cartArray = Order::findCartArray();
                     $res["cart"] = $cartArray;
+                    $res["message"] = "* " . $code->description;
                 }
             } else {
                 $res["status"] = FALSE;

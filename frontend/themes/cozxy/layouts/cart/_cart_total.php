@@ -14,7 +14,7 @@
             <div class="pull-right"><?= (isset($this->params['cart']['shippingRate']) && $this->params['cart']['shippingRate'] == 0) ? "FREE" : number_format($this->params['cart']['shippingRate']) ?></div>
         </div>
         <div class="price-detail">PROMO CODE
-            <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? number_format($this->params['cart']['discount'], 2) : '0' ?> THB</div>
+            <div class="pull-right promo-coupon-codes discountFormatText" style="color: <?= (isset($this->params['cart']['discount']) && $this->params['cart']['discount'] > 0) ? "#f65d35" : "" ?>;vertical-align: top"> <?= isset($this->params['cart']['discount']) ? $this->params['cart']['discount'] : '0' ?> THB</div>
             <div class="row coupon  ">
                 <div class="col-lg-6 promo-coupon-codes-code">
                     <?= isset($this->params['cart']['couponCode']) ? "<span class='label label-primary'>" . $this->params['cart']['couponCode'] . "</span>" : "" ?>
@@ -29,7 +29,10 @@
                 ?> text-right">
                     <a class='text-danger'><i class="fa fa-trash cancelCouponCode" data-id="<?php echo isset($this->params['cart']['orderId']) ? $this->params['cart']['orderId'] : ''; ?>"></i></a>
                 </div>
+                <div class="col-lg-12 <?= isset($this->params['cart']['couponCode']) ? 'display' : 'hidden' ?>" id="couponDescription" style="font-size: 10pt;margin-top: 5px;">
+                    <?= isset($this->params['cart']['couponDescription']) ? "<span>* " . $this->params['cart']['couponDescription'] . "</span>" : "" ?>
 
+                </div>
             </div>
         </div>
         <div class="price-detail b size20 size18-sm size18-xs">TOTAL

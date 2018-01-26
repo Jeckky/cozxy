@@ -40,16 +40,23 @@ use common\models\costfit\Promotion;
                         <br>
                         <table style="width: 100%;">
                             <tr>
-                                <td rowspan="2" style="width: 50%;vertical-align: middle;text-align: right;"><b>Discount Type</b></td>
-                                <td><br>
-                                    <input type="radio" name="Promotion[discountType]" value="1" required="true" <?= $model->discountType == 1 ? 'checked' : '' ?>>
+                                <td rowspan="3" style="width: 50%;vertical-align: middle;text-align: center;"><b>Discount Type</b></td>
+                                <td style="text-align: left;"><br>
+                                    <input type="radio" name="Promotion[discountType]" id="discountType" value="1" required="true" <?= $model->discountType == 1 ? 'checked' : '' ?>>
                                     <span>&nbsp;&nbsp;percent  ( % )</span><br><br>
                                 </td>
                             </tr>
                             <tr>
-
-                                <td><input type="radio" name="Promotion[discountType]" value="2" required="true" <?= $model->discountType == 2 ? 'checked' : '' ?>>
-                                    <span>&nbsp;&nbsp;cash ( THB )</span></td>
+                                <td style="text-align: left;">
+                                    <input type="radio" name="Promotion[discountType]" id="discountType" value="2" required="true" <?= $model->discountType == 2 ? 'checked' : '' ?>>
+                                    <span>&nbsp;&nbsp;cash ( THB )</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;"><br>
+                                    <input type="radio" name="Promotion[discountType]" id="discountType" value="3" required="true" <?= $model->discountType == 3 ? 'checked' : '' ?>>
+                                    <span>&nbsp;&nbsp;cash ( THB ) เมื่อซื้อครบ</span>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -66,11 +73,21 @@ use common\models\costfit\Promotion;
                                 <td><b>Maximum discount</b><span><span>&nbsp;&nbsp;( cash THB. )</span></span></td>
                                 <td>
                                     <input type="text" name="Promotion[maximumDiscount]" class="form-control" value="<?= isset($model->maximumDiscount) ? $model->maximumDiscount : '' ?>">
+                                    <br>
                                 </td>
+
+                            </tr>
+                            <tr>
+                                <td><b>เมื่อซื้อครบ</b><span></span></td>
+                                <td>
+                                    <input type="text" id="orderSummary" name="Promotion[orderSummary]" class="form-control"  value="<?= isset($model->orderSummary) ? $model->orderSummary : '' ?>" <?= isset($model->orderSummary) ? '' : 'disabled' ?>>
+                                </td>
+
                             </tr>
                         </table>
                     </div>
                 </div>
+                <br>
                 <br>
                 <br>
                 <div class="row">

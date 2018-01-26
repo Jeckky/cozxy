@@ -971,3 +971,13 @@ function checkAllBrand(categoryId) {
         },
     });
 }
+$(document).on('click', '#discountType', function (e) {
+    var value = $(this).val();
+    if (value == 3) {
+        $("#orderSummary").removeAttr("disabled");
+        $("#orderSummary").prop("required", "required");
+    } else {
+        $("#orderSummary").prop("disabled", "true");
+        $("#orderSummary").removeAttr("required");
+    }
+});

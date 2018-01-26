@@ -133,6 +133,10 @@ class PromotionController extends PromotionMasterController {
             } else {
                 $code = $this->generatePromotionCode();
             }
+            if (isset($_POST["Promotion"]["orderSummary"]) && $_POST["Promotion"]["orderSummary"] != '') {
+                $orderSummary = $_POST["Promotion"]["orderSummary"];
+                $model->orderSummary = $orderSummary;
+            }
             $model->promotionCode = $code;
             $model->createDateTime = new \yii\db\Expression('NOW()');
             $model->updateDateTime = new \yii\db\Expression('NOW()');
@@ -180,10 +184,15 @@ class PromotionController extends PromotionMasterController {
                 ->orderBy('title')
                 ->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (isset($_POST["Promotion"]["orderSummary"]) && $_POST["Promotion"]["orderSummary"] != '') {
+                $orderSummary = $_POST["Promotion"]["orderSummary"];
+                $model->orderSummary = $orderSummary;
+            }
             $model->updateDateTime = new \yii\db\Expression('NOW()');
             $model->save(false);
             $brand = isset($_POST["Promotion"]["brand"]) ? $_POST["Promotion"]["brand"] : '';
             $categories = isset($_POST["Promotion"]["category"]) ? $_POST["Promotion"]["category"] : '';
+
             // if (isset($brand) && count($brand) > 0 && !empty($brand)) {
             //$this->saveBrandPromotion($brand, $model->promotionId);
             // }
