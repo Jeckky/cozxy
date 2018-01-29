@@ -39,21 +39,33 @@ if (count($order) > 0) {
                             } else {
                                 $picking_pointName = '';
                             }
-                            $Countries = common\models\dbworld\Countries::find()->where("countryId= '" . $picking_point->countryId . "' ")->one();
-                            if (count($Countries) > 0) {
-                                $CountriesName = $Countries->localName;
+                            if (isset($picking_point->countryId)) {
+                                $Countries = common\models\dbworld\Countries::find()->where("countryId= '" . $picking_point->countryId . "' ")->one();
+                                if (count($Countries) > 0) {
+                                    $CountriesName = $Countries->localName;
+                                } else {
+                                    $CountriesName = '';
+                                }
                             } else {
                                 $CountriesName = '';
                             }
-                            $States = common\models\dbworld\States::find()->where("stateId='" . $picking_point->provinceId . "'")->one();
-                            if (count($States) > 0) {
-                                $StateslocalName = $States->localName;
+                            if (isset($picking_point->provinceId)) {
+                                $States = common\models\dbworld\States::find()->where("stateId='" . $picking_point->provinceId . "'")->one();
+                                if (count($States) > 0) {
+                                    $StateslocalName = $States->localName;
+                                } else {
+                                    $StateslocalName = '';
+                                }
                             } else {
                                 $StateslocalName = '';
                             }
-                            $Cities = common\models\dbworld\Cities::find()->where("cityId='" . $picking_point->amphurId . "'")->one();
-                            if (count($Cities) > 0) {
-                                $CitieslocalName = $Cities->localName;
+                            if (isset($picking_point->amphurId)) {
+                                $Cities = common\models\dbworld\Cities::find()->where("cityId='" . $picking_point->amphurId . "'")->one();
+                                if (count($Cities) > 0) {
+                                    $CitieslocalName = $Cities->localName;
+                                } else {
+                                    $CitieslocalName = '';
+                                }
                             } else {
                                 $CitieslocalName = '';
                             }
@@ -97,9 +109,9 @@ if (count($order) > 0) {
                 }
                 //$GetOrder = common\models\costfit\OrderItem::find()->where('orderId=' . $value1['orderId'] . ' and supplierId=' . $value1['supplierId'] . ' and receiveType=' . $value1->receiveType)->groupBy('orderId')->one();
                 ?>
-                                                                                                                                                                                                                                                                                                                                                                                                <!--<tr>
-                                                                                                                                                                                                                                                                                                                                                                                                    <td style="font-size: 12px;" colspan="7">
-                                                                                                                                                                                                                                                                                                                                                                                                        <strong>สถานที่รับของ :</strong><br>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!--<tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td style="font-size: 12px;" colspan="7">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <strong>สถานที่รับของ :</strong><br>
                 <?php
                 /* if (isset($GetOrder->pickingId)) {
                   $picking_point = common\models\costfit\PickingPoint::find()->where('pickingId=' . $GetOrder->pickingId)->one();
@@ -112,8 +124,8 @@ if (count($order) > 0) {
                   echo ', ' . $Cities->localName;
                   } */
                 ?>
-                                                                                                                                                                                                                                                                                                                                                                                                    </td>
-                                                                                                                                                                                                                                                                                                                                                                                                </tr>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tr>-->
                 <?php
                 //} /* $value1->receiveType == 1 : Lockers */
             }
