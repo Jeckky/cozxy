@@ -104,9 +104,15 @@ class ProductSuppliersController extends ProductManagerMasterController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+//        $model->delete();
+//        $this->findModel($id)->delete();
+        $model->status = 2;
+        $model->approve = 'delete';
+        $model->save(false);
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::to(['/productmanager/product/view', 'id'=>$model->product->parentId]));
+        //return $this->redirect(['index']);
     }
 
     /**

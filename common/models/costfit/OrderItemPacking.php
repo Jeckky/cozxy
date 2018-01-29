@@ -200,7 +200,7 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function findItemInBag($bagNo) {
-        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status=4")->all();
+        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status>4")->all();
         if (isset($orderItems) && !empty($orderItems)) {
             return $orderItems;
         } else {

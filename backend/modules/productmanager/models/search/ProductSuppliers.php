@@ -104,7 +104,7 @@ class ProductSuppliers extends ProductSuppliersModel
     {
         $query = ProductSuppliers::find()
             ->leftJoin('product p', 'product_suppliers.productId=p.productId')
-            ->where(['p.parentId'=>$parentId]);
+            ->where(['p.parentId'=>$parentId, 'product_suppliers.status'=>1, 'product_suppliers.approve'=>'approve']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

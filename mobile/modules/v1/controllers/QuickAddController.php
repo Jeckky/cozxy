@@ -75,11 +75,16 @@ class QuickAddController extends Controller
                 $productPostComparePriceModel->country = $country;
 
                 if($productPostComparePriceModel->save()) {
-                    $numRows = ProductPostImages::updateAll(['productPostId' => $storyId], 'imagesId in (' . implode(',', $imageIds) . ')');
+//                    $numRows = ProductPostImages::updateAll(['productPostId' => $storyId], 'imagesId in (' . implode(',', $imageIds) . ')');
+//
+//                    if($numRows == sizeof($imageIds)) {
+//                        $flag = true;
+//                    }
 
-                    if($numRows == sizeof($imageIds)) {
-                        $flag = true;
-                    }
+                    $imageFiles = new ProductPostImages();
+                    $imageFiles->imageFiles = UploadedFile::getInstancesByName('image');
+
+                    $flag = $imageFiles->upload($storyId);
                 }
 
                 if($flag) {
@@ -98,6 +103,30 @@ class QuickAddController extends Controller
             $res['error'] = 'Error : User not found.';
         }
         return Json::encode($res);
+    }
+
+    private static function uploadFile($imageFile)
+    {
+        $res = ['success' => false, 'error' => NULL];
+        $imageFileName = explode('.', $imageFile->name);
+        $ext = end($imageFileName);
+        $fileName = Yii::$app->security->generateRandomString(12) . '.' . $ext;
+//            $fileName = uniqid() . '.' . $ext;
+        $fileUrl = 'images/story/' . $fileName;
+        $filePath = Yii::$app->basePath . '/../frontend/web/images/story/' . $fileName;
+
+        $productPostImage = new ProductPostImages();
+        $productPostImage->picture = $fileUrl;
+        $productPostImage->status = 2; //quick add
+        $productPostImage->createDateTime = new Expression('NOW()');
+        $productPostImage->updateDateTime = new Expression('NOW()');
+
+        if($imageFile->saveAs($filePath) && $productPostImage->save(false)) {
+            $res['success'] = true;
+            $res['imageId'] = Yii::$app->db->lastInsertID;
+        }
+
+        return $res;
     }
 
     public function actionUploadFile()
@@ -127,6 +156,28 @@ class QuickAddController extends Controller
             $res['error'] = 'Can not uploaded file, please try again';
         }
 
+        return Json::encode($res);
+    }
+
+    public function actionCurrencyCode()
+    {
+        $currencyInfoModels = CurrencyInfo::find()->where(['status'=>2])->orderBy(['ctry_name'=>SORT_ASC])->all();
+
+        $res = [];
+        $i = 0;
+
+        foreach($currencyInfoModels as $currencyInfoModel) {
+            $res[$i] = [
+                'currencyId'=>$currencyInfoModel->currencyId,
+                'name'=>$currencyInfoModel->currency_name,
+                'code'=>$currencyInfoModel->currency_code,
+                'symbol'=>$currencyInfoModel->currrency_symbol,
+                'country'=>$currencyInfoModel->ctry_name,
+            ];
+            $i++;
+        }
+
+        header('Content-Type: application/json');
         return Json::encode($res);
     }
 }
