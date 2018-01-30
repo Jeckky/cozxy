@@ -9,6 +9,7 @@ use \yii\helpers\Json;
 use Yii;
 use common\models\LoginForm;
 use common\helpers\Email;
+use mobile\modules\v1\models\ProductShelf;
 
 /**
  * Default controller for the `mobile` module
@@ -53,7 +54,7 @@ class AuthController extends Controller
 //                $res['token'] = $userModel->auth_key;
                 $res['token'] = $userModel->auth_key;
                 $res['birthDate'] = $userModel->birthDate;
-                $res['avatar'] = Yii::$app->homeUrl.$userModel->avatar;
+                $res['avatar'] = Yii::$app->homeUrl . $userModel->avatar;
                 $res['mobile'] = $userModel->tel;
                 $res['success'] = true;
 
@@ -62,6 +63,25 @@ class AuthController extends Controller
                  */
                 $cartArray = \common\models\costfit\Order::findCartArray();
                 $res["cart"] = $cartArray;
+
+                $productShelfs = ProductShelf::find()
+                    ->where(['userId' => $userModel->userId, 'status' => 1])
+                    ->andWhere('type!=2')
+//                ->limit($this->pageSize)
+//                ->offset($offset)
+                    ->all();
+
+                $j = 0;
+                foreach($productShelfs as $productShelf) {
+                    $shelf = [
+                        'productShelfId' => $productShelf->productShelfId,
+                        'title' => $productShelf->title,
+                    ];
+                    //Cozxy shelve
+                    $items[$j] = $shelf;
+                    $j++;
+                }
+                $res['cozxyShelves'] = $items;
             } else {
                 $res["error"] = "บัญชีของท่านไม่มีสิทธิ์เข้าใช้งาน";
                 $res['result'] = false;
