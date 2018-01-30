@@ -821,6 +821,7 @@ function checkoutNewBilling() {
                      htmls += " <p class = \"help-block help-block-error\">this mobile phone number address has already been taken.</p>"
                      htmls += "</div></div> ";
                      $('.field-address-tel-unique').html(htmls);*/
+                    $(".bs-example-modal-lg").modal("hide");
                 } else {
                     $.ajax({
                         type: "POST",
