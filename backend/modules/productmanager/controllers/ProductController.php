@@ -283,6 +283,12 @@ class ProductController extends ProductManagerMasterController {
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            //update brand & category in product master
+            if($model->parentId == null) {
+                Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
+            }
+
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);
         } else {
             return $this->render('update', [

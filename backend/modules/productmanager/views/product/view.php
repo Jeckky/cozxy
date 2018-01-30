@@ -42,8 +42,18 @@ $productId = $model->productId;
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'brandId',
-            'categoryId',
+            [
+                'attribute'=>'brandId',
+                'value'=>function($model) {
+                    return $model->brand->title;
+                }
+            ],
+            [
+                'attribute'=>'categoryId',
+                'value'=>function($model) {
+                    return $model->category->title;
+                }
+            ],
             'isbn:ntext',
             'code',
             'title',
