@@ -19,7 +19,7 @@ $productId = $model->productId;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php if ($model->parentId !== NULL): ?>
+        <?php if($model->parentId !== NULL): ?>
             <?= Html::a('Go Back', ['view', 'id' => $model->parentId], ['class' => 'btn']) ?>
         <?php else: ?>
             <?= Html::a('Go Back', ['index', 'id' => $model->parentId], ['class' => 'btn']) ?>
@@ -34,7 +34,7 @@ $productId = $model->productId;
             ],
         ])
         ?>
-        <?= Html::a('Product Option', ['/product/product-group/add-option', 'id'=>$model->productId, 'template'=>$model->productGroupTemplateId], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Product Option', ['/product/product-group/add-option', 'id' => $model->productId, 'template' => $model->productGroupTemplateId], ['class' => 'btn btn-warning']) ?>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -52,29 +52,29 @@ $productId = $model->productId;
             'shortDescription:html',
             'description:html',
             'specification:html',
-        //            'createDateTime',
-        //            'updateDateTime',
-        //            'approve',
-        //            'approveCreateBy',
-        //            'receiveType',
-        //            'productGroupTemplateId',
-        //            'productId',
-        //            'userId',
-        //            'parentId',
-        //            'suppCode',
-        //            'merchantCode',
-        //            'optionName',
-        //            'width',
-        //            'height',
-        //            'depth',
-        //            'weight',
-        //            'price',
-        //            'unit',
-        //            'smallUnit',
-        //            'tags',
-        //            'productSuppId',
-        //            'approvecreateDateTime',
-        //            'step',
+            //            'createDateTime',
+            //            'updateDateTime',
+            //            'approve',
+            //            'approveCreateBy',
+            //            'receiveType',
+            //            'productGroupTemplateId',
+            //            'productId',
+            //            'userId',
+            //            'parentId',
+            //            'suppCode',
+            //            'merchantCode',
+            //            'optionName',
+            //            'width',
+            //            'height',
+            //            'depth',
+            //            'weight',
+            //            'price',
+            //            'unit',
+            //            'smallUnit',
+            //            'tags',
+            //            'productSuppId',
+            //            'approvecreateDateTime',
+            //            'step',
         ],
     ])
     ?>
@@ -83,18 +83,20 @@ $productId = $model->productId;
 
     <?php
     //echo $model->hasProductSuppliers();
-    if ($model->parentId === NULL):
+    if($model->parentId === NULL):
         ?>
-        <?php //if (!$model->hasProductSuppliers()): ?>
+        <?php //if (!$model->hasProductSuppliers()):
+        ?>
         <?php
         //if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
-        if ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
+        if((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
             ?>
             <p>
                 <?= Html::a('Create Product Suppliers', Url::to(['create-product-suppliers', 'id' => $model->productId]), ['class' => 'btn btn-warning btn-block btn-lg']) ?>
             </p>
         <?php } ?>
-        <?php //endif; ?>
+        <?php //endif;
+        ?>
         <div>
 
             <!-- Nav tabs -->
@@ -103,7 +105,7 @@ $productId = $model->productId;
                     <a href="#products" aria-controls="home" role="tab" data-toggle="tab">Products</a></li>
                 <?php
                 //if ($checkAuth == 'Partner' || $checkAuth == 'Partner-Content') {
-                if ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
+                if((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) {
                     ?>
                     <li role="presentation">
                         <a href="#productSuppliers" aria-controls="profile" role="tab" data-toggle="tab">ProductSuppliers</a>
@@ -123,7 +125,7 @@ $productId = $model->productId;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'header' => 'Image',
-                                'value' => function($model) {
+                                'value' => function ($model) {
                                     return isset($model->images->imageThumbnail1) ? Yii::$app->homeUrl . $model->images->imageThumbnail1 : '';
                                 },
                                 'format' => 'image'
@@ -176,8 +178,8 @@ $productId = $model->productId;
                             ['class' => 'yii\grid\SerialColumn'],
                             [
                                 'header' => 'Image',
-                                'value' => function($model) {
-                                    return isset($model->product->images->imageThumbnail1) ?  Yii::$app->homeUrl . $model->product->images->imageThumbnail1 : '';
+                                'value' => function ($model) {
+                                    return isset($model->product->images->imageThumbnail1) ? Yii::$app->homeUrl . $model->product->images->imageThumbnail1 : '';
                                 },
                                 'format' => 'image'
                             ],
@@ -206,7 +208,14 @@ $productId = $model->productId;
                                     'price' => function ($url, $model, $index) {
                                         return Html::a('Price', Url::to(Url::home() . 'productmanager/product-suppliers/price?id=' . $model->productSuppId), ['class' => 'btn btn-warning btn-xs']);
                                     },
-                                ]
+                                ],
+                                'urlCreator' => function ($action, $model, $key, $index) {
+                                    if($action === 'delete') {
+                                        $url = Url::to(Url::home() . 'productmanager/product-suppliers/delete?id=' . $model->productSuppId);
+
+                                        return $url;
+                                    }
+                                }
                             ],
                         ],
                     ]);
@@ -218,7 +227,7 @@ $productId = $model->productId;
 
     <?php endif; ?>
 
-    <?php if ($model->parentId !== NULL): ?>
+    <?php if($model->parentId !== NULL): ?>
         <?= $this->render('_image_grid', ['productId' => $model->productId]) ?>
     <?php endif; ?>
 </div>

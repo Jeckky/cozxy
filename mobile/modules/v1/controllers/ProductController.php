@@ -9,6 +9,7 @@ use common\models\costfit\ProductPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\User;
 use common\models\ModelMaster;
+use mobile\modules\v1\models\ProductPostComparePrice;
 use mobile\modules\v1\models\Wishlist;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -20,7 +21,7 @@ class ProductController extends \common\controllers\MasterController
     public function beforeAction($action)
     {
 //        if ($action->id == 'for-sale' || $action->id=='not-sale' || $action->id=='view') {
-        if(in_array($action->id, ['for-sale', 'not-sale', 'view', 'isbn', 'search'])) {
+        if(in_array($action->id, ['for-sale', 'not-sale', 'view', 'isbn', 'search', 'similar', 'related'])) {
             $this->enableCsrfValidation = false;
         }
 
@@ -334,7 +335,10 @@ class ProductController extends \common\controllers\MasterController
         }
         $res['shareUrl'] = Url::home(true).'product/'.ModelMaster::encodeParams(['productId'=>$id]);
         $res['isWishlist'] = self::isWishlist($product->productId, $userId);
+        $res['worldPrice'] = self::worldPrice($id);
+        $res['localPrice'] = self::localPrice($id);
 
+        header('Content-Type: application/json');
         return Json::encode($res);
     }
 
@@ -348,6 +352,95 @@ class ProductController extends \common\controllers\MasterController
         $count = Wishlist::find()->where(['productId'=>$productId, 'userId'=>$userId])->count();
 
         return ($count > 0) ? true : false;
+    }
+
+    public function actionSimilar()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productId = $contents['id'];
+
+        $productModels = self::randomProduct();
+
+        $res = [];
+        $i = 0;
+        foreach($productModels as $productModel) {
+            if(!$productModel->images) {
+                continue;
+            }
+
+            $res[$i] = self::prepareSimilarProduct($productModel);
+
+            $i++;
+        }
+        header('Content-Type: application/json');
+        echo Json::encode($res);
+    }
+
+
+
+    public function actionRelated()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $productId = $contents['id'];
+
+        $productModels = self::randomProduct();
+
+        $res = [];
+        $i = 0;
+        foreach($productModels as $productModel) {
+            if(!$productModel->images) {
+                continue;
+            }
+
+            $res[$i] = self::prepareSimilarProduct($productModel);
+
+            $i++;
+        }
+        header('Content-Type: application/json');
+        echo Json::encode($res);
+    }
+
+    private static function randomProduct()
+    {
+        return Product::find()
+            ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
+            ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+            ->leftJoin('brand b', 'b.brandId=product.brandId')
+//            ->leftJoin('category c', 'c.categoryId=product.categoryId')
+            ->where(['product.status'=>1, 'product.approve'=>'approve'])
+            ->andWhere(['ps.status'=>1, 'ps.approve'=>'approve'])
+            ->andWhere('ps.result > 0')
+            ->andWhere('pps.price > 0')
+            ->andWhere('ps.productId is not null')
+            ->andWhere('b.brandId is not null')
+//            ->andWhere('c.categoryId is not null')
+            ->orderBy('RAND()')
+            ->limit(6)
+            ->all();
+    }
+
+    private static function prepareSimilarProduct($productModel)
+    {
+        return [
+            'brand' => $productModel->brand->title,
+            'productId' => $productModel->productId,
+            'title' => trim($productModel->title),
+            'image' => Url::home(true).$productModel->images->imageThumbnail1
+        ];
+    }
+
+    private static function worldPrice($productId)
+    {
+        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy('RAND()')->one();
+
+        return (isset($worldPrice)) ? $worldPrice->price : null;
+    }
+
+    private static function localPrice($productId)
+    {
+        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy('RAND()')->one();
+
+        return (isset($worldPrice)) ? $worldPrice->price : null;
     }
 
 }
