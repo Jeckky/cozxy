@@ -813,7 +813,7 @@ function checkoutNewBilling() {
         success: function (data, status)
         {
             if (status == "success") {
-                if (data == 1) {
+                if (data == 12) {
                     /*htmls = "<div class=\"form-group\">"
                      htmls += "<label>MOBILE PHONE NUMBER*</label>"
                      htmls += " <div class = \"form-group field-address-tel required has-error\">"
