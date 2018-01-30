@@ -55,9 +55,25 @@ class PackingController extends StoreMasterController {
                 ->orderBy("`order`.status ASC");
 
         $ms = '';
+        if (isset($_GET['orderNumberSearch']) && !empty($_GET['orderNumberSearch'])) {
+            $query->andWhere("`order`.orderNo='" . $_GET['orderNumberSearch'] . "'");
+        }
+        if (isset($_GET['bagNumberSearch']) && !empty($_GET['bagNumberSearch'])) {
+            $packing = OrderItemPacking::find()->where("bagNo='" . $_GET['bagNumberSearch'] . "'")->one();
+            if (isset($packing)) {
+                $orderItem = OrderItem::find()->where("orderItemId=$packing->orderItemId")->one();
+                if (isset($orderItem)) {
+                    $query->andWhere("`order`.orderId=$orderItem->orderId");
+                }
+            }
+        }
+        if (isset($_GET['invoiceNumberSearch']) && !empty($_GET['invoiceNumberSearch'])) {
+            $query->andWhere("`order`.invoiceNo='" . $_GET['invoiceNumberSearch'] . "'");
+        }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
         if (isset($_GET['orderNo']) && !empty($_GET['orderNo'])) {
             $order = Order::find()->where("orderNo='" . $_GET['orderNo'] . "' and status=12")->one();
             if (isset($order) && !empty($order)) {
@@ -290,6 +306,60 @@ class PackingController extends StoreMasterController {
                     'bagNo' => $bag,
                     'orderId' => $order->orderId,
                     'taxNo' => $tax,
+                    'date' => $date,
+                    'fullDate' => $fullDate,
+                    'extraDiscount' => $extraDiscont,
+                    'orderNo' => $orderNo,
+                    'billingTax' => $billingTax
+        ]);
+    }
+
+    public function actionAllBagLabel($orderId) {
+        $orderItems = OrderItem::find()->where("orderId=" . $orderId)->all();
+        $order = Order::find()->where("orderId=$orderId")->one();
+        $itemItemId = '';
+        $orderItemPackings = null;
+        foreach ($orderItems as $orderItem):
+            $itemItemId = $itemItemId . $orderItem->orderItemId . ",";
+        endforeach;
+        if ($itemItemId != '') {
+            $itemItemId = substr($itemItemId, 0, -1);
+            $orderItemPackings = OrderItemPacking::find()->where("orderItemId in ($itemItemId)")
+                    ->groupBy("bagNo")
+                    ->all();
+        }
+        return $this->render('all_bag', [
+                    'orderItemPacking' => $orderItemPackings,
+                    'order' => $order
+        ]);
+    }
+
+    public function actionReprintBagLabel($bagNo) {
+        if (!isset(Yii::$app->user->identity->userId)) {
+            return $this->redirect($baseUrl . '/auth');
+        }
+        $extraDiscont = 0;
+        $orderNo = '';
+        $billingTax = '';
+        $orderItem = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->one();
+        $order = OrderItem::find()->where("orderItemId=" . $orderItem->orderItemId)->one();
+        $orderDiscount = Order::find()->where("orderId=" . $order->orderId)->one();
+        if (isset($orderDiscount)) {
+            if ($orderDiscount->discount != null) {
+                $extraDiscont = $orderDiscount->discount;
+            }
+            $orderNo = $orderDiscount->orderNo;
+            $billingTax = $orderDiscount->billingTax != '' && $orderDiscount->billingTax != null ? $orderDiscount->billingTax : '';
+        }
+
+        $taxNo = $orderItem->taxNo;
+        $date = $orderItem->year . $orderItem->month;
+        $d = substr($bagNo, 8, 2);
+        $fullDate = $d . "/" . $orderItem->month . "/" . $orderItem->year;
+        return $this->renderPartial('bag_label', [
+                    'bagNo' => $bagNo,
+                    'orderId' => $order->orderId,
+                    'taxNo' => $taxNo,
                     'date' => $date,
                     'fullDate' => $fullDate,
                     'extraDiscount' => $extraDiscont,

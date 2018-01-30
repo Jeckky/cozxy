@@ -30,8 +30,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <tbody>
                     <tr>
                         <th style="vertical-align: middle;text-align: center;"><h4><b>Order No QR code : </b></h4></th>
-                        <td><?= \yii\helpers\Html::textInput('orderNo', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
-                    </tr>
+                <td><?= \yii\helpers\Html::textInput('orderNo', NULL, ['class' => 'input-lg', 'autofocus' => 'autofocus']); ?><?= isset($ms) && $ms != '' ? ' <code> ' . $ms . '</code>' : '' ?></td>
+                </tr>
                 </tbody>
             </table>
             <br><h4>สแกน Qr Code ของ Order เพื่อแพ็คสินค้า</h4>
@@ -43,6 +43,8 @@ $this->params['pageHeader'] = Html::encode($this->title);
                                 }
                             });
                 ") ?>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
     <div class="panel panel-default">
@@ -50,6 +52,28 @@ $this->params['pageHeader'] = Html::encode($this->title);
             <span class="panel-title"><h4> รายการ Order เตรียมแพ็ค / แพ็คแล้ว </h4></span>
         </div>
         <div class="panel-body">
+            <?php
+            $form = ActiveForm::begin([
+                        'method' => 'GET',
+                        'action' => ['packing/index'],
+            ]);
+            ?>
+            <div class="row col-lg-12 col-md-12" style="margin-bottom:20px;">
+                <div class="col-lg-3 col-md-3">
+                    <input type="text" class="form-control" name="bagNumberSearch" placeholder="Bag number" value="<?= isset($_GET["bagNumberSearch"]) ? $_GET["bagNumberSearch"] : '' ?>">
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <input type="text" class="form-control" name="orderNumberSearch" placeholder="Order number" value="<?= isset($_GET["orderNumberSearch"]) ? $_GET["orderNumberSearch"] : '' ?>">
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <input type="text" class="form-control" name="invoiceNumberSearch" placeholder="Invoice number" value="<?= isset($_GET["invoiceNumberSearch"]) ? $_GET["invoiceNumberSearch"] : '' ?>">
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?>
+
             <?=
             GridView::widget([
                 'layout' => "{summary}\n{pager}\n{items}\n{pager}\n",
@@ -61,13 +85,13 @@ $this->params['pageHeader'] = Html::encode($this->title);
                     'class' => 'table-light'
                 ],
                 'rowOptions' => function ($model, $index, $widget, $grid) {
-                    if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
-                        return ['class' => 'success'];
-                },
+            if ($model->status == common\models\costfit\Order::ORDER_STATUS_PACKED)
+                return ['class' => 'success'];
+        },
                 'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn'],
                     'orderNo',
-                        [
+                    [
                         'attribute' => 'countItem',
                         'format' => 'html',
                         'value' => function($model) {
@@ -75,11 +99,22 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             return $countItemsArray['countItems'] . " รายการ<br>" . $countItemsArray['sumQuantity'] . " ชิ้น";
                         }
                     ],
-                        [
+                    [
                         'attribute' => 'status',
                         'format' => 'html',
                         'value' => function($model) {
                             return $model->createStatus2($model->orderId);
+                        }
+                    ],
+                    [
+                        'attribute' => 'Reprint',
+                        'format' => 'html',
+                        'value' => function($model) {
+                            if ($model->status >= \common\models\costfit\Order::ORDER_STATUS_PACKED) {
+                                return Html::a('<i class="fa fa-print" aria-hidden="true"></i> Reprint Bag Label', Yii::$app->homeUrl . "store/packing/all-bag-label?orderId=" . $model->orderId);
+                            } else {
+                                return '';
+                            }
                         }
                     ],
 //                        ['class' => 'yii\grid\ActionColumn',
@@ -97,23 +132,5 @@ $this->params['pageHeader'] = Html::encode($this->title);
             ?>
         </div>
     </div>
-    <!--    <div id="printableArea">
-            <h1>Print me</h1>
-        </div>-->
-
-    <?php ActiveForm::end(); ?>
     <?php Pjax::end(); ?>
 </div>
-<!--<input type="button" onclick="printDiv('printableArea')" value="print a div!" />
-<script>
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-
-        document.body.innerHTML = printContents;
-
-        window.print();
-
-        document.body.innerHTML = originalContents;
-    }
-</script>-->

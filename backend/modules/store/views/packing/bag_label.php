@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                 ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                    ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                 ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                    ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -117,10 +117,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     $empty = 20;
     $orderItems = OrderItemPacking::findItemInBag($bagNo);
     $total = 0;
-    if (isset($orderItems) && !empty($orderItems)) {
+    if (isset($orderItems) && count($orderItems) > 0) {
         foreach ($orderItems as $orderItem):
             $item = Product::findProducts($orderItem->orderItemId);
-            if (isset($item) && !empty($item)) {
+            if (isset($item) && count($item) > 0) {
                 echo '<tr style="height: 25px;">';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $item->isbn . '</center></td>';
                 echo '<td style="border-right: #000 solid thin;"><center>' . $item->title . '</center></td>';
@@ -191,10 +191,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                    ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                       ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                    ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                       ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">

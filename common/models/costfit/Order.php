@@ -569,7 +569,7 @@ class Order extends \common\models\costfit\master\OrderMaster {
                 $order->discount = $totalDiscount;
             }
         }else {//type =3 ลดเมื่อซื้อครบจำนวนที่กำหนด
-            if ($order->summary >= $promotion->orderSummary) {
+            if ($order->total >= $promotion->orderSummary) {
                 $order->discount = $promotion->discount;
             } else {
                 $order->discount = 0;

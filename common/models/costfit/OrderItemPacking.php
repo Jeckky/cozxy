@@ -114,14 +114,14 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         $items = '';
         $bags = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
         $oldBag = '';
-        if (isset($bags) && !empty($bags)) {
+        if (isset($bags) && count($bags) > 0) {
             foreach ($bags as $bag):
                 if ($bag->bagNo != $oldBag) {
                     $itemsInBag = OrderItemPacking::find()->where("bagNo='" . $bag->bagNo . "'")->all();
                     if (isset($itemsInBag) && !empty($itemsInBag)) {
                         foreach ($itemsInBag as $itemInBag):
                             $orderItem = OrderItem::find()->where("orderItemId=" . $itemInBag->orderItemId)->one();
-                            if (isset($orderItem) && !empty($orderItem)) {
+                            if (isset($orderItem) && count($orderItem) > 0) {
                                 $product = Product::find()->where("productId=" . $orderItem->productId)->one();
                                 if (isset($product) && !empty($product)) {
                                     $items = $items . $product->code . " (" . $bag->quantity . ")" . ", ";
@@ -138,6 +138,11 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
         } else {
             return '';
         }
+    }
+
+    static public function countItemInBag($bagNo) {
+        $itemsInBag = OrderItemPacking::find()->where("bagNo='" . $bagNo . "'")->all();
+        return count($itemsInBag);
     }
 
     public static function bagInOrderToShip($orderId) {
@@ -200,7 +205,8 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function findItemInBag($bagNo) {
-        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status>4")->all();
+        $orderItems = OrderItemPacking::find()->where("bagNo='" . $bagNo . "' and status>=4")->all();
+        // throw new \yii\base\Exception($bagNo);
         if (isset($orderItems) && !empty($orderItems)) {
             return $orderItems;
         } else {
@@ -226,14 +232,10 @@ class OrderItemPacking extends \common\models\costfit\master\OrderItemPackingMas
     }
 
     static public function countBagNo($bagNo) {
-        //throw new \yii\base\Exception($bagNo);
         $result = OrderItemPacking::find()
-//->distinct('order_item_packing.bagNo')
-//->join('LEFT JOIN', 'order_item oi', 'oi.orderItemId = order_item_packing.orderItemId')
                 ->where("bagNo='" . $bagNo . "'")
                 ->groupBy("bagNo")
                 ->all();
-        // throw new \yii\base\Exception(print_r($result, true));
         return count($result);
     }
 
