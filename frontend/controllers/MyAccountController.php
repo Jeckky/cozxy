@@ -401,6 +401,7 @@ class MyAccountController extends MasterController {
         $this->title = 'Cozxy.com | Order Purchase';
         $this->subTitle = 'Home';
         $this->subSubTitle = "Order Purchase";
+
         $cartCalculates = \common\helpers\CozxyCalculatesCart::ShowCalculatesCartCart($params['orderId']);
 
         if (isset($params['orderId'])) {

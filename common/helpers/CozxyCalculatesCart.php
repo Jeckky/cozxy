@@ -46,14 +46,16 @@ class CozxyCalculatesCart {
         //exit();
         $cartOrderId = \common\models\costfit\Order::findCartArray();
         //echo '<pre>';
-        // print_r($cartOrderId);
+        //print_r($cartOrderId);
         ///throw new \yii\base\Exception(print_r($cartOrderId['orderId'], true));
-
-        if (isset($cartOrderId['orderId'])) {
+        //echo 'cartOrderId =' . $cartOrderId['orderId'];
+        //if (isset($cartOrderId['orderId'])) {
+        if (!isset($orderIdParams)) {
             //echo '1';
             $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $cartOrderId['orderId'])->orderBy('orderId desc')->one();
             if (isset($Order->orderId)) {
                 $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $Order->orderId)->sum('total');
+                //$OrderItemSumTotal = $Order->total;
             } else {
                 $OrderItemSumTotal = 0;
             }
@@ -65,12 +67,13 @@ class CozxyCalculatesCart {
                 $couponValue = 0;
             }
         } else {
-            //echo '1.1';
+            //echo '2';
             //echo '1.3';
             $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $orderIdParams)->orderBy('orderId desc')->one();
             $orderId = $Order->attributes['orderId'];
             if (isset($orderId)) {
                 $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId)->sum('total');
+                //$OrderItemSumTotal = $Order->total;
             } else {
                 $OrderItemSumTotal = 0;
             }
@@ -83,6 +86,9 @@ class CozxyCalculatesCart {
             }
         }
 
+        //echo 'OrderItemSumTotal :' . $OrderItemSumTotal . '<br>';
+        //echo '<pre>';
+        //print_r($Order->attributes);
 
         $OrderTotle = $OrderItemSumTotal - $couponValue;
         return round($OrderTotle, 0, PHP_ROUND_HALF_UP);
@@ -97,6 +103,7 @@ class CozxyCalculatesCart {
 
     public static function FormulaTotal($orderIdParams) {
         $result = \common\helpers\CozxyCalculatesCart::UserOrder($orderIdParams);
+        //echo 'FormulaTotal :' . $result;
         return round($result, 0, PHP_ROUND_HALF_UP);
     }
 

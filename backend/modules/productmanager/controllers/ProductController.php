@@ -89,6 +89,11 @@ class ProductController extends ProductManagerMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        //echo 'userId : ' . Yii::$app->user->identity->userId;
+        //$userSuppliers = \common\helpers\Suppliers::GetUserSuppliers();
+        //$productCountents = \common\helpers\Suppliers::GetUserContents();
+        //print_r($productCountents);
+
         $searchModel = new ProductSearch();
         $searchModel->parentId = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -285,7 +290,7 @@ class ProductController extends ProductManagerMasterController {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             //update brand & category in product master
-            if($model->parentId == null) {
+            if ($model->parentId == null) {
                 Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
             }
 
