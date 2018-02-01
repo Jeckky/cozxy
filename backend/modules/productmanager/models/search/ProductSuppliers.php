@@ -102,13 +102,15 @@ class ProductSuppliers extends ProductSuppliersModel {
 
         //echo Yii::$app->user->identity->userId;
         if (Yii::$app->user->identity->userId == 19) {
-            $userId = $textUserPartner + $textUserCountents;
+            //$userId = $textUserPartner + $textUserCountents;
+            $userId = $textUserCountents;
             //print_r($userId);
             $whereArray["product_suppliers.userId"] = $userId;
             $query = ProductSuppliers::find()
                     ->leftJoin('product p', 'product_suppliers.productId=p.productId')
                     ->where(['p.parentId' => $parentId, 'product_suppliers.status' => 1, 'product_suppliers.approve' => 'approve'])
-                    ->andWhere($whereArray);
+                    ->andWhere($whereArray)
+                    ->andWhere('product_suppliers.userId=' . Yii::$app->user->identity->userId);
         } else {
             $query = ProductSuppliers::find()
                     ->leftJoin('product p', 'product_suppliers.productId=p.productId')
