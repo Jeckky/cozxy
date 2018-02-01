@@ -82,10 +82,10 @@
                 </div>
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
                     Cozxy Dot Com Co.,Ltd.<br>
-                    Tax : 0105546109903 <br>
+                    <!--Tax : 0105546109903 <br>
                     5 Soi Ram Intra 5 Yeak 4, Anusawari,  <br>
                     Bang Ken, Bangkok 10220<br>
-                    T: , F: <br>
+                    T: , F: <br>-->
                 </div>
             </div>
         </div>

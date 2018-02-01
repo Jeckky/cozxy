@@ -173,6 +173,7 @@ class MyAccountController extends MasterController {
         }
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
         $addressId = $params['addressId'];
         $model = \common\models\costfit\Address::find()->where('addressId=' . $addressId)->one();
         $model->scenario = 'shipping_address';
@@ -396,6 +397,7 @@ class MyAccountController extends MasterController {
         }
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
 
         $orderId = Yii::$app->request->get('OrderNo');
         $this->title = 'Cozxy.com | Order Purchase';

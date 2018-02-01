@@ -89,16 +89,35 @@ class ProductController extends ProductManagerMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' ")->all();
+        foreach ($userGroup as $value) {
+            //$value[] = $value['user_id'];
+            $textUserPartner[] = $value['user_id'];
+        }
+        //print_r($textUser);
         //echo 'userId : ' . Yii::$app->user->identity->userId;
         //$userSuppliers = \common\helpers\Suppliers::GetUserSuppliers();
         //$productCountents = \common\helpers\Suppliers::GetUserContents();
+        //echo '<pre>';
         //print_r($productCountents);
+        $productCountents = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Content' ")->all();
+        foreach ($productCountents as $value) {
+            //$value[] = $value['user_id'];
+            $textUserCountents[] = $value['user_id'];
+        }
+
+
+        //print_r($textUserCountents);
 
         $searchModel = new ProductSearch();
+
         $searchModel->parentId = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id);
+        //echo 'parentId : ' . $id;
+
+        $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id, $textUserPartner, $textUserCountents);
+        //print_r($productSupplierDataProvider);
         $getAuth = \common\helpers\menuBackend::getUser();
         return $this->render('view', [
                     'model' => $this->findModel($id),

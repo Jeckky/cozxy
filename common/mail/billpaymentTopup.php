@@ -112,8 +112,8 @@
                 <div class="foorter title"  style="background-color: #000000; color: rgba(255,212,36,.9); padding: 20px;">
 
                     Cozxy Dot Com Co., Ltd<br>
-                    tax Identification Number 0105553036789 <br>
-                    5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220
+                    <!--tax Identification Number 0105553036789 <br>
+                    5 Ram Intra Soi 5 Yeak4, Anusawari, Khet Bang Ken, Bangkok,10220-->
                     For customer care please contact us at: customercare@cozxy.com or call 064-184-7414<br>
 
                 </div>

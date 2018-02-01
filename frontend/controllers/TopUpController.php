@@ -528,9 +528,9 @@ class TopUpController extends MasterController {
         $zero = 10 - $lenght;
         $text = '';
         for ($i = 0; $i < $zero; $i++):
-            $text.='0';
+            $text .= '0';
         endfor;
-        $text.=$amount;
+        $text .= $amount;
         return $text;
     }
 
