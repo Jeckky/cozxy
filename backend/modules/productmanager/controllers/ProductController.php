@@ -319,6 +319,15 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
+        if($product->parentId == null) {
+            $productChildModels = Product::find()->where(['parentId'=>$id])->all();
+
+            $pcs = ArrayHelper::map($productChildModels, 'productId', 'productId');
+
+            Product::updateAll(['status'=>2, 'approve'=>'delete'], 'productId in ('.implode(',', $pcs).')');
+            ProductSuppliers::updateAll(['status'=>2, 'approve'=>'delete'], 'productId in ('.implode(',', $pcs).')');
+        }
+
         return $this->redirect(['index']);
     }
 
