@@ -182,8 +182,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_price', [
                         <div class="wf-container">
                             <?php
                             yii\widgets\Pjax::begin([
-                                'enablePushState' => false, // to disable push state
-                                'enableReplaceState' => false // to disable replace state
+//                                'enablePushState' => false, // to disable push state
+//                                'enableReplaceState' => false // to disable replace state
                             ]);
                             echo \yii\widgets\ListView::widget([
                                 'dataProvider' => $productCanSell,
@@ -221,8 +221,8 @@ line-height:35px;"><br><br><br>No results found.</div></div>',
                             <div class="filter-product-cozxy-not-sale">
                                 <?php
                                 yii\widgets\Pjax::begin([
-                                    'enablePushState' => false, // to disable push state
-                                    'enableReplaceState' => false // to disable replace state
+//                                    'enablePushState' => false, // to disable push state
+//                                    'enableReplaceState' => false // to disable replace state
                                 ]);
                                 echo \yii\widgets\ListView::widget([
                                     'dataProvider' => $productNotSell,

@@ -294,8 +294,8 @@ $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
                                     <?php
                                     yii\widgets\Pjax::begin([
                                         'id' => 'notsale',
-                                        'enablePushState' => false, // to disable push state
-                                        'enableReplaceState' => false, // to disable replace state
+//                                        'enablePushState' => false, // to disable push state
+//                                        'enableReplaceState' => false, // to disable replace state
                                         'timeout' => 5000,
                                         'clientOptions' => [
                                             'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
