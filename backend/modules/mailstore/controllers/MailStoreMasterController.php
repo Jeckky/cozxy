@@ -13,7 +13,7 @@ use common\models\costfit;
 /**
  * content controller
  */
-class MailStoreMasterController extends MailStoreMasterController {
+class MailStoreMasterController extends \backend\controllers\BackendMasterController {
 
     public $breadcrumbs = [];
     public $layout = '/cl1';
