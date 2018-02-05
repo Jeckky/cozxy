@@ -583,7 +583,11 @@ class LedController extends LedMasterController {
         //$qr = ['R1C3S1', 'R1C3S2', 'R1C3S3', 'R1C3S4', 'R1C3S5', 'R1C3S6', 'R1C3S7', 'R1C3S8', 'R1C3S9', 'R1C3S10'];
         $qrCode = ['LC-0108'];
         //$qr = ['AA0AB56', 'AA0AB57', 'AA0BL59'];
-        return $this->render('show_qr', ['qrCode' => $qrCode]);
+        $picking = \common\models\costfit\PickingPoint::find()->where("ip!=1")->all();
+        return $this->render('show_qr', [
+                    'qrCode' => $qrCode,
+                    'picking' => $picking
+        ]);
     }
 
 }
