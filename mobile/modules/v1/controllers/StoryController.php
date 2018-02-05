@@ -495,26 +495,31 @@ class StoryController extends Controller
                 if($storyModel->save()) {
                     $res['storyId'] = Yii::$app->db->lastInsertID;
                     $comparePrice = $contents['comparePrice'];
-                    $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $comparePrice['currencyId']])->one();
 
-                    $productComparePriceModel = new ProductPostComparePrice();
-                    $productComparePriceModel->productId = $productId;
-                    $productComparePriceModel->shopName = $comparePrice['shopName'];
-                    $productComparePriceModel->placeName = $comparePrice['placeName'];
-                    $productComparePriceModel->moreDetail = $comparePrice['moreDetail'];
-                    $productComparePriceModel->price = $comparePrice['price'];
-                    $productComparePriceModel->currency = $currencyInfoModel->currencyId;
-                    $productComparePriceModel->country = $currencyInfoModel->ctry_name;
-                    $productComparePriceModel->latitude = $comparePrice['latitude'];
-                    $productComparePriceModel->longitude = $comparePrice['longitude'];
-                    $productComparePriceModel->productPostId = $res['storyId'];
-                    $productComparePriceModel->userId = $userId;
-                    $productComparePriceModel->createDateTime = $productComparePriceModel->updateDateTime = new Expression('NOW()');
+                    if($comparePrice !== []) {
+                        $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $comparePrice['currencyId']])->one();
 
-                    if($productComparePriceModel->save()) {
-                        $flag = true;
+                        $productComparePriceModel = new ProductPostComparePrice();
+                        $productComparePriceModel->productId = $productId;
+                        $productComparePriceModel->shopName = $comparePrice['shopName'];
+                        $productComparePriceModel->placeName = $comparePrice['placeName'];
+                        $productComparePriceModel->moreDetail = $comparePrice['moreDetail'];
+                        $productComparePriceModel->price = $comparePrice['price'];
+                        $productComparePriceModel->currency = $currencyInfoModel->currencyId;
+                        $productComparePriceModel->country = $currencyInfoModel->ctry_name;
+                        $productComparePriceModel->latitude = $comparePrice['latitude'];
+                        $productComparePriceModel->longitude = $comparePrice['longitude'];
+                        $productComparePriceModel->productPostId = $res['storyId'];
+                        $productComparePriceModel->userId = $userId;
+                        $productComparePriceModel->createDateTime = $productComparePriceModel->updateDateTime = new Expression('NOW()');
+
+                        if($productComparePriceModel->save(false)) {
+                            $flag = true;
+                        } else {
+                            $res['error'] = $productComparePriceModel->errors;
+                        }
                     } else {
-                        $res['error'] = $productComparePriceModel->errors;
+                        $flag = true;
                     }
                 } else {
                     $res['error'] = $storyModel->errors;
