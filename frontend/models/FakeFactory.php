@@ -285,11 +285,15 @@ class FakeFactory extends Model {
 
     public static function productStoryAll($n, $productId, $productSuppId, $productPostId) {
         $products = [];
-        $productPosts = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
-        $allProductId = \common\models\costfit\ProductSuppliers::productSupplierGroupStory($productPosts->productId);
-        $productPost = \common\models\costfit\ProductPost::find()->where("productId in($allProductId)")
-                ->orderBy("totalScore DESC")
-                ->all();
+        if ($productPostId == '') {
+            $productPost = \common\models\costfit\ProductPost::find()->where("userId != 0 and productId=" . $productId . '  and status =1')->orderBy('productPostId desc')->all();
+        } else {
+            $productPosts = \common\models\costfit\ProductPost::find()->where("productPostId=" . $productPostId . ' and product_post.status =1')->one();
+            $allProductId = \common\models\costfit\ProductSuppliers::productSupplierGroupStory($productPosts->productId);
+            $productPost = \common\models\costfit\ProductPost::find()->where("productId in($allProductId)")
+                    ->orderBy("totalScore DESC")
+                    ->all();
+        }
 
 
 

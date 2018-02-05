@@ -25,6 +25,8 @@ class StoryController extends MasterController {
     public function actionIndex($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
+
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -53,7 +55,7 @@ class StoryController extends MasterController {
                 $productViews->createDateTime = new \yii\db\Expression('NOW()');
                 $productViews->save(FALSE);
                 $productPost = ProductPost::find()->where("productPostId=" . $params['productPostId'])->one();
-                $productPost->totalScore+=ProductPost::VIEW_SCORE;
+                $productPost->totalScore += ProductPost::VIEW_SCORE;
                 $productPost->totalView = count(\common\models\costfit\ProductPostView::find()->where("productPostId=" . $params['productPostId'])->all());
                 $productPost->save(FALSE);
             }
@@ -112,6 +114,7 @@ class StoryController extends MasterController {
     public function actionWriteYourStory($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -247,7 +250,7 @@ class StoryController extends MasterController {
             $stars = \common\models\costfit\ProductPostRating::find()->where("productPostId=" . $post->productPostId . " and status=1")->all();
             if (isset($stars) && count($stars) > 0) {
                 foreach ($stars as $star):
-                    $totalStar+=($star->score * ProductPost::STAR_SCORE);
+                    $totalStar += ($star->score * ProductPost::STAR_SCORE);
                 endforeach;
             }
             $post->totalScore = $totalView + $totalStar;
@@ -359,7 +362,8 @@ class StoryController extends MasterController {
     public function actionSeeMore($hash = FALSE) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
-
+        //echo '<pre>';
+        //print_r($params);
         $productSuppId = isset($params['productSupplierId']) ? $params['productSupplierId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;
@@ -376,6 +380,8 @@ class StoryController extends MasterController {
     public function actionUpdateStories($hash) {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
+
+
         $productSuppId = isset($params['productSuppId']) ? $params['productSuppId'] : NULL;
         $productId = isset($params['productId']) ? $params['productId'] : NULL;
         $productPostId = isset($params['productPostId']) ? $params['productPostId'] : NULL;

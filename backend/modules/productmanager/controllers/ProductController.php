@@ -89,11 +89,35 @@ class ProductController extends ProductManagerMasterController {
      * @return mixed
      */
     public function actionView($id) {
+        $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' ")->all();
+        foreach ($userGroup as $value) {
+            //$value[] = $value['user_id'];
+            $textUserPartner[] = $value['user_id'];
+        }
+        //print_r($textUser);
+        //echo 'userId : ' . Yii::$app->user->identity->userId;
+        //$userSuppliers = \common\helpers\Suppliers::GetUserSuppliers();
+        //$productCountents = \common\helpers\Suppliers::GetUserContents();
+        //echo '<pre>';
+        //print_r($productCountents);
+        $productCountents = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Content' ")->all();
+        foreach ($productCountents as $value) {
+            //$value[] = $value['user_id'];
+            $textUserCountents[] = $value['user_id'];
+        }
+
+
+        //print_r($textUserCountents);
+
         $searchModel = new ProductSearch();
+
         $searchModel->parentId = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id);
+        //echo 'parentId : ' . $id;
+
+        $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id, $textUserPartner, $textUserCountents);
+        //print_r($productSupplierDataProvider);
         $getAuth = \common\helpers\menuBackend::getUser();
         return $this->render('view', [
                     'model' => $this->findModel($id),
@@ -233,6 +257,7 @@ class ProductController extends ProductManagerMasterController {
                 $productSuppliers->status = 1;
                 $productSuppliers->approve = 'approve';
                 $productSuppliers->productId = $productId;
+                $productSuppliers->userId = Yii::$app->user->id;
                 $productSuppliers->createDateTime = new Expression('NOW()');
                 $productSuppliers->updateDateTime = new Expression('NOW()');
                 $productSuppliers->quantity = $ps['result'];
@@ -285,7 +310,7 @@ class ProductController extends ProductManagerMasterController {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             //update brand & category in product master
-            if($model->parentId == null) {
+            if ($model->parentId == null) {
                 Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
             }
 
@@ -313,6 +338,15 @@ class ProductController extends ProductManagerMasterController {
         $product->status = 2;
         $product->approve = 'delete';
         $product->save(false);
+
+        if ($product->parentId == null) {
+            $productChildModels = Product::find()->where(['parentId' => $id])->all();
+
+            $pcs = ArrayHelper::map($productChildModels, 'productId', 'productId');
+
+            Product::updateAll(['status' => 2, 'approve' => 'delete'], 'productId in (' . implode(',', $pcs) . ')');
+            ProductSuppliers::updateAll(['status' => 2, 'approve' => 'delete'], 'productId in (' . implode(',', $pcs) . ')');
+        }
 
         return $this->redirect(['index']);
     }

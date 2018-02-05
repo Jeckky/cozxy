@@ -19,7 +19,7 @@ class ProductController extends MasterController {
         $k = base64_decode(base64_decode($hash));
         $params = \common\models\ModelMaster::decodeParams($hash);
 
-        // echo '<pre>';
+        //echo '<pre>';
         // print_r($params);
         //exit();
         $productIdParams = $params['productId']; //เก็บ ProductId

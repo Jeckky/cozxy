@@ -1,10 +1,7 @@
 <?php
 
 $params = array_merge(
-        require(__DIR__ . '/../../common/config/params.php'),
-        require(__DIR__ . '/../../common/config/params-local.php'),
-        require(__DIR__ . '/params.php'),
-        require(__DIR__ . '/params-local.php')
+        require(__DIR__ . '/../../common/config/params.php'), require(__DIR__ . '/../../common/config/params-local.php'), require(__DIR__ . '/params.php'), require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -55,9 +52,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-//'search/<title>/<hash>' => 'search/index',
-//Custom Rule
-//                '<controller:\w+>/<hash>' => '<controller>/index',
+                //'search/<title>/<hash>' => 'search/index',
+                //Custom Rule
+                // '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
                 'products/<hash>' => 'products/index',
@@ -72,19 +69,19 @@ return [
                 'profile/transfer-confirm/<hash>' => 'profile/transfer-confirm',
                 'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
                 'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
-//                'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
-//                'profile/shipping-address/<hash>' => 'profile/shipping-address',
+                // 'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
+                // 'profile/shipping-address/<hash>' => 'profile/shipping-address',
                 'profile/billings-address/<hash>' => 'profile/billings-address',
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
-//                'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
+                // 'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
                 'checkout/confirmation/<hash>' => 'checkout/confirmation',
                 'checkout/order-summary-topup/<hash>' => 'checkout/order-summary-topup',
                 'top-up/send-payment/<hash>' => 'top-up/send-payment',
-//                'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
-//                'profile/picking-point/<hash>' => 'profile/picking-point',
-//mobile
-//                'mobile/product/<hash>' => 'mobile/product',
-//                'mobile/product/product/<hash>' => 'mobile/product/product',
+                // 'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
+                // 'profile/picking-point/<hash>' => 'profile/picking-point',
+                //mobile
+                // 'mobile/product/<hash>' => 'mobile/product',
+                // 'mobile/product/product/<hash>' => 'mobile/product/product',
                 'my-account/purchase-order/<hash>' => 'my-account/purchase-order/',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
