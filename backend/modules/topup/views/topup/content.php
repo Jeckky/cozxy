@@ -9,7 +9,7 @@ use common\models\costfit\ProductSuppliers;
     <div style="width: 70%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;padding-top: 3px;">
         ชื่อลูกค้า/ Customers : <b><?= $customerName ?></b><br>
         ที่อยู่ / Address : <b><?= $address ?></b><br>
-        เลขประจำตัวผู้เสียภาษีอากร : <b>( ไม่มีข้อมูล )</b>
+        เลขประจำตัวผู้เสียภาษีอากร : <b><?= $tax != null || $tax != '' ? $tax : '( ไม่มีข้อมูล )' ?></b>
     </div>
     <div style="width: 30%;height: 90px;border:solid 0.5px #000000;padding-left: 10px;margin-left: 500px;margin-top: -93px;padding-top: 3px;">
 
