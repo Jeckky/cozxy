@@ -316,11 +316,12 @@ class User extends \common\models\costfit\master\UserMaster {
         $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")
                 ->orderBy("createDateTime DESC")
                 ->one();
-        if (isset($detail)) {
-            return $detail;
-        } else {
-            return NULL;
+        if (!isset($detail)) {
+            $detail = Address::find()->where("userId=" . $userId)
+                    ->orderBy("createDateTime DESC")
+                    ->one();
         }
+        return $detail;
     }
 
     public static function supplierAddressText($addressId) {
