@@ -78,7 +78,6 @@ class WishlistController extends Controller
             $res['error'] = 'Error : User not found.';
         }
 
-
         echo Json::encode($res);
     }
 
