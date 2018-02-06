@@ -293,11 +293,10 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function userName($id) {
         $user = Address::find()->where("userId=" . $id . " and isDefault=1")->one();
-        if (isset($user)) {
-            return $user->firstname . " " . $user->lastname;
-        } else {
-            return '';
+        if (!isset($user)) {
+            $user = Address::find()->where("userId=" . $id)->one();
         }
+        return $user->firstname . " " . $user->lastname;
     }
 
     public static function supplierDetail($userId) {
@@ -316,11 +315,12 @@ class User extends \common\models\costfit\master\UserMaster {
         $detail = Address::find()->where("userId=" . $userId . " and isDefault=1")
                 ->orderBy("createDateTime DESC")
                 ->one();
-        if (isset($detail)) {
-            return $detail;
-        } else {
-            return NULL;
+        if (!isset($detail)) {
+            $detail = Address::find()->where("userId=" . $userId)
+                    ->orderBy("createDateTime DESC")
+                    ->one();
         }
+        return $detail;
     }
 
     public static function supplierAddressText($addressId) {
@@ -361,42 +361,41 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function userAddressText($addressId, $tel = true) {
         $text = Address::find()->where("addressId=" . $addressId . " and isDefault=1")->one();
-        if (isset($text) && !empty($text)) {
-            $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
-            if (isset($districtId) && !empty($districtId)) {
-                $district = $districtId->localName;
-                $id = $districtId->cityId;
-            } else {
-                $district = '';
-                $id = '';
-            }
-            $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
-            if (isset($aumphur) && !empty($aumphur)) {
-                $city = $aumphur->localName;
-            } else {
-                $city = '';
-            }
-            $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
-            if (isset($province) && !empty($province)) {
-                $state = $province->localName;
-            } else {
-                $state = '';
-            }
-            $zipcode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $text->zipcode)->one();
-            if (isset($zipcode) && !empty($zipcode)) {
-                $zipcodes = $zipcode->zipcode;
-            } else {
-                $zipcodes = '';
-            }
-            if ($tel == true) {
-                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
-            } else {
-                $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes;
-            }
-            return $address;
-        } else {
-            return NULL;
+        if (!isset($text)) {
+            $text = Address::find()->where("addressId=" . $addressId)->one();
         }
+        $districtId = \common\models\dbworld\District::find()->where("districtId=" . $text->districtId)->one();
+        if (isset($districtId) && !empty($districtId)) {
+            $district = $districtId->localName;
+            $id = $districtId->cityId;
+        } else {
+            $district = '';
+            $id = '';
+        }
+        $aumphur = \common\models\dbworld\Cities::find()->where("cityId=" . $text->amphurId)->one();
+        if (isset($aumphur) && !empty($aumphur)) {
+            $city = $aumphur->localName;
+        } else {
+            $city = '';
+        }
+        $province = \common\models\dbworld\States::find()->where("stateId=" . $text->provinceId)->one();
+        if (isset($province) && !empty($province)) {
+            $state = $province->localName;
+        } else {
+            $state = '';
+        }
+        $zipcode = \common\models\dbworld\Zipcodes::find()->where("zipcodeId=" . $text->zipcode)->one();
+        if (isset($zipcode) && !empty($zipcode)) {
+            $zipcodes = $zipcode->zipcode;
+        } else {
+            $zipcodes = '';
+        }
+        if ($tel == true) {
+            $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes . "<br>TEL. " . $text->tel . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax. " . $text->fax;
+        } else {
+            $address = $text->address . " " . $district . " " . $city . " " . $state . " " . $zipcodes;
+        }
+        return $address;
     }
 
     public static function userTel($userId) {

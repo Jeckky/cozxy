@@ -285,7 +285,12 @@ class TopupController extends TopupMasterController {
 
         if (isset($topUp)) {
             $customerName = User::userName($topUp->userId);
-            //throw new \yii\base\Exception($topUp->userId);
+            // throw new \yii\base\Exception($topUp->userId);
+            $taxId = \common\models\costfit\Address::find()->where("userId=" . $topUp->userId . " and isDefault=1")->one();
+            if (!isset($taxId)) {
+                $taxId = \common\models\costfit\Address::find()->where("userId=" . $topUp->userId)->one();
+            }
+            $tax = $taxId->tax;
             $address = User::userAddressText(User::userDetail($topUp->userId)->addressId, false);
             $topUpNo = $topUp->topUpNo;
             $subDate = substr($topUp->updateDateTime, 0, -9);
@@ -298,6 +303,7 @@ class TopupController extends TopupMasterController {
         $content = $this->renderPartial('content', [
             'customerName' => $customerName,
             'address' => $address,
+            'tax' => $tax,
             'topUpNo' => $topUpNo,
             'date' => $date,
             'point' => $point,

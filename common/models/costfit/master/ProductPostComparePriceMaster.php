@@ -43,8 +43,7 @@ return [
             [['price'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
             [['shopName'], 'string', 'max' => 200],
-            [['country', 'currency'], 'string', 'max' => 100],
-            [['longitude', 'latitude'], 'string', 'max' => 50],
+            [['country',], 'string', 'max' => 100],
         ];
 }
 
