@@ -37,12 +37,13 @@ class VerifyEmailController extends MailStoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
+        $NotVerify = \common\models\costfit\User::find()->where('status=0')->count();
         $dataProvider = new ActiveDataProvider([
             'query' => User::find()->where("status = 0"),
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider, 'NotVerify' => $NotVerify
         ]);
     }
 
@@ -76,23 +77,6 @@ class VerifyEmailController extends MailStoreMasterController {
 
     }
 
-    public function actionAddProduct($id) {
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-        }
-        $dataProvider = new ActiveDataProvider([
-            'query' => SectionItem::find()->where("sectionId=" . $id),
-        ]);
-
-        $model = new SectionItem();
-        $section = Section::find()->where("sectionId=" . $id)->one();
-        return $this->render('add_product', [
-                    'section' => $section,
-                    'model' => $model,
-                    'dataProvider' => $dataProvider,
-        ]);
-    }
-
     /**
      * Deletes an existing Section model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -118,6 +102,10 @@ class VerifyEmailController extends MailStoreMasterController {
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionNewVerify() {
+        return $this->render('messages');
     }
 
 }

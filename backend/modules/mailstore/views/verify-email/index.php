@@ -31,15 +31,15 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
     <div id="content-wrapper">
         <div class="mail-nav">
             <div class="compose-btn">
-                <a href="pages-new-email.html" class="btn btn-primary btn-labeled btn-block"><i class="btn-label fa fa-pencil-square-o"></i>New Email</a>
+                <a href="<?= Yii::$app->homeUrl ?>mailstore/verify-email/new-verify" class="btn btn-primary btn-labeled btn-block"><i class="btn-label fa fa-pencil-square-o"></i>New Email</a>
             </div>
             <div class="navigation">
                 <ul class="sections">
-                    <li class="active"><a href="#"><i class="m-nav-icon fa fa-inbox"></i>Inbox <span class="label pull-right">20</span></a></li>
-                    <li><a href="#"><i class="m-nav-icon fa fa-star"></i>Starred <span class="label pull-right">43</span></a></li>
+                    <li class="active"><a href="#"><i class="m-nav-icon fa fa-inbox"></i>Inbox <span class="label pull-right"><?= $NotVerify ?></span></a></li>
+                    <li><a href="#"><i class="m-nav-icon fa fa-star"></i>Starred <span class="label pull-right">0</span></a></li>
                     <li><a href="#"><i class="m-nav-icon fa fa-envelope"></i>Sent mail</a></li>
                     <li><a href="#"><i class="m-nav-icon fa fa-exclamation"></i>Important</a></li>
-                    <li><a href="#"><i class="m-nav-icon fa fa-file-text-o"></i>Drafts <span class="label pull-right">11</span></a></li>
+                    <li><a href="#"><i class="m-nav-icon fa fa-file-text-o"></i>Drafts <span class="label pull-right">0</span></a></li>
                     <li><a href="#"><i class="m-nav-icon fa fa-trash-o"></i>Trash</a></li>
                     <li class="divider"></li>
                     <li class="add-more"><a href="#">+ Add More</a></li>
