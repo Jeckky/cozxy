@@ -2,9 +2,11 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Inbox';
+$this->title = 'Verify Email';
 $this->params['breadcrumbs'][] = $this->title; // inbox/index
 
 $baseUrl = Yii::$app->getUrlManager()->getBaseUrl();
@@ -43,7 +45,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <li class="add-more"><a href="#">+ Add More</a></li>
                 </ul>
 
-                <div class="mail-nav-header">LABELS</div>
+                <!--<div class="mail-nav-header">LABELS</div>
                 <ul class="sections">
                     <li><a href="#"><div class="mail-nav-lbl bg-success"></div>Client</a></li>
                     <li><a href="#"><div class="mail-nav-lbl bg-danger"></div>Social</a></li>
@@ -52,13 +54,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                     <li><a href="#"><div class="mail-nav-lbl bg-pa-purple"></div>Work</a></li>
                     <li class="divider"></li>
                     <li class="add-more"><a href="#">+ Add More</a></li>
-                </ul>
+                </ul>-->
             </div>
         </div>
 
         <div class="mail-container">
             <div class="mail-container-header">
-                Inbox
+                <?= $this->title ?>
 
                 <form action="" class="pull-right" style="width: 200px;margin-top: 3px;">
                     <div class="form-group input-group-sm has-feedback no-margin">
@@ -73,7 +75,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                     <div class="btn-group">
                         <div class="btn-group">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-check-square-o"></i>&nbsp;<i class="fa fa-caret-down"></i></button>
+                            <!--<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-check-square-o"></i>&nbsp;<i class="fa fa-caret-down"></i></button>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Check all</a></li>
                                 <li><a href="#">Check read</a></li>
@@ -82,7 +84,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                                 <li><a href="#">Uncheck all</a></li>
                                 <li><a href="#">Uncheck read</a></li>
                                 <li><a href="#">Uncheck unread</a></li>
-                            </ul>
+                            </ul>-->
                         </div>
                         <button type="button" class="btn"><i class="fa fa-repeat"></i></button>
                     </div>
@@ -95,7 +97,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
 
                 </div>
 
-                <div class="btn-toolbar pull-right" role="toolbar">
+                <!--<div class="btn-toolbar pull-right" role="toolbar">
                     <div class="btn-group">
                         <button type="button" class="btn"><i class="fa fa-chevron-left"></i></button>
                         <button type="button" class="btn"><i class="fa fa-chevron-right"></i></button>
@@ -103,158 +105,29 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@app/themes/costfit/
                 </div>
                 <div class="pages pull-right">
                     1-50 of 825
-                </div>
+                </div>-->
             </div>
 
 
             <ul class="mail-list">
-                <li class="mail-item unread">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Facebook</a></div>
-                    <div class="m-subject"><span class="label label-danger">Social</span>&nbsp;&nbsp;<a href="pages-show-email.html">Reset your account password</a></div>
-                    <div class="m-date">3:25 PM</div>
-                </li>
-                <li class="mail-item starred">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Dropbox</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">Complete your Dropbox setup!</a></div>
-                    <div class="m-date">Yesterday, 1:15 PM</div>
-                </li>
-                <!--<li class="mail-item unread">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Michelle Bortz</a></div>
-                    <div class="m-subject"><span class="label label-pa-purple">Work</span>&nbsp;&nbsp;<a href="pages-show-email.html">New design concepts</a>&nbsp;&nbsp;<i class="fa fa-paperclip"></i></div>
-                    <div class="m-date">Mar 28</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">TaskManager</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You have 5 uncompleted tasks!</a></div>
-                    <div class="m-date">Mar 27</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">GitHub</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">[GitHub] Your password has changed</a></div>
-                    <div class="m-date">Mar 26</div>
-                </li>
-                <li class="mail-item starred">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Timothy Owens</a></div>
-                    <div class="m-subject"><span class="label label-warning">Friends</span>&nbsp;&nbsp;<a href="pages-show-email.html">Hi John! How are you?</a></div>
-                    <div class="m-date">Mar 25</div>
-                </li>
-                <li class="mail-item starred unread">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Master Yoda</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You're ready, young padawan.</a></div>
-                    <div class="m-date">Mar 24</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Facebook</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">Reset your account password</a></div>
-                    <div class="m-date">Mar 23</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Dropbox</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">Complete your Dropbox setup!</a></div>
-                    <div class="m-date">Mar 22</div>
-                </li>
-                <li class="mail-item unread">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Michelle Bortz</a></div>
-                    <div class="m-subject"><span class="label label-pa-purple">Work</span>&nbsp;&nbsp;<a href="pages-show-email.html">New design concepts</a>&nbsp;&nbsp;<i class="fa fa-paperclip"></i></div>
-                    <div class="m-date">Mar 21</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">TaskManager</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You have 5 uncompleted tasks!</a></div>
-                    <div class="m-date">Mar 20</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">GitHub</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">[GitHub] Your password has changed</a></div>
-                    <div class="m-date">Mar 19</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Timothy Owens</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">Hi John! How are you?</a></div>
-                    <div class="m-date">Mar 18</div>
-                </li>
-                <li class="mail-item starred">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Master Yoda</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You're ready, young padawan.</a></div>
-                    <div class="m-date">Mar 17</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Facebook</a></div>
-                    <div class="m-subject"><span class="label label-danger">Social</span>&nbsp;&nbsp;<a href="pages-show-email.html">Reset your account password</a></div>
-                    <div class="m-date">Mar 16</div>
-                </li>
-                <li class="mail-item starred">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Dropbox</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">Complete your Dropbox setup!</a></div>
-                    <div class="m-date">Mar 15</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Michelle Bortz</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">New design concepts</a>&nbsp;&nbsp;<i class="fa fa-paperclip"></i></div>
-                    <div class="m-date">Mar 14</div>
-                </li>
-                <li class="mail-item starred unread">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Master Yoda</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You're ready, young padawan.</a></div>
-                    <div class="m-date">Mar 13</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">TaskManager</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">You have 5 uncompleted tasks!</a></div>
-                    <div class="m-date">Mar 11</div>
-                </li>
-                <li class="mail-item">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">GitHub</a></div>
-                    <div class="m-subject"><a href="pages-show-email.html">[GitHub] Your password has changed</a></div>
-                    <div class="m-date">Mar 10</div>
-                </li>
-                <li class="mail-item starred">
-                    <div class="m-chck"><label class="px-single"><input type="checkbox" name="" value="" class="px"><span class="lbl"></span></label></div>
-                    <div class="m-star"><a href="#"></a></div>
-                    <div class="m-from"><a href="#">Timothy Owens</a></div>
-                    <div class="m-subject"><span class="label label-warning">Friends</span>&nbsp;&nbsp;<a href="pages-show-email.html">Hi John! How are you?</a></div>
-                    <div class="m-date">Mar 10</div>
-                </li>-->
+                <?=
+                \yii\widgets\ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'summary' => "",
+                    'options' => [
+                        'tag' => false,
+                    ],
+                    'itemView' => function ($model, $key, $index, $widget) {
+                        return $this->render('@app/themes/costfit/layouts/mailstore/_item_email', ['model' => $model, 'index' => $index]);
+                    },
+                    // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                    //'layout'=>"{summary}{pager}{items}"
+                    //'layout' => "{items}",
+                    'itemOptions' => [
+                        'tag' => false,
+                    ],
+                ]);
+                ?>
             </ul>
 
         </div>
