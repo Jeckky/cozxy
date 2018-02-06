@@ -69,8 +69,10 @@ class CozxyCalculatesCart {
         } else {
             //echo '2';
             //echo '1.3';
-            $Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $orderIdParams)->orderBy('orderId desc')->one();
-            $orderId = $Order->attributes['orderId'];
+            //$Order = \common\models\costfit\Order::find()->where('userId=' . Yii::$app->user->id . ' and orderId=' . $orderIdParams)->orderBy('orderId desc')->one();
+            $Order = \common\models\costfit\Order::find()->where('orderId=' . $orderIdParams)->orderBy('orderId desc')->one(); /* sak */
+            //$orderId = $Order->attributes['orderId'];
+            $orderId = $Order->orderId;
             if (isset($orderId)) {
                 $OrderItemSumTotal = \common\models\costfit\OrderItem::find()->where('orderId=' . $orderId)->sum('total');
                 //$OrderItemSumTotal = $Order->total;
