@@ -3,10 +3,10 @@
 namespace backend\modules\mailstore;
 
 /**
- * mailstore module definition class
+ * productpost module definition class
  */
-class MailStore extends \yii\base\Module
-{
+class MailStore extends \yii\base\Module {
+
     /**
      * @inheritdoc
      */
@@ -15,10 +15,10 @@ class MailStore extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
 
         // custom initialization code goes here
     }
+
 }
