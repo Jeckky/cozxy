@@ -36,6 +36,7 @@ class ProductPostComparePrice extends \common\models\costfit\master\ProductPostC
             ['country', 'required'],
             ['currency', 'required'],
             [['shopName', 'price', 'country', 'currency'], 'required', 'on' => self::Cozxy_Product_Post_Compare_Price],
+            [['currency', 'latitude', 'longitude'], 'number'],
         ]);
     }
 

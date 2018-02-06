@@ -322,21 +322,25 @@ class ProductController extends \common\controllers\MasterController
         $id = $contents['id'];
         $res = [];
         $product = Product::findProductById($id);
+        if(isset($product)) {
 
-        $res = $product->attributes;
-        $res['brand'] = $product->brand->title;
-        $res['category'] = $product->category->title;
-        $res['shortDescription'] = strip_tags($product->shortDescription);
+            $res = $product->attributes;
+            $res['brand'] = $product->brand->title;
+            $res['category'] = $product->category->title;
+            $res['shortDescription'] = strip_tags($product->shortDescription);
 
-        $productSuppliers = ProductSuppliers::findCheapest($id);
-        if(isset($productPriceSupplier)) {
-            $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
-            $res['salePrice'] = $productPriceSupplier->price;
+            $productSuppliers = ProductSuppliers::findCheapest($id);
+            if(isset($productPriceSupplier)) {
+                $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
+                $res['salePrice'] = $productPriceSupplier->price;
+            }
+            $res['shareUrl'] = Url::home(true) . 'product/' . ModelMaster::encodeParams(['productId' => $id]);
+            $res['isWishlist'] = self::isWishlist($product->productId, $userId);
+            $res['worldPrice'] = self::worldPrice($id);
+            $res['localPrice'] = self::localPrice($id);
+        } else {
+            $res['error'] = 'Product not found';
         }
-        $res['shareUrl'] = Url::home(true).'product/'.ModelMaster::encodeParams(['productId'=>$id]);
-        $res['isWishlist'] = self::isWishlist($product->productId, $userId);
-        $res['worldPrice'] = self::worldPrice($id);
-        $res['localPrice'] = self::localPrice($id);
 
         header('Content-Type: application/json');
         return Json::encode($res);

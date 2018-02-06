@@ -51,7 +51,7 @@ class MyAccountController extends MyAccountFrontendController
 
                     if($avatar->saveAs($filePath) && $userModel->save(false)) {
                         $res['success'] = true;
-                        $res['avatar'] = Url::home(true).'images/user/avatar/'.$fileName;
+                        $res['avatar'] = Url::home(true) . 'images/user/avatar/' . $fileName;
                     }
                 } else {
                     $res['error'] = 'Can not uploaded file, please try again';
@@ -67,15 +67,15 @@ class MyAccountController extends MyAccountFrontendController
     public function actionBillingAddress()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $res = ['items'=>[], 'error' => NULL];
+        $res = ['items' => [], 'error' => NULL];
 
         if(isset($contents) && $contents !== []) {
-            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
             if(isset($userModel)) {
                 $addressModels = Address::find()
-                    ->where(['userId'=>$userModel->userId, 'type'=>Address::TYPE_BILLING])
-                    ->orderBy(['isDefault'=>SORT_DESC])
+                    ->where(['userId' => $userModel->userId, 'type' => Address::TYPE_BILLING])
+                    ->orderBy(['isDefault' => SORT_DESC])
                     ->all();
                 $i = 0;
                 foreach($addressModels as $addressModel) {
@@ -92,15 +92,15 @@ class MyAccountController extends MyAccountFrontendController
     public function actionShippingAddress()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $res = ['items'=>[], 'error' => NULL];
+        $res = ['items' => [], 'error' => NULL];
 
         if(isset($contents) && $contents !== []) {
-            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
             if(isset($userModel)) {
                 $addressModels = Address::find()
-                    ->where(['userId'=>$userModel->userId, 'type'=>Address::TYPE_SHIPPING])
-                    ->orderBy(['isDefault'=>SORT_DESC])
+                    ->where(['userId' => $userModel->userId, 'type' => Address::TYPE_SHIPPING])
+                    ->orderBy(['isDefault' => SORT_DESC])
                     ->all();
                 $i = 0;
                 foreach($addressModels as $addressModel) {
@@ -117,9 +117,9 @@ class MyAccountController extends MyAccountFrontendController
     public function actionRequestChangeMobile()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $res = ['success'=>false, 'error'=>''];
+        $res = ['success' => false, 'error' => ''];
 
-        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
         if(isset($userModel)) {
             //send confirm code via sms
@@ -132,11 +132,10 @@ class MyAccountController extends MyAccountFrontendController
             $res['success'] = true;
 
             Sms::Send('POST', Sms::SMS_URL, Json::encode([
-                'from'=>'Cozxy',
-                'to'=>[self::preparePhoneNumber($userModel->tel)],
-                'text'=>"รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
+                'from' => 'Cozxy',
+                'to' => [self::preparePhoneNumber($userModel->tel)],
+                'text' => "รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
             ]));
-
         } else {
             $res['error'] = 'Error : User not found';
         }
@@ -147,9 +146,9 @@ class MyAccountController extends MyAccountFrontendController
     public function actionConfirmChangeMobile()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $res = ['success'=>false, 'error'=>''];
+        $res = ['success' => false, 'error' => ''];
 
-        $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
         if(isset($userModel)) {
             if($userModel->code == $contents['otp']) {
@@ -170,16 +169,16 @@ class MyAccountController extends MyAccountFrontendController
 
     private static function preparePhoneNumber($tel)
     {
-        return '66'.substr($tel, 1);
+        return '66' . substr($tel, 1);
     }
 
     public function actionSaveAddress()
     {
         $contents = Json::decode(file_get_contents("php://input"));
-        $res = ['success'=>false, 'error'=>''];
+        $res = ['success' => false, 'error' => ''];
 
         if(isset($contents) && $contents !== []) {
-            $userModel = User::find()->where(['auth_key'=>$contents['token']])->one();
+            $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
             if(isset($userModel)) {
                 $addressModel = new Address();
                 $addressModel->firstname = $contents['firstname'];
@@ -196,13 +195,13 @@ class MyAccountController extends MyAccountFrontendController
                 $addressModel->isDefault = $contents['isDefault'];
 
                 //if $contents['isDefault'] = 1 change all isDefault=0
-                Address::updateAll(['isDefault'=>0], ['userId'=>$userModel->userId, 'type'=>$contents['type']]);
+                Address::updateAll(['isDefault' => 0], ['userId' => $userModel->userId, 'type' => $contents['type']]);
 
                 //zipcode
                 $zipCode = Zipcodes::find()
-                ->leftJoin('district d', 'd.code=zipcodes.districtCode')
-                ->where(['d.districtId'=>$contents['districtId']])
-                ->one();
+                    ->leftJoin('district d', 'd.code=zipcodes.districtCode')
+                    ->where(['d.districtId' => $contents['districtId']])
+                    ->one();
 
                 $addressModel->zipcode = $zipCode->zipcodeId;
 
@@ -223,12 +222,61 @@ class MyAccountController extends MyAccountFrontendController
     private static function prepareAddress($address)
     {
         $zipcde = isset($address->zipcodes->zipcode) ? $address->zipcodes->zipcode : '';
+
         return [
-            'addressId'=>$address->addressId,
-            'isDefaule'=>$address->isDefault,
-            'name'=>$address->firstname.' '.$address->lastname,
-            'address'=>$address->address.' '.$address->district->districtName.' '.$address->cities->cityName.' '.$address->states->stateName.' '.$zipcde,
-            'tel'=>$address->tel,
+            'addressId' => $address->addressId,
+            'isDefaule' => $address->isDefault,
+            'name' => $address->firstname . ' ' . $address->lastname,
+            'address' => $address->address . ' ' . $address->district->districtName . ' ' . $address->cities->cityName . ' ' . $address->states->stateName . ' ' . $zipcde,
+            'tel' => $address->tel,
         ];
+    }
+
+    public function actionChangeMobile()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+        if(isset($userModel)) {
+            $userModel->tel = $contents['mobile'];
+            $userModel->save(false);
+            $res['success'] = true;
+        } else {
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
+    }
+
+
+
+    public function actionChangeName()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+        if(isset($userModel)) {
+            if(!empty($contents['firstname'])) {
+                $userModel->firstname = $contents['firstname'];
+            }
+
+            if(!empty($contents['lastname'])) {
+                $userModel->lastname = $contents['lastname'];
+            }
+
+
+            if(!empty($contents['displayName'])) {
+                $userModel->displayName = $contents['displayName'];
+            }
+
+            $userModel->save(false);
+            $res['success'] = true;
+        } else {
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
     }
 }

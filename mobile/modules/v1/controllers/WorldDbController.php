@@ -103,4 +103,19 @@ class WorldDbController extends Controller
 
         echo Json::encode($res);
     }
+
+    public function actionCallingCode()
+    {
+        $countryModels = Countries::find()->orderBy(['countryName'=>SORT_ASC])->all();
+        $res = [];
+        $i = 0;
+        foreach($countryModels as $countryModel) {
+            $res[$i] = [
+                'code'=>$countryModel->webCode,
+                'callingCode'=>$countryModel->callingCode,
+            ];
+        }
+
+        echo Json::encode($res);
+    }
 }

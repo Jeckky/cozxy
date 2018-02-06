@@ -126,6 +126,9 @@ return [
         'promotion' => [
             'class' => 'backend\modules\promotion\promotion',
         ],
+        'mailstore' => [
+            'class' => 'backend\modules\mailstore\MailStore',
+        ],
     ],
     'components' => [
         'user' => [

@@ -13,7 +13,7 @@ class SignupForm extends Model {
 
     const COZXY_REGIS = 'register';
     const COZXY_BOOTH_REGIS = 'registerBooth';
-    const COZXY_MOBILE_REGIS = 'registerBooth';
+    const COZXY_MOBILE_REGIS = 'registerMobile';
 
     public $firstname;
     public $lastname;
@@ -69,6 +69,7 @@ class SignupForm extends Model {
             ['rePassword', 'required', 'message' => 'Re Password must be equal to "New Password".'],
             [['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'dd', 'mm', 'yyyy'], 'required', 'on' => self::COZXY_REGIS],
             [['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'], 'required', 'on' => self::COZXY_BOOTH_REGIS],
+            [['email', 'password'], 'required', 'on' => self::COZXY_MOBILE_REGIS],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Confirm Passwords don't match"],
         ];
     }
@@ -77,7 +78,7 @@ class SignupForm extends Model {
         return [
             self::COZXY_REGIS => ['firstname', 'lastname', 'email', 'password', 'confirmPassword', 'gender', 'dd', 'mm', 'yyyy'],
             self::COZXY_BOOTH_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'confirmPassword'],
-                //self::COZXY_MOBILE_REGIS => ['firstname', 'lastname', 'tel', 'email', 'password', 'gender', 'birthDate'],
+            self::COZXY_MOBILE_REGIS => ['email', 'password'],
         ];
     }
 

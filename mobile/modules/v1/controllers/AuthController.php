@@ -4,6 +4,7 @@ namespace mobile\modules\v1\controllers;
 
 use common\models\costfit\User;
 use frontend\models\SignupForm;
+use yii\helpers\Url;
 use yii\web\Controller;
 use \yii\helpers\Json;
 use Yii;
@@ -72,6 +73,7 @@ class AuthController extends Controller
                     ->all();
 
                 $j = 0;
+                $items = [];
                 foreach($productShelfs as $productShelf) {
                     $shelf = [
                         'productShelfId' => $productShelf->productShelfId,
@@ -204,7 +206,7 @@ class AuthController extends Controller
             } else {
                 $signupModel = new SignupForm(['scenario' => SignupForm::COZXY_MOBILE_REGIS]);
                 $signupModel->attributes = $contents;
-                $signupModel->birthDate = $contents['birthDate'];
+//                $signupModel->birthDate = $contents['birthDate'];
 
                 $user = $signupModel->signup();
 
@@ -242,9 +244,35 @@ class AuthController extends Controller
                 $res['error'] = 'User not found.';
             }
 
-
             return Json::encode($res);
         }
     }
 
+    public function actionSessionCheck()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+
+        if(isset($contents['token']) && !empty($contents['token']))  {
+            $userModel = User::find()
+                ->select('firstname, lastname, displayName, email, birthDate, avatar')
+                ->where(['auth_key' => $contents['token']])
+                ->one();
+
+            if(isset($userModel)) {
+                $res['success'] = true;
+
+                $res['user'] = [
+                    'firstname'=>$userModel->firstname,
+                    'lastname'=>$userModel->lastname,
+                    'displayName'=>$userModel->displayName,
+                    'email'=>$userModel->email,
+                    'birthdate'=>substr($userModel->birthDate, 0, 10),
+                    'avatar'=>(isset($userModel->avatar) && !empty($userModel->avatar)) ? Url::home(true).$userModel->avatar:'',
+                ];
+            }
+        }
+
+        return Json::encode($res);
+    }
 }
