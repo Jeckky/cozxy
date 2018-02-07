@@ -52,9 +52,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //'search/<title>/<hash>' => 'search/index',
-                //Custom Rule
-                // '<controller:\w+>/<hash>' => '<controller>/index',
+//'search/<title>/<hash>' => 'search/index',
+//Custom Rule
+// '<controller:\w+>/<hash>' => '<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<hash>/<title>' => '<controller>/<action>',
                 'products/<hash>' => 'products/index',
@@ -70,7 +70,7 @@ return [
                 'payment/print-purchase-order/<hash>/<title>' => 'payment/print-purchase-order',
                 'payment/print-receipt/<hash>/<title>' => 'payment/print-receipt',
                 // 'payment/print-pay-in/<hash>/<title>' => 'payment/print-pay-in',
-                // 'profile/shipping-address/<hash>' => 'profile/shipping-address',
+// 'profile/shipping-address/<hash>' => 'profile/shipping-address',
                 'profile/billings-address/<hash>' => 'profile/billings-address',
                 'checkout/confirm-checkout/<hash>' => 'checkout/confirm-checkout',
                 // 'checkout/edit-checkout/<hash>' => 'checkout/edit-checkout',
@@ -78,10 +78,10 @@ return [
                 'checkout/order-summary-topup/<hash>' => 'checkout/order-summary-topup',
                 'top-up/send-payment/<hash>' => 'top-up/send-payment',
                 // 'checkout/reverse-order-to-cart/<hash>' => 'checkout/reverse-order-to-cart',
-                // 'profile/picking-point/<hash>' => 'profile/picking-point',
-                //mobile
-                // 'mobile/product/<hash>' => 'mobile/product',
-                // 'mobile/product/product/<hash>' => 'mobile/product/product',
+// 'profile/picking-point/<hash>' => 'profile/picking-point',
+//mobile
+// 'mobile/product/<hash>' => 'mobile/product',
+// 'mobile/product/product/<hash>' => 'mobile/product/product',
                 'my-account/purchase-order/<hash>' => 'my-account/purchase-order/',
                 'my-account/edit-billing/<hash>' => 'my-account/edit-billing',
                 'story/write-your-story/<hash>' => 'story/write-your-story/',
@@ -143,9 +143,11 @@ return [
          */
         'view' => [
             'theme' => [
-                'pathMap' => ['@app/views' => '@app/themes/cozxy'],
+                'pathMap' => [
+                    '@app/views' => '@app/themes/cozxy',
+                ],
                 'baseUrl' => '@web'
-            ]
+            ],
         ],
         /**
          * Assert Manager
@@ -180,7 +182,7 @@ return [
                     'authUrl' => 'https://www.facebook.com/dialog/oauth?display=popup',
                     /* 'clientId' => '1660657237592929',
                       'clientSecret' => 'd4503ebb0f9b512e58d73fee8134853f', */
-                    // New Test App ID Facebook Pew
+// New Test App ID Facebook Pew
                     'clientId' => '362825020809663',
                     'clientSecret' => '7c0053e0dfff8b317b171d3eb20d7ee0',
                     'attributeNames' => [
@@ -191,9 +193,9 @@ return [
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
                     //'class' => 'yii\authclient\clients\GoogleOAuth',
-                    //'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
-                    //'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
-                    // New Test App ID Google Pew
+//'clientId' => '51351302330-9bnvl3nmdqmdspqece4rlbc71br0o5sh.apps.googleusercontent.com',
+//'clientSecret' => 'N739bef0DKOS7VUKT4DKmAL2',
+// New Test App ID Google Pew
                     'clientId' => '929695392739-gi499d6l2o7u0virnonlkfgjuscf4pul.apps.googleusercontent.com',
                     'clientSecret' => '9_FsWMcRocJA0AKqxaYDgz9U',
                     //'scope' => 'https://www.googleapis.com/auth/userinfo.email',

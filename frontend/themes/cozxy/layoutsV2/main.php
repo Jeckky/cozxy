@@ -79,18 +79,12 @@ AppAsset::register($this);
                 height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
         <!-- End Google Tag Manager (noscript) -->
-        <?php
-        //if (Yii::$app->controller->id == 'home') {
-        //echo $this->render('@app/themes/cozxy/layoutsV2/_menu');
-        //} else {
-        echo $this->render('_menu');
-        //}
-        echo $content;
-        echo $this->render('_footer')
-        ?>
+        <?= $this->render('_menu') ?>
+        <?= $content ?>
+
+        <?= $this->render('_footer') ?>
+
         <?php $this->endBody() ?>
-<!--        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw" async-->
-        <!--        defer></script>-->
 
     </body>
 </html>
