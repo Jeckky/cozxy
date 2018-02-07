@@ -19,17 +19,13 @@ $supplierPrice = isset($model->price) ? $model->price : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //GetBrowser::UserAgent() == 'computer'
 //print_r($model);
-echo $index;
-if ($index == 0) {
-    $active = 'active';
-} else {
-    $active = '';
-}
+
+$j = 0;
 ?>
 
-<div class="item ">
-    <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-6 box-product new-themes-product-items">
+<div class="item active">
+    <div class="row-cozxy">
+        <div class="col-md-2 col-sm-3 col-xs-3 box-product new-themes-product-items">
             <div class="product-box">
                 <?php if ($DiscountProduct != 'Lessthan10') { ?>
                     <div class="product-sticker">
@@ -41,7 +37,7 @@ if ($index == 0) {
                                     //echo 'SALE';
                                     echo $DiscountProduct;
                                     echo '<div class="off-style">OFF</div>';
-                                } else if (Yii::$app->controller->id == 'site') {
+                                } else if (Yii::$app->controller->id == 'site' || Yii::$app->controller->id == 'home') {
                                     //echo 'SALE';
                                     echo $DiscountProduct;
                                     echo '<div class="off-style">OFF</div>';
@@ -52,7 +48,7 @@ if ($index == 0) {
                             <p><?php
                                 if (Yii::$app->controller->id == 'search') {
                                     //echo '-' . $DiscountProduct;
-                                } else if (Yii::$app->controller->id == 'site') {
+                                } else if (Yii::$app->controller->id == 'site' || Yii::$app->controller->id == 'home') {
                                     //echo '-' . $DiscountProduct;
                                     //echo 'OFF';
                                 } else {
@@ -66,7 +62,8 @@ if ($index == 0) {
                 <?php } ?>
                 <div class="product-img text-center">
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
-                        <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>"  >
+                        <!--<img class="media-object fullwidth img-responsive" src="<?//= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>"  >-->
+                        <img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/Cf06b2IDsMtxAbKMipVzZfBMab4JQm5p.jpg">
                     </a>
                     <div class="v-hover">
                         <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>">
@@ -122,9 +119,7 @@ if ($index == 0) {
                         <p class="brand">
                             <span class="size16">NO BRAND</span>
                         </p>
-                    <?php }
-                    ?>
-
+                    <?php } ?>
                     <p class="name">
                         <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
                             <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
@@ -150,10 +145,9 @@ if ($index == 0) {
                         echo '';
                     }
                     ?>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+

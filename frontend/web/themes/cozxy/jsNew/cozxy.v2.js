@@ -9,4 +9,17 @@ $(document).ready(function () {
         pause: true,
         interval: false,
     });
+    $('#media1').carousel({
+        pause: true,
+        interval: false,
+    });
+    $('#media2').carousel({
+        pause: true,
+        interval: false,
+    });
+    $('#media1').find('.item').first().addClass('active');
+
+
+
 });
+

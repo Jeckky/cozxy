@@ -23,7 +23,7 @@
     border-radius: 23px 23px 23px 23px;*/
     height: 40px;
     width : 40px;
-    margin-top: 90px
+    margin-top: 9.5%;
 }
 /* Next button  */
 .media-carousel .carousel-control.right
@@ -35,7 +35,7 @@
     border-radius: 23px 23px 23px 23px;*/
     height: 40px;
     width : 40px;
-    margin-top: 90px;
+    margin-top: 9.5%;
 }
 /* Changes the position of the indicators */
 .media-carousel .carousel-indicators
@@ -62,3 +62,22 @@
 .thumbnail {
     border-radius: 0px;
 }
+
+
+.product-box {
+    box-shadow: 0 0px 0 #ddd;
+}
+
+.new-themes-product-items{
+    left: 10px;
+}
+
+/* Previous button product items section */
+.prev-product-items{
+    margin-top: 15% !important;
+}
+/* Next button  product items section */
+.next-product-items{
+    margin-top: 15% !important;
+}
+

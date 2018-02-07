@@ -95,7 +95,7 @@ class HomeController extends MasterHomeController {
      */
     public function actionIndex() {
 
-        $productCanSell = Product::productForSale(6);
+        $productCanSell = Product::productForSale(18);
         $productNotSell = Product::productForNotSale(6);
         $productStory = ProductPost::productStory(3);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
@@ -103,8 +103,10 @@ class HomeController extends MasterHomeController {
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
         $sections = Section::showSections();
+        $category = \frontend\models\DisplayMyCategory::ShowCategory();
+
         //return $this->render('index');
-        return $this->render('index', compact('sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        return $this->render('index', compact('category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
@@ -123,7 +125,6 @@ class HomeController extends MasterHomeController {
         }
 
         $model = new LoginForm();
-
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
