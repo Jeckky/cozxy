@@ -2,13 +2,14 @@
     <div class="product-box">
         <div class="product-img text-center">
             <a href="#" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= Yii::$app->homeUrl ?>images/Category/1-Home page copy.jpg" width="410" height="256">
+                <img class="media-object fullwidth img-responsive" src="<?= Yii::$app->homeUrl ?>images/Category/1-Home page copy 5.jpg" width="410" height="256">
             </a>
-        </div> 
+        </div>
+
     </div>
     <div class="text-center">
         <p class="category">
-            <span class="size14"><?= $model->title ?></span>
+            <span class="size14">&nbsp;</span>
         </p>
     </div>
 </div>

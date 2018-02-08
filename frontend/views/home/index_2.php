@@ -7,6 +7,7 @@
 $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
 ?>
 
+
 <?php if (isset($slideGroup)): ?>
     <div class="bg-white rela">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -43,7 +44,6 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 <?php endif; ?>
-<div class="size6 bg-white">&nbsp;</div>
 
 <!--/ slide prodcut  /-->
 <div class="bg-white" >
@@ -131,6 +131,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
+
 <div class="size6 bg-white">&nbsp;</div>
 
 <!--/ category  /-->
@@ -175,7 +176,6 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -184,12 +184,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide media-carousel" id="media1">
-                    <div class="head-all-new-v2">
-                        <h1>SUNGLASSES BEST SELLER</h1>
-                    </div>
-                    <div class="see-all-new-v2">
-                        see all >
-                    </div>
+                    <h1>SUNGLASSES BEST SELLER</h1>
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -225,6 +220,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
 <div class="size6 bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
+
 <div class="bg-white" >
     <div class="container-x">
         <div class="row">
@@ -241,7 +237,6 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -250,12 +245,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide media-carousel" id="media2">
-                    <div class="head-all-new-v2">
-                        <h1>COSMETICS BEST SELLER</h1>
-                    </div>
-                    <div class="see-all-new-v2">
-                        see all >
-                    </div>
+                    <h1>COSMETICS BEST SELLER</h1>
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -291,6 +281,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
 <div class="size6 bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
+
 <div class="bg-white" >
     <div class="container-x">
         <div class="row">
@@ -307,7 +298,6 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -340,9 +330,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
                     </div>
 
                 </div>
-                <div class="see-all-new-v2">
-                    see more
-                </div>
+
             </div>
         </div>
     </div>
@@ -365,7 +353,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -374,12 +362,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide media-carousel" id="media3">
-                    <div class="head-all-new-v2">
-                        <h1>ALL THE BAGS</h1>
-                    </div>
-                    <div class="see-all-new-v2">
-                        see all >
-                    </div>
+                    <h1>ALL THE BAGS</h1>
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -422,13 +405,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide media-carousel" id="media4">
-                    <div class="head-all-new-v2">
-                        <h1>ITEMS YOU MAY LIKE</h1>
-                    </div>
-                    <div class="see-all-new-v2">
-                        see all >
-                    </div>
-
+                    <h1>ITEMS YOU MAY LIKE</h1>
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -462,18 +439,7 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
     </div>
 </div>
 
-
-<div class="bg-white">
-    <div class="container-x">
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" >
-                    <div style=" border:  1px solid #f5f5f5; height: 10px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="size6 bg-white">&nbsp;</div>
 
 <!--/ category  /-->
 <div class="bg-white">
@@ -505,31 +471,16 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-
-<div class="bg-white">
-    <div class="container-x">
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" >
-                    <div style=" border:  1px solid #f5f5f5; height: 10px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="size6 bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
     <div class="container-x">
         <div class="row">
             <div class="col-xs-12 col-md-12">
+
                 <div class="carousel slide media-carousel" id="media5">
-                    <div class="head-all-new-v2">
-                        <h1>PRODUCT STORY</h1>
-                    </div>
-                    <div class="see-all-new-v2">
-                        see all >
-                    </div>
+                    <h1>PRODUCT STORY</h1>
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -557,8 +508,11 @@ $this->title = 'test new themes cozxy.com - Buy what fuels your passion';
                     <a data-slide="next" href="#media5" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
+
 <div class="size6 bg-white">&nbsp;</div>

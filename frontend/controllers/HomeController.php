@@ -97,16 +97,17 @@ class HomeController extends MasterHomeController {
 
         $productCanSell = Product::productForSale(18);
         $productNotSell = Product::productForNotSale(6);
-        $productStory = ProductPost::productStory(3);
+        $productStory = ProductPost::productStory(6);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
         $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
         $sections = Section::showSections();
         $category = \frontend\models\DisplayMyCategory::ShowCategory();
+        $productNewCanSell = Product::productForSale(8);
 
         //return $this->render('index');
-        return $this->render('index', compact('category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        return $this->render('index', compact('productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
