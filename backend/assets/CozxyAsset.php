@@ -29,6 +29,7 @@ class CozxyAsset extends AssetBundle {
         'js/cozxy/cozxy-unity.js', //by Taninut.Bm, Master codeding
         //'js/cozxy/cozxy-unity.min.js', // By Taninut.bm , create date 06/02/2017 , ย่อขนาด บีบอัดไฟล์
         'js/cozxy/cozxy-printer.js',
+        'js/cozxy/cozxy-email.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset'

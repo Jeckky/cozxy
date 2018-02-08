@@ -34,29 +34,33 @@ $this->title = 'Sing Up : cozxy.com - Buy what fuels your passion';
                 <div class="col-lg-8 col-lg-offset-2">
                     <p class="size18">CREATE ACCOUNT</p>
                     <div class="size14 hr-margin">&nbsp;</div>
-                    <?php $form = ActiveForm::begin(['id' => 'register-form', 'action' => isset($_GET['cz']) ? Url::to(['/site/signup?cz=' . time()]) : Url::to(['/site/signup']), 'options' => ['class' => 'registr-form']]); ?>
+                    <?php
+                    $form = ActiveForm::begin(['id' => 'register-form',
+                                'action' => isset($_GET['cz']) ? Url::to(['/site/signup?cz=' . time()]) : Url::to(['/site/signup']),
+                                'options' => ['class' => 'registr-form']]);
+                    ?>
                     <div class="row">
                         <div class="col-md-6">
-                            <?php // throw new \yii\base\Exception($model->scenario);   ?>
+<?php // throw new \yii\base\Exception($model->scenario);    ?>
                             <?= $form->field($model, 'firstname')->textInput(['class' => 'fullwidth', 'placeholder' => 'FIRSTNAME'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
-                            <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
+                    <?= $form->field($model, 'lastname')->textInput(['class' => 'fullwidth', 'placeholder' => 'LASTNAME'])->label(false); ?>
                         </div>
                     </div>
-                    <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
+                            <?= $form->field($model, 'email')->textInput(['class' => 'fullwidth', 'placeholder' => 'EMAIL ADDRESS'])->label(false); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?= $form->field($model, 'password')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'PASSWORD'])->label(false); ?>
                         </div>
                         <div class="col-md-6">
-                            <?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
+<?= $form->field($model, 'confirmPassword')->passwordInput(['class' => 'fullwidth', 'placeholder' => 'CONFIRM PASSWORD'])->label(false); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <p>Gender</p>
-                            <?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
+<?= $form->field($model, 'gender', ['radioTemplate' => '<label class="gender-head">{label}</label><label class="signup-radio">{input}</label>'])->inline()->radioList([1 => 'Male', 0 => 'Female'], ['separator' => '', 'tabindex' => 3])->label(false); ?>
                         </div>
                         <div class="col-md-9">
                             <p>Birthday</p>
@@ -136,7 +140,7 @@ $this->title = 'Sing Up : cozxy.com - Buy what fuels your passion';
                     </div>
 
                 </div>
-                <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
@@ -175,7 +179,7 @@ $this->title = 'Sing Up : cozxy.com - Buy what fuels your passion';
                 <h4 class="modal-title" id="gridSystemModalLabel">I have read and agree with the terms</h4>
             </div>
             <div class="modal-body">
-                <?= $content['description'] ?>
+<?= $content['description'] ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
