@@ -362,7 +362,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 </div>
 <div class="size6 bg-white">&nbsp;</div>
 
-
 <!--/   prodcut  items /-->
 <div class="bg-white" >
     <div class="container-x">
@@ -409,7 +408,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-
 
 <div class="bg-white">
     <div class="container-x">

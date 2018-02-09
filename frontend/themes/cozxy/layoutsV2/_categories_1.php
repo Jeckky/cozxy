@@ -157,8 +157,6 @@
     </div>
 </div>
 
-
-
 <!-- Categories Nav [SmartPhone] -->
 <div class="bg-white menubar hidden-lg hidden-md">
     <div class="container">
