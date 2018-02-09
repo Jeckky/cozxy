@@ -37,14 +37,57 @@ class VerifyEmailController extends MailStoreMasterController {
      * @return mixed
      */
     public function actionIndex() {
-        $NotVerify = \common\models\costfit\User::find()->where('status=0')->count();
+        $NotVerify = User::find()->where('status=0')->count();
+        $query = User::find()->where("status = 0");
+        if (isset($_GET["searchEmail"]) && $_GET["searchEmail"] != '') {
+            //throw new \yii\base\Exception('123456');
+            $query->andWhere("email like '%" . $_GET["searchEmail"] . "%' or username like '%" . $_GET["searchEmail"] . "%' or firstname like '%" . $_GET["searchEmail"] . "%'");
+            $NotVerify = User::find()->where("status=0 and (email like '%" . $_GET["searchEmail"] . "%' or username like '%" . $_GET["searchEmail"] . "%' or firstname like '%" . $_GET["searchEmail"] . "%')")->count();
+        }
+        $query->orderBy("password DESC,createDateTime DESC");
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where("status = 0"),
+            'query' => $query
         ]);
 
         return $this->render('index', [
-                    'dataProvider' => $dataProvider, 'NotVerify' => $NotVerify
+                    'dataProvider' => $dataProvider,
+                    'NotVerify' => $NotVerify,
         ]);
+    }
+
+    public function actionPrepareAction() {
+        //throw new \yii\base\Exception($_POST["submitType"]);
+        if (isset($_POST["user"])) {
+            if ($_POST["submitType"] == 'verify') {
+                foreach ($_POST["user"] as $userId => $mail):
+                    $this->sendEmail($mail, $userId);
+                endforeach;
+                $this->redirect('index');
+            }
+            if ($_POST["submitType"] == 'delete') {
+                foreach ($_POST["user"] as $userId => $mail):
+                    $this->deleteUser($userId);
+                endforeach;
+            }
+        } else {
+            $this->redirect('index');
+        }
+    }
+
+    public function sendEmail($email, $userId) {
+        $user = User::find()->where("userId=$userId")->one();
+        if (isset($user)) {
+            $url = "http://" . Yii::$app->request->getServerName() . "/site/confirm?token=" . $user->token;
+            $emailSend = \common\helpers\Email::mailRegisterConfirmBooth($email, $url);
+        }
+    }
+
+    public function deleteUser($userId) {
+        $user = User::find()->where("userId=$userId")->one();
+        if (isset($user)) {
+            $user->delete();
+        }
+        $this->redirect('index');
     }
 
     /**
@@ -106,6 +149,26 @@ class VerifyEmailController extends MailStoreMasterController {
 
     public function actionNewVerify() {
         return $this->render('messages');
+    }
+
+    public function actionAllUser() {
+        $res = [];
+        $user = User::find()->where("status = 0")->all();
+        if (isset($_GET["searchEmail"]) && $_GET["searchEmail"] != '') {
+            $user = User::find()->where("status=0 and (email like '%" . $_GET["searchEmail"] . "%' or username like '%" . $_GET["searchEmail"] . "%' or firstname like '%" . $_GET["searchEmail"] . "%')")->count();
+        }
+        if (isset($user) && count($user) > 0) {
+            $i = 0;
+            foreach ($user as $id):
+                $res["userId"][$i] = $id->userId;
+                $i++;
+            endforeach;
+            $res["status"] = true;
+            $res["count"] = count($user);
+        }else {
+            $res["status"] = false;
+        }
+        return json_encode($res);
     }
 
 }
