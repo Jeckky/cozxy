@@ -113,7 +113,7 @@ function categoryOffClearance() {
 $(".menu-category-pomotion").mouseout(function () {
     categoryOffClearance();
 }).mouseover(function () {
-    alert('clearance');
+
     $('#categories-pomotion').collapse('show');
     $('#categories-pomotion').addClass('active');
     /* hide brands*/
