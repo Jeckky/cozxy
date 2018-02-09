@@ -77,8 +77,9 @@ function categoryOut() {
     categoryOff();
     $('#categories').collapse('hide');
 }
-function categoryOff() {
-    $('.menubar .menu-category').removeClass('active');
+function categoryOff() {//menubar-cozxy
+    //$('.menubar .menu-category').removeClass('active');
+    $('.menubar-cozxy .menu-category').removeClass('active');
     $('.categories-submenu .menu-item').removeClass('active');
     $('.sub2menu').hide(0);
 }
@@ -98,7 +99,8 @@ function categoryLoad(x) {
 $(document).on('mousemove', function (event) {
     var h1 = $('.topbar').height();
     var h2 = $('.headbar').height();
-    var h3 = $('.menubar').height();
+    //var h3 = $('.menubar').height();
+    var h3 = $('.menubar-cozxy').height();
     var h4 = $('.categories-submenu').height() + 128;
     var header = (h1 + h2 + h3 + h4);
     if (event.pageY >= header) {

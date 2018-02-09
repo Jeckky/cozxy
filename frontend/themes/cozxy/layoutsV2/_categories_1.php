@@ -1,18 +1,17 @@
-
 <!-- Categories Nav [PC] -->
 <div class="bg-white menubar hidden-sm hidden-xs">
-    <div class="container">
+    <div class="container menu-main-cozxy">
         <div class="row">
-            <a href="#" class="menu-category" data-toggle="collapse" data-target="#categories" style="color: #000000;">CATEGORIES &nbsp;</a>
-            <a href="#" class="menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;">CLEARANCE &nbsp;</a>
-            <a href="#" class="menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="color: #000000;">POMOTION &nbsp;</a>
-            <a href="#" class="menu-category-brands" data-toggle="collapse" data-target="#categories-brands" style="color: #000000;">BRANDS <span class="size12">(mouse over)</span>&nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;">CLEARANCE &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion">POMOTION &nbsp;</a>
+            <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands">BRANDS &nbsp;</a>
         </div>
     </div>
 </div>
 
 <!--/ categories / -->
-<div class="categories-submenu hidden-sm hidden-xs">
+<div class="menubar-cozxy categories-submenu hidden-sm hidden-xs">
     <div class="collapse" id="categories">
         <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff;">
             <div class="row-cozxy">
@@ -58,7 +57,6 @@
                         </div>
                     <?php } ?>
                     <!-- Item End -->
-
                 </div>
                 <!-- End Category -->
                 <div class="col-lg-6 col-md-8 sub2menu" style="display:none; ">
@@ -97,18 +95,55 @@
             </div>
         </div>
     </div>
-
 </div>
 
-<div class="categories-submenu-brands hidden-sm hidden-xs">
-    <div class="collapse" id="categories">
-        <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff;">
-            <div class="collapse" id="categories-brands">
-                test's
+<!--/ categories brand/ -->
+<div class="menubar-cozxy categories-submenu-brands hidden-sm hidden-xs">
+    <div class="collapse" id="categories-brands">
+        <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff; ">
+            <div class="row-cozxy">
+                <!-- Main Category -->
+                <div class="col-lg-12 col-md-12">
+                    <div class="row main-category-brands"><p>&nbsp;</p>
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $this->params['brandsMenuCategory'],
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_category_v2', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <!-- Sub Category -->
+                <div class="sr-only-brands">
+                    <!-- Item 1 -->
+                    <!-- Item End -->
+                </div>
+                <!-- End Category -->
+                <div class="col-lg-6 col-md-8 sub2menu" style="display:none; ">
+                    <div class="row loadCategoryBrands"></div>
+                </div>
             </div>
+            <!-- / Brands Form New Layout / -->
         </div>
     </div>
 </div>
+
+
+
 <!-- Categories Nav [SmartPhone] -->
 <div class="bg-white menubar hidden-lg hidden-md">
     <div class="container">

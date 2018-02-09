@@ -59,6 +59,7 @@ class MasterController extends MasterCommonController {
         $this->view->params['cate'] = \frontend\models\DisplayMyCategory::ShowMenuCategory();
 
         $this->view->params['brands'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCate();
+        $this->view->params['brandsMenuCategory'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCateItems();
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {

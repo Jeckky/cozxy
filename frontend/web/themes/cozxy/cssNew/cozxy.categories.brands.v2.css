@@ -1,6 +1,31 @@
+/*
+    New Layouts For Cozxy 2018
+    Create date : 6/02/2018
+    Create By : Taninut.Bm
+*/ 
 
-.main-category{
+.menubar a {
+    color: #000;
+}
+
+.menu-main-cozxy .category-cozxy-head a{
+    color: #000 !important;
+}
+
+.menu-main-cozxy .category-cozxy-head a:active{
+    color: #000;
+}
+
+.menu-main-cozxy .category-cozxy-head a:hover{
+    color:  #f9c204;
+}
+.main-category-brands{
     max-height:500px; min-height: 500px;
+}
+
+.main-category-brands .menu-item{
+    float: left;
+    width: 20%;
 }
 
 /* Category Sub Menu */
