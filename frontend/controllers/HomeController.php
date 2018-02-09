@@ -97,7 +97,7 @@ class HomeController extends MasterController {
 
         $productCanSell = Product::productForSale(18);
         $productNotSell = Product::productForNotSale(6);
-        $productStory = ProductPost::productStory(6);
+        $productStory = ProductPost::productStory(10);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
         $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
         $productBrand = Brand::allAvailableBrands();

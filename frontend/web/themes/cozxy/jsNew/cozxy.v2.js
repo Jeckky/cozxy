@@ -17,6 +17,18 @@ $(document).ready(function () {
         pause: true,
         interval: false,
     });
+    $('#media3').carousel({
+        pause: true,
+        interval: false,
+    });
+    $('#media4').carousel({
+        pause: true,
+        interval: false,
+    });
+    $('#media5').carousel({
+        pause: true,
+        interval: false,
+    });
     $('#media1').find('.item').first().addClass('active');
 });
 

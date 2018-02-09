@@ -9,7 +9,7 @@
     </div>
     <div class="text-center">
         <p class="category">
-            <span class="size14">&nbsp;</span>
+            <span class="size18"><?= strtoupper($model->title) ?></span>
         </p>
     </div>
 </div>

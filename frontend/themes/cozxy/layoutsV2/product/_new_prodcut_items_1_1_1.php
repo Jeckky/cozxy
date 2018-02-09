@@ -37,14 +37,13 @@ if ($index == 0) {
                     <div class="product-sticker">
                         <div class="rcorners4">
                             <p>
-                                <span class="discount"> 25</span><span class="percen-discount">%</span></p><div class="off-style">OFF</div><p></p>
-                            <p>  </p>
+                                <span class="discount"> 25</span><span class="percen-discount">%</span></p><div class="off-style">OFF</div>
                         </div>
                         <div class="triangle"></div>
                     </div>
                     <div class="product-img text-center">
                         <a  href="/cozxy/frontend/web/product/TjVS4zYHodLRoLFcnFkRy3ihL5RZOKxdphrRMIdp2KU%3D" class="fc-black  ">
-                            <img class="media-object fullwidth img-responsive" src="/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/a61VDMzH4fZis0sVzAXATQzDyzJN14ZF.jpg">
+                            <img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg">
                         </a>
                         <div class="v-hover">
                             <a href="/cozxy/frontend/web/product/LpCvpN88FKzYjWip4K85qioA54gcO6VP0UjYU0KzBug%3D">
@@ -60,19 +59,6 @@ if ($index == 0) {
                                 <div class="col-xs-4 shopping-1891"><i id="cart-plus-1891" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                             </a>
                         </div>
-                    </div>
-                    <div class="product-txt">
-                        <p class="brand">
-                            <span class="size14">SK-II</span>
-                        </p>
-
-                        <p class="name">
-                            <a href="/cozxy/frontend/web/product/LpCvpN88FKzYjWip4K85qioA54gcO6VP0UjYU0KzBug%3D" class="size18 b">SK-II MEN FACIAL TREATMENT ESSENCE 160 ML.</a>
-                        </p>
-                        <p class="price">
-                            <span class="size18 fc-red">4,275 THB </span> <span class="size14 onsale">5,700 THB </span>
-                        </p>
-
                     </div>
                 </div>
             </div>

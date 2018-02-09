@@ -17,7 +17,12 @@ use common\helpers\Base64Decode;
             </p>
             <p class="name">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="size18 b"><?= strtoupper($model->title) ?></a>
-            </p> 
+            </p>
+            <p class="price" style="height:25px;">
+                <span class="col-md-4 col-sm-6 col-xs-6" style="padding-right: 0px;padding-left: 0px;"><i class="fa fa-eye"></i> <?= $model->countView() ?></span>
+                <span class="col-md-4 col-sm-6 col-xs-6"  style="padding-right:0px; padding-left:5px;"><i class="fa fa-star"></i> <?= $model->averageStar() ?></span>
+            </p>
         </div>
+
     </div>
 </div>

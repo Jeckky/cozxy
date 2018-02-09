@@ -4,7 +4,7 @@
 
 \frontend\assets\NewCozxyAsset::register($this);
 
-$this->title = 'test new layout cozxy.com - Buy what fuels your passion';
+$this->title = 'test new themes cozxy.com - Buy what fuels your passion';
 ?>
 
 <?php if (isset($slideGroup)): ?>
@@ -53,36 +53,78 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="carousel slide media-carousel" id="media">
                     <h1>HOT DEALS 30% - 70%</h1>
                     <div class="carousel-inner">
-                        <?php
-                        echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $productCanSell,
-                            'summary' => "",
-                            'options' => [
-                                'tag' => false,
-                            ],
-                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                                //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_1_1_1', ['model' => $model, 'index' => $index]);
-                            },
-                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                            //'layout' => "{summary}{pager}{items}",
-                            'layout' => "{items}",
-                            'itemOptions' => [
-                                'tag' => false,
-                            ],
-                                //'itemOptions' => ['class' => 'item'],
-                        ]);
-                        ?>
+                        <div class="item  active">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="thumbnail" href="#"><img alt="" src="http://localhost/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/o0ds5kPtaMtBG2z4_9vwvO52zW3op_zl.jpg"></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <a data-slide="prev" href="#media" class="left carousel-control fc-black mca"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
                     <a data-slide="next" href="#media" class="right carousel-control fc-black mca"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
-                    <!--<a data-slide="prev" href="#media" class="prev-product-items-first left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
-                        <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media" class="next-product-items-first right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
-                        <span class="sr-only">Next</span></a>-->
                 </div>
 
             </div>
@@ -169,9 +211,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a data-slide="prev" href="#media1" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                    <a data-slide="prev" href="#media1" class="left carousel-control fc-black mca prev-product-items"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media1" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                    <a data-slide="next" href="#media1" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
             </div>
@@ -230,9 +272,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a data-slide="prev" href="#media2" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                    <a data-slide="prev" href="#media2" class="left carousel-control fc-black mca prev-product-items"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media2" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                    <a data-slide="next" href="#media2" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
             </div>
@@ -350,9 +392,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a data-slide="prev" href="#media3" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                    <a data-slide="prev" href="#media3" class="left carousel-control fc-black mca prev-product-items"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media3" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                    <a data-slide="next" href="#media3" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
 
@@ -399,9 +441,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a data-slide="prev" href="#media4" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                    <a data-slide="prev" href="#media4" class="left carousel-control fc-black mca prev-product-items"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media4" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                    <a data-slide="next" href="#media4" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
 
@@ -500,9 +542,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a data-slide="prev" href="#media5" class="prev-product-story-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                    <a data-slide="prev" href="#media5" class="left carousel-control fc-black mca prev-product-items"><span class="glyphicon glyphicon-menu-left"></span>
                         <span class="sr-only">Previous</span></a>
-                    <a data-slide="next" href="#media5" class="next-product-story-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                    <a data-slide="next" href="#media5" class="right carousel-control fc-black mca next-product-items"><span class="glyphicon glyphicon-menu-right"></span>
                         <span class="sr-only">Next</span></a>
                 </div>
             </div>
