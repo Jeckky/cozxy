@@ -13,9 +13,10 @@ use common\controllers\MasterController as MasterCommonController;
 /**
  * Site controller
  */
-class MasterController extends MasterCommonController {
+class MasterHomeController extends MasterCommonController {
 
     //public $layout = '/content';
+    //public $layout = '@app/themes/cozxy/layoutsV2';
     public $title = 'Title';
     public $subTitle = 'Sub Title';
     public $subSubTitle = 'Sub Sub Title';
@@ -58,9 +59,9 @@ class MasterController extends MasterCommonController {
         $this->view->params['actionTreeSub'] = \frontend\controllers\CategoriesController::actionTreeSub();
         $this->view->params['cate'] = \frontend\models\DisplayMyCategory::ShowMenuCategory();
 
-        $this->view->params['brands'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCate();
-        $this->view->params['brandsMenuCategory'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCateItems();
 
+        //echo '<pre>';
+        //print_r($this->view->params['actionTreeSub']);
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([

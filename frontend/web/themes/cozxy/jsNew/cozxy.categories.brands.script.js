@@ -22,25 +22,25 @@ $(function () {
         }
     });
     // Category Script (PC)
-    $('.menu-category').click(function () {
+    $('.menu-category-brands').click(function () {
         categoryOff();
         $(this).addClass('active');
     });
-    $('.menu-category').mouseover(function () {
+    $('.menu-category-brands').mouseover(function () {
         categoryOff();
-        $('#categories').collapse('show');
+        $('#categories-brands').collapse('show');
         $(this).addClass('active');
     });
     $('.topbar').mouseover(function () {
         categoryOff();
-        $('#categories').collapse('hide');
+        $('#categories-brands').collapse('hide');
     });
     $('.headbar').mouseover(function () {
         categoryOff();
-        $('#categories').collapse('hide');
+        $('#categories-brands').collapse('hide');
     });
     // Category Script (SM)
-    var mobc = $('.main-category').html();
+    var mobc = $('.main-category-brands').html();
     $('.mob-maincate').html(mobc);
     $('.mobcategories').click(function () {
         $('body').css('overflow-y', 'hidden');
@@ -54,7 +54,7 @@ $(function () {
     }, function () {
         mouseo_x = 0;
     });
-    $('.main-category').hover(function () {
+    $('.main-category-brands').hover(function () {
         mouseo_y = 1;
     }, function () {
         mouseo_y = 0;
@@ -75,21 +75,20 @@ $(function () {
 // Sub Category Script (PC)
 function categoryOut() {
     categoryOff();
-    $('#categories').collapse('hide');
+    $('#categories-brands').collapse('hide');
 }
-function categoryOff() {//menubar-cozxy
-    //$('.menubar .menu-category').removeClass('active');
-    $('.menubar-cozxy .menu-category').removeClass('active');
-    $('.categories-submenu .menu-item').removeClass('active');
+function categoryOff() {
+    $('.menubar .menu-category-brands').removeClass('active');
+    $('.categories-submenu-brands .menu-item').removeClass('active');
     $('.sub2menu').hide(0);
 }
 function categoryLoad(x) {
-    $('.categories-submenu .menu-item').removeClass('active');
-    $('.categories-submenu .sub-' + x).addClass('active');
+    $('.categories-submenu-brands .menu-item').removeClass('active');
+    $('.categories-submenu-brands .sub-' + x).addClass('active');
     var temp = $('.sub-item-' + x).html();
     if (temp != '') {
-        $('.loadCategory').html(temp);
-        var cs = $('.categories-submenu').height();
+        $('.loadCategoryBrands').html(temp);
+        var cs = $('.categories-submenu-brands').height();
         $('.sub2menu').css('min-height', cs + 'px');
         $('.sub2menu').slideDown(384);
     } else {
@@ -99,13 +98,12 @@ function categoryLoad(x) {
 $(document).on('mousemove', function (event) {
     var h1 = $('.topbar').height();
     var h2 = $('.headbar').height();
-    //var h3 = $('.menubar').height();
-    var h3 = $('.menubar-cozxy').height();
-    var h4 = $('.categories-submenu').height() + 128;
+    var h3 = $('.menubar').height();
+    var h4 = $('.categories-submenu-brands').height() + 128;
     var header = (h1 + h2 + h3 + h4);
     if (event.pageY >= header) {
         categoryOff();
-        $('#categories').collapse('hide');
+        $('#categories-brands').collapse('hide');
     }
 });
 // Sub Category Script (SM)

@@ -57,4 +57,15 @@ class DisplayMyCategory extends Model {
         return $category;
     }
 
+    public static function ShowCategory() {
+        $category = \common\models\costfit\Category::find()
+                        //->where("category.parentId IS NULL AND category.statusx=1")
+                        ->where("category.status=1 and `image` IS NOT NULL and `image` !='' ")
+                        ->orderBy(new \yii\db\Expression('rand()'))->limit(6);
+        return new ActiveDataProvider([
+            'query' => $category,
+            'pagination' => false,
+        ]);
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\elasticsearch\controllers;
+namespace backend\modules\elasticsearch\controllers;
 
 use yii\web\Controller;
 

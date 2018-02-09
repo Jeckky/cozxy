@@ -471,9 +471,12 @@ class SearchController extends MasterController {
          * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
          */
         //$productid[] = '';
+        //echo '<pre>';
+        //print_r($dataProvider->allModels);
+        //exit();
         foreach ($dataProvider->allModels as $key => $value) {
-            $productid[] = $value['productid'];
-            $brandid[] = $value['brandid'];
+            $productid[] = $value['productId'];
+            $brandid[] = $value['brandId'];
             //$productid['brandid'] = $value['brandid'];
         }
         //print_r($productid);

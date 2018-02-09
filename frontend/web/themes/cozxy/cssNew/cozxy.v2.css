@@ -1,0 +1,196 @@
+/*
+    New Layouts For Cozxy 2018
+    Create date : 6/02/2018
+    Create By : Taninut.Bm
+*/
+
+.menubar {
+
+    border-top: 0px solid #fee60a;
+}
+
+.container-x{
+    padding-left: 55px; padding-right: 55px;
+}
+/* carousel */
+.media-carousel
+{
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+    margin-top: 30px;
+}
+/* Previous button  */
+.media-carousel .carousel-control.left
+{
+    left: -12px;
+    background-image: none;
+    /*background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;*/
+    height: 40px;
+    width : 40px;
+    margin-top: 9.5%;
+}
+/* Next button  */
+.media-carousel .carousel-control.right
+{
+    right: -12px !important;
+    background-image: none;
+    /*background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;*/
+    height: 40px;
+    width : 40px;
+    margin-top: 9.5% ;
+}
+/* Changes the position of the indicators */
+.media-carousel .carousel-indicators
+{
+    right: 50%;
+    top: auto;
+    bottom: 0px;
+    margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.media-carousel .carousel-indicators li
+{
+    background: #c0c0c0;
+}
+.media-carousel .carousel-indicators .active
+{
+    background: #333333;
+}
+.media-carousel img
+{
+    /*width: 250px;
+    height: 100px;*/
+}
+.thumbnail {
+    border-radius: 0px;
+}
+
+
+.product-box {
+    box-shadow: 0 0px 0 #ddd;
+}
+
+.new-themes-product-items{
+    left: 10px;
+}
+
+/* Previous button product items section */
+.prev-product-items{
+    margin-top: 20% !important;
+}
+.prev-product-items-first{
+    margin-top: 13% !important;
+}
+.prev-product-story-items{
+    margin-top: 18% !important;
+}
+/* Next button  product items section */
+.next-product-items{
+    margin-top: 20% !important;
+}
+.next-product-items-first{
+    margin-top: 13% !important;
+}
+.next-product-story-items{
+    margin-top: 18% !important;
+}
+
+.see-all-new-v2{
+    float: left;
+    width: 50%;
+    color: #03a9f4 !important;
+    text-align-last: end;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 300;
+    line-height: 1.1;
+    color: inherit;
+    font-size: 22px;
+}
+
+.head-all-new-v2{
+    float: left; width: 50%;
+}
+
+.main-category{
+    max-height:500px; min-height: 500px;
+}
+
+/* Category Sub Menu */
+.categories-submenu, .categories-submenu .collapsing {
+    position: absolute !important;
+    width: 100%;
+    z-index: 4096;
+}
+.categories-submenu .menu-item {
+    /*background-color: #e2e6e9;*/
+    background-color: #fff;
+    display: block;
+}
+.categories-submenu .menu-item a {
+    padding: 12px;
+    display: block;
+    width: 100%;
+    color: #333;
+}
+.categories-submenu .menu-item:hover a, .categories-submenu .menu-item.active a{
+    background-color: #fdc532;
+}
+/* Category Sub Menu Level 2 */
+.sub2menu {
+    /*background-color: #fdc532;*/
+    background-color: #fff;
+}
+.loadCategory .sub-cate {
+    background-color: #ffffff;
+    padding: 0 8px 5px;
+}
+.loadCategory .sub-cate a {
+    padding: 12px 16px 6px;
+    display: block;
+    width: 100%;
+    color: #333;
+    border-bottom: 1px solid #fee1a7;
+}
+.loadCategory .sub-items {
+    padding: 0px 8px;
+}
+.loadCategory .sub-items a {
+    padding: 2px 24px;
+    display: block;
+    width: 100%;
+    color: #333;
+}
+.loadCategory .sub-cate:hover, .loadCategory .sub-cate a:hover, .loadCategory .sub-items a:hover {
+    /*background-color: #ffffff;*/
+    color: #000;
+}
+.categories-submenu .mob-only {
+    display: none !important;
+}
+
+.menu-item a:hover{
+    border-bottom: 1px solid #fcdd08;
+}
+.subs-sub-titles {
+    margin-bottom:1px ;
+    padding: 10px;
+}
+.subs-sub-titles a:hover{
+    background-color: #fcdd08;
+}
+
+/* percen discount hotdeals */
+
+.product-sticker {
+    position: absolute;
+    top: 10px;
+    right: -1px;
+    z-index: 10;
+    width: 50px;
+}

@@ -120,4 +120,31 @@ class DisplayMyBrand {
         return $brand;
     }
 
+    public static function MyFilterBrandMenuCate() {
+
+        $brands = \common\models\costfit\Brand::find()
+                ->orderBy(new \yii\db\Expression('rand()'));
+        // ->all();
+        return new ActiveDataProvider([
+            'query' => $brands,
+            'pagination' => [
+                'pageSize' => 8,
+            ]
+        ]);
+        return $brands;
+    }
+
+    public static function MyFilterBrandMenuCateItems() {
+
+        $brands = \common\models\costfit\Brand::find()
+                ->orderBy(new \yii\db\Expression('rand()'));
+        return new ActiveDataProvider([
+            'query' => $brands,
+            'pagination' => [
+                'pageSize' => 24,
+            ]
+        ]);
+        return $brands;
+    }
+
 }
