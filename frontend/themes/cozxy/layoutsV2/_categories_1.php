@@ -54,6 +54,15 @@
                                     </div>
                                 <?php } ?>
                             <?php } ?>
+                            <div class="col-md-6">
+                                <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900;">&nbsp;</div>
+                                <div class="sub-cate col-md-12" style="color:#FF9AD9;font-weight: 900; padding: 5px;">
+                                    <span style=" margin-left: 10px;">PROMOTION</span>
+                                </div>
+                                <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900; padding: 5px;">
+                                    <span style=" margin-left: 10px;">CLEARANCE</span>
+                                </div>
+                            </div>
                         </div>
                     <?php } ?>
                     <!-- Item End -->
