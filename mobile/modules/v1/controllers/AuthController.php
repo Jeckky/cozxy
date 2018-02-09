@@ -255,7 +255,7 @@ class AuthController extends Controller
 
         if(isset($contents['token']) && !empty($contents['token']))  {
             $userModel = User::find()
-                ->select('firstname, lastname, displayName, email, birthDate, avatar')
+                ->select('firstname, lastname, displayName, email, birthDate, tel, avatar')
                 ->where(['auth_key' => $contents['token']])
                 ->one();
 
@@ -268,6 +268,7 @@ class AuthController extends Controller
                     'displayName'=>$userModel->displayName,
                     'email'=>$userModel->email,
                     'birthdate'=>substr($userModel->birthDate, 0, 10),
+                    'mobile'=>$userModel->tel,
                     'avatar'=>(isset($userModel->avatar) && !empty($userModel->avatar)) ? Url::home(true).$userModel->avatar:'',
                 ];
             }

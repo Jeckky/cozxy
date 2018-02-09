@@ -240,6 +240,7 @@ class MyAccountController extends MyAccountFrontendController
 
         if(isset($userModel)) {
             $userModel->tel = $contents['mobile'];
+            $userModel->callingCode = $contents['callingCode'];
             $userModel->save(false);
             $res['success'] = true;
         } else {
@@ -270,6 +271,24 @@ class MyAccountController extends MyAccountFrontendController
             if(!empty($contents['displayName'])) {
                 $userModel->displayName = $contents['displayName'];
             }
+
+            $userModel->save(false);
+            $res['success'] = true;
+        } else {
+            $res['error'] = 'Error : User not found.';
+        }
+
+        echo Json::encode($res);
+    }
+
+    public function actionChangeBirthDate()
+    {
+        $contents = Json::decode(file_get_contents("php://input"));
+        $res = ['success' => false, 'error' => ''];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+
+        if(isset($userModel)) {
+            $userModel->birthDate = $contents['birthDate'];
 
             $userModel->save(false);
             $res['success'] = true;
