@@ -45,7 +45,7 @@ $productId = $model->productId;
             [
                 'attribute' => 'brandId',
                 'value' => function($model) {
-                    return $model->brand->title;
+                    return isset($model->brand->title) ? $model->brand->title : '';
                 }
             ],
             [

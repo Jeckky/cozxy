@@ -45,6 +45,7 @@ class ProductAllController extends SuppliersMasterController {
                 ->select('pps.price as sellingPrice ,ps.result as resultSupp,ps.userId as userIdSupp, product.*,ps.*')
                 ->leftJoin('product_suppliers ps', 'product.productId=ps.productId')
                 ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
+            ->leftJoin('brand b', 'b.brandId=product.brandId')
                 ->where("product.status=1 AND product.approve='approve'
                         AND ps.status=1
                         AND product.parentId is not null
@@ -52,7 +53,8 @@ class ProductAllController extends SuppliersMasterController {
                         AND ps.productId is not null
                         AND ps.result >0
                         AND pps.status=1
-                        AND pps.price > 0 and ps.userId =" . Yii::$app->user->identity->userId);
+                        AND b.brandId is not null
+                        AND pps.price > 0 and ps.userId =19");// . Yii::$app->user->identity->userId);
 
         if (isset($title) && !empty($title)) {
             $product->andFilterWhere([
