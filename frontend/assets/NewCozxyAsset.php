@@ -23,9 +23,11 @@ class NewCozxyAsset extends AssetBundle {
     public $baseUrl = '@web/themes/cozxy';
     public $css = [
         'cssNew/cozxy.v2.css',
+        'cssNew/cozxy.categories.brands.v2.css',
     ];
     public $js = [
-        'jsNew/cozxy.v2.js'
+        'jsNew/cozxy.v2.js',
+        'jsNew/cozxy.categories.brands.script.js'
     ];
     public $depends = [
         'frontend\assets\AppAsset'

@@ -58,9 +58,8 @@ class MasterController extends MasterCommonController {
         $this->view->params['actionTreeSub'] = \frontend\controllers\CategoriesController::actionTreeSub();
         $this->view->params['cate'] = \frontend\models\DisplayMyCategory::ShowMenuCategory();
 
+        $this->view->params['brands'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCate();
 
-        //echo '<pre>';
-        //print_r($this->view->params['actionTreeSub']);
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {
             $dataProvider_shipping_bk = new \yii\data\ActiveDataProvider([

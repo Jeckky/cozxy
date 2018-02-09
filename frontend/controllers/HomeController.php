@@ -29,7 +29,7 @@ use common\models\costfit\User;
 /**
  * SiteDemo controller
  */
-class HomeController extends MasterHomeController {
+class HomeController extends MasterController {
 
     public $layout = '@app/themes/cozxy/layoutsV2/main';
 

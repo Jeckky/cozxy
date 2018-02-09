@@ -1,3 +1,4 @@
+
 .menubar {
 
     border-top: 0px solid #fee60a;
@@ -99,14 +100,9 @@
     float: left; width: 50%;
 }
 
-/*.categories-submenu .menu-item {
-    background-color: #fff;
-    display: block;
+.main-category{
+    max-height:500px; min-height: 500px;
 }
-
-.sub2menu {
-    background-color: #fff;
-}*/
 
 /* Category Sub Menu */
 .categories-submenu, .categories-submenu .collapsing {
@@ -115,6 +111,7 @@
     z-index: 4096;
 }
 .categories-submenu .menu-item {
+    /*background-color: #e2e6e9;*/
     background-color: #fff;
     display: block;
 }
@@ -126,14 +123,14 @@
 }
 .categories-submenu .menu-item:hover a, .categories-submenu .menu-item.active a{
     background-color: #fdc532;
-    /*border-bottom: 3px solid #fdc532;*/
 }
 /* Category Sub Menu Level 2 */
 .sub2menu {
-    background-color: #fdc532;
+    /*background-color: #fdc532;*/
+    background-color: #fff;
 }
 .loadCategory .sub-cate {
-    background-color: #fdc532;
+    background-color: #ffffff;
     padding: 0 8px 5px;
 }
 .loadCategory .sub-cate a {
@@ -144,7 +141,7 @@
     border-bottom: 1px solid #fee1a7;
 }
 .loadCategory .sub-items {
-    padding: 12px 8px;
+    padding: 0px 8px;
 }
 .loadCategory .sub-items a {
     padding: 2px 24px;
@@ -153,10 +150,22 @@
     color: #333;
 }
 .loadCategory .sub-cate:hover, .loadCategory .sub-cate a:hover, .loadCategory .sub-items a:hover {
-    background-color: #fcdd08;
+    /*background-color: #ffffff;*/
     color: #000;
 }
 .categories-submenu .mob-only {
     display: none !important;
 }
-/* Category Sub Menu Smart Phone */
+
+.menu-item a:hover{
+    border-bottom: 1px solid #fcdd08;
+}
+.subs-sub-titles {
+    margin-bottom:1px ;
+    padding: 10px;
+}
+.subs-sub-titles a:hover{
+    background-color: #fcdd08;
+}
+
+/* Category Sub Menu Brands Layout v2 */
