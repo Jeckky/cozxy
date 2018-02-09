@@ -104,7 +104,7 @@
             <div class="row-cozxy">
                 <!-- Main Category -->
                 <div class="col-lg-12 col-md-12">
-                    <div class="row main-category-brands"><p>&nbsp;</p>
+                    <div class="row main-category-brands">
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $this->params['brandsMenuCategory'],
