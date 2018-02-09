@@ -330,14 +330,14 @@ class ProductController extends \common\controllers\MasterController
             $res['shortDescription'] = strip_tags($product->shortDescription);
 
             $productSuppliers = ProductSuppliers::findCheapest($id);
-            if(isset($productPriceSupplier)) {
+            if(isset($productSuppliers)) {
                 $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
-                $res['salePrice'] = $productPriceSupplier->price;
+                $res['sellingPrice'] = $productPriceSupplier->price;
             }
             $res['shareUrl'] = Url::home(true) . 'product/' . ModelMaster::encodeParams(['productId' => $id]);
             $res['isWishlist'] = self::isWishlist($product->productId, $userId);
-            $res['worldPrice'] = self::worldPrice($id);
-            $res['localPrice'] = self::localPrice($id);
+            $res['worldPrice'] = (self::worldPrice($id) !== null) ? self::worldPrice($id) : $res['price'];
+            $res['localPrice'] = (self::localPrice($id) !== null) ? self::localPrice($id) : number_format($res['price'] * 0.8, 2);
         } else {
             $res['error'] = 'Product not found';
         }
