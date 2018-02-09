@@ -57,10 +57,10 @@
                             <div class="col-md-6">
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900;">&nbsp;</div>
                                 <div class="sub-cate col-md-12" style="color:#FF9AD9;font-weight: 900; padding: 5px;">
-                                    <span style=" margin-left: 10px;">PROMOTION</span>
+                                    <span style="margin-left: 20px;">PROMOTION</span>
                                 </div>
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900; padding: 5px;">
-                                    <span style=" margin-left: 10px;">CLEARANCE</span>
+                                    <span style="margin-left: 20px;">CLEARANCE</span>
                                 </div>
                             </div>
                         </div>
@@ -79,6 +79,7 @@
                         <a href="#" style=" font-weight:900; color: #000;">IN BRANDS </a>
                     </div>
                     <div class="col-md-12 sub-items" style="padding: 0px; margin-left: 20px;">
+
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $this->params['brands'],
@@ -112,7 +113,12 @@
         <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff; ">
             <div class="row-cozxy">
                 <!-- Main Category -->
+                <div style="margin-top: 5px;">
+                    <a href="#" style=" font-weight:900; color: #000;">POPULAR BRANDS</a>
+                    <div style=" border-top:  1px solid #000000; height: 10px;"></div>
+                </div>
                 <div class="col-lg-12 col-md-12">
+
                     <div class="row main-category-brands">
                         <?php
                         echo \yii\widgets\ListView::widget([
