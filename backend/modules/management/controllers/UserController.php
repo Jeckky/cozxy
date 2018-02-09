@@ -94,12 +94,12 @@ class UserController extends ManagementMasterController {
         $authItems = \yii\helpers\ArrayHelper::map(AuthItem::find()->where(['type' => 1,])->asArray()->all(), 'name', 'name');
 
         $authAssignment = new AuthAssignment([
-        //'user_id' => $model->userId,
+                //'user_id' => $model->userId,
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider, 'model' => $model, 'authAssignment' => $authAssignment,
-            'authItems' => $authItems,
+                    'dataProvider' => $dataProvider, 'model' => $model, 'authAssignment' => $authAssignment,
+                    'authItems' => $authItems,
         ]);
     }
 
@@ -113,13 +113,13 @@ class UserController extends ManagementMasterController {
         $modelUser = $this->findModel($id);
 
         $authAssignments = AuthAssignment::find()->where([
-            'user_id' => $modelUser->userId,
-        ])->column();
+                    'user_id' => $modelUser->userId,
+                ])->column();
 
         $authItems = \yii\helpers\ArrayHelper::map(
-        AuthItem::find()->where([
-            'type' => 1,
-        ])->asArray()->all(), 'name', 'name');
+                        AuthItem::find()->where([
+                            'type' => 1,
+                        ])->asArray()->all(), 'name', 'name');
 
         $authAssignment = new AuthAssignment([
             'user_id' => $modelUser->userId,
@@ -153,8 +153,11 @@ class UserController extends ManagementMasterController {
         // print_r($listMenu);
         $authAssignment->item_name = $authAssignments;
         return $this->render('view', [
-            'model' => $this->findModel($id), 'listViewLevels' => $listViewLevels, 'listMenu' => $listMenu, 'authAssignment' => $authAssignment,
-            'authItems' => $authItems,
+                    'model' => $this->findModel($id),
+                    'listViewLevels' => $listViewLevels,
+                    'listMenu' => $listMenu,
+                    'authAssignment' => $authAssignment,
+                    'authItems' => $authItems,
         ]);
     }
 
@@ -219,7 +222,7 @@ class UserController extends ManagementMasterController {
         }
 
         return $this->render('create', [
-            'model' => $model
+                    'model' => $model
         ]);
     }
 
@@ -250,7 +253,7 @@ class UserController extends ManagementMasterController {
             }
         }
         return $this->render('update', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -294,13 +297,13 @@ class UserController extends ManagementMasterController {
 //            }
 //        }
         $authAssignments = AuthAssignment::find()->where([
-            'user_id' => $model->userId,
-        ])->column();
+                    'user_id' => $model->userId,
+                ])->column();
 
         $authItems = \yii\helpers\ArrayHelper::map(
-        AuthItem::find()->where([
-            'type' => 1,
-        ])->asArray()->all(), 'name', 'name');
+                        AuthItem::find()->where([
+                            'type' => 1,
+                        ])->asArray()->all(), 'name', 'name');
 
         $authAssignment = new AuthAssignment([
             'user_id' => $model->userId,
@@ -321,8 +324,8 @@ class UserController extends ManagementMasterController {
                     $authAssignment2->save();
 
                     $authAssignments = AuthAssignment::find()->where([
-                        'user_id' => $model->userId,
-                    ])->column();
+                                'user_id' => $model->userId,
+                            ])->column();
 //                    }
                 }
             }
@@ -391,7 +394,7 @@ class UserController extends ManagementMasterController {
             }
         }
         return $this->render('margin', [
-            'model' => $model, 'title' => $title
+                    'model' => $model, 'title' => $title
         ]);
     }
 
