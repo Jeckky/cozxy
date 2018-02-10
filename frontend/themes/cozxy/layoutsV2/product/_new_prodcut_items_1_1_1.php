@@ -32,7 +32,7 @@ if ($index == 0) {
         <?php
         for ($index1 = 0; $index1 < 6; $index1++) {
             ?>
-            <div class="col-md-2 col-sm-3 col-xs-3 box-product new-themes-product-items">
+            <div class="col-md-2 col-sm-6 col-xs-6 box-product new-themes-product-items">
                 <div class="product-box">
                     <div class="product-sticker">
                         <div class="rcorners4">

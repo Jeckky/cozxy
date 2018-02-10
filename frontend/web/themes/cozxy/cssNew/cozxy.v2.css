@@ -3,15 +3,93 @@
     Create date : 6/02/2018
     Create By : Taninut.Bm
 */
+/*
+@media (min-width: 1200px){
+    .container-x{width: 1170px;}
+
+}
+@media (min-width: 992px){
+    .container-x{width: 970px;}
+
+}
+@media (min-width: 768px){
+    .container-x{width: 750px;}
+
+}
+.container-x {
+    padding-right: 15px;
+    padding-left: 15px;
+
+    margin-right: auto;
+    margin-left: auto;
+}*/
+
+/*
+
+@media (min-width: 1200px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 1170px;
+}
+@media (min-width: 992px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 970px;
+}
+@media (min-width: 768px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 750px;
+}
+bootstrap.min.c…v=1509593719:5
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+*/
 
 .menubar {
-
     border-top: 0px solid #fee60a;
 }
 
 .container-x{
     padding-left: 55px; padding-right: 55px;
 }
+
+/*
+@media only screen and (max-width: 414px) {
+    .container-x {width:100%; padding:5px;}
+    .product-sticker {  width: 80px !important; }
+}*/
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1600px !important;
+    }
+}
+
+@media (min-width: 992px){
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 768px){
+    .container {
+        width: 750px;
+    }
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 /* carousel */
 .media-carousel
 {
@@ -101,7 +179,7 @@
 
 .see-all-new-v2{
     float: left;
-    width: 50%;
+    width: 47%;
     color: #03a9f4 !important;
     text-align-last: end;
     margin-top: 25px;
@@ -114,7 +192,7 @@
 }
 
 .head-all-new-v2{
-    float: left; width: 50%;
+    float: left; width: 50%; padding: 0 0px 0px 40px;
 }
 
 .main-category{

@@ -72,6 +72,7 @@ AppAsset::register($this);
         ?><!-- End Google Tag Manager -->
     </head>
     <body>
+
         <?php $this->beginBody() ?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
