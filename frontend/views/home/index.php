@@ -45,16 +45,137 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <?php endif; ?>
 <div class="size6 bg-white">&nbsp;</div>
 
+
 <!--/ slide prodcut  /-->
 <div class="bg-white" >
     <div class="container">
         <div class="row">
+            <style>
+                .multi-item-carousel{
+                    .carousel-inner{
+                        > .item{
+                            transition: 500ms ease-in-out left;
+                        }
+                        .active{
+                            &.left{
+                                left:-33%;
+                            }
+                            &.right{
+                                left:33%;
+                            }
+                        }
+                        .next{
+                            left: 33%;
+                        }
+                        .prev{
+                            left: -33%;
+                        }
+                        @media all and (transform-3d), (-webkit-transform-3d) {
+                            > .item{
+                                // use your favourite prefixer here
+                                transition: 500ms ease-in-out left;
+                                transition: 500ms ease-in-out all;
+                                backface-visibility: visible;
+                                transform: none!important;
+                            }
+                        }
+                    }
+                    .carouse-control{
+                        &.left, &.right{
+                            background-image: none;
+                        }
+                    }
+                }
+            </style>
+            <div class="col-xs-12 col-md-12">
+                <h2>HOT DEALS 30% - 70%</h2> >
+                <div class="carousel slide multi-item-carousel" id="theCarousel">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/f44336/000000" class="img-responsive"></a></div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/e91e63/000000" class="img-responsive"></a></div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/9c27b0/000000" class="img-responsive"></a></div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/673ab7/000000" class="img-responsive"></a></div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/4caf50/000000" class="img-responsive"></a></div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/8bc34a/000000" class="img-responsive"></a></div>
+                        </div>
+                        <!-- add  more items here -->
+                        <!-- Example item start:  -->
 
+                        <div class="item">
+                            <div class="col-xs-4"><a href="#1"><img src="http://placehold.it/300/8bc34a/000000" class="img-responsive"></a></div>
+                        </div>
+
+                        <!--  Example item end -->
+                    </div>
+                    <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="size6 bg-white">&nbsp;</div>
+
+
+<!--/ slide prodcut  /-->
+<div class="bg-white" >
+    <div class="container">
+        <div class="row">
+            <style>
+                .multi-item-carousel{
+                    .carousel-inner{
+                        > .item{
+                            transition: 500ms ease-in-out left;
+                        }
+                        .active{
+                            &.left{
+                                left:-33%;
+                            }
+                            &.right{
+                                left:33%;
+                            }
+                        }
+                        .next{
+                            left: 33%;
+                        }
+                        .prev{
+                            left: -33%;
+                        }
+                        @media all and (transform-3d), (-webkit-transform-3d) {
+                            > .item{
+                                // use your favourite prefixer here
+                                transition: 500ms ease-in-out left;
+                                transition: 500ms ease-in-out all;
+                                backface-visibility: visible;
+                                transform: none!important;
+                            }
+                        }
+                    }
+                    .carouse-control{
+                        &.left, &.right{
+                            background-image: none;
+                        }
+                    }
+                }
+            </style>
             <div class="col-xs-12 col-md-12">
                 <h2>HOT DEALS 30% - 70%</h2>
-                <div class="carousel slide media-carousel" id="media">
+                <div class="carousel slide media-carousel multi-item-carousel" id="media">
 
-                    <div class="carousel-inner">
+                    <div class="carousel-inner ">
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productCanSell,
