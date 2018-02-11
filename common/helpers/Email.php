@@ -137,4 +137,12 @@ class Email {
                 ->send();
     }
 
+    public static function mailFromCozxy($toMail, $subject, $message) {//ส่งถึงสมาชิก ด้วยข้อความที่เขียนขึ้นมาเอง อะไรก็ได้
+        \Yii::$app->mail->compose('cozxy_mail', ['message' => $message, 'subject' => $subject])
+                ->setTo($toMail)//tomail
+                ->setFrom('cozxy@cozxy.com')
+                ->setSubject($subject)
+                ->send();
+    }
+
 }

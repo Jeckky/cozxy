@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use common\models\costfit\SectionItem;
 use common\models\costfit\User;
 use common\models\costfit\ProductSuppliers;
+use common\helpers\Email;
 
 /**
  * SectionController implements the CRUD actions for Section model.
@@ -40,7 +41,7 @@ class VerifyEmailController extends MailStoreMasterController {
         $NotVerify = User::find()->where('status=0')->count();
         $query = User::find()->where("status = 0");
         if (isset($_GET["searchEmail"]) && $_GET["searchEmail"] != '') {
-            //throw new \yii\base\Exception('123456');
+//throw new \yii\base\Exception('123456');
             $query->andWhere("email like '%" . $_GET["searchEmail"] . "%' or username like '%" . $_GET["searchEmail"] . "%' or firstname like '%" . $_GET["searchEmail"] . "%'");
             $NotVerify = User::find()->where("status=0 and (email like '%" . $_GET["searchEmail"] . "%' or username like '%" . $_GET["searchEmail"] . "%' or firstname like '%" . $_GET["searchEmail"] . "%')")->count();
         }
@@ -56,7 +57,7 @@ class VerifyEmailController extends MailStoreMasterController {
     }
 
     public function actionPrepareAction() {
-        //throw new \yii\base\Exception($_POST["submitType"]);
+//throw new \yii\base\Exception($_POST["submitType"]);
         if (isset($_POST["user"])) {
             if ($_POST["submitType"] == 'verify') {
                 foreach ($_POST["user"] as $userId => $mail):
@@ -78,7 +79,7 @@ class VerifyEmailController extends MailStoreMasterController {
         $user = User::find()->where("userId=$userId")->one();
         if (isset($user)) {
             $url = "http://" . Yii::$app->request->getServerName() . "/site/confirm?token=" . $user->token;
-            $emailSend = \common\helpers\Email::mailRegisterConfirmBooth($email, $url);
+            $emailSend = Email::mailRegisterConfirmBooth($email, $url);
         }
     }
 
@@ -147,8 +148,47 @@ class VerifyEmailController extends MailStoreMasterController {
         }
     }
 
-    public function actionNewVerify() {
-        return $this->render('messages');
+    public function actionNewVerify($error = false) {
+        $email = ArrayHelper::map(User::find()->where("password is not null")
+                                ->asArray()
+                                ->all(), 'userId', 'email');
+        $user = new User();
+        if (isset($error) && $error != false) {
+            $errorMessage = $error;
+        } else {
+            $errorMessage = '';
+        }
+        return $this->render('messages', [
+                    'email' => $email,
+                    'user' => $user,
+                    'errorMessage' => $errorMessage
+        ]);
+    }
+
+    public function actionSendEmail() {
+        $subjectPost = '';
+        $messagePost = '';
+        $error = 'somting wrong, Please try again.';
+        if (isset($_POST["subject"]) && $_POST["subject"] != '') {
+            $subjectPost = $_POST["subject"];
+        }
+        if (isset($_POST["message"]) && $_POST["message"] != '') {
+            $messagePost = $_POST["message"];
+        }
+        if (isset($_POST["User"]["email"])) {
+            foreach ($_POST["User"]["email"] as $userId):
+                $user = User::find()->where("userId=$userId")->one();
+                if (isset($user) && $user->email != null) {
+                    $mailTo = $user->email;
+                    $subject = $subjectPost;
+                    $message = $messagePost;
+                    $emailSend = Email::mailFromCozxy($mailTo, $subject, $message);
+                }
+            endforeach;
+            $error = 'Mails send';
+//throw new \yii\base\Exception(print_r($_POST["User"]["email"], true));
+        }
+        $this->redirect(['new-verify', 'error' => $error]);
     }
 
     public function actionAllUser() {
