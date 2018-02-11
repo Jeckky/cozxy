@@ -29,6 +29,42 @@ $(document).ready(function () {
         pause: true,
         interval: false,
     });
+
+    $('#fruitscarousel').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxycarousel1').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxyCarousel2').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxyCarousel3').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxyCarousel4').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxyCarousel5').carousel({
+        pause: true,
+        interval: false,
+    });
+
+    $('#cozxyCarousel6').carousel({
+        pause: true,
+        interval: false,
+    });
+
     $('#media1').find('.item').first().addClass('active');
 });
 
@@ -161,4 +197,25 @@ $(".menu-category").mouseout(function () {
     $('#categories-brands').collapse('hide');
     $('#categories-clearance').collapse('hide');
     $('#categories-pomotion').collapse('hide');
+});
+
+
+jQuery(document).ready(function () {
+
+    jQuery('.carousel[data-type="multi"] .item').each(function () {
+        var next = jQuery(this).next();
+        if (!next.length) {
+            next = jQuery(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo(jQuery(this));
+
+        for (var i = 0; i < 4; i++) {
+            next = next.next();
+            if (!next.length) {
+                next = jQuery(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+
 });

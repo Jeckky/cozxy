@@ -50,6 +50,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="bg-white" >
     <div class="container">
         <div class="row">
+            <style>
+
+            </style>
             <div class="col-xs-12 col-md-12">
                 <h2>HOT DEALS 30% - 70%</h2>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="fruitscarousel">
@@ -112,6 +115,18 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ],
                     ]);
                     ?>
+                    <!--<div class="col-md-4">
+                        <img src="<?= Yii::$app->homeUrl ?>images/Category/1-Home page copy.jpg">
+                        <h3>xxx</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="<?= Yii::$app->homeUrl ?>images/Category/1-Home page copy.jpg">
+                        <h3>xxx</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="<?= Yii::$app->homeUrl ?>images/Category/1-Home page copy.jpg">
+                        <h3>xxx</h3>
+                    </div>-->
 
                 </div>
             </div>
@@ -132,9 +147,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2">
                     see all >
                 </div>
-
-
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxycarousel1">
+                <div class="carousel slide media-carousel" id="media1">
 
                     <div class="carousel-inner">
                         <?php
@@ -146,7 +159,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_1_1', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",
@@ -158,10 +171,10 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#cozxycarousel1" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#cozxycarousel1" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a data-slide="prev" href="#media1" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="sr-only">Previous</span></a>
+                    <a data-slide="next" href="#media1" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="sr-only">Next</span></a>
                 </div>
             </div>
         </div>
@@ -174,7 +187,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide row" id="media1">
+                <div class="carousel slide media-carousel" id="media1">
                     <div class="carousel-inner">
                         <img src="/cozxy/frontend/web/images/story/1-Home page copy 2.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
@@ -197,7 +210,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2 hidden-sm hidden-xs">
                     see all >
                 </div>
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel2">
+                <div class="carousel slide media-carousel" id="media2">
 
                     <div class="carousel-inner">
                         <?php
@@ -209,7 +222,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_1_1', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",
@@ -221,12 +234,11 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#cozxyCarousel2" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#cozxyCarousel2" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a data-slide="prev" href="#media2" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="sr-only">Previous</span></a>
+                    <a data-slide="next" href="#media2" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="sr-only">Next</span></a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -238,7 +250,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide row" id="media1">
+                <div class="carousel slide media-carousel" id="media1">
                     <div class="carousel-inner">
                         <img src="/cozxy/frontend/web/images/story/1-Home page copy 3.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
@@ -256,7 +268,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2"><h2>RECOMMENDED</h2></div>
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel3">
+                <div class="carousel slide media-carousel" id="media1">
 
                     <div class="carousel-inner">
                         <?php
@@ -280,6 +292,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
+
                 </div>
                 <div class="see-all-new-v2">
                     see more
@@ -294,7 +307,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide row" id="media1">
+                <div class="carousel slide media-carousel" id="media1">
 
                     <div class="carousel-inner">
                         <img src="/cozxy/frontend/web/images/story/1-Home page copy 4.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
@@ -320,7 +333,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2">
                     see all >
                 </div>
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel4">
+                <div class="carousel slide media-carousel" id="media3">
 
                     <div class="carousel-inner">
                         <?php
@@ -332,7 +345,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_1_1', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",
@@ -344,11 +357,12 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#cozxyCarousel4" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#cozxyCarousel4" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a data-slide="prev" href="#media3" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="sr-only">Previous</span></a>
+                    <a data-slide="next" href="#media3" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="sr-only">Next</span></a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -367,7 +381,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2">
                     see all >
                 </div>
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel5">
+                <div class="carousel slide media-carousel" id="media4">
 
                     <div class="carousel-inner">
                         <?php
@@ -379,7 +393,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_1_1', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",
@@ -391,12 +405,11 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#cozxyCarousel5" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#cozxyCarousel5" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a data-slide="prev" href="#media4" class="prev-product-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="sr-only">Previous</span></a>
+                    <a data-slide="next" href="#media4" class="next-product-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="sr-only">Next</span></a>
                 </div>
-
 
             </div>
         </div>
@@ -469,7 +482,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2">
                     see all >
                 </div>
-                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel6">
+                <div class="carousel slide media-carousel" id="media5">
 
                     <div class="carousel-inner">
                         <?php
@@ -493,10 +506,10 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#cozxyCarousel6" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#cozxyCarousel6" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a data-slide="prev" href="#media5" class="prev-product-story-items left carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-left"></span>
+                        <span class="sr-only">Previous</span></a>
+                    <a data-slide="next" href="#media5" class="next-product-story-items right carousel-control fc-black mca "><span class="glyphicon glyphicon-menu-right"></span>
+                        <span class="sr-only">Next</span></a>
                 </div>
             </div>
         </div>

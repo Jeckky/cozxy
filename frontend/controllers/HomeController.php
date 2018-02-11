@@ -96,6 +96,7 @@ class HomeController extends MasterController {
     public function actionIndex() {
 
         $productCanSell = Product::productForSale(18);
+
         $productNotSell = Product::productForNotSale(6);
         $productStory = ProductPost::productStory(10);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);

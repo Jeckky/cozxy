@@ -20,12 +20,16 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
 //GetBrowser::UserAgent() == 'computer'
 //print_r($model);
 
-$j = 0;
+if ($index == 0) {
+    $active = 'active';
+} else {
+    $active = '';
+}
 ?>
 
-<div class="item active">
-    <div class="row-cozxy">
-        <div class="col-md-2 col-sm-3 col-xs-3 box-product new-themes-product-items">
+<div class="item <?= $active ?>">
+    <div class="col-md-2 col-sm-4 col-xs-12">
+        <div class="box-product">
             <div class="product-box">
                 <?php if ($DiscountProduct != 'Lessthan10') { ?>
                     <div class="product-sticker">
@@ -130,13 +134,13 @@ $j = 0;
                         if (isset($hotDeal)) {
                             ?>
                             <p class="price" >
-                                <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span><br>
+                                <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
                                 <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                             </p>
                         <?php } else {
                             ?>
                             <p class="price" >
-                                <span class="size18" ><?= number_format($model->price) . ' THB' ?> </span><br>
+                                <span class="size18 fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
                                 <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                             </p>
                             <?php
@@ -150,4 +154,3 @@ $j = 0;
         </div>
     </div>
 </div>
-

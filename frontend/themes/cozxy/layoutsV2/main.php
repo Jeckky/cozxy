@@ -72,6 +72,7 @@ AppAsset::register($this);
         ?><!-- End Google Tag Manager -->
     </head>
     <body>
+
         <?php $this->beginBody() ?>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
@@ -103,4 +104,10 @@ $this->registerJs("
 
 ", \yii\web\View::POS_END);
 ?>
+<script>
+
+</script>
+<style>
+
+</style>
 <?php $this->endPage() ?>
