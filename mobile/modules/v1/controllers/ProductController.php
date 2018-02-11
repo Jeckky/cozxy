@@ -442,14 +442,26 @@ class ProductController extends \common\controllers\MasterController
     {
         $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy(['price'=>SORT_ASC])->one();
 
-        return (isset($worldPrice)) ? $worldPrice->attributes : null;
+        if(isset($worldPrice)){
+            $res = $worldPrice->attributes;
+            $res['currency'] = 'THB';
+            return $res;
+        }
+
+        return null;
     }
 
     private static function localPrice($productId)
     {
-        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId, 'country'=>'THA'])->orderBy(['price'=>SORT_ASC])->one();
+        $localPrice = ProductPostComparePrice::find()->where(['productId'=>$productId, 'country'=>'THA'])->orderBy(['price'=>SORT_ASC])->one();
 
-        return (isset($worldPrice)) ? $worldPrice->attributes : null;
+        if(isset($localPrice)) {
+            $res = $localPrice->attributes;
+            $res['currency'] = 'THB';
+            return $res;
+        }
+
+        return null;
     }
 
 }
