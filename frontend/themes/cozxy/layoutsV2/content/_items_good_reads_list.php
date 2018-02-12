@@ -1,8 +1,8 @@
 <div class="col-md-4 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
-        <div class="product-img text-center">
+        <div class="product-img text-center" style="min-height: 256px; max-height: 256px;">
             <a href="#" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= Yii::$app->homeUrl ?><?= $model['image'] ?>" width="410" height="256">
+                <img class="media-object fullwidth img-responsive" src="<?= $model['image'] ?>" width="410" height="256">
             </a>
         </div>
 
