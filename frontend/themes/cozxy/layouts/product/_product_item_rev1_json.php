@@ -96,7 +96,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $productImageThumbnail ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail  ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
