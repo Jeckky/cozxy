@@ -89,7 +89,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container-cozxy">
         <div class="row">
             <div class="col-xs-12">
-                <div class="media-carousel-x">
+                <div class="media-carousel-x img-items-category">
                     <?php
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $category,
