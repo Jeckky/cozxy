@@ -534,10 +534,10 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                         echo '';
                     }
                     ?>
-                    <div class="<?= ($UserAgent == 'mobile') ? 'col-xs-1' : 'col-xs-3'; ?> <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>">
+                    <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
-                    <div class="<?= ($UserAgent == 'mobile') ? 'col-xs-1' : 'col-xs-3'; ?>"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
+                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
@@ -630,9 +630,9 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => $urlSearch, 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
-                        <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>" style="<?= ($UserAgent == 'mobile') ? 'width: auto;' : ''; ?>">
+                        <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
                     </div>
-                    <div class="align-middle text-right" style="width:120px; <?= ($UserAgent == 'mobile') ? 'left:20%;' : 'right:0;'; ?>">
+                    <div class="align-middle text-right" style="width:120px; right:0;">
                         <input type="submit" value="SEARCH" class="search-btn bg-yellow3">
                     </div>
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
