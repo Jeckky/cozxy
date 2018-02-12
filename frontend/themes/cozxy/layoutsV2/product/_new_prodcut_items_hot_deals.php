@@ -25,10 +25,10 @@ if ($index == 0) {
 } else {
     $active = '';
 }
-echo 'index:' . $index % 4
+//echo 'index:' . $index % 4
 ?>
-<div class="item <?= $active ?> ">
-    <div class="col-md-2 col-sm-6 col-xs-6 box-product new-themes-product-items product-<?= $model->productId ?>">
+<div class="item <?= $active ?>" productId-<?= $model->productId ?>>
+    <div class="col-md-2 col-sm-4 col-xs-12">
         <div class="product-box">
             <?php if ($DiscountProduct != 'Lessthan10') { ?>
                 <div class="product-sticker">
@@ -60,13 +60,13 @@ echo 'index:' . $index % 4
                             ?>
                         </p>
                     </div>
-                    <div class="triangle"></div> 
+                    <div class="triangle"></div>
                 </div>
             <?php } ?>
             <div class="product-img text-center">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
-                    <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
-                    <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/Cf06b2IDsMtxAbKMipVzZfBMab4JQm5p.jpg">-->
+                    <!--<img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">-->
+                    <img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/zqQkrvAcdFGAcyoiTRDrU-6KytJ8THLF.jpg">
                 </a>
                 <div class="v-hover">
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>">
@@ -132,4 +132,3 @@ echo 'index:' . $index % 4
         </div>
     </div>
 </div>
-

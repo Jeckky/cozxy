@@ -3,6 +3,53 @@
     Create date : 6/02/2018
     Create By : Taninut.Bm
 */
+/*
+@media (min-width: 1200px){
+    .container-x{width: 1170px;}
+
+}
+@media (min-width: 992px){
+    .container-x{width: 970px;}
+
+}
+@media (min-width: 768px){
+    .container-x{width: 750px;}
+
+}
+.container-x {
+    padding-right: 15px;
+    padding-left: 15px;
+
+    margin-right: auto;
+    margin-left: auto;
+}*/
+
+/*
+
+@media (min-width: 1200px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 1170px;
+}
+@media (min-width: 992px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 970px;
+}
+@media (min-width: 768px)
+bootstrap.min.c…v=1509593719:5
+.container {
+    width: 750px;
+}
+bootstrap.min.c…v=1509593719:5
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+*/
 
 .menubar {
     border-top: 0px solid #fee60a;
@@ -12,19 +59,23 @@
     padding-left: 55px; padding-right: 55px;
 }
 
-.container-anchor{
-    width: 1170px !important;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
+/*
+@media only screen and (max-width: 414px) {
+    .container-x {width:100%; padding:5px;}
+    .product-sticker {  width: 80px !important; }
+}*/
 
 @media (min-width: 1200px) {
     .container {
         width: 95% !important;
     }
-
+    .container-anchor{
+        width: 1170px !important;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 992px){
@@ -39,14 +90,68 @@
     }
 }
 
-
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 /* carousel */
 .media-carousel
 {
-    /*margin-bottom: 0;
+    margin-bottom: 0;
     padding: 0 40px 30px 40px;
-    margin-top: 30px;*/
+    margin-top: 30px;
+}
+/* Previous button  */
+.media-carousel .carousel-control.left
+{
+    left: -12px;
+    background-image: none;
+    /*background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;*/
+    height: 40px;
+    width : 40px;
+    margin-top: 9.5%;
+}
+/* Next button  */
+.media-carousel .carousel-control.right
+{
+    right: -12px !important;
+    background-image: none;
+    /*background: none repeat scroll 0 0 #222222;
+    border: 4px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;*/
+    height: 40px;
+    width : 40px;
+    margin-top: 9.5% ;
+}
+/* Changes the position of the indicators */
+.media-carousel .carousel-indicators
+{
+    right: 50%;
+    top: auto;
+    bottom: 0px;
+    margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.media-carousel .carousel-indicators li
+{
+    background: #c0c0c0;
+}
+.media-carousel .carousel-indicators .active
+{
+    background: #333333;
+}
+.media-carousel img
+{
+    /*width: 250px;
+    height: 100px;*/
+}
+.thumbnail {
+    border-radius: 0px;
 }
 
 
@@ -234,11 +339,11 @@
 }
 
 .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
-    margin-right: -100px!important; color: #000; 
+    margin-right: -100px!important;
 }
 .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
     left: 50%;
-    margin-left: -100px!important; color: #000;
+    margin-left: -100px!important;;
 }
 
 .carousel-control.left, .carousel-control.right {
@@ -246,7 +351,7 @@
 }
 
 .carousel-inner{
-    /*padding: 0 40px 30px 40px;*/
+    padding: 0 40px 30px 40px;
 }
 
 /*.img-responsive{

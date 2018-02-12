@@ -655,7 +655,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
 <?php
 if (Yii::$app->controller->id != 'brands') {
     ?>
-    <?= $this->render('_categories_1') ?>
+    <?= $this->render('_categories') ?>
 <?php } ?>
 <?php
 $this->registerJs("

@@ -64,7 +64,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_hot_deals_1', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_hot_deals', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",
@@ -174,7 +174,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide row" id="media1">
+                <div class="carousel slide media-carousel" id="media1">
                     <div class="carousel-inner">
                         <img src="/cozxy/frontend/web/images/story/1-Home page copy 2.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>

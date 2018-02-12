@@ -12,17 +12,22 @@
     padding-left: 55px; padding-right: 55px;
 }
 
-.container-anchor{
-    width: 1170px !important;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
+/*
+@media only screen and (max-width: 414px) {
+    .container-x {width:100%; padding:5px;}
+    .product-sticker {  width: 80px !important; }
+}*/
 
 @media (min-width: 1200px) {
     .container {
         width: 95% !important;
+    }
+    .container-anchor{
+        width: 1170px !important;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
     }
 
 }
@@ -39,14 +44,19 @@
     }
 }
 
-
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 /* carousel */
 .media-carousel
 {
-    /*margin-bottom: 0;
+    margin-bottom: 0;
     padding: 0 40px 30px 40px;
-    margin-top: 30px;*/
+    margin-top: 30px;
 }
 
 
@@ -234,11 +244,11 @@
 }
 
 .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
-    margin-right: -100px!important; color: #000; 
+    margin-right: -100px!important;
 }
 .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
     left: 50%;
-    margin-left: -100px!important; color: #000;
+    margin-left: -100px!important;;
 }
 
 .carousel-control.left, .carousel-control.right {
@@ -246,13 +256,38 @@
 }
 
 .carousel-inner{
-    /*padding: 0 40px 30px 40px;*/
+    padding: 0 40px 30px 40px;
 }
 
 /*.img-responsive{
     width:100%;
     height:auto;
 }*/
+
+@media (min-width: 1200px) {
+    .container {
+        width: 95% !important;
+    }
+    .container-anchor{
+        width: 1170px !important;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+}
+@media (min-width: 992px ) {
+    .carousel-inner .active.left {
+        left: -25%;
+    }
+    .carousel-inner .next {
+        left:  25%;
+    }
+    .carousel-inner .prev {
+        left: -25%;
+    }
+}
 
 @media (min-width: 992px ) {
     .carousel-inner .active.left {
