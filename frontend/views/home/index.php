@@ -429,8 +429,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <!--/   prodcut  items story/-->
 <div class="bg-white">
     <div class="container">
-        <div class="row">
-
+        <div class="row"> 
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>PRODUCT STORY</h2>

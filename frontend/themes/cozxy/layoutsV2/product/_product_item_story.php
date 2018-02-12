@@ -9,7 +9,7 @@ if ($index == 0) {
 }
 ?>
 <div class="item <?= $active ?>">
-    <div class="col-md-2 col-sm-3 col-xs-6">
+    <div class="col-md-2 col-sm-4 col-xs-12">
         <div class="product-box box-product">
             <div class="product-img text-center">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
