@@ -53,7 +53,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <h2>HOT DEALS 30% - 70%</h2>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="fruitscarousel">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="background-color: #0000ff;">
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productCanSell,
@@ -75,8 +75,12 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-                    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#fruitscarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev" style=" background-color: #009926;">
+                        <i class="glyphicon glyphicon-chevron-left" style="background-color: #00BAFF;"></i>
+                    </a>
+                    <a class="right carousel-control" href="#fruitscarousel" data-slide="next" style=" background-color: #009926;">
+                        <i class="glyphicon glyphicon-chevron-right" style="background-color: #00BAFF;"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -429,7 +433,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <!--/   prodcut  items story/-->
 <div class="bg-white">
     <div class="container">
-        <div class="row"> 
+        <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>PRODUCT STORY</h2>
