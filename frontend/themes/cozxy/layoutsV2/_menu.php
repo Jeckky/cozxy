@@ -524,8 +524,8 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
 <div class="bg-black headbar">
     <div class="container-anchor">
         <div class="row">
-            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : ''; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
-            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
+            <div class="<?= ($UserAgent == 'mobile') ? 'col-md-1' : 'col-md-3'; ?> col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : ''; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
+            <div class="<?= ($UserAgent == 'mobile') ? 'col-md-1' : 'col-md-3'; ?> col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
                 <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
@@ -630,9 +630,9 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => $urlSearch, 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
-                        <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
+                        <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>" style="<?= ($UserAgent == 'mobile') ? 'width: auto;' : ''; ?>">
                     </div>
-                    <div class="align-middle text-right" style="width:120px; right:0;">
+                    <div class="align-middle text-right" style="width:120px; <?= ($UserAgent == 'mobile') ? 'left:20%;' : 'right:0;'; ?>">
                         <input type="submit" value="SEARCH" class="search-btn bg-yellow3">
                     </div>
                     <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
