@@ -94,7 +94,7 @@
 }
 
 .head-all-new-v2{
-    float: left; width: 50%; padding: 0 0px 0px 40px;
+    float: left; width: 50%; padding: 0 0px 0px 0px;
 }
 
 .main-category{
@@ -234,7 +234,7 @@
 }
 
 .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
-    margin-right: -100px!important; color: #000; 
+    margin-right: -100px!important; color: #000;
 }
 .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
     left: 50%;
@@ -303,4 +303,17 @@
     .active > div:first-child {
         display:block;
     }
+}
+
+.line-spacing{
+    border: 1px solid #e6e3e3;
+    height: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top : 2%;
+    margin-bottom: 2%;
+}
+
+.spacing-cozxy{
+    padding : 20px;
 }

@@ -110,15 +110,14 @@
 <!--/ categories brand/ -->
 <div class="menubar-cozxy categories-submenu-brands hidden-sm hidden-xs">
     <div class="collapse" id="categories-brands">
-        <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff; ">
+        <div class="container-anchor" style="max-height:500px; min-height: 500px; background-color: #fff; ">
             <div class="row-cozxy">
                 <!-- Main Category -->
-                <div style="margin-top: 5px;">
-                    <a href="#" style=" font-weight:900; color: #000;">POPULAR BRANDS</a>
-                    <div style=" border-top:  1px solid #000000; height: 10px;"></div>
+                <div style="">
+                    <a href="#" style=" font-weight:900; color: #000; margin-top: 10px;">POPULAR BRANDS</a>
+                    <div style=" border-top:  1px solid #000000; height: 15px;"></div>
                 </div>
                 <div class="col-lg-12 col-md-12">
-
                     <div class="row main-category-brands">
                         <?php
                         echo \yii\widgets\ListView::widget([

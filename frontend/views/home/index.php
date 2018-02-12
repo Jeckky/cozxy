@@ -43,8 +43,8 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 <?php endif; ?>
-<div class="size6 bg-white">&nbsp;</div>
 
+<div class="bg-white"><br></div>
 
 <!--/ slide prodcut  /-->
 <div class="bg-white" >
@@ -85,8 +85,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
-
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/ category  /-->
 <div class="bg-white" >
@@ -118,7 +117,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -167,7 +166,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
 <div class="bg-white" >
@@ -183,7 +182,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -231,7 +230,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
 <div class="bg-white" >
@@ -247,7 +246,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -288,7 +287,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <div class="bg-white" >
     <div class="container">
@@ -306,7 +305,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -353,7 +352,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
 <div class="bg-white" >
@@ -407,9 +406,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" >
-                    <div style=" border:  1px solid #f5f5f5; height: 10px;"></div>
-                </div>
+                <div class="line-spacing"></div>
             </div>
         </div>
     </div>
@@ -450,9 +447,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" >
-                    <div style=" border:  1px solid #f5f5f5; height: 10px;"></div>
-                </div>
+                <div class="line-spacing"></div>
             </div>
         </div>
     </div>
@@ -502,4 +497,4 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         </div>
     </div>
 </div>
-<div class="size6 bg-white">&nbsp;</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
