@@ -27,6 +27,7 @@ class ApiElasticSearch {
         $maxs = $Eparameter['maxs'];
         $size = $Eparameter['size'];
         $pages = $Eparameter['pages'];
+        $has_supplier = $Eparameter['has_supplier'];
         //echo $search;
         $search = str_replace(" ", "%20", $search);
 
@@ -40,7 +41,7 @@ class ApiElasticSearch {
             $category_id = '';
         }
 
-        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size;
+        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
         //echo $url;
         $curl = curl_init();
 

@@ -1,7 +1,7 @@
 <?php
 
 echo \yii\widgets\ListView::widget([
-    'dataProvider' => $dataProvider,
+    'dataProvider' => $dataProviderNotSalse,
     'options' => [
         'tag' => false,
     ],
