@@ -42,7 +42,7 @@ class ApiElasticSearch {
         }
 
         $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
-        //echo $url;
+        echo $url . '<br>';
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
