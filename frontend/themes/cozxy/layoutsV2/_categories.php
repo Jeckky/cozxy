@@ -1,219 +1,178 @@
-<style>
-    .navbar {
-        position: relative;
-        min-height: 50px;
-        margin-bottom: 0px;
-        border: 1px solid transparent;
-    }
-
-    .navbar-default {
-        background-color: #fff;/*rgba(0,0,0,.0001);
-        border-color: #e7e7e7;*/
-        border-color: #fff;
-    }
-    .dropdown {
-        /* width: 130.9px; */
-        display: inline-block;
-        padding: 0px 15px 0px;
-        /* padding: 40px 10px 35px; */
-        /* border: 1px solid #f5f3ef; */
-        font-size: 18px;
-        text-align: center;
-    }
-    .dropdown-menu{
-        margin-top: -0px !important;
-        border: 0px !important;
-        width: 300px !important;
-
-    }
-    .dropdown-menu > li.kopie > a {
-        padding-left:5px;
-        top: 0px;
-    }
-
-    .dropdown-submenu {
-        position:relative;
-    }
-
-    .dropdown-submenu>.dropdown-menu {
-        /*top:0;(/)
-        left:100%;
-        /*margin-top:-6px;*/
-        margin-left:-6px !important;
-        /*-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;*/
-        background-color: #000;
-    }
-
-    .dropdown-submenu > a:after {
-        border-color: transparent transparent transparent #333;
-        border-style: solid;
-        border-width: 5px 0 5px 5px;
-        content: " ";
-        display: block;
-        float: right;
-        height: 0;
-        margin-right: -10px;
-        /*margin-top: 5px ;*/
-        margin-top: 0px !important;
-        width: 0;
-    }
-
-    .dropdown-submenu:hover>a:after {
-        border-left-color:#555;
-    }
-
-    .dropdown-menu > li > a:hover, .dropdown-menu > .active > a:hover {
-        text-decoration: none;
-    }
-
-    @media (max-width: 767px) {
-
-        .navbar-nav  {
-            display: inline;
-            font-size: 18px;
-        }
-        .navbar-default .navbar-brand {
-            display: inline;
-        }
-        .navbar-default .navbar-toggle .icon-bar {
-            background-color: #fff;
-        }
-        .navbar-default .navbar-nav .dropdown-menu > li > a {
-            color: red;
-            background-color: #ccc;
-            border-radius: 4px;
-            margin-top: 2px;
-        }
-        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-            color: #333;
-        }
-        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-            background-color: #ccc;
-        }
-
-        .navbar-nav .open .dropdown-menu {
-            border-bottom: 1px solid white;
-            border-radius: 0;
-        }
-        .dropdown-menu {
-            padding-left: 10px;
-        }
-        .dropdown-menu .dropdown-menu {
-            padding-left: 20px;
-        }
-        .dropdown-menu .dropdown-menu .dropdown-menu {
-            padding-left: 30px;
-        }
-        li.dropdown.open {
-            border: 0px solid red;
-        }
-
-    }
-
-    @media (min-width: 768px) {
-        ul.nav li:hover > ul.dropdown-menu {
-            display: block;
-        }
-        #navbar {
-            text-align: center;
-        }
-    }
-
-</style>
-<div class="bg-white">
-    <div class="container">
-        <div id="navbar">
-            <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!--<a class="navbar-brand" href="#">CATEGORIES</a>-->
-                </div>
-
-                <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <!--<li class="active"><a href="#">CLEARANCE</a></li>
-                        <li><a href="#">POMOTION</a></li>-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle active" data-toggle="dropdown">CATEGORIES <!--<b class="caret"></b>--></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Link 4</a>
-                                    <ul class="dropdown-menu" style=" background-color: #009926;">
-                                        <li class="kopie-x"><a href="#">Dropdown Link 4</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 4.1</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 4.2</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 4.3</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 4.4</a></li>
-
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Link 5</a>
-                                    <ul class="dropdown-menu" style=" background-color: #0000ff">
-                                        <li class="kopie-x"><a href="#">Dropdown Link 5</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 5.1</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 5.2</a></li>
-                                        <li><a href="#">Dropdown Submenu Link 5.3</a></li>
-
-                                        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="kopie-x"><a href="#">Dropdown Submenu Link 5.4</a></li>
-                                                <li><a href="#">Dropdown Submenu Link 5.4.1</a></li>
-                                                <li><a href="#">Dropdown Submenu Link 5.4.2</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">CLEARANCE <!--<b class="caret"></b>--></a>
-                            <ul class="dropdown-menu">
-                                <li class="kopie"><a href="#">Dropdown2</a></li>
-                                <li><a href="#">Dropdown2 Link 1</a></li>
-                                <li><a href="#">Dropdown2 Link 2</a></li>
-                                <li><a href="#">Dropdown2 Link 3</a></li>
-
-                                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown2 Link 4</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="kopie"><a href="#">Dropdown2 Link 4</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.1</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.2</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.3</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 4.4</a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown2 Link 5</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="kopie"><a href="#">Dropdown Link 5</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.1</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.2</a></li>
-                                        <li><a href="#">Dropdown2 Submenu Link 5.3</a></li>
-                                        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="kopie"><a href="#">Dropdown2 Submenu Link 5.4</a></li>
-                                                <li><a href="#">Dropdown2 Submenu Link 5.4.1</a></li>
-                                                <li><a href="#">Dropdown2 Submenu Link 5.4.2</a></li>
-
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="#" style="font-size: 18px;">POMOTION</a></li>
-                        <li><a href="<?= Yii::$app->homeUrl ?>brands" style="font-size: 18px;">BRANDS</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </nav>
+<!-- Categories Nav [PC] -->
+<div class="bg-white menubar hidden-sm hidden-xs">
+    <div class="container-anchor menu-main-cozxy">
+        <div class="row">
+            <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;">CLEARANCE &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion">POMOTION &nbsp;</a>
+            <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands">BRANDS &nbsp;</a>
         </div>
     </div>
 </div>
 
+<!--/ categories / -->
+<div class="menubar-cozxy categories-submenu hidden-sm hidden-xs">
+    <div class="collapse" id="categories">
+        <div class="container-anchor" style="max-height:500px; min-height: 500px; background-color: #fff;">
+            <div class="row-cozxy">
+                <!-- Main Category -->
+                <div class="col-lg-2 col-md-4" style="border-right: solid 1px #ccc;">
+                    <div class="row main-category">
+                        <?php
+                        foreach ($this->params['cate'] as $key => $value) {
+                            ?>
+                            <div class="menu-item sub-<?= $value['categoryId'] ?>"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);" style=" background-color: #fff;"><?= $value['title'] ?></a><a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a></div>
+                        <?php } ?>
+                    </div>
+                </div>
+                <!-- Sub Category -->
+                <div class="sr-only">
+                    <!-- Item 1 -->
+                    <?php
+                    foreach ($this->params['actionTreeSub'] as $key => $value) {
+                        //echo common\models\ModelMaster::createTitleArray($value['title']);
+                        ?>
+                        <div class="sub-item-<?= $value['categoryId'] ?>">
+                            <?php
+                            if (isset($value['Children'])) {
+                                //echo 'count :' . count($value['Children']);
+                                foreach ($value['Children'] as $key => $items) {
+                                    ?>
+                                    <div class="col-md-6">
+                                        <div class="sub-cate col-md-12"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($items['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $items['categoryId']]) ?>" style=" font-weight: 900;"><?= strtoupper($items['title']) ?></a></div>
+                                        <?php
+                                        if (isset($items['Children'])) {
+                                            ?>
+                                            <div class="row sub-items col-md-12">
+                                                <?php
+                                                foreach ($items['Children'] as $key => $sub) {
+                                                    ?>
+                                                    <div class="col-md-12 subs-sub-titles"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($sub['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $sub['categoryId']]) ?>">– <?= $sub['title'] ?></a></div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                            <?php } ?>
+                            <div class="col-md-6">
+                                <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900;">&nbsp;</div>
+                                <div class="sub-cate col-md-12" style="color:#FF9AD9;font-weight: 900; padding: 5px;">
+                                    <span style="margin-left: 20px;">PROMOTION</span>
+                                </div>
+                                <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900; padding: 5px;">
+                                    <span style="margin-left: 20px;">CLEARANCE</span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <!-- Item End -->
+                </div>
+                <!-- End Category -->
+                <div class="col-lg-6 col-md-8 sub2menu" style="display:none; ">
+                    <div class="row loadCategory"></div>
+                </div>
+            </div>
+            <!-- / Brands Form New Layout / -->
+            <div class="col-lg-2 col-md-7 sub2menu" style="border-left: solid 1px #ccc; padding: 0px;">
+                <div class="row main-category col-md-12" style="top:15px;">
+                    <div class="col-md-12">
+                        <a href="#" style=" font-weight:900; color: #000;">IN BRANDS </a>
+                    </div>
+                    <div class="col-md-12 sub-items" style="padding: 0px; margin-left: 20px;">
 
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $this->params['brands'],
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_category_v2', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!--/ categories brand/ -->
+<div class="menubar-cozxy categories-submenu-brands hidden-sm hidden-xs">
+    <div class="collapse" id="categories-brands">
+        <div class="container-anchor" style="max-height:500px; min-height: 500px; background-color: #fff; ">
+            <div class="row-cozxy">
+                <!-- Main Category -->
+                <div style="">
+                    <a href="#" style=" font-weight:900; color: #000; margin-top: 10px;">POPULAR BRANDS</a>
+                    <div style=" border-top:  1px solid #000000; height: 15px;"></div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="row main-category-brands">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $this->params['brandsMenuCategory'],
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_category_v2', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                </div>
+                <!-- Sub Category -->
+                <div class="sr-only-brands">
+                    <!-- Item 1 -->
+                    <!-- Item End -->
+                </div>
+                <!-- End Category -->
+                <div class="col-lg-6 col-md-8 sub2menu" style="display:none; ">
+                    <div class="row loadCategoryBrands"></div>
+                </div>
+            </div>
+            <!-- / Brands Form New Layout / -->
+        </div>
+    </div>
+</div>
+
+<!-- Categories Nav [SmartPhone] -->
+<div class="bg-white menubar hidden-lg hidden-md">
+    <div class="container">
+        <div class="row">
+            <a href="#" class="menu-category mobcategories">&nbsp; CATEGORIES &nbsp;</a><a href="#" class="menu-category mobcategories pull-right">&nbsp; <i class="fa fa-navicon size20"></i> &nbsp;</a>
+        </div>
+    </div>
+</div>
+<div class="xs-category" style="display:none;">
+    <div class="mob-box">
+        <div class="mob-category">
+            <div class="bg-black"><a href="javascript:xscategoryOff();"><span class="fc-white size20">&nbsp; <i class="fa fa-close"></i> &nbsp; CLOSE</span></a></div>
+            <div class="mob-maincate"></div>
+        </div>
+        <div class="mob-s-category">
+            <div class="bg-black"><a href="javascript:xscategoryBack();"><span class="fc-white size20">&nbsp; <i class="fa fa-angle-left"></i> &nbsp; BACK</span></a></div>
+            <div class="mob-subcate"></div>
+        </div>
+    </div>
+</div>

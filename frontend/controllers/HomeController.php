@@ -107,6 +107,8 @@ class HomeController extends MasterController {
         $category = \frontend\models\DisplayMyCategory::ShowCategory();
         $productNewCanSell = Product::productForSale(8);
 
+        //echo '<pre>';
+        //print_r($otherProducts);
         //return $this->render('index');
         return $this->render('index', compact('productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
