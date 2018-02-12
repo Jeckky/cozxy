@@ -159,7 +159,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
-<div class="bg-white" >
+<div class="bg-white">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -175,7 +175,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -410,7 +410,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ],
                     ]);
                     ?>
-
                 </div>
             </div>
         </div>
@@ -427,10 +426,11 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     </div>
 </div>
 
-<!--/   prodcut  items /-->
-<div class="bg-white" >
+<!--/   prodcut  items story/-->
+<div class="bg-white">
     <div class="container">
         <div class="row">
+
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>PRODUCT STORY</h2>
@@ -439,7 +439,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel6">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -462,13 +461,12 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxyCarousel6" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxyCarousel6" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="spacing-cozxy bg-white">&nbsp;</div>
