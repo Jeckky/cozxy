@@ -67,7 +67,14 @@ bootstrap.min.c…v=1509593719:5
 
 @media (min-width: 1200px) {
     .container {
-        width: 1600px !important;
+        width: 95% !important;
+    }
+    .container-anchor{
+        width: 1170px !important;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
     }
 }
 
@@ -344,13 +351,13 @@ bootstrap.min.c…v=1509593719:5
 }
 
 .carousel-inner{
-    padding: 0 40px 30px 40px; 
+    padding: 0 40px 30px 40px;
 }
 
-.img-responsive{
+/*.img-responsive{
     width:100%;
     height:auto;
-}
+}*/
 
 @media (min-width: 992px ) {
     .carousel-inner .active.left {

@@ -104,10 +104,5 @@ $this->registerJs("
 
 ", \yii\web\View::POS_END);
 ?>
-<script>
 
-</script>
-<style>
-
-</style>
 <?php $this->endPage() ?>

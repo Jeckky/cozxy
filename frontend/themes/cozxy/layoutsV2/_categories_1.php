@@ -1,6 +1,6 @@
 <!-- Categories Nav [PC] -->
 <div class="bg-white menubar hidden-sm hidden-xs">
-    <div class="container menu-main-cozxy">
+    <div class="container-anchor menu-main-cozxy">
         <div class="row">
             <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES &nbsp;</a>
             <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;">CLEARANCE &nbsp;</a>
@@ -13,7 +13,7 @@
 <!--/ categories / -->
 <div class="menubar-cozxy categories-submenu hidden-sm hidden-xs">
     <div class="collapse" id="categories">
-        <div class="container" style="max-height:500px; min-height: 500px; background-color: #fff;">
+        <div class="container-anchor" style="max-height:500px; min-height: 500px; background-color: #fff;">
             <div class="row-cozxy">
                 <!-- Main Category -->
                 <div class="col-lg-2 col-md-4" style="border-right: solid 1px #ccc;">
