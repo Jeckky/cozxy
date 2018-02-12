@@ -317,3 +317,10 @@
 .spacing-cozxy{
     padding : 20px;
 }
+
+.img-good-reads img{
+    min-height: 256px; max-height: 256px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    overflow: hidden;
+}

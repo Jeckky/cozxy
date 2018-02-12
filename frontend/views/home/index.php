@@ -391,7 +391,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" id="media1">
+                <div class="carousel slide media-carousel img-good-reads" id="media1">
                     <?php
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $otherProducts,
