@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
-$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPriceAndResult($model['productid']);
+$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPriceAndResult($model['productId']);
 
 if (isset($productSellingsPrice)) {
     $cozxyResult = $productSellingsPrice['result'];
@@ -19,7 +19,7 @@ if (isset($productSellingsPrice)) {
     $cozxyproductSuppId = NULL;
 }
 
-$productBrand = common\models\costfit\Product::productBrand($model['brandid']);
+$productBrand = common\models\costfit\Product::productBrand($model['brandId']);
 //$productBrand = new common\models\costfit\Product();
 //$productBrand = $productBrand->getBrand();
 //echo '<pre>';
@@ -30,16 +30,16 @@ $productBrand = common\models\costfit\Product::productBrand($model['brandid']);
   $cozxyBrandTitle = NULL;
   } */
 
-$productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
+$productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
 if (isset($productImageThumbnail)) {
-    $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productid']);
+    $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
 } else {
     $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
 }
-//$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productid']);
+//$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productId']);
 
 $cozxyIsInWishlist = new common\models\costfit\Product();
-$cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productid']);
+$cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productId']);
 
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
@@ -95,11 +95,11 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         }
         ?>
         <div class="product-img text-center">
-            <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productid']])) ?>" class="fc-black">
+            <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
                 <img class="media-object fullwidth img-responsive" src="<?= $productImageThumbnail ?>"  >
             </a>
             <div class="v-hover">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productid']])) ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
                     <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
                 </a>
                 <?php
@@ -107,15 +107,15 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                     if (isset($cozxyIsInWishlist)) {
                         if ($cozxyIsInWishlist == 1) { // เคย wishList ไปแล้ว
                             ?>
-                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productid'] ?>);">
-                                <div class="col-xs-4 heart-<?= $model['productid'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);">
+                                <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                             </a>
                         <?php } else { ?>
-                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productid'] ?>);" id="heartbeat-<?= $model['productid'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
-                                <div class="col-xs-4 heart-<?= $model['productid'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);" id="heartbeat-<?= $model['productId'] ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                                <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
                             </a>
-                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productid'] ?>);" id="heart-o-<?= $model['productid'] ?>">
-                                <div class="col-xs-4 heart-<?= $model['productid'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                            <a href="javascript:addItemToDefaultWishlist(<?= $model['productId'] ?>);" id="heart-o-<?= $model['productId'] ?>">
+                                <div class="col-xs-4 heart-<?= $model['productId'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                             </a>
                             <?php
                         }
@@ -128,14 +128,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 <?php } ?>
                 <?php
                 if ($cozxyResult > 0) {
-                    if ($model['receivetype'] != null) {
-                        $receiveType = $model['receivetype'];
+                    if ($model['receiveType'] != null) {
+                        $receiveType = $model['receiveType'];
                     } else {
                         $receiveType = 1;
                     }
                     ?>
-                    <a href="javascript:addItemToCartUnitys('<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productid'] ?>','<?= $model['userid'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productsuppid'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
-                        <div class="col-xs-4 shopping-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>"><i id="cart-plus-<?= isset($model['productsuppid']) ? $model['productsuppid'] : $cozxyproductSuppId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
+                    <a href="javascript:addItemToCartUnitys('<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productId'] ?>','<?= $model['userId'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                        <div class="col-xs-4 shopping-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>"><i id="cart-plus-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>
             </div>
@@ -156,7 +156,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productid']) ? $model['productid'] : $model['productid']])) ?>" class="size18 b" title="<?= $model['productid'] ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="size18 b" title="<?= $model['productId'] ?>">
                     <?= strtoupper($model['title']) ?>
                 </a>
             </p>
