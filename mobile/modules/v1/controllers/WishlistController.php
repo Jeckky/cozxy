@@ -137,7 +137,7 @@ class WishlistController extends Controller
                 $sortField = 'p.productId';
                 break;
             case 'brand':
-                $sortField = 'b.brandId';
+                $sortField = 'b.title';
                 break;
         }
 
