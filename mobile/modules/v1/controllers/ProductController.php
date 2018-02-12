@@ -336,8 +336,13 @@ class ProductController extends \common\controllers\MasterController
             }
             $res['shareUrl'] = Url::home(true) . 'product/' . ModelMaster::encodeParams(['productId' => $id]);
             $res['isWishlist'] = self::isWishlist($product->productId, $userId);
-            $res['worldPrice'] = (self::worldPrice($id) !== null) ? self::worldPrice($id) : $res['price'];
-            $res['localPrice'] = (self::localPrice($id) !== null) ? self::localPrice($id) : number_format($res['price'] * 0.8, 2);
+//            $res['worldPrice'] = (self::worldPrice($id) !== null) ? self::worldPrice($id) : $res['price'];
+//            $res['localPrice'] = (self::localPrice($id) !== null) ? self::localPrice($id) : number_format($res['price'] * 0.8, 2);
+
+            $res['comparePrice'] = [
+                'worldPrice'=>self::worldPrice($id),
+                'localPrice'=>self::localPrice($id),
+            ];
         } else {
             $res['error'] = 'Product not found';
         }
@@ -435,16 +440,28 @@ class ProductController extends \common\controllers\MasterController
 
     private static function worldPrice($productId)
     {
-        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy('RAND()')->one();
+        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy(['price'=>SORT_ASC])->one();
 
-        return (isset($worldPrice)) ? $worldPrice->price : null;
+        if(isset($worldPrice)){
+            $res = $worldPrice->attributes;
+            $res['currency'] = 'THB';
+            return $res;
+        }
+
+        return null;
     }
 
     private static function localPrice($productId)
     {
-        $worldPrice = ProductPostComparePrice::find()->where(['productId'=>$productId])->orderBy('RAND()')->one();
+        $localPrice = ProductPostComparePrice::find()->where(['productId'=>$productId, 'country'=>'THA'])->orderBy(['price'=>SORT_ASC])->one();
 
-        return (isset($worldPrice)) ? $worldPrice->price : null;
+        if(isset($localPrice)) {
+            $res = $localPrice->attributes;
+            $res['currency'] = 'THB';
+            return $res;
+        }
+
+        return null;
     }
 
 }
