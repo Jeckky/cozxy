@@ -30,12 +30,12 @@ $productBrand = common\models\costfit\Product::productBrand($model['brandId']);
   $cozxyBrandTitle = NULL;
   } */
 
-$productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
-if (isset($productImageThumbnail)) {
-    $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
-} else {
-    $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
-}
+/* $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
+  if (isset($productImageThumbnail)) {
+  $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
+  } else {
+  $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
+  } */
 //$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productId']);
 
 $cozxyIsInWishlist = new common\models\costfit\Product();
@@ -96,7 +96,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail  ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail   ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">

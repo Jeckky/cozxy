@@ -27,7 +27,7 @@ if ($index == 0) {
 }
 ?>
 <div class="item <?= $active ?>">
-    <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="col-md-2 col-sm-4 col-xs-12">
         <div class="box-product">
             <div class="product-box">
                 <?php if ($DiscountProduct != 'Lessthan10') { ?>
