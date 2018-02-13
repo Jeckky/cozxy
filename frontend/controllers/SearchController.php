@@ -448,11 +448,24 @@ class SearchController extends MasterController {
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
-            'pages' => $ConfigpParameter['pages']
+            'pages' => $ConfigpParameter['pages'],
+            'has_supplier' => 'true'
+        );
+        $EparameterNotSale = array(
+            'search' => $ConfigpParameter['search'],
+            'status' => $ConfigpParameter['status'],
+            'brandId' => $ConfigpParameter['brandId'],
+            'categoryId' => $ConfigpParameter['categoryId'],
+            'mins' => $ConfigpParameter['mins'],
+            'maxs' => $ConfigpParameter['maxs'],
+            'size' => 12,
+            'pages' => $ConfigpParameter['pages'],
+            'has_supplier' => 'false'
         );
 
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
+
 
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
@@ -492,6 +505,46 @@ class SearchController extends MasterController {
         } else {
             $brandid = NULL;
         }
+
+        $searchElasticNotSalse = \common\helpers\ApiElasticSearch::searchProduct($EparameterNotSale);
+
+        $dataProviderNotSalse = new ArrayDataProvider([
+            //'key' => 'productid',
+            'allModels' => $searchElasticNotSalse['data'],
+            /* 'sort' => [
+              'attributes' => ['total', 'took', 'size', 'page', 'data'],
+              ], */
+            'pagination' => [
+                'pageSize' => $searchElasticNotSalse['size'],
+            ],
+        ]);
+        /* end 1 */
+
+        /*
+         * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
+         */
+        //$productid[] = '';
+
+        foreach ($dataProviderNotSalse->allModels as $key => $value) {
+            $productidSup[] = $value['productId'];
+            $brandidSup[] = $value['brandId'];
+            //$productid['brandid'] = $value['brandid'];
+        }
+        //print_r($productid);
+        //print_r($brandid);
+        //exit();
+        if (isset($productidSup) && count($productidSup) > 0) {
+            $productidSup = $productid;
+        } else {
+            $productidSup = NULL;
+        }
+        if (isset($brandidSup)) {
+            $brandidSup = $brandid;
+        } else {
+            $brandidSup = NULL;
+        }
+
+
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
         //echo $productid;
@@ -510,12 +563,12 @@ class SearchController extends MasterController {
         /* end 2 */
 
         if (isset($ConfigpParameter['pages'])) {
-            return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
         } else {
             if (isset($_GET['type'])) {
-                return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
             } else {
-                return $this->render('index_search_json', compact('paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->render('@app/views/elastic/index_search_json', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
             }
         }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
