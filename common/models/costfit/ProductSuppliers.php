@@ -360,39 +360,4 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return $products;
     }
 
-    public static function productSellingsPriceAndResultTests($productid) {
-        $products = ProductSuppliers::find()
-                ->where('productId=' . $productid)
-                ->andWhere("status=1 and approve='approve' ")
-                ->one();
-        //echo '<pre>';
-        //print_r($products['attributes']);
-
-        if (isset($products)) {
-
-            $productSuppPrice = \common\models\costfit\ProductPriceSuppliers::find()
-                    ->where('productSuppId=' . $products['productSuppId'] . ' ')
-                    ->andWhere('status = 1')
-                    ->one();
-            if (isset($productSuppPrice)) {
-                $productResult['productSuppId'] = $products['productSuppId'];
-                $productResult['result'] = $products['result'];
-                $productResult['productId'] = $products['productId'];
-                $productResult['price'] = $productSuppPrice['price'];
-            } else {
-                $productResult['productSuppId'] = NULL;
-                $productResult['result'] = NULL;
-                $productResult['productId'] = NULL;
-                $productResult['price'] = NULL;
-            }
-        } else {
-            $productResult['productSuppId'] = NULL;
-            $productResult['result'] = NULL;
-            $productResult['productId'] = NULL;
-            $productResult['price'] = NULL;
-        }
-
-        return $productResult;
-    }
-
 }

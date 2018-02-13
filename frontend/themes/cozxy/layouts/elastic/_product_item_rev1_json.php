@@ -9,6 +9,7 @@ use common\helpers\CozxyCalculatesCart;
 
 $productBrand = common\models\costfit\Product::productBrand($model['brandId']);
 
+
 $cozxyIsInWishlist = new common\models\costfit\Product();
 $cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productId']);
 
@@ -36,7 +37,7 @@ $supplierPrice = isset($cozxySellingsPrice) ? $cozxySellingsPrice : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 ?>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
-<div class="col-md-4 col-sm-6 col-xs-6 box-product cozxy-items-<?= $model['productId'] ?>">
+<div class="col-md-4 col-sm-6 col-xs-6 box-product cozxy-items-<?= $model['productId'] . '-' . $model['brandId'] ?>">
     <div class="product-box">
         <?php
         if ($cozxySellingsPrice > 0) {
@@ -78,7 +79,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                            ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                   ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
