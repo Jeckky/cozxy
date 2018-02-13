@@ -563,12 +563,12 @@ class SearchController extends MasterController {
         /* end 2 */
 
         if (isset($ConfigpParameter['pages'])) {
-            return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
         } else {
             if (isset($_GET['type'])) {
-                return $this->renderAjax('@app/themes/cozxy/layouts/product/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
             } else {
-                return $this->render('index_search_json', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->render('@app/views/elastic/index_search_json', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
             }
         }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
