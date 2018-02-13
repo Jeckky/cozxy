@@ -7,36 +7,7 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
-$productSellingsPrice = common\models\costfit\ProductSuppliers::productSellingsPriceAndResult($model['productId']);
-
-if (isset($productSellingsPrice)) {
-    $cozxyResult = $productSellingsPrice['result'];
-    $cozxySellingsPrice = $productSellingsPrice['price'];
-    $cozxyproductSuppId = $productSellingsPrice['productSuppId'];
-} else {
-    $cozxyResult = NULL;
-    $cozxySellingsPrice = NULL;
-    $cozxyproductSuppId = NULL;
-}
-
 $productBrand = common\models\costfit\Product::productBrand($model['brandId']);
-//$productBrand = new common\models\costfit\Product();
-//$productBrand = $productBrand->getBrand();
-//echo '<pre>';
-//print_r($productBrand->modelclass);
-/* if (isset($productBrand)) {
-  $cozxyBrandTitle = $productBrand['title'];
-  } else {
-  $cozxyBrandTitle = NULL;
-  } */
-
-/* $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
-  if (isset($productImageThumbnail)) {
-  $productImageThumbnail = \Yii::$app->homeUrl . common\models\costfit\Product::productImageThumbnail2($model['productId']);
-  } else {
-  $productImageThumbnail = Base64Decode::DataImageSvg('Svg260x260');
-  } */
-//$cozxyIsInWishlist = common\models\costfit\Product::isInWishlist($model['productId']);
 
 $cozxyIsInWishlist = new common\models\costfit\Product();
 $cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productId']);
@@ -48,10 +19,21 @@ if (Yii::$app->controller->id == 'product') {
     $width = "width: 260px";
     $height = "height: 260px";
 }
-$marketPrice = isset($model['price']) ? $model['price'] : 0;
+
+if (isset($model['suppliers']) && !empty($model['suppliers'])) {
+    $cozxySellingsPrice = $model['suppliers']['lowestSupplier']['price'];
+    $cozxyproductSuppId = $model['suppliers']['lowestSupplier']['productSuppId'];
+    $cozxyResult = $model['suppliers']['lowestSupplier']['result'];
+    $marketPriceMaster = $model['price'];
+} else {
+    $cozxySellingsPrice = 0;
+    $cozxyResult = '';
+    $marketPriceMaster = 0;
+    $cozxyproductSuppId = '';
+}
+$marketPrice = isset($marketPriceMaster) ? $marketPriceMaster : 0;
 $supplierPrice = isset($cozxySellingsPrice) ? $cozxySellingsPrice : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
-//GetBrowser::UserAgent() == 'computer'
 ?>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-4 col-sm-6 col-xs-6 box-product cozxy-items-<?= $model['productId'] ?>">
@@ -96,7 +78,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail           ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                            ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -166,13 +148,13 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                     ?>
                     <p class="price">
                         <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span><br>
-                        <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
+                        <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
                         <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span><br>
-                        <span class="size14 onsale"><?= isset($model['price']) ? number_format($model['price']) . ' THB' : '' ?> </span>
+                        <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }

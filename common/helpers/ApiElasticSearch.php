@@ -66,7 +66,7 @@ class ApiElasticSearch {
         } else {
             $someResponse = json_decode($response, true);
             //echo '<pre>';
-            //print_r($someArray);
+            //print_r($someResponse);
             //exit();
             return $someResponse;
         }
