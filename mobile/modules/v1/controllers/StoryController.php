@@ -626,14 +626,26 @@ class StoryController extends Controller
     {
         $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $contents['storyId'];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
-        $numRow = ProductPost::deleteAll(['productPostId' => $storyId]);
+        if(isset($userModel)){
+            $storyId = $contents['storyId'];
+            $storyModel = ProductPost::findOne($storyId);
 
-        if($numRow) {
-            $res['success'] = true;
+            if($storyModel->userId == $userModel->userId) {
+
+                $numRow = ProductPost::deleteAll(['productPostId' => $storyId]);
+
+                if($numRow) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error : Please try again';
+                }
+            } else {
+                $res['error'] = 'Error : You don\'t have permission to delete this story.';
+            }
         } else {
-            $res['error'] = 'Error : Please try again';
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);
