@@ -545,8 +545,6 @@ class SearchController extends MasterController {
         }
 
 
-
-
         //$productid .= $productid;
         //$productid = substr($productid, 0, -1);
         //echo $productid;

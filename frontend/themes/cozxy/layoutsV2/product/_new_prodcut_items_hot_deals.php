@@ -31,7 +31,7 @@ if ($index == 0) {
     <div class="col-md-2 col-sm-4 col-xs-12">
         <div class="product-box">
             <?php if ($DiscountProduct != 'Lessthan10') { ?>
-                <div class="product-sticker">
+                <div class="product-sticker" style="right: 13px;">
                     <div class="rcorners4">
                         <p>
                             <?php
