@@ -436,6 +436,7 @@ class SearchController extends MasterController {
 
     public function actionElasticSearch() {
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
+        $serverName = $_SERVER['SERVER_NAME'];
 
         $ConfigpParameter = $this->ConfigpParameter('searching');
         $statusStockData = $ConfigpParameter['statusStockData'];
@@ -449,7 +450,8 @@ class SearchController extends MasterController {
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
             'pages' => $ConfigpParameter['pages'],
-            'has_supplier' => 'true'
+            'has_supplier' => 'true',
+            'serverName' => $serverName
         );
         $EparameterNotSale = array(
             'search' => $ConfigpParameter['search'],
@@ -460,7 +462,8 @@ class SearchController extends MasterController {
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
             'pages' => $ConfigpParameter['pages'],
-            'has_supplier' => 'false'
+            'has_supplier' => 'false',
+            'serverName' => $serverName
         );
         /*
          * สินค้าไม่มีใน Stock

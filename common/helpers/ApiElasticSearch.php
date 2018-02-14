@@ -29,20 +29,26 @@ class ApiElasticSearch {
         $size = $Eparameter['size'];
         $pages = $Eparameter['pages'];
         $has_supplier = $Eparameter['has_supplier'];
+        $serverName = $Eparameter['serverName'];
+
         //echo $search;
         $search = str_replace(" ", "%20", $search);
-
         if ($mins == 100 && $maxs == 100) {
             $mins = '';
             $maxs = '';
         }
-
         //echo $search;
         if ($category_id == 0) {
             $category_id = '';
         }
-
-        $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
+        if ($serverName == 'localhost') {
+            $ipApi = '45.76.157.59:3000';
+        } elseif ($serverName == 'test101.cozxy.com') {
+            $ipApi = '45.76.157.59:3000';
+        } else {
+            $ipApi = '35.229.175.119:3000'; // api use production
+        }
+        $url = 'http://' . $ipApi . '/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
         //echo $url . '<br>';
         $curl = curl_init();
 

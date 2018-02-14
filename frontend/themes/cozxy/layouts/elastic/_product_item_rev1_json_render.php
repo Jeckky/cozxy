@@ -1,7 +1,7 @@
 <?php
 
 if (isset($statusStockData)) {
-    echo 'status stock data :' . $statusStockData;
+    //echo 'status stock data :' . $statusStockData;
     if ($statusStockData == 'stock') {
         $dataProviderData = $dataProvider;
     } else {
