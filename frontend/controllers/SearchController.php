@@ -466,7 +466,7 @@ class SearchController extends MasterController {
             'serverName' => $serverName
         );
         /*
-         * สินค้าไม่มีใน Stock
+         * สินค้ามีใน Stock
          */
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
@@ -537,7 +537,10 @@ class SearchController extends MasterController {
         } else {
             $brandidSup = NULL;
         }
-
+        /*
+         * สินค้าที่มีใน Stock
+         * 3.หา paginate
+         */
         //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
         /* 3.หา paginate */
