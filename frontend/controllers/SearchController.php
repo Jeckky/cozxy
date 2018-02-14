@@ -39,8 +39,8 @@ class SearchController extends MasterController {
             $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         }
 
-        //echo 'categoryId :' . $categoryId;
-        //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
+//echo 'categoryId :' . $categoryId;
+//$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, $categoryId)]);
         $catPrice = DisplaySearch::findAllPrice($categoryId);
 //        $productCanSell = new ArrayDataProvider(
 //        [
@@ -60,12 +60,12 @@ class SearchController extends MasterController {
             'allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($categoryId)
         ]);
 
-        //$productCanSell = Product::productForSaleByCategory($categoryId);
+//$productCanSell = Product::productForSaleByCategory($categoryId);
         $productCanSell = Product::productForSale(12, $categoryId);
         $productNotSell = Product::productForNotSale(12, $categoryId);
 
 
-        //print_r($productNotSell);
+//print_r($productNotSell);
 
         if ($categoryId != 'undefined') {
             $site = 'category';
@@ -78,9 +78,9 @@ class SearchController extends MasterController {
     }
 
     public function actionCozxyProduct() {
-        //$category = Yii::$app->request->post('search');
-        //$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
-        //return $this->render('index', compact('productCanSell', 'category'));
+//$category = Yii::$app->request->post('search');
+//$productCanSell = new ArrayDataProvider(['allModels' => FakeFactory::productForSale(9, FALSE)]);
+//return $this->render('index', compact('productCanSell', 'category'));
         $search_hd = Yii::$app->request->get('search');
 
         $categoryId = NULL;
@@ -156,7 +156,7 @@ class SearchController extends MasterController {
         $categoryId = Yii::$app->request->get('categoryId');
         $brand = Yii::$app->request->post('brand');
         $FilterPrice = [];
-        //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+//$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
         $productFilterPriceNotsale = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 12]
@@ -165,7 +165,7 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productFilterAll($categoryId, $brand, $mins, $maxs, 'Cansale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
-        //
+//
         $category = \common\models\costfit\Category::findOne($categoryId)->title;
         $promotions = Product::productPromotion(12, $categoryId, $brand, $mins, $maxs);
         return $this->renderAjax("_product_list", [
@@ -182,7 +182,7 @@ class SearchController extends MasterController {
         $brandId = Yii::$app->request->post('brandId');
         $brandName = "";
 
-        //$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
+//$productFilterPrice = new ArrayDataProvider(['allModels' => DisplaySearch::productSearchCategory(9, $categoryId, $mins, $maxs)]);
         $productFilterPriceNotsale = new ArrayDataProvider([
             'allModels' => DisplaySearch::productFilterAll($categoryId = false, $brandId, $mins, $maxs, 'Notsale'),
             'pagination' => ['defaultPageSize' => 12]
@@ -191,8 +191,8 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productFilterAll($categoryId = false, $brandId, $mins, $maxs, 'Cansale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
-        //
-        // throw new \yii\base\Exception($mins . ',' . $maxs);
+//
+// throw new \yii\base\Exception($mins . ',' . $maxs);
         $brand = \common\models\costfit\Brand::find()->where("brandId=" . $brandId)->one();
         if (isset($brandId)) {
             $brandName = $brand->title;
@@ -218,8 +218,8 @@ class SearchController extends MasterController {
             'allModels' => DisplaySearch::productFilterAllSearch($search, $mins, $maxs, $sort = false, $type = false, 'Cansale'),
             'pagination' => ['defaultPageSize' => 12]
         ]);
-        //
-        // throw new \yii\base\Exception($mins . ',' . $maxs);
+//
+// throw new \yii\base\Exception($mins . ',' . $maxs);
 
         return $this->renderAjax("_product_list_all_search", [
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
@@ -229,7 +229,7 @@ class SearchController extends MasterController {
     }
 
     public function actionFilterBrand() {
-        //echo ;;l
+//echo ;;l
         $mins = Yii::$app->request->post('mins');
         $maxs = Yii::$app->request->post('maxs');
         $brand = Yii::$app->request->post('brand');
@@ -265,7 +265,7 @@ class SearchController extends MasterController {
             $site = 'brand';
             $promotions = Product::productPromotion(12, '', $brand);
         }
-        // throw new \yii\base\Exception($categoryId);
+// throw new \yii\base\Exception($categoryId);
         return $this->renderAjax("_product_list_choose_brand", [
                     'promotions' => $promotions,
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
@@ -309,8 +309,8 @@ class SearchController extends MasterController {
             $category = '';
             $promotions = Product::productPromotion(12, '', $brand, $mins, $maxs, $status, $sort);
         }
-        //echo 'categoryId:' . $categoryId;
-        //echo '<br>brand:' . $brand;
+//echo 'categoryId:' . $categoryId;
+//echo '<br>brand:' . $brand;
         return $this->renderAjax("_product_list", [
                     'productFilterPriceNotsale' => $productFilterPriceNotsale,
                     'productFilterPriceCansale' => $productFilterPriceCansale,
@@ -435,11 +435,12 @@ class SearchController extends MasterController {
     }
 
     public function actionElasticSearch() {
-
         //  --url 'http://45.76.157.59:3000/search?text=dry%20skin&brand_id=67,68&category_id=16'
-
+        $serverName = $_SERVER['SERVER_NAME'];
 
         $ConfigpParameter = $this->ConfigpParameter('searching');
+        $statusStockData = $ConfigpParameter['statusStockData'];
+
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
@@ -449,7 +450,8 @@ class SearchController extends MasterController {
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
             'pages' => $ConfigpParameter['pages'],
-            'has_supplier' => 'true'
+            'has_supplier' => 'true',
+            'serverName' => $serverName
         );
         $EparameterNotSale = array(
             'search' => $ConfigpParameter['search'],
@@ -460,13 +462,14 @@ class SearchController extends MasterController {
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
             'pages' => $ConfigpParameter['pages'],
-            'has_supplier' => 'false'
+            'has_supplier' => 'false',
+            'serverName' => $serverName
         );
-
+        /*
+         * สินค้าไม่มีใน Stock
+         */
         /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
         $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
-
-
         //echo 'perPage : ' . $perPage;
         $dataProvider = new ArrayDataProvider([
             //'key' => 'productid',
@@ -479,22 +482,14 @@ class SearchController extends MasterController {
             ],
         ]);
         /* end 1 */
-
         /*
          * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
          */
-        //$productid[] = '';
-        //echo '<pre>';
-        //print_r($dataProvider->allModels);
-        //exit();
         foreach ($dataProvider->allModels as $key => $value) {
             $productid[] = $value['productId'];
             $brandid[] = $value['brandId'];
             //$productid['brandid'] = $value['brandid'];
         }
-        //print_r($productid);
-        //print_r($brandid);
-        //exit();
         if (isset($productid) && count($productid) > 0) {
             $productid = $productid;
         } else {
@@ -506,8 +501,12 @@ class SearchController extends MasterController {
             $brandid = NULL;
         }
 
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+        /* end 2 */
+        /*
+         * สินค้าไม่มีใน Stock
+         */
         $searchElasticNotSalse = \common\helpers\ApiElasticSearch::searchProduct($EparameterNotSale);
-
         $dataProviderNotSalse = new ArrayDataProvider([
             //'key' => 'productid',
             'allModels' => $searchElasticNotSalse['data'],
@@ -519,20 +518,15 @@ class SearchController extends MasterController {
             ],
         ]);
         /* end 1 */
-
         /*
          * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
          */
         //$productid[] = '';
-
         foreach ($dataProviderNotSalse->allModels as $key => $value) {
             $productidSup[] = $value['productId'];
             $brandidSup[] = $value['brandId'];
             //$productid['brandid'] = $value['brandid'];
         }
-        //print_r($productid);
-        //print_r($brandid);
-        //exit();
         if (isset($productidSup) && count($productidSup) > 0) {
             $productidSup = $productid;
         } else {
@@ -544,12 +538,6 @@ class SearchController extends MasterController {
             $brandidSup = NULL;
         }
 
-
-        //$productid .= $productid;
-        //$productid = substr($productid, 0, -1);
-        //echo $productid;
-        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
-        /* end 2 */
         //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
         /* 3.หา paginate */
@@ -559,16 +547,26 @@ class SearchController extends MasterController {
         $total_records = $searchElastic['total'];
         $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId']);
-        /* end 2 */
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
+        /*
+         * สินค้าที่ไม่มีใน Stock
+         * 3.หา paginate
+         */
+        $perPageNoStock = round($searchElasticNotSalse['total'] / 12, 0, PHP_ROUND_HALF_UP);
+        $item_per_page_no_stock = 12; //$searchElastic['size'];
+        $current_page_no_stock = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records_no_stock = $searchElasticNotSalse['total'];
+        $total_pages_no_stock = $perPageNoStock;
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
 
         if (isset($ConfigpParameter['pages'])) {
-            return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
         } else {
             if (isset($_GET['type'])) {
-                return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
             } else {
-                return $this->render('@app/views/elastic/index_search_json', compact('dataProviderNotSalse', 'paginate', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->render('@app/views/elastic/index_search_json', compact('dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
             }
         }
         //return $this->render('index_search_json', compact('site', 'search', 'categoryId', 'brandId', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice'));
@@ -576,6 +574,7 @@ class SearchController extends MasterController {
 
     public function ConfigpParameter($type) {
 
+        $statusStockData = Yii::$app->request->get('status');
         $mins = Yii::$app->request->get('mins');
         $maxs = Yii::$app->request->get('maxs');
         if ($mins == 100 && $maxs == 100) {
@@ -624,13 +623,13 @@ class SearchController extends MasterController {
             'maxs' => $maxs,
             'size' => $size,
             'pages' => $pages,
-            'site' => $site
+            'site' => $site,
+            'statusStockData' => $statusStockData
         );
         return $Eparameter;
     }
 
     public function actionEPaginate() {
-
         $page = $_GET['page'];
         $search = $_GET['search'];
         $brandName = $_GET['brandName'];
@@ -643,7 +642,8 @@ class SearchController extends MasterController {
         $current_page = $page;
         $total_records = $Trecords;
         $total_pages = $Tpages;
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category);
+        $status = $_GET['status'];
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category, $status);
         echo $paginate;
     }
 
