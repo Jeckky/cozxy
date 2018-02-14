@@ -250,6 +250,10 @@ class MyAccountController extends MyAccountFrontendController
         echo Json::encode($res);
     }
 
+    /**
+     *
+     */
+
 
 
     public function actionChangeName()

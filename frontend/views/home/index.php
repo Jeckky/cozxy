@@ -53,7 +53,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <h2>HOT DEALS 30% - 70%</h2>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="fruitscarousel">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -76,10 +75,12 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
-                    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                    <a class="right carousel-control" href="#fruitscarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
+                    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                    <a class="right carousel-control" href="#fruitscarousel" data-slide="next">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -92,7 +93,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container-cozxy">
         <div class="row">
             <div class="col-xs-12">
-                <div class="media-carousel-x">
+                <div class="media-carousel-x img-items-category">
                     <?php
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $category,
@@ -111,7 +112,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ],
                     ]);
                     ?>
-
                 </div>
             </div>
         </div>
@@ -123,7 +123,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="bg-white" >
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>SUNGLASSES BEST SELLER</h2>
@@ -131,10 +130,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                 <div class="see-all-new-v2">
                     see all >
                 </div>
-
-
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxycarousel1">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -157,10 +153,8 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxycarousel1" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxycarousel1" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
             </div>
         </div>
@@ -169,13 +163,13 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
-<div class="bg-white" >
+<div class="bg-white">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide media-carousel" id="media1">
                     <div class="carousel-inner">
-                        <img src="/cozxy/frontend/web/images/story/1-Home page copy 2.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27907867_165864180863361_560513674889134297_o.jpg?oh=fdac23c5e27713cb50e6e4a0e817d5d0&oe=5B0C5DAC" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
@@ -185,10 +179,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white">
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>COSMETICS BEST SELLER</h2>
@@ -197,7 +190,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel2">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -220,12 +212,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxyCarousel2" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxyCarousel2" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -239,7 +228,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="/cozxy/frontend/web/images/story/1-Home page copy 3.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
@@ -252,11 +241,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="bg-white" >
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2"><h2>RECOMMENDED</h2></div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel3">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -294,9 +281,8 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
-
                     <div class="carousel-inner">
-                        <img src="/cozxy/frontend/web/images/story/1-Home page copy 4.jpg" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
 
                     </div>
                 </div>
@@ -311,7 +297,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="bg-white" >
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>ALL THE BAGS</h2>
@@ -343,10 +328,8 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxyCarousel4" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxyCarousel4" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
             </div>
         </div>
@@ -367,7 +350,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel5">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -390,13 +372,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxyCarousel5" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxyCarousel5" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -417,16 +395,16 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
-                <div class="carousel slide media-carousel" id="media1">
+                <div class="carousel slide media-carousel img-good-reads" id="media1">
                     <?php
                     echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $category,
+                        'dataProvider' => $otherProducts,
                         'summary' => "",
                         'options' => [
                             'tag' => false,
                         ],
                         'itemView' => function ($model, $key, $index, $widget) {
-                            return $this->render('@app/themes/cozxy/layoutsV2/category/_items_category_v2_1', ['model' => $model, 'index' => $index]);
+                            return $this->render('@app/themes/cozxy/layoutsV2/content/_items_good_reads_list', ['model' => $model, 'index' => $index]);
                         },
                         // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                         //'layout'=>"{summary}{pager}{items}"
@@ -436,7 +414,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ],
                     ]);
                     ?>
-
                 </div>
             </div>
         </div>
@@ -453,8 +430,8 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     </div>
 </div>
 
-<!--/   prodcut  items /-->
-<div class="bg-white" >
+<!--/   prodcut  items story/-->
+<div class="bg-white">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -465,7 +442,6 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel6">
-
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
@@ -488,13 +464,12 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ]);
                         ?>
                     </div>
-
                     <a class="left carousel-control" href="#cozxyCarousel6" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#cozxyCarousel6" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="spacing-cozxy bg-white">&nbsp;</div>

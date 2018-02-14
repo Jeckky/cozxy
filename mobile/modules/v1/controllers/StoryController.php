@@ -188,13 +188,13 @@ class StoryController extends Controller
 
             $storyModels = ProductPost::find()
                 ->leftJoin('product p', 'product_post.productId=p.productId')
-                ->leftJoin('brand b', 'p.brandId=b.brandid')
+                ->leftJoin('brand b', 'p.brandId=b.brandId')
                 ->leftJoin('favorite_story fs', 'product_post.productPostId=fs.productPostId')
                 ->leftJoin('user u', 'fs.userId=u.userId')
                 ->where(['product_post.status' => 1, 'product_post.isPublic' => 1])
                 ->andWhere('b.brandId is not null')
                 ->andWhere('u.userId is not null')
-                ->andWhere(['fs.userId' => $userModel->userId])
+                ->andWhere(['fs.userId' => $userModel->userId, 'fs.status'=>1])
                 ->orderBy($orderBy)
                 ->limit($this->pageSize)
                 ->offset($offset)
@@ -626,14 +626,26 @@ class StoryController extends Controller
     {
         $contents = Json::decode(file_get_contents("php://input"));
         $res = ['success' => false, 'error' => NULL];
-        $storyId = $contents['storyId'];
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
 
-        $numRow = ProductPost::deleteAll(['productPostId' => $storyId]);
+        if(isset($userModel)){
+            $storyId = $contents['storyId'];
+            $storyModel = ProductPost::findOne($storyId);
 
-        if($numRow) {
-            $res['success'] = true;
+            if($storyModel->userId == $userModel->userId) {
+
+                $numRow = ProductPost::deleteAll(['productPostId' => $storyId]);
+
+                if($numRow) {
+                    $res['success'] = true;
+                } else {
+                    $res['error'] = 'Error : Please try again';
+                }
+            } else {
+                $res['error'] = 'Error : You don\'t have permission to delete this story.';
+            }
         } else {
-            $res['error'] = 'Error : Please try again';
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);

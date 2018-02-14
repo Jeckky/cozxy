@@ -267,14 +267,18 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px ) {
+
     .carousel-inner .active.left {
-        left: -33.3%;
+        /*left: -33.3%; */
+        left: -25%;
     }
     .carousel-inner .next {
-        left:  33.3%;
+        /*left:  33.3%;*/
+        left: -25%;
     }
     .carousel-inner .prev {
-        left: -33.3%;
+        /*left: -33.3%;*/
+        left: -25%;
     }
     .active > div:first-child {
         display:block;
@@ -285,6 +289,14 @@
     .active > div:last-child {
         display:none;
     }
+    .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+        margin-right: -10px!important; color: #000;
+    }
+    .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+        left: 50%;
+        margin-left: -10px!important; color: #000;
+    }
+
 }
 
 @media (max-width: 767px) {
@@ -303,6 +315,14 @@
     .active > div:first-child {
         display:block;
     }
+    .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+        margin-right: -10px!important; color: #000;
+    }
+    .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+        left: 50%;
+        margin-left: -10px!important; color: #000;
+    }
+
 }
 
 .line-spacing{
@@ -316,4 +336,18 @@
 
 .spacing-cozxy{
     padding : 20px;
+}
+
+.img-good-reads img{
+    min-height: 256px; max-height: 256px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.img-items-category img{
+    min-height: 256px; max-height: 256px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    overflow: hidden;
 }
