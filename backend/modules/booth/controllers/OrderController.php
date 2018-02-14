@@ -151,7 +151,7 @@ class OrderController extends BoothMasterController {
 
 //                    send sms
                     Sms::Send('POST', SMS::SMS_URL, Json::encode([
-                                "from" => "Cozxy",
+                                "from" => "COZXY",
                                 "to" => [$tel],
                                 "text" => 'Order No. : ' . $order->orderNo . '\r\n รหัสรับสินค้า : ' . $order->password
                     ]));

@@ -289,37 +289,43 @@ class WishlistController extends Controller
         $flag = false;
         $res = ['success' => false, 'error' => NULL];
 
-        try {
-            //move to shelf
-            $numWishlist = Wishlist::find()->where(['productShelfId' => $productShelfId])->count();
-            $numDelete = Wishlist::deleteAll(['productShelfId' => $productShelfId]);
-            $isDeleteProductShelf = ProductShelf::deleteAll(['productShelfId' => $productShelfId]);
+        $userModel = User::find()->where(['auth_key' => $contents['token']])->one();
+        if(isset($userModel)) {
 
-            if($numWishlist > 0) {
-                if($numWishlist == $numDelete && $isDeleteProductShelf) {
-                    $flag = true;
+            try {
+                //move to shelf
+                $numWishlist = Wishlist::find()->where(['productShelfId' => $productShelfId])->count();
+                $numDelete = Wishlist::deleteAll(['productShelfId' => $productShelfId]);
+                $isDeleteProductShelf = ProductShelf::deleteAll(['productShelfId' => $productShelfId]);
+
+                if($numWishlist > 0) {
+                    if($numWishlist == $numDelete && $isDeleteProductShelf) {
+                        $flag = true;
+                    } else {
+                        $res['error'] .= 'Error :: error 1';
+                    }
                 } else {
-                    $res['error'] = 'Error :: error 1';
+                    if($isDeleteProductShelf) {
+                        $flag = true;
+                    } else {
+                        $res['error'] .= 'Error :: error 2';
+                    }
                 }
-            } else {
-                if($isDeleteProductShelf) {
-                    $flag = true;
+
+                if($flag) {
+                    $transaction->commit();
+                    $res['success'] = true;
                 } else {
-                    $res['error'] = 'Error :: error 2';
+                    $transaction->rollBack();
+                    $res['error'] .= 'Error :: error 3 Please try again';
                 }
             }
-
-            if($flag) {
-                $transaction->commit();
-                $res['success'] = true;
-            } else {
+            catch(Exception $e) {
                 $transaction->rollBack();
-                $res['error'] = 'Error :: error 3 Please try again';
+                $res['error'] = 'Error :: Please try again';
             }
-        }
-        catch(Exception $e) {
-            $transaction->rollBack();
-            $res['error'] = 'Error :: Please try again';
+        } else {
+            $res['error'] = 'Error : User not found.';
         }
 
         echo Json::encode($res);
