@@ -59,7 +59,7 @@ class SignupForm extends Model {
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken, please log in.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 8],
             //['email', 'unique'],
@@ -127,7 +127,7 @@ class SignupForm extends Model {
                 $url = "http://api.ants.co.th/sms/1/text/single";
                 $method = "POST";
                 $data = json_encode(array(
-                    "from" => "Cozxy OTP",
+                    "from" => "COZXY",
                     //"to" => ["66937419977", "66616539889", "66836134241"],
                     //"to" => ["66937419977"],
                     "to" => [$output],

@@ -74,9 +74,9 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
             <tr>
                 <td style="width: 33%;border: #000 thin solid;padding: 15px;">
 
-                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                    ?>
+                    <b>วันที่</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php // $fullDate                                                                                        ?>
                 </td>
-                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                    ?>"></td>
+                <td style="width: 27%;text-align: center;"><img src="https://chart.googleapis.com/chart?chs=140x140&cht=qr&chl=<?php // $bagNo                                                                                        ?>"></td>
                 <td style="width: 40%;text-align: center;"></td>
 
             </tr>
@@ -117,6 +117,7 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     $empty = 20;
     $orderItems = OrderItemPacking::findItemInBag($bagNo);
     $total = 0;
+
     if (isset($orderItems) && count($orderItems) > 0) {
         foreach ($orderItems as $orderItem):
             $item = Product::findProducts($orderItem->orderItemId);
@@ -146,6 +147,7 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     } else {
         echo '<tr><td colspan="3"><center>ไม่มีรายการสินค้า</center></td></tr>';
     }
+    $summary = $total - $extraDiscount;
     ?>
     <tr>
         <td rowspan="4" colspan="2" style="text-align: left;vertical-align: text-top;border-top:#000 solid thin;border-right: #000 solid thin; "><b>หมายเหตุ</b></td>
@@ -154,18 +156,18 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
     </tr>
     <tr>
         <td colspan="2" style="border-right: #000 solid thin;border-top: #000 solid thin;"><b>&nbsp;&nbsp;ราคาสินค้าไม่รวมภาษี / sub total exclude VAT</b></td>
-        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format($total * (100 / 107), 2) ?></td>
+        <td style="border-top: #000 solid thin; text-align: right;"><?= number_format($summary * (100 / 107), 2) ?></td>
     </tr>
     <tr>
     </tr>
     <tr>
         <td colspan="2"style="border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;ภาษีมูลค่าเพิ่ม / VAT 7%</b></td>
-        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format(($total - ($total * (100 / 107))), 2) ?></td>
+        <td style="border-top:#000 solid thin;text-align: right;"><?= number_format(($summary - ($summary * (100 / 107))), 2) ?></td>
     </tr>
     <tr>
         <td colspan="2" style="text-align: center;border-top:#000 solid thin;border-right: #000 solid thin; ">(<?= IntToBath::changeToBath(number_format($total, 2)) ?>)</td>
         <td colspan="2" style = "border-right: #000 solid thin;border-top:#000 solid thin;"><b>&nbsp;&nbsp;ราคาสินค้ารวมภาษีมูลค่าเพิ่ม / Sub total include VAT</b></td>
-        <td style = "border-top:#000 solid thin;text-align: right;"><?= number_format($total, 2)
+        <td style = "border-top:#000 solid thin;text-align: right;"><?= number_format($summary, 2)
     ?></td>
     </tr>
 
@@ -191,10 +193,10 @@ $logo = ContentGroup::find()->where("lower(title)='logoimage'")->one();
 <?php
 // $img = common\models\costfit\Signature::financialSignature();
 ?><center>
-<img src="<?php // Yii::$app->homeUrl . $img                                       ?>" style="width:50px;height: 50px;"><br>
+<img src="<?php // Yii::$app->homeUrl . $img                                           ?>" style="width:50px;height: 50px;"><br>
 ----------------------------------------<br><br>
 ผู้มีอำนาจลงนาม<br>
-วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                       ?>
+วันที่&nbsp;&nbsp;&nbsp;<?php // $fullDate                                           ?>
 </center>
 </td>
 <td style="width: 33%;text-align: left;">
