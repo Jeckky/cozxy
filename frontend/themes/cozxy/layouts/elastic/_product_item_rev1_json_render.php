@@ -3,8 +3,10 @@
 if (isset($statusStockData)) {
     //echo 'status stock data :' . $statusStockData;
     if ($statusStockData == 'stock') {
+        //echo 'stock';
         $dataProviderData = $dataProvider;
     } else {
+        //echo 'no stock';
         $dataProviderData = $dataProviderNotSalse;
     }
     echo \yii\widgets\ListView::widget([
