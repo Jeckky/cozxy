@@ -51,7 +51,7 @@ class PackingController extends StoreMasterController {
         }
         $query = Order::find()
                 ->join("LEFT JOIN", 'order_item oi', 'oi.orderId = `order`.orderId')
-                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . Order::ORDER_STATUS_PICKED . " OR `order`.status =" . Order::ORDER_STATUS_PACKED . " )")
+                ->where("DATE(DATE_SUB(oi.sendDateTime,INTERVAL " . OrderItem::DATE_GAP_TO_PICKING . " DAY)) <= CURDATE() AND (`order`.status = " . Order::ORDER_STATUS_PICKED . " OR `order`.status >=" . Order::ORDER_STATUS_PACKED . " )")
                 ->orderBy("`order`.status ASC");
 
         $ms = '';
