@@ -19,6 +19,7 @@ class ApiElasticSearch {
 
     //public static function searchProduct($search, $status, $brand_id, $category_id, $mins, $maxs, $size, $pages) {
     public static function searchProduct($Eparameter) {
+
         $search = $Eparameter['search'];
         $status = $Eparameter['status'];
         $brand_id = $Eparameter['brandId'];
@@ -42,7 +43,7 @@ class ApiElasticSearch {
         }
 
         $url = 'http://45.76.157.59:3000/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
-        echo $url . '<br>';
+        //echo $url . '<br>';
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -72,10 +73,8 @@ class ApiElasticSearch {
         }
     }
 
-    public static function paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category) {
-
+    public static function paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category, $status) {
         //?search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-
         $pagination = '';
         if ($total_pages > 0 && $total_pages != 1 && $current_page <= $total_pages) { //verify total pages and current page number
             $pagination .= '<ul class="pagination">';
@@ -87,10 +86,10 @@ class ApiElasticSearch {
             if ($current_page > 1) {
                 $previous_link = ($previous == 0) ? 1 : $previous;
                 $pagination .= '<li class="first"><a href="#" data-page="1" title="First">&laquo;</a></li>'; //first link
-                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $previous_link . '" data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '" title="Previous">&lt;</a></li>'; //previous link
+                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $previous_link . '" data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '" data-status="' . $status . '"  title="Previous" >&lt;</a></li>'; //previous link
                 for ($i = ($current_page - 2); $i < $current_page; $i++) { //Create left-hand side links
                     if ($i > 0) {
-                        $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $i . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Page' . $i . '">' . $i . '</a></li>';
+                        $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $i . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Page' . $i . '" data-status="' . $status . '">' . $i . '</a></li>';
                     }
                 }
                 $first_link = false; //set first link to false
@@ -106,13 +105,13 @@ class ApiElasticSearch {
 
             for ($i = $current_page + 1; $i < $right_links; $i++) { //create right-hand side links
                 if ($i <= $total_pages) {
-                    $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $i . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Page ' . $i . '">' . $i . '</a></li>';
+                    $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $i . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Page ' . $i . '" data-status="' . $status . '">' . $i . '</a></li>';
                 }
             }
             if ($current_page < $total_pages) {
                 $next_link = ($i > $total_pages) ? $total_pages : $i;
-                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $next_link . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Next">&gt;</a></li>'; //next link
-                $pagination .= '<li class="last"><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $total_pages . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Last">&raquo;</a></li>'; //last link
+                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $next_link . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Next" data-status="' . $status . '">&gt;</a></li>'; //next link
+                $pagination .= '<li class="last"><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $total_pages . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Last" data-status="' . $status . '">&raquo;</a></li>'; //last link
             }
 
             $pagination .= '</ul>';

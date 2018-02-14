@@ -1976,9 +1976,9 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         type: "POST",
         data: {},
         success: function (data, status) {
+
             //console.log(data);
             $('.filter-e-search-cozxy').html(data);
-
         }
     });
 
