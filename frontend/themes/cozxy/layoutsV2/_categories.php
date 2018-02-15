@@ -3,9 +3,9 @@
     <div class="container-anchor menu-main-cozxy">
         <div class="row">
             <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES &nbsp;</a>
-            <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;">CLEARANCE &nbsp;</a>
-            <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion">POMOTION &nbsp;</a>
-            <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands">BRANDS &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;padding: 14px 8px 12px;">CLEARANCE &nbsp;</a>
+            <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="padding: 14px 8px 12px;">POMOTION &nbsp;</a>
+            <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands"  style="padding: 14px 8px 12px;">BRANDS &nbsp;</a>
         </div>
     </div>
 </div>

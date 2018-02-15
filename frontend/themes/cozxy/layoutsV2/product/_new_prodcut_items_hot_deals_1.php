@@ -28,10 +28,10 @@ if ($index == 0) {
 //echo 'index:' . $index % 4
 ?>
 <div class="item <?= $active ?>" productId-<?= $model->productId ?>>
-    <div class="col-md-2 col-sm-4 col-xs-12" style="padding: 5px;">
+    <div class="col-md-2 col-sm-4 col-xs-12">
         <div class="product-box">
             <?php if ($DiscountProduct != 'Lessthan10') { ?>
-                <div class="product-sticker" style="right: 15%;">
+                <div class="product-sticker" style="  right: 15%;">
                     <div class="rcorners4">
                         <p>
                             <?php
@@ -110,7 +110,25 @@ if ($index == 0) {
                     <?php } ?>
                 </div>
             </div>
-
+            <div class="product-txt">
+                <?php
+                if (isset($model->product->brand->title)) {
+                    ?>
+                    <p class="brand">
+                        <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
+                    </p>
+                <?php } else {
+                    ?>
+                    <p class="brand">
+                        <span class="size16">NO BRAND</span>
+                    </p>
+                <?php } ?>
+                <p class="name">
+                    <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
+                        <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 </div>

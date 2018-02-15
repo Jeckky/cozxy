@@ -1,8 +1,8 @@
-<div class="col-md-4 col-sm-6 col-xs-6 box-product">
+<div class="col-md-6 col-sm-6 col-xs-6 box-product">
     <div class="product-box">
         <div class="product-img text-center">
             <a href="#" class="fc-black">
-                <img class="media-object img-responsive" src="<?= $model['image'] ?>" width="410" height="256">
+                <img class="media-object img-responsive" src="<?= $model['image'] ?>" width="100%" height="300">
             </a>
         </div>
 

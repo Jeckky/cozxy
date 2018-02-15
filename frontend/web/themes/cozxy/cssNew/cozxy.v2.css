@@ -4,6 +4,12 @@
     Create By : Taninut.Bm
 */
 
+.wrapper-cozxy .container {
+    padding-right: 6%;
+    padding-left: 6%;
+    margin-right: auto;
+    margin-left: auto;
+}
 .menubar {
     border-top: 0px solid #fee60a;
 }
@@ -31,11 +37,19 @@
     .container {
         width: 970px;
     }
+
 }
 
 @media (min-width: 768px){
     .container {
         width: 750px;
+    }
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2em;
     }
 }
 
@@ -335,7 +349,7 @@
 }
 
 .spacing-cozxy{
-    padding : 20px;
+    padding : 0px;
 }
 
 .img-good-reads img{
@@ -350,4 +364,8 @@
     -o-object-fit: cover;
     object-fit: cover;
     overflow: hidden;
+}
+
+.box-product-items{
+    padding:0px;
 }

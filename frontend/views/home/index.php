@@ -4,7 +4,7 @@
 
 \frontend\assets\NewCozxyAsset::register($this);
 
-$this->title = 'test new layout cozxy.com - Buy what fuels your passion';
+$this->title = 'cozxy.com - Buy what fuels your passion';
 ?>
 
 <?php if (isset($slideGroup)): ?>
@@ -20,9 +20,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         'tag' => false,
                     ],
                     'itemView' => function ($model, $key, $index, $widget) {
-                        return $this->render('@app/themes/cozxy/layouts/_slide_rev1', ['model' => $model, 'index' => $index]);
+                        return $this->render('@app/themes/cozxy/layoutsV2/banners/_slide_rev1', ['model' => $model, 'index' => $index]);
                     },
-                    // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                    //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                     //'layout'=>"{summary}{pager}{items}"
                     //'layout' => "{items}",
                     'itemOptions' => [
@@ -44,10 +44,10 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     </div>
 <?php endif; ?>
 
-<div class="bg-white"><br></div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/ slide prodcut  /-->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -89,7 +89,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/ category  /-->
-<div class="bg-white" >
+<div class="bg-white">
     <div class="container-cozxy">
         <div class="row">
             <div class="col-xs-12">
@@ -120,7 +120,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -163,7 +163,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -179,7 +179,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -222,7 +222,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--// Good Reads -->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -238,7 +238,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -267,7 +267,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
                         ?>
                     </div>
                 </div>
-                <div class="see-all-new-v2">
+                <div class="see-all-new-v2 text-center">
                     see more
                 </div>
             </div>
@@ -276,17 +276,15 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
                         <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -294,7 +292,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -338,10 +336,9 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/   prodcut  items /-->
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-
             <div class="col-xs-12 col-md-12">
                 <div class="head-all-new-v2">
                     <h2>ITEMS YOU MAY LIKE</h2>
@@ -380,7 +377,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     </div>
 </div>
 
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -391,7 +388,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 </div>
 
 <!--/ category  /-->
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -420,7 +417,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
     </div>
 </div>
 
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -431,7 +428,7 @@ $this->title = 'test new layout cozxy.com - Buy what fuels your passion';
 </div>
 
 <!--/   prodcut  items story/-->
-<div class="bg-white">
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
