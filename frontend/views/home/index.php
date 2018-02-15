@@ -299,7 +299,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <div class="head-all-new-v2">
                     <h2>ALL THE BAGS</h2>
                 </div>
-                <div class="see-all-new-v2">
+                <div class="see-all-new-v2 text-right">
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel4">
@@ -343,7 +343,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <div class="head-all-new-v2">
                     <h2>ITEMS YOU MAY LIKE</h2>
                 </div>
-                <div class="see-all-new-v2">
+                <div class="see-all-new-v2 text-right">
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel5">
@@ -435,7 +435,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <div class="head-all-new-v2">
                     <h2>PRODUCT STORY</h2>
                 </div>
-                <div class="see-all-new-v2">
+                <div class="see-all-new-v2 text-right">
                     see all >
                 </div>
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel6">
