@@ -380,7 +380,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-12">
+            <div class="col-xs-12 col-md-12" style="padding-right: 0px; padding-left: 0px;">
                 <div class="line-spacing"></div>
             </div>
         </div>
@@ -391,7 +391,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-12">
+            <div class="col-xs-12 col-md-12" style="padding-right: 0px; padding-left: 0px;">
                 <div class="carousel slide media-carousel img-good-reads" id="media1">
                     <?php
                     echo \yii\widgets\ListView::widget([
@@ -420,7 +420,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-12">
+            <div class="col-xs-12 col-md-12" style="padding-right: 0px; padding-left: 0px;">
                 <div class="line-spacing"></div>
             </div>
         </div>

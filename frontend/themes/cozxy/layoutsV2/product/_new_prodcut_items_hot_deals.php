@@ -27,7 +27,7 @@ if ($index == 0) {
 }
 //echo 'index:' . $index % 4
 ?>
-<div class="item <?= $active ?>" productId-<?= $model->productId ?>>
+<div class="item <?= $active ?> productId-<?= $model->productId ?>">
     <div class="col-md-2 col-sm-4 col-xs-12" style="padding: 5px;">
         <div class="product-box">
             <?php if ($DiscountProduct != 'Lessthan10') { ?>
