@@ -267,7 +267,14 @@ if ($ConfigpParameter['site'] == 'category') {
  * Simple function to replicate PHP 5 behaviour
  */
 ?>
-
+<style>
+    .left-quote  {
+        quotes: "\00ab" "\00bb" "\2039" "\203A";
+    }
+    .right-quote  {
+        quotes: "\201D";
+    }
+</style>
 <div class="filter-e-search-test">
     <?=
     $this->render('@app/themes/cozxy/layouts/search/_search_filter_all_rev1', [
@@ -284,16 +291,16 @@ if ($ConfigpParameter['site'] == 'category') {
                         <div class="filter-product-cozxy col-sm-12">
                             <div class="row" style="padding-right: 0px;padding-left: 0px;">
                                 <h3 class="b" style="word-wrap: break-word;white-space: normal;">
-                                    <!--RECOMMENDED-->Search "<?= isset($_GET['search']) ? $_GET['search'] : '' ?>"&nbsp;
+                                    <!--RECOMMENDED-->Search result for &#8220;<?= isset($_GET['search']) ? $_GET['search'] : '' ?>&#8221;&nbsp;
                                     <span class="size16" style="margin:0px;color:#989898;"><?= $searchElastic['total'] ?> results (<?= $searchElastic['took'] ?>ms)</span>
                                 </h3>
                             </div>
                             <!--<div class="col-md-12" style="padding-right: 0px;padding-left: 0px;">
-                                <a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                          ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                                               ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
-                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                          ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                                               ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
-                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                          ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <span style="color: #fc0;">|</span><a href="javascript:filterESortCozxy('<?php //echo $ConfigpParameter['categoryId'];                                                                               ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
                             </div>-->
                             <div class="row">
@@ -303,7 +310,7 @@ if ($ConfigpParameter['site'] == 'category') {
                                     <?= $this->render('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('dataProvider', 'dataProviderNotSalse', 'paginate')) ?>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="loading-div">&nbsp;</div>
+                                    <!--<div class="loading-div">&nbsp;</div>-->
                                     <div id="results" class="col-lg-offset-4"> <?= $paginate ?></div>
                                 </div>
                             </div>
@@ -313,7 +320,7 @@ if ($ConfigpParameter['site'] == 'category') {
                                     <?= $this->render('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render_notsale', compact('dataProviderNotSalse', 'dataProvider')) ?>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="loading-div">&nbsp;</div>
+                                    <!--<div class="loading-div">&nbsp;</div>-->
                                     <div id="resultsNoStock" class="col-lg-offset-4"> <?= $paginateNoStock ?></div>
                                 </div>
                             </div>
@@ -328,7 +335,7 @@ if ($ConfigpParameter['site'] == 'category') {
                 <div class="col-xs-9"></div>
 
                 <div class="col-xs-9 text-center">
-                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ?> ')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ?> ')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <pan class="size16">&nbsp; ↓ </span></a>-->
                 </div>
                 <div class="col-xs-3 text-center">&nbsp;</div>
