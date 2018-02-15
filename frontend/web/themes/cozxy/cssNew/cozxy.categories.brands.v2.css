@@ -115,3 +115,8 @@
 }
 
 /* Category Sub Menu Brands Layout v2 */
+
+.product-txt {
+    padding: 12px 12px 0 !important;
+    position: relative;
+}
