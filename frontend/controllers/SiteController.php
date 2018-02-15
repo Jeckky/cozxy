@@ -406,7 +406,11 @@ class SiteController extends MasterController {
     }
 
     public function actionWhyRegister() {
-        return $this->render('why-register');
+        $contentGroup = ContentGroup::find()->where("lower(title)='WhyRegister'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->one();
+        }
+        return $this->render('why-register', compact('content'));
     }
 
     public function actionTermsAndConditions() {
