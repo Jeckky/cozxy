@@ -886,6 +886,18 @@ class DisplaySearch extends Model {
     }
 
     public static function findAllPriceSearch($search_hd, $productid = NULL) {
+
+        //$search_hd = strtr($search_text, '"', "");
+        //echo $search_hd;
+        //exit();
+        // Order of replacement
+        //$str = $search_text;
+        //$order = array('"');
+        //$replace = '';
+        // Processes \r\n's first so they aren't converted twice.
+        $search_text = str_replace('"', '', $search_hd);
+        //echo $search_text;
+
         $whereArray = [];
         $whereArray["ps.approve"] = "approve";
         $whereArray["pps.status"] = "1";
@@ -910,9 +922,9 @@ class DisplaySearch extends Model {
                   ]) */
                 ->andFilterWhere([
                     'OR',
-                    'ps.title LIKE "%' . $search_hd . '" ',
-                    'strip_tags(ps.description) LIKE "%' . $search_hd . '%"',
-                    'ps.isbn LIKE "%' . $search_hd . '%"'
+                    'ps.title LIKE "%' . $search_text . '" ',
+                    'strip_tags(ps.description) LIKE "%' . $search_text . '%"',
+                    'ps.isbn LIKE "%' . $search_text . '%"'
                 ])
                 ->one();
 
