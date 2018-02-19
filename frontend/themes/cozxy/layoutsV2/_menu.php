@@ -286,8 +286,8 @@ $this->registerCss("
 ");
 $UserAgent = common\helpers\GetBrowser::UserAgent();
 if (Yii::$app->controller->action->id != 'elastic-search') {
-    $urlSearch = Yii::$app->homeUrl . 'search/cozxy-product/';
-    //$urlSearch = Yii::$app->homeUrl . 'search/elastic-search/';
+    //$urlSearch = Yii::$app->homeUrl . 'search/cozxy-product/';
+    $urlSearch = Yii::$app->homeUrl . 'search/elastic-search/';
 } else {
     $urlSearch = Yii::$app->homeUrl . 'search/elastic-search/';
 }
