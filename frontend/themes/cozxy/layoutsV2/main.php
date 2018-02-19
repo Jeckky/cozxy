@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -106,3 +107,51 @@ $this->registerJs("
 ?>
 
 <?php $this->endPage() ?>
+<?php
+if ($UserAgent == 'mobile') {
+    ?>
+    <script>
+                jQuery(document).ready(function () {
+
+                    jQuery('.carousel[data-type="multi"] .item').each(function () {
+                        var next = jQuery(this).next();
+                        if (!next.length) {
+                            next = jQuery(this).siblings(':first');
+                        }
+                        next.children(':first-child').clone().appendTo(jQuery(this));
+
+                        for (var i = 0; i < 4; i++) {
+                            next = next.next();
+                            if (!next.length) {
+                                next = jQuery(this).siblings(':first');
+                            }
+                            next.children(':first-child').clone().appendTo($(this));
+                        }
+                    });
+
+                });
+    </script>
+<?php } else { ?>
+    <script>
+        jQuery(document).ready(function () {
+
+            jQuery('.carousel[data-type="multi"] .item').each(function () {
+                var next = jQuery(this).next();
+                if (!next.length) {
+                    next = jQuery(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo(jQuery(this));
+
+                for (var i = 0; i < 4; i++) {//4
+                    next = next.next();
+                    if (!next.length) {
+                        next = jQuery(this).siblings(':first');
+                    }
+                    next.children(':first-child').clone().appendTo($(this));
+                }
+            });
+
+        });
+    </script>
+    <?php
+}?>

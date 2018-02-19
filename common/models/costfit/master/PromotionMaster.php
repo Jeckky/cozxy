@@ -12,6 +12,7 @@ use Yii;
     * @property string $description
     * @property string $promotionCode
     * @property integer $discount
+    * @property integer $orderSummary
     * @property integer $discountType
     * @property integer $maximumDiscount
     * @property integer $maximum
@@ -39,8 +40,8 @@ public function rules()
 {
 return [
             [['description'], 'string'],
-            [['discount', 'discountType'], 'required'],
-            [['discount', 'discountType', 'maximumDiscount', 'maximum', 'perUser', 'status'], 'integer'],
+            [['promotionCode', 'discount', 'discountType'], 'required'],
+            [['discount', 'orderSummary', 'discountType', 'maximumDiscount', 'maximum', 'perUser', 'status'], 'integer'],
             [['startDate', 'endDate', 'createDateTime', 'updateDateTime'], 'safe'],
             [['title', 'promotionCode'], 'string', 'max' => 255],
         ];
@@ -57,6 +58,7 @@ return [
     'description' => Yii::t('promotion', 'Description'),
     'promotionCode' => Yii::t('promotion', 'Promotion Code'),
     'discount' => Yii::t('promotion', 'Discount'),
+    'orderSummary' => Yii::t('promotion', 'Order Summary'),
     'discountType' => Yii::t('promotion', 'Discount Type'),
     'maximumDiscount' => Yii::t('promotion', 'Maximum Discount'),
     'maximum' => Yii::t('promotion', 'Maximum'),

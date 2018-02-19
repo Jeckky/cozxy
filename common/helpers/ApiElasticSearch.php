@@ -48,7 +48,7 @@ class ApiElasticSearch {
         } else {
             $ipApi = '35.229.175.119:3000'; // api use production
         }
-        $url = 'http://' . $ipApi . '/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $mins . '&price_gte=' . $maxs . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
+        $url = 'http://' . $ipApi . '/search?text=' . $search . '&brand_id=' . $brand_id . '&category_id=' . $category_id . '&price_lte=' . $maxs . '&price_gte=' . $mins . '&page=' . $pages . '&size=' . $size . '&has_supplier=' . $has_supplier;
         //echo $url . '<br>';
         $curl = curl_init();
 

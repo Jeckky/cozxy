@@ -132,10 +132,6 @@ class SiteController extends MasterController {
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-            //echo '<pre>';
-            //print_r($model->attributes);
-            //echo $_POST['LoginForm']['rememberMe'];
-            //exit();
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
                 \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
