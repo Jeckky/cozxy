@@ -19,7 +19,7 @@ $supplierPrice = isset($model->price) ? $model->price : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //GetBrowser::UserAgent() == 'computer'
 //print_r($model);
-
+;
 if ($index == 0) {
     $active = 'active';
 } else {
@@ -27,7 +27,7 @@ if ($index == 0) {
 }
 ?>
 <div class="item <?= $active ?>">
-    <div class="col-md-2 col-sm-4 col-xs-12 box-product-items">
+    <div class="col-md-2 col-sm-4 col-xs-4 box-product-items">
         <div class="box-product">
             <div class="product-box">
                 <?php if ($DiscountProduct != 'Lessthan10') { ?>

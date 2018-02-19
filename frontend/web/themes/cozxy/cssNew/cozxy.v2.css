@@ -326,7 +326,8 @@
         left: -100%;
     }
     .active > div {
-        display:none;
+        /*display:none;
+        display:visible;*/
     }
     .active > div:first-child {
         display:block;
