@@ -441,7 +441,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>PRODUCT STORY</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>/story/views-all/">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>story/views-all/">see all ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
