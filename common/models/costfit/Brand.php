@@ -65,8 +65,10 @@ class Brand extends \common\models\costfit\master\BrandMaster {
                 ->leftJoin('product_suppliers p', 'p.brandId=brand.brandId')
                 ->where("`p`.`approve`='approve'")
                 ->groupBy('brand.brandId')
-                ->orderBy('sumResult', 'desc');
-
+                ->orderBy([
+                    'sumResult' => SORT_DESC //Need this line to be fixed
+                ])
+                ->limit(20);
         return new ActiveDataProvider([
             'query' => $pb,
             'pagination' => [
