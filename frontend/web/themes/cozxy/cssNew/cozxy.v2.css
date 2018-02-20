@@ -407,3 +407,7 @@
 .box-product-items{
     padding:0px;
 }
+
+.headbar {
+    padding: 2px 0 !important;
+}

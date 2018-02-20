@@ -515,8 +515,8 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
-            <div class="col-md-2 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12  text-center' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : ''; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
-            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
+            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-12' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : 'text-align: -webkit-right;'; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
+            <div class="col-md-4 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-12' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
                 <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
@@ -525,10 +525,10 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>">
+                    <div class="col-xs-3 col-md-1<?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;'; ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
-                    <div class="col-xs-3 "><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
+                    <div class="col-xs-3 col-md-2" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;right:-10px;'; ?>"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();
@@ -617,7 +617,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                     ?>
                 </div>
             </div>
-            <div class="col-md-7 col-sm-12 col-xs-12">
+            <div class="col-md-5 col-sm-12 col-xs-12">
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => $urlSearch, 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
