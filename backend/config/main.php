@@ -203,7 +203,7 @@ return [
         'class' => '\hscstudio\mimin\components\AccessControl',
         'allowActions' => [
             // add wildcard allowed action here!
-            //'dashboard/*',
+            'dashboard/*',
             'auth/*',
             'site/*',
             //'order/*',
@@ -217,6 +217,7 @@ return [
             // 'product/*',
             'redactor/*',
             'gii/*',
+            'productpost/*'
         //'booth/*',
         //'productmanager/*'
             'elasticsearch/*'

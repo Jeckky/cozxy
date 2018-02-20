@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 \frontend\assets\NewCozxyAsset::register($this);
 ?>
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="size6 bg-white">&nbsp;</div>
 
-<div class="bg-white" >
+<div class="bg-white wrapper-cozxy" >
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-12">

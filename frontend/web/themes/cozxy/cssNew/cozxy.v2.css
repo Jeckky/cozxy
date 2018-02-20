@@ -4,6 +4,12 @@
     Create By : Taninut.Bm
 */
 
+.wrapper-cozxy .container {
+    padding-right: 6%;
+    padding-left: 6%;
+    margin-right: auto;
+    margin-left: auto;
+}
 .menubar {
     border-top: 0px solid #fee60a;
 }
@@ -31,15 +37,27 @@
     .container {
         width: 970px;
     }
+
 }
 
 @media (min-width: 768px){
     .container {
         width: 750px;
     }
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
 }
 
-
+.menu-item-brands-inbrand{
+    float: left;
+    width: 100%;
+    padding: 5px;
+}
 
 /* carousel */
 .media-carousel
@@ -94,11 +112,15 @@
 }
 
 .head-all-new-v2{
-    float: left; width: 50%; padding: 0 0px 0px 0px;
+    float: left; width: 50%; padding: 0 0px 0px 0px;margin-left: -10px;
 }
 
 .main-category{
     max-height:500px; min-height: 500px;
+}
+
+.categories-brands-height{
+    max-height:500px; min-height: 500px; background-color: #fff;
 }
 
 /* Category Sub Menu */
@@ -264,6 +286,7 @@
     .carousel-inner .prev {
         left: -25%;
     }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px ) {
@@ -297,6 +320,7 @@
         margin-left: -10px!important; color: #000;
     }
 
+
 }
 
 @media (max-width: 767px) {
@@ -310,7 +334,8 @@
         left: -100%;
     }
     .active > div {
-        display:none;
+        /*display:none;
+        display:visible;*/
     }
     .active > div:first-child {
         display:block;
@@ -322,7 +347,34 @@
         left: 50%;
         margin-left: -10px!important; color: #000;
     }
+    .head-all-new-v2{
+        float: left; width: 100%; padding: 0 0px 0px 0px;margin-left: -10px;text-align: left;
+    }
 
+    .menubar {
+        overflow-y: visible !important;
+    }
+
+    .container-anchor {
+        width: 100% !important;
+        overflow-x:auto;
+    }
+
+    .menu-item-brands-inbrand{
+        float: left;
+        width: 100% !important;
+        padding: 5px;
+    }
+    .categories-brands-height{
+        max-height:400px; min-height: 400px; background-color: #fff;
+    }
+    .menu-item-brands{
+        float: left;
+        width: 50% !important;
+        min-height: 50px;
+        max-height: 50px;
+        padding: 5px;
+    }
 }
 
 .line-spacing{
@@ -335,7 +387,7 @@
 }
 
 .spacing-cozxy{
-    padding : 20px;
+    padding : 0px;
 }
 
 .img-good-reads img{
@@ -350,4 +402,8 @@
     -o-object-fit: cover;
     object-fit: cover;
     overflow: hidden;
+}
+
+.box-product-items{
+    padding:0px;
 }

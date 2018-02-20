@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-xs-12 bg-yellow1 b" style="padding:18px 18px 10px;">
             <p class="size20 size18-xs">Why register?</p>
-        </div>
-        <div class="col-xs-12 bg-white size18 b" style="padding: 20px;">
-
-
+        </div> 
+        <div class="col-xs-12 bg-white" style="padding: 20px; margin-bottom: 10px; ">
+            <h3><?= $content->title ?></h3>
+            <?= $content->description ?>
         </div>
     </div>
 </div>

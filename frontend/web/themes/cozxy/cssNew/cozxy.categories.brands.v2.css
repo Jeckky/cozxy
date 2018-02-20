@@ -3,7 +3,9 @@
     Create date : 6/02/2018
     Create By : Taninut.Bm
 */
-
+.category-cozxy-head{
+    font-weight: 800;
+}
 .menubar a {
     color: #000;
 }
@@ -22,12 +24,30 @@
 .main-category-brands{
     max-height:500px; min-height: 500px;
 }
-
 .main-category-brands .menu-item{
     float: left;
     width: 20%;
 }
-
+/*.menu-item{
+    float: left;
+    width: 20%;
+    min-height: 50px;
+    max-height: 50px;
+    padding: 5px;
+}
+*/
+.menu-item-brands{
+    float: left;
+    width: 20%;
+    min-height: 50px;
+    max-height: 50px;
+    padding: 5px;
+}
+.categories-submenu-brands .menu-item-brands:hover a, .categories-submenu-brands .menu-item-brands.active a{
+    background-color: #fdc532;
+    color: #ff0000;
+    height: auto;
+}
 /* Category Sub Menu */
 .categories-submenu-brands, .categories-submenu-brands .collapsing {
     position: absolute !important;
@@ -40,13 +60,15 @@
     display: block;
 }
 .categories-submenu-brands .menu-item a {
-    padding: 12px;
+    /*padding: 12px;*/
     display: block;
     width: 100%;
     color: #333;
 }
 .categories-submenu-brands .menu-item:hover a, .categories-submenu-brands .menu-item.active a{
     background-color: #fdc532;
+    color: #ff0000;
+    height: auto;
 }
 /* Category Sub Menu Level 2 */
 .sub2menu {
@@ -93,3 +115,8 @@
 }
 
 /* Category Sub Menu Brands Layout v2 */
+
+.product-txt {
+    padding: 12px 12px 0 !important;
+    position: relative;
+}

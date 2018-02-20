@@ -13,6 +13,8 @@ use Yii;
     * @property string $userId
     * @property integer $productSelfId
     * @property string $shopName
+    * @property string $placeName
+    * @property string $moreDetail
     * @property string $price
     * @property string $country
     * @property string $currency
@@ -40,10 +42,11 @@ public function rules()
 return [
             [['productPostId', 'userId', 'price', 'createDateTime'], 'required'],
             [['productPostId', 'productId', 'userId', 'productSelfId', 'status'], 'integer'],
-            [['price'], 'number'],
+            [['price', 'longitude', 'latitude'], 'number'],
             [['createDateTime', 'updateDateTime'], 'safe'],
-            [['shopName'], 'string', 'max' => 200],
-            [['country',], 'string', 'max' => 100],
+            [['shopName', 'placeName'], 'string', 'max' => 200],
+            [['moreDetail'], 'string', 'max' => 255],
+            [['country', 'currency'], 'string', 'max' => 100],
         ];
 }
 
@@ -59,6 +62,8 @@ return [
     'userId' => Yii::t('product_post_compare_price', 'User ID'),
     'productSelfId' => Yii::t('product_post_compare_price', 'Product Self ID'),
     'shopName' => Yii::t('product_post_compare_price', 'Shop Name'),
+    'placeName' => Yii::t('product_post_compare_price', 'Place Name'),
+    'moreDetail' => Yii::t('product_post_compare_price', 'More Detail'),
     'price' => Yii::t('product_post_compare_price', 'Price'),
     'country' => Yii::t('product_post_compare_price', 'Country'),
     'currency' => Yii::t('product_post_compare_price', 'Currency'),

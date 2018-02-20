@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -106,3 +107,4 @@ $this->registerJs("
 ?>
 
 <?php $this->endPage() ?>
+ 

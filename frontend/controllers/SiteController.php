@@ -132,10 +132,6 @@ class SiteController extends MasterController {
 
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-            //echo '<pre>';
-            //print_r($model->attributes);
-            //echo $_POST['LoginForm']['rememberMe'];
-            //exit();
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
                 \common\models\costfit\User::updateAll(['lastvisitDate' => new \yii\db\Expression("NOW()")], ['userId' => Yii::$app->user->identity->userId]);
@@ -406,7 +402,11 @@ class SiteController extends MasterController {
     }
 
     public function actionWhyRegister() {
-        return $this->render('why-register');
+        $contentGroup = ContentGroup::find()->where("lower(title)='WhyRegister'")->one();
+        if (isset($contentGroup)) {
+            $content = Content::find()->where("contentGroupId=" . $contentGroup->contentGroupId)->one();
+        }
+        return $this->render('why-register', compact('content'));
     }
 
     public function actionTermsAndConditions() {
