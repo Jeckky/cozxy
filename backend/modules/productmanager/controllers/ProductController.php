@@ -216,11 +216,11 @@ class ProductController extends ProductManagerMasterController {
                 $p->userId = Yii::$app->user->id;
                 $p->save();
 
+                $pid = Yii::$app->db->lastInsertID;
                 //Elastic
                 Elastic::createProduct($p);
 
 
-                $pid = Yii::$app->db->lastInsertID;
 
                 //new product images
                 $i = 0;
@@ -280,10 +280,10 @@ class ProductController extends ProductManagerMasterController {
                 $productSuppliers->result = $ps['result'];
                 $productSuppliers->save(false);
 
+                $productSuppId = Yii::$app->db->lastInsertID;
                 //Elastic
                 Elastic::createProductSupplier($productSuppliers);
 
-                $productSuppId = Yii::$app->db->lastInsertID;
 
                 //product price suppliers
                 $productPriceSuppliers = new ProductPriceSuppliers();
