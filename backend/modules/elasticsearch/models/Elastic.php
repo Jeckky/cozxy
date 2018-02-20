@@ -97,9 +97,14 @@ class Elastic extends Model
 
         $res['description'] = trim(preg_replace('/\s+/', ' ', strip_tags($productModel->description)));
         $res['specification'] = trim(preg_replace('/\s+/', ' ', strip_tags($productModel->specification)));
-        $res['image'] = Url::home(true) . $productModel->images->image;
-        $res['imageThumbnail1'] = Url::home(true) . $productModel->images->imageThumbnail1;
-        $res['imageThumbnail2'] = Url::home(true) . $productModel->images->imageThumbnail2;
+
+        $image = isset($productModel->images->image) ? Url::home(true) . $productModel->images->image : '';
+        $imageThumbnail1 = isset($productModel->images->imageThumbnail1) ? Url::home(true) . $productModel->images->imageThumbnail1 : '';
+        $imageThumbnail2 = isset($productModel->images->imageThumbnail2) ? Url::home(true) . $productModel->images->imageThumbnail2 : '';
+
+        $res['image'] = $image;
+        $res['imageThumbnail1'] = $imageThumbnail1;
+        $res['imageThumbnail2'] = $imageThumbnail2;
 
         $createDateTime = explode(' ', $res['createDateTime']);
         $res['createDateTime'] = $createDateTime[0] . 'T' . $createDateTime[1] . '.000Z';
