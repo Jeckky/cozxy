@@ -217,7 +217,7 @@ return [
             // 'product/*',
             'redactor/*',
             'gii/*',
-            'productpost/*'
+            'productpost/*',
         //'booth/*',
         //'productmanager/*'
             'elasticsearch/*'
