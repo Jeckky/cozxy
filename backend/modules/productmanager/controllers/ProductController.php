@@ -23,6 +23,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
 use common\helpers\menuBackend;
+use yii\helpers\Url;
 
 /**
  * ProductController implements the CRUD actions for Product model.
