@@ -113,9 +113,12 @@ class HomeController extends MasterController {
 
         /* New Home Query */
         $sectionItem = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 1);
-        //echo '<pre>';
+        $productCanSellBySunglasses = Product::productForSale(18, 4);
+        $productCanSellByCosmetics = Product::productForSale(18, 14);
+        $productCanSellByBags = Product::productForNotSale(18, 26);
+        //echo '<pre>';BAGS
         //print_r($sectionItem);
-        return $this->render('index', compact('sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        return $this->render('index', compact('productCanSellByBags', 'productCanSellByCosmetics', 'productCanSellBySunglasses', 'sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
