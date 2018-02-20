@@ -4,6 +4,10 @@
     Create By : Taninut.Bm
 */
 
+.headbar {
+    padding: 2px 0 !important;
+}
+
 .wrapper-cozxy .container {
     padding-right: 6%;
     padding-left: 6%;
@@ -393,6 +397,10 @@
         text-align: center;
         margin-left: 0px;
     }
+    .headbar {
+        zoom:.7 !important;
+    }
+
 }
 
 .line-spacing{
@@ -426,6 +434,3 @@
     padding:0px;
 }
 
-.headbar {
-    padding: 2px 0 !important;
-}
