@@ -17,6 +17,7 @@ class BrandsController extends MasterController {
     public $layout = '@app/themes/cozxy/layoutsV2/main';
 
     public function actionIndex() {
+        /* Query เอา Brand ที่ Sum Result มากที่สุด จำนวน 20 Brand */
         $brand = Brand::popularBrands(24);
 
         //$brand = Brand::allAvailableBrands();

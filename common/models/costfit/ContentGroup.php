@@ -36,4 +36,9 @@ class ContentGroup extends \common\models\costfit\master\ContentGroupMaster {
         return $this->hasMany(Content::className(), ['contentGroupId' => 'contentGroupId']);
     }
 
+    public static function BannerPromotesHome($type) {
+        $contentGroup = ContentGroup::find()->where("lower(title)='" . $type . "'")->one();
+        return $contentGroup;
+    }
+
 }

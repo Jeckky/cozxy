@@ -171,7 +171,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide media-carousel" id="media1">
                     <div class="carousel-inner">
-                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27907867_165864180863361_560513674889134297_o.jpg?oh=fdac23c5e27713cb50e6e4a0e817d5d0&oe=5B0C5DAC" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="<?= $BannerPromotes1['image'] ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="<?= isset($BannerPromotes1['image']) ? $BannerPromotes1['image'] : 'https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
@@ -286,7 +286,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="<?= isset($BannerPromotes1['image']) ? $BannerPromotes1['image'] : 'https://scontent.fbkk5-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
