@@ -2,6 +2,7 @@
 
 namespace backend\modules\productmanager\controllers;
 
+use backend\modules\elasticsearch\models\Elastic;
 use common\helpers\Upload;
 use common\models\costfit\Brand;
 use backend\modules\productmanager\models\Category;
@@ -214,14 +215,28 @@ class ProductController extends ProductManagerMasterController {
                 $p->userId = Yii::$app->user->id;
                 $p->save();
 
+                //Elastic
+                Elastic::createProduct($p);
+
+
                 $pid = Yii::$app->db->lastInsertID;
 
                 //new product images
+                $i = 0;
                 foreach ($product->productImages as $productImage) {
                     $img = new ProductImage();
                     $img->attributes = $productImage->attributes;
                     $img->productId = $pid;
                     $img->save();
+
+                    $res['image'] = Url::home(true).$img->image;
+                    $res['imageThumbnail1'] = Url::home(true).$img->imageThumbnail1;
+                    $res['imageThumbnail2'] = Url::home(true).$img->imageThumbnail2;
+
+                    // Elastic
+                    Elastic::updateProduct($pid, $data);
+
+                    $i++;
                 }
                 //product options
                 foreach ($productGroupOptions as $productGroupOption) {
@@ -263,6 +278,9 @@ class ProductController extends ProductManagerMasterController {
                 $productSuppliers->quantity = $ps['result'];
                 $productSuppliers->result = $ps['result'];
                 $productSuppliers->save(false);
+
+                //Elastic
+                Elastic::createProductSupplier($productSuppliers);
 
                 $productSuppId = Yii::$app->db->lastInsertID;
 
@@ -312,6 +330,13 @@ class ProductController extends ProductManagerMasterController {
             //update brand & category in product master
             if ($model->parentId == null) {
                 Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
+
+                $productModels = Product::find()->where(['parentId'=>$model->productId, 'status'=>1])->all();
+                foreach($productModels as $productModel) {
+                    Elastic::updateProductSupplier($productModel);
+                }
+            } else {
+                Elastic::updateProduct($model);
             }
 
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);
@@ -346,6 +371,9 @@ class ProductController extends ProductManagerMasterController {
 
             Product::updateAll(['status' => 2, 'approve' => 'delete'], 'productId in (' . implode(',', $pcs) . ')');
             ProductSuppliers::updateAll(['status' => 2, 'approve' => 'delete'], 'productId in (' . implode(',', $pcs) . ')');
+
+            //Elastic
+            Elastic::deleteProduct($id);
         }
 
         return $this->redirect(['index']);
