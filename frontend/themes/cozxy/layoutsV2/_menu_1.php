@@ -511,7 +511,16 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
         margin-bottom: -16px;
     }
 </style>
-
+<div class="bg-yellow1 topbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-3 col-xs-12 pull-right text-right"><a href="#" class="dismiss visible-md visible-lg hidden-xs hidden-sm"><i class="fa fa-close fc-black"></i></a></div>
+            <div class="col-md-3 col-sm-4 col-xs-6 size12-xs"><!--<i class="fa fa-phone"></i>--><?= Html::img(Url::home() . 'imgs/i-phone.png') ?>&nbsp;&nbsp;Hotline: 064-184-7414 &nbsp; </div>
+            <div class="col-md-7 col-sm-5 col-xs-6 size12-xs"><!--<i class="fa fa-truck"></i>--><?= Html::img(Url::home() . 'imgs/i-truck.png') ?>&nbsp;&nbsp;Free Shipping &nbsp; </div>
+        </div>
+    </div>
+</div>
+<div class="topOpener"></div>
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
