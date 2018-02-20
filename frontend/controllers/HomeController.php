@@ -96,17 +96,15 @@ class HomeController extends MasterController {
     public function actionIndex() {
 
         $productCanSell = Product::productForSale(18);
-
-        $productNotSell = Product::productForNotSale(6);
+        //$productNotSell = Product::productForNotSale(6);
         $productStory = ProductPost::productStory(10);
-        $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
-        $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
+        //$otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
+        //$promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
-        $sections = Section::showSections();
+        //$sections = Section::showSections();
         $category = \frontend\models\DisplayMyCategory::ShowCategory();
         $productNewCanSell = Product::productForSale(8);
-
         //echo '<pre>';
         //print_r($otherProducts);
         //return $this->render('index');
