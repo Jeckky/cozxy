@@ -134,7 +134,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $productCanSell,
+                            'dataProvider' => $productCanSellBySunglasses,
                             'summary' => "",
                             'options' => [
                                 'tag' => false,
@@ -193,7 +193,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $productCanSell,
+                            'dataProvider' => $productCanSellByCosmetics,
                             'summary' => "",
                             'options' => [
                                 'tag' => false,
@@ -307,7 +307,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $productCanSell,
+                            'dataProvider' => $productCanSellByBags,
                             'summary' => "",
                             'options' => [
                                 'tag' => false,
