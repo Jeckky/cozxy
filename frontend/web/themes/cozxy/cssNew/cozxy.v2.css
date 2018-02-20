@@ -378,6 +378,21 @@
         max-height: 50px;
         padding: 5px;
     }
+    .product-sticker{
+        zoom:.7 !important;
+    }
+    .discount {
+        position: relative;
+        font-size: 1.6em;
+        font-weight: bold;
+        top: -2px;
+    }
+    .rcorners4 .off-style {
+        width: 100%;
+        margin-top: -20px;
+        text-align: center;
+        margin-left: 0px;
+    }
 }
 
 .line-spacing{
