@@ -56,7 +56,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     <div class="carousel-inner">
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $productCanSell,
+                            'dataProvider' => $sectionItem,
                             'summary' => "",
                             'options' => [
                                 'tag' => false,

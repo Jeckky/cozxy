@@ -110,7 +110,12 @@ class HomeController extends MasterController {
         //echo '<pre>';
         //print_r($otherProducts);
         //return $this->render('index');
-        return $this->render('index', compact('productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+
+        /* New Home Query */
+        $sectionItem = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 1);
+        //echo '<pre>';
+        //print_r($sectionItem);
+        return $this->render('index', compact('sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
