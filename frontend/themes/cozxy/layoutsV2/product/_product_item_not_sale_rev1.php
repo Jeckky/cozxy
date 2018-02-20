@@ -36,26 +36,24 @@ if ($index == 0) {
                         <img class="media-object fullwidth img-responsive" src="<?= \Yii::$app->homeUrl . $model->productImageThumbnail() ?>">
                     </a>
                     <div class="v-hover">
-                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>">
-                            <div class="col-xs-4"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>">
+                            <div class="col-xs-6"><i class="fa fa-eye" aria-hidden="true"></i></div>
                         </a>
                         <?php
                         if (Yii::$app->user->id) {
-                            if (isset($model->product)) {
-                                if ($model->product->isInWishlist() == 1) { // เคย wishList ไปแล้ว
-                                    ?>
-                                    <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
-                                        <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                                    </a>
-                                <?php } else { ?>
-                                    <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
-                                        <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
-                                    </a>
-                                    <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
-                                        <div class="col-xs-4 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                                    </a>
-                                    <?php
-                                }
+                            if ($model->isInWishlist() == 1) { // เคย wishList ไปแล้ว
+                                ?>
+                                <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);">
+                                    <div class="col-xs-6 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                                </a>
+                            <?php } else { ?>
+                                <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heartbeat-<?= $model->productId ?>" data-loading-text="<div class='col-xs-4'><i class='fa fa-heart' aria-hidden='true'></i></div>" style="display: none;">
+                                    <div class="col-xs-6 heart-<?= $model->productId ?>"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                                </a>
+                                <a href="javascript:addItemToDefaultWishlist(<?= $model->productId ?>);" id="heart-o-<?= $model->productId ?>">
+                                    <div class="col-xs-6 heart-<?= $model->productId ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                                </a>
+                                <?php
                             }
                         } else {
                             ?>
@@ -63,7 +61,6 @@ if ($index == 0) {
                                 <div class="col-xs-4"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                             </a>
                         <?php } ?>
-
                     </div>
                 </div>
                 <div class="product-txt">
