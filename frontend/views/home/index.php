@@ -314,7 +314,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                             ],
                             'itemView' => function ($model, $key, $index, $widget) { //$widget,
                                 //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_product_item_not_sale_rev1', ['model' => $model, 'index' => $index]);
                             },
                             // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout' => "{summary}{pager}{items}",

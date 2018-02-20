@@ -19,7 +19,7 @@ $supplierPrice = isset($model->price) ? $model->price : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
 //GetBrowser::UserAgent() == 'computer'
 //print_r($model);
-;
+
 if ($index == 0) {
     $active = 'active';
 } else {
@@ -66,7 +66,6 @@ if ($index == 0) {
                 <div class="product-img text-center">
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
                         <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
-                        <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/Qz3ZW41MCFd6Wy5lpCF9J_OyqWg8w6XS.jpg">-->
                     </a>
                     <div class="v-hover">
                         <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>">
