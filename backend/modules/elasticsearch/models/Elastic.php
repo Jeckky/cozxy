@@ -3,6 +3,7 @@
 namespace backend\modules\elasticsearch\models;
 
 use backend\modules\productmanager\models\ProductSuppliers;
+use common\models\costfit\ProductPriceSuppliers;
 use yii\base\Model;
 use common\models\User;
 use yii\helpers\Json;
@@ -68,6 +69,7 @@ class Elastic extends Model
 
     public static function updateProduct($productId, $data = [])
     {
+        settype($productId, 'int');
         $url = self::getElasticUrl() . 'products/' . $productId;
 
         return self::connect($url, $data, self::METHOD_PUT);
@@ -146,7 +148,8 @@ class Elastic extends Model
 
     public static function prepareProductSupplierData($productSuppliersModel)
     {
-        $price = $productSuppliersModel->productPriceSuppliers->price;
+        $productPriceSuppliers = ProductPriceSuppliers::find()->where(['productSuppId'=>$productSuppliersModel->productSuppId, 'status'=>1])->one();
+        $price = $productPriceSuppliers->price;
         settype($price, 'double');
 
         $res = [

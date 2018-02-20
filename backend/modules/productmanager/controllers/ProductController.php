@@ -281,9 +281,6 @@ class ProductController extends ProductManagerMasterController {
                 $productSuppliers->save(false);
 
                 $productSuppId = Yii::$app->db->lastInsertID;
-                //Elastic
-                Elastic::createProductSupplier($productSuppliers);
-
 
                 //product price suppliers
                 $productPriceSuppliers = new ProductPriceSuppliers();
@@ -293,6 +290,9 @@ class ProductController extends ProductManagerMasterController {
                 $productPriceSuppliers->createDateTime = new Expression('NOW()');
                 $productPriceSuppliers->updateDateTime = new Expression('NOW()');
                 $productPriceSuppliers->save(false);
+
+                //Elastic
+                Elastic::createProductSupplier($productSuppliers);
 
                 //product image suppliers
                 $productImages = ProductImage::find()->where(['productId' => $productId])->all();
@@ -337,7 +337,7 @@ class ProductController extends ProductManagerMasterController {
                     Elastic::updateProductSupplier($productModel);
                 }
             } else {
-                Elastic::updateProduct($model);
+                Elastic::updateProduct($model->productId, $model->attributes);
             }
 
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);
