@@ -116,9 +116,11 @@ class HomeController extends MasterController {
         $productCanSellByBags = Product::productForNotSale(18, 65);
         $BannerPromotes1 = \common\models\costfit\ContentGroup::BannerPromotesHome('BannerPromotes1');
         $BannerPromotes2 = \common\models\costfit\ContentGroup::BannerPromotesHome('BannerPromotes2');
+        $productCanSellByYouMayLike = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 10);
+
         //echo '<pre>';BAGS
         //print_r($sectionItem);
-        return $this->render('index', compact('BannerPromotes1', 'BannerPromotes2', 'productCanSellByBags', 'productCanSellByCosmetics', 'productCanSellBySunglasses', 'sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
+        return $this->render('index', compact('productCanSellByYouMayLike', 'BannerPromotes1', 'BannerPromotes2', 'productCanSellByBags', 'productCanSellByCosmetics', 'productCanSellBySunglasses', 'sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
     /**
