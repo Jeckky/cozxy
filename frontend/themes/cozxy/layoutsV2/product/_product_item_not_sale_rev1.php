@@ -1,8 +1,24 @@
 <?php
 
-use common\models\costfit\ProductShelf;
+use yii\bootstrap\ActiveForm;
 use common\models\costfit\ProductSuppliers;
+use common\models\costfit\ProductShelf;
 use yii\helpers\Url;
+use common\helpers\Base64Decode;
+use common\helpers\CozxyCalculatesCart;
+
+if (Yii::$app->controller->id == 'product') {
+    $width = "width: 195px";
+    $height = "height: 195px";
+} else {
+    $width = "width: 260px";
+    $height = "height: 260px";
+}
+$marketPrice = isset($model->product) ? $model->product->price : 0;
+$supplierPrice = isset($model->price) ? $model->price : 0;
+$DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
+//GetBrowser::UserAgent() == 'computer'
+//print_r($model);
 
 if ($index == 0) {
     $active = 'active';
@@ -12,11 +28,11 @@ if ($index == 0) {
 ?>
 <div class="item <?= $active ?>">
     <div class="col-md-2 col-sm-4 col-xs-4 box-product-items">
-        <div class="product-box">
+        <div class="box-product">
             <div class="product-box">
 
                 <div class="product-img text-center">
-                    <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
+                    <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
                         <img class="media-object fullwidth img-responsive" src="<?= \Yii::$app->homeUrl . $model->productImageThumbnail() ?>">
                     </a>
                     <div class="v-hover">
@@ -57,7 +73,5 @@ if ($index == 0) {
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-

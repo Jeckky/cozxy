@@ -96,17 +96,15 @@ class HomeController extends MasterController {
     public function actionIndex() {
 
         $productCanSell = Product::productForSale(18);
-
-        $productNotSell = Product::productForNotSale(6);
+        //$productNotSell = Product::productForNotSale(6);
         $productStory = ProductPost::productStory(10);
         $otherProducts = new ArrayDataProvider(['allModels' => FakeFactory::productOtherProducts()]);
-        $promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
+        //$promotions = Product::productPromotion(6, $cat = FALSE, $brandId = false); /* sak sprint3 change to use section */
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
-        $sections = Section::showSections();
+        //$sections = Section::showSections();
         $category = \frontend\models\DisplayMyCategory::ShowCategory();
         $productNewCanSell = Product::productForSale(8);
-
         //echo '<pre>';
         //print_r($otherProducts);
         //return $this->render('index');
@@ -115,7 +113,7 @@ class HomeController extends MasterController {
         $sectionItem = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 1);
         $productCanSellBySunglasses = Product::productForSale(18, 4);
         $productCanSellByCosmetics = Product::productForSale(18, 14);
-        $productCanSellByBags = Product::productForNotSale(18, 26);
+        $productCanSellByBags = Product::productForNotSale(18, 65);
         //echo '<pre>';BAGS
         //print_r($sectionItem);
         return $this->render('index', compact('productCanSellByBags', 'productCanSellByCosmetics', 'productCanSellBySunglasses', 'sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
