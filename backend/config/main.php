@@ -117,8 +117,8 @@ return [
         'inbound' => [
             'class' => 'backend\modules\inbound\Inbound',
         ],
-        'elastic-search' => [
-            'class' => 'app\modules\elasticsearch\ElasticSearch',
+        'elasticsearch' => [
+            'class' => 'backend\modules\elasticsearch\ElasticSearch',
         ],
         'productmanager' => [
             'class' => 'backend\modules\productmanager\ProductManager',
@@ -219,6 +219,7 @@ return [
             'gii/*',
         //'booth/*',
         //'productmanager/*'
+            'elasticsearch/*'
         ],
     ],
     'params' => $params,

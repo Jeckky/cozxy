@@ -1,8 +1,12 @@
 <?php
+
 namespace backend\modules\elasticsearch\models;
 
+use backend\modules\productmanager\models\ProductSuppliers;
 use yii\base\Model;
 use common\models\User;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 /**
  * Signup form
@@ -16,6 +20,9 @@ class Elastic extends Model
     const METHOD_GET = 'GET';
     const METHOD_PUT = 'PUT';
     const METHOD_DELETE = 'DELETE';
+
+    const BASE_URL = 'http://45.76.157.59:3000/';
+    const BASE_PRODUCT_URL = self::BASE_URL . 'products';
 
     public static function connect($url, $data = [], $requestMethod)
     {
@@ -36,17 +43,111 @@ class Elastic extends Model
         $error = curl_error($curl);
         curl_close($curl);
 
-        return [
-            'res' => $result,
-            'status' => $status,
-            'error' => $error
-        ];
+        return $result;
     }
+
     /**
      * Product
      */
     public static function product($productId)
     {
+        $url = self::BASE_URL . 'products/' . $productId;
 
+        return self::connect($url, [], self::METHOD_GET);
+    }
+
+    public static function createProduct($productModel)
+    {
+        $productId = $productModel->productId;
+        $url = self::BASE_URL . 'products/' . $productModel->productId;
+
+        return self::connect($url, self::prepareProductData($productModel), self::METHOD_POST);
+    }
+
+    public static function updateProduct($productId, $data = [])
+    {
+        $url = self::BASE_URL . 'products/' . $productId;
+
+        return self::connect($url, $data, self::METHOD_PUT);
+    }
+
+    public static function deleteProduct($productId)
+    {
+        $url = self::BASE_URL . 'products/' . $productId;
+
+        return self::connect($url, [], self::METHOD_DELETE);
+    }
+
+    public static function prepareProductData($productModel)
+    {
+//        $productModel = Product::findOne($productId);
+
+        $res = $productModel->attributes;
+
+        settype($res['productId'], 'int');
+        settype($res['userId'], 'int');
+        settype($res['parentId'], 'int');
+        settype($res['brandId'], 'int');
+        settype($res['categoryId'], 'int');
+        settype($res['productGroupTemplateId'], 'int');
+        settype($res['price'], 'double');
+        settype($res['step'], 'int');
+
+        $res['description'] = trim(preg_replace('/\s+/', ' ', strip_tags($productModel->description)));
+        $res['specification'] = trim(preg_replace('/\s+/', ' ', strip_tags($productModel->specification)));
+        $res['image'] = Url::home(true) . $productModel->images->image;
+        $res['imageThumbnail1'] = Url::home(true) . $productModel->images->imageThumbnail1;
+        $res['imageThumbnail2'] = Url::home(true) . $productModel->images->imageThumbnail2;
+
+        $createDateTime = explode(' ', $res['createDateTime']);
+        $res['createDateTime'] = $createDateTime[0] . 'T' . $createDateTime[1] . '.000Z';
+
+        $updateDateTime = explode(' ', $res['updateDateTime']);
+        $res['updateDateTime'] = $updateDateTime[0] . 'T' . $updateDateTime[1] . '.000Z';
+
+        return $res;
+    }
+
+    /**
+     * Product Supplier
+     */
+    public static function productSupplier($productSuppliersModel)
+    {
+
+    }
+
+    public static function createProductSupplier($productSuppliersModel)
+    {
+        $url = self::BASE_URL . 'products/' . $productSuppliersModel->productId . '/suppliers/' . $productSuppliersModel->productSuppId;
+
+        return self::connect($url, self::prepareProductSupplierData($productSuppliersModel), self::METHOD_POST);
+    }
+
+    public static function updateProductSupplier($productSuppliersModel)
+    {
+        $url = self::BASE_URL . 'products/' . $productSuppliersModel->productId . '/suppliers/' . $productSuppliersModel->productSuppId;
+
+        return self::connect($url, self::prepareProductSupplierData($productSuppliersModel), self::METHOD_PUT);
+    }
+
+    public static function deleteProductSupplier($productSuppliersModel)
+    {
+        $url = self::BASE_URL . 'products/' . $productSuppliersModel->productId . '/suppliers/' . $productSuppliersModel->productSuppId;
+
+        return self::connect($url, [], self::METHOD_DELETE);
+    }
+
+    public static function prepareProductSupplierData($productSuppliersModel)
+    {
+        $price = $productSuppliersModel->productPriceSuppliers->price;
+        settype($price, 'double');
+
+        $res = [
+            'result' => $productSuppliersModel->result,
+            'price' => $price,
+            'status' => $productSuppliersModel->status,
+        ];
+
+        return $res;
     }
 }
