@@ -32,7 +32,7 @@ class Brand extends \common\models\costfit\master\BrandMaster {
      */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
-            'Access'
+            'Access', 'sumResult'
         ]);
     }
 
@@ -57,6 +57,22 @@ class Brand extends \common\models\costfit\master\BrandMaster {
             ]
         ]);
         //return $brands;
+    }
+
+    public static function popularBrands($n = null) {
+        $pb = Brand::find()
+                ->select(' brand.image as image, brand.brandId as brandId, brand.title as title, count(brand.brandId) , sum(p.result) as sumResult ')
+                ->leftJoin('product_suppliers p', 'p.brandId=brand.brandId')
+                ->where("`p`.`approve`='approve'")
+                ->groupBy('brand.brandId')
+                ->orderBy('sumResult', 'desc');
+
+        return new ActiveDataProvider([
+            'query' => $pb,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 20,
+            ]
+        ]);
     }
 
 }

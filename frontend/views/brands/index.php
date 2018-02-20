@@ -29,16 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'itemView' => function ($model, $key, $index, $widget) {
                                 return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_v2', ['model' => $model, 'index' => $index]);
                             },
-                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'summaryOptions' => ['class' => 'sort-by-section clearfix'],
                             //'layout'=>"{summary}{pager}{items}"
-                            //'layout' => "{items}",
+                            'layout' => "{items}",
                             'itemOptions' => [
                                 'tag' => false,
                             ],
                         ]);
-                        //foreach ($productBrand as $brand) {
-                        //echo $this->render('@app/themes/cozxy/layouts/_brand_rev1', ['model' => $brand]);
-                        //}
                         ?>
                     </div>
                 </div>

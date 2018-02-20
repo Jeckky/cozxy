@@ -17,7 +17,9 @@ class BrandsController extends MasterController {
     public $layout = '@app/themes/cozxy/layoutsV2/main';
 
     public function actionIndex() {
-        $brand = Brand::allAvailableBrands();
+        $brand = Brand::popularBrands(24);
+
+        //$brand = Brand::allAvailableBrands();
         $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
         return $this->render('index', compact('brand', 'alphabet'));
     }
