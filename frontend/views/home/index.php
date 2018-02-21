@@ -231,7 +231,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="<?= isset($BannerPromotes2['image']) ? $BannerPromotes1['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="<?= isset($BannerPromotes2['image']) ? $BannerPromotes2['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
@@ -286,7 +286,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="<?= isset($BannerPromotes3['image']) ? $BannerPromotes1['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <img src="<?= isset($BannerPromotes3['image']) ? $BannerPromotes3['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27797384_165864170863362_7213802211719036278_o.jpg?oh=e4427da2ba39572e4d8b1f0d92a2ee46&oe=5B100B35' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
                     </div>
                 </div>
             </div>
