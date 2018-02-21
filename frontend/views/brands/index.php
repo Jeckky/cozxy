@@ -102,10 +102,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <?php
                                         foreach ($testBrands[$value] as $key => $items) {
                                             //echo '<pre>';
-                                            //print_r($items->attributes);
+                                            //print_r($items->attributes['brandId]);
                                             foreach ($items as $key => $list) {
                                                 ?>
-                                                <p><?= $list; ?></p>
+                                                <p>
+                                                    <a href="<?php echo Yii::$app->homeUrl . 'search/brand/' . common\models\ModelMaster::encodeParams(['brandId' => $items->attributes['brandId']]); ?>"><?= $list; ?></a>
+                                                </p>
                                                 <?php
                                             }
                                         }
