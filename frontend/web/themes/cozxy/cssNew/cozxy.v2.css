@@ -51,6 +51,12 @@
         width: 970px;
     }
 
+    .brands-alphabet-box  {
+        float: left;
+        width: 25% !important;
+        height: 30%;
+    }
+
 }
 
 @media (min-width: 768px){

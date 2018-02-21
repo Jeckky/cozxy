@@ -91,14 +91,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="carousel slide media-carousel" id="all-brands">
                     <h4>ALL BRANDS</h4>
                     <div style=" border-top:  1px solid #000000; height: 10px;"></div>
-                    <div class="carousel-inner">
+                    <div class="carousel-inner ">
                         <?php
                         foreach ($alphabet as $a => $value) {
                             ?>
-                            <div class="col-xs-6 col-md-3" style="min-height: 420px; max-height: 500px;">
+                            <div class="brands-alphabet-box">
                                 <div id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px;  ">
                                     <h2> <?= $value ?></h2>
-                                    <div class="carousel-inner" style=" padding: 0 0px 0px 0px;">
+                                    <div class="carousel-inner-brands-alphabet" style=" padding: 0 0px 0px 0px;">
                                         <?php
                                         foreach ($testBrands[$value] as $key => $items) {
                                             foreach ($items as $key => $list) {
