@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php
                         foreach ($alphabet as $a => $value) {
                             ?>
-                            <div class="brands-alphabet-box cell-<?= $a ?>">
+                            <div class="col-xs-6 col-md-3 col-xs-6 cell-<?= $a ?>">
                                 <div id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px;  ">
                                     <h2> <?= $value ?></h2>
                                     <div class="carousel-inner-brands-alphabet " style=" padding: 0 0px 0px 0px;">
