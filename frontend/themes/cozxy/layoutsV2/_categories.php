@@ -7,7 +7,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         <div class="row <?= ($UserAgent == 'mobile') ? '' : 'text-center' ?>">
             <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES</a>
             <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;padding:5px;">CLEARANCE</a>
-            <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="padding: 5px;">PROMOTIONS</a>
+            <a href="<?= Yii::$app->homeUrl ?>promotions" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="padding: 5px;">PROMOTIONS</a>
             <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands"  style="padding: 5px;">BRANDS</a>
         </div>
     </div>
