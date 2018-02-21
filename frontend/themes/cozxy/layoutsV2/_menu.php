@@ -517,7 +517,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
         <div class="row">
             <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-4' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : 'text-align: -webkit-left;'; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
             <div class="col-md-4 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-8' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
-                <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
+                <div class="row user-menu" style="margin-right: -1px; margin-top: 0px;">
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         //echo '<div class="col-xs-3">' . Html::a('&nbsp;', Yii::$app->homeUrl . 'my-account', ['class' => 'u-menu-1']) . '</div>';
@@ -621,13 +621,13 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                 <div class="rela" style="height: 64px;">
                     <?php $form = ActiveForm::begin(['id' => 'register-form', 'method' => "get", 'action' => $urlSearch, 'options' => ['class' => 'registr-form']]); ?>
                     <div class="align-center align-middle fullwidth">
-                        <input type="text" name="search" id="search" class="search-input" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
+                        <input type="text" name="search" id="search" class="search-input pull-right" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
                     </div>
                     <div class="align-middle text-right" style="width:auto; right:0;">
-                        <input type="submit" value="SEARCH" class="search-btn bg-yellow3">
+                        <input type="submit" value="SEARCH" class="search-btn bg-yellow3" style=" margin-top: -3px;">
                     </div>
-                    <div class="align-middle text-right size24" style="width:32px; padding-top: 8px;">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <div class="align-middle text-right size24" style="width:32px; <?= ($UserAgent == 'mobile') ? 'padding-top: -3px;' : 'padding-top: 4px;' ?>">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true" style="zoom: .8; left: -5px;"></span>
                     </div>
                     <?= $this->registerJS("
                         //   $('#search').blur(function(event){

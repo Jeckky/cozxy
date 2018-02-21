@@ -98,9 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="brands-alphabet-box cell-<?= $a ?>">
                                 <div id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px;  ">
                                     <h2> <?= $value ?></h2>
-                                    <div class="carousel-inner-brands-alphabet" style=" padding: 0 0px 0px 0px;">
+                                    <div class="carousel-inner-brands-alphabet " style=" padding: 0 0px 0px 0px;">
                                         <?php
                                         foreach ($testBrands[$value] as $key => $items) {
+                                            //echo '<pre>';
+                                            //print_r($items->attributes);
                                             foreach ($items as $key => $list) {
                                                 ?>
                                                 <p><?= $list; ?></p>
