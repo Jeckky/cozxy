@@ -50,7 +50,7 @@
                                                 <?php
                                                 foreach ($items['Children'] as $key => $sub) {
                                                     ?>
-                                                    <div class="col-md-12 subs-sub-titles"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($sub['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $sub['categoryId']]) ?>">– <?= $sub['title'] ?></a></div>
+                                                    <div class="col-md-12 subs-sub-titles"><a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($sub['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $sub['categoryId']]) ?>">&nbsp;<?= $sub['title'] ?></a></div>
                                                 <?php } ?>
                                             </div>
                                         <?php } ?>

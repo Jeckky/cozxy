@@ -14,7 +14,7 @@
 
 .headbar .search-input{
     /* padding: 2px 0 !important; */
-    zoom: .7 !important; 
+    zoom: .7 !important;
 }
 
 .wrapper-cozxy .container {
@@ -205,7 +205,7 @@
 }
 .subs-sub-titles {
     margin-bottom:1px ;
-    padding: 10px;
+    padding: 2px !important;
 }
 .subs-sub-titles a:hover{
     background-color: #fcdd08;
