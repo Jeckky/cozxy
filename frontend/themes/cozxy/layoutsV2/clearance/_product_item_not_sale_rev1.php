@@ -4,7 +4,7 @@ use common\models\costfit\ProductShelf;
 use common\models\costfit\ProductSuppliers;
 use yii\helpers\Url;
 ?>
-<div class="col-md-3 col-sm-3 col-xs-2  box-product">
+<div class="col-md-3 col-sm-3 col-xs-4  box-product">
     <div class="product-box">
 
         <div class="product-img text-center">
