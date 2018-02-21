@@ -84,10 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="size6 bg-white">&nbsp;</div>-->
 
-
-
-
-
 <div class="bg-white wrapper-cozxy" >
     <div class="container">
         <div class="row">
@@ -96,28 +92,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h4>ALL BRANDS</h4>
                     <div style=" border-top:  1px solid #000000; height: 10px;"></div>
                     <div class="carousel-inner">
-                        <div class="col-md-12 col-sm-12">
-                            <?php
-                            foreach ($alphabet as $a => $value) {
-                                ?>
-                                <div class="col-xs-6 col-md-3">
-                                    <div class="carousel slide media-carousel" id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px;  ">
-                                        <h2> <?= $value ?></h2>
-                                        <div class="carousel-inner" style=" padding: 0 0px 0px 0px;">
-                                            <?php
-                                            foreach ($testBrands[$value] as $key => $items) {
-                                                foreach ($items as $key => $list) {
-                                                    ?>
-                                                    <p><?= $list; ?></p>
-                                                    <?php
-                                                }
+                        <?php
+                        foreach ($alphabet as $a => $value) {
+                            ?>
+                            <div class="col-xs-6 col-md-3" style="min-height: 420px; max-height: 500px;">
+                                <div id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px;  ">
+                                    <h2> <?= $value ?></h2>
+                                    <div class="carousel-inner" style=" padding: 0 0px 0px 0px;">
+                                        <?php
+                                        foreach ($testBrands[$value] as $key => $items) {
+                                            foreach ($items as $key => $list) {
+                                                ?>
+                                                <p><?= $list; ?></p>
+                                                <?php
                                             }
-                                            ?>
-                                        </div>
+                                        }
+                                        ?>
                                     </div>
                                 </div>
-                            <?php } ?>
-                        </div>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
