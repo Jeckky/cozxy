@@ -28,7 +28,9 @@ class CozxyAsset extends AssetBundle {
         'css/chat.css',
         'css/cozxy.css',
         'fonts/fonts.css',
-        'css/cozxy-reform.css'
+        'css/cozxy-reform.css',
+        'cssNew/cozxy.v2.css',
+        'cssNew/cozxy.categories.brands.v2.css',
     ];
     public $js = [
         'js/js.v2/jquery.js',
@@ -42,8 +44,9 @@ class CozxyAsset extends AssetBundle {
         'js/jquery.elevateZoom-3.0.8.min.js',
         'js/js.v2/cozxy.script.js',
         'fixer.io/money.js',
-    //'js/currency-real-time.js',
-    //'js/search-filter.js'
+        //'js/currency-real-time.js',
+        //'js/search-filter.js'
+        'jsNew/cozxy.v2.js',
     ];
 
 }

@@ -10,7 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
-AppAsset::register($this);
+frontend\assets\AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -81,9 +81,9 @@ AppAsset::register($this);
         <!-- End Google Tag Manager (noscript) -->
         <?php
         //if (Yii::$app->controller->id == 'home') {
-        //echo $this->render('@app/themes/cozxy/layoutsV2/_menu');
+        echo $this->render('@app/themes/cozxy/layoutsV2/_menu');
         //} else {
-        echo $this->render('_menu');
+        //echo $this->render('_menu');
         //}
         echo $content;
         echo $this->render('_footer')
