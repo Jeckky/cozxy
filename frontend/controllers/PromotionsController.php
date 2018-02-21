@@ -17,9 +17,8 @@ class PromotionsController extends MasterController {
     public $layout = '@app/themes/cozxy/layoutsV2/main';
 
     public function actionIndex() {
-
-
-        return $this->render('index');
+        $pomotion = \common\models\costfit\Promotion::pomotionsShowAll();
+        return $this->render('index', compact('pomotion'));
     }
 
 }

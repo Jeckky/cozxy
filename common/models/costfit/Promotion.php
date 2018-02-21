@@ -4,6 +4,7 @@ namespace common\models\costfit;
 
 use Yii;
 use \common\models\costfit\master\PromotionMaster;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "promotion".
@@ -81,10 +82,10 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                     if (isset($subCategory) && count($subCategory) > 0) {
 
                         foreach ($subCategory as $sub):
-                            $level4.=$sub->categoryId . ",";
+                            $level4 .= $sub->categoryId . ",";
                         endforeach;
                     }
-                    $level2.=$category->categoryId . ",";
+                    $level2 .= $category->categoryId . ",";
                 endforeach;
 
                 $allCategoryId = self::category($level2, $level4);
@@ -94,7 +95,7 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                 if (isset($products) && count($products) > 0) {
                     foreach ($products as $product):
                         if ($product->brandId != null && $product->brandId != '') {
-                            $brandId.= $product->brandId . ",";
+                            $brandId .= $product->brandId . ",";
                         }
                     endforeach;
                 }
@@ -202,6 +203,17 @@ class Promotion extends \common\models\costfit\master\PromotionMaster {
                 }
             }
         }
+    }
+
+    public static function pomotionsShowAll($n = null, $categoryId = null) {
+
+        $pomotions = self::find();
+        return new ActiveDataProvider([
+            'query' => $pomotions,
+            'pagination' => [
+                'pageSize' => isset($n) ? $n : 12,
+            ]
+        ]);
     }
 
 }
