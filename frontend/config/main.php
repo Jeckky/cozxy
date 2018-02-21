@@ -7,7 +7,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    //'defaultRoute' => 'home',
+    'defaultRoute' => 'home',
     'bootstrap' => ['log',
         [
             'class' => 'common\components\LanguageSelector',
