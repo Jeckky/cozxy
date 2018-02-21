@@ -624,7 +624,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                         <input type="text" name="search" id="search" class="search-input pull-right" placeholder="SEARCH PRODUCT" value="<?= isset($_GET["search"]) ? $_GET["search"] : NULL ?>">
                     </div>
                     <div class="align-middle text-right" style="width:auto; right:0;">
-                        <input type="submit" value="SEARCH" class="search-btn bg-yellow3" style=" margin-top: -3px;">
+                        <input type="submit" value="SEARCH" class="search-btn bg-yellow3" style=" <?= ($UserAgent == 'mobile') ? 'margin-top: -3px;' : 'margin-top: -1px;' ?>">
                     </div>
                     <div class="align-middle text-right size24" style="width:32px; <?= ($UserAgent == 'mobile') ? 'padding-top: -3px;' : 'padding-top: 4px;' ?>">
                         <span class="glyphicon glyphicon-search" aria-hidden="true" style="zoom: .8; left: -5px;"></span>
