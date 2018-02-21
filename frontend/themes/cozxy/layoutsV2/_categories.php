@@ -1,7 +1,10 @@
+<?php
+$UserAgent = common\helpers\GetBrowser::UserAgent();
+?>
 <!-- Categories Nav [PC] hidden-sm hidden-xs-->
 <div class="bg-white menubar ">
     <div class="container-anchor menu-main-cozxy">
-        <div class="row">
+        <div class="row <?= ($UserAgent == 'mobile') ? '' : 'text-center' ?>">
             <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES</a>
             <a href="#" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;padding:5px;">CLEARANCE</a>
             <a href="#" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="padding: 5px;">PROMOTIONS</a>
