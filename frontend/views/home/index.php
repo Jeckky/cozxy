@@ -128,7 +128,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>SUNGLASSES BEST SELLER</h2>
             </div>
             <div class="see-all-new-v2 hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
@@ -188,7 +188,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>COSMETICS BEST SELLER</h2>
             </div>
             <div class="see-all-new-v2 hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
@@ -272,7 +272,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                     </div>
                 </div>
                 <div class="text-center col-xs-12 ">
-                    <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">see more</a>
+                    <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE</a>
                 </div>
             </div>
         </div>
@@ -303,7 +303,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>ALL THE BAGS</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
@@ -348,7 +348,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>ITEMS YOU MAY LIKE</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>site/see-all-section-item?sectionId=10">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>site/see-all-section-item?sectionId=10">SEE MORE ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
@@ -441,7 +441,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
                 <h2>PRODUCT STORY</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
-                <a href="<?= Yii::$app->homeUrl ?>story/views-all/">see all ></a>
+                <a href="<?= Yii::$app->homeUrl ?>story/views-all/">SEE MORE ></a>
             </div>
             <div class="col-xs-12 col-md-12">
 
