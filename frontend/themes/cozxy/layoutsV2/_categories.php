@@ -145,16 +145,20 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                                 //'itemOptions' => ['class' => 'item'],
                         ]);
                         ?>
+                        <div class="menu-item-brands sub-9999-brands"><a href="<?= Yii::$app->homeUrl ?>brands">SEE ALL</a> </div>
                     </div>
+
                 </div>
                 <!-- Sub Category -->
                 <div class="sr-only-brands">
                     <!-- Item 1 -->
                     <!-- Item End -->
                 </div>
+
                 <!-- End Category -->
                 <div class="col-lg-6 col-md-8  sub2menu" style="display:none; ">
                     <div class="row loadCategoryBrands"></div>
+
                 </div>
             </div>
             <!-- / Brands Form New Layout / -->
