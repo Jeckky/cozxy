@@ -413,11 +413,16 @@
         position: relative;
         font-size: 1.1em;
         font-weight: bold;
-        top: -8px;
+        top: 2px;
+    }
+    .percen-discount {
+        position: relative;
+        font-size: 10px;
+        top: 3px;
     }
     .rcorners4 .off-style {
         width: 100%;
-        margin-top: -20px;
+        margin-top: -10px;
         text-align: center;
         margin-left: 0px;
     }
