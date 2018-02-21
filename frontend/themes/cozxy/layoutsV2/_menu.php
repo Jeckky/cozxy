@@ -525,10 +525,10 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                         echo '';
                     }
                     ?>
-                    <div class="col-xs-3 col-md-1 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;'; ?>">
+                    <div class="col-xs-3 col-md-2 <?= isset(Yii::$app->user->id) ? 'col-xs-offset-1' : '' ?>" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;'; ?>">
                         <a href="<?php echo Yii::$app->homeUrl; ?><?= isset(Yii::$app->user->id) ? 'my-account?act=my-shelves' : 'site/login' ?>" class="u-menu-2 tooltip-bottom" data-tooltip="MY SHELVES">&nbsp;</a>
                     </div>
-                    <div class="col-xs-3 col-md-2" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;right:-10px;'; ?>"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
+                    <div class="col-xs-3 col-md-2" style="<?= ($UserAgent == 'mobile') ? '' : 'text-align: -webkit-right;'; ?>"><?= Html::a('&nbsp;', Yii::$app->homeUrl . 'cart', ['class' => 'u-menu-3 tooltip-bottom', 'data-tooltip' => 'CART']) ?>
                         <?php
                         if (Yii::$app->user->id != '') {
                             $Product = \common\models\costfit\Order::find()->where('userId =' . \Yii::$app->user->id . ' and status=0')->one();

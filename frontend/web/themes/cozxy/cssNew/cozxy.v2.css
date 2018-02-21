@@ -4,8 +4,17 @@
     Create By : Taninut.Bm
 */
 
-.headbar {
+/*.headbar {
     padding: 2px 0 !important;
+}*/
+.headbar .search-btn{
+    /* padding: 2px 0 !important; */
+    zoom: .8 !important;
+}
+
+.headbar .search-input{
+    /* padding: 2px 0 !important; */
+    zoom: .8 !important;
 }
 
 .wrapper-cozxy .container {
