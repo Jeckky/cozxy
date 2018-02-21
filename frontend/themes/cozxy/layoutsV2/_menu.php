@@ -574,7 +574,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
                     <?php
                     if (isset(Yii::$app->user->identity->userId)) {
                         ?>
-                        <div class="col-xs-3 menuWrapper <?= ($UserAgent == 'mobile') ? 'text-left' : '' ?> ">
+                        <div class="col-xs-3 menuWrapper <?= ($UserAgent == 'mobile') ? 'text-left' : 'text-left' ?> ">
                             <div class="dropdown">
                                 <a href="#" class="dropdown-menu-title u-menu-1"  id="dLabel" data-toggle="dropdown" data-target="#"></a>
                                 <?php
