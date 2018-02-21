@@ -2,7 +2,7 @@
     <div class="product-box">
         <div class="product-img text-center">
             <a href="#" class="fc-black">
-                <img class="media-object img-responsive" src="<?= $model['image'] ?>" width="100%" height="300">
+                <img class="media-object img-responsive" src="<?= $model['image'] ?>" width="100%" height="230">
             </a>
         </div>
 

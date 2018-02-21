@@ -441,7 +441,7 @@
 }
 
 .img-good-reads img{
-    min-height: 256px; max-height: 256px;
+    min-height: 230px; max-height: 230px;
     -o-object-fit: cover;
     object-fit: cover;
     overflow: hidden;
