@@ -22,11 +22,15 @@ class BrandsController extends MasterController {
         //$brand = Brand::popularBrands();
         //$brand = Brand::allAvailableBrands();
         $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-        //foreach ($alphabet as $value) {
-        //$testBrands[$value] = \common\models\costfit\Brand::find()->select('title')->where('title like "' . $value . '%"')->all();
-        //}
+        foreach ($alphabet as $value) {
+            $testBrands[$value] = \common\models\costfit\Brand::find()->select('title')->where('title like "' . $value . '%"')->all();
+        }
         //echo '<pre>';
-        //print_r($alphabet);
+        //print_r($testBrands['A'][0]);
+        foreach ($testBrands['A'] as $key => $value) {
+            //echo $value[$key];
+        }
+
         //exit();
         return $this->render('index', compact('brand', 'alphabet', 'testBrands'));
     }

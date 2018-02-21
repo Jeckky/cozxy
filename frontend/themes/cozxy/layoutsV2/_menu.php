@@ -515,7 +515,7 @@ if (Yii::$app->controller->action->id != 'elastic-search') {
 <div class="bg-black headbar">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-4' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : 'text-align: -webkit-right;'; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
+            <div class="col-md-3 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-4' : 'col-xs-4' ?>" style="<?= ($UserAgent == 'mobile') ? 'margin-top: 15px;' : 'text-align: -webkit-left;'; ?>"><a href="<?= Url::to(['/']) ?>"><?= Html::img(Url::home() . 'imgs/cozxy.png', ['class' => 'img-responsive']) ?></a></div>
             <div class="col-md-4 col-sm-6 <?= isset(Yii::$app->user->id) ? 'col-xs-8' : 'col-xs-8' ?> pull-right text-right " style="<?= ($UserAgent == 'mobile') ? 'padding-right: 0px; text-align: left;' : ''; ?>">
                 <div class="row user-menu" style="margin-right: -1px;    margin-top: 0px;">
                     <?php
