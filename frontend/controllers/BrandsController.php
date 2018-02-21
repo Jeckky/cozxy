@@ -25,8 +25,8 @@ class BrandsController extends MasterController {
         //foreach ($alphabet as $value) {
         //$testBrands[$value] = \common\models\costfit\Brand::find()->select('title')->where('title like "' . $value . '%"')->all();
         //}
-        //echo '<pre>';
-        //print_r($testBrands);
+        echo '<pre>';
+        print_r($alphabet);
         //exit();
         return $this->render('index', compact('brand', 'alphabet', 'testBrands'));
     }

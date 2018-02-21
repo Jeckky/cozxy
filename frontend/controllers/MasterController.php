@@ -60,6 +60,8 @@ class MasterController extends MasterCommonController {
 
         $this->view->params['brands'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCate();
         $this->view->params['brandsMenuCategory'] = \frontend\models\DisplayMyBrand::MyFilterBrandMenuCateItems();
+        //$brand = Brand::popularBrands(24);
+        $this->view->params['categoryPopularBrands'] = \common\models\costfit\Brand::popularBrands(24);
 
         // - SHIPPING = 2; // ที่อยู่จัดส่งสินค้า
         if ((!Yii::$app->user->isGuest) && $this->id == "profile") {

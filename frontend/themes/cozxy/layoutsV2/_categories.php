@@ -124,7 +124,7 @@
                     <div class="row main-category-brands">
                         <?php
                         echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $this->params['brandsMenuCategory'],
+                            'dataProvider' => $this->params['categoryPopularBrands'],
                             'summary' => "",
                             'options' => [
                                 'tag' => false,

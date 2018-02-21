@@ -94,7 +94,7 @@ class ModelMaster extends \yii\db\ActiveRecord {
         return $userAssetTypeArray[$type];
     }
 
-    public function createTitle() {
+    public static function createTitle() {
         if (strpos($this->title, "/") === FALSE) {
             $title = explode(' ', $this->title);
         } else {
