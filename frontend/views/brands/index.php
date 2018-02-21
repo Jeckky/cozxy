@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
                                 <div class="col-xs-6 col-md-3 ">
                                     <div class="carousel slide media-carousel" id="brands-alphabet"  style="padding-left: 0px; padding-right: 0px; ">
-                                         <h2> <?= $value ?></h2>
+                                         <h2> <?//= $value ?></h2>
                                         <div class="carousel-inner" style=" padding: 0 0px 0px 0px;">
                                             12345 12345 <br>
                                             12345 12345 <br>
