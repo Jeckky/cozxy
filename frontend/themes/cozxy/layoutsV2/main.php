@@ -17,6 +17,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
     <head>
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111426492-1"></script>
         <script>
@@ -72,7 +73,7 @@ AppAsset::register($this);
          ", \yii\web\View::POS_HEAD);
         ?><!-- End Google Tag Manager -->
     </head>
-    <body>
+    <body style="">
 
         <?php $this->beginBody() ?>
         <!-- Google Tag Manager (noscript) -->
@@ -107,4 +108,3 @@ $this->registerJs("
 ?>
 
 <?php $this->endPage() ?>
- 

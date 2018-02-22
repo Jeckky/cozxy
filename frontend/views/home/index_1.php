@@ -5,7 +5,6 @@
 \frontend\assets\NewCozxyAsset::register($this);
 
 $this->title = 'cozxy.com - Buy what fuels your passion';
-$UserAgent = common\helpers\GetBrowser::UserAgent();
 ?>
 
 <?php if (isset($slideGroup)): ?>
@@ -44,6 +43,8 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         </div>
     </div>
 <?php endif; ?>
+
+<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <!--/ slide prodcut  /-->
 <div class="bg-white wrapper-cozxy">
@@ -90,7 +91,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 
 <!--/ category  /-->
 <div class="bg-white">
-    <div class="<?= ($UserAgent == 'mobile') ? 'container' : 'container-cozxy' ?> ">
+    <div class="container-cozxy">
         <div class="row">
             <div class="col-xs-12">
                 <div class="media-carousel-x img-items-category">
@@ -118,7 +119,6 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
     </div>
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
-
 
 <!--/   prodcut  items /-->
 <div class="bg-white wrapper-cozxy">
