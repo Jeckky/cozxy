@@ -124,7 +124,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2">
+            <div class="head-all-new-v2 text-section-padding">
                 <h2>SUNGLASSES BEST SELLER</h2>
             </div>
             <div class="see-all-new-v2 hidden-sm hidden-xs">
@@ -184,7 +184,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2">
+            <div class="head-all-new-v2 text-section-padding">
                 <h2>COSMETICS BEST SELLER</h2>
             </div>
             <div class="see-all-new-v2 hidden-sm hidden-xs">
@@ -244,7 +244,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2"><h2>RECOMMENDED</h2></div>
+            <div class="head-all-new-v2 text-section-padding"><h2>RECOMMENDED</h2></div>
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel3">
@@ -299,7 +299,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2">
+            <div class="head-all-new-v2 text-section-padding">
                 <h2>ALL THE BAGS</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
@@ -344,7 +344,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2">
+            <div class="head-all-new-v2 text-section-padding">
                 <h2>ITEMS YOU MAY LIKE</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
@@ -437,7 +437,7 @@ $this->title = 'cozxy.com - Buy what fuels your passion';
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <div class="head-all-new-v2">
+            <div class="head-all-new-v2 text-section-padding">
                 <h2>PRODUCT STORY</h2>
             </div>
             <div class="see-all-new-v2 text-right hidden-sm hidden-xs">

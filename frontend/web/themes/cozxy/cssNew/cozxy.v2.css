@@ -429,7 +429,9 @@
     .headbar {
         zoom:.7 !important;
     }
-
+    .text-section-padding h2{
+        padding-left: 10px;
+    }
 }
 
 .line-spacing{
@@ -500,3 +502,4 @@
     float: left;
     display: inline; clear: both;
 }
+
