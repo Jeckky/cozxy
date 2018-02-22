@@ -103,7 +103,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
         return array_merge(parent::attributes(), [
             'price image', 'Smart Price', 'firstname', 'lastname', 'bTitle', 'cTitle', 'uTitle', 'smuTitle'
             , 'simage', 'simageThumbnail1', 'simageThumbnail2', 'priceSuppliers', 'pTitle', 'sUser', 'price',
-            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId', 'isbn'
+            'orderItemId', 'brandId', 'image', 'title', 'description', 'parentId', 'isbn', 'specialDiscount'
         ]);
     }
 

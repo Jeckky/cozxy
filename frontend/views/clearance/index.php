@@ -196,7 +196,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <div class="row">
                                 <div class="wf-container">
-
                                     <?php
                                     yii\widgets\Pjax::begin([
                                         'id' => 'cansale',
@@ -214,7 +213,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                            return $this->render('@app/themes/cozxy/layoutsV2/clearance/_product_item_rev1', ['model' => $model]);
+                                            return $this->render('@app/themes/cozxy/layoutsV2/clearance/_product_item_special_discounted', ['model' => $model]);
                                         },
                                         'emptyText' => ' ',
                                         'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
@@ -258,7 +257,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                                     ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                                    ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                                   ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                                  ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
                     <span class="size16">&nbsp; ↓ </span></a>-->
             </div>
             <div class="col-xs-3 text-center">&nbsp;</div>
