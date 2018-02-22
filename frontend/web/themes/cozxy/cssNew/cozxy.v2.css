@@ -475,3 +475,28 @@
     font-weight: bold;
     top: -20px !important;
 }
+
+#all-brands .cell-4{
+    float: left;
+    display: inline; clear: both;
+}
+
+#all-brands .cell-8{
+    float: left;
+    display: inline; clear: both;
+}
+
+#all-brands .cell-16{
+    float: left;
+    display: inline; clear: both;
+}
+
+#all-brands .cell-20{
+    float: left;
+    display: inline; clear: both;
+}
+
+#all-brands .cell-24{
+    float: left;
+    display: inline; clear: both;
+}

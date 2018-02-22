@@ -22,11 +22,14 @@ class BrandsController extends MasterController {
         //$brand = Brand::popularBrands();
         //$brand = Brand::allAvailableBrands();
         $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        $numRow = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        //echo count($alphabet / 4);
+
         foreach ($alphabet as $value) {
             $testBrands[$value] = \common\models\costfit\Brand::find()->select('title')->where('title like "' . $value . '%"')->all();
         }
 
-        return $this->render('index', compact('brand', 'alphabet', 'testBrands'));
+        return $this->render('index', compact('brand', 'alphabet', 'testBrands', 'numRow'));
     }
 
 }
