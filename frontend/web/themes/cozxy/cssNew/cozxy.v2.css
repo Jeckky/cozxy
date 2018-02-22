@@ -148,7 +148,7 @@
 }
 
 .categories-brands-height{
-    max-height:500px; min-height: 500px; background-color: #fff;
+    max-height:500px; min-height: 500px; background-color: #f5f5f5;
 }
 
 /* Category Sub Menu */
@@ -169,15 +169,15 @@
     color: #333;
 }
 .categories-submenu .menu-item:hover a, .categories-submenu .menu-item.active a{
-    background-color: #fdc532;
+    background-color: #fdc532 !important;
 }
 /* Category Sub Menu Level 2 */
 .sub2menu {
     /*background-color: #fdc532;*/
-    background-color: #fff;
+    background-color: #f5f5f5;
 }
 .loadCategory .sub-cate {
-    background-color: #ffffff;
+    background-color: #f5f5f5;
     padding: 0 8px 5px;
 }
 .loadCategory .sub-cate a {
@@ -206,6 +206,7 @@
 
 .menu-item a:hover{
     border-bottom: 1px solid #fcdd08;
+    background-color: #fdc532;
 }
 .subs-sub-titles {
     margin-bottom:1px ;
@@ -397,7 +398,7 @@
         padding: 5px;
     }
     .categories-brands-height{
-        max-height:400px; min-height: 400px; background-color: #fff;
+        max-height:400px; min-height: 400px; background-color: #f5f5f5;
     }
     .menu-item-brands{
         float: left;

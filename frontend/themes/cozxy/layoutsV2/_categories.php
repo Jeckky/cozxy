@@ -25,7 +25,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         foreach ($this->params['cate'] as $key => $value) {
                             ?>
                             <div class="menu-item sub-<?= $value['categoryId'] ?>">
-                                <a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);" style=" background-color: #fff;"><?= $value['title'] ?></a>
+                                <a href="<?= Yii::$app->homeUrl . 'search/' . common\models\ModelMaster::createTitleArray($value['title']) . '/' . common\models\ModelMaster::encodeParams(['categoryId' => $value['categoryId']]) ?>" onmouseover="categoryLoad(<?= $value['categoryId'] ?>);" style=" background-color: #f5f5f5;"><?= $value['title'] ?></a>
                                 <a class="mob-only" href="javascript:categoryMob(<?= $value['categoryId'] ?>);"><i class="fa fa-angle-right size18"></i></a>
                             </div>
                         <?php } ?>
