@@ -175,7 +175,7 @@ class SearchController extends MasterController {
             if (isset($_GET['type'])) {
                 return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
             } else {
-                return $this->render('@app/views/elastic/index_search_json', compact('dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+                return $this->render('@app/views/elastic/index_search_json', compact('title', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
             }
         }
     }
