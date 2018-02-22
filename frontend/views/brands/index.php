@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Brands';
 $this->params['breadcrumbs'][] = $this->title;
-
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 \frontend\assets\NewCozxyAsset::register($this);
 $numRow = count($numRow) / 4;
 ?>
@@ -54,7 +54,7 @@ $numRow = count($numRow) / 4;
                 <div class="carousel slide media-carousel" id="all-brands">
                     <h4>ALL BRANDS</h4>
                     <div style=" border-top: 1px solid #000000; height: 10px;"></div>
-                    <div class="carousel-inner ">
+                    <div class="carousel-inner <?= ($UserAgent == 'mobile') ? '' : 'col-lg-offset-1' ?>">
                         <?php
                         foreach ($alphabet as $a => $value) {
                             ?>
