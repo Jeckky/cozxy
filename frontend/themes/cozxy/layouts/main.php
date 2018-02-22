@@ -86,7 +86,8 @@ frontend\assets\AppAsset::register($this);
         //echo $this->render('_menu');
         //}
         echo $content;
-        echo $this->render('_footer')
+        //echo $this->render('_footer')
+        echo $this->render('@app/themes/cozxy/layoutsV2/_footer');
         ?>
         <?php $this->endBody() ?>
 <!--        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoAu9KrtLAc-lq1QgpJWtRP0Oyjty_-Cw" async-->

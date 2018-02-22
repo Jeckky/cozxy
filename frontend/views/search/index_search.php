@@ -120,8 +120,8 @@ $(function() {
 });
 ');
 \frontend\assets\SearchAsset::register($this);
-if($site == 'category') {
-    if(isset($title) && !empty($title)) {
+if ($site == 'category') {
+    if (isset($title) && !empty($title)) {
         $this->title = 'Search Categories ' . isset($title) ? strtoupper($title) : '';
         $this->params['breadcrumbs'][] = $this->title;
     } else {
@@ -129,11 +129,11 @@ if($site == 'category') {
         $this->params['breadcrumbs'][] = $this->title;
         $title = '';
     }
-    if(isset($_GET["search"]) && !empty($_GET['search'])) {
+    if (isset($_GET["search"]) && !empty($_GET['search'])) {
         $search = 'SEARCH : ' . $_GET["search"];
     }
 } else {
-    if(isset($title) && !empty($title)) {
+    if (isset($title) && !empty($title)) {
         $this->title = 'Search Brand ' . isset($title) ? strtoupper($title) : '';
         $this->params['breadcrumbs'][] = $this->title;
     } else {
@@ -141,215 +141,217 @@ if($site == 'category') {
         $this->params['breadcrumbs'][] = $this->title;
         $title = '';
     }
-    if(isset($_GET["search"]) && !empty($_GET['search'])) {
+    if (isset($_GET["search"]) && !empty($_GET['search'])) {
         $search = 'SEARCH : ' . $_GET["search"];
         $this->title = $_GET["search"];
     }
 }
 ?>
+<div class="wrapper-cozxy">
+    <?=
+    $this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
+        'categoryId' => $categoryId,
+        'productFilterBrand' => $productFilterBrand,
+        'search' => $search_hd
+    ]);
+    ?>
+    <div class="product-list">
+        <div class="container">
 
-<?=
-$this->render('@app/themes/cozxy/layouts/search/_search_filter_all', [
-    'categoryId' => $categoryId,
-    'productFilterBrand' => $productFilterBrand,
-    'search' => $search_hd
-]);
-?>
-<div class="product-list">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-9 col-sm-12 col-xs-12">
-                <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
-                    <?php if($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
-                        <div class="size16">&nbsp;</div>
-                        <div class="alert alert-danger">
-                            <h2>No item found</h2>
-                        </div>
-                    <?php endif; ?>
-                    <?php if(isset($promotions) && $promotions->getCount() > 0): ?>
-                        <div class="filter-product-cozxy col-sm-12">
-                            <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
-                            <div class="row">
-                                <?php
-                                //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
-                                ?>
-                                <?php
-                                echo \yii\widgets\ListView::widget([
-                                    'dataProvider' => $promotions,
-                                    'options' => [
-                                        'tag' => false,
-                                    ],
-                                    'itemView' => function ($model, $key, $index, $widget) {
-                                        return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
-                                    },
-                                    //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                                    //'layout'=>"{summary}{pager}{items}"
-                                    //                            'layout' => "{items}",
-                                    'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
-                                    'itemOptions' => [
-                                        'tag' => false,
-                                        'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
-                                            'firstPageLabel' => 'first',
-                                            'lastPageLabel' => 'last',
-                                            'prevPageLabel' => 'previous',
-                                            'nextPageLabel' => 'next',
-                                            'maxButtonCount' => 3,
-                                        ] : [],
-                                    ],
-                                ]);
-                                //                        yii\widgets\Pjax::end();
-                                ?>
+            <div class="row">
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="brand-price-filter col-sm-12" style="padding-right: 0px;padding-left: 0px;">
+                        <?php if ($productCanSell->getTotalCount() == 0 && $productNotSell->getTotalCount() == 0): ?>
+                            <div class="size16">&nbsp;</div>
+                            <div class="alert alert-danger">
+                                <h2>No item found</h2>
                             </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="filter-product-cozxy col-sm-12">
-
-                        <?php if($productCanSell->getTotalCount() > 0): ?>
-                            <h3 class="b" style="word-wrap: break-word;white-space: normal;">
-                                <?php
-                                if(isset($search)) {
-                                    echo $search . '(RECOMMENDED)';
-                                } else {
-                                    echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(RECOMMENDED)';
-                                }
-                                ?>
-                                <? //= strtoupper('category') ?><!-- :: --><? //= strtoupper($title) ?> <!--(RECOMMENDED)-->
-                                <small>
-                                    <a href="javascript:sortCozxySearch('<?= $search_hd; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
-                                    <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
-                                </small>
-                            </h3>
-
-                            <div class="row">
-                                <div class="wf-container">
-
+                        <?php endif; ?>
+                        <?php if (isset($promotions) && $promotions->getCount() > 0): ?>
+                            <div class="filter-product-cozxy col-sm-12">
+                                <h3 class="b text-center-sm text-center-xs">HOT DEALS</h3>
+                                <div class="row">
                                     <?php
-                                    yii\widgets\Pjax::begin([
-                                        'id' => 'cansale',
-//                                        'enablePushState' => false, // to disable push state
-//                                        'enableReplaceState' => false, // to disable replace state
-                                        'timeout' => 5000,
-                                        'clientOptions' => [
-                                            'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
-                                            'linkSelector' => '#cansale',
-                                        ]
-                                    ]);
+                                    //                        yii\widgets\Pjax::begin(['id' => 'promotions', 'timeout' => false, 'enablePushState' => false])
+                                    ?>
+                                    <?php
                                     echo \yii\widgets\ListView::widget([
-                                        'dataProvider' => $productCanSell,
+                                        'dataProvider' => $promotions,
                                         'options' => [
                                             'tag' => false,
                                         ],
                                         'itemView' => function ($model, $key, $index, $widget) {
-                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model, 'hotDeal' => 1]);
                                         },
-                                        'emptyText' => ' ',
-                                        'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                        'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
-                                        //'layout' => "{items}",
+                                        //                        'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                                        //'layout'=>"{summary}{pager}{items}"
+                                        //                            'layout' => "{items}",
+                                        'layout' => (Yii::$app->controller->action->id == "see-all-promotions") ? "{summary}\n{items}\n<div class=' text-center'>{pager}</div>\n" : "{items}",
                                         'itemOptions' => [
                                             'tag' => false,
-                                        ], 'pager' => [
-                                            'firstPageLabel' => 'first',
-                                            'lastPageLabel' => 'last',
-                                            'prevPageLabel' => 'previous',
-                                            'nextPageLabel' => 'next',
-                                            'maxButtonCount' => 3,
+                                            'pager' => (Yii::$app->controller->action->id == "see-all-promotions") ? [
+                                                'firstPageLabel' => 'first',
+                                                'lastPageLabel' => 'last',
+                                                'prevPageLabel' => 'previous',
+                                                'nextPageLabel' => 'next',
+                                                'maxButtonCount' => 3,
+                                                    ] : [],
                                         ],
-                                        // Customzing options for pager container tag
-                                        'options' => [
-                                            'tag' => 'div',
+                                    ]);
+                                    //                        yii\widgets\Pjax::end();
+                                    ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="filter-product-cozxy col-sm-12">
+
+                            <?php if ($productCanSell->getTotalCount() > 0): ?>
+                                <h3 class="b" style="word-wrap: break-word;white-space: normal;">
+                                    <?php
+                                    if (isset($search)) {
+                                        echo $search . '(RECOMMENDED)';
+                                    } else {
+                                        echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(RECOMMENDED)';
+                                    }
+                                    ?>
+                                    <? //= strtoupper('category') ?><!-- :: --><? //= strtoupper($title) ?> <!--(RECOMMENDED)-->
+                                    <small>
+                                        <a href="javascript:sortCozxySearch('<?= $search_hd; ?>','price')" style="color: #000;">Sort by price&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortprice" id="Sortprice" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','brand')" style="color: #000;">Sort by brand&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortbrand" id="Sortbrand" value="SORT_DESC">
+                                        <span style="color: #fc0;">|</span><a href="javascript:sortCozxySearch('<?= $search_hd; ?>','new')" style="color: #000;">Sort by new product&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <input type="hidden" name="Sortnew" id="Sortnew" value="SORT_DESC">
+                                    </small>
+                                </h3>
+
+                                <div class="row">
+                                    <div class="wf-container">
+
+                                        <?php
+                                        yii\widgets\Pjax::begin([
+                                            'id' => 'cansale',
+//                                        'enablePushState' => false, // to disable push state
+//                                        'enableReplaceState' => false, // to disable replace state
+                                            'timeout' => 5000,
+                                            'clientOptions' => [
+                                                'registerClientScript' => "$.pjax.reload({container:'#cansale'});",
+                                                'linkSelector' => '#cansale',
+                                            ]
+                                        ]);
+                                        echo \yii\widgets\ListView::widget([
+                                            'dataProvider' => $productCanSell,
+                                            'options' => [
+                                                'tag' => false,
+                                            ],
+                                            'itemView' => function ($model, $key, $index, $widget) {
+                                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_rev1', ['model' => $model]);
+                                            },
+                                            'emptyText' => ' ',
+                                            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                                            'layout' => "{summary}\n{items}\n<div class ='col-lg-offset-3'>{pager}</div>\n",
+                                            //'layout' => "{items}",
+                                            'itemOptions' => [
+                                                'tag' => false,
+                                            ], 'pager' => [
+                                                'firstPageLabel' => 'first',
+                                                'lastPageLabel' => 'last',
+                                                'prevPageLabel' => 'previous',
+                                                'nextPageLabel' => 'next',
+                                                'maxButtonCount' => 3,
+                                            ],
+                                            // Customzing options for pager container tag
+                                            'options' => [
+                                                'tag' => 'div',
                                             //'class' => 'pager-wrapper col-sm-12',
                                             //'id' => 'pager-container',
-                                        ],
-                                    ]);
-                                    yii\widgets\Pjax::end();
+                                            ],
+                                        ]);
+                                        yii\widgets\Pjax::end();
+                                        ?>
+
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="filter-product-cozxy-not-sale col-sm-12">
+                            <?php if ($productNotSell->getTotalCount() > 0): ?>
+                                <h3 class="b" style="word-wrap: break-word;white-space: normal;">
+                                    <?php
+                                    if (isset($search)) {
+                                        echo $search . '(PRODUCTS EXPLORE)';
+                                    } else {
+                                        echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(PRODUCTS EXPLORE)';
+                                    }
                                     ?>
 
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="filter-product-cozxy-not-sale col-sm-12">
-                        <?php if($productNotSell->getTotalCount() > 0): ?>
-                            <h3 class="b" style="word-wrap: break-word;white-space: normal;">
-                                <?php
-                                if(isset($search)) {
-                                    echo $search . '(PRODUCTS EXPLORE)';
-                                } else {
-                                    echo strtoupper('SEARCH') . '::' . strtoupper($title) . '(PRODUCTS EXPLORE)';
-                                }
-                                ?>
+                                </h3>
 
-                            </h3>
+                                <div class="row">
+                                    <div class="wf-container">
 
-                            <div class="row">
-                                <div class="wf-container">
-
-                                    <?php
-                                    yii\widgets\Pjax::begin([
-                                        'id' => 'notsale',
+                                        <?php
+                                        yii\widgets\Pjax::begin([
+                                            'id' => 'notsale',
 //                                        'enablePushState' => false, // to disable push state
 //                                        'enableReplaceState' => false, // to disable replace state
-                                        'timeout' => 5000,
-                                        'clientOptions' => [
-                                            'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
-                                            'linkSelector' => '#notsale'
-                                        ]
-                                    ]);
-                                    echo \yii\widgets\ListView::widget([
-                                        'dataProvider' => $productNotSell,
-                                        'options' => [
-                                            'tag' => false,
-                                        ],
-                                        'itemView' => function ($model, $key, $index, $widget) {
-                                            return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
-                                        },
-                                        'emptyText' => ' ',
-                                        'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
-                                        'layout' => "{summary}\n{items}\n<div class =' col-sm-offset-3'>{pager}</div>\n",
-                                        //'layout' => "{items}",
-                                        'itemOptions' => [
-                                            'tag' => false,
-                                        ], 'pager' => [
-                                            'firstPageLabel' => 'first',
-                                            'lastPageLabel' => 'last',
-                                            'prevPageLabel' => 'previous',
-                                            'nextPageLabel' => 'next',
-                                            'maxButtonCount' => 3,
-                                        ], // Customzing options for pager container tag
-                                    ]);
-                                    yii\widgets\Pjax::end();
-                                    ?>
+                                            'timeout' => 5000,
+                                            'clientOptions' => [
+                                                'registerClientScript' => "$.pjax.reload({container:'#notsale'});",
+                                                'linkSelector' => '#notsale'
+                                            ]
+                                        ]);
+                                        echo \yii\widgets\ListView::widget([
+                                            'dataProvider' => $productNotSell,
+                                            'options' => [
+                                                'tag' => false,
+                                            ],
+                                            'itemView' => function ($model, $key, $index, $widget) {
+                                                return $this->render('@app/themes/cozxy/layouts/product/_product_item_not_sale_rev1', ['model' => $model]);
+                                            },
+                                            'emptyText' => ' ',
+                                            'summaryOptions' => ['class' => 'size18 size16-sm size14-xs text-right'],
+                                            'layout' => "{summary}\n{items}\n<div class =' col-sm-offset-3'>{pager}</div>\n",
+                                            //'layout' => "{items}",
+                                            'itemOptions' => [
+                                                'tag' => false,
+                                            ], 'pager' => [
+                                                'firstPageLabel' => 'first',
+                                                'lastPageLabel' => 'last',
+                                                'prevPageLabel' => 'previous',
+                                                'nextPageLabel' => 'next',
+                                                'maxButtonCount' => 3,
+                                            ], // Customzing options for pager container tag
+                                        ]);
+                                        yii\widgets\Pjax::end();
+                                        ?>
 
+                                    </div>
                                 </div>
-                            </div>
 
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
+
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="size18">&nbsp;</div>
+                    <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId', 'categoryId', 'productStory')) ?>
+
                 </div>
 
-            </div>
-            <div class="col-md-3 col-sm-12 col-xs-12">
-                <div class="size18">&nbsp;</div>
-                <?= $this->render('@app/themes/cozxy/layouts/story/_panel_recent_stories', compact('productSupplierId', 'categoryId', 'productStory')) ?>
+                <div class="col-xs-9">
 
-            </div>
+                </div>
 
-            <div class="col-xs-9">
-
+                <div class="col-xs-9 text-center">
+                    <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                   ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                  ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                  ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                                ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
+                        <span class="size16">&nbsp; ↓ </span></a>-->
+                </div>
+                <div class="col-xs-3 text-center">&nbsp;</div>
             </div>
-
-            <div class="col-xs-9 text-center">
-                <!--<a href="javascript:showMore('<?php //echo $categoryId;                                                                                                                                                                                                                                                                                  ?>','<?php //echo $clickNum;                                                                                                                                                                                                                                                                                 ?>','<?php //echo $countAllProduct;                                                                                                                                                                                                                                                                                 ?>','<?php //echo $limit_start;                                                                                                                                                                                                                                                                                ?>','<?php //echo $limit_end;                                                                                                                                                                                                                                                                               ?>')" class="b btn-black showStepMore" style="margin:24px auto 32px">SHOW MORE
-                    <span class="size16">&nbsp; ↓ </span></a>-->
-            </div>
-            <div class="col-xs-3 text-center">&nbsp;</div>
         </div>
     </div>
 </div>
+
