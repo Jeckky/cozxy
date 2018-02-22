@@ -106,7 +106,7 @@
 
 <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
     <div class="card">
-        <img class="card-img-top" src="images/user/avatar/15192017085a8d2dac4b6ab9.15953876.png">
+        <img class="card-img-top" src="<?= ($_SERVER['SERVER_NAME'] == 'test101.cozxy.com') ? 'https://www.cozxy.com/images/user/avatar/15192017085a8d2dac4b6ab9.15953876.png' : 'images/user/avatar/15192017085a8d2dac4b6ab9.15953876.png' ?>">
         <div class="card-block">
             <h4 class="card-title"><?= $model->title ?></h4>
             <div class="meta">
