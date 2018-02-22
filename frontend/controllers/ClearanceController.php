@@ -60,7 +60,7 @@ class ClearanceController extends MasterController {
         return new ActiveDataProvider([
             'query' => $products,
             'pagination' => [
-                'pageSize' => isset($n) ? $n : 18,
+                'pageSize' => isset($n) ? $n : 20,
             ]
         ]);
     }
