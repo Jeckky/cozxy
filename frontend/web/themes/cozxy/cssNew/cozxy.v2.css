@@ -465,13 +465,13 @@
 
 .clearance .percen-discount {
     position: relative;
-    font-size: 10px;
-    top: -22px;
+    font-size: 10px !important;
+    top: -22px !important;
 }
 
 .clearance .discount {
     position: relative;
-    font-size: 30px;
+    font-size: 26px !important;
     font-weight: bold;
-    top: -20px;
+    top: -20px !important;
 }
