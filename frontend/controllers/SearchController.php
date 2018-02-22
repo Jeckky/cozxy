@@ -273,33 +273,153 @@ class SearchController extends MasterController {
         if (isset($brandId) && !empty($brandId)) {
             $brand = \common\models\costfit\Brand::find()->where('brandId=' . $brandId)->one();
             if (isset($brand)) {
-                $brandName = $brand['title'];
+                $title = $brand['title'];
             } else {
-                $brandName = '';
+                $title = '';
             }
         } else {
-            $brandName = '';
+            $title = '';
         }
 
-//        $productCanSell = new ArrayDataProvider(
-//        [
-//            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'sale')
-//            , 'pagination' => ['defaultPageSize' => 12]
-//        ]);
-        $brandPrice = DisplaySearch::findAllBrandPrice($brandId);
-        $productCanSell = Product::productForSale(null, null, $brandId);
 
-//        $productNotSell = new ArrayDataProvider(
-//        [
-//            'allModels' => DisplaySearch::productSearchBrand($brandId, '', FALSE, 'notsale')
-//            , 'pagination' => ['defaultPageSize' => 12]
-//        ]);
+        //echo 'categoryId :' . $categoryId;
 
-        $productNotSell = Product::productForNotSale(null, null, $brandId);
+        $serverName = $_SERVER['SERVER_NAME'];
 
-        $promotions = Product::productPromotion(12, '', $brandId);
+        $ConfigpParameter = $this->ConfigpParameter('searching');
+        $statusStockData = $ConfigpParameter['statusStockData'];
 
-        return $this->render('brand', compact('promotions', 'productCanSell', 'brandName', 'productNotSell', 'brandId', 'brandPrice'));
+        $Eparameter = array(
+            'search' => $ConfigpParameter['search'],
+            'status' => $ConfigpParameter['status'],
+            'brandId' => $brandId,
+            'categoryId' => $ConfigpParameter['categoryId'],
+            'mins' => $ConfigpParameter['mins'],
+            'maxs' => $ConfigpParameter['maxs'],
+            'size' => 12,
+            'pages' => $ConfigpParameter['pages'],
+            'has_supplier' => 'true',
+            'serverName' => $serverName
+        );
+        $EparameterNotSale = array(
+            'search' => $ConfigpParameter['search'],
+            'status' => $ConfigpParameter['status'],
+            'brandId' => $brandId,
+            'categoryId' => $ConfigpParameter['categoryId'],
+            'mins' => $ConfigpParameter['mins'],
+            'maxs' => $ConfigpParameter['maxs'],
+            'size' => 12,
+            'pages' => $ConfigpParameter['pages'],
+            'has_supplier' => 'false',
+            'serverName' => $serverName
+        );
+        /*
+         * สินค้ามีใน Stock
+         */
+        /* 1. ส่ง data ไป get ข้อมูลของ apiโคเชน */
+        $searchElastic = \common\helpers\ApiElasticSearch::searchProduct($Eparameter);
+        //echo 'perPage : ' . $perPage;
+        $dataProvider = new ArrayDataProvider([
+            //'key' => 'productid',
+            'allModels' => $searchElastic['data'],
+            /* 'sort' => [
+              'attributes' => ['total', 'took', 'size', 'page', 'data'],
+              ], */
+            'pagination' => [
+                'pageSize' => $searchElastic['size'],
+            ],
+        ]);
+        /* end 1 */
+        /*
+         * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
+         */
+        foreach ($dataProvider->allModels as $key => $value) {
+            $productid[] = $value['productId'];
+            $brandid[] = $value['brandId'];
+            //$productid['brandid'] = $value['brandid'];
+        }
+        if (isset($productid) && count($productid) > 0) {
+            $productid = $productid;
+        } else {
+            $productid = NULL;
+        }
+        if (isset($brandid)) {
+            $brandid = $brandid;
+        } else {
+            $brandid = NULL;
+        }
+
+        $catPrice = DisplaySearch::findAllPriceSearch($ConfigpParameter['search'], $productid);
+        /* end 2 */
+        /*
+         * สินค้าไม่มีใน Stock
+         */
+        $searchElasticNotSalse = \common\helpers\ApiElasticSearch::searchProduct($EparameterNotSale);
+        $dataProviderNotSalse = new ArrayDataProvider([
+            //'key' => 'productid',
+            'allModels' => $searchElasticNotSalse['data'],
+            /* 'sort' => [
+              'attributes' => ['total', 'took', 'size', 'page', 'data'],
+              ], */
+            'pagination' => [
+                'pageSize' => $searchElasticNotSalse['size'],
+            ],
+        ]);
+        /* end 1 */
+        /*
+         * 2. เอา productid ไปหา MIN(pps.price) as minPrice , MAX(pps.price) as maxPrice เพราะโคเชนส่งมาครั้งละ 10 row
+         */
+        //$productid[] = '';
+        foreach ($dataProviderNotSalse->allModels as $key => $value) {
+            $productidSup[] = $value['productId'];
+            $brandidSup[] = $value['brandId'];
+            //$productid['brandid'] = $value['brandid'];
+        }
+        if (isset($productidSup) && count($productidSup) > 0) {
+            $productidSup = $productid;
+        } else {
+            $productidSup = NULL;
+        }
+        if (isset($brandidSup)) {
+            $brandidSup = $brandid;
+        } else {
+            $brandidSup = NULL;
+        }
+        /*
+         * สินค้าที่มีใน Stock
+         * 3.หา paginate
+         */
+        //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
+        $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
+        /* 3.หา paginate */
+        $perPage = round($searchElastic['total'] / 12, 0, PHP_ROUND_HALF_UP);
+        $item_per_page = 12; //$searchElastic['size'];
+        $current_page = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records = $searchElastic['total'];
+        $total_pages = $perPage;
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
+        /*
+         * สินค้าที่ไม่มีใน Stock
+         * 3.หา paginate
+         */
+        $perPageNoStock = round($searchElasticNotSalse['total'] / 12, 0, PHP_ROUND_HALF_UP);
+        $item_per_page_no_stock = 12; //$searchElastic['size'];
+        $current_page_no_stock = isset($ConfigpParameter['pages']) ? $ConfigpParameter['pages'] : 1;
+        $total_records_no_stock = $searchElasticNotSalse['total'];
+        $total_pages_no_stock = $perPageNoStock;
+        //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
+
+        if (isset($ConfigpParameter['pages'])) {
+            return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+        } else {
+            if (isset($_GET['type'])) {
+                return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
+            } else {
+                return $this->render('@app/views/elastic/index_search_json', compact('title', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'searchElastic', 'dataProvider', 'productFilterBrand', 'catPrice', 'perPage'));
+            }
+        }
     }
 
     public function actionFilterPrice() {
