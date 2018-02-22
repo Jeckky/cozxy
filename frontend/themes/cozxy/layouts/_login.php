@@ -55,7 +55,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                 case 'facebook':
                                     //$class = 'primary';
                                     $class = 'facebook';
-                                    $text = '<p>F</p>';
+                                    $text = '<i class="fa fa-facebook"></i>';
                                     break;
                                 case 'twitter':
                                     $class = 'info';
@@ -63,7 +63,7 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                                 case 'google':
                                     //$class = 'danger';
                                     $class = 'google';
-                                    $text = '<span>G +</span>';
+                                    $text = '<i class="fa fa-google-plus"></i>';
                                     break;
                                 case 'live':
                                     $class = 'warning';
@@ -71,8 +71,11 @@ $this->title = 'LOGIN/REGISTER: cozxy.com - Buy what fuels your passion';
                             }
 
                             //echo $authAuthChoice->clientLink($client, 'Login with ' . ucfirst($client->getName()), ['class' => 'btn btn-' . $class . ' btn-block'])
-                            echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' circle circle-' . $class . ' btn-block '])
+                            //echo $authAuthChoice->clientLink($client, ucfirst($text), ['class' => 'btn btn-' . $class . ' circle circle-' . $class . ' btn-block '])
+                            echo $authAuthChoice->clientLink($client, '' . ucfirst($text), ['class' => 'btn btn-' . $class . ' btn-circle'])
                             ?>
+
+
                         <?php endforeach; ?>
                         <?php
                         yii\authclient\widgets\AuthChoice::end();

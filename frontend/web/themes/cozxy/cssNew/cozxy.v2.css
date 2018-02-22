@@ -504,3 +504,11 @@
     display: inline; clear: both;
 }
 
+.btn-circle {
+    width: 60px;
+    height: 60px;
+    line-height: 60px; /* adjust line height to align vertically*/
+    padding:0;
+    border-radius: 50%;
+    font-size:24px;
+}
