@@ -70,12 +70,10 @@ $numRow = count($numRow) / 4;
                                             //print_r($items->attributes);
                                             //foreach ($items->attributes as $key => $list) {
                                             //echo $items->attributes['brandId'];
-                                            //print_r($items->attributes['title']);
-                                            $title = $items->attributes['title'];
-                                            $brandId = $items->attributes['brandId'];
+                                            print_r($items->attribute);
                                             ?>
                                             <p>
-                                                <a href="<?php echo Yii::$app->homeUrl . 'search/brand/' . common\models\ModelMaster::encodeParams(['brandId' => $brandId]); ?>"><?= $title; ?></a>
+                                                <a href="<?php echo Yii::$app->homeUrl . 'search/brand/' . common\models\ModelMaster::encodeParams(['brandId' => $items->attributes['brandId']]); ?>">xx<?//= $list; ?></a>
                                             </p>
                                             <?php
                                             //}

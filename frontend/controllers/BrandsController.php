@@ -26,7 +26,7 @@ class BrandsController extends MasterController {
         //echo count($alphabet / 4);
 
         foreach ($alphabet as $value) {
-            $testBrands[$value] = \common\models\costfit\Brand::find()->select('title')->where('title like "' . $value . '%"')->all();
+            $testBrands[$value] = \common\models\costfit\Brand::find()->select('brandId,title')->where('title like "' . $value . '%"')->all();
         }
 
         return $this->render('index', compact('brand', 'alphabet', 'testBrands', 'numRow'));
