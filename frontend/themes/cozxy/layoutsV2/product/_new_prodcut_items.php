@@ -24,11 +24,11 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
 if ($index == 0) {
     $active = 'active';
 } else {
-    $active = '';
+    $active = 'clearfix d-none d-md-block';
 }
 ?>
-<div class="item <?= $active ?>">
-    <div class="col-md-2 col-sm-4 col-xs-4 box-product-items">
+<div class="item" data-id="<?= $model->productId ?>">
+    <div class="col-md-2 col-sm-4 col-xs-4 box-product-items item-<?= $model->productId ?>">
         <div class="box-product">
             <div class="product-box">
                 <?php if ($DiscountProduct != 'Lessthan10') { ?>
@@ -65,8 +65,12 @@ if ($index == 0) {
                     </div>
                 <?php } ?>
                 <div class="product-img text-center">
+                    <?php
+                    //$images = common\models\costfit\ProductImage::find()->where('productId=' . $model->product->productId)->one();
+                    ?>
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
                         <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
+                        <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?//= $images['imageThumbnail1']  ?>">-->
                     </a>
                     <?php
                     if ($UserAgent != 'mobile') {

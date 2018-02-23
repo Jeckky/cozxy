@@ -72,7 +72,7 @@ class SearchController extends MasterController {
 
 
         $serverName = $_SERVER['SERVER_NAME'];
-
+        $categorySearchId = isset($categorySearchId) ? $categorySearchId : $ConfigpParameter['categoryId'];
         $ConfigpParameter = $this->ConfigpParameter('searching');
         $statusStockData = $ConfigpParameter['statusStockData'];
 
@@ -80,7 +80,7 @@ class SearchController extends MasterController {
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
             'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => isset($categorySearchId) ? $categorySearchId : $ConfigpParameter['categoryId'],
+            'categoryId' => $categorySearchId,
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
@@ -92,7 +92,7 @@ class SearchController extends MasterController {
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
             'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => isset($categorySearchId) ? $categorySearchId : $ConfigpParameter['categoryId'],
+            'categoryId' => $categorySearchId,
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
@@ -177,6 +177,8 @@ class SearchController extends MasterController {
          * สินค้าที่มีใน Stock
          * 3.หา paginate
          */
+
+        //echo $ConfigpParameter['brandId'];
         //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
         /* 3.หา paginate */
@@ -186,7 +188,7 @@ class SearchController extends MasterController {
         $total_records = $searchElastic['total'];
         $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $categorySearchId, 'stock');
         /*
          * สินค้าที่ไม่มีใน Stock
          * 3.หา paginate
@@ -197,7 +199,7 @@ class SearchController extends MasterController {
         $total_records_no_stock = $searchElasticNotSalse['total'];
         $total_pages_no_stock = $perPageNoStock;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
+        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $categorySearchId, 'nostock');
 
         if (isset($ConfigpParameter['pages'])) {
             return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
@@ -319,10 +321,12 @@ class SearchController extends MasterController {
         $ConfigpParameter = $this->ConfigpParameter('searching');
         $statusStockData = $ConfigpParameter['statusStockData'];
 
+        $EbrandId = isset($brandId) ? $brandId : $ConfigpParameter['brandId'];
+
         $Eparameter = array(
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
-            'brandId' => $brandId,
+            'brandId' => $EbrandId,
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
@@ -334,7 +338,7 @@ class SearchController extends MasterController {
         $EparameterNotSale = array(
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
-            'brandId' => $brandId,
+            'brandId' => $EbrandId,
             'categoryId' => $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
@@ -428,7 +432,7 @@ class SearchController extends MasterController {
         $total_records = $searchElastic['total'];
         $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $EbrandId, $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
         /*
          * สินค้าที่ไม่มีใน Stock
          * 3.หา paginate
@@ -439,7 +443,7 @@ class SearchController extends MasterController {
         $total_records_no_stock = $searchElasticNotSalse['total'];
         $total_pages_no_stock = $perPageNoStock;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
+        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $EbrandId, $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
 
         if (isset($ConfigpParameter['pages'])) {
             return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
@@ -843,6 +847,7 @@ class SearchController extends MasterController {
          * สินค้าที่มีใน Stock
          * 3.หา paginate
          */
+        $EbrandId = $ConfigpParameter['brandId'];
         //$productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrand($ConfigpParameter['categoryId'])]);
         $productFilterBrand = new ArrayDataProvider(['allModels' => \frontend\models\DisplayMyBrand::MyFilterBrandNew($brandid)]);
         /* 3.หา paginate */
@@ -852,7 +857,7 @@ class SearchController extends MasterController {
         $total_records = $searchElastic['total'];
         $total_pages = $perPage;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
+        $paginate = \common\helpers\ApiElasticSearch::paginate($item_per_page, $current_page, $total_records, $total_pages, $ConfigpParameter['search'], $EbrandId, $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'stock');
         /*
          * สินค้าที่ไม่มีใน Stock
          * 3.หา paginate
@@ -863,7 +868,7 @@ class SearchController extends MasterController {
         $total_records_no_stock = $searchElasticNotSalse['total'];
         $total_pages_no_stock = $perPageNoStock;
         //search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
-        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $ConfigpParameter['brandId'], $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
+        $paginateNoStock = \common\helpers\ApiElasticSearch::paginate($item_per_page_no_stock, $current_page_no_stock, $total_records_no_stock, $total_pages_no_stock, $ConfigpParameter['search'], $EbrandId, $ConfigpParameter['mins'], $ConfigpParameter['maxs'], $ConfigpParameter['categoryId'], 'nostock');
 
         if (isset($ConfigpParameter['pages'])) {
             return $this->renderAjax('@app/themes/cozxy/layouts/elastic/_product_item_rev1_json_render', compact('statusStockData', 'dataProviderNotSalse', 'paginate', 'paginateNoStock', 'ConfigpParameter', 'dataProvider', 'searchElastic', 'productFilterBrand', 'catPrice', 'perPage'));
@@ -891,7 +896,8 @@ class SearchController extends MasterController {
         $pages = Yii::$app->request->get('page');
         $status = 1;
         //print_r($brand);
-        $categoryId = Yii::$app->request->get('categoryId');
+        //$categoryId = Yii::$app->request->get('categoryId');
+        $categoryId = Yii::$app->request->get('category');
         //$search = Yii::$app->request->get('search');
         $search = Yii::$app->request->get('search');
         if (isset($search)) {
@@ -912,12 +918,14 @@ class SearchController extends MasterController {
         }
 
         if ($categoryId != 'undefined') {
-            $categoryId = Yii::$app->request->get('categoryId');
+            $categoryId = Yii::$app->request->get('category');
             $site = 'category';
         } else {
             $categoryId = NULL;
             $site = 'brand';
         }
+
+        //echo 'xx :' . $brandId;
 
         $Eparameter = array(
             'search' => $search,

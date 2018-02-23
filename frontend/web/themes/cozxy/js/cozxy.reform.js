@@ -502,10 +502,10 @@ function addItemToCartUnitys(productSuppId, quantity, maxQnty, fastId, productId
     var str = window.location.pathname;
     var res = str.split("/");
     if (res[1] != 'search') {
-        $this.button('loading');
-        setTimeout(function () {
-            $this.button('reset');
-        }, 8000);
+        /* $this.button('loading');
+         setTimeout(function () {
+         $this.button('reset');
+         }, 8000);*/
     } else {
 
         $('.shopping-' + productSuppId + ' i').removeClass('fa fa-shopping-bag');
@@ -1968,6 +1968,9 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
     }
     $min = $('input:hidden:eq(0)', '#amount-min').val();
     $max = $('input:hidden:eq(1)', '#amount-min').val();
+
+    //alert($('.results').attr("data-category"));
+
     $('.filter-e-search-cozxy').html("<div class='text-center' style='zoom: 5;'><br><i class='fa fa-spinner fa-spin' aria-hidden='true'></i></div>");
     //var path = $baseUrl + "search/filter-e-search?categoryId=" + $categoryId + '&brandName=' + brandName + '';
     var path = $baseUrl + "search/elastic-search?categoryId=" + $categoryId + '&brandName=' + brandName + '&mins=' + $min + '&maxs=' + $max + '&search=' + search + '&type=filter' + '&status=stock';
@@ -1978,6 +1981,7 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         success: function (data, status) {
             //console.log(data);
             $('.filter-e-search-cozxy').html(data);
+            $("#results .pagination li a").attr("data-brandName", brandName);
         }
     });
 
@@ -1989,8 +1993,11 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         success: function (data, status) {
             //console.log(data);
             $('.filter-e-search-cozxy-no-stock').html(data);
+            //$("#results").html('');
+            $("#resultsNoStock .pagination li a").attr("data-brandName", brandName);
         }
     });
+
 
 
     /*var settings = {

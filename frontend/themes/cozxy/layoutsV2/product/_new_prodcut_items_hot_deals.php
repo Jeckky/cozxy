@@ -27,15 +27,17 @@ if ($index == 0) {
 } else {
     $active = '';
 }
+$num = $index++;
 //echo 'index:' . $index % 4
+//echo count($model);
 ?>
-<div class="item <?= $active ?> productId-<?= $model->productId ?>">
-    <div class="col-md-2 col-sm-4 col-xs-4" style="padding: 5px;">
+<div class="item" data-id="<?= $num ?>">
+    <div class="col-md-2 col-sm-4 col-xs-4 item-<?= $num ?>" style="padding: 5px;">
         <div class="product-box">
             <?php if ($DiscountProduct != 'Lessthan10') { ?>
                 <div class="product-sticker" style="right: 7%;">
                     <div class="rcorners4">
-                        <p> 
+                        <p>
                             <?php
                             //echo Yii::$app->controller->id;
                             if (Yii::$app->controller->id == 'search') {
@@ -66,9 +68,12 @@ if ($index == 0) {
                 </div>
             <?php } ?>
             <div class="product-img text-center">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black">
+                <?php
+                //$images = common\models\costfit\ProductImage::find()->where('productId=' . $model->product->productId)->one();
+                ?>
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
                     <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
-                    <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/images/ProductImageSuppliers/thumbnail1/zqQkrvAcdFGAcyoiTRDrU-6KytJ8THLF.jpg">-->
+                    <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?//= $images['imageThumbnail1'] ?>">-->
                 </a>
                 <?php
                 if ($UserAgent != 'mobile') {

@@ -81,6 +81,7 @@ class ApiElasticSearch {
 
     public static function paginate($item_per_page, $current_page, $total_records, $total_pages, $search, $brandName, $mins, $maxs, $category, $status) {
         //?search=&brandName=3,51,42&mins=100&maxs=100&categoryId=&pages=18
+        //echo $brandName;
         $pagination = '';
         if ($total_pages > 0 && $total_pages != 1 && $current_page <= $total_pages) { //verify total pages and current page number
             $pagination .= '<ul class="pagination">';
@@ -92,7 +93,7 @@ class ApiElasticSearch {
             if ($current_page > 1) {
                 $previous_link = ($previous == 0) ? 1 : $previous;
                 $pagination .= '<li class="first"><a href="#" data-page="1" title="First">&laquo;</a></li>'; //first link
-                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $previous_link . '" data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '" data-status="' . $status . '"  title="Previous" >&lt;</a></li>'; //previous link
+                $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $previous_link . '" data-search="' . $search . '"  data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '" data-status="' . $status . '"  title="Previous" >&lt;</a></li>'; //previous link
                 for ($i = ($current_page - 2); $i < $current_page; $i++) { //Create left-hand side links
                     if ($i > 0) {
                         $pagination .= '<li><a href="#" data-records="' . $total_records . '"  data-pages="' . $total_pages . '"  data-page="' . $i . '"  data-search="' . $search . '" data-brandName="' . $brandName . '" data-mins="' . $mins . '" data-maxs="' . $maxs . '" data-category="' . $category . '"  title="Page' . $i . '" data-status="' . $status . '">' . $i . '</a></li>';

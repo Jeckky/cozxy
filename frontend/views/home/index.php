@@ -51,9 +51,8 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         <div class="row">
             <h2>HOT DEALS 30% - 70%</h2>
             <div class="col-xs-12 col-md-12">
-
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="fruitscarousel">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner ">
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $sectionItem,
@@ -133,7 +132,8 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             <div class="col-xs-12 col-md-12">
 
                 <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxycarousel1">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner ">
+
                         <?php
                         echo \yii\widgets\ListView::widget([
                             'dataProvider' => $productCanSellBySunglasses,

@@ -232,7 +232,8 @@
 .multi-item-carousel{
     .carousel-inner{
         >  .item{
-            transition: 500ms ease-in-out left;
+            /*transition: 500ms ease-in-out left;*/
+            transition: 500ms ease-in-out all;
             display: inline;
         }
         .active{

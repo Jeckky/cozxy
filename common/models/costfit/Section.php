@@ -60,7 +60,7 @@ class Section extends \common\models\costfit\master\SectionMaster {
                 ->all();
         if (isset($sectionItems) && count($sectionItems) > 0) {
             foreach ($sectionItems as $item):
-                $productSectionItems.= $item->productSuppId . ",";
+                $productSectionItems .= $item->productSuppId . ",";
                 // $productSectionItem.= $item->productId . ",";
             endforeach;
             $productSectionItems = substr($productSectionItems, 0, -1);
@@ -116,7 +116,7 @@ class Section extends \common\models\costfit\master\SectionMaster {
                 ->all();
         if (isset($sectionItems) && count($sectionItems) > 0) {
             foreach ($sectionItems as $item):
-                $productSectionItems.= $item->productSuppId . ",";
+                $productSectionItems .= $item->productSuppId . ",";
                 // $productSectionItem.= $item->productId . ",";
             endforeach;
             $productSectionItems = substr($productSectionItems, 0, -1);

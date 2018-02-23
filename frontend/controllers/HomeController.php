@@ -25,6 +25,7 @@ use common\helpers\Email;
 use common\helpers\CozxyUnity;
 use common\models\costfit\Section;
 use common\models\costfit\User;
+use yii\db\Expression;
 
 /**
  * SiteDemo controller
@@ -110,17 +111,16 @@ class HomeController extends MasterController {
         //return $this->render('index');
 
         /* New Home Query */
-        $sectionItem = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 1);
+        $sectionItem = Section::productSection(18, $cat = FALSE, $brandId = false, 1);
         $productCanSellBySunglasses = Product::productForSale(18, 4);
         $productCanSellByCosmetics = Product::productForSale(18, 14);
         $productCanSellByBags = Product::productForNotSale(18, 65);
         $BannerPromotes1 = \common\models\costfit\ContentGroup::BannerPromotesHome('BannerPromotes1');
         $BannerPromotes2 = \common\models\costfit\ContentGroup::BannerPromotesHome('BannerPromotes2');
         $BannerPromotes3 = \common\models\costfit\ContentGroup::BannerPromotesHome('BannerPromotes3');
-        $productCanSellByYouMayLike = Section::productSection($n = FALSE, $cat = FALSE, $brandId = false, 10);
+        $productCanSellByYouMayLike = Section::productSection(18, $cat = FALSE, $brandId = false, 10);
 
-        //echo '<pre>';BAGS
-        //print_r($sectionItem);
+
         return $this->render('index', compact('productCanSellByYouMayLike', 'BannerPromotes1', 'BannerPromotes2', 'BannerPromotes3', 'productCanSellByBags', 'productCanSellByCosmetics', 'productCanSellBySunglasses', 'sectionItem', 'productNewCanSell', 'category', 'sections', 'productCanSell', 'productNotSell', 'productStory', 'slideGroup', 'productBrand', 'otherProducts', 'promotions'));
     }
 
