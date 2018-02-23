@@ -35,6 +35,7 @@ if (isset($model['suppliers']) && !empty($model['suppliers'])) {
 $marketPrice = isset($marketPriceMaster) ? $marketPriceMaster : 0;
 $supplierPrice = isset($cozxySellingsPrice) ? $cozxySellingsPrice : 0;
 $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierPrice);
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 ?>
 <?php $col = isset($colSize) ? $colSize : '4'; ?>
 <div class="col-md-3 col-sm-3 col-xs-6 box-product cozxy-items-<?= $model['productId'] . '-' . $model['brandId'] ?>">
@@ -79,7 +80,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                    ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                       ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -125,21 +126,23 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
         </div>
         <div class="product-txt">
             <?php
-            if (isset($productBrand)) {
-                ?>
-                <p class="brand">
-                    <span class="size14"><?= strtoupper($productBrand['title']) ?></span>
-                </p>
-            <?php } else {
-                ?>
-                <p class="brand">
-                    <span class="size16">NO BRAND</span>
-                </p>
-                <?php
+            if ($UserAgent != 'mobile') {
+                if (isset($productBrand)) {
+                    ?>
+                    <p class="brand">
+                        <span class="size14"><?= strtoupper($productBrand['title']) ?></span>
+                    </p>
+                <?php } else {
+                    ?>
+                    <p class="brand">
+                        <span class="size16">NO BRAND</span>
+                    </p>
+                    <?php
+                }
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="size18 b" title="<?= $model['productId'] ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
                     <?= strtoupper($model['title']) ?>
                 </a>
             </p>
@@ -148,13 +151,13 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price">
-                        <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span><br>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span><br>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="size18 fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span><br>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span><br>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                     <?php

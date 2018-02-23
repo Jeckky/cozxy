@@ -127,13 +127,13 @@ if ($index == 0) {
                             <p class="brand">
                                 <span class="size16">NO BRAND</span>
                             </p>
-                        <?php
+                            <?php
                         }
                     }
                     ?>
                     <p class="name">
                         <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>">
-<?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
+                            <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
                         </a>
                     </p>
                     <?php
@@ -141,13 +141,13 @@ if ($index == 0) {
                         if (isset($hotDeal)) {
                             ?>
                             <p class="price" >
-                                <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                                <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
                                 <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                             </p>
                         <?php } else {
                             ?>
                             <p class="price" >
-                                <span class="size18 fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
+                                <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
                                 <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                             </p>
                             <?php
