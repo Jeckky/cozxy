@@ -116,20 +116,24 @@ if ($index == 0) {
                 </div>
                 <div class="product-txt">
                     <?php
-                    if (isset($model->product->brand->title)) {
-                        ?>
-                        <p class="brand">
-                            <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
-                        </p>
-                    <?php } else {
-                        ?>
-                        <p class="brand">
-                            <span class="size16">NO BRAND</span>
-                        </p>
-                    <?php } ?>
+                    if ($UserAgent != 'mobile') {
+                        if (isset($model->product->brand->title)) {
+                            ?>
+                            <p class="brand">
+                                <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
+                            </p>
+                        <?php } else {
+                            ?>
+                            <p class="brand">
+                                <span class="size16">NO BRAND</span>
+                            </p>
+                        <?php
+                        }
+                    }
+                    ?>
                     <p class="name">
-                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
-                            <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
+                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>">
+<?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
                         </a>
                     </p>
                     <?php

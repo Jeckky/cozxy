@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
+$UserAgent = common\helpers\GetBrowser::UserAgent();
+
 if (Yii::$app->controller->id == 'product') {
     $width = "width: 195px";
     $height = "height: 195px";
@@ -64,11 +66,15 @@ if ($index == 0) {
                     </div>
                 </div>
                 <div class="product-txt">
-                    <p class="brand" >
-                        <span class="size14"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
-                    </p>
+                    <?php
+                    if ($UserAgent != 'mobile') {
+                        ?>
+                        <p class="brand" >
+                            <span class="size14"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
+                        </p>
+                    <?php } ?>
                     <p class="name">
-                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="size18 b"><?= strtoupper($model['title']) ?></a>
+                        <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>"><?= strtoupper($model['title']) ?></a>
                     </p>
                 </div>
             </div>
