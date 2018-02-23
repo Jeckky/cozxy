@@ -62,7 +62,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                             <?php } ?>
                             <div class="col-md-6">
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900;">&nbsp;</div>
-                                <div class="sub-cate col-md-12" style="color:#FF9AD9;font-weight: 900; padding: 5px;">
+                                <div class="sub-cate col-md-12" style="color:#000;font-weight: 900; padding: 5px;">
                                     <span style="margin-left: 20px;">PROMOTION</span>
                                 </div>
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900; padding: 5px;">
