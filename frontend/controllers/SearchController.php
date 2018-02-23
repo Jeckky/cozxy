@@ -32,15 +32,44 @@ class SearchController extends MasterController {
 
         if (isset($_GET['c']) && !empty($_GET['c'])) {
             $category = $_GET['c'];
+            $categorySearchId = '';
         } else {
             $k = base64_decode(base64_decode($hash));
             $params = \common\models\ModelMaster::decodeParams($hash);
             $categoryId = $params['categoryId'];
+            /* หา Categories Parent Children */
+            $test2 = \frontend\controllers\CategoriesController::actionTreeSubToApiElastic($categoryId);
+
+            foreach ($test2 as $key => $value) {
+                $categoryArray[$key][] = $value['categoryId'];
+                if (isset($value['Children'])) {
+                    foreach ($value['Children'] as $key => $items) {
+                        $categoryArray[$key][] = $items['categoryId'];
+                        if (isset($items['Children'])) {
+                            foreach ($items['Children'] as $key => $sub) {
+                                $categoryArray[$key] = $sub['categoryId'];
+                            }
+                        }
+                    }
+                }
+            }
+            $cateToElasticx = '';
+            if (isset($categoryArray)) {
+                foreach ($categoryArray as $key => $value) {
+                    $cateToElastic = '';
+                    foreach ($value as $key => $item) {
+                        $cateToElastic .= $item . ',';
+                    }
+                    $cateToElasticx .= $cateToElastic;
+                }
+                $categorySearchId = $cateToElasticx . $categoryId;
+            } else {
+                $categorySearchId = $categoryId;
+            }
 
             $productStory = new ArrayDataProvider(['allModels' => \frontend\models\FakeFactory::productStoryViewsMore(99, $categoryId), 'pagination' => ['defaultPageSize' => 16]]);
         }
 
-        //echo 'categoryId :' . $categoryId;
 
         $serverName = $_SERVER['SERVER_NAME'];
 
@@ -51,7 +80,7 @@ class SearchController extends MasterController {
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
             'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $categoryId, //$ConfigpParameter['categoryId'],
+            'categoryId' => isset($categorySearchId) ? $categorySearchId : $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
@@ -63,7 +92,7 @@ class SearchController extends MasterController {
             'search' => $ConfigpParameter['search'],
             'status' => $ConfigpParameter['status'],
             'brandId' => $ConfigpParameter['brandId'],
-            'categoryId' => $categoryId, //$ConfigpParameter['categoryId'],
+            'categoryId' => isset($categorySearchId) ? $categorySearchId : $ConfigpParameter['categoryId'],
             'mins' => $ConfigpParameter['mins'],
             'maxs' => $ConfigpParameter['maxs'],
             'size' => 12,
@@ -71,6 +100,7 @@ class SearchController extends MasterController {
             'has_supplier' => 'false',
             'serverName' => $serverName
         );
+
         /*
          * สินค้ามีใน Stock
          */

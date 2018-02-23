@@ -7,8 +7,11 @@ use yii\helpers\Url;
 use common\helpers\Base64Decode;
 use common\helpers\CozxyCalculatesCart;
 
-$productBrand = common\models\costfit\Product::productBrand($model['brandId']);
-
+if (isset($model['brandId'])) {
+    $productBrand = common\models\costfit\Product::productBrand($model['brandId']);
+} else {
+    $productBrand = null;
+}
 
 $cozxyIsInWishlist = new common\models\costfit\Product();
 $cozxyIsInWishlist = $cozxyIsInWishlist->isInWishlist($model['productId']);
@@ -80,7 +83,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                        ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                           ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -157,7 +160,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span> 
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                     <?php

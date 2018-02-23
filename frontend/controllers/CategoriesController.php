@@ -34,8 +34,8 @@ class CategoriesController extends MasterController {
         $message = '';
         $data = (object) [];
         $model = \common\models\costfit\Category::find()->where('parentId IS  NULL')->asArray()->orderBy([
-            'parentId' => SORT_ASC //Need this line to be fixed
-        ])->all();
+                    'parentId' => SORT_ASC //Need this line to be fixed
+                ])->all();
         $cattree = self::CreateTree($model);
 // echo '<pre>';
 //print_r($cattree);
@@ -55,8 +55,8 @@ class CategoriesController extends MasterController {
         $message = '';
         $data = (object) [];
         $model = \common\models\costfit\Category::find()->where('status = 1')->asArray()->orderBy([
-            'parentId' => SORT_ASC //Need this line to be fixed
-        ])->all();
+                    'parentId' => SORT_ASC //Need this line to be fixed
+                ])->all();
         /* $model = \common\models\costfit\ProductSuppliers::find()
           ->select('`product_suppliers`.categoryId , `category`.`parentId`, `category`.title ,product_suppliers.productSuppId,product_suppliers.productId')
           ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
@@ -82,6 +82,7 @@ class CategoriesController extends MasterController {
     public static function CreateTree($tree, $parentId = 0) {
         $branch = [];
         foreach ($tree as $element) {
+            //echo $parentId;
             if ($element['parentId'] == $parentId) {
                 $children = self::CreateTree($tree, $element['categoryId']);
                 if ($children) {
@@ -97,12 +98,12 @@ class CategoriesController extends MasterController {
 
     public static function actionSearchForCategoriesWithProducts() {
         $cate = \common\models\costfit\ProductSuppliers::find()
-        ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
-        ->join("LEFT JOIN", "category", "category.categoryId = product_suppliers.categoryId")
-        ->where("approve = 'approve' and parentId IS NULL")
-        ->groupBy('`product_suppliers`.categoryId')
-        ->orderBy('count(`product_suppliers`.`categoryId`) ASC')
-        ->all();
+                ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+                ->join("LEFT JOIN", "category", "category.categoryId = product_suppliers.categoryId")
+                ->where("approve = 'approve' and parentId IS NULL")
+                ->groupBy('`product_suppliers`.categoryId')
+                ->orderBy('count(`product_suppliers`.`categoryId`) ASC')
+                ->all();
 
         echo count($cate);
     }
@@ -112,6 +113,29 @@ class CategoriesController extends MasterController {
         echo '<pre>';
         print_r($tree);
         //return json_encode($tree);
+    }
+
+    public static function actionTreeSubToApiElastic($categoryId) {
+        $status = false;
+        $message = '';
+        $data = (object) [];
+        $model = \common\models\costfit\Category::find()
+                        ->select('parentId,categoryId')
+                        ->where('status = 1')->asArray()
+                        ->orderBy([
+                            'parentId' => SORT_ASC //Need this line to be fixed
+                        ])->all();
+        $cattree = self::CreateTree($model, $categoryId);
+
+        return $cattree;
+        die;
+        if ($model) {
+            return ['status' => true, 'message' => 'All Child Categories Listing',
+                'data' => $model];
+        } else {
+            return ['status' => false, 'message' => 'Child Categories not found',
+                'data' => $data];
+        }
     }
 
 }
