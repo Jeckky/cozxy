@@ -334,10 +334,16 @@ class ProductController extends ProductManagerMasterController {
 
                 $productModels = Product::find()->where(['parentId'=>$model->productId, 'status'=>1])->all();
                 foreach($productModels as $productModel) {
-                    Elastic::updateProductSupplier($productModel);
+                    $data = Elastic::prepareProductData($productModel);
+                    $productId = $productModel->productId;
+                    settype($productId, 'int');
+                    Elastic::updateProduct($productId, $data);
                 }
             } else {
-                Elastic::updateProduct($model->productId, $model->attributes);
+                $data = Elastic::prepareProductData($model);
+                $productId = $model->productId;
+                settype($productId, 'int');
+                Elastic::updateProduct($productId, $data);
             }
 
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);

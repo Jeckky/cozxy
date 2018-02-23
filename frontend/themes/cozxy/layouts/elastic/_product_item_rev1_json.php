@@ -121,7 +121,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         $receiveType = 1;
                     }
                     ?>
-                    <a href="javascript:addItemToCartUnitys('<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productId'] ?>','<?= $model['userId'] ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= $model['productSuppId'] ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
+                    <a href="javascript:addItemToCartUnitys('<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>',1,'<?= $cozxyResult ?>','FALSE','<?= $model['productId'] ?>','<?= isset($model['userId']) ? $model['userId'] : 0 ?>','<?= $receiveType ?>')" id="addItemsToCartMulti-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>" data-loading-text="<div class='col-xs-4 shopping-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>'><i class='fa fa-cart-plus fa-spin' aria-hidden='true'></i></div>">
                         <div class="col-xs-4 shopping-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>"><i id="cart-plus-<?= isset($model['productSuppId']) ? $model['productSuppId'] : $cozxyproductSuppId ?>" class="fa fa-cart-plus" aria-hidden="true"></i></div>
                     </a>
                 <?php } ?>
