@@ -99,7 +99,7 @@ class AuthController extends AuthMasterController {
                 $checkType = $login->attributes;
                 //echo $checkType['type'];
                 if ($checkType['type'] == 1) {
-                    return $this->render('index');
+                    return $this->redirect(['/dashboard']);
                 } else {
                     $this->redirect(Yii::$app->getUrlManager()->getBaseUrl() . '/dashboard');
                 }

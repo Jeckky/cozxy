@@ -2,12 +2,12 @@
 
 namespace backend\modules\elasticsearch\controllers;
 
-use yii\web\Controller;
+use backend\controllers\BackendMasterController;
 
 /**
  * Default controller for the `elastic-search` module
  */
-class DefaultController extends Controller
+class DefaultController extends BackendMasterController
 {
     /**
      * Renders the index view for the module
@@ -15,6 +15,5 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-
     }
 }
