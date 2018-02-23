@@ -231,7 +231,8 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide row" id="media1">
                     <div class="carousel-inner">
-                        <img src="<?= isset($BannerPromotes2['image']) ? $BannerPromotes2['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;">
+                        <a href="search/Fragrance/C6PMjTtOULptLuT9kk3xT-5ySf7dy3tp_GcsjXB9_Mk%3D">
+                            <img src="<?= isset($BannerPromotes2['image']) ? $BannerPromotes2['image'] : 'https://scontent.fbkk1-4.fna.fbcdn.net/v/t31.0-8/27913153_165864184196694_233336126967648172_o.jpg?oh=a2902b97e0cb4068c0a8d28ccd01be5d&oe=5B0FEE1B' ?>" alt="Other Product" class="fullwidth  img-responsive" style="width: 100%; height: 20%;"></a>
                     </div>
                 </div>
             </div>
