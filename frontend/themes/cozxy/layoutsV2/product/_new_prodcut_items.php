@@ -50,14 +50,14 @@ if ($index == 0) {
                                 }
                                 ?></p>
                             <p><?php
-                            if (Yii::$app->controller->id == 'search') {
-                                //echo '-' . $DiscountProduct;
-                            } else if (Yii::$app->controller->id == 'site' || Yii::$app->controller->id == 'home') {
-                                //echo '-' . $DiscountProduct;
-                                //echo 'OFF';
-                            } else {
-                                echo $DiscountProduct;
-                            }
+                                if (Yii::$app->controller->id == 'search') {
+                                    //echo '-' . $DiscountProduct;
+                                } else if (Yii::$app->controller->id == 'site' || Yii::$app->controller->id == 'home') {
+                                    //echo '-' . $DiscountProduct;
+                                    //echo 'OFF';
+                                } else {
+                                    echo $DiscountProduct;
+                                }
                                 ?>
                             </p>
                         </div>
@@ -66,11 +66,11 @@ if ($index == 0) {
                 <?php } ?>
                 <div class="product-img text-center">
                     <?php
-                    $images = common\models\costfit\ProductImage::find()->where('productId=' . $model->product->productId)->one();
+                    //$images = common\models\costfit\ProductImage::find()->where('productId=' . $model->product->productId)->one();
                     ?>
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
-                        <!--<img class="media-object fullwidth img-responsive" src="<?isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260')  ?>">-->
-                        <img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?= $images['imageThumbnail1'] ?>">
+                        <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
+                        <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?//= $images['imageThumbnail1'] ?>">-->
                     </a>
                     <?php
                     if ($UserAgent != 'mobile') {
