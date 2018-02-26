@@ -112,7 +112,7 @@
             <div class="meta">
                 <a href="#">cozxy.com</a>
             </div>
-            <div class="card-text" style="min-height: 50px;">
+            <div class="card-text" style="min-height: 100px; max-height: 150px;">
                 <?= $model->description ?>
             </div>
         </div>
