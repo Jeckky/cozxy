@@ -71,7 +71,9 @@ class QuickAddController extends Controller
                 $productPostComparePriceModel->price = $price;
                 $productPostComparePriceModel->createDateTime = $productPostComparePriceModel->updateDateTime = new Expression('NOW()');
                 $productPostComparePriceModel->status = 2;
-                $productPostComparePriceModel->currency = $currencyInfoModel->ccy;
+                $cid = $currencyInfoModel->currencyId;
+                settype($cid, 'string');
+                $productPostComparePriceModel->currency = $cid;
                 $productPostComparePriceModel->country = $country;
 
                 if($productPostComparePriceModel->save()) {

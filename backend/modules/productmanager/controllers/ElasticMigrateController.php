@@ -134,7 +134,8 @@ class ElasticMigrateController extends ProductManagerMasterController
             settype($productModel['result'], 'int');
             settype($productModel['price'], 'float');
 
-//        Elastic::connect($url.'products/' . $productId . '/suppliers/' . $productSuppId, $productModel, Elastic::METHOD_POST);
+            Elastic::connect($url . 'products/' . $productId . '/suppliers/' . $productSuppId, $productModel, Elastic::METHOD_POST);
+            $productModel['url'] = $url . 'products/' . $productId . '/suppliers/' . $productSuppId;
 
             var_dump($productModel);
             $i++;
