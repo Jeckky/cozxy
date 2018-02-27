@@ -65,7 +65,7 @@ if ($index == 0) {
                 <?php } ?>
             </div>
         </div>
-        <div class="product-txt">
+        <div class="product-txt text-left">
             <?php
             if ($UserAgent != 'mobile') {
                 ?>
