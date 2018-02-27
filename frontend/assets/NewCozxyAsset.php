@@ -24,10 +24,14 @@ class NewCozxyAsset extends AssetBundle {
     public $css = [
         'cssNew/cozxy.v2.css',
         'cssNew/cozxy.categories.brands.v2.css',
+        //'swiper/css/swiper.min.css',
+        'swiper/css/swiper.custom.css',
     ];
     public $js = [
         'jsNew/cozxy.v2.js',
-            //'jsNew/cozxy.categories.brands.script.js'
+        //'jsNew/cozxy.categories.brands.script.js',
+        'swiper/js/swiper.min.js',
+        'swiper/js/swiper.custom.js'
     ];
     public $depends = [
         'frontend\assets\AppAsset'

@@ -8,8 +8,8 @@ if ($index == 0) {
     $active = '';
 }
 ?>
-<div class="item <?= $active ?>">
-    <div class="col-md-2 col-sm-4 col-xs-4" style="padding: 5px;">
+<div class="swiper-slide <?= $active ?>">
+    <div class="" style="padding: 5px;">
         <div class="product-box box-product">
             <div class="product-img text-center">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">

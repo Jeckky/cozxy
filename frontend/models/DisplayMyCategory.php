@@ -68,4 +68,21 @@ class DisplayMyCategory extends Model {
         ]);
     }
 
+    public static function ShowCategoryOnline() {
+        $category = \common\models\costfit\ProductSuppliers::find()
+                ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+                ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
+                ->where('`category`.status = 1')
+                ->groupBy('`product_suppliers`.categoryId')
+                //->orderBy(new \yii\db\Expression('rand()'), 'count(`product_suppliers`.`categoryId`) desc')
+                ->orderBy([
+                    'count(`product_suppliers`.`categoryId`) ' => SORT_DESC  //Need this line to be fixed
+                ])
+                ->limit(6);
+        return new ActiveDataProvider([
+            'query' => $category,
+            'pagination' => false,
+        ]);
+    }
+
 }

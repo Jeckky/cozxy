@@ -227,27 +227,20 @@ jQuery(document).ready(function () {
     jQuery('.carousel[data-type="multi"] .item').each(function () {
         var next = jQuery(this).next();
         if (!next.length) {
-            next = jQuery(this).siblings(':first');
+            next = jQuery(this).siblings(':first').addClass('active');
         }
         next.children(':first-child').clone().appendTo(jQuery(this));
-
+        //console.log(next.children(':first-child'));
         for (var i = 0; i < 4; i++) {
+            var itemType = $(this).data('id');
             next = next.next();
             if (!next.length) {
                 next = jQuery(this).siblings(':first').addClass('active');
-                //var itemType = $(this).data('id');
-
-                //console.log(itemType);
-                //alert($(this).attr("data-id"));
-                //$(".box-product-item:first").addClass('active');
-                //$('.item-' + itemType).children(".active");
-                //$(".box-product-items").siblings().addClass('active');
-                //jQuery(this).siblings(':first-child').addClass('active');
-                //$('.box-product-items').addClass("active");
-                //$('.box-product-items').addClass('active');
             }
+            //$('.box-product-items').attr("items-id", itemType);
             next.children(':first-child').clone().appendTo($(this));
         }
     });
 
 });
+
