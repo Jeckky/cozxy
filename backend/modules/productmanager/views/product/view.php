@@ -143,7 +143,7 @@ $productId = $model->productId;
                             [
                                 'attribute' => 'title',
                                 'value' => function ($model) {
-                                    return mb_substr($model->title, 0, 40);
+                                    return $model->title;
                                 },
                             ],
                             'isbn:ntext',
@@ -196,7 +196,7 @@ $productId = $model->productId;
                             [
                                 'attribute' => 'title',
                                 'value' => function ($model) {
-                                    return mb_substr($model->title, 0, 40);
+                                    return $model->title;
                                 },
                             ],
                             'isbn:ntext',
