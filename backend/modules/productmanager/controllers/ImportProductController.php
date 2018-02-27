@@ -56,6 +56,7 @@ class ImportProductController extends ProductManagerMasterController {
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
+        $match = false;
         if (isset($_POST["fileCsv"])) {
             $folderName = "file"; //  folderName
             $folderThumbnail = "importProduct"; //  folderName
@@ -78,16 +79,17 @@ class ImportProductController extends ProductManagerMasterController {
                         $data = [];
                         while (($objArr = fgetcsv($fcsv, 1000, ",")) !== FALSE) {
                             //$data[$r] = $objArr[0];
-                            $totalCol = count($objArr);
                             $col = 1;
-                            if ($r == 0) {
+                            if ($r == 0) {//แถวแรกเป็น ชื่อ ของcolumn
                                 for ($i = 0; $i < count($objArr); $i++):
                                     $colcumn[$i] = $objArr[$i];
                                 endfor;
-                                $match = self::matchColumn($totalCol, $templateId, $colcumn); //ตรวจสอบว่าColumnตรงกันรึป่าว
-                                if ($match) {
-                                    
-                                }
+                                $match = self::matchColumn(templateId, $colcumn); //ตรวจสอบว่าColumnตรงกันรึป่าว
+                            }
+                            if ($match) {
+//บันทึกลงตาราง Product
+                            } else {
+                                //column ไม่ตรงกัน
                             }
                             if ($r != 0) {//first record is title//////////////////////////wait forbank
                                 $data[$r][1] = $objArr[0];
@@ -127,7 +129,11 @@ class ImportProductController extends ProductManagerMasterController {
         $res = [];
         $res["status"] = false;
         $productGroupTemplateId = $_POST["productGroupTemplateId"];
-        $text = 'ProductId&nbsp;&nbsp;|&nbsp;&nbsp;Image&nbsp;&nbsp;|&nbsp;&nbsp;Category&nbsp;&nbsp;|&nbsp;&nbsp;Brand&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;ShortDescription&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Secification&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;';
+        $text = 'Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;shotDescription'
+                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
+                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
+                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
+                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|<hr>&nbsp;&nbsp;';
         $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$productGroupTemplateId")->all();
         if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
             foreach ($productGroupTemplateOptions as $option):
@@ -140,7 +146,11 @@ class ImportProductController extends ProductManagerMasterController {
     }
 
     private static function FirstTemplateFormat() {
-        $text = 'ProductId&nbsp;&nbsp;|&nbsp;&nbsp;Image&nbsp;&nbsp;|&nbsp;&nbsp;Category&nbsp;&nbsp;|&nbsp;&nbsp;Brand&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;ShortDescription&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Secification&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;';
+        $text = 'Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;shotDescription'
+                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
+                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
+                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
+                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|<hr>&nbsp;&nbsp;';
         $firstTemplate = ProductGroupTemplate::find()->where('status=1')->orderBy('title')->one();
         $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$firstTemplate->productGroupTemplateId")->all();
         if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
@@ -151,10 +161,10 @@ class ImportProductController extends ProductManagerMasterController {
         return $text;
     }
 
-    private static function matchColumn($totalCol, $templateId, $colcumn) {
+    private static function matchColumn($templateId, $colcumn) {
         $templateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$templateId")->all();
         $error = 0;
-        $i = 0;
+        $i = 0; //กำหนดว่าให้เริ่มเปรียบเทียบที่คอลัมไหน
         if (isset($templateOptions) && count($templateOptions) > 0) {
             foreach ($templateOptions as $option):
                 if ($option->title != $colcumn[$i]) {
