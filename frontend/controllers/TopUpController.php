@@ -261,7 +261,7 @@ class TopUpController extends MasterController {
 //                $merchantId = "451005319527001";
 //                $terminalId = "74428381";
             } else {
-                //For Cozxy
+                //For Cozxy production
                 $merchantId = "451005319527001";
                 $terminalId = "74428381";
                 //For Cozxy

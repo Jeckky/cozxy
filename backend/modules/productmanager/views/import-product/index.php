@@ -38,8 +38,8 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
             <?= $form->field($model, 'productGroupTemplateId')->dropDownList($productGroupTemplateFilter) ?>
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12" >
-                <h4>*กรุณาสร้างไฟล์ Excel ที่มีคอลัมม์เรียงลำดับตามรูปแบบด้านล่าง</h4>
-                <div class="col-lg-12 col-md-12 col-sm-12" id="templateColumn"style="height: 100px;border: #cccccc solid thin;padding-top: 20px;font-size: 11pt;">
+                <h4>* กรุณาสร้างไฟล์ Excel ที่มีคอลัมม์เรียงลำดับตามรูปแบบด้านล่าง</h4>
+                <div class="col-lg-12 col-md-12 col-sm-12" id="templateColumn"style="height: 150px;border: #cccccc solid thin;padding-top: 20px;font-size: 11pt;">
                     <?php
                     if (isset($firstTemplate) && $firstTemplate != '') {
                         echo $firstTemplate;
@@ -48,12 +48,16 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
                 </div>
 
             </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" id="templateId" style="position: absolute;">
+                <input type="hidden" name="templateId" value="<?= $firstTemplateId ?>">
+            </div>
             <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 20px;font-size: 12pt;">
                 <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" value="Upload" style="float: left;" required="true">
                 <input type="hidden" name="fileCsv[csv]" value="">&nbsp;&nbsp;&nbsp;<b>Upload file .xls,csv : </b>
+                <button type="submit" class="btn btn-success"><b>UPLOAD</b></button>
             </div>
-
-<?php ActiveForm::end(); ?>
+            <div class="col-lg-12 col-md-12 col-sm-12" id=""></div>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
