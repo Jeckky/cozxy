@@ -111,7 +111,7 @@ class HomeController extends MasterController {
         //return $this->render('index');
         $category = \frontend\models\DisplayMyCategory::ShowCategoryOnline();
         /* New Home Query */
-        $sectionItem = Section::productSection(18, $cat = FALSE, $brandId = false, 1);
+        $sectionItem = Section::productSection(24, $cat = FALSE, $brandId = false, 1);
         $productCanSellBySunglasses = Product::productForSale(18, 4);
         $productCanSellByCosmetics = Product::productForSale(18, 14);
         $productCanSellByBags = Product::productForNotSale(18, 65);
