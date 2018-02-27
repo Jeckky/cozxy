@@ -3,7 +3,7 @@
 
 
 \frontend\assets\NewCozxyAsset::register($this);
-
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 $this->title = 'cozxy.com - Buy what fuels your passion';
 $UserAgent = common\helpers\GetBrowser::UserAgent();
 ?>
@@ -98,10 +98,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -173,10 +175,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -233,10 +237,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -349,10 +355,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -393,10 +401,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -453,10 +463,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
     </div>
 </div>
 
-
-
 <div class="spacing-cozxy bg-white">&nbsp;</div>
-
 
 <div class="bg-white wrapper-cozxy">
     <div class="container">
@@ -491,10 +498,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
+                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <?php if ($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <?php } ?>
             </div>
         </div>
     </div>

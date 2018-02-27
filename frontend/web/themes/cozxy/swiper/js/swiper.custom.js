@@ -13,10 +13,10 @@ var swiper = new Swiper('.swiper-container', {
     loop: true,
     loopFillGroupWithBlank: true,
     passiveListeners: true,
-    /*pagination: {
-     el: '.swiper-pagination',
-     clickable: true,
-     },*/
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -37,6 +37,7 @@ var swiper = new Swiper('.swiper-container', {
         640: {
             slidesPerView: 3,
             spaceBetween: 2
-        }
+        },
+
     }
 });
