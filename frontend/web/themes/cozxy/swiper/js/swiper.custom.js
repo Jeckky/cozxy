@@ -9,7 +9,7 @@
 var swiper = new Swiper('.swiper-container', {
     slidesPerView: 6,
     spaceBetween: 5,
-    slidesPerGroup: 3,
+    slidesPerGroup: 6,
     loop: true,
     loopFillGroupWithBlank: true,
     passiveListeners: true,
@@ -36,7 +36,8 @@ var swiper = new Swiper('.swiper-container', {
         // when window width is <= 640px
         640: {
             slidesPerView: 3,
-            spaceBetween: 2
+            spaceBetween: 2,
+            slidesPerGroup: 3,
         },
 
     }
