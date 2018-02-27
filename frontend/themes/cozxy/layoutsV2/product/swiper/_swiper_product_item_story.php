@@ -2,14 +2,15 @@
 
 use common\helpers\Base64Decode;
 
+$UserAgent = common\helpers\GetBrowser::UserAgent();
 if ($index == 0) {
     $active = 'active';
 } else {
     $active = '';
 }
 ?>
-<div class="swiper-slide <?= $active ?>">
-    <div class="" style="padding: 5px;">
+<div class="swiper-slide">
+    <div class="">
         <div class="product-box box-product">
             <div class="product-img text-center">
                 <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>">
@@ -17,13 +18,13 @@ if ($index == 0) {
                     <!--<img class="media-object fullwidth img-responsive" src="/cozxy/frontend/web/images/ProductImageSuppliers/thumbnail1/gWYeDn5aopSZD5PWhMJdRbrVAC_6wNVa.jpg">-->
                 </a>
             </div>
-            <div class="product-txt">
+            <div class="product-txt text-left">
                 <?php $pid = $model->product; ?>
                 <p class="brand">
-                    <span class="size14"><?= isset($model->product->brand->title) ? strtoupper($model->product->brand->title) : 'NO BRAND' ?></span>
+                    <span class="<?= ($UserAgent != 'mobile') ? 'size14' : 'size10' ?>"><?= isset($model->product->brand->title) ? strtoupper($model->product->brand->title) : 'NO BRAND' ?></span>
                 </p>
                 <p class="name">
-                    <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="size18 b"><?= strtoupper($model->title) ?></a>
+                    <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size12' ?>"><?= strtoupper($model->title) ?></a>
                 </p>
             </div>
         </div>
