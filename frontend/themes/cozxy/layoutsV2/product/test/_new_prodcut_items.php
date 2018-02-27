@@ -70,7 +70,7 @@ if ($index == 0) {
                     ?>
                     <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="fc-black" style=" min-height: 256px; max-height: 256px;">
                         <img class="media-object fullwidth img-responsive" src="<?= isset($model->product) ? \Yii::$app->homeUrl . $model->product->productImageThumbnail() : Base64Decode::DataImageSvg('Svg260x260') ?>">
-                        <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?//= $images['imageThumbnail1'] ?>">-->
+                          <!--<img class="media-object fullwidth img-responsive" src="https://www.cozxy.com/<?//= $images['imageThumbnail1'] ?>">-->
                     </a>
                     <?php
                     if ($UserAgent != 'mobile') {

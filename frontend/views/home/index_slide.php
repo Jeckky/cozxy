@@ -69,44 +69,48 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
     </div>
 <?php endif; ?>
 
-<!-- Swiper All the bags -->
+<!--/ slide prodcut  /-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <h2>HOT DEALS 30% - 70%</h2>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $sectionItem,
-                        'summary' => "",
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                            //echo $model->productId, ',';
-                            return $this->render('@app/themes/cozxy/layoutsV2/product/swiper/_swiper_prodcut_items_hot_deals', ['model' => $model, 'index' => $index]);
-                        },
-                        // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout' => "{summary}{pager}{items}",
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                            //'itemOptions' => ['class' => 'item'],
-                    ]);
-                    ?>
+            <div class="col-xs-12 col-md-12">
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="fruitscarousel">
+                    <div class="carousel-inner ">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $sectionItem,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items_hot_deals', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#fruitscarousel" data-slide="prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                    <a class="right carousel-control" href="#fruitscarousel" data-slide="next">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
                 </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </div>
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
+
 <!--/ category  /-->
 <div class="bg-white">
     <div class="<?= ($UserAgent == 'mobile') ? 'container' : 'container-cozxy' ?> ">
@@ -139,12 +143,56 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
 
-<!-- Swiper Sunglasses -->
+<!--/   prodcut  items /-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="head-all-new-v2 text-section-padding">
                 <h2>SUNGLASSES BEST SELLER</h2>
+            </div>
+            <div class="see-all-new-v2 hidden-sm hidden-xs">
+                <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
+            </div>
+            <div class="col-xs-12 col-md-12">
+
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxycarousel1">
+                    <div class="carousel-inner ">
+
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productCanSellBySunglasses,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#cozxycarousel1" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#cozxycarousel1" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="spacing-cozxy bg-white">&nbsp;</div>
+<!-- Swiper -->
+<div class="bg-white wrapper-cozxy">
+    <div class="container">
+        <div class="row">
+            <div class="head-all-new-v2 text-section-padding">
+                <h2>SUNGLASSES BEST SELLER : Swiper Container</h2>
             </div>
             <div class="see-all-new-v2 hidden-sm hidden-xs">
                 <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
@@ -199,7 +247,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
-<!-- Swiper Cosmetics -->
+<!--/   prodcut  items /-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
@@ -209,34 +257,34 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             <div class="see-all-new-v2 hidden-sm hidden-xs">
                 <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productCanSellByCosmetics,
-                        'summary' => "",
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                            //echo $model->productId, ',';
-                            return $this->render('@app/themes/cozxy/layoutsV2/product/swiper/_swiper_product_items', ['model' => $model, 'index' => $index]);
-                        },
-                        // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout' => "{summary}{pager}{items}",
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                            //'itemOptions' => ['class' => 'item'],
-                    ]);
-                    ?>
+            <div class="col-xs-12 col-md-12">
+
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel2">
+                    <div class="carousel-inner">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productCanSellByCosmetics,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#cozxyCarousel2" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#cozxyCarousel2" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
                 </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </div>
@@ -315,93 +363,93 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
-<!-- Swiper All the bags -->
+<!--/   prodcut  items /-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="head-all-new-v2 text-section-padding">
                 <h2>ALL THE BAGS</h2>
             </div>
-            <div class="see-all-new-v2 hidden-sm hidden-xs">
+            <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
                 <a href="<?= Yii::$app->homeUrl ?>site/see-all-sale/">SEE MORE ></a>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productCanSellByBags,
-                        'summary' => "",
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                            //echo $model->productId, ',';
-                            return $this->render('@app/themes/cozxy/layoutsV2/product/swiper/_swiper_product_items_not_sale', ['model' => $model, 'index' => $index]);
-                        },
-                        // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout' => "{summary}{pager}{items}",
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                            //'itemOptions' => ['class' => 'item'],
-                    ]);
-                    ?>
+            <div class="col-xs-12 col-md-12">
+
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel4">
+
+                    <div class="carousel-inner">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productCanSellByBags,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_product_item_not_sale_rev1', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#cozxyCarousel4" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#cozxyCarousel4" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
                 </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </div>
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
-
+<!--/   prodcut  items /-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="head-all-new-v2 text-section-padding">
                 <h2>ITEMS YOU MAY LIKE</h2>
             </div>
-            <div class="see-all-new-v2 hidden-sm hidden-xs">
+            <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
                 <a href="<?= Yii::$app->homeUrl ?>site/see-all-section-item?sectionId=10">SEE MORE ></a>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productCanSellByYouMayLike,
-                        'summary' => "",
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                            //echo $model->productId, ',';
-                            return $this->render('@app/themes/cozxy/layoutsV2/product/swiper/_swiper_product_items', ['model' => $model, 'index' => $index]);
-                        },
-                        // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout' => "{summary}{pager}{items}",
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                            //'itemOptions' => ['class' => 'item'],
-                    ]);
-                    ?>
+            <div class="col-xs-12 col-md-12">
+
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel5">
+                    <div class="carousel-inner">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productCanSellByYouMayLike,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_new_prodcut_items', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#cozxyCarousel5" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#cozxyCarousel5" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
                 </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </div>
 </div>
-<div class="spacing-cozxy bg-white">&nbsp;</div>
 
 <div class="bg-white wrapper-cozxy">
     <div class="container">
@@ -453,50 +501,47 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
     </div>
 </div>
 
-
-
-<div class="spacing-cozxy bg-white">&nbsp;</div>
-
-
+<!--/   prodcut  items story/-->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
             <div class="head-all-new-v2 text-section-padding">
                 <h2>PRODUCT STORY</h2>
             </div>
-            <div class="see-all-new-v2 hidden-sm hidden-xs">
+            <div class="see-all-new-v2 text-right hidden-sm hidden-xs">
                 <a href="<?= Yii::$app->homeUrl ?>story/views-all/">SEE MORE ></a>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $productStory,
-                        'summary' => "",
-                        'options' => [
-                            'tag' => false,
-                        ],
-                        'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                            //echo $model->productId, ',';
-                            return $this->render('@app/themes/cozxy/layoutsV2/product/swiper/_swiper_product_item_story', ['model' => $model, 'index' => $index]);
-                        },
-                        // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                        //'layout' => "{summary}{pager}{items}",
-                        'layout' => "{items}",
-                        'itemOptions' => [
-                            'tag' => false,
-                        ],
-                            //'itemOptions' => ['class' => 'item'],
-                    ]);
-                    ?>
+            <div class="col-xs-12 col-md-12">
+
+                <div class="carousel slide row" data-ride="carousel" data-type="multi" data-interval="2000" id="cozxyCarousel6">
+                    <div class="carousel-inner">
+                        <?php
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $productStory,
+                            'summary' => "",
+                            'options' => [
+                                'tag' => false,
+                            ],
+                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                                //echo $model->productId, ',';
+                                return $this->render('@app/themes/cozxy/layoutsV2/product/_product_item_story', ['model' => $model, 'index' => $index]);
+                            },
+                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                            //'layout' => "{summary}{pager}{items}",
+                            'layout' => "{items}",
+                            'itemOptions' => [
+                                'tag' => false,
+                            ],
+                                //'itemOptions' => ['class' => 'item'],
+                        ]);
+                        ?>
+                    </div>
+                    <a class="left carousel-control" href="#cozxyCarousel6" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="right carousel-control" href="#cozxyCarousel6" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
                 </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="spacing-cozxy bg-white">&nbsp;</div>

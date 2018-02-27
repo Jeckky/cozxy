@@ -104,12 +104,12 @@ class HomeController extends MasterController {
         $productBrand = Brand::allAvailableBrands();
         $slideGroup = Content::banners();
         //$sections = Section::showSections();
-        $category = \frontend\models\DisplayMyCategory::ShowCategory();
+        //$category = \frontend\models\DisplayMyCategory::ShowCategory();
         $productNewCanSell = Product::productForSale(8);
         //echo '<pre>';
         //print_r($otherProducts);
         //return $this->render('index');
-
+        $category = \frontend\models\DisplayMyCategory::ShowCategoryOnline();
         /* New Home Query */
         $sectionItem = Section::productSection(18, $cat = FALSE, $brandId = false, 1);
         $productCanSellBySunglasses = Product::productForSale(18, 4);
