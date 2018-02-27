@@ -52,15 +52,74 @@ class ImportProductController extends ProductManagerMasterController {
         $model->scenario = 'createProductGroup';
         $model->approve = 'approve';
         $firstTemplate = self::FirstTemplateFormat();
+        $firstTemplateId = ProductGroupTemplate::find()->where('status=1')->orderBy('title')->one();
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
+        if (isset($_POST["fileCsv"])) {
+            $folderName = "file"; //  folderName
+            $folderThumbnail = "importProduct"; //  folderName
+            $uploadPath = \Yii::$app->getBasePath() . '/web/' . 'images/' . $folderName . '/' . $folderThumbnail; // Path
+            $file = \yii\web\UploadedFile::getInstanceByName('fileCsv[csv]');
+            $newFileName = \Yii::$app->security->generateRandomString(10) . '.' . $file->extension;
+            $ext = explode('.', $file->name);
+            $templateId = $_POST["templateId"];
+            if (end($ext) == 'csv') {
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0777);
+                }
+                $upload = $file->saveAs($uploadPath . '/' . $newFileName);
+                if ($upload) {
+                    define('CSV_PATH', $uploadPath);
+                    $csv_file = CSV_PATH . '/' . $newFileName;
+                    $fcsv = fopen($csv_file, "r");
+                    if ($fcsv) {
+                        $r = 0;
+                        $data = [];
+                        while (($objArr = fgetcsv($fcsv, 1000, ",")) !== FALSE) {
+                            //$data[$r] = $objArr[0];
+                            $totalCol = count($objArr);
+                            $col = 1;
+                            if ($r == 0) {
+                                for ($i = 0; $i < count($objArr); $i++):
+                                    $colcumn[$i] = $objArr[$i];
+                                endfor;
+                                $match = self::matchColumn($totalCol, $templateId, $colcumn); //ตรวจสอบว่าColumnตรงกันรึป่าว
+                                if ($match) {
+                                    
+                                }
+                            }
+                            if ($r != 0) {//first record is title//////////////////////////wait forbank
+                                $data[$r][1] = $objArr[0];
+                                $data[$r][1] = $objArr[1];
+                                $data[$r][2] = $objArr[2];
+                                $data[$r][3] = $objArr[3];
+                                $data[$r][4] = $objArr[4];
+                                $data[$r][5] = $objArr[5];
+                            }
+                            $r++;
+                        }
+                        fclose($fcsv);
+                    }
+                }
+            } else {
+                //ประเภทไฟล์ ผิด
+                return $this->render('index', [
+                            'model' => $model,
+                            'brandFilter' => $brandFilter,
+                            'categoryFilter' => $categoryFilter,
+                            'productGroupTemplateFilter' => $productGroupTemplateFilter,
+                            'firstTemplate' => $firstTemplate
+                ]);
+            }
+        }
         return $this->render('index', [
                     'model' => $model,
                     'brandFilter' => $brandFilter,
                     'categoryFilter' => $categoryFilter,
                     'productGroupTemplateFilter' => $productGroupTemplateFilter,
-                    'firstTemplate' => $firstTemplate
+                    'firstTemplate' => $firstTemplate,
+                    'firstTemplateId' => $firstTemplateId->productGroupTemplateId
         ]);
     }
 
@@ -90,6 +149,25 @@ class ImportProductController extends ProductManagerMasterController {
             endforeach;
         }
         return $text;
+    }
+
+    private static function matchColumn($totalCol, $templateId, $colcumn) {
+        $templateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$templateId")->all();
+        $error = 0;
+        $i = 0;
+        if (isset($templateOptions) && count($templateOptions) > 0) {
+            foreach ($templateOptions as $option):
+                if ($option->title != $colcumn[$i]) {
+                    $error++;
+                }
+                $i++;
+            endforeach;
+        }
+        if ($error == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

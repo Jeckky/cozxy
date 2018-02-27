@@ -34,7 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
-                    'description:ntext',
+                    [
+                        'attribute' => 'description',
+                        'value' => function ($model) {
+                            return mb_substr($model->description, 0, 90);
+                        },
+                    ],
                     'promotionCode',
                     ['attribute' => 'Discont',
                         'value' => function($model) {

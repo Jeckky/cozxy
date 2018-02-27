@@ -19,6 +19,8 @@ $(document).on('change', '#product-productgrouptemplateid', function (e) {
             if (data.status) {
                 $("#templateColumn").html('');
                 $("#templateColumn").html(data.text);
+                $("#templateId").html('');
+                $("#templateId").html('<input type="hidden" name="templateId" value="' + productGroupTemplateId + '">');
             }
         },
     });
