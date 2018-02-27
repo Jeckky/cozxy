@@ -254,11 +254,11 @@ class StoryController extends Controller
             'id' => $storyModel->productPostId,
             'shortDescription' => $storyModel->shortDescription,
             'description' => $storyModel->description,
-            'image' => Url::home(true) . $storyModel->product->images->imageThumbnail1,
+            'image' => Yii::$app->params['baseUrl'] . $storyModel->product->images->imageThumbnail1,
             'views' => $storyModel->countView(),
             'stars' => $storyModel->averageStar(),
             'lastUpdate' => $storyModel->updateDateTime,
-            'shareUrl' => Url::home(true).'story/' . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
+            'shareUrl' => Yii::$app->params['baseUrl'] . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
         ];
 
         $data['product'] = [
@@ -271,9 +271,10 @@ class StoryController extends Controller
             'brandTitle' => isset($storyModel->product->brand->title) ? $storyModel->product->brand->title : '',
         ];
 
+        $name = isset($storyModel->user) ? $storyModel->user->firstname . ' ' . $storyModel->user->lastname : '';
         $data['author'] = [
-            'name' => $storyModel->user->firstname . ' ' . $storyModel->user->lastname,
-            'avatar' => Url::home(true) . 'images/user/avatar/' . $storyModel->user->avatar
+            'name' => $name,
+            'avatar' => Yii::$app->params['baseUrl'] . 'images/user/avatar/' . $storyModel->user->avatar
         ];
 
         $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);

@@ -130,12 +130,15 @@ class MyAccountController extends MyAccountFrontendController
 
             $res['otp'] = $code;
             $res['success'] = true;
+            $tel = self::preparePhoneNumber($userModel->tel);
 
             Sms::Send('POST', Sms::SMS_URL, Json::encode([
                 'from' => 'COZXY',
-                'to' => [self::preparePhoneNumber($userModel->tel)],
+                'to' => [$tel],
                 'text' => "รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
             ]));
+
+            $a = 0;
         } else {
             $res['error'] = 'Error : User not found';
         }
