@@ -39,7 +39,7 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
             <hr>
             <div class="col-lg-12 col-md-12 col-sm-12" >
                 <h4>* กรุณาสร้างไฟล์ Excel ที่มีคอลัมม์เรียงลำดับตามรูปแบบด้านล่าง</h4>
-                <div class="col-lg-12 col-md-12 col-sm-12" id="templateColumn"style="height: 100px;border: #cccccc solid thin;padding-top: 20px;font-size: 11pt;">
+                <div class="col-lg-12 col-md-12 col-sm-12" id="templateColumn"style="height: 150px;border: #cccccc solid thin;padding-top: 20px;font-size: 11pt;">
                     <?php
                     if (isset($firstTemplate) && $firstTemplate != '') {
                         echo $firstTemplate;
@@ -48,7 +48,7 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
                 </div>
 
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12" id="templateId">
+            <div class="col-lg-12 col-md-12 col-sm-12" id="templateId" style="position: absolute;">
                 <input type="hidden" name="templateId" value="<?= $firstTemplateId ?>">
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 20px;font-size: 12pt;">
