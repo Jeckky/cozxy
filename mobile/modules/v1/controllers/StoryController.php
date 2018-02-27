@@ -254,11 +254,11 @@ class StoryController extends Controller
             'id' => $storyModel->productPostId,
             'shortDescription' => $storyModel->shortDescription,
             'description' => $storyModel->description,
-            'image' => Yii::$app->params['baseUrl'] . $storyModel->product->images->imageThumbnail1,
+            'image' => Yii::$app->params['baseUrl']. DIRECTORY_SEPARATOR . $storyModel->product->images->imageThumbnail1,
             'views' => $storyModel->countView(),
             'stars' => $storyModel->averageStar(),
             'lastUpdate' => $storyModel->updateDateTime,
-            'shareUrl' => Yii::$app->params['baseUrl'] . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
+            'shareUrl' => Yii::$app->params['baseUrl'] . DIRECTORY_SEPARATOR . ModelMaster::encodeParams(['productPostId' => $storyModel->productPostId])
         ];
 
         $data['product'] = [
@@ -274,7 +274,7 @@ class StoryController extends Controller
         $name = isset($storyModel->user) ? $storyModel->user->firstname . ' ' . $storyModel->user->lastname : '';
         $data['author'] = [
             'name' => $name,
-            'avatar' => Yii::$app->params['baseUrl'] . 'images/user/avatar/' . $storyModel->user->avatar
+            'avatar' => Yii::$app->params['baseUrl'] . DIRECTORY_SEPARATOR . 'images/user/avatar/' . $storyModel->user->avatar
         ];
 
         $data['comparePrice'] = self::prepareComparePrice($storyModel->productPostId);
