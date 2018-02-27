@@ -132,7 +132,7 @@ class MyAccountController extends MyAccountFrontendController
             $res['success'] = true;
 
             Sms::Send('POST', Sms::SMS_URL, Json::encode([
-                'from' => 'Cozxy',
+                'from' => 'COZXY',
                 'to' => [self::preparePhoneNumber($userModel->tel)],
                 'text' => "รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
             ]));
