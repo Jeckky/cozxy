@@ -29,6 +29,7 @@ if ($index == 0) {
 
                     </a>
                 </p>
+                <br>
             </div>
         </div>
     </div>
