@@ -518,4 +518,5 @@
 
 .product-txt p.price {
     margin-top: 2px!important;
+    line-height: 1.1em!important;
 }

@@ -129,7 +129,7 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
 
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size14 b">
-                    <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) <= 50) ? strtoupper($model->product->title) : substr(strtoupper($model->product->title), 0, 50) : '' ?>
+                    <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) <= 45) ? strtoupper($model->product->title) : substr(strtoupper($model->product->title), 0, 45) : '' ?>
                 </a>
             </p>
             <?php
