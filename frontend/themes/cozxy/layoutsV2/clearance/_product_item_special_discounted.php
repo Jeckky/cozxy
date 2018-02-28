@@ -116,12 +116,12 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             if (isset($model->product->brand->title)) {
                 ?>
                 <p class="brand">
-                    <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
+                    <span class="size12"><?= strtoupper($model->product->brand->title) ?></span>
                 </p>
             <?php } else {
                 ?>
                 <p class="brand">
-                    <span class="size14">NO BRAND</span>
+                    <span class="size12">NO BRAND</span>
                 </p>
                 <?php
             }
