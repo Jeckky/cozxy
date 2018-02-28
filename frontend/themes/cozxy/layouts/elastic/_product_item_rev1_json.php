@@ -83,7 +83,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                               ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                                    ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -133,12 +133,12 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 if (isset($productBrand)) {
                     ?>
                     <p class="brand">
-                        <span class="size14"><?= strtoupper($productBrand['title']) ?></span>
+                        <span class="size12"><?= strtoupper($productBrand['title']) ?></span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="brand">
-                        <span class="size16">NO BRAND</span>
+                        <span class="size12">NO BRAND</span>
                     </p>
                     <?php
                 }
@@ -146,7 +146,8 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             ?>
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
-                    <?= strtoupper($model['title']) ?>
+
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 45) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 45) : '' ?>
                 </a>
             </p>
             <?php
