@@ -70,7 +70,7 @@ if ($index == 0) {
             if ($UserAgent != 'mobile') {
                 ?>
                 <p class="brand" >
-                    <span class="size14"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
+                    <span class="size12"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
                 </p>
             <?php } ?>
             <p class="name">
@@ -78,7 +78,7 @@ if ($index == 0) {
                     <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 35) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 35) : '' ?>
                 </a>
             </p>
-            <br> 
+            <br>
         </div>
     </div>
 </div>
