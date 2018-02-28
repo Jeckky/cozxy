@@ -83,7 +83,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                                    ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                                      ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -147,7 +147,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
 
-                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 45) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 45) : '' ?>
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 40) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 40) : '' ?>
                 </a>
             </p>
             <?php
