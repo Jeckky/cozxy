@@ -565,7 +565,7 @@ label {
     margin: 0 auto 12px;
     height: 48px;
     overflow-y: hidden;
-    line-height: 1.4em;
+    line-height: 1.1em!important;
     color: #222;
 }
 .product-txt p.name a {
