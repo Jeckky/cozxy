@@ -83,7 +83,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                             ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                               ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -145,7 +145,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
                     <?= strtoupper($model['title']) ?>
                 </a>
             </p>
@@ -154,13 +154,13 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price">
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                     <?php
