@@ -121,14 +121,15 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
             <?php } else {
                 ?>
                 <p class="brand">
-                    <span class="size16">NO BRAND</span>
+                    <span class="size14">NO BRAND</span>
                 </p>
-            <?php }
+                <?php
+            }
             ?>
 
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size18 b">
-                    <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="size14 b">
+                    <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) <= 50) ? strtoupper($model->product->title) : substr(strtoupper($model->product->title), 0, 50) : '' ?>
                 </a>
             </p>
             <?php
@@ -136,14 +137,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
-                        <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="size14 onsale pull-right"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="size14 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="size12 onsale pull-right"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="size18 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="size14 fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="size12 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }
