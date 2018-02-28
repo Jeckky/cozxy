@@ -24,7 +24,7 @@ if ($index == 0) {
                     <span class="<?= ($UserAgent != 'mobile') ? 'size14' : 'size10' ?>"><?= isset($model->product->brand->title) ? strtoupper($model->product->brand->title) : 'NO BRAND' ?></span>
                 </p>
                 <p class="name">
-                    <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size12' ?>"><?= strtoupper($model->title) ?></a>
+                    <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size12' ?>"><?= strtoupper($model->title) ?></a>
                 </p>
             </div>
         </div>

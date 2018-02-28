@@ -116,19 +116,19 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 if (isset($model->product->brand->title)) {
                     ?>
                     <p class="brand">
-                        <span class="size14"><?= strtoupper($model->product->brand->title) ?></span>
+                        <span class="size12"><?= strtoupper($model->product->brand->title) ?></span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="brand">
-                        <span class="size16">NO BRAND</span>
+                        <span class="size12">NO BRAND</span>
                     </p>
                     <?php
                 }
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
                     <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
                 </a>
             </p>
@@ -137,14 +137,14 @@ $DiscountProduct = CozxyCalculatesCart::DiscountProduct($marketPrice, $supplierP
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="size14 onsale pull-right"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="size12 onsale pull-right"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="size14 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="size12 onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }

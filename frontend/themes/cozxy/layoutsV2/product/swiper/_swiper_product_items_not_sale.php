@@ -74,7 +74,7 @@ if ($index == 0) {
                 </p>
             <?php } ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>"><?= strtoupper($model['title']) ?></a>
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>"><?= strtoupper($model['title']) ?></a>
             </p>
         </div>
     </div>

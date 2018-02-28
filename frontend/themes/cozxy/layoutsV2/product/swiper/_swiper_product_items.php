@@ -134,7 +134,7 @@ if ($index == 0) {
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>">
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
                     <?= isset($model->product) ? strtoupper($model->product->title) : '' ?>
                 </a>
             </p>
@@ -143,14 +143,14 @@ if ($index == 0) {
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size10' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size14' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size10' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size10' ?> fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size14' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size10' ?> fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }
