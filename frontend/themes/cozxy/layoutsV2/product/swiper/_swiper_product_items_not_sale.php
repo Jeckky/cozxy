@@ -78,6 +78,7 @@ if ($index == 0) {
                     <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 35) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 35) : '' ?>
                 </a>
             </p>
+            <br> 
         </div>
     </div>
 </div>
