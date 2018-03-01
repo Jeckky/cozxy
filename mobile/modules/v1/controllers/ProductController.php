@@ -434,7 +434,7 @@ class ProductController extends \common\controllers\MasterController
             'brand' => $productModel->brand->title,
             'productId' => $productModel->productId,
             'title' => trim($productModel->title),
-            'image' => Url::home(true).$productModel->images->imageThumbnail1
+            'image' => Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR.$productModel->images->imageThumbnail1
         ];
     }
 
