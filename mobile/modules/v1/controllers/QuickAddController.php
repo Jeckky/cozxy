@@ -57,6 +57,8 @@ class QuickAddController extends Controller
                 $storyModel->save(false);
                 $storyId = Yii::$app->db->lastInsertID;
 
+                ProductPostImages::updateAll(['productPostId'=>$storyId], 'imagesId in ('.implode(',', $contents['imageIds']).')');
+
                 $currencyInfoModel = CurrencyInfo::find()->where(['currencyId' => $currencyId])->one();
 
                 //create ProductPostPrice

@@ -70,9 +70,9 @@ class DisplayMyCategory extends Model {
 
     public static function ShowCategoryOnline() {
         $category = \common\models\costfit\ProductSuppliers::find()
-                ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`)')
+                ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`) ,`category`.`image`')
                 ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
-                ->where('`category`.status = 1')
+                ->where("`category`.status = 1 and `category`.`image` IS NOT NULL and `category`.`image` !=''")
                 ->groupBy('`product_suppliers`.categoryId')
                 //->orderBy(new \yii\db\Expression('rand()'), 'count(`product_suppliers`.`categoryId`) desc')
                 ->orderBy([

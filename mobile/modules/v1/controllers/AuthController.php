@@ -55,7 +55,7 @@ class AuthController extends Controller
 //                $res['token'] = $userModel->auth_key;
                 $res['token'] = $userModel->auth_key;
                 $res['birthDate'] = $userModel->birthDate;
-                $res['avatar'] = Yii::$app->homeUrl . $userModel->avatar;
+                $res['avatar'] = Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR . $userModel->avatar;
                 $res['mobile'] = $userModel->tel;
                 $res['success'] = true;
 
@@ -178,7 +178,7 @@ class AuthController extends Controller
         $user = \common\models\costfit\User::find()->where('email = "' . $forget . '  " ')->one();
         if(count($user) > 0) {
             if($user['status'] == 1) {
-                $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
+                $url = Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR . "site/forget-confirm?token=" . $user->token . '::' . $user->email;
                 $toMail = $user->email;
                 Email::mailForgetPassword($toMail, $url);
                 $res['success'] = true;
@@ -269,7 +269,7 @@ class AuthController extends Controller
                     'email'=>$userModel->email,
                     'birthdate'=>substr($userModel->birthDate, 0, 10),
                     'mobile'=>$userModel->tel,
-                    'avatar'=>(isset($userModel->avatar) && !empty($userModel->avatar)) ? Url::home(true).$userModel->avatar:'',
+                    'avatar'=>(isset($userModel->avatar) && !empty($userModel->avatar)) ? Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR.$userModel->avatar:'',
                 ];
             }
         }

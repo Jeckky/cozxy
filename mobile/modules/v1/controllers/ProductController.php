@@ -334,7 +334,7 @@ class ProductController extends \common\controllers\MasterController
                 $productPriceSupplier = ProductPriceSuppliers::latestPrice($productSuppliers->productSuppId);
                 $res['sellingPrice'] = $productPriceSupplier->price;
             }
-            $res['shareUrl'] = Url::home(true) . 'product/' . ModelMaster::encodeParams(['productId' => $id]);
+            $res['shareUrl'] = \Yii::$app->params['baseUrl']. DIRECTORY_SEPARATOR . 'product/' . ModelMaster::encodeParams(['productId' => $id]);
             $res['isWishlist'] = self::isWishlist($product->productId, $userId);
 //            $res['worldPrice'] = (self::worldPrice($id) !== null) ? self::worldPrice($id) : $res['price'];
 //            $res['localPrice'] = (self::localPrice($id) !== null) ? self::localPrice($id) : number_format($res['price'] * 0.8, 2);
@@ -434,7 +434,7 @@ class ProductController extends \common\controllers\MasterController
             'brand' => $productModel->brand->title,
             'productId' => $productModel->productId,
             'title' => trim($productModel->title),
-            'image' => Url::home(true).$productModel->images->imageThumbnail1
+            'image' => Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR.$productModel->images->imageThumbnail1
         ];
     }
 

@@ -139,9 +139,9 @@ class SignupForm extends Model {
                 //exit();
             } else {
                 if (isset($this->cz) && !empty($this->cz)) {//Redirect ไปหน้า Cart
-                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
+                    $url = Yii::$app->params['baseUrl']. DIRECTORY_SEPARATOR . "site/confirm?token=" . $user->token . '&cz=' . $this->cz;
                 } else {
-                    $url = "http://" . Yii::$app->request->getServerName() . Yii::$app->homeUrl . "site/confirm?token=" . $user->token;
+                    $url = Yii::$app->params['baseUrl']. DIRECTORY_SEPARATOR . "site/confirm?token=" . $user->token;
                 }
                 $toMail = $user->email;
 

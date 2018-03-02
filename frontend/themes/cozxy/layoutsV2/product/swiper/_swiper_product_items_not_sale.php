@@ -70,12 +70,15 @@ if ($index == 0) {
             if ($UserAgent != 'mobile') {
                 ?>
                 <p class="brand" >
-                    <span class="size14"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
+                    <span class="size12"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
                 </p>
             <?php } ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>"><?= strtoupper($model['title']) ?></a>
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 35) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 35) : '' ?>
+                </a>
             </p>
+            <br>
         </div>
     </div>
 </div>

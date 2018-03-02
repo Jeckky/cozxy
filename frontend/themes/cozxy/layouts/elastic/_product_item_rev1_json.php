@@ -83,7 +83,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         ?>
         <div class="product-img text-center">
             <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => $model['productId']])) ?>" class="fc-black">
-                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                           ?>"  >
+                <img class="media-object fullwidth img-responsive" src="<?= $model['imageThumbnail1']//$productImageThumbnail                                                                                      ?>"  >
             </a>
             <div class="v-hover">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model['productId']])) ?>">
@@ -133,20 +133,21 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 if (isset($productBrand)) {
                     ?>
                     <p class="brand">
-                        <span class="size14"><?= strtoupper($productBrand['title']) ?></span>
+                        <span class="size12"><?= strtoupper($productBrand['title']) ?></span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="brand">
-                        <span class="size16">NO BRAND</span>
+                        <span class="size12">NO BRAND</span>
                     </p>
                     <?php
                 }
             }
             ?>
             <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
-                    <?= strtoupper($model['title']) ?>
+                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . common\models\ModelMaster::encodeParams(['productId' => isset($model['productId']) ? $model['productId'] : $model['productId']])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>" title="<?= $model['productId'] ?>">
+
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 40) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 40) : '' ?>
                 </a>
             </p>
             <?php
@@ -154,13 +155,13 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price">
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) . ' THB' : 'NONE' ?> </span>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size18 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= isset($cozxySellingsPrice) ? number_format($cozxySellingsPrice) : 'NONE' . ' THB' ?> </span>
                         <span class="size14 onsale"><?= isset($marketPrice) ? number_format($marketPrice) . ' THB' : '' ?> </span>
                     </p>
                     <?php

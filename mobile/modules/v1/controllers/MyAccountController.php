@@ -51,7 +51,7 @@ class MyAccountController extends MyAccountFrontendController
 
                     if($avatar->saveAs($filePath) && $userModel->save(false)) {
                         $res['success'] = true;
-                        $res['avatar'] = Url::home(true) . 'images/user/avatar/' . $fileName;
+                        $res['avatar'] = Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR . 'images/user/avatar/' . $fileName;
                     }
                 } else {
                     $res['error'] = 'Can not uploaded file, please try again';
@@ -130,12 +130,15 @@ class MyAccountController extends MyAccountFrontendController
 
             $res['otp'] = $code;
             $res['success'] = true;
+            $tel = self::preparePhoneNumber($userModel->tel);
 
             Sms::Send('POST', Sms::SMS_URL, Json::encode([
-                'from' => 'Cozxy',
-                'to' => [self::preparePhoneNumber($userModel->tel)],
+                'from' => 'COZXY',
+                'to' => [$tel],
                 'text' => "รหัส OTP สำหรับเปลี่ยนเบอร์โทรศัพท์ ของคุณคือ $code"
             ]));
+
+            $a = 0;
         } else {
             $res['error'] = 'Error : User not found';
         }
