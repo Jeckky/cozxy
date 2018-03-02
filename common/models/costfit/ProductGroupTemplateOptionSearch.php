@@ -43,7 +43,7 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $query->orderBy("ordering ASC");
+        //$query->orderBy("ordering ASC");
         $query->andFilterWhere(['productGroupTemplateId' => $this->productGroupTemplateId]);
 
         if (!($this->load($params) && $this->validate())) {
@@ -62,7 +62,7 @@ class ProductGroupTemplateOptionSearch extends ProductGroupTemplateOption {
 
         $query->andFilterWhere(['like', 'title', $this->title])
                 ->andFilterWhere(['like', 'description', $this->description]);
-        $query->orderBy("ordering ASC");
+        //$query->orderBy("ordering ASC");
         return $dataProvider;
     }
 
