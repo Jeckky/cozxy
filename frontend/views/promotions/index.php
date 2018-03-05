@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-xs-12 col-md-12">
                 <div class="carousel slide media-carousel" id="media1">
-                    <h4>Promotion Cozxy</h4>
+                    <h4>Cozxy Promotions</h4>
                     <div style=" border-top:  1px solid #000000; height: 10px;"></div>
                     <div class="carousel-inner">
                         <?php
