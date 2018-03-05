@@ -26,7 +26,9 @@ $this->params['breadcrumbs'][] = 'Update';
                 'model' => $model,
                 'brandFilter'=>$brandFilter,
                 'categoryFilter'=>$categoryFilter,
-                'productGroupTemplateFilter'=>$productGroupTemplateFilter
+                'productGroupTemplateFilter'=>$productGroupTemplateFilter,
+                'productPriceCurrencyModel' => $productPriceCurrencyModel,
+                'currencyModel' => $currencyModel,
             ]) ?>
         </div>
     </div>

@@ -71,6 +71,12 @@
                 </div>
             </div>-->
 
+            <div class="alert alert-warning">
+                <span class="small">
+                Regards: On rare occasions, product packaging design may be different from the image shown by the brand owner. We try our best to update our images. If you are not satisfied with your product please request for return before opening package.
+                    </span>
+            </div>
+
         </div>
     </div>
 </div>
