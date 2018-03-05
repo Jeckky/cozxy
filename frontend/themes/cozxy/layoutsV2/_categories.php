@@ -85,7 +85,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         <a href="#" style=" font-weight:900; color: #000;">IN BRANDS </a>
                     </div>
                     <div class="col-md-12 sub-items" style="padding: 0px; margin-left: 20px;">
-                        <div class="brand_menu_in_brands">
+                        <div class="brand_menu_in_brands" style=" max-height: 480px; width: 100%;">
 
                         </div>
                         <?php
