@@ -73,7 +73,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 <div class="bg-white wrapper-cozxy">
     <div class="container">
         <div class="row">
-            <h2>HOT DEALS 30% - 70%</h2>
+            <h2>HOT DEALS<!--30% - 70%--></h2>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <?php
