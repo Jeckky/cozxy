@@ -34,13 +34,13 @@ use kartik\widgets\Select2;
         <div class="panel-body">
             <?php
             $form = ActiveForm::begin([
-                'options' => ['class' => 'panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
-                'fieldConfig' => [
-                    'template' => '{label}<div class="col-sm-9">{input}</div>',
-                    'labelOptions' => [
-                        'class' => 'col-sm-3 control-label'
-                    ]
-                ]
+                        'options' => ['class' => 'panel-default form-horizontal', 'enctype' => 'multipart/form-data'],
+                        'fieldConfig' => [
+                            'template' => '{label}<div class="col-sm-9">{input}</div>',
+                            'labelOptions' => [
+                                'class' => 'col-sm-3 control-label'
+                            ]
+                        ]
             ]);
             ?>
 
@@ -139,7 +139,7 @@ use kartik\widgets\Select2;
             <div class="form-group field-pickingpoint-status">
                 <label class="col-sm-3 control-label" for="pickingpoint-status">Status</label>
                 <div class="col-sm-9">
-                    <?= $form->field($model, 'status')->checkbox([ 'label' => '']) ?>
+                    <?= $form->field($model, 'status')->checkbox(['label' => '']) ?>
                 </div>
             </div>
 
@@ -160,6 +160,6 @@ use kartik\widgets\Select2;
 
     </div>
     <?php $this->registerJs("
-           
+
 
 ", \yii\web\View::POS_END); ?>
