@@ -148,11 +148,40 @@ class DisplayMyBrand {
     }
 
     public static function MyFilterCatToBrand($categoryId) {
+        $test2 = \frontend\controllers\CategoriesController::actionTreeSubToApiElastic($categoryId);
 
+        foreach ($test2 as $key => $value) {
+            $categoryArray[$key][] = $value['categoryId'];
+            if (isset($value['Children'])) {
+                foreach ($value['Children'] as $key => $items) {
+                    $categoryArray[$key][] = $items['categoryId'];
+                    if (isset($items['Children'])) {
+                        foreach ($items['Children'] as $key => $sub) {
+                            $categoryArray[$key] = $sub['categoryId'];
+                        }
+                    }
+                }
+            }
+        }
+        $cateToElasticx = '';
+        if (isset($categoryArray)) {
+            foreach ($categoryArray as $key => $value) {
+                $cateToElastic = '';
+                foreach ($value as $key => $item) {
+                    $cateToElastic .= $item . ',';
+                }
+                $cateToElasticx .= $cateToElastic;
+            }
+            $categorySearchId = $cateToElasticx . $categoryId;
+        } else {
+            $categorySearchId = $categoryId;
+        }
+
+        //echo $categorySearchId;
         $brands = \common\models\costfit\ProductSuppliers::find()
                         ->select('brand.* ')
                         ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
-                        ->andWhere(['product_suppliers.categoryId' => $categoryId])
+                        ->andWhere('product_suppliers.categoryId in (' . $categorySearchId . ') ')
                         ->groupBy(['product_suppliers.brandId'])
                         ->asArray()->all();
 
