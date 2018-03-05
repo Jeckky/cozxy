@@ -94,7 +94,7 @@ class WishlistController extends Controller
                 'sellingPrice' => $wishlist->sellingPrice,
                 'discountPercent' => self::discountPercent($wishlist),
                 'title' => $wishlist->product->title,
-                'image' => Url::home(true).$wishlist->product->images->imageThumbnail1,
+                'image' => Yii::$app->params['baseUrl'].DIRECTORY_SEPARATOR.$wishlist->product->images->imageThumbnail1,
                 'brand' => $wishlist->product->brand->title
             ];
             $j++;

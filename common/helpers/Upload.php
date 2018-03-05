@@ -393,4 +393,42 @@ class Upload {
         return false;
     }
 
+    public static function UploadAllImage() {
+        $imagePath = 'images/ProductImage/';
+        $thumbnail1Path = $imagePath . 'thumbnail1/';
+        $thumbnail2Path = $imagePath . 'thumbnail2/';
+
+        $uploadBasePath = Yii::$app->basePath . '/web/';
+        $uploadPath = $uploadBasePath . $imagePath;
+        $uploadPath1 = $uploadBasePath . $thumbnail1Path;
+        $uploadPath2 = $uploadBasePath . $thumbnail2Path;
+        if (isset($_FILES['fileImages'])) {
+            //$file = \yii\web\UploadedFile::getInstanceByName('fileImages');
+            foreach ($_FILES['fileImages']['tmp_name'] as $key => $val):
+
+                $file_name[$key] = $_FILES['fileImages']['name'][$key];
+                $file_size[$key] = $_FILES['fileImages']['size'][$key];
+                $file_tmp[$key] = $_FILES['fileImages']['tmp_name'][$key];
+                $file_type[$key] = $_FILES['fileImages']['type'][$key];
+                $originalFile = $uploadPath . $file_name[$key]; // originalFile
+                $thumbFile = $uploadPath . $file_name[$key];
+                $thumbFile1 = $uploadPath1 . $file_name[$key];
+                $thumbFile2 = $uploadPath2 . $file_name[$key];
+                move_uploaded_file($file_tmp[$key], $thumbFile);
+                move_uploaded_file($file_tmp[$key], $thumbFile1);
+                move_uploaded_file($file_tmp[$key], $thumbFile2);
+//                $file->saveAs($uploadPath . $file);
+//
+//                Image::thumbnail($originalFile, 1500, 1000)->save($thumbFile, ['quality' => 100]); // large image
+//                Image::thumbnail($originalFile, 262, 262)->save($thumbFile1, ['quality' => 80]); // thumbnail 1 file
+                //   Image::thumbnail($originalFile, 131, 131)->save($thumbFile2, ['quality' => 80]); // thumbnail 2 file
+            endforeach;
+            //}
+        } else {
+            echo "No Detect Image Upload";
+        }
+
+        return false;
+    }
+
 }

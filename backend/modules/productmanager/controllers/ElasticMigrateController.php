@@ -100,7 +100,7 @@ class ElasticMigrateController extends ProductManagerMasterController
             ->leftJoin('product_price_suppliers pps', 'ps.productSuppId=pps.productSuppId')
             ->where(['ps.status' => 1, 'ps.approve' => 'approve', 'pps.status' => 1])
             ->andWhere('ps.result > 0')
-            ->orderBy(['ps.productSuppId' => SORT_ASC])
+            ->orderBy(['ps.productSuppId' => SORT_ASC, 'pps.price'=>SORT_ASC])
             ->offset($page * $limit)
             ->limit($limit)
             ->asArray()
@@ -134,7 +134,7 @@ class ElasticMigrateController extends ProductManagerMasterController
             settype($productModel['result'], 'int');
             settype($productModel['price'], 'float');
 
-            Elastic::connect($url . 'products/' . $productId . '/suppliers/' . $productSuppId, $productModel, Elastic::METHOD_POST);
+//            Elastic::connect($url . 'products/' . $productId . '/suppliers/' . $productSuppId, $productModel, Elastic::METHOD_POST);
             $productModel['url'] = $url . 'products/' . $productId . '/suppliers/' . $productSuppId;
 
             var_dump($productModel);

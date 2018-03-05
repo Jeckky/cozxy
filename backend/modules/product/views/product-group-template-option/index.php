@@ -61,10 +61,10 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             //throw new \yii\base\Exception(print_r($model, true));
                             $total = ProductGroupTemplateOption::countOption($model->productGroupTemplateId);
                             $minut = '<a href="javascript:orderingTemplateOption(' . $model->productGroupTemplateOptionId . ',' . $total . ',0' . ')" class="btn btn-warning" style="font-size: 14pt;">-</a>&nbsp;&nbsp;&nbsp;';
-                            $ordering = '<span id="orderingTemplate' . $model->productGroupTemplateOptionId . '" style="font-size: 14pt;">' . $model->ordering . '</span> &nbsp;&nbsp;&nbsp;';
+                            $ordering = '<span id="orderingTemplate' . $model->productGroupTemplateOptionId . '" style="font-size: 14pt;"> </span> &nbsp;&nbsp;&nbsp;';
 
                             $plus = ' <a href = "javascript:orderingTemplateOption(' . $model->productGroupTemplateOptionId . ',' . $total . ',1' . ')" class = "btn btn-success"style = "font-size: 14pt;">+</a>';
-                            return $minut . $ordering . $plus;
+                            //return $minut . $ordering . $plus;
                         }
                     ],
                     // 'createDateTime',

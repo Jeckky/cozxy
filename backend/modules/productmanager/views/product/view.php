@@ -36,6 +36,8 @@ $productId = $model->productId;
         ?>
         <?= Html::a('Product Option', ['/product/product-group/add-option', 'id' => $model->productId, 'template' => $model->productGroupTemplateId], ['class' => 'btn btn-warning']) ?>
         <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Import product file', ['/productmanager/import-product', 'id' => $model->productId, 'templateId' => $model->productGroupTemplateId], ['class' => 'btn']) ?>
+        <?= Html::a('Import Image', ['/productmanager/import-product/import-image'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?=
@@ -172,72 +174,72 @@ $productId = $model->productId;
                                     'image' => function ($url, $model, $index) {
                                         return Html::a('<i class="fa fa-picture-o"></i>', Url::to(['create-product-images', 'id' => $model->productId]));
                                     }
-                                ]
-                            ],
-                        ],
-                    ]);
-                    ?>
-                    <?php Pjax::end(); ?>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="productSuppliers"> 
-                    <?=
-                    GridView::widget([
-                        'dataProvider' => $productSupplierDataProvider,
-                        //                        'filterModel' => $searchModel,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            [
-                                'header' => 'Image',
-                                'value' => function ($model) {
-                                    return isset($model->product->images->imageThumbnail1) ? Yii::$app->homeUrl . $model->product->images->imageThumbnail1 : '';
-                                },
-                                'format' => 'image'
-                            ],
-                            [
-                                'attribute' => 'title',
-                                'value' => function ($model) {
-                                    return $model->title;
-                                },
-                            ],
-                            'isbn:ntext',
-                            [
-                                'attribute' => 'price',
-                                'value' => function ($model) {
-                                    return isset($model->productPriceSuppliers->price) ? $model->productPriceSuppliers->price : '-';
-                                }
-                            ],
-                            'quantity',
-                            'result',
-                            [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template' => ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) ? '{stock} {price} {delete}' : '',
-                                'buttons' => [
-                                    'stock' => function ($url, $model, $index) {
-                                        return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);
-                                    },
-                                    'price' => function ($url, $model, $index) {
-                                        return Html::a('Price', Url::to(Url::home() . 'productmanager/product-suppliers/price?id=' . $model->productSuppId), ['class' => 'btn btn-warning btn-xs']);
-                                    },
+                                        ]
+                                    ],
                                 ],
-                                'urlCreator' => function ($action, $model, $key, $index) {
-                                    if ($action === 'delete') {
-                                        $url = Url::to(Url::home() . 'productmanager/product-suppliers/delete?id=' . $model->productSuppId);
+                            ]);
+                            ?>
+                            <?php Pjax::end(); ?>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="productSuppliers">
+                            <?=
+                            GridView::widget([
+                                'dataProvider' => $productSupplierDataProvider,
+                                //                        'filterModel' => $searchModel,
+                                'columns' => [
+                                    ['class' => 'yii\grid\SerialColumn'],
+                                    [
+                                        'header' => 'Image',
+                                        'value' => function ($model) {
+                                            return isset($model->product->images->imageThumbnail1) ? Yii::$app->homeUrl . $model->product->images->imageThumbnail1 : '';
+                                        },
+                                        'format' => 'image'
+                                    ],
+                                    [
+                                        'attribute' => 'title',
+                                        'value' => function ($model) {
+                                            return $model->title;
+                                        },
+                                    ],
+                                    'isbn:ntext',
+                                    [
+                                        'attribute' => 'price',
+                                        'value' => function ($model) {
+                                            return isset($model->productPriceSuppliers->price) ? $model->productPriceSuppliers->price : '-';
+                                        }
+                                    ],
+                                    'quantity',
+                                    'result',
+                                    [
+                                        'class' => 'yii\grid\ActionColumn',
+                                        'template' => ((\hscstudio\mimin\components\Mimin::checkRoute('productmanager/product' . '/create-product-suppliers'))) ? '{stock} {price} {delete}' : '',
+                                        'buttons' => [
+                                            'stock' => function ($url, $model, $index) {
+                                                return Html::a('Stock', Url::to(Url::home() . 'productmanager/product-suppliers/stock?id=' . $model->productSuppId), ['class' => 'btn btn-info btn-xs']);
+                                            },
+                                                    'price' => function ($url, $model, $index) {
+                                                return Html::a('Price', Url::to(Url::home() . 'productmanager/product-suppliers/price?id=' . $model->productSuppId), ['class' => 'btn btn-warning btn-xs']);
+                                            },
+                                                ],
+                                                'urlCreator' => function ($action, $model, $key, $index) {
+                                            if ($action === 'delete') {
+                                                $url = Url::to(Url::home() . 'productmanager/product-suppliers/delete?id=' . $model->productSuppId);
 
-                                        return $url;
-                                    }
-                                }
-                            ],
-                        ],
-                    ]);
-                    ?>
-                </div>
-            </div>
+                                                return $url;
+                                            }
+                                        }
+                                            ],
+                                        ],
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
 
-        </div>
+                        </div>
 
-    <?php endif; ?>
+                    <?php endif; ?>
 
-    <?php if ($model->parentId !== NULL): ?>
-        <?= $this->render('_image_grid', ['productId' => $model->productId]) ?>
-    <?php endif; ?>
+                    <?php if ($model->parentId !== NULL): ?>
+                        <?= $this->render('_image_grid', ['productId' => $model->productId]) ?>
+                    <?php endif; ?>
 </div>
