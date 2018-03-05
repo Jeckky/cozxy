@@ -85,26 +85,28 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         <a href="#" style=" font-weight:900; color: #000;">IN BRANDS </a>
                     </div>
                     <div class="col-md-12 sub-items" style="padding: 0px; margin-left: 20px;">
+                        <div class="brand_menu_in_brands">
 
+                        </div>
                         <?php
-                        echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $this->params['brands'],
-                            'summary' => "",
-                            'options' => [
-                                'tag' => false,
-                            ],
-                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                                //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_in_brands', ['model' => $model, 'index' => $index]);
-                            },
-                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                            //'layout' => "{summary}{pager}{items}",
-                            'layout' => "{items}",
-                            'itemOptions' => [
-                                'tag' => false,
-                            ],
-                                //'itemOptions' => ['class' => 'item'],
-                        ]);
+                        /* echo \yii\widgets\ListView::widget([
+                          'dataProvider' => $this->params['brands'],
+                          'summary' => "",
+                          'options' => [
+                          'tag' => false,
+                          ],
+                          'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                          //echo $model->productId, ',';
+                          return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_in_brands', ['model' => $model, 'index' => $index]);
+                          },
+                          // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                          //'layout' => "{summary}{pager}{items}",
+                          'layout' => "{items}",
+                          'itemOptions' => [
+                          'tag' => false,
+                          ],
+                          //'itemOptions' => ['class' => 'item'],
+                          ]); */
                         ?>
                     </div>
                 </div>

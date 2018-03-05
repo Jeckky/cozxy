@@ -115,6 +115,7 @@ function xscategoryBack() {
     $('.mob-box').animate({left: '0'}, 512);
 }
 function categoryMob(x) {
+
     var temp = $('.sub-item-' + x).html();
     if (temp != '') {
         $('.mob-subcate').html(temp);

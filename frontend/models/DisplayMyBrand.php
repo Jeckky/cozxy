@@ -147,4 +147,17 @@ class DisplayMyBrand {
         return $brands;
     }
 
+    public static function MyFilterCatToBrand($categoryId) {
+
+        $brands = \common\models\costfit\ProductSuppliers::find()
+                        ->select('brand.* ')
+                        ->join(" LEFT JOIN", "brand", "brand.brandId  = product_suppliers.brandId")
+                        ->andWhere(['product_suppliers.categoryId' => $categoryId])
+                        ->groupBy(['product_suppliers.brandId'])
+                        ->asArray()->all();
+
+        //print_r($brands);
+        return $brands;
+    }
+
 }
