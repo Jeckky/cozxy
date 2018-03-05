@@ -75,11 +75,11 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
     */ ?>
-    <?= $form->field($model, 'productGroupTemplateId')->dropDownList($productGroupTemplateFilter, ['disabled'=>$disabled])?>
+    <?= $form->field($model, 'productGroupTemplateId')->dropDownList($productGroupTemplateFilter, ['disabled' => $disabled]) ?>
 
-    <?= $form->field($model, 'brandId')->dropDownList($brandFilter, ['disabled'=>$disabled]) ?>
+    <?= $form->field($model, 'brandId')->dropDownList($brandFilter, ['disabled' => $disabled]) ?>
 
-    <?= $form->field($model, 'categoryId')->dropDownList($categoryFilter, ['disabled'=>$disabled]) ?>
+    <?= $form->field($model, 'categoryId')->dropDownList($categoryFilter, ['disabled' => $disabled]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -114,15 +114,21 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
     ]);
     ?>
 
-    <?=$form->field($model, 'price')->textInput() ?>
+    <?php
+    /**
+     * Product Price Currency
+     */
+    ?>
+    <?= $form->field($productPriceCurrencyModel, 'currencyId')->dropDownList($currencyModel->currencyCodeArray)?>
+    <?= $form->field($productPriceCurrencyModel, 'price')->textInput() ?>
 
-    <?php if($model->parentId !== NULL):?>
-    <?=$form->field($model, 'isbn')->textInput() ?>
-    <?php endif;?>
+    <?php if($model->parentId !== NULL): ?>
+        <?= $form->field($model, 'isbn')->textInput() ?>
+    <?php endif; ?>
 
     <div class="form-group">
         <div class="col-md-offset-3">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-block btn-lg' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-block btn-lg' : 'btn btn-primary']) ?>
         </div>
     </div>
 
