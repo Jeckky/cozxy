@@ -256,9 +256,47 @@ class Category extends \common\models\costfit\master\CategoryMaster {
                         ->all();
     }
 
-    public static function categoryId($title) {
-        $category = Category::find()->where("title='" . $title . "' and status=1")->one();
-        return $category->categoryId;
+    public static function categoryId($category) {
+        $categoryArr = explode(",", $category);
+        $allcate = count($categoryArr);
+        $i = 0;
+        if ($allcate == 1) {
+            $categoryLevel1 = Category::find()->where("title='" . $categoryArr[0] . "' and level=1 and status=1")->one();
+            if (isset($categoryLevel1)) {
+                $i++;
+                return $categoryLevel1->categoryId;
+            }
+        } else if ($allcate == 2) {
+            $level1 = $categoryArr[0];
+            $level2 = $categoryArr[1];
+            $categoryLevel1 = Category::find()->where("title='" . $level1 . "' and status=1 and level=1 and parentId is null")->one();
+            if (isset($categoryLevel1)) {
+                $categoryLevel2 = Category::find()->where("parentId=$categoryLevel1->categoryId and level=2 and title='" . $level2 . "'")->one();
+                if (isset($categoryLevel2)) {
+                    $i++;
+                    return $categoryLevel2->categoryId;
+                }
+            }
+        } else if ($allcate == 3) {
+            $level1 = $categoryArr[0];
+            $level2 = $categoryArr[1];
+            $level3 = $categoryArr[2];
+            $categoryLevel1 = Category::find()->where("title='" . $level1 . "' and status=1 and level=1 and parentId is null")->one();
+            if (isset($categoryLevel1)) {
+                $categoryLevel2 = Category::find()->where("parentId=$categoryLevel1->categoryId and level=2 and title='" . $level2 . "'")->one();
+                if (isset($categoryLevel2)) {
+                    $categoryLevel3 = Category::find()->where("parent=$categoryLevel2->categoryId and level=4 and title='" . $level3 . "'")->one();
+
+                    if (isset($categoryLevel3)) {
+                        $i++;
+                        return $categoryLevel3->categoryId;
+                    }
+                }
+            }
+        }
+        if ($i == 0) {
+            return null;
+        }
     }
 
 }
