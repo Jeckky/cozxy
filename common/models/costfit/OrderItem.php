@@ -231,6 +231,13 @@ class OrderItem extends \common\models\costfit\master\OrderItemMaster {
         }
     }
 
+    public static function OrderItem($id) {
+        $orderItem = OrderItem::find()->where("orderItemId=$id")->one();
+        if (isset($orderItem)) {
+            return $orderItem;
+        }
+    }
+
     public static function itemNotEnought($orderId, $id) {
         $orderItems = OrderItem::find()->where("orderId=" . $orderId . " and productsuppId in ($id)")->all();
         return $orderItems;

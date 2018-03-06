@@ -32,51 +32,19 @@ class Product {
             $char = 'AA0AA00';
             $productCode = $char;
         }
-        //$productCode++;
-        /* $char1 = substr($char, -1); //ตัวที่ 1
-          $result1 = Product::IntegerPlus($char1);
-          $char2 = substr($char, -2, 1); // ตัวที่ 2
-          if ($char1 == '9') {//ถ้าตัวที่ 1 = 9 ให้ + ตัวที่ 2
-          $result2 = Product::IntegerPlus($char2);
-          } else {
-          $result2 = $char2;
-          }
-          $ot = $char1 . $char2; //ot - > one to two
-          $char3 = substr($char, -3, 1);
-          if ($ot == '99') {
-          $result3 = Product::characterPlus($char3);
-          } else {
-          $result3 = $char3;
-          }
-          $oth = substr($char, 4, 3); //$oth->one to three
-          $char4 = substr($char, -4, 1);
-          if ($oth == 'Z99') {
-          $result4 = Product::characterPlus($char4);
-          } else {
-          $result4 = $char4;
-          }
-          $of = substr($char, 3, 4); //$oth->one to three
-          $char5 = substr($char, -5, 1);
-          if ($of == 'ZZ99') {
-          $result5 = IntegerPlus($char5);
-          } else {
-          $result5 = $char5;
-          }
-          $ofv = substr($char, 2, 5); //$ofv one to five
-          $char6 = substr($char, -6, 1);
-          if ($ofv == '9ZZ99') {
-          $result6 = IntegerPlus($char6);
-          } else {
-          $result6 = $char6;
-          }
-          $os = substr($char, 1, 6); //$ofv one to five
-          $char7 = substr($char, -7, 1);
-          if ($os == 'Z9ZZ99') {
-          $result7 = characterPlus($char7);
-          } else {
-          $result7 = $char7;
-          }
-          $productCode = $result7 . $result6 . $result5 . $result4 . $result3 . $result2 . $result1; */
+        return $productCode;
+    }
+
+    public static function generateProductCode2() {
+        $lastCode = \common\models\costfit\Product::find()->where("code is not null and code!='' ")->orderBy("code DESC")->one();
+        if (isset($lastCode)) {
+            $char = $lastCode->code;
+            $productCode = $char;
+            $productCode++;
+        } else {
+            $char = 'AA0AA00';
+            $productCode = $char;
+        }
         return $productCode;
     }
 

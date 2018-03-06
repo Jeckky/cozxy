@@ -414,13 +414,15 @@ class Upload {
                 Image::thumbnail($originalFile, 1500, 1000)->save($thumbFile, ['quality' => 100]); // large image
                 Image::thumbnail($originalFile, 262, 262)->save($thumbFile1, ['quality' => 80]); // thumbnail 1 file
                 Image::thumbnail($originalFile, 131, 131)->save($thumbFile2, ['quality' => 80]); // thumbnail 2 file
-                $productImage = \common\models\costfit\ProductImage::find()->where("image='" . $imagePath . $newFileName . "'")->one();
-                if (isset($productImage)) {
-                    $product = \common\models\costfit\Product::find()->where("productId=$productImage->productId")->one();
-                    if (isset($product)) {
-                        $product->status = 1;
-                        $product->save(false);
-                    }
+                $productImages = \common\models\costfit\ProductImage::find()->where("image='" . $imagePath . $newFileName . "'")->all();
+                if (isset($productImages) && count($productImages) > 0) {
+                    foreach ($productImages as $productImage):
+                        $product = \common\models\costfit\Product::find()->where("productId=$productImage->productId")->one();
+                        if (isset($product)) {
+                            $product->status = 1;
+                            $product->save(false);
+                        }
+                    endforeach;
                 }
             endforeach;
         } else {

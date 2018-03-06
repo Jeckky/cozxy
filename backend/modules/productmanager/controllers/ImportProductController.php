@@ -70,15 +70,36 @@ class ImportProductController extends ProductManagerMasterController {
                     $fcsv = fopen($csv_file, "r");
                     if ($fcsv) {
                         $r = 0;
+                        $error = 0;
+                        $transaction = \Yii::$app->db->beginTransaction();
+
                         while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
-                                    $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '' || $objArr[8] == '') {
+                                        $error++;
+                                        break;
+                                    } else {
+                                        $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                    }
                                 } else {
                                     self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
                                 }
                             }
+                            if ($r == 10) {
+                                break;
+                            }
                             $r++;
+                        }
+                        if ($error == 0) {
+                            $transaction->commit();
+                        } else {
+                            $transaction->rollBack();
+                            $message = '<span style="color: red;"><span class="glyphicon glyphicon-remove" aria-hidden="true" "></span> มีบางอย่างผิดพลาด กรุณาใส่ข้อมูลที่จำเป็นให้ครบถ้วน.</span><br>';
+                            return $this->render('index', [
+                                        'model' => $model,
+                                        'message' => $message,
+                            ]);
                         }
                         fclose($fcsv);
                         $message = '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload products complete.<br>';
@@ -123,63 +144,7 @@ class ImportProductController extends ProductManagerMasterController {
         ]);
     }
 
-    public function actionTemplateFormat() {
-        $res = [];
-        $res["status"] = false;
-        $productGroupTemplateId = $_POST["productGroupTemplateId"];
-        $text = 'Image&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;ShotDescription'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|<hr>Stock&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|&nbsp;&nbsp;';
-        $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$productGroupTemplateId")->all();
-        if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
-            foreach ($productGroupTemplateOptions as $option):
-                $text.=$option->title . '&nbsp;&nbsp;|&nbsp;&nbsp';
-            endforeach;
-            $res["status"] = true;
-        }
-        $res["text"] = $text;
-        return json_encode($res);
-    }
-
-    private static function FirstTemplateFormat($productGroupTemplateId) {
-        $text = 'Image&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;ShotDescription'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|<hr>Stock&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|&nbsp;&nbsp;';
-        $firstTemplate = ProductGroupTemplate::find()->where("productGroupTemplateId=$productGroupTemplateId")->one();
-        $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$firstTemplate->productGroupTemplateId")->all();
-        if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
-            foreach ($productGroupTemplateOptions as $option):
-                $text.=$option->title . '&nbsp;&nbsp;|&nbsp;&nbsp';
-            endforeach;
-        }
-        return $text;
-    }
-
-    private static function matchColumn($templateId, $colcumn) {
-        $templateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$templateId")->all();
-        $error = 0;
-        $i = 15; //กำหนดว่าให้เริ่มเปรียบเทียบที่คอลัมไหน
-        if (isset($templateOptions) && count($templateOptions) > 0) {
-            foreach ($templateOptions as $option):
-                if ($option->title != $colcumn[$i]) {
-                    $error++;
-                }
-                $i++;
-            endforeach;
-        }
-        if ($error == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private static function saveProductGroup($productArr) {
-        //throw new \yii\base\Exception(print_r($productArr, true));
         $templateId = ProductGroupTemplateOption::templateId($productArr[18]);
         $brandId = Brand::brandId($productArr[1]);
         $categoryId = \common\models\costfit\Category::categoryId($productArr[2]);
@@ -224,11 +189,11 @@ class ImportProductController extends ProductManagerMasterController {
             $product->userId = \Yii::$app->user->id;
             $product->parentId = $parentId;
             $product->brandId = $products->brandId;
-            $product->categoryId = $product->categoryId;
+            $product->categoryId = $products->categoryId;
             $product->productGroupTemplateId = $products->productGroupTemplateId;
             $product->step = 5;
             $product->approve = 'approve';
-            $product->code = \common\helpers\Product::generateProductCode();
+            $product->code = \common\helpers\Product::generateProductCode2();
             $product->title = $productArr[4] != '' ? $productArr[4] : $products->title;
             $product->optionName = $productArr[5];
             $product->shortDescription = $productArr[6] != '' ? $productArr[6] : $products->shortDescription;
@@ -632,92 +597,6 @@ class ImportProductController extends ProductManagerMasterController {
             endforeach;
         }
         return $dupplicateImg;
-    }
-
-    public function actionUploadProductImage() {
-        $filePath = 'file/ProductImage/';
-        $imagePath = 'images/ProductImage/';
-        $uploadBasePath = Yii::$app->basePath . '/web/';
-        $uploadImagePath = $uploadBasePath . $imagePath;
-        $uploadFilePath = $uploadBasePath . $filePath;
-        $userFile = Yii::$app->user->id . '.txt';
-        $userFileDup = Yii::$app->user->id . '_dup.txt';
-        if (isset($_FILES['image'])) {
-            $fileName = $_FILES['image']['name'];
-            $dupplicateImg = '';
-            $dupp = false;
-            $objScan = scandir($uploadImagePath);
-            foreach ($objScan as $oldFile):
-                if ($fileName == $oldFile) {
-                    $dupp = true;
-                    $dupplicateImg .= $fileName . ",";
-                }
-            endforeach;
-            if (!$dupp) {//ถ้าไม่มีไฟล์ซ้ำให้save
-                Upload::UploadProductImage2();
-                if (!file_exists($uploadFilePath)) {
-                    mkdir($uploadFilePath, 0777, true);
-                }
-                $file = fopen($uploadFilePath . $userFile, "a+");
-                fwrite($file, $fileName . ",");
-                fclose($file);
-            } else {
-                $file = fopen($uploadFilePath . $userFileDup, "a+"); //เขียนไฟล์ที่ซ้ำกัน
-                fwrite($file, $dupplicateImg);
-                fclose($file);
-            }
-        }
-        //
-    }
-
-    public function actionDupplicateImage() {
-        $filePath = 'file/ProductImage/';
-        $imagePath = 'images/ProductImage/';
-        $uploadBasePath = Yii::$app->basePath . '/web/';
-        $uploadFilePath = $uploadBasePath . $filePath;
-        $uploadImagePath = $uploadBasePath . $imagePath;
-        $userFile = Yii::$app->user->id . '.txt';
-        $userFileDup = Yii::$app->user->id . '_dup.txt';
-
-        $res = [];
-        $text = '';
-        $data = '';
-        $file = fopen($uploadFilePath . $userFileDup, "a+");
-        while (!feof($file)) {
-            $data = fgets($file);
-        }
-        fclose($file);
-
-        if ($data == '') {
-            $res["status"] = true;
-            $res["text"] = "<span class='glyphicon glyphicon-ok' aria-hidden='true' style='color:green;'></span> Upload images Successful.";
-        } else {
-            $res["false"] = true;
-            $dupp = explode(",", $data);
-            if (count($dupp) > 0) {
-                $textError = "<span class='glyphicon glyphicon-remove' aria-hidden='true' style='color:red;'></span> มีไฟล์รูปภาพชื่อซ้ำกัน กรุณาเปลี่ยนชื่อรูปแล้วอัพโหลดใหม่อีกครั้ง<br><br>";
-                foreach ($dupp as $dup):
-                    $textError.=$dup . "<br>";
-                endforeach;
-            }
-            $res["error"] = $textError;
-            $file = fopen($uploadFilePath . $userFile, "a+");
-            while (!feof($file)) {
-                $data = fgets($file);
-            }
-            $dataArr = explode(",", $data);
-            if (count($dataArr) > 0) {
-                foreach ($dataArr as $img):
-                    if (is_file($uploadImagePath . $img)) {
-                        unlink($uploadImagePath . $img); //ลบรูปที่อัพทั้งหมดเพื่อให้ อัพใหม่
-                    }
-                endforeach;
-                unlink($uploadFilePath . $userFile);
-                unlink($uploadFilePath . $userFileDup);
-            }
-        }
-
-        return Json::encode($res);
     }
 
     public static function uploadImage($uploadedFile) {

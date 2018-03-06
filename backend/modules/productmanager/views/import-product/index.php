@@ -41,7 +41,7 @@ $disabled = (Yii::$app->controller->action->id == 'update' && $model->parentId !
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 20px;font-size: 12pt;">
                         <input class="btn btn-lg btn-warning" type="file" name="fileCsv[csv]" style="float: left;">
-                        <input type="hidden" name="fileCsv[csv]">&nbsp;&nbsp;&nbsp;<b>Upload file .xls,csv  </b>
+                        <input type="hidden" name="fileCsv[csv]">&nbsp;&nbsp;&nbsp;<b>Upload file .csv  </b>
 
                     </div>
 
