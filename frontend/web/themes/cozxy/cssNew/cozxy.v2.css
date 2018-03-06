@@ -414,7 +414,7 @@
     }
     .discount {
         position: relative;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: bold;
         top: 2px;
     }
@@ -425,7 +425,7 @@
     }
     .rcorners4 .off-style {
         width: 100%;
-        margin-top: -10px;
+        margin-top: -15px;
         text-align: center;
         margin-left: 0px;
         font-size: 10px;
@@ -477,9 +477,9 @@
 
 .clearance .discount {
     position: relative;
-    font-size: 26px !important;
+    font-size: 15px !important;
     font-weight: bold;
-    top: -20px !important;
+    top: -18px !important;
 }
 
 #all-brands .cell-4{
@@ -529,4 +529,15 @@
 }
 .menubar a:hover {
     color: #fdc532!important;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #fdc532!important;
+}
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: -7px!important;
+    left: 0;
+    width: 100%;
 }

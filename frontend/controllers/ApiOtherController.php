@@ -31,7 +31,15 @@ class ApiOtherController extends MasterController {
 </div>";
         }
         echo $text;
-        //echo \yii\helpers\Json::encode($brand);
+//echo \yii\helpers\Json::encode($brand);
+    }
+
+    public function actionFilterCatInSubCate() {
+        $cateId = $_POST['categories'];
+        $subCate = \frontend\models\DisplayMyBrand::MyFilterCatToSubCate($cateId);
+        foreach ($subCate as $value) {
+            echo $value['title'];
+        }
     }
 
 }

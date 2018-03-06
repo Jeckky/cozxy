@@ -133,6 +133,16 @@ function categoryLoad(x) {
 
         }
     });
+    /*var path = $baseUrl + "api-other/filter-cat-in-sub-cate";
+     $.ajax({
+     url: path,
+     type: "POST",
+     //dataType: "JSON",
+     data: {categories: x},
+     success: function (data, status) {
+     alert(data);
+     }
+     });*/
 }
 $(document).on('mousemove', function (event) {
     var h1 = $('.topbar').height();
