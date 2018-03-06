@@ -63,10 +63,18 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                             <div class="col-md-6">
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900;">&nbsp;</div>
                                 <div class="sub-cate col-md-12" style="color:#000;font-weight: 900; padding: 5px;">
-                                    <span style="margin-left: 20px;">PROMOTION</span>
+                                    <a href="<?= Yii::$app->homeUrl ?>promotions" style=" padding:0px;
+                                       display: block;
+                                       width: 100%;
+                                       color: #333;
+                                       border-bottom: 0px solid #fee1a7;"><span style="margin-left: 20px;">PROMOTION</span></a>
                                 </div>
                                 <div class="sub-cate col-md-12" style="color:#ca0909;font-weight: 900; padding: 5px;">
-                                    <span style="margin-left: 20px;">CLEARANCE</span>
+                                    <a href="<?= Yii::$app->homeUrl ?>clearance" style=" padding:0px;
+                                       display: block;
+                                       width: 100%;
+                                       color: #333;
+                                       border-bottom: 0px solid #fee1a7;"><span style="margin-left: 20px;">CLEARANCE</span></a>
                                 </div>
                             </div>
                         </div>
