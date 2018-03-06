@@ -98,6 +98,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
+
                 <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
                 <?php if ($UserAgent != 'mobile') { ?>
@@ -498,6 +499,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                     ?>
                 </div>
                 <!-- Add Pagination -->
+
                 <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
                 <?php if ($UserAgent != 'mobile') { ?>
