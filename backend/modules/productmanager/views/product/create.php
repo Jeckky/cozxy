@@ -32,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'brandFilter'=>$brandFilter,
                 'categoryFilter'=>$categoryFilter,
-                'productGroupTemplateFilter'=>$productGroupTemplateFilter
+                'productGroupTemplateFilter'=>$productGroupTemplateFilter,
+                'productPriceCurrencyModel'=>$productPriceCurrencyModel,
+                'currencyModel' => $currencyModel,
             ]) ?>
         </div>
     </div>

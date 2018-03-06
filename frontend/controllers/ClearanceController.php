@@ -67,10 +67,11 @@ class ClearanceController extends MasterController {
 
     public static function forSale($categoryId = null, $brandId = null) {
         $products = ProductSuppliers::find()
-                ->select('product_suppliers.*, pps.price as price , CEILING(((p.`price` - pps.`price`) / p.`price`) * 100) as specialDiscount ')
+                ->select('product_suppliers.*, pps.price as price , CEILING(((p.`price` - pps.`price`) / p.`price`) * 100) as specialDiscount')
                 ->leftJoin("product_price_suppliers pps", "pps.productSuppId = product_suppliers.productSuppId")
                 ->leftJoin('product p', 'product_suppliers.productId=p.productId')
                 ->where('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 AND pps.status =1 AND  pps.price > 0 AND p.approve="approve" AND p.parentId is not null')
+                ->andWhere('CEILING(((p.`price` - pps.`price`) / p.`price`) * 100) >=25')
                 //->orderBy(new Expression('rand()') . " , pps.price");
                 ->orderBy(['specialDiscount' => SORT_DESC]);
 

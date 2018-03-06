@@ -120,6 +120,19 @@ function categoryLoad(x) {
     } else {
         categoryOff();
     }
+    //alert(x);
+    var path = $baseUrl + "api-other/filter-cat-in-brand";
+    $.ajax({
+        url: path,
+        type: "POST",
+        //dataType: "JSON",
+        data: {categories: x},
+        success: function (data, status) {
+
+            $('.brand_menu_in_brands').html(data);
+
+        }
+    });
 }
 $(document).on('mousemove', function (event) {
     var h1 = $('.topbar').height();

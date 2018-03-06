@@ -6,7 +6,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
     <div class="container-anchor menu-main-cozxy">
         <div class="row <?= ($UserAgent == 'mobile') ? '' : 'text-center' ?>">
             <a href="#" class="category-cozxy-head menu-category" data-toggle="collapse" data-target="#categories">CATEGORIES</a>
-            <a href="<?= Yii::$app->homeUrl ?>clearance" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="color:#ca0909;padding:5px;">CLEARANCE</a>
+            <a href="<?= Yii::$app->homeUrl ?>clearance" class="category-cozxy-head menu-category-clearance" data-toggle="collapse" data-target="#categories-clearance" style="padding:5px;">CLEARANCE</a>
             <a href="<?= Yii::$app->homeUrl ?>promotions" class="category-cozxy-head menu-category-pomotion" data-toggle="collapse" data-target="#categories-pomotion" style="padding: 5px;">PROMOTIONS</a>
             <a href="<?= Yii::$app->homeUrl ?>brands" class="category-cozxy-head menu-category-brands" data-toggle="collapse" data-target="#categories-brands"  style="padding: 5px;">BRANDS</a>
         </div>
@@ -85,26 +85,28 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         <a href="#" style=" font-weight:900; color: #000;">IN BRANDS </a>
                     </div>
                     <div class="col-md-12 sub-items" style="padding: 0px; margin-left: 20px;">
+                        <div class="brand_menu_in_brands" style=" max-height: 480px; width: 100%;">
 
+                        </div>
                         <?php
-                        echo \yii\widgets\ListView::widget([
-                            'dataProvider' => $this->params['brands'],
-                            'summary' => "",
-                            'options' => [
-                                'tag' => false,
-                            ],
-                            'itemView' => function ($model, $key, $index, $widget) { //$widget,
-                                //echo $model->productId, ',';
-                                return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_in_brands', ['model' => $model, 'index' => $index]);
-                            },
-                            // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
-                            //'layout' => "{summary}{pager}{items}",
-                            'layout' => "{items}",
-                            'itemOptions' => [
-                                'tag' => false,
-                            ],
-                                //'itemOptions' => ['class' => 'item'],
-                        ]);
+                        /* echo \yii\widgets\ListView::widget([
+                          'dataProvider' => $this->params['brands'],
+                          'summary' => "",
+                          'options' => [
+                          'tag' => false,
+                          ],
+                          'itemView' => function ($model, $key, $index, $widget) { //$widget,
+                          //echo $model->productId, ',';
+                          return $this->render('@app/themes/cozxy/layoutsV2/brands/_brand_menu_in_brands', ['model' => $model, 'index' => $index]);
+                          },
+                          // 'summaryOptions' => ['class' => 'sort-by-section clearfix'],
+                          //'layout' => "{summary}{pager}{items}",
+                          'layout' => "{items}",
+                          'itemOptions' => [
+                          'tag' => false,
+                          ],
+                          //'itemOptions' => ['class' => 'item'],
+                          ]); */
                         ?>
                     </div>
                 </div>

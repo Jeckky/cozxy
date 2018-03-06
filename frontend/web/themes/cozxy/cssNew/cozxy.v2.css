@@ -520,3 +520,13 @@
     margin-top: 2px!important;
     line-height: 1.1em!important;
 }
+
+.menu-category.active{
+    color:#000!important;
+}
+.menu-category a:hover {
+    color:#fdc532!important;
+}
+.menubar a:hover {
+    color: #fdc532!important;
+}

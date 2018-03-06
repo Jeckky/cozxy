@@ -11,11 +11,14 @@ use common\models\costfit\ProductGroupOptionValue;
 use common\models\costfit\ProductGroupTemplate;
 use common\models\costfit\ProductImage;
 use common\models\costfit\ProductImageSuppliers;
+use common\models\costfit\ProductPriceCurrency;
 use common\models\costfit\ProductPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
+use common\models\worlddb\Currency;
 use Yii;
 use backend\modules\productmanager\models\Product;
 use backend\modules\productmanager\models\search\Product as ProductSearch;
+use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -28,12 +31,14 @@ use yii\helpers\Url;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends ProductManagerMasterController {
+class ProductController extends ProductManagerMasterController
+{
 
     /**
      * @inheritdoc
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -48,17 +53,18 @@ class ProductController extends ProductManagerMasterController {
      * Lists all Product models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new ProductSearch();
         $searchModel->status = 1;
 
         //remember params
         $params = Yii::$app->request->queryParams;
-        if (count($params) <= 1) {
+        if(count($params) <= 1) {
             $params = Yii::$app->session['productParentParams'];
-            if (isset($params['page'])) {
+            if(isset($params['page'])) {
                 $_GET['page'] = $params['page'];
-                if (isset($params['sort']) && !empty($params['sort'])) {
+                if(isset($params['sort']) && !empty($params['sort'])) {
                     $_GET['sort'] = $params['sort'];
                 }
             }
@@ -77,11 +83,11 @@ class ProductController extends ProductManagerMasterController {
         //echo '<pre>';
         //print_r($getAuth);
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'brandFilter' => $brandFilter,
-                    'categoryFilter' => $categoryFilter,
-                    'checkAuth' => $getAuth
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'brandFilter' => $brandFilter,
+            'categoryFilter' => $categoryFilter,
+            'checkAuth' => $getAuth
         ]);
     }
 
@@ -90,9 +96,10 @@ class ProductController extends ProductManagerMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' ")->all();
-        foreach ($userGroup as $value) {
+        foreach($userGroup as $value) {
             //$value[] = $value['user_id'];
             $textUserPartner[] = $value['user_id'];
         }
@@ -103,7 +110,7 @@ class ProductController extends ProductManagerMasterController {
         //echo '<pre>';
         //print_r($productCountents);
         $productCountents = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Content' ")->all();
-        foreach ($productCountents as $value) {
+        foreach($productCountents as $value) {
             //$value[] = $value['user_id'];
             $textUserCountents[] = $value['user_id'];
         }
@@ -121,12 +128,13 @@ class ProductController extends ProductManagerMasterController {
         $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id, $textUserPartner, $textUserCountents);
         //print_r($productSupplierDataProvider);
         $getAuth = \common\helpers\menuBackend::getUser();
+
         return $this->render('view', [
-                    'model' => $this->findModel($id),
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'productSupplierDataProvider' => $productSupplierDataProvider,
-                    'checkAuth' => $getAuth
+            'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'productSupplierDataProvider' => $productSupplierDataProvider,
+            'checkAuth' => $getAuth
         ]);
     }
 
@@ -135,16 +143,20 @@ class ProductController extends ProductManagerMasterController {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() { //step 1
+    public function actionCreate()
+    { //step 1
         $model = new Product(['createDateTime' => new Expression('NOW()')]);
         $model->scenario = 'createProductGroup';
         $model->approve = 'approve';
+
+        $productPriceCurrencyModel = new ProductPriceCurrency();
+        $currencyModel = new Currency();
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $productId = Yii::$app->db->lastInsertID;
             $model->userId = Yii::$app->user->id;
@@ -152,7 +164,7 @@ class ProductController extends ProductManagerMasterController {
 
             $productGroupTemplate = ProductGroupTemplate::find()->where(['productGroupTemplateId' => $model->productGroupTemplateId])->one();
 
-            foreach ($productGroupTemplate->productGroupTemplateOptions as $productGroupTemplateOption) {
+            foreach($productGroupTemplate->productGroupTemplateOptions as $productGroupTemplateOption) {
                 $productGroupOption = new ProductGroupOption();
                 $productGroupOption->productGroupId = $productId;
                 $productGroupOption->productGroupTemplateOptionId = $productGroupTemplateOption->productGroupTemplateOptionId;
@@ -163,37 +175,46 @@ class ProductController extends ProductManagerMasterController {
                 $productGroupOption->save(false);
             }
 
+            $productPriceCurrencyModel->attributes = $_POST['ProductPriceCurrency'];
+            $productPriceCurrencyModel->productId = $productId;
+            $productPriceCurrencyModel->createDateTime = new Expression('NOW()');
+            $productPriceCurrencyModel->save(false);
 
             return $this->redirect(['create-product-images', 'id' => $model->productId]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
-                        'brandFilter' => $brandFilter,
-                        'categoryFilter' => $categoryFilter,
-                        'productGroupTemplateFilter' => $productGroupTemplateFilter
+                'model' => $model,
+                'brandFilter' => $brandFilter,
+                'categoryFilter' => $categoryFilter,
+                'productGroupTemplateFilter' => $productGroupTemplateFilter,
+                'productPriceCurrencyModel' => $productPriceCurrencyModel,
+                'currencyModel' => $currencyModel,
             ]);
         }
     }
 
-    public function actionCreateProductImages($id) { //step 2
+    public function actionCreateProductImages($id)
+    { //step 2
         //upload images
         $model = Product::findOne($id);
+
         return $this->render('create-product-image', ['productId' => $id, 'model' => $model]);
     }
 
-    public function actionCreateProductOption($id) {
+    public function actionCreateProductOption($id)
+    {
         $product = Product::findOne($id);
         $productGroupTemplate = ProductGroupTemplate::find()->where(['productGroupTemplateId' => $product->productGroupTemplateId])->one();
         $productWithOptions = [];
         $data = [];
 
-        if (isset($_POST['previewOptions'])) {
+        if(isset($_POST['previewOptions'])) {
             $data = $_POST['ProductGroupOptionValue'];
             $productWithOptions = $this->array_cartesian($data);
 
             $data2 = [];
-            foreach ($data as $key => $value) {
-                foreach ($value as $k => $v) {
+            foreach($data as $key => $value) {
+                foreach($value as $k => $v) {
                     $data2[$key][$v] = $v;
                 }
             }
@@ -201,11 +222,13 @@ class ProductController extends ProductManagerMasterController {
             $data = $data2;
         }
 
-        if (isset($_POST['productOptions'])) {
+        if(isset($_POST['productOptions'])) {
             $data = $_POST['ProductGroupOptionValue'];
             $productGroupOptions = ProductGroupOption::find()->where(['productGroupId' => $id])->all();
 
-            foreach ($data as $value) {
+            $productPriceCurrencyModel = ProductPriceCurrency::find()->where(['productId' => $id])->one();
+
+            foreach($data as $value) {
                 //new product
                 $p = new Product();
                 $p->attributes = $product->attributes;
@@ -220,19 +243,26 @@ class ProductController extends ProductManagerMasterController {
                 //Elastic
                 Elastic::createProduct($p);
 
+                // Product Price Currency
+                $ppc = new ProductPriceCurrency();
+                $ppc->currencyId = $productPriceCurrencyModel->currencyId;
+                $ppc->price = $productPriceCurrencyModel->price;
+                $ppc->createDateTime = new Expression('NOW()');
+                $ppc->productId = $pid;
+                $ppc->save();
 
 
                 //new product images
                 $i = 0;
-                foreach ($product->productImages as $productImage) {
+                foreach($product->productImages as $productImage) {
                     $img = new ProductImage();
                     $img->attributes = $productImage->attributes;
                     $img->productId = $pid;
                     $img->save();
 
-                    $res['image'] = Url::home(true).$img->image;
-                    $res['imageThumbnail1'] = Url::home(true).$img->imageThumbnail1;
-                    $res['imageThumbnail2'] = Url::home(true).$img->imageThumbnail2;
+                    $res['image'] = Url::home(true) . $img->image;
+                    $res['imageThumbnail1'] = Url::home(true) . $img->imageThumbnail1;
+                    $res['imageThumbnail2'] = Url::home(true) . $img->imageThumbnail2;
 
                     // Elastic
                     Elastic::updateProduct($pid, $data);
@@ -240,8 +270,8 @@ class ProductController extends ProductManagerMasterController {
                     $i++;
                 }
                 //product options
-                foreach ($productGroupOptions as $productGroupOption) {
-                    if (isset($value[$productGroupOption->productGroupTemplateOptionId])) {
+                foreach($productGroupOptions as $productGroupOption) {
+                    if(isset($value[$productGroupOption->productGroupTemplateOptionId])) {
                         $productGroupOptionValue = new ProductGroupOptionValue();
                         $productGroupOptionValue->productGroupOptionId = $productGroupOption->productGroupOptionId;
                         $productGroupOptionValue->productGroupTemplateOptionId = $productGroupOption->productGroupTemplateOptionId;
@@ -256,17 +286,19 @@ class ProductController extends ProductManagerMasterController {
                     }
                 }
             }
+
             return $this->redirect(['view', 'id' => $id]);
         }
 
         return $this->render('create-product-option', compact('productGroupTemplate', 'product', 'productWithOptions', 'data'));
     }
 
-    public function actionCreateProductSuppliers($id) {
+    public function actionCreateProductSuppliers($id)
+    {
         $product = Product::findOne($id);
 
-        if (isset($_POST['createProductSuppliers'])) {
-            foreach ($_POST['ProductSuppliers'] as $productId => $ps) {
+        if(isset($_POST['createProductSuppliers'])) {
+            foreach($_POST['ProductSuppliers'] as $productId => $ps) {
                 $child = Product::find()->where(['productId' => $productId])->one();
                 $productSuppliers = new ProductSuppliers();
                 $productSuppliers->attributes = $child->attributes;
@@ -296,7 +328,7 @@ class ProductController extends ProductManagerMasterController {
 
                 //product image suppliers
                 $productImages = ProductImage::find()->where(['productId' => $productId])->all();
-                foreach ($productImages as $productImage) {
+                foreach($productImages as $productImage) {
                     $productImageSuppliers = new ProductImageSuppliers();
                     $productImageSuppliers->attributes = $productImage->attributes;
                     $productImageSuppliers->productSuppId = $productSuppId;
@@ -313,26 +345,76 @@ class ProductController extends ProductManagerMasterController {
         return $this->render('create-product-suppliers', compact('product'));
     }
 
+    public function actionCreateProductPrice($id)
+    {
+        // id = productId
+        $productPriceCurrencyModel = new ProductPriceCurrency();
+        $currencyModel = new Currency();
+        $productPriceCurrencyQuery = ProductPriceCurrency::find()->where(['productId'=>$id])->orderBy(['status'=>SORT_ASC, 'createDateTime'=>SORT_DESC]);
+        $dataProdiver = new ActiveDataProvider(['query'=>$productPriceCurrencyQuery]);
+
+        if(isset($_POST['ProductPriceCurrency'])) {
+            $productPriceCurrencyModel->attributes = $_POST['ProductPriceCurrency'];
+
+            $ppc = ProductPriceCurrency::find()->where(['productId'=>$id, 'currencyId'=>$productPriceCurrencyModel->currencyId, 'status'=>ProductPriceCurrency::STATUS_ACTIVE])->one();
+            if(isset($ppc)) {
+                $ppc->status = ProductPriceCurrency::STATUS_INACTIVE;
+                $ppc->save();
+            }
+
+            $productPriceCurrencyModel->productId = $id;
+            $productPriceCurrencyModel->createDateTime = new Expression('NOW()');
+
+            if($productPriceCurrencyModel->save()) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+
+        return $this->render('create-product-price', compact('productPriceCurrencyModel', 'currencyModel', 'dataProdiver'));
+    }
+
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
 
         $brandFilter = self::brandFilter();
         $categoryFilter = self::categoryFilter();
         $productGroupTemplateFilter = self::productGroupTemplateFilter();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $productPriceCurrencyModel = ProductPriceCurrency::find()->where(['productId' => $id, 'status' => ProductPriceCurrency::STATUS_ACTIVE])->one();
+        if(!isset($productPriceCurrencyModel)) {
+            $productPriceCurrencyModel = new ProductPriceCurrency();
+        }
+
+        $currencyModel = new Currency();
+
+        if($model->load(Yii::$app->request->post()) && $model->save()) {
+
+//            if($productPriceCurrencyModel->currencyId == $_POST['ProductPriceCurrency']['currencyId']) {
+//                $productPriceCurrencyModel->status = 2;
+//                if(!$productPriceCurrencyModel->save()) {
+//                    print_r($productPriceCurrencyModel->errors);
+//                    exit();
+//                }
+//            }
+//            $ppc = new ProductPriceCurrency();
+//            $ppc->productId = $productPriceCurrencyModel->productId;
+//            $ppc->currencyId = $_POST['ProductPriceCurrency']['currencyId'];
+//            $ppc->price = $_POST['ProductPriceCurrency']['price'];
+//            $ppc->createDateTime = new Expression('NOW()');
+//            $ppc->save();
 
             //update brand & category in product master
-            if ($model->parentId == null) {
+            if($model->parentId == null) {
                 Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
 
-                $productModels = Product::find()->where(['parentId'=>$model->productId, 'status'=>1])->all();
+                $productModels = Product::find()->where(['parentId' => $model->productId, 'status' => 1])->all();
                 foreach($productModels as $productModel) {
                     $data = Elastic::prepareProductData($productModel);
                     $productId = $productModel->productId;
@@ -349,10 +431,12 @@ class ProductController extends ProductManagerMasterController {
             return $this->redirect(['view', 'id' => isset($model->parentId) ? $model->parentId : $model->productId]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
-                        'brandFilter' => $brandFilter,
-                        'categoryFilter' => $categoryFilter,
-                        'productGroupTemplateFilter' => $productGroupTemplateFilter
+                'model' => $model,
+                'brandFilter' => $brandFilter,
+                'categoryFilter' => $categoryFilter,
+                'productGroupTemplateFilter' => $productGroupTemplateFilter,
+                'productPriceCurrencyModel' => $productPriceCurrencyModel,
+                'currencyModel' => $currencyModel,
             ]);
         }
     }
@@ -363,7 +447,8 @@ class ProductController extends ProductManagerMasterController {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
 //        $this->findModel($id)->delete();
         //update to delete status
         $product = $this->findModel($id);
@@ -371,7 +456,7 @@ class ProductController extends ProductManagerMasterController {
         $product->approve = 'delete';
         $product->save(false);
 
-        if ($product->parentId == null) {
+        if($product->parentId == null) {
             $productChildModels = Product::find()->where(['parentId' => $id])->all();
 
             $pcs = ArrayHelper::map($productChildModels, 'productId', 'productId');
@@ -393,27 +478,32 @@ class ProductController extends ProductManagerMasterController {
      * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
-        if (($model = Product::findOne($id)) !== null) {
+    protected function findModel($id)
+    {
+        if(($model = Product::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
-    private static function brandFilter() {
+    private static function brandFilter()
+    {
         return ArrayHelper::map(Brand::find()->where(['status' => 1])->orderBy('title')->all(), 'brandId', 'title');
     }
 
-    private static function categoryFilter() {
+    private static function categoryFilter()
+    {
         return Category::categoryFilter();
     }
 
-    private static function productGroupTemplateFilter() {
+    private static function productGroupTemplateFilter()
+    {
         return ArrayHelper::map(ProductGroupTemplate::find()->where('status=1')->orderBy('title')->all(), 'productGroupTemplateId', 'title');
     }
 
-    public static function uploadImage($uploadedFile) {
+    public static function uploadImage($uploadedFile)
+    {
         $mime = \yii\helpers\FileHelper::getMimeType($uploadedFile->tempName);
         $file = time() . "_" . $uploadedFile->name;
 
@@ -424,18 +514,18 @@ class ProductController extends ProductManagerMasterController {
 
 
         //ตรวจสอบ
-        if ($uploadedFile == null) {
+        if($uploadedFile == null) {
             $message = "ไม่มีไฟล์ที่ Upload";
-        } else if ($uploadedFile->size == 0) {
+        } else if($uploadedFile->size == 0) {
             $message = "ไฟล์มีขนาด 0";
-        } else if ($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
+        } else if($mime != "image/jpeg" && $mime != "image/png" && $mime != "image/gif") {
             $message = "รูปภาพควรเป็น JPG หรือ PNG";
-        } else if ($uploadedFile->tempName == null) {
+        } else if($uploadedFile->tempName == null) {
             $message = "มีข้อผิดพลาด";
         } else {
             $message = "";
             $move = $uploadedFile->saveAs($uploadPath);
-            if (!$move) {
+            if(!$move) {
                 $message = "ไม่สามารถนำไฟล์ไปไว้ใน Folder ได้กรุณาตรวจสอบ Permission Read/Write/Modify";
             }
         }
@@ -443,17 +533,20 @@ class ProductController extends ProductManagerMasterController {
         echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
     }
 
-    public function actionUploadDescriptionImage() {
+    public function actionUploadDescriptionImage()
+    {
         $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
         self::uploadImage($uploadedFile);
     }
 
-    public function actionUploadSpecificationImage() {
+    public function actionUploadSpecificationImage()
+    {
         $uploadedFile = \yii\web\UploadedFile::getInstanceByName('upload');
         self::uploadImage($uploadedFile);
     }
 
-    public function actionUploadProductImage($id) {
+    public function actionUploadProductImage($id)
+    {
         $product = Product::findOne($id);
         $productImage = new ProductImage();
         $productImage->productId = $id;
@@ -466,16 +559,17 @@ class ProductController extends ProductManagerMasterController {
         Upload::UploadProductImage($productImage, $ordering);
     }
 
-    public function actionMoveImageUp($id) {
+    public function actionMoveImageUp($id)
+    {
         $productImage = ProductImage::findOne($id);
         $upper = ProductImage::find()->where(['productId' => $productImage->productId])->andWhere(['<', 'ordering', $productImage->ordering])->orderBy(['ordering' => SORT_DESC])->one();
 
-        if (isset($upper)) {
+        if(isset($upper)) {
             $newOrdering = $upper->ordering;
             $upper->ordering = $productImage->ordering;
             $productImage->ordering = $newOrdering;
 
-            if ($productImage->save() && $upper->save()) {
+            if($productImage->save() && $upper->save()) {
                 return Json::encode(['result' => true]);
             } else {
                 return Json::encode(['result' => false]);
@@ -483,16 +577,17 @@ class ProductController extends ProductManagerMasterController {
         }
     }
 
-    public function actionMoveImageDown($id) {
+    public function actionMoveImageDown($id)
+    {
         $productImage = ProductImage::findOne($id);
         $lower = ProductImage::find()->where(['productId' => $productImage])->andWhere(['>', 'ordering', $productImage->ordering])->orderBy(['ordering' => SORT_ASC])->one();
 
-        if (isset($lower)) {
+        if(isset($lower)) {
             $newOrdering = $lower->ordering;
             $lower->ordering = $productImage->ordering;
             $productImage->ordering = $newOrdering;
 
-            if ($productImage->save() && $lower->save()) {
+            if($productImage->save() && $lower->save()) {
                 return Json::encode(['result' => true]);
             } else {
                 return Json::encode(['result' => false]);
@@ -500,7 +595,8 @@ class ProductController extends ProductManagerMasterController {
         }
     }
 
-    public function actionDeleteProductImage($id) {
+    public function actionDeleteProductImage($id)
+    {
         $productImage = ProductImage::findOne($id);
         $productImage->delete();
 
@@ -509,14 +605,16 @@ class ProductController extends ProductManagerMasterController {
 //        unlink(Yii::$app->basePath . '/web/' . $productImage->imageThumbnail2);
     }
 
-    public function actionPrepareProducts($id) {
+    public function actionPrepareProducts($id)
+    {
         $data = $_POST['data'];
         $res = [];
 
         return Json::encode($res);
     }
 
-    public function array_cartesian($arrays) {
+    public function array_cartesian($arrays)
+    {
         $result = array();
         $keys = array_keys($arrays);
         $arrays = array_values($arrays);
@@ -524,20 +622,20 @@ class ProductController extends ProductManagerMasterController {
         $sizeIn = sizeof($arrays);
 
         $size = $sizeIn > 0 ? 1 : 0;
-        foreach ($arrays as $array) {
+        foreach($arrays as $array) {
             $size = $size * sizeof($array);
         }
-        for ($i = 0; $i < $size; $i++) {
+        for($i = 0; $i < $size; $i++) {
             $result[$i] = array();
-            for ($j = 0; $j < $sizeIn; $j++) {
+            for($j = 0; $j < $sizeIn; $j++) {
 //            array_push($result[$i], current($arrays[$j]));
                 $result[$i][$keys[$j]] = current($arrays[$j]);
             }
 
-            for ($j = ($sizeIn - 1); $j >= 0; $j--) {
-                if (next($arrays[$j]))
+            for($j = ($sizeIn - 1); $j >= 0; $j--) {
+                if(next($arrays[$j]))
                     break;
-                elseif (isset($arrays[$j]))
+                elseif(isset($arrays[$j]))
                     reset($arrays[$j]);
             }
         }
@@ -546,7 +644,8 @@ class ProductController extends ProductManagerMasterController {
         return $result;
     }
 
-    public function actionMultipleDelete() {
+    public function actionMultipleDelete()
+    {
         $res = ['success' => false, 'error' => NULL];
         $productIds = explode(',', $_POST['productIds']);
 
