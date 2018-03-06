@@ -65,7 +65,7 @@ if ($index == 0) {
                 <?php } ?>
             </div>
         </div>
-        <div class="product-txt text-left">
+        <div class="product-txt text-left" style="<?= ($UserAgent == 'mobile') ? 'padding:2px 2px 0 !important;' : '' ?>">
             <?php
             if ($UserAgent != 'mobile') {
                 ?>
@@ -73,9 +73,9 @@ if ($index == 0) {
                     <span class="size12"><?= isset($model->brand) ? strtoupper($model->brand->title) : 'NO BRAND' ?></span>
                 </p>
             <?php } ?>
-            <p class="name">
+            <p class="name" style="<?= ($UserAgent == 'mobile') ? 'height: 50px' : '' ?>">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
-                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 30) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 30) : '' ?>
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) >= 30) ? substr(strtoupper($model['title']), 0, 30) : substr(strtoupper($model['title']), 0, 30) : '' ?>
                 </a>
             </p>
             <br>

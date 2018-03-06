@@ -116,7 +116,7 @@ if ($index == 0) {
                 </div>
             <?php } ?>
         </div>
-        <div class="product-txt text-left">
+        <div class="product-txt text-left" style="<?= ($UserAgent == 'mobile') ? 'padding:2px 2px 0 !important;' : '' ?>">
             <?php
             if ($UserAgent != 'mobile') {
                 if (isset($model->product->brand->title)) {
@@ -133,24 +133,32 @@ if ($index == 0) {
                 }
             }
             ?>
-            <p class="name">
-                <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
-                    <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) <= 30) ? strtoupper($model->product->title) : substr(strtoupper($model->product->title), 0, 30) : '' ?>
-                </a>
+            <p class="name" style="<?= ($UserAgent == 'mobile') ? 'height: 50px' : '' ?>">
+                <?php
+                if ($UserAgent != 'mobile') {
+                    ?>
+                    <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
+                        <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) >= 30) ? substr(strtoupper($model->product->title), 0, 30) : substr(strtoupper($model->product->title), 0, 30) : '' ?>
+                    </a>
+                <?php } else { ?>
+                    <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => isset($model->product->productId) ? $model->product->productId : $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>" style=" display: inline-table; word-wrap: break-word;">
+                        <?= isset($model->product) ? (strlen(strtoupper($model->product->title)) >= 20) ? substr(strtoupper($model->product->title), 0, 20) : substr(strtoupper($model->product->title), 0, 30) : '' ?>
+                    </a>
+                <?php } ?>
             </p>
             <?php
             if ($model->price > 0) {
                 if (isset($hotDeal)) {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size10' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red"><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size12' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                 <?php } else {
                     ?>
                     <p class="price" >
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size10' ?> fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
-                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size10' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?> fc-red" ><?= number_format($model->price) . ' THB' ?> </span>
+                        <span class="<?= ($UserAgent != 'mobile') ? 'size12' : 'size12' ?> onsale"><?= isset($model->product) ? number_format($model->product->price) . ' THB' : '' ?> </span>
                     </p>
                     <?php
                 }
