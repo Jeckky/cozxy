@@ -76,9 +76,9 @@ class DisplayMyBrand {
     public static function MyFilterBrandNew($brandId) {
         if (isset($brandId)) {
             $whereArray["brandId"] = $brandId;
-            $brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
+            $brand = \common\models\costfit\Brand::find()->where($whereArray)->orderBy('title asc')->all();
         } else {
-            $brand = \common\models\costfit\Brand::find()->all();
+            $brand = \common\models\costfit\Brand::find()->orderBy('title asc')->all();
         }
         //$brand = \common\models\costfit\Brand::find()->where($whereArray)->all();
         return $brand;
