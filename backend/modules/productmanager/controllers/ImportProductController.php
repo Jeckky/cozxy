@@ -81,6 +81,10 @@ class ImportProductController extends ProductManagerMasterController {
                                         break;
                                     } else {
                                         $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                        if ($perentId == 0) {
+                                            $error++;
+                                            break;
+                                        }
                                     }
                                 } else {
                                     self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
@@ -148,7 +152,6 @@ class ImportProductController extends ProductManagerMasterController {
         $templateId = ProductGroupTemplateOption::templateId($productArr[18]);
         $brandId = Brand::brandId($productArr[1]);
         $categoryId = \common\models\costfit\Category::categoryId($productArr[2]);
-        //throw new \yii\base\Exception($categoryId);
         $product = new \common\models\costfit\Product();
         $product->userId = \Yii::$app->user->id;
         $product->parentId = null;
@@ -175,12 +178,16 @@ class ImportProductController extends ProductManagerMasterController {
         $product->createDateTime = new Expression('NOW()');
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
-        $product->save();
-        $parentId = \Yii::$app->db->getLastInsertID();
-        $imgs = $productArr[3];
-        $imgArr = explode(',', $imgs);
-        self::saveProductImageName($parentId, $imgArr);
-        return $parentId;
+        if ($categoryId != null) {
+            $product->save();
+            $parentId = \Yii::$app->db->getLastInsertID();
+            $imgs = $productArr[3];
+            $imgArr = explode(',', $imgs);
+            self::saveProductImageName($parentId, $imgArr);
+            return $parentId;
+        } else {
+            return 0;
+        }
     }
 
     private static function saveProduct($parentId, $productArr) {

@@ -260,6 +260,7 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         $categoryArr = explode(",", $category);
         $allcate = count($categoryArr);
         $i = 0;
+
         if ($allcate == 1) {
             $categoryLevel1 = Category::find()->where("title='" . $categoryArr[0] . "' and level=1 and status=1")->one();
             if (isset($categoryLevel1)) {
