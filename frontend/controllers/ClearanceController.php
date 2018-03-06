@@ -75,6 +75,7 @@ class ClearanceController extends MasterController {
                 //->orderBy(new Expression('rand()') . " , pps.price");
                 ->orderBy(['specialDiscount' => SORT_DESC]);
 
+
         if (isset($categoryId)) {
             $products->leftJoin('category_to_product ctp', 'ctp.productId=p.productId');
             $products->andWhere(['ctp.categoryId' => $categoryId]);
