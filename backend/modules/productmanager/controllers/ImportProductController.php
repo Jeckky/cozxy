@@ -70,15 +70,36 @@ class ImportProductController extends ProductManagerMasterController {
                     $fcsv = fopen($csv_file, "r");
                     if ($fcsv) {
                         $r = 0;
-                        while (($objArr = fgetcsv($fcsv, 1000, ",")) !== FALSE) {
+                        $error = 0;
+                        $transaction = \Yii::$app->db->beginTransaction();
+
+                        while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
-                                    $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '' || $objArr[8] == '') {
+                                        $error++;
+                                        break;
+                                    } else {
+                                        $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                    }
                                 } else {
                                     self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
                                 }
                             }
+                            if ($r == 10) {
+                                break;
+                            }
                             $r++;
+                        }
+                        if ($error == 0) {
+                            $transaction->commit();
+                        } else {
+                            $transaction->rollBack();
+                            $message = '<span style="color: red;"><span class="glyphicon glyphicon-remove" aria-hidden="true" "></span> มีบางอย่างผิดพลาด กรุณาใส่ข้อมูลที่จำเป็นให้ครบถ้วน.</span><br>';
+                            return $this->render('index', [
+                                        'model' => $model,
+                                        'message' => $message,
+                            ]);
                         }
                         fclose($fcsv);
                         $message = '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload products complete.<br>';
@@ -89,6 +110,15 @@ class ImportProductController extends ProductManagerMasterController {
                 //ประเภทไฟล์ ผิด
             }
         }
+
+        return $this->render('index', [
+                    'model' => $model,
+                    'message' => $message,
+        ]);
+    }
+
+    public function actionImportImage() {
+        $message = '';
         if (isset($_FILES['fileImages']) && $_FILES['fileImages']['tmp_name'][0] != '') {
             foreach ($_FILES['fileImages']['tmp_name'] as $key => $val) {
                 $file_name[$key] = $_FILES['fileImages']['name'][$key];
@@ -98,80 +128,23 @@ class ImportProductController extends ProductManagerMasterController {
             }
             $dupp = self::checkDupplicateFile($file_name);
             if ($dupp == '') {
-                self::uploadAllImage($_FILES['fileImages']);
+                Upload::UploadAllImage();
+
                 $message .= '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload images complete.<br>';
             } else {
                 $dupplicate = "มีชื่อรูปนี้อยู่แล้ว<br>" . $dupp . "กรุณาเปลี่ยนชื่อ";
-                return $this->render('index', [
-                            'model' => $model,
+                return $this->render('import_image', [
                             'message' => $message,
                             'dupplicate' => $dupplicate
                 ]);
             }
         }
-        return $this->render('index', [
-                    'model' => $model,
+        return $this->render('import_image', [
                     'message' => $message,
         ]);
     }
 
-    public function actionTemplateFormat() {
-        $res = [];
-        $res["status"] = false;
-        $productGroupTemplateId = $_POST["productGroupTemplateId"];
-        $text = 'Image&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;ShotDescription'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|<hr>Stock&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|&nbsp;&nbsp;';
-        $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$productGroupTemplateId")->all();
-        if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
-            foreach ($productGroupTemplateOptions as $option):
-                $text.=$option->title . '&nbsp;&nbsp;|&nbsp;&nbsp';
-            endforeach;
-            $res["status"] = true;
-        }
-        $res["text"] = $text;
-        return json_encode($res);
-    }
-
-    private static function FirstTemplateFormat($productGroupTemplateId) {
-        $text = 'Image&nbsp;&nbsp;|&nbsp;&nbsp;Title&nbsp;&nbsp;|&nbsp;&nbsp;OptionName&nbsp;&nbsp;|&nbsp;&nbsp;ShotDescription'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Description&nbsp;&nbsp;|&nbsp;&nbsp;Specifcation'
-                . '&nbsp;&nbsp;|&nbsp;&nbsp;Width&nbsp;&nbsp;|&nbsp;&nbsp;Height&nbsp;&nbsp;|&nbsp;&nbsp;Depth&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Weight&nbsp;&nbsp;|&nbsp;&nbsp;Price&nbsp;&nbsp;|&nbsp;&nbsp;'
-                . 'Unit&nbsp;&nbsp;|&nbsp;&nbsp;SmallUnit&nbsp;&nbsp;|<hr>Stock&nbsp;&nbsp;|&nbsp;&nbsp;Tag&nbsp;&nbsp;|&nbsp;&nbsp;';
-        $firstTemplate = ProductGroupTemplate::find()->where("productGroupTemplateId=$productGroupTemplateId")->one();
-        $productGroupTemplateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$firstTemplate->productGroupTemplateId")->all();
-        if (isset($productGroupTemplateOptions) && count($productGroupTemplateOptions) > 0) {
-            foreach ($productGroupTemplateOptions as $option):
-                $text.=$option->title . '&nbsp;&nbsp;|&nbsp;&nbsp';
-            endforeach;
-        }
-        return $text;
-    }
-
-    private static function matchColumn($templateId, $colcumn) {
-        $templateOptions = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$templateId")->all();
-        $error = 0;
-        $i = 15; //กำหนดว่าให้เริ่มเปรียบเทียบที่คอลัมไหน
-        if (isset($templateOptions) && count($templateOptions) > 0) {
-            foreach ($templateOptions as $option):
-                if ($option->title != $colcumn[$i]) {
-                    $error++;
-                }
-                $i++;
-            endforeach;
-        }
-        if ($error == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private static function saveProductGroup($productArr) {
-        //throw new \yii\base\Exception(print_r($productArr, true));
         $templateId = ProductGroupTemplateOption::templateId($productArr[18]);
         $brandId = Brand::brandId($productArr[1]);
         $categoryId = \common\models\costfit\Category::categoryId($productArr[2]);
@@ -197,7 +170,7 @@ class ImportProductController extends ProductManagerMasterController {
         $product->unit = $productArr[14];
         $product->smallUnit = $productArr[15];
         $product->tags = $productArr[17];
-        $product->status = 1;
+        $product->status = 99;
         $product->createDateTime = new Expression('NOW()');
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
@@ -216,16 +189,16 @@ class ImportProductController extends ProductManagerMasterController {
             $product->userId = \Yii::$app->user->id;
             $product->parentId = $parentId;
             $product->brandId = $products->brandId;
-            $product->categoryId = $product->categoryId;
+            $product->categoryId = $products->categoryId;
             $product->productGroupTemplateId = $products->productGroupTemplateId;
             $product->step = 5;
             $product->approve = 'approve';
-            $product->code = \common\helpers\Product::generateProductCode();
-            $product->title = $productArr[4];
+            $product->code = \common\helpers\Product::generateProductCode2();
+            $product->title = $productArr[4] != '' ? $productArr[4] : $products->title;
             $product->optionName = $productArr[5];
-            $product->shortDescription = $productArr[6];
-            $product->description = $productArr[7];
-            $product->specification = $productArr[8];
+            $product->shortDescription = $productArr[6] != '' ? $productArr[6] : $products->shortDescription;
+            $product->description = $productArr[7] != '' ? $productArr[7] : $products->description;
+            $product->specification = $productArr[8] != '' ? $productArr[8] : $products->specification;
             $product->width = $productArr[9];
             $product->height = $productArr[10];
             $product->depth = $productArr[11];
@@ -234,42 +207,43 @@ class ImportProductController extends ProductManagerMasterController {
             $product->unit = $productArr[14];
             $product->smallUnit = $productArr[15];
             $product->tags = $productArr[17];
-            $product->status = 1;
+            $product->status = 99;
             $product->createDateTime = new Expression('NOW()');
             $product->updateDateTime = new Expression('NOW()');
             $product->approvecreateDateTime = new Expression('NOW()');
             $product->save();
             $productId = \Yii::$app->db->getLastInsertID();
-            $productSuppliers = new ProductSuppliers();
-            $productSuppliers->userId = \Yii::$app->user->id;
-            $productSuppliers->brandId = $products->brandId;
-            $productSuppliers->categoryId = $product->categoryId;
-            $productSuppliers->approve = 'approve';
-            $productSuppliers->code = $products->code;
-            $productSuppliers->title = $productArr[4];
-            $productSuppliers->optionName = $productArr[5];
-            $productSuppliers->shortDescription = $productArr[6];
-            $productSuppliers->description = $productArr[7];
-            $productSuppliers->specification = $productArr[8];
-            $productSuppliers->width = $productArr[9];
-            $productSuppliers->height = $productArr[10];
-            $productSuppliers->depth = $productArr[11];
-            $productSuppliers->weight = $productArr[12];
-            $productSuppliers->unit = $productArr[14];
-            $productSuppliers->smallUnit = $productArr[15];
-            $productSuppliers->tags = $productArr[17];
-            $productSuppliers->quantity = $productArr[16];
-            $productSuppliers->result = $productArr[16];
-            $productSuppliers->productId = $productId;
-            $productSuppliers->status = 1;
-            $productSuppliers->createDateTime = new Expression('NOW()');
-            $productSuppliers->updateDateTime = new Expression('NOW()');
-            $productSuppliers->approvecreateDateTime = new Expression('NOW()');
-            $productSuppliers->save();
-            $productSuppId = \Yii::$app->db->getLastInsertID();
+            /* $productSuppliers = new ProductSuppliers();
+              $productSuppliers->userId = \Yii::$app->user->id;
+              $productSuppliers->brandId = $products->brandId;
+              $productSuppliers->categoryId = $product->categoryId;
+              $productSuppliers->approve = 'approve';
+              $productSuppliers->code = $products->code;
+              $productSuppliers->title = $productArr[4];
+              $productSuppliers->optionName = $productArr[5];
+              $productSuppliers->shortDescription = $productArr[6];
+              $productSuppliers->description = $productArr[7];
+              $productSuppliers->specification = $productArr[8];
+              $productSuppliers->width = $productArr[9];
+              $productSuppliers->height = $productArr[10];
+              $productSuppliers->depth = $productArr[11];
+              $productSuppliers->weight = $productArr[12];
+              $productSuppliers->unit = $productArr[14];
+              $productSuppliers->smallUnit = $productArr[15];
+              $productSuppliers->tags = $productArr[17];
+              $productSuppliers->quantity = $productArr[16];
+              $productSuppliers->result = $productArr[16];
+              $productSuppliers->productId = $productId;
+              $productSuppliers->status = 1;
+              $productSuppliers->createDateTime = new Expression('NOW()');
+              $productSuppliers->updateDateTime = new Expression('NOW()');
+              $productSuppliers->approvecreateDateTime = new Expression('NOW()');
+              $productSuppliers->save();
+              $productSuppId = \Yii::$app->db->getLastInsertID();
+             */
             $imgs = $productArr[3];
             $imgArr = explode(',', $imgs);
-            ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productSuppId, $productArr);
+            ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productArr);
             self::saveProductImageName($productId, $imgArr);
         }
     }
@@ -294,7 +268,20 @@ class ImportProductController extends ProductManagerMasterController {
                 $productImage->ordering = $ordering;
                 $productImage->title = $product->title;
                 $productImage->createDateTime = new \yii\db\Expression('NOW()');
+                $productImage->updateDateTime = new \yii\db\Expression('NOW()');
                 $productImage->save(FALSE);
+                $uploadBasePath = Yii::$app->basePath . '/web/';
+                $uploadPath = $uploadBasePath . $imagePath;
+                $objScan = scandir($uploadPath);
+                foreach ($objScan as $oldFile):
+                    if ($newFileName == $oldFile) {
+                        $product = \common\models\costfit\Product::find()->where("productId=$id")->one();
+                        if (isset($product)) {
+                            $product->status = 1;
+                            $product->save(false);
+                        }
+                    }
+                endforeach;
             endforeach;
         }
     }
@@ -610,13 +597,6 @@ class ImportProductController extends ProductManagerMasterController {
             endforeach;
         }
         return $dupplicateImg;
-    }
-
-    private static function uploadAllImage() {
-        if (isset($_FILES['fileImages'])) {
-
-            Upload::UploadAllImage();
-        }
     }
 
     public static function uploadImage($uploadedFile) {
