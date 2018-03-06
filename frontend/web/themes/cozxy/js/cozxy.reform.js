@@ -1998,7 +1998,7 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
         }
     });
 
-
+    $('.menu-filter-brand').toggle();
 
     /*var settings = {
      "async": true,
@@ -2012,6 +2012,11 @@ function filterBrandAndCategoryCozxyApi($categoryId) {
      console.log(response);
      });*/
 }
+
+
+$('.filter-brand-menu').click(function () {
+    $('.menu-filter-brand').removeAttr("style");
+});
 
 function filterESortCozxy($categoryId, status) {
     //Sort by price  |Sort by brand  |Sort by new product
