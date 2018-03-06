@@ -45,7 +45,7 @@ class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGr
         return $model = count(ProductGroupTemplateOption::find()->where("productGroupTemplateId=" . $productGroupTemplateId)->all());
     }
 
-    public static function saveOption($productGroupId, $templateId, $productId, $productSuppId, $productArr) {
+    public static function saveOption($productGroupId, $templateId, $productId, $productArr) {
         $productGroupOptions = ProductGroupOption::find()->where("productGroupId=$productGroupId")->all();
         if (!isset($productGroupOptions) || count($productGroupOptions) <= 0) {
             $productGroupTemplateOption = ProductGroupTemplateOption::find()->where("productGroupTemplateId=$templateId")->all();
@@ -72,7 +72,7 @@ class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGr
                 $optionValue->productGroupTemplateId = $templateId;
                 $optionValue->productGroupId = $productGroupId;
                 $optionValue->productId = $productId;
-                $optionValue->productSuppId = $productSuppId;
+                //$optionValue->productSuppId = $productSuppId;
                 $optionValue->productGroupTemplateId = $templateId;
                 $optionValue->value = $productArr[$i];
                 $optionValue->status = 1;

@@ -403,28 +403,58 @@ class Upload {
         $uploadPath1 = $uploadBasePath . $thumbnail1Path;
         $uploadPath2 = $uploadBasePath . $thumbnail2Path;
         if (isset($_FILES['fileImages'])) {
-            //$file = \yii\web\UploadedFile::getInstanceByName('fileImages');
-            foreach ($_FILES['fileImages']['tmp_name'] as $key => $val):
-
-                $file_name[$key] = $_FILES['fileImages']['name'][$key];
-                $file_size[$key] = $_FILES['fileImages']['size'][$key];
-                $file_tmp[$key] = $_FILES['fileImages']['tmp_name'][$key];
-                $file_type[$key] = $_FILES['fileImages']['type'][$key];
-                $originalFile = $uploadPath . $file_name[$key]; // originalFile
-                $thumbFile = $uploadPath . $file_name[$key];
-                $thumbFile1 = $uploadPath1 . $file_name[$key];
-                $thumbFile2 = $uploadPath2 . $file_name[$key];
-                move_uploaded_file($file_tmp[$key], $thumbFile);
-                move_uploaded_file($file_tmp[$key], $thumbFile1);
-                move_uploaded_file($file_tmp[$key], $thumbFile2);
-//                $file->saveAs($uploadPath . $file);
-//
-//                Image::thumbnail($originalFile, 1500, 1000)->save($thumbFile, ['quality' => 100]); // large image
-//                Image::thumbnail($originalFile, 262, 262)->save($thumbFile1, ['quality' => 80]); // thumbnail 1 file
-                //   Image::thumbnail($originalFile, 131, 131)->save($thumbFile2, ['quality' => 80]); // thumbnail 2 file
+            $files = \yii\web\UploadedFile::getInstancesByName('fileImages');
+            foreach ($files as $file):
+                $newFileName = $file;
+                $file->saveAs($uploadPath . $newFileName);
+                $originalFile = $uploadPath . $newFileName; // originalFile
+                $thumbFile = $uploadPath . $newFileName;
+                $thumbFile1 = $uploadPath1 . $newFileName;
+                $thumbFile2 = $uploadPath2 . $newFileName;
+                Image::thumbnail($originalFile, 1500, 1000)->save($thumbFile, ['quality' => 100]); // large image
+                Image::thumbnail($originalFile, 262, 262)->save($thumbFile1, ['quality' => 80]); // thumbnail 1 file
+                Image::thumbnail($originalFile, 131, 131)->save($thumbFile2, ['quality' => 80]); // thumbnail 2 file
+                $productImage = \common\models\costfit\ProductImage::find()->where("image='" . $imagePath . $newFileName . "'")->one();
+                if (isset($productImage)) {
+                    $product = \common\models\costfit\Product::find()->where("productId=$productImage->productId")->one();
+                    if (isset($product)) {
+                        $product->status = 1;
+                        $product->save(false);
+                    }
+                }
             endforeach;
+        } else {
+            echo "No Detect Image Upload";
+        }
+
+        return false;
+    }
+
+    public static function UploadProductImage2() {
+        $imagePath = 'images/ProductImage/';
+        $thumbnail1Path = $imagePath . 'thumbnail1/';
+        $thumbnail2Path = $imagePath . 'thumbnail2/';
+
+        $uploadBasePath = Yii::$app->basePath . '/web/';
+        $uploadPath = $uploadBasePath . $imagePath;
+        $uploadPath1 = $uploadBasePath . $thumbnail1Path;
+        $uploadPath2 = $uploadBasePath . $thumbnail2Path;
+        if (isset($_FILES['image'])) {
+            $file = \yii\web\UploadedFile::getInstanceByName('image');
+            $file->saveAs($uploadPath . $file);
+            $originalFile = $uploadPath . $file; // originalFile
+            $thumbFile = $uploadPath . $file;
+            $thumbFile1 = $uploadPath1 . $file;
+            $thumbFile2 = $uploadPath2 . $file;
+            Image::thumbnail($originalFile, 1500, 1000)->save($thumbFile, ['quality' => 100]); // large image
+            //Image::thumbnail($originalFile, 262, 262)->save($thumbFile1, ['quality' => 80]); // thumbnail 1 file
+            // Image::thumbnail($originalFile, 131, 131)->save($thumbFile2, ['quality' => 80]); // thumbnail 2 file
             //}
         } else {
+
+            /* return $this->render('upload', [
+              'model' => $model,
+              ]); */
             echo "No Detect Image Upload";
         }
 

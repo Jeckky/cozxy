@@ -30,3 +30,23 @@ $(document).on('click', '#deleteUser', function (e) {
         return false;
     }
 });
+function showImageStatus()
+{
+    $.ajax({
+        type: "POST",
+        url: $url + "productmanager/import-product/dupplicate-image",
+        data: {a: 1},
+        dataType: 'JSON',
+        success: function (data) {
+            if (data.status) {
+                $('#showSuccess').show();
+                $('#showError').hide();
+                $('#showSuccess').html(data.text);
+            } else {
+                $('#showError').show();
+                $('#showSuccess').hide();
+                $('#showError').html(data.error);
+            }
+        }
+    });
+}
