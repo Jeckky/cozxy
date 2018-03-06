@@ -75,7 +75,7 @@ if ($index == 0) {
             <?php } ?>
             <p class="name">
                 <a href="<?= Url::to(Yii::$app->homeUrl . 'product/' . $model->encodeParams(['productId' => $model->productId])) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size14' ?>">
-                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 35) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 35) : '' ?>
+                    <?= isset($model['title']) ? (strlen(strtoupper($model['title'])) <= 30) ? strtoupper($model['title']) : substr(strtoupper($model['title']), 0, 30) : '' ?>
                 </a>
             </p>
             <br>

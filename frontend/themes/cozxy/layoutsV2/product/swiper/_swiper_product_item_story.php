@@ -25,7 +25,7 @@ if ($index == 0) {
                 </p>
                 <p class="name">
                     <a href="<?= Yii::$app->homeUrl . 'story/' . $model->encodeParams(['productPostId' => $model->productPostId]) ?>" class="<?= ($UserAgent != 'mobile') ? 'size14 b' : 'size12' ?>">
-                        <?= isset($model->title) ? (strlen(strtoupper($model->title)) <= 40) ? strtoupper($model->title) : substr(strtoupper($model->title), 0, 40) : '' ?>
+                        <?= isset($model->title) ? (strlen(strtoupper($model->title)) <= 30) ? strtoupper($model->title) : substr(strtoupper($model->title), 0, 30) : '' ?>
 
                     </a>
                 </p>
