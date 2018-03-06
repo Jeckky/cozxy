@@ -414,7 +414,7 @@
     }
     .discount {
         position: relative;
-        font-size: 12px;
+        font-size: 15px;
         font-weight: bold;
         top: 2px;
     }
@@ -425,7 +425,7 @@
     }
     .rcorners4 .off-style {
         width: 100%;
-        margin-top: -10px;
+        margin-top: -15px;
         text-align: center;
         margin-left: 0px;
         font-size: 10px;
