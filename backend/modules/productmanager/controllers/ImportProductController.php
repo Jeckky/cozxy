@@ -23,6 +23,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
 use common\helpers\menuBackend;
+use common\models\worlddb\Currency;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -76,11 +77,15 @@ class ImportProductController extends ProductManagerMasterController {
                         while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
-                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '' || $objArr[8] == '') {
+                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '') {
                                         $error++;
                                         break;
                                     } else {
                                         $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                        if ($perentId == 0) {
+                                            $error++;
+                                            break;
+                                        }
                                     }
                                 } else {
                                     self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
@@ -103,11 +108,11 @@ class ImportProductController extends ProductManagerMasterController {
                         }
                         fclose($fcsv);
                         $message = '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload products complete.<br>';
-                        // return $this->redirect(['/productmanager/product']);
+// return $this->redirect(['/productmanager/product']);
                     }
                 }
             } else {
-                //ประเภทไฟล์ ผิด
+//ประเภทไฟล์ ผิด
             }
         }
 
@@ -158,7 +163,6 @@ class ImportProductController extends ProductManagerMasterController {
         $product->approve = 'approve';
         $product->code = null;
         $product->title = $productArr[4];
-        $product->optionName = $productArr[5];
         $product->shortDescription = $productArr[6];
         $product->description = $productArr[7];
         $product->specification = $productArr[8];
@@ -174,12 +178,16 @@ class ImportProductController extends ProductManagerMasterController {
         $product->createDateTime = new Expression('NOW()');
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
-        $product->save();
-        $parentId = \Yii::$app->db->getLastInsertID();
-        $imgs = $productArr[3];
-        $imgArr = explode(',', $imgs);
-        self::saveProductImageName($parentId, $imgArr);
-        return $parentId;
+        if ($categoryId != null) {
+            $product->save();
+            $parentId = \Yii::$app->db->getLastInsertID();
+            $imgs = $productArr[3];
+            $imgArr = explode(',', $imgs);
+            self::saveProductImageName($parentId, $imgArr);
+            return $parentId;
+        } else {
+            return 0;
+        }
     }
 
     private static function saveProduct($parentId, $productArr) {
@@ -195,7 +203,7 @@ class ImportProductController extends ProductManagerMasterController {
             $product->approve = 'approve';
             $product->code = \common\helpers\Product::generateProductCode2();
             $product->title = $productArr[4] != '' ? $productArr[4] : $products->title;
-            $product->optionName = $productArr[5];
+            $product->isbn = $productArr[5];
             $product->shortDescription = $productArr[6] != '' ? $productArr[6] : $products->shortDescription;
             $product->description = $productArr[7] != '' ? $productArr[7] : $products->description;
             $product->specification = $productArr[8] != '' ? $productArr[8] : $products->specification;
@@ -244,7 +252,22 @@ class ImportProductController extends ProductManagerMasterController {
             $imgs = $productArr[3];
             $imgArr = explode(',', $imgs);
             ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productArr);
+            self::saveCurrency($productId, $productArr[16], $productArr[13]);
             self::saveProductImageName($productId, $imgArr);
+        }
+    }
+
+    public static function saveCurrency($id, $currency, $price) {
+        if ($currency != '') {
+            $cArr = explode(":", $currency);
+            $currencyId = $cArr[2];
+            $productCurrency = new \common\models\costfit\ProductPriceCurrency();
+            $productCurrency->currencyId = $currencyId;
+            $productCurrency->productId = $id;
+            $productCurrency->price = $price;
+            $productCurrency->status = 1;
+            $productCurrency->createDateTime = new \yii\db\Expression('NOW()');
+            $productCurrency->save();
         }
     }
 
@@ -294,33 +317,33 @@ class ImportProductController extends ProductManagerMasterController {
     public function actionView($id) {
         $userGroup = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Partner' ")->all();
         foreach ($userGroup as $value) {
-            //$value[] = $value['user_id'];
+//$value[] = $value['user_id'];
             $textUserPartner[] = $value['user_id'];
         }
-        //print_r($textUser);
-        //echo 'userId : ' . Yii::$app->user->identity->userId;
-        //$userSuppliers = \common\helpers\Suppliers::GetUserSuppliers();
-        //$productCountents = \common\helpers\Suppliers::GetUserContents();
-        //echo '<pre>';
-        //print_r($productCountents);
+//print_r($textUser);
+//echo 'userId : ' . Yii::$app->user->identity->userId;
+//$userSuppliers = \common\helpers\Suppliers::GetUserSuppliers();
+//$productCountents = \common\helpers\Suppliers::GetUserContents();
+//echo '<pre>';
+//print_r($productCountents);
         $productCountents = \common\models\costfit\AuthAssignment::find()->where("item_name = 'Content' ")->all();
         foreach ($productCountents as $value) {
-            //$value[] = $value['user_id'];
+//$value[] = $value['user_id'];
             $textUserCountents[] = $value['user_id'];
         }
 
 
-        //print_r($textUserCountents);
+//print_r($textUserCountents);
 
         $searchModel = new ProductSearch();
 
         $searchModel->parentId = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        //echo 'parentId : ' . $id;
+//echo 'parentId : ' . $id;
 
         $productSupplierDataProvider = ProductSuppliersSearch::searchByParentId($id, $textUserPartner, $textUserCountents);
-        //print_r($productSupplierDataProvider);
+//print_r($productSupplierDataProvider);
         $getAuth = \common\helpers\menuBackend::getUser();
         return $this->render('view', [
                     'model' => $this->findModel($id),
@@ -377,7 +400,7 @@ class ImportProductController extends ProductManagerMasterController {
     }
 
     public function actionCreateProductImages($id) { //step 2
-        //upload images
+//upload images
         $model = Product::findOne($id);
         return $this->render('create-product-image', ['productId' => $id, 'model' => $model]);
     }
@@ -407,7 +430,7 @@ class ImportProductController extends ProductManagerMasterController {
             $productGroupOptions = ProductGroupOption::find()->where(['productGroupId' => $id])->all();
 
             foreach ($data as $value) {
-                //new product
+//new product
                 $p = new Product();
                 $p->attributes = $product->attributes;
                 $p->parentId = $product->productId;
@@ -419,14 +442,14 @@ class ImportProductController extends ProductManagerMasterController {
 
                 $pid = Yii::$app->db->lastInsertID;
 
-                //new product images
+//new product images
                 foreach ($product->productImages as $productImage) {
                     $img = new ProductImage();
                     $img->attributes = $productImage->attributes;
                     $img->productId = $pid;
                     $img->save();
                 }
-                //product options
+//product options
                 foreach ($productGroupOptions as $productGroupOption) {
                     if (isset($value[$productGroupOption->productGroupTemplateOptionId])) {
                         $productGroupOptionValue = new ProductGroupOptionValue();
@@ -469,7 +492,7 @@ class ImportProductController extends ProductManagerMasterController {
 
                 $productSuppId = Yii::$app->db->lastInsertID;
 
-                //product price suppliers
+//product price suppliers
                 $productPriceSuppliers = new ProductPriceSuppliers();
                 $productPriceSuppliers->productSuppId = $productSuppId;
                 $productPriceSuppliers->price = $ps['price'];
@@ -478,7 +501,7 @@ class ImportProductController extends ProductManagerMasterController {
                 $productPriceSuppliers->updateDateTime = new Expression('NOW()');
                 $productPriceSuppliers->save(false);
 
-                //product image suppliers
+//product image suppliers
                 $productImages = ProductImage::find()->where(['productId' => $productId])->all();
                 foreach ($productImages as $productImage) {
                     $productImageSuppliers = new ProductImageSuppliers();
@@ -512,7 +535,7 @@ class ImportProductController extends ProductManagerMasterController {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            //update brand & category in product master
+//update brand & category in product master
             if ($model->parentId == null) {
                 Product::updateAll(['brandId' => $model->brandId, 'categoryId' => $model->categoryId], ['parentId' => $model->productId]);
             }
@@ -536,7 +559,7 @@ class ImportProductController extends ProductManagerMasterController {
      */
     public function actionDelete($id) {
 //        $this->findModel($id)->delete();
-        //update to delete status
+//update to delete status
         $product = $this->findModel($id);
         $product->status = 2;
         $product->approve = 'delete';
@@ -609,7 +632,7 @@ class ImportProductController extends ProductManagerMasterController {
         $uploadPath = Yii::getAlias('@webroot') . '/images/product-content/' . $file;
 
 
-        //ตรวจสอบ
+//ตรวจสอบ
         if ($uploadedFile == null) {
             $message = "ไม่มีไฟล์ที่ Upload";
         } else if ($uploadedFile->size == 0) {
@@ -726,6 +749,90 @@ class ImportProductController extends ProductManagerMasterController {
         Product::updateAll(['status' => 2], ['in', 'productId', $productIds]);
 
         echo Json::encode($res);
+    }
+
+    public function actionGenerateCategoryText() {
+        $cateText = [];
+        $i = 0;
+        $categoryLevel1 = \common\models\costfit\Category::find()->where("status=1 and level=1 and parentId is null")->all();
+        if (isset($categoryLevel1) && count($categoryLevel1) > 0) {
+            foreach ($categoryLevel1 as $cat1) :
+                $cateText[$i] = $cat1->title . "," . $cat1->categoryId;
+                $i++;
+                $categoryLevel2 = \common\models\costfit\Category::find()->where("status=1 and level=2 and parentId=$cat1->categoryId")->all();
+                if (isset($categoryLevel2) && count($categoryLevel2) > 0) {
+
+                    foreach ($categoryLevel2 as $cat2) :
+                        $cateText[$i] = $cat1->title . "," . $cat2->title . "," . $cat2->categoryId;
+                        $i++;
+                        $categoryLevel3 = \common\models\costfit\Category::find()->where("status=1 and level=4 and parentId=$cat2->categoryId")->all();
+                        if (isset($categoryLevel3) && count($categoryLevel3) > 0) {
+                            foreach ($categoryLevel3 as $cat3) :
+                                $cateText[$i] = $cat1->title . "," . $cat2->title . "," . $cat3->title . "," . $cat3->categoryId;
+                                $i++;
+                            endforeach;
+                        }
+                    endforeach;
+                }
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $cateText
+        ]);
+    }
+
+    public function actionGenerateCurrencyText() {
+        $currency = Currency::find()->where("1")
+                ->orderBy("code")
+                ->all();
+        $data = [];
+        if (isset($currency) && count($currency) > 0) {
+            foreach ($currency as $c):
+                if ($c->countryId == null) {
+                    $data[$c->currencyId] = $c->code . "," . $c->name;
+                } else {
+                    $country = \common\models\worlddb\Country::find()->where("countryId=$c->countryId")->one();
+                    if (isset($country)) {
+                        $data[$c->currencyId] = $c->code . ":" . $country->name . ":" . $c->currencyId;
+                    }
+                }
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $data
+        ]);
+    }
+
+    public function actionGenerateBrandText() {
+        $brand = Brand::find()->where("status=1")
+                ->orderBy("title")
+                ->all();
+        $data = [];
+        if (isset($brand) && count($brand) > 0) {
+            foreach ($brand as $c):
+
+                $data[$c->brandId] = $c->title . ":" . $c->brandId;
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $data
+        ]);
+    }
+
+    public function actionGenerateTemplateText() {
+        $template = ProductGroupTemplate::find()->where("status=1")
+                ->orderBy("title")
+                ->all();
+        $data = [];
+        if (isset($template) && count($template) > 0) {
+            foreach ($template as $c):
+
+                $data[$c->productGroupTemplateId] = $c->title . ":" . $c->productGroupTemplateId;
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $data
+        ]);
     }
 
 }

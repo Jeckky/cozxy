@@ -256,9 +256,17 @@ class Category extends \common\models\costfit\master\CategoryMaster {
                         ->all();
     }
 
-    public static function categoryId($title) {
-        $category = Category::find()->where("title='" . $title . "' and status=1")->one();
-        return $category->categoryId;
+    public static function categoryId($category) {
+        $categoryArr = explode(",", $category);
+        $allcate = count($categoryArr);
+        if ($allcate == 2) {
+            $categoryId = $categoryArr[1];
+        } else if ($allcate == 3) {
+            $categoryId = $categoryArr[1];
+        } else if ($allcate == 4) {
+            $categoryId = $categoryArr[1];
+        }
+        return $categoryId;
     }
 
 }
