@@ -10,6 +10,7 @@ use common\models\costfit\ProductGroupOptionValue;
 use common\models\costfit\ProductGroupTemplate;
 use common\models\costfit\ProductImage;
 use common\models\costfit\ProductImageSuppliers;
+use common\models\costfit\ProductPriceCurrency;
 use common\models\costfit\ProductPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ProductGroupTemplateOption;
@@ -62,7 +63,7 @@ class ImportProductController extends ProductManagerMasterController {
             $ext = explode('.', $file->name);
             if (end($ext) == 'csv') {
                 if (!file_exists($uploadPath)) {
-                    mkdir($uploadPath, 0777);
+                    mkdir($uploadPath, 0777,true);
                 }
                 $upload = $file->saveAs($uploadPath . '/' . $newFileName);
                 if ($upload) {
