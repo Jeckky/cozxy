@@ -42,4 +42,9 @@ class ApiOtherController extends MasterController {
         }
     }
 
+    public function actionTestApi(){
+
+    }
+
+
 }

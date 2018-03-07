@@ -11,7 +11,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         margin-top: 0px;
     }
 </style>
-<div class="product-menu ">
+<div class="product-menu">
     <div class="container">
         <div class="row">
             <div class="dropdown items">
