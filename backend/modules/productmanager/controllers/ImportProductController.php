@@ -154,6 +154,7 @@ class ImportProductController extends ProductManagerMasterController {
         $templateId = ProductGroupTemplateOption::templateId($productArr[18]);
         $brandId = Brand::brandId($productArr[1]);
         $categoryId = \common\models\costfit\Category::categoryId($productArr[2]);
+        throw new \yii\base\exception($categoryId);
         $product = new \common\models\costfit\Product();
         $product->userId = \Yii::$app->user->id;
         $product->parentId = null;
@@ -273,6 +274,7 @@ class ImportProductController extends ProductManagerMasterController {
     }
 
     public static function saveProductImageName($id, $imageName) {
+        throw new \yii\base\exception($id);
         $product = Product::findOne($id);
         if (isset($imageName) && count($imageName) > 0) {
             foreach ($imageName as $newFileName):

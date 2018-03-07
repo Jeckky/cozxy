@@ -262,9 +262,9 @@ class Category extends \common\models\costfit\master\CategoryMaster {
         if ($allcate == 2) {
             $categoryId = $categoryArr[1];
         } else if ($allcate == 3) {
-            $categoryId = $categoryArr[1];
+            $categoryId = $categoryArr[2];
         } else if ($allcate == 4) {
-            $categoryId = $categoryArr[1];
+            $categoryId = $categoryArr[3];
         }
         return $categoryId;
     }
