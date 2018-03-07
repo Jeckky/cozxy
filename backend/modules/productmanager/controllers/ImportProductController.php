@@ -23,6 +23,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
 use common\helpers\menuBackend;
+use common\models\worlddb\Currency;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -162,7 +163,6 @@ class ImportProductController extends ProductManagerMasterController {
         $product->approve = 'approve';
         $product->code = null;
         $product->title = $productArr[4];
-//$product->optionName = $productArr[5];
         $product->shortDescription = $productArr[6];
         $product->description = $productArr[7];
         $product->specification = $productArr[8];
@@ -252,7 +252,22 @@ class ImportProductController extends ProductManagerMasterController {
             $imgs = $productArr[3];
             $imgArr = explode(',', $imgs);
             ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productArr);
+            self::saveCurrency($productId, $productArr[16], $productArr[13]);
             self::saveProductImageName($productId, $imgArr);
+        }
+    }
+
+    public static function saveCurrency($id, $currency, $price) {
+        if ($currency != '') {
+            $cArr = explode(":", $currency);
+            $currencyId = $cArr[2];
+            $productCurrency = new \common\models\costfit\ProductPriceCurrency();
+            $productCurrency->currencyId = $currencyId;
+            $productCurrency->productId = $id;
+            $productCurrency->price = $price;
+            $productCurrency->status = 1;
+            $productCurrency->createDateTime = new \yii\db\Expression('NOW()');
+            $productCurrency->save();
         }
     }
 
@@ -763,6 +778,28 @@ class ImportProductController extends ProductManagerMasterController {
         }
         return $this->render('show_category_text', [
                     'cateText' => $cateText
+        ]);
+    }
+
+    public function actionGenerateCurrencyText() {
+        $currency = Currency::find()->where("1")
+                ->orderBy("code")
+                ->all();
+        $data = [];
+        if (isset($currency) && count($currency) > 0) {
+            foreach ($currency as $c):
+                if ($c->countryId == null) {
+                    $data[$c->currencyId] = $c->code . "," . $c->name;
+                } else {
+                    $country = \common\models\worlddb\Country::find()->where("countryId=$c->countryId")->one();
+                    if (isset($country)) {
+                        $data[$c->currencyId] = $c->code . ":" . $country->name . ":" . $c->currencyId;
+                    }
+                }
+            endforeach;
+        }
+        return $this->render('show_currency_text', [
+                    'currency' => $data
         ]);
     }
 
