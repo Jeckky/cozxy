@@ -77,9 +77,13 @@ class Brand extends \common\models\costfit\master\BrandMaster {
         ]);
     }
 
-    public static function brandId($title) {
-        $brand = Brand::find()->where("title='" . $title . "' and status=1")->one();
-        return $brand->brandId;
+    public static function brandId($brand) {
+        $brandId = null;
+        $brandArr = explode(":", $brand);
+        if (count($brand) > 0) {
+            $brandId = $brandArr[1];
+        }
+        return $brandId;
     }
 
 }

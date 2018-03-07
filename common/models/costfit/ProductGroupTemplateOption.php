@@ -84,13 +84,13 @@ class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGr
         endforeach;
     }
 
-    public static function templateId($title) {
-        $template = ProductGroupTemplate::find()->where("title='" . $title . "'")->one();
-        if (isset($template)) {
-            return $template->productGroupTemplateId;
-        } else {
-            return null;
+    public static function templateId($template) {
+        $templateArr = explode(":", $template);
+        $templateId = null;
+        if (count($templateArr) > 0) {
+            $templateId = $templateArr[1];
         }
+        return $templateId;
     }
 
 }

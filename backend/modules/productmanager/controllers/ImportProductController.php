@@ -77,7 +77,7 @@ class ImportProductController extends ProductManagerMasterController {
                         while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
-                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '' || $objArr[8] == '') {
+                                    if ($objArr[4] == '' || $objArr[6] == '' || $objArr[7] == '') {
                                         $error++;
                                         break;
                                     } else {
@@ -757,18 +757,18 @@ class ImportProductController extends ProductManagerMasterController {
         $categoryLevel1 = \common\models\costfit\Category::find()->where("status=1 and level=1 and parentId is null")->all();
         if (isset($categoryLevel1) && count($categoryLevel1) > 0) {
             foreach ($categoryLevel1 as $cat1) :
-                $cateText[$i] = $cat1->title;
+                $cateText[$i] = $cat1->title . "," . $cat1->categoryId;
                 $i++;
                 $categoryLevel2 = \common\models\costfit\Category::find()->where("status=1 and level=2 and parentId=$cat1->categoryId")->all();
                 if (isset($categoryLevel2) && count($categoryLevel2) > 0) {
 
                     foreach ($categoryLevel2 as $cat2) :
-                        $cateText[$i] = $cat1->title . "," . $cat2->title;
+                        $cateText[$i] = $cat1->title . "," . $cat2->title . "," . $cat2->categoryId;
                         $i++;
                         $categoryLevel3 = \common\models\costfit\Category::find()->where("status=1 and level=4 and parentId=$cat2->categoryId")->all();
                         if (isset($categoryLevel3) && count($categoryLevel3) > 0) {
                             foreach ($categoryLevel3 as $cat3) :
-                                $cateText[$i] = $cat1->title . "," . $cat2->title . "," . $cat3->title;
+                                $cateText[$i] = $cat1->title . "," . $cat2->title . "," . $cat3->title . "," . $cat3->categoryId;
                                 $i++;
                             endforeach;
                         }
@@ -776,8 +776,8 @@ class ImportProductController extends ProductManagerMasterController {
                 }
             endforeach;
         }
-        return $this->render('show_category_text', [
-                    'cateText' => $cateText
+        return $this->render('show_text', [
+                    'data' => $cateText
         ]);
     }
 
@@ -798,8 +798,40 @@ class ImportProductController extends ProductManagerMasterController {
                 }
             endforeach;
         }
-        return $this->render('show_currency_text', [
-                    'currency' => $data
+        return $this->render('show_text', [
+                    'data' => $data
+        ]);
+    }
+
+    public function actionGenerateBrandText() {
+        $brand = Brand::find()->where("status=1")
+                ->orderBy("title")
+                ->all();
+        $data = [];
+        if (isset($brand) && count($brand) > 0) {
+            foreach ($brand as $c):
+
+                $data[$c->brandId] = $c->title . ":" . $c->brandId;
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $data
+        ]);
+    }
+
+    public function actionGenerateTemplateText() {
+        $template = ProductGroupTemplate::find()->where("status=1")
+                ->orderBy("title")
+                ->all();
+        $data = [];
+        if (isset($template) && count($template) > 0) {
+            foreach ($template as $c):
+
+                $data[$c->productGroupTemplateId] = $c->title . ":" . $c->productGroupTemplateId;
+            endforeach;
+        }
+        return $this->render('show_text', [
+                    'data' => $data
         ]);
     }
 

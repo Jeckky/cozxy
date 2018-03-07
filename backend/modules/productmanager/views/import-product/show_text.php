@@ -5,10 +5,10 @@ use yii\helpers\Html;
 
 <table class="table">
     <?php
-    if (isset($cateText) && count($cateText) > 0) {
-        foreach ($cateText as $title):
+    if (isset($data) && count($data) > 0) {
+        foreach ($data as $title):
             ?>
-            <tr><td><?= $title; ?><td></tr>
+            <tr><td><?= $title; ?></td></tr>
             <?php
         endforeach;
     }
