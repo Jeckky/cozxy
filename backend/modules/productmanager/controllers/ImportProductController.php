@@ -187,7 +187,7 @@ class ImportProductController extends ProductManagerMasterController {
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
 
-        if ($categoryId != null) {
+        if ($categoryId != null &&$brandId!=null && $templateId!=null) {
             $product->save();
             $parentId = \Yii::$app->db->getLastInsertID();
             $imgs = $productArr[3];
