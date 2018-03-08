@@ -82,14 +82,20 @@ class ImportProductController extends ProductManagerMasterController {
                                         $error++;
                                         break;
                                     } else {
-                                        $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
-                                        if ($perentId == 0) {
+
+                                        $parentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                        if ($parentId == 0) {
                                             $error++;
                                             break;
                                         }
                                     }
                                 } else {
-                                    self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
+                                    if (!isset($parentId) || $parentId == 0) {
+                                        $error++;
+                                        break;
+                                    }else {
+                                        self::saveProduct($parentId, $objArr); //เป็นproduct master มี option
+                                    }
                                 }
                             }
                             if ($r == 10) {
