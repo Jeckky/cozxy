@@ -98,9 +98,6 @@ class ImportProductController extends ProductManagerMasterController {
                                     }
                                 }
                             }
-                            if ($r == 10) {
-                                break;
-                            }
                             $r++;
                         }
                         if ($error == 0) {
