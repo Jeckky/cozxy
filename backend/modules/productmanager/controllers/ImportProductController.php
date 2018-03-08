@@ -74,7 +74,6 @@ class ImportProductController extends ProductManagerMasterController {
                         $r = 0;
                         $error = 0;
                         $transaction = \Yii::$app->db->beginTransaction();
-
                         while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
@@ -99,15 +98,19 @@ class ImportProductController extends ProductManagerMasterController {
                         }
                         if ($error == 0) {
                             $transaction->commit();
+                            fclose($fcsv);
+                            unlink($uploadPath . '/' . $newFileName);
                         } else {
                             $transaction->rollBack();
+                            fclose($fcsv);
+                            unlink($uploadPath . '/' . $newFileName);
                             $message = '<span style="color: red;"><span class="glyphicon glyphicon-remove" aria-hidden="true" "></span> มีบางอย่างผิดพลาด กรุณาใส่ข้อมูลที่จำเป็นให้ครบถ้วน.</span><br>';
                             return $this->render('index', [
                                         'model' => $model,
                                         'message' => $message,
                             ]);
                         }
-                        fclose($fcsv);
+
                         $message = '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload products complete.<br>';
 // return $this->redirect(['/productmanager/product']);
                     }
