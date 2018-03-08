@@ -11,6 +11,8 @@ use yii\imagine\Image;
 use Imagine\Gd;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
+use backend\modules\elasticsearch\models\Elastic;
+
 
 /**
  * Upload 15/12/2016 By Taninut.Bm
@@ -421,6 +423,7 @@ class Upload {
                         if (isset($product)) {
                             $product->status = 1;
                             $product->save(false);
+                            Elastic::createProduct($product);
                         }
                     endforeach;
                 }

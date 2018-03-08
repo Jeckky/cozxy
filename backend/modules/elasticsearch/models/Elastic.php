@@ -40,7 +40,6 @@ class Elastic extends Model
         $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $error = curl_error($curl);
         curl_close($curl);
-
         return $result;
     }
 
@@ -113,7 +112,8 @@ class Elastic extends Model
 
         $updateDateTime = explode(' ', $res['updateDateTime']);
         $res['updateDateTime'] = $updateDateTime[0] . 'T' . $updateDateTime[1] . '.000Z';
-
+        $approvecreateDateTime = explode(' ', $res['approvecreateDateTime']);
+        $res['approvecreateDateTime'] = $approvecreateDateTime[0] . 'T' . $approvecreateDateTime[1] . '.000Z';
         return $res;
     }
 

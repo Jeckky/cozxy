@@ -25,6 +25,7 @@ use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
 use common\helpers\menuBackend;
 use common\models\worlddb\Currency;
+use backend\modules\elasticsearch\models\Elastic;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -182,12 +183,18 @@ class ImportProductController extends ProductManagerMasterController {
         $product->createDateTime = new Expression('NOW()');
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
+
         if ($categoryId != null) {
             $product->save();
             $parentId = \Yii::$app->db->getLastInsertID();
             $imgs = $productArr[3];
             $imgArr = explode(',', $imgs);
             self::saveProductImageName($parentId, $imgArr);
+            //Elastic
+            //throw new \yii\base\exception(print_r($product,true));
+           // Elastic::createProduct($product);
+
+            // Product Price Currency
             return $parentId;
         } else {
             return 0;
@@ -258,6 +265,7 @@ class ImportProductController extends ProductManagerMasterController {
             ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productArr);
             self::saveCurrency($productId, $productArr[16], $productArr[13]);
             self::saveProductImageName($productId, $imgArr);
+
         }
     }
 
@@ -306,6 +314,9 @@ class ImportProductController extends ProductManagerMasterController {
                         if (isset($product)) {
                             $product->status = 1;
                             $product->save(false);
+                            //Elastic
+                            Elastic::createProduct($product);
+                            // Product Price Currency
                         }
                     }
                 endforeach;
