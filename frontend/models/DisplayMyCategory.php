@@ -69,16 +69,35 @@ class DisplayMyCategory extends Model {
     }
 
     public static function ShowCategoryOnline() {
+        /*
+          SELECT   ps.`categoryId` , child.title  , count(ps.`categoryId`) , child.`image` FROM `product_suppliers` ps
+          left join `category` child on child.`categoryId` = ps.`categoryId`
+          left join category parent on parent.`categoryId` = ps.`categoryId`
+          where (ps.status=1 and ps.approve="approve" and ps.result > 0 )  and (child.status = 1 and child.`image` IS NOT NULL and child.`image` !='')
+          group by ps.`categoryId`
+          order by count(ps.`categoryId`) desc
+         */
+        /* $category = \common\models\costfit\ProductSuppliers::find()
+          ->select('`product_suppliers`.categoryIdx , `category`.title , count(`product_suppliers`.`categoryId`) ,`category`.`image`')
+          ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
+          ->where("`category`.status = 1 and `category`.`image` IS NOT NULL and `category`.`image` !=''")
+          ->andWhere('product_suppliers.status=1 and product_suppliers.approve="approve" and product_suppliers.result > 0 ')
+          ->groupBy('`product_suppliers`.categoryId')
+          //->orderBy(new \yii\db\Expression('rand()'), 'count(`product_suppliers`.`categoryId`) desc')
+          ->orderBy([
+          'count(`product_suppliers`.`title`) ' => SORT_ASC  //Need this line to be fixed
+          ])
+          ->limit(6); */
         $category = \common\models\costfit\ProductSuppliers::find()
-                ->select('`product_suppliers`.categoryId , `category`.title , count(`product_suppliers`.`categoryId`) ,`category`.`image`')
-                ->join("LEFT JOIN", "category", "category.categoryId=product_suppliers.categoryId")
-                ->where("`category`.status = 1 and `category`.`image` IS NOT NULL and `category`.`image` !=''")
-                ->groupBy('`product_suppliers`.categoryId')
-                //->orderBy(new \yii\db\Expression('rand()'), 'count(`product_suppliers`.`categoryId`) desc')
-                ->orderBy([
-                    'count(`product_suppliers`.`categoryId`) ' => SORT_DESC  //Need this line to be fixed
-                ])
-                ->limit(6);
+                        ->select(' product_suppliers.`categoryId` , child.title  , count(product_suppliers.`categoryId`) , child.`image`')
+                        ->join("LEFT JOIN", "category child", "child.`categoryId` = product_suppliers.`categoryId`")
+                        ->join("LEFT JOIN", "category parent", "parent.`categoryId` = product_suppliers.`categoryId`")
+                        ->where("product_suppliers.status=1 and product_suppliers.approve='approve' and product_suppliers.result > 0 )  and (child.status = 1   ")
+                        ->andWhere(" child.`image` IS NOT NULL and child.`image` !='' ")
+                        ->orderBy([
+                            'count(`product_suppliers`.`title`) ' => SORT_DESC  //Need this line to be fixed
+                        ])
+                        ->groupBy('product_suppliers.`categoryId`')->limit(6);
         return new ActiveDataProvider([
             'query' => $category,
             'pagination' => false,
