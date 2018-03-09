@@ -12,6 +12,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         width: 100%;
         height: 100%;
     }
+
     .swiper-slide {
         text-align: center;
         font-size: 18px;
@@ -32,7 +33,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
         align-items: center;
     }
 </style>
-<?php if (isset($slideGroup)): ?>
+<?php if(isset($slideGroup)): ?>
     <div class="bg-white rela">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Wrapper for slides -->
@@ -93,17 +94,20 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
 
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>
@@ -141,7 +145,6 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
 
-
 <!-- Swiper Sunglasses -->
 <div class="bg-white wrapper-cozxy">
     <div class="container">
@@ -171,16 +174,19 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>
@@ -233,16 +239,19 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>
@@ -293,7 +302,7 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                             'itemOptions' => [
                                 'tag' => false,
                             ],
-                                //'itemOptions' => ['class' => 'item'],
+                            //'itemOptions' => ['class' => 'item'],
                         ]);
                         ?>
                     </div>
@@ -351,23 +360,25 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>
     </div>
 </div>
 <div class="spacing-cozxy bg-white">&nbsp;</div>
-
 
 <div class="bg-white wrapper-cozxy">
     <div class="container">
@@ -397,16 +408,19 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>
@@ -494,17 +508,20 @@ $UserAgent = common\helpers\GetBrowser::UserAgent();
                         'itemOptions' => [
                             'tag' => false,
                         ],
-                            //'itemOptions' => ['class' => 'item'],
+                        //'itemOptions' => ['class' => 'item'],
                     ]);
                     ?>
                 </div>
                 <!-- Add Pagination -->
 
-                <?php if ($UserAgent == 'mobile') { ?><div class="swiper-pagination"></div><?php } ?>
+                <?php if($UserAgent == 'mobile') { ?>
+                    <div class="swiper-pagination"></div><?php } ?>
                 <!-- Add Arrows -->
-                <?php if ($UserAgent != 'mobile') { ?>
-                    <div class="swiper-button-next" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-right"></span></div>
-                    <div class="swiper-button-prev" style="background-image: none !important;"><span class="glyphicon glyphicon-menu-left"></span></div>
+                <?php if($UserAgent != 'mobile') { ?>
+                    <div class="swiper-button-next" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-right"></span></div>
+                    <div class="swiper-button-prev" style="background-image: none !important;">
+                        <span class="glyphicon glyphicon-menu-left"></span></div>
                 <?php } ?>
             </div>
         </div>

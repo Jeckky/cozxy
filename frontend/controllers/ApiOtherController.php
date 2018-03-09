@@ -19,9 +19,11 @@ use yii\web\Controller;
  *
  * @author cozxy
  */
-class ApiOtherController extends MasterController {
+class ApiOtherController extends MasterController
+{
 
-    public function actionFilterCatInBrand() {
+    public function actionFilterCatInBrand()
+    {
         $cateId = $_POST['categories'];
         $brand = \frontend\models\DisplayMyBrand::MyFilterCatToBrand($cateId);
         $text = '';
@@ -34,7 +36,8 @@ class ApiOtherController extends MasterController {
 //echo \yii\helpers\Json::encode($brand);
     }
 
-    public function actionFilterCatInSubCate() {
+    public function actionFilterCatInSubCate()
+    {
         $cateId = $_POST['categories'];
         $subCate = \frontend\models\DisplayMyBrand::MyFilterCatToSubCate($cateId);
         foreach ($subCate as $value) {
@@ -42,7 +45,8 @@ class ApiOtherController extends MasterController {
         }
     }
 
-    public function actionTestApi(){
+    public function actionTestApi()
+    {
 
     }
 

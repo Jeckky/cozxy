@@ -541,3 +541,16 @@
     left: 0;
     width: 100%;
 }
+
+
+.menubar .menu-category-clearance a {
+    color:red!important;
+}
+
+.menu-category-clearance a:hover{
+    color:red!important;
+}
+
+.menubar  .menu-category-clearance{
+    color:#d00c0c!important;
+}
