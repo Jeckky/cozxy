@@ -4,6 +4,7 @@ namespace common\models\costfit;
 
 use Yii;
 use \common\models\costfit\master\ProductGroupTemplateOptionMaster;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "product_group_template_option".
@@ -87,9 +88,9 @@ class ProductGroupTemplateOption extends \common\models\costfit\master\ProductGr
     public static function templateId($template) {
         $templateArr = explode(":", $template);
         $templateId = null;
-        if (count($templateArr) > 0) {
-            $templateId = $templateArr[1];
-        }
+            if(count($templateArr) > 0 && $template!='') {
+                $templateId = $templateArr[1];
+            }
         return $templateId;
     }
 

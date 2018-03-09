@@ -10,6 +10,7 @@ use common\models\costfit\ProductGroupOptionValue;
 use common\models\costfit\ProductGroupTemplate;
 use common\models\costfit\ProductImage;
 use common\models\costfit\ProductImageSuppliers;
+use common\models\costfit\ProductPriceCurrency;
 use common\models\costfit\ProductPriceSuppliers;
 use common\models\costfit\ProductSuppliers;
 use common\models\costfit\ProductGroupTemplateOption;
@@ -24,6 +25,7 @@ use yii\filters\VerbFilter;
 use backend\modules\productmanager\models\search\ProductSuppliers as ProductSuppliersSearch;
 use common\helpers\menuBackend;
 use common\models\worlddb\Currency;
+use backend\modules\elasticsearch\models\Elastic;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -62,7 +64,7 @@ class ImportProductController extends ProductManagerMasterController {
             $ext = explode('.', $file->name);
             if (end($ext) == 'csv') {
                 if (!file_exists($uploadPath)) {
-                    mkdir($uploadPath, 0777);
+                    mkdir($uploadPath, 0777,true);
                 }
                 $upload = $file->saveAs($uploadPath . '/' . $newFileName);
                 if ($upload) {
@@ -73,7 +75,6 @@ class ImportProductController extends ProductManagerMasterController {
                         $r = 0;
                         $error = 0;
                         $transaction = \Yii::$app->db->beginTransaction();
-
                         while (($objArr = fgetcsv($fcsv, 1000, "|")) !== FALSE) {
                             if ($r != 0) {
                                 if ($objArr[0] == 1) {
@@ -81,32 +82,39 @@ class ImportProductController extends ProductManagerMasterController {
                                         $error++;
                                         break;
                                     } else {
-                                        $perentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
-                                        if ($perentId == 0) {
+
+                                        $parentId = self::saveProductGroup($objArr); //ไม่ต้องsave Option/productSuppliers
+                                        if ($parentId == 0) {
                                             $error++;
                                             break;
                                         }
                                     }
                                 } else {
-                                    self::saveProduct($perentId, $objArr); //เป็นproduct master มี option
+                                    if (!isset($parentId) || $parentId == 0) {
+                                        $error++;
+                                        break;
+                                    }else {
+                                        self::saveProduct($parentId, $objArr); //เป็นproduct master มี option
+                                    }
                                 }
-                            }
-                            if ($r == 10) {
-                                break;
                             }
                             $r++;
                         }
                         if ($error == 0) {
                             $transaction->commit();
+                            fclose($fcsv);
+                            unlink($uploadPath . '/' . $newFileName);
                         } else {
                             $transaction->rollBack();
-                            $message = '<span style="color: red;"><span class="glyphicon glyphicon-remove" aria-hidden="true" "></span> มีบางอย่างผิดพลาด กรุณาใส่ข้อมูลที่จำเป็นให้ครบถ้วน.</span><br>';
+                            fclose($fcsv);
+                            unlink($uploadPath . '/' . $newFileName);
+                            $message = '<span style="color: red;"><span class="glyphicon glyphicon-remove" aria-hidden="true" "></span> มีบางอย่างผิดพลาด กรุณาตรวจสอบความถูกต้องของข้อมูล.</span><br>';
                             return $this->render('index', [
                                         'model' => $model,
                                         'message' => $message,
                             ]);
                         }
-                        fclose($fcsv);
+
                         $message = '<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: #33cc00;"></span> Upload products complete.<br>';
 // return $this->redirect(['/productmanager/product']);
                     }
@@ -178,12 +186,18 @@ class ImportProductController extends ProductManagerMasterController {
         $product->createDateTime = new Expression('NOW()');
         $product->updateDateTime = new Expression('NOW()');
         $product->approvecreateDateTime = new Expression('NOW()');
-        if ($categoryId != null) {
+
+        if ($categoryId != null &&$brandId!=null && $templateId!=null) {
             $product->save();
             $parentId = \Yii::$app->db->getLastInsertID();
             $imgs = $productArr[3];
             $imgArr = explode(',', $imgs);
             self::saveProductImageName($parentId, $imgArr);
+            //Elastic
+            //throw new \yii\base\exception(print_r($product,true));
+           // Elastic::createProduct($product);
+
+            // Product Price Currency
             return $parentId;
         } else {
             return 0;
@@ -254,6 +268,7 @@ class ImportProductController extends ProductManagerMasterController {
             ProductGroupTemplateOption::saveOption($parentId, $product->productGroupTemplateId, $productId, $productArr);
             self::saveCurrency($productId, $productArr[16], $productArr[13]);
             self::saveProductImageName($productId, $imgArr);
+
         }
     }
 
@@ -302,6 +317,9 @@ class ImportProductController extends ProductManagerMasterController {
                         if (isset($product)) {
                             $product->status = 1;
                             $product->save(false);
+                            //Elastic
+                            Elastic::createProduct($product);
+                            // Product Price Currency
                         }
                     }
                 endforeach;
