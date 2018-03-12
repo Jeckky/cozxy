@@ -44,6 +44,8 @@ class CheckoutController extends MasterController {
         $provinceid = Yii::$app->request->post('provinceId');
         $amphurid = Yii::$app->request->post('amphurId');
         $LcpickingId = ($shipTo == 1) ? Yii::$app->request->post('LcpickingId') : 0;
+        //echo 'xx :' . $LcpickingId;
+        //echo $LcpickingId = ($shipTo == 1) ? $_POST['LcpickingId'] : 0;
         $checkTax = Yii::$app->request->post('checkTax');
         $tax = Yii::$app->request->post('billingTax');
         $addressId = Yii::$app->request->post('addressId'); //addressId
@@ -59,18 +61,32 @@ class CheckoutController extends MasterController {
         $hash = 'add';
         $orderId = (isset($_POST['orderId']) && !empty($_POST['orderId'])) ? $_POST['orderId'] : $this->view->params['cart']['orderId'];
         $order = Order::find()->where(['orderId' => $orderId])->one();
-
+        //echo 'pickingId' . $_GET['LcpickingId'];
+        $request = Yii::$app->request;
+        //print_r($request->bodyParams['PickingPoint']['pickingId']);
 
         if ($shipTo == 1) {
 
             if (isset($_POST['pickingId-lats-longs'])) {
                 $pickingIdLatsLongs = $_POST['pickingId-lats-longs'];
-                $splitLocation = explode('-', $pickingIdLatsLongs);
-                $pickingId = $splitLocation[0];
-                $latsLongs = $splitLocation[1];
-                $splitlatsLongs = explode(',', $latsLongs);
-                $lats = $splitlatsLongs[0];
-                $longs = $splitlatsLongs[1];
+                if (isset($pickingIdLatsLongs)) {
+
+                    $splitLocation = explode('-', $pickingIdLatsLongs);
+                    $pickingId = $splitLocation[0];
+                    $latsLongs = $splitLocation[1];
+                    $splitlatsLongs = explode(',', $latsLongs);
+                    $lats = $splitlatsLongs[0];
+                    $longs = $splitlatsLongs[1];
+                } else {
+                    $pickingIdLatsLongs = $request->bodyParams['PickingPoint']['pickingId'];
+                    $splitLocation = explode('-', $pickingIdLatsLongs);
+                    $pickingId = $splitLocation[0];
+                    $latsLongs = $splitLocation[1];
+                    $splitlatsLongs = explode(',', $latsLongs);
+                    $lats = $splitlatsLongs[0];
+                    $longs = $splitlatsLongs[1];
+                }
+
                 $shipToCozxyBoxNew = \common\models\costfit\PickingPoint::find()->where('pickingId = ' . $pickingId)->one();
                 $shipToCozxyBoxNew->scenario = 'picking_point_new';
                 //echo '<pre>';

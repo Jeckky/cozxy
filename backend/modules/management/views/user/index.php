@@ -41,7 +41,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                 <div class="panel-body">
                     <?php
                     $form = ActiveForm::begin([
-                        'options' => ['class' => 'form-horizontalx', 'enctype' => 'multipart/form-data'],
+                                'options' => ['class' => 'form-horizontalx', 'enctype' => 'multipart/form-data'],
                     ]);
                     ?>
 
@@ -128,7 +128,7 @@ $this->params['pageHeader'] = Html::encode($this->title);
                             foreach ($model->roles as $role) {
                                 $roles[] = $role->item_name;
                             }
-                            return Html:: a(implode(', ', $roles), [ 'view', 'id' => $model->userId, 'tab' => 3, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
+                            return Html:: a(implode(', ', $roles), ['view', 'id' => $model->userId, 'tab' => 3, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1]);
                         },
                     ],
                     // 'auth_key:ntext',
@@ -185,25 +185,25 @@ $this->params['pageHeader'] = Html::encode($this->title);
                         'template' => '{view} {address} {margin}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', [ 'view', 'id' => $model->userId, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1], [
-                                    'title' => Yii::t('yii', 'view'),
+                                return Html::a('<i class="fa fa-pencil"></i> ตั้งค่าสมาชิก', ['view', 'id' => $model->userId, 'page' => isset($_GET["page"]) ? $_GET["page"] : 1], [
+                                            'title' => Yii::t('yii', 'view'),
                                 ]);
                             },
                             'address' => function ($url, $model) {
                                 if ($model->type == 4) {
                                     return "<br>" . Html::a('<i class="fa fa-home"></i> ที่อยู่ suppliers', Yii::$app->homeUrl . "management/address/?userId=" . $model->userId, [
-                                        'title' => Yii ::t('app', 'สถานที่'), 'class' => 'text-center']);
+                                                'title' => Yii ::t('app', 'สถานที่'), 'class' => 'text-center']);
                                 }
                             },
                             'margin' => function ($url, $model) {
                                 if ($model->type == 4) {
                                     return "<br>" . Html::a('<i class="fa fa-dollar"></i> Margin', Yii::$app->homeUrl . "management/user/margin?supplierId=" . $model->userId, [
-                                        'title' => Yii::t('app', 'ผลกำไร'), 'class' => 'text-center']);
+                                                'title' => Yii::t('app', 'ผลกำไร'), 'class' => 'text-center']);
                                 }
                             },
                             'update' => function ($url, $model) {
                                 return Html::a('<i class="fa fa-pencil"></i>', $url, [
-                                    'title' => Yii::t('yii', 'update'),
+                                            'title' => Yii::t('yii', 'update'),
                                 ]);
                             },
                         ]

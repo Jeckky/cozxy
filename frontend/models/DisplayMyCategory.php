@@ -69,6 +69,7 @@ class DisplayMyCategory extends Model {
     }
 
     public static function ShowCategoryOnline() {
+
         /*
           SELECT   ps.`categoryId` , child.title  , count(ps.`categoryId`) , child.`image` FROM `product_suppliers` ps
           left join `category` child on child.`categoryId` = ps.`categoryId`

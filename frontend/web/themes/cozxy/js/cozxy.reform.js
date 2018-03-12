@@ -1815,6 +1815,8 @@ $('#LcpickingId').change(function () {
         $("#shipToCozxyBox .field-LcpickingId p").html("");
     }
 
+    //console.log(stateId + '::' + amphurId + '::' + LcpickingId);
+
 });
 $('#checkBillingTax').click(function () {
     if ($('#checkBillingTax').val() == 0) {
