@@ -297,7 +297,7 @@ class User extends \common\models\costfit\master\UserMaster {
             $user = Address::find()->where("userId=" . $id)->one();
             return $user->firstname . " " . $user->lastname;
         }else{
-            return null;
+            return null; 
         }
 
     }
