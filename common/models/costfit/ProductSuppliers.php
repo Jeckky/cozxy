@@ -200,6 +200,7 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
     }
 
     public static function productId($productSuppId) {
+        /**/
         if (isset($productSuppId)) {
             $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             if (isset($id)) {
