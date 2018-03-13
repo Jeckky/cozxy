@@ -293,13 +293,12 @@ class User extends \common\models\costfit\master\UserMaster {
 
     public static function userName($id) {
         $user = Address::find()->where("userId=" . $id . " and isDefault=1")->one();
-        if (!isset($user)) {
+        if (isset($user)) {
             $user = Address::find()->where("userId=" . $id)->one();
             return $user->firstname . " " . $user->lastname;
-        }else{
-            return null; 
+        } else {
+            return null;
         }
-
     }
 
     public static function supplierDetail($userId) {
