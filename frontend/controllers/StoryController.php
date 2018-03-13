@@ -73,9 +73,7 @@ class StoryController extends MasterController {
                 $imgShowStory = $product_image->image;
             }
         }
-        //echo '<pre>';
-        //print_r($productPost);
-        //exit();
+
         // $product_image_suppliers = $productPost->attributes;
         //if (isset($product_image_suppliers['productId'])) {
         if (isset($productId)) {
