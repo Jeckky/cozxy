@@ -204,6 +204,8 @@ class ProductSuppliers extends \common\models\costfit\master\ProductSuppliersMas
             $id = ProductSuppliers::find()->where("productSuppId=" . $productSuppId)->one();
             if (isset($id)) {
                 return $id->productId;
+            } else {
+                return null;
             }
         } else {
             return null;
